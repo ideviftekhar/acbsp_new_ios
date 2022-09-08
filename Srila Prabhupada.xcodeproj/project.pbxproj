@@ -1,0 +1,581 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 55;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C00E4DCB28CA36F100F1A123 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4DCA28CA36F100F1A123 /* AppDelegate.swift */; };
+		C00E4DCD28CA36F100F1A123 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4DCC28CA36F100F1A123 /* SceneDelegate.swift */; };
+		C00E4DD228CA36F100F1A123 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C00E4DD028CA36F100F1A123 /* Main.storyboard */; };
+		C00E4DD428CA36F200F1A123 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C00E4DD328CA36F200F1A123 /* Assets.xcassets */; };
+		C00E4DD728CA36F200F1A123 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C00E4DD528CA36F200F1A123 /* LaunchScreen.storyboard */; };
+		C00E4DE128CA393600F1A123 /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4DDF28CA393600F1A123 /* LogInViewController.swift */; };
+		C00E4DE228CA393600F1A123 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4DE028CA393600F1A123 /* CreateAccountViewController.swift */; };
+		C00E4DEF28CA39CB00F1A123 /* TopLectures.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C00E4DE428CA39CB00F1A123 /* TopLectures.storyboard */; };
+		C00E4DF028CA39CB00F1A123 /* Playlists.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C00E4DE528CA39CB00F1A123 /* Playlists.storyboard */; };
+		C00E4DF128CA39CB00F1A123 /* SideMenu.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C00E4DE628CA39CB00F1A123 /* SideMenu.storyboard */; };
+		C00E4DF228CA39CB00F1A123 /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C00E4DE728CA39CB00F1A123 /* Home.storyboard */; };
+		C00E4DF328CA39CB00F1A123 /* Stats.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C00E4DE828CA39CB00F1A123 /* Stats.storyboard */; };
+		C00E4DF428CA39CB00F1A123 /* History.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C00E4DE928CA39CB00F1A123 /* History.storyboard */; };
+		C00E4DF528CA39CB00F1A123 /* Downloads.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C00E4DEA28CA39CB00F1A123 /* Downloads.storyboard */; };
+		C00E4DF628CA39CB00F1A123 /* Favorites.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C00E4DEB28CA39CB00F1A123 /* Favorites.storyboard */; };
+		C00E4DF828CA39CB00F1A123 /* PopularLecture.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C00E4DED28CA39CB00F1A123 /* PopularLecture.storyboard */; };
+		C00E4DFC28CA39F400F1A123 /* SideMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4DFB28CA39F400F1A123 /* SideMenuTableViewController.swift */; };
+		C00E4E0828CA39FE00F1A123 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4DFE28CA39FE00F1A123 /* TabBarController.swift */; };
+		C00E4E0928CA39FE00F1A123 /* DownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E0028CA39FE00F1A123 /* DownloadViewController.swift */; };
+		C00E4E0A28CA39FE00F1A123 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E0128CA39FE00F1A123 /* FavoritesViewController.swift */; };
+		C00E4E0B28CA39FE00F1A123 /* LectureBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E0228CA39FE00F1A123 /* LectureBaseViewController.swift */; };
+		C00E4E0C28CA39FE00F1A123 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E0328CA39FE00F1A123 /* HomeViewController.swift */; };
+		C00E4E0D28CA39FE00F1A123 /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E0428CA39FE00F1A123 /* PlaylistViewController.swift */; };
+		C00E4E0E28CA39FE00F1A123 /* PopularLectureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E0528CA39FE00F1A123 /* PopularLectureViewController.swift */; };
+		C00E4E0F28CA39FE00F1A123 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E0628CA39FE00F1A123 /* HistoryViewController.swift */; };
+		C00E4E1028CA39FE00F1A123 /* TopLectureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E0728CA39FE00F1A123 /* TopLectureViewController.swift */; };
+		C00E4E1228CA3A1700F1A123 /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E1128CA3A1700F1A123 /* ForgotPasswordViewController.swift */; };
+		C00E4E1628CA433A00F1A123 /* StatsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E1328CA433A00F1A123 /* StatsViewController.swift */; };
+		C00E4E1728CA433A00F1A123 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E1428CA433A00F1A123 /* AboutViewController.swift */; };
+		C00E4E1828CA433A00F1A123 /* CopyrightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E1528CA433A00F1A123 /* CopyrightViewController.swift */; };
+		C00E4E1A28CA45E000F1A123 /* PlaylistLecturesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E1928CA45E000F1A123 /* PlaylistLecturesViewController.swift */; };
+		C00E4E1C28CA462000F1A123 /* BaseSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E1B28CA462000F1A123 /* BaseSearchViewController.swift */; };
+		EC54544C3F772D72F0E81C35 /* Pods_Srila_Prabhupada.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3320FB8F92398ED70E906DB5 /* Pods_Srila_Prabhupada.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		277C5557A9865640DB48AF50 /* Pods-Srila Prabhupada.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Srila Prabhupada.release.xcconfig"; path = "Target Support Files/Pods-Srila Prabhupada/Pods-Srila Prabhupada.release.xcconfig"; sourceTree = "<group>"; };
+		3320FB8F92398ED70E906DB5 /* Pods_Srila_Prabhupada.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Srila_Prabhupada.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C00E4DC728CA36F100F1A123 /* Srila Prabhupada.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Srila Prabhupada.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		C00E4DCA28CA36F100F1A123 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		C00E4DCC28CA36F100F1A123 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		C00E4DD128CA36F100F1A123 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		C00E4DD328CA36F200F1A123 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		C00E4DD628CA36F200F1A123 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		C00E4DD828CA36F200F1A123 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C00E4DDF28CA393600F1A123 /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
+		C00E4DE028CA393600F1A123 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
+		C00E4DE428CA39CB00F1A123 /* TopLectures.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = TopLectures.storyboard; sourceTree = "<group>"; };
+		C00E4DE528CA39CB00F1A123 /* Playlists.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Playlists.storyboard; sourceTree = "<group>"; };
+		C00E4DE628CA39CB00F1A123 /* SideMenu.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = SideMenu.storyboard; sourceTree = "<group>"; };
+		C00E4DE728CA39CB00F1A123 /* Home.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Home.storyboard; sourceTree = "<group>"; };
+		C00E4DE828CA39CB00F1A123 /* Stats.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Stats.storyboard; sourceTree = "<group>"; };
+		C00E4DE928CA39CB00F1A123 /* History.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = History.storyboard; sourceTree = "<group>"; };
+		C00E4DEA28CA39CB00F1A123 /* Downloads.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Downloads.storyboard; sourceTree = "<group>"; };
+		C00E4DEB28CA39CB00F1A123 /* Favorites.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Favorites.storyboard; sourceTree = "<group>"; };
+		C00E4DED28CA39CB00F1A123 /* PopularLecture.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PopularLecture.storyboard; sourceTree = "<group>"; };
+		C00E4DFB28CA39F400F1A123 /* SideMenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewController.swift; sourceTree = "<group>"; };
+		C00E4DFE28CA39FE00F1A123 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		C00E4E0028CA39FE00F1A123 /* DownloadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadViewController.swift; sourceTree = "<group>"; };
+		C00E4E0128CA39FE00F1A123 /* FavoritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
+		C00E4E0228CA39FE00F1A123 /* LectureBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LectureBaseViewController.swift; sourceTree = "<group>"; };
+		C00E4E0328CA39FE00F1A123 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		C00E4E0428CA39FE00F1A123 /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
+		C00E4E0528CA39FE00F1A123 /* PopularLectureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopularLectureViewController.swift; sourceTree = "<group>"; };
+		C00E4E0628CA39FE00F1A123 /* HistoryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
+		C00E4E0728CA39FE00F1A123 /* TopLectureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopLectureViewController.swift; sourceTree = "<group>"; };
+		C00E4E1128CA3A1700F1A123 /* ForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewController.swift; sourceTree = "<group>"; };
+		C00E4E1328CA433A00F1A123 /* StatsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatsViewController.swift; sourceTree = "<group>"; };
+		C00E4E1428CA433A00F1A123 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
+		C00E4E1528CA433A00F1A123 /* CopyrightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyrightViewController.swift; sourceTree = "<group>"; };
+		C00E4E1928CA45E000F1A123 /* PlaylistLecturesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistLecturesViewController.swift; sourceTree = "<group>"; };
+		C00E4E1B28CA462000F1A123 /* BaseSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSearchViewController.swift; sourceTree = "<group>"; };
+		ECD65E5E27758ADC85903139 /* Pods-Srila Prabhupada.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Srila Prabhupada.debug.xcconfig"; path = "Target Support Files/Pods-Srila Prabhupada/Pods-Srila Prabhupada.debug.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C00E4DC428CA36F100F1A123 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EC54544C3F772D72F0E81C35 /* Pods_Srila_Prabhupada.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3F33EC5C7A820F55C7071AE3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3320FB8F92398ED70E906DB5 /* Pods_Srila_Prabhupada.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		718E9976842A38ECCABB0218 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				ECD65E5E27758ADC85903139 /* Pods-Srila Prabhupada.debug.xcconfig */,
+				277C5557A9865640DB48AF50 /* Pods-Srila Prabhupada.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		C00E4DBE28CA36F100F1A123 = {
+			isa = PBXGroup;
+			children = (
+				C00E4DC928CA36F100F1A123 /* Srila Prabhupada */,
+				C00E4DC828CA36F100F1A123 /* Products */,
+				718E9976842A38ECCABB0218 /* Pods */,
+				3F33EC5C7A820F55C7071AE3 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		C00E4DC828CA36F100F1A123 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C00E4DC728CA36F100F1A123 /* Srila Prabhupada.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		C00E4DC928CA36F100F1A123 /* Srila Prabhupada */ = {
+			isa = PBXGroup;
+			children = (
+				C00E4DE328CA393B00F1A123 /* Storyboards */,
+				C00E4DDE28CA393600F1A123 /* PreLogIn */,
+				C00E4DFA28CA39F400F1A123 /* LeftMenuControllers */,
+				C00E4DFD28CA39FE00F1A123 /* CommonControllers */,
+				C00E4DFF28CA39FE00F1A123 /* LectureControllers */,
+				C00E4E0428CA39FE00F1A123 /* PlaylistViewController.swift */,
+				C00E4DD328CA36F200F1A123 /* Assets.xcassets */,
+				C00E4DCA28CA36F100F1A123 /* AppDelegate.swift */,
+				C00E4DCC28CA36F100F1A123 /* SceneDelegate.swift */,
+				C00E4DD528CA36F200F1A123 /* LaunchScreen.storyboard */,
+				C00E4DD828CA36F200F1A123 /* Info.plist */,
+			);
+			path = "Srila Prabhupada";
+			sourceTree = "<group>";
+		};
+		C00E4DDE28CA393600F1A123 /* PreLogIn */ = {
+			isa = PBXGroup;
+			children = (
+				C00E4DDF28CA393600F1A123 /* LogInViewController.swift */,
+				C00E4DE028CA393600F1A123 /* CreateAccountViewController.swift */,
+				C00E4E1128CA3A1700F1A123 /* ForgotPasswordViewController.swift */,
+			);
+			path = PreLogIn;
+			sourceTree = "<group>";
+		};
+		C00E4DE328CA393B00F1A123 /* Storyboards */ = {
+			isa = PBXGroup;
+			children = (
+				C00E4DD028CA36F100F1A123 /* Main.storyboard */,
+				C00E4DE628CA39CB00F1A123 /* SideMenu.storyboard */,
+				C00E4DE728CA39CB00F1A123 /* Home.storyboard */,
+				C00E4DEA28CA39CB00F1A123 /* Downloads.storyboard */,
+				C00E4DEB28CA39CB00F1A123 /* Favorites.storyboard */,
+				C00E4DE928CA39CB00F1A123 /* History.storyboard */,
+				C00E4DE528CA39CB00F1A123 /* Playlists.storyboard */,
+				C00E4DED28CA39CB00F1A123 /* PopularLecture.storyboard */,
+				C00E4DE428CA39CB00F1A123 /* TopLectures.storyboard */,
+				C00E4DE828CA39CB00F1A123 /* Stats.storyboard */,
+			);
+			path = Storyboards;
+			sourceTree = "<group>";
+		};
+		C00E4DFA28CA39F400F1A123 /* LeftMenuControllers */ = {
+			isa = PBXGroup;
+			children = (
+				C00E4DFB28CA39F400F1A123 /* SideMenuTableViewController.swift */,
+				C00E4E1428CA433A00F1A123 /* AboutViewController.swift */,
+				C00E4E1528CA433A00F1A123 /* CopyrightViewController.swift */,
+				C00E4E1328CA433A00F1A123 /* StatsViewController.swift */,
+			);
+			path = LeftMenuControllers;
+			sourceTree = "<group>";
+		};
+		C00E4DFD28CA39FE00F1A123 /* CommonControllers */ = {
+			isa = PBXGroup;
+			children = (
+				C00E4DFE28CA39FE00F1A123 /* TabBarController.swift */,
+				C00E4E1B28CA462000F1A123 /* BaseSearchViewController.swift */,
+				C00E4E0228CA39FE00F1A123 /* LectureBaseViewController.swift */,
+			);
+			path = CommonControllers;
+			sourceTree = "<group>";
+		};
+		C00E4DFF28CA39FE00F1A123 /* LectureControllers */ = {
+			isa = PBXGroup;
+			children = (
+				C00E4E0328CA39FE00F1A123 /* HomeViewController.swift */,
+				C00E4E0028CA39FE00F1A123 /* DownloadViewController.swift */,
+				C00E4E0128CA39FE00F1A123 /* FavoritesViewController.swift */,
+				C00E4E1928CA45E000F1A123 /* PlaylistLecturesViewController.swift */,
+				C00E4E0528CA39FE00F1A123 /* PopularLectureViewController.swift */,
+				C00E4E0628CA39FE00F1A123 /* HistoryViewController.swift */,
+				C00E4E0728CA39FE00F1A123 /* TopLectureViewController.swift */,
+			);
+			path = LectureControllers;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		C00E4DC628CA36F100F1A123 /* Srila Prabhupada */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C00E4DDB28CA36F200F1A123 /* Build configuration list for PBXNativeTarget "Srila Prabhupada" */;
+			buildPhases = (
+				523CEDFA34EE218CA04DC39C /* [CP] Check Pods Manifest.lock */,
+				C00E4DC328CA36F100F1A123 /* Sources */,
+				C00E4DC428CA36F100F1A123 /* Frameworks */,
+				C00E4DC528CA36F100F1A123 /* Resources */,
+				AD18E0F8ED7A0605A0F37E78 /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Srila Prabhupada";
+			productName = "Srila Prabhupada";
+			productReference = C00E4DC728CA36F100F1A123 /* Srila Prabhupada.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		C00E4DBF28CA36F100F1A123 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1320;
+				LastUpgradeCheck = 1320;
+				TargetAttributes = {
+					C00E4DC628CA36F100F1A123 = {
+						CreatedOnToolsVersion = 13.2.1;
+					};
+				};
+			};
+			buildConfigurationList = C00E4DC228CA36F100F1A123 /* Build configuration list for PBXProject "Srila Prabhupada" */;
+			compatibilityVersion = "Xcode 13.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = C00E4DBE28CA36F100F1A123;
+			productRefGroup = C00E4DC828CA36F100F1A123 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				C00E4DC628CA36F100F1A123 /* Srila Prabhupada */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		C00E4DC528CA36F100F1A123 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C00E4DF228CA39CB00F1A123 /* Home.storyboard in Resources */,
+				C00E4DF528CA39CB00F1A123 /* Downloads.storyboard in Resources */,
+				C00E4DF328CA39CB00F1A123 /* Stats.storyboard in Resources */,
+				C00E4DF028CA39CB00F1A123 /* Playlists.storyboard in Resources */,
+				C00E4DD728CA36F200F1A123 /* LaunchScreen.storyboard in Resources */,
+				C00E4DD428CA36F200F1A123 /* Assets.xcassets in Resources */,
+				C00E4DF428CA39CB00F1A123 /* History.storyboard in Resources */,
+				C00E4DF128CA39CB00F1A123 /* SideMenu.storyboard in Resources */,
+				C00E4DEF28CA39CB00F1A123 /* TopLectures.storyboard in Resources */,
+				C00E4DD228CA36F100F1A123 /* Main.storyboard in Resources */,
+				C00E4DF628CA39CB00F1A123 /* Favorites.storyboard in Resources */,
+				C00E4DF828CA39CB00F1A123 /* PopularLecture.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		523CEDFA34EE218CA04DC39C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Srila Prabhupada-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AD18E0F8ED7A0605A0F37E78 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Srila Prabhupada/Pods-Srila Prabhupada-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Srila Prabhupada/Pods-Srila Prabhupada-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Srila Prabhupada/Pods-Srila Prabhupada-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		C00E4DC328CA36F100F1A123 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C00E4DE228CA393600F1A123 /* CreateAccountViewController.swift in Sources */,
+				C00E4DCB28CA36F100F1A123 /* AppDelegate.swift in Sources */,
+				C00E4E1628CA433A00F1A123 /* StatsViewController.swift in Sources */,
+				C00E4E1A28CA45E000F1A123 /* PlaylistLecturesViewController.swift in Sources */,
+				C00E4E0A28CA39FE00F1A123 /* FavoritesViewController.swift in Sources */,
+				C00E4DCD28CA36F100F1A123 /* SceneDelegate.swift in Sources */,
+				C00E4E0F28CA39FE00F1A123 /* HistoryViewController.swift in Sources */,
+				C00E4E0B28CA39FE00F1A123 /* LectureBaseViewController.swift in Sources */,
+				C00E4E0C28CA39FE00F1A123 /* HomeViewController.swift in Sources */,
+				C00E4E0928CA39FE00F1A123 /* DownloadViewController.swift in Sources */,
+				C00E4E1728CA433A00F1A123 /* AboutViewController.swift in Sources */,
+				C00E4E1828CA433A00F1A123 /* CopyrightViewController.swift in Sources */,
+				C00E4E0E28CA39FE00F1A123 /* PopularLectureViewController.swift in Sources */,
+				C00E4E0D28CA39FE00F1A123 /* PlaylistViewController.swift in Sources */,
+				C00E4E0828CA39FE00F1A123 /* TabBarController.swift in Sources */,
+				C00E4E1228CA3A1700F1A123 /* ForgotPasswordViewController.swift in Sources */,
+				C00E4E1028CA39FE00F1A123 /* TopLectureViewController.swift in Sources */,
+				C00E4E1C28CA462000F1A123 /* BaseSearchViewController.swift in Sources */,
+				C00E4DE128CA393600F1A123 /* LogInViewController.swift in Sources */,
+				C00E4DFC28CA39F400F1A123 /* SideMenuTableViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		C00E4DD028CA36F100F1A123 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C00E4DD128CA36F100F1A123 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		C00E4DD528CA36F200F1A123 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C00E4DD628CA36F200F1A123 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		C00E4DD928CA36F200F1A123 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		C00E4DDA28CA36F200F1A123 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		C00E4DDC28CA36F200F1A123 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = ECD65E5E27758ADC85903139 /* Pods-Srila Prabhupada.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Srila Prabhupada/Info.plist";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.iskcon.prabhupada;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		C00E4DDD28CA36F200F1A123 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 277C5557A9865640DB48AF50 /* Pods-Srila Prabhupada.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Srila Prabhupada/Info.plist";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.iskcon.prabhupada;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		C00E4DC228CA36F100F1A123 /* Build configuration list for PBXProject "Srila Prabhupada" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C00E4DD928CA36F200F1A123 /* Debug */,
+				C00E4DDA28CA36F200F1A123 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C00E4DDB28CA36F200F1A123 /* Build configuration list for PBXNativeTarget "Srila Prabhupada" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C00E4DDC28CA36F200F1A123 /* Debug */,
+				C00E4DDD28CA36F200F1A123 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = C00E4DBF28CA36F100F1A123 /* Project object */;
+}
