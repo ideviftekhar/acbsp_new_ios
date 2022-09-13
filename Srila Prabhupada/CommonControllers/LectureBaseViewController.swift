@@ -16,7 +16,6 @@ class BaseLectureViewController: BaseSearchViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-       
     }
 }
 

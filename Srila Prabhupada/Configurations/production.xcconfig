@@ -1,0 +1,11 @@
+//
+//  production.xcconfig
+//  Srila Prabhupada
+//
+//  Created by IE on 9/12/22.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+GOOGLE_SERVICE_FILE_NAME = GoogleService-Info-production

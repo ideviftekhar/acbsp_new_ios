@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 //Protocol
 protocol SideMenuControllerDelegate: AnyObject {
@@ -61,15 +62,25 @@ class SideMenuTableViewController: UITableViewController{
 
             let alertController = UIAlertController(title: "Logout", message: "Are you sure you would like to Logout?", preferredStyle: .actionSheet)
             alertController.addAction(UIAlertAction(title: "Logout", style: .destructive, handler: { _ in
-                if let window = UIApplication.shared.keyWindow {
-                // A mask of options indicating how you want to perform the animations.
-                UIView.transition(with: window, duration: 0.5, options: [.transitionFlipFromLeft]) {
+
+                do {
+                    try FirebaseAuth.Auth.auth().signOut()
+
+                    if let window = UIApplication.shared.keyWindow {
+                        // A mask of options indicating how you want to perform the animations.
+                        UIView.transition(with: window, duration: 0.5, options: [.transitionFlipFromLeft]) {
                             let storyboard = UIStoryboard(name: "Main", bundle: nil)
                             let initialController = storyboard.instantiateInitialViewController()
                             window.rootViewController = initialController
                         } completion: { _ in
                         }
                     }
+                } catch (let error) {
+
+                    let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+                    alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                    self.present(alertController, animated: true, completion: nil)
+                }
             }))
 
             alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))

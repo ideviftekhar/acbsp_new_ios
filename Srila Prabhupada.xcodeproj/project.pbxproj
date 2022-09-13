@@ -39,6 +39,18 @@
 		C00E4E1828CA433A00F1A123 /* CopyrightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E1528CA433A00F1A123 /* CopyrightViewController.swift */; };
 		C00E4E1A28CA45E000F1A123 /* PlaylistLecturesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E1928CA45E000F1A123 /* PlaylistLecturesViewController.swift */; };
 		C00E4E1C28CA462000F1A123 /* BaseSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E1B28CA462000F1A123 /* BaseSearchViewController.swift */; };
+		C0D76E2528CF7C9B00F69320 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D76E2328CF7C9A00F69320 /* Environment.swift */; };
+		C0D76E2728CF7CFF00F69320 /* development.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C0D76E2628CF7CFF00F69320 /* development.xcconfig */; };
+		C0D76E2928CF7D0F00F69320 /* production.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C0D76E2828CF7D0F00F69320 /* production.xcconfig */; };
+		C0D76E2E28CF7E0700F69320 /* GoogleService-Info-development.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0D76E2D28CF7E0700F69320 /* GoogleService-Info-development.plist */; };
+		C0D76E3028CF7F2500F69320 /* GoogleService-Info-production.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0D76E2F28CF7F2500F69320 /* GoogleService-Info-production.plist */; };
+		C0EA13E428CF53FA00BE9110 /* ForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EA13E328CF53FA00BE9110 /* ForgotPasswordViewModel.swift */; };
+		C0EA13EA28CF5A9D00BE9110 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EA13E928CF5A9D00BE9110 /* UIViewController+Alert.swift */; };
+		C0EA13ED28CF685E00BE9110 /* RoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EA13EC28CF685E00BE9110 /* RoundButton.swift */; };
+		C0EA13EF28CF6D0D00BE9110 /* UIView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EA13EE28CF6D0D00BE9110 /* UIView+extension.swift */; };
+		C0FA305D28CF461900E78843 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FA305C28CF461900E78843 /* String+Extension.swift */; };
+		C0FA305F28CF4AF000E78843 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FA305E28CF4AF000E78843 /* LoginViewModel.swift */; };
+		C0FA306228CF51EB00E78843 /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FA306128CF51EB00E78843 /* SignupViewModel.swift */; };
 		EC54544C3F772D72F0E81C35 /* Pods_Srila_Prabhupada.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3320FB8F92398ED70E906DB5 /* Pods_Srila_Prabhupada.framework */; };
 /* End PBXBuildFile section */
 
@@ -79,6 +91,18 @@
 		C00E4E1528CA433A00F1A123 /* CopyrightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyrightViewController.swift; sourceTree = "<group>"; };
 		C00E4E1928CA45E000F1A123 /* PlaylistLecturesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistLecturesViewController.swift; sourceTree = "<group>"; };
 		C00E4E1B28CA462000F1A123 /* BaseSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSearchViewController.swift; sourceTree = "<group>"; };
+		C0D76E2328CF7C9A00F69320 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
+		C0D76E2628CF7CFF00F69320 /* development.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = development.xcconfig; sourceTree = "<group>"; };
+		C0D76E2828CF7D0F00F69320 /* production.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = production.xcconfig; sourceTree = "<group>"; };
+		C0D76E2D28CF7E0700F69320 /* GoogleService-Info-development.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-development.plist"; sourceTree = "<group>"; };
+		C0D76E2F28CF7F2500F69320 /* GoogleService-Info-production.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-production.plist"; sourceTree = "<group>"; };
+		C0EA13E328CF53FA00BE9110 /* ForgotPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModel.swift; sourceTree = "<group>"; };
+		C0EA13E928CF5A9D00BE9110 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
+		C0EA13EC28CF685E00BE9110 /* RoundButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundButton.swift; sourceTree = "<group>"; };
+		C0EA13EE28CF6D0D00BE9110 /* UIView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+extension.swift"; sourceTree = "<group>"; };
+		C0FA305C28CF461900E78843 /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		C0FA305E28CF4AF000E78843 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Login\U0010ViewModel.swift"; sourceTree = "<group>"; };
+		C0FA306128CF51EB00E78843 /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
 		ECD65E5E27758ADC85903139 /* Pods-Srila Prabhupada.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Srila Prabhupada.debug.xcconfig"; path = "Target Support Files/Pods-Srila Prabhupada/Pods-Srila Prabhupada.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -132,12 +156,15 @@
 		C00E4DC928CA36F100F1A123 /* Srila Prabhupada */ = {
 			isa = PBXGroup;
 			children = (
-				C00E4DE328CA393B00F1A123 /* Storyboards */,
+				C0D76E2128CF7C9A00F69320 /* Configurations */,
+				C0EA13EB28CF684800BE9110 /* Subclasses */,
+				C0FA305B28CF461900E78843 /* Extensions */,
 				C00E4DDE28CA393600F1A123 /* PreLogIn */,
 				C00E4DFA28CA39F400F1A123 /* LeftMenuControllers */,
 				C00E4DFD28CA39FE00F1A123 /* CommonControllers */,
 				C00E4DFF28CA39FE00F1A123 /* LectureControllers */,
 				C00E4E0428CA39FE00F1A123 /* PlaylistViewController.swift */,
+				C00E4DE328CA393B00F1A123 /* Storyboards */,
 				C00E4DD328CA36F200F1A123 /* Assets.xcassets */,
 				C00E4DCA28CA36F100F1A123 /* AppDelegate.swift */,
 				C00E4DCC28CA36F100F1A123 /* SceneDelegate.swift */,
@@ -150,6 +177,7 @@
 		C00E4DDE28CA393600F1A123 /* PreLogIn */ = {
 			isa = PBXGroup;
 			children = (
+				C0FA306028CF4AF500E78843 /* ViewModel */,
 				C00E4DDF28CA393600F1A123 /* LogInViewController.swift */,
 				C00E4DE028CA393600F1A123 /* CreateAccountViewController.swift */,
 				C00E4E1128CA3A1700F1A123 /* ForgotPasswordViewController.swift */,
@@ -209,6 +237,46 @@
 			path = LectureControllers;
 			sourceTree = "<group>";
 		};
+		C0D76E2128CF7C9A00F69320 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				C0D76E2328CF7C9A00F69320 /* Environment.swift */,
+				C0D76E2628CF7CFF00F69320 /* development.xcconfig */,
+				C0D76E2828CF7D0F00F69320 /* production.xcconfig */,
+				C0D76E2D28CF7E0700F69320 /* GoogleService-Info-development.plist */,
+				C0D76E2F28CF7F2500F69320 /* GoogleService-Info-production.plist */,
+			);
+			path = Configurations;
+			sourceTree = "<group>";
+		};
+		C0EA13EB28CF684800BE9110 /* Subclasses */ = {
+			isa = PBXGroup;
+			children = (
+				C0EA13EC28CF685E00BE9110 /* RoundButton.swift */,
+			);
+			path = Subclasses;
+			sourceTree = "<group>";
+		};
+		C0FA305B28CF461900E78843 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				C0FA305C28CF461900E78843 /* String+Extension.swift */,
+				C0EA13E928CF5A9D00BE9110 /* UIViewController+Alert.swift */,
+				C0EA13EE28CF6D0D00BE9110 /* UIView+extension.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		C0FA306028CF4AF500E78843 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C0FA305E28CF4AF000E78843 /* LoginViewModel.swift */,
+				C0FA306128CF51EB00E78843 /* SignupViewModel.swift */,
+				C0EA13E328CF53FA00BE9110 /* ForgotPasswordViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -221,6 +289,7 @@
 				C00E4DC428CA36F100F1A123 /* Frameworks */,
 				C00E4DC528CA36F100F1A123 /* Resources */,
 				AD18E0F8ED7A0605A0F37E78 /* [CP] Embed Pods Frameworks */,
+				C0D76E2A28CF7DC400F69320 /* Copy Google Plist */,
 			);
 			buildRules = (
 			);
@@ -271,16 +340,20 @@
 			files = (
 				C00E4DF228CA39CB00F1A123 /* Home.storyboard in Resources */,
 				C00E4DF528CA39CB00F1A123 /* Downloads.storyboard in Resources */,
+				C0D76E2E28CF7E0700F69320 /* GoogleService-Info-development.plist in Resources */,
 				C00E4DF328CA39CB00F1A123 /* Stats.storyboard in Resources */,
 				C00E4DF028CA39CB00F1A123 /* Playlists.storyboard in Resources */,
 				C00E4DD728CA36F200F1A123 /* LaunchScreen.storyboard in Resources */,
 				C00E4DD428CA36F200F1A123 /* Assets.xcassets in Resources */,
+				C0D76E2928CF7D0F00F69320 /* production.xcconfig in Resources */,
 				C00E4DF428CA39CB00F1A123 /* History.storyboard in Resources */,
 				C00E4DF128CA39CB00F1A123 /* SideMenu.storyboard in Resources */,
 				C00E4DEF28CA39CB00F1A123 /* TopLectures.storyboard in Resources */,
 				C00E4DD228CA36F100F1A123 /* Main.storyboard in Resources */,
 				C00E4DF628CA39CB00F1A123 /* Favorites.storyboard in Resources */,
 				C00E4DF828CA39CB00F1A123 /* PopularLecture.storyboard in Resources */,
+				C0D76E2728CF7CFF00F69320 /* development.xcconfig in Resources */,
+				C0D76E3028CF7F2500F69320 /* GoogleService-Info-production.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,6 +399,24 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Srila Prabhupada/Pods-Srila Prabhupada-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		C0D76E2A28CF7DC400F69320 /* Copy Google Plist */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Google Plist";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "PATH_TO_GOOGLE_PLISTS=\"${PROJECT_DIR}/Srila Prabhupada/Configurations\"\n\ncase \"${CONFIGURATION}\" in\n\n   \"Debug\" )\n        cp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-development.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n\n   \"Release\" )\n        cp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-production.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n\n    *)\n        ;;\nesac\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -333,19 +424,27 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C0EA13E428CF53FA00BE9110 /* ForgotPasswordViewModel.swift in Sources */,
 				C00E4DE228CA393600F1A123 /* CreateAccountViewController.swift in Sources */,
+				C0FA305D28CF461900E78843 /* String+Extension.swift in Sources */,
 				C00E4DCB28CA36F100F1A123 /* AppDelegate.swift in Sources */,
 				C00E4E1628CA433A00F1A123 /* StatsViewController.swift in Sources */,
+				C0EA13EA28CF5A9D00BE9110 /* UIViewController+Alert.swift in Sources */,
 				C00E4E1A28CA45E000F1A123 /* PlaylistLecturesViewController.swift in Sources */,
 				C00E4E0A28CA39FE00F1A123 /* FavoritesViewController.swift in Sources */,
 				C00E4DCD28CA36F100F1A123 /* SceneDelegate.swift in Sources */,
 				C00E4E0F28CA39FE00F1A123 /* HistoryViewController.swift in Sources */,
 				C00E4E0B28CA39FE00F1A123 /* LectureBaseViewController.swift in Sources */,
+				C0FA306228CF51EB00E78843 /* SignupViewModel.swift in Sources */,
+				C0EA13EF28CF6D0D00BE9110 /* UIView+extension.swift in Sources */,
+				C0FA305F28CF4AF000E78843 /* LoginViewModel.swift in Sources */,
 				C00E4E0C28CA39FE00F1A123 /* HomeViewController.swift in Sources */,
 				C00E4E0928CA39FE00F1A123 /* DownloadViewController.swift in Sources */,
+				C0D76E2528CF7C9B00F69320 /* Environment.swift in Sources */,
 				C00E4E1728CA433A00F1A123 /* AboutViewController.swift in Sources */,
 				C00E4E1828CA433A00F1A123 /* CopyrightViewController.swift in Sources */,
 				C00E4E0E28CA39FE00F1A123 /* PopularLectureViewController.swift in Sources */,
+				C0EA13ED28CF685E00BE9110 /* RoundButton.swift in Sources */,
 				C00E4E0D28CA39FE00F1A123 /* PlaylistViewController.swift in Sources */,
 				C00E4E0828CA39FE00F1A123 /* TabBarController.swift in Sources */,
 				C00E4E1228CA3A1700F1A123 /* ForgotPasswordViewController.swift in Sources */,

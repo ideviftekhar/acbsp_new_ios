@@ -32,7 +32,6 @@ extension BaseSearchViewController: SideMenuControllerDelegate {
         }
 
         present(sideMenuNavigationController, animated: true, completion: nil)
-
     }
 
     func sideMenuController(_ controller: SideMenuTableViewController, didSelected menu: SideMenuTableViewController.Menu) {
