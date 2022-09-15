@@ -12,6 +12,6 @@ class PopularLectureViewController: BaseLectureViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.lectures = ["Popular Lecture 1", "Popular Lecture 2", "Popular Lecture 3", "Popular Lecture 4", "Popular Lecture 5"]
+//        self.lectures = ["Popular Lecture 1", "Popular Lecture 2", "Popular Lecture 3", "Popular Lecture 4", "Popular Lecture 5"]
     }
 }

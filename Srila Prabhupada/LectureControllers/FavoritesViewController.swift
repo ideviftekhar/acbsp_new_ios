@@ -12,6 +12,6 @@ class FavoritesViewController: BaseLectureViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.lectures = ["Favorites 1", "Favorites 2", "Favorites 3", "Favorites 4", "Favorites 5"]
+//        self.lectures = ["Favorites 1", "Favorites 2", "Favorites 3", "Favorites 4", "Favorites 5"]
     }
 }

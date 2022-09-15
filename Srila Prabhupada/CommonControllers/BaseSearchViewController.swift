@@ -8,21 +8,32 @@
 import UIKit
 import SideMenu
 import SafariServices
+import FirebaseFirestore
 
 class BaseSearchViewController: UIViewController {
+
+    let firestore: Firestore = {
+        let firestore = Firestore.firestore()
+        let settings = FirestoreSettings()
+        settings.isPersistenceEnabled = true
+        firestore.settings = settings
+
+        return firestore
+    }()
 
     @IBOutlet weak var hamburgerBarButton: UIBarButtonItem!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+
     }
 }
 
 extension BaseSearchViewController: SideMenuControllerDelegate {
 
     @IBAction func humburgerBarButtonTapped(_ sender : UIBarButtonItem){
-        let storyboard = UIStoryboard(name: "SideMenu", bundle: nil)
-        let sideMenuNavigationController = storyboard.instantiateViewController(withIdentifier: "SideMenuViewController") as! SideMenuNavigationController
+        let sideMenuNavigationController = UIStoryboard.sideMenu.instantiate(SideMenuNavigationController.self)
         sideMenuNavigationController.settings.presentationStyle = .menuSlideIn
         sideMenuNavigationController .settings.presentationStyle.presentingEndAlpha = 0.7
         sideMenuNavigationController.settings.presentationStyle.onTopShadowOpacity = 0.3
@@ -40,21 +51,17 @@ extension BaseSearchViewController: SideMenuControllerDelegate {
             self.tabBarController?.selectedIndex = 0
             controller.dismiss(animated: true, completion: nil)
         case .history:
-            let storyboard = UIStoryboard(name: "History", bundle: nil)
-            let history = storyboard.instantiateViewController(withIdentifier: "HistoryViewController") as! HistoryViewController
-            controller.navigationController?.pushViewController(history, animated: true)
+            let historyController = UIStoryboard.history.instantiate(HistoryViewController.self)
+            controller.navigationController?.pushViewController(historyController, animated: true)
         case .stats:
-            let storyboard = UIStoryboard(name: "Stats", bundle: nil)
-            let stats = storyboard.instantiateViewController(withIdentifier: "StatsViewController") as! StatsViewController
-            controller.navigationController?.pushViewController(stats, animated: true)
+            let statsController = UIStoryboard.stats.instantiate(StatsViewController.self)
+            controller.navigationController?.pushViewController(statsController, animated: true)
         case .popularLectures:
-            let storyboard = UIStoryboard(name: "PopularLecture", bundle: nil)
-            let popularLecture = storyboard.instantiateViewController(withIdentifier: "PopularLectureViewController") as! PopularLectureViewController
-            controller.navigationController?.pushViewController(popularLecture, animated: true)
+            let popularLectureController = UIStoryboard.popularLecture.instantiate(PopularLectureViewController.self)
+            controller.navigationController?.pushViewController(popularLectureController, animated: true)
         case .about:
-            let storyboard = UIStoryboard(name: "SideMenu", bundle: nil)
-            let about = storyboard.instantiateViewController(withIdentifier: "AboutViewController") as! AboutViewController
-            controller.present(about, animated: true, completion: nil)
+            let aboutController = UIStoryboard.sideMenu.instantiate(AboutViewController.self)
+            controller.present(aboutController, animated: true, completion: nil)
         case .share:
             let appLink = [URL(string: "https://play.google.com/store/apps/details?id=com.iskcon.prabhupada")!]
             let shareController = UIActivityViewController(activityItems: appLink, applicationActivities: nil)
@@ -67,9 +74,8 @@ extension BaseSearchViewController: SideMenuControllerDelegate {
                 controller.present(safariController, animated: true, completion: nil)
             }
         case .copyright:
-            let storyboard = UIStoryboard(name: "SideMenu", bundle: nil)
-            let copyright = storyboard.instantiateViewController(withIdentifier: "CopyrightViewController") as! CopyrightViewController
-            controller.present(copyright, animated: true, completion: nil)
+            let copyrightController = UIStoryboard.sideMenu.instantiate(CopyrightViewController.self)
+            controller.present(copyrightController, animated: true, completion: nil)
         case .signOut:
             break
         }

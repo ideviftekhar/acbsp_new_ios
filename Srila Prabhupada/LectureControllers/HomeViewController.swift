@@ -11,6 +11,6 @@ class HomeViewController: BaseLectureViewController {
    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.lectures = ["Home Lecture 1", "Home Lecture 2", "Home Lecture 3", "Home Lecture 4", "Home Lecture 5"]
+//        self.lectures = ["Home Lecture 1", "Home Lecture 2", "Home Lecture 3", "Home Lecture 4", "Home Lecture 5"]
     }
 }

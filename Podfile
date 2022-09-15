@@ -16,5 +16,10 @@ target 'Srila Prabhupada' do
 
   pod 'SkyFloatingLabelTextField'
   pod 'IQKeyboardManagerSwift'
+  pod 'IQListKit'
+
+  pod 'BEMCheckBox'
+
+  pod "MBCircularProgressBar"
 
 end

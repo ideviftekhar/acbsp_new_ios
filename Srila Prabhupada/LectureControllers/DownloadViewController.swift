@@ -12,6 +12,6 @@ class DownloadViewController: BaseLectureViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.lectures = ["Download 1", "Download 2", "Download 3", "Download 4", "Download 5"]
+//        self.lectures = ["Download 1", "Download 2", "Download 3", "Download 4", "Download 5"]
     }
 }

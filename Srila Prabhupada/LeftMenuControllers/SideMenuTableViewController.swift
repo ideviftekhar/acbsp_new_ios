@@ -69,8 +69,7 @@ class SideMenuTableViewController: UITableViewController{
                     if let window = UIApplication.shared.keyWindow {
                         // A mask of options indicating how you want to perform the animations.
                         UIView.transition(with: window, duration: 0.5, options: [.transitionFlipFromLeft]) {
-                            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                            let initialController = storyboard.instantiateInitialViewController()
+                            let initialController = UIStoryboard.main.instantiateInitialViewController()
                             window.rootViewController = initialController
                         } completion: { _ in
                         }
