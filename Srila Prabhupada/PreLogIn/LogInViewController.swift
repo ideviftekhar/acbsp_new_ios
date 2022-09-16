@@ -44,7 +44,7 @@ class LogInViewController: UIViewController {
 
                 switch result {
                 case .success:
-                    let tabBarController = UIStoryboard.main.instantiate(UITabBarController.self)
+                    let tabBarController = UIStoryboard.main.instantiate(TabBarController.self)
                     self.present(tabBarController, animated: true, completion: nil)
                 case .failure(let error):
                     self.showAlert(title: "Error", message: error.localizedDescription)
@@ -67,7 +67,7 @@ class LogInViewController: UIViewController {
 
             switch result {
             case .success:
-                let tabBarController = UIStoryboard.main.instantiate(UITabBarController.self)
+                let tabBarController = UIStoryboard.main.instantiate(TabBarController.self)
                 self.present(tabBarController, animated: true, completion: nil)
             case .failure(let error):
                 self.showAlert(title: "Error", message: error.localizedDescription)

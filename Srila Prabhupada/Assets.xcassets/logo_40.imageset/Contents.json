@@ -1,15 +1,16 @@
 {
   "images" : [
     {
-      "filename" : "9004787_star_favorite_award_like_icon.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "Icon-Spotlight-40@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
+      "filename" : "Icon-Spotlight-40@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

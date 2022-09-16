@@ -1,5 +1,5 @@
 
-platform :ios, '13.0'
+platform :ios, '14.0'
 
 target 'Srila Prabhupada' do
 	
@@ -19,7 +19,9 @@ target 'Srila Prabhupada' do
   pod 'IQListKit'
 
   pod 'BEMCheckBox'
+  pod 'AlamofireImage'
 
   pod "MBCircularProgressBar"
+  pod 'LoadingPlaceholderView'
 
 end

@@ -23,7 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             user.getIDToken { [self] response, error in
                 if let error = error {
 
-                    let loginNavigationController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "LoginNavigationController") as! UINavigationController
+                    let loginNavigationController = UIStoryboard.main.instantiateViewController(withIdentifier: "LoginNavigationController") as! UINavigationController
 
                     window = UIWindow(windowScene: windowScene)
                     window?.rootViewController = loginNavigationController
@@ -31,7 +31,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 }
             }
 
-            let tabBarController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "UITabBarController") as! UITabBarController
+            let tabBarController = UIStoryboard.main.instantiate(TabBarController.self)
 
             window = UIWindow(windowScene: windowScene)
             window?.rootViewController = tabBarController

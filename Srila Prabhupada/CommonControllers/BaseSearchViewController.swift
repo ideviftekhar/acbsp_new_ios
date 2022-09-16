@@ -22,11 +22,50 @@ class BaseSearchViewController: UIViewController {
     }()
 
     @IBOutlet weak var hamburgerBarButton: UIBarButtonItem!
+    let searchController = UISearchController(searchResultsController: nil)
+    private var lastSearchText: String = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search..."
+        searchController.searchBar.searchTextField.leftView?.tintColor = UIColor.systemGray4
+        searchController.searchBar.searchTextField.rightView?.tintColor = UIColor.systemGray4
+        searchController.searchBar.barStyle = .black
+        searchController.searchBar.searchTextField.defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+        searchController.searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: "Search...", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray4])
+        searchController.delegate = self
+        searchController.searchResultsUpdater = self
+        navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = true
+    }
 
+    @objc func refreshAsynchronous() {
+
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
+}
+
+extension BaseSearchViewController: UISearchControllerDelegate, UISearchResultsUpdating {
+
+    func willPresentSearchController(_ searchController: UISearchController) {
+        lastSearchText = searchController.searchBar.text ?? ""
+    }
+
+    func willDismissSearchController(_ searchController: UISearchController) {
+
+    }
+
+    func updateSearchResults(for searchController: UISearchController) {
+        Self.cancelPreviousPerformRequests(withTarget: self, selector: #selector(refreshAsynchronous), object: nil)
+        if let text = searchController.searchBar.text, !text.elementsEqual(lastSearchText) {
+            self.perform(#selector(refreshAsynchronous), with: nil, afterDelay: 1)
+            lastSearchText = text
+        }
     }
 }
 

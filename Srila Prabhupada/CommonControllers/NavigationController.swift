@@ -1,13 +1,14 @@
 //
-//  HomeViewController.swift
-//  SrilaPrabhupada
+//  NavigationController.swift
+//  Srila Prabhupada
 //
-//  Created by IE06 on 19/08/22.
+//  Created by IE on 9/16/22.
 //
 
+import Foundation
 import UIKit
 
-class TabBarController: UITabBarController {
+class NavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }

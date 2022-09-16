@@ -20,9 +20,29 @@
 				<string>com.iskcon.prabhupada</string>
 			</array>
 		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.897989727803-bubgiq4689affhgike3lmoc8ejdekda4</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.bvksdigital.acbsp</string>
+			</array>
+		</dict>
 	</array>
 	<key>GOOGLE_SERVICE_FILE_NAME</key>
 	<string>$(GOOGLE_SERVICE_FILE_NAME)</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
+	<key>LECTURES_COLLECTION_NAME</key>
+	<string>$(LECTURES_COLLECTION_NAME)</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -42,5 +62,11 @@
 			</array>
 		</dict>
 	</dict>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>audio</string>
+	</array>
+	<key>UIViewControllerBasedStatusBarAppearance</key>
+	<true/>
 </dict>
 </plist>

@@ -51,11 +51,13 @@
 		C00E4E1828CA433A00F1A123 /* CopyrightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E1528CA433A00F1A123 /* CopyrightViewController.swift */; };
 		C00E4E1A28CA45E000F1A123 /* PlaylistLecturesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E1928CA45E000F1A123 /* PlaylistLecturesViewController.swift */; };
 		C00E4E1C28CA462000F1A123 /* BaseSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E1B28CA462000F1A123 /* BaseSearchViewController.swift */; };
+		C0118A7928D34AA800F6002D /* GoogleService-Info-development-client.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0118A7728D34AA700F6002D /* GoogleService-Info-development-client.plist */; };
+		C0118A7A28D34AA800F6002D /* GoogleService-Info-development-internal.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0118A7828D34AA700F6002D /* GoogleService-Info-development-internal.plist */; };
+		C0118A7C28D34AB400F6002D /* GoogleService-Info-production-client.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0118A7B28D34AB400F6002D /* GoogleService-Info-production-client.plist */; };
+		C0CAF25D28D45B8C00DA9878 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CAF25C28D45B8C00DA9878 /* NavigationController.swift */; };
 		C0D76E2528CF7C9B00F69320 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D76E2328CF7C9A00F69320 /* Environment.swift */; };
-		C0D76E2728CF7CFF00F69320 /* development.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C0D76E2628CF7CFF00F69320 /* development.xcconfig */; };
-		C0D76E2928CF7D0F00F69320 /* production.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C0D76E2828CF7D0F00F69320 /* production.xcconfig */; };
-		C0D76E2E28CF7E0700F69320 /* GoogleService-Info-development.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0D76E2D28CF7E0700F69320 /* GoogleService-Info-development.plist */; };
-		C0D76E3028CF7F2500F69320 /* GoogleService-Info-production.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0D76E2F28CF7F2500F69320 /* GoogleService-Info-production.plist */; };
+		C0D76E2728CF7CFF00F69320 /* development-internal.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C0D76E2628CF7CFF00F69320 /* development-internal.xcconfig */; };
+		C0D76E2928CF7D0F00F69320 /* production-client.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C0D76E2828CF7D0F00F69320 /* production-client.xcconfig */; };
 		C0EA13E428CF53FA00BE9110 /* ForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EA13E328CF53FA00BE9110 /* ForgotPasswordViewModel.swift */; };
 		C0EA13EA28CF5A9D00BE9110 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EA13E928CF5A9D00BE9110 /* UIViewController+Alert.swift */; };
 		C0EA13ED28CF685E00BE9110 /* RoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EA13EC28CF685E00BE9110 /* RoundButton.swift */; };
@@ -69,6 +71,7 @@
 /* Begin PBXFileReference section */
 		277C5557A9865640DB48AF50 /* Pods-Srila Prabhupada.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Srila Prabhupada.release.xcconfig"; path = "Target Support Files/Pods-Srila Prabhupada/Pods-Srila Prabhupada.release.xcconfig"; sourceTree = "<group>"; };
 		3320FB8F92398ED70E906DB5 /* Pods_Srila_Prabhupada.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Srila_Prabhupada.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A81878F32167781392E62B86 /* Pods-Srila Prabhupada.release-client.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Srila Prabhupada.release-client.xcconfig"; path = "Target Support Files/Pods-Srila Prabhupada/Pods-Srila Prabhupada.release-client.xcconfig"; sourceTree = "<group>"; };
 		C00AB20328D1E6DD00A62A2F /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		C00AB20528D1F19500A62A2F /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		C00AB20828D1F52D00A62A2F /* FilterDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterDetailTableViewCell.swift; sourceTree = "<group>"; };
@@ -115,11 +118,14 @@
 		C00E4E1528CA433A00F1A123 /* CopyrightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyrightViewController.swift; sourceTree = "<group>"; };
 		C00E4E1928CA45E000F1A123 /* PlaylistLecturesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistLecturesViewController.swift; sourceTree = "<group>"; };
 		C00E4E1B28CA462000F1A123 /* BaseSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSearchViewController.swift; sourceTree = "<group>"; };
+		C0118A7428D349F400F6002D /* development-client.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "development-client.xcconfig"; sourceTree = "<group>"; };
+		C0118A7728D34AA700F6002D /* GoogleService-Info-development-client.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-development-client.plist"; sourceTree = "<group>"; };
+		C0118A7828D34AA700F6002D /* GoogleService-Info-development-internal.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-development-internal.plist"; sourceTree = "<group>"; };
+		C0118A7B28D34AB400F6002D /* GoogleService-Info-production-client.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-production-client.plist"; sourceTree = "<group>"; };
+		C0CAF25C28D45B8C00DA9878 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		C0D76E2328CF7C9A00F69320 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
-		C0D76E2628CF7CFF00F69320 /* development.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = development.xcconfig; sourceTree = "<group>"; };
-		C0D76E2828CF7D0F00F69320 /* production.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = production.xcconfig; sourceTree = "<group>"; };
-		C0D76E2D28CF7E0700F69320 /* GoogleService-Info-development.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-development.plist"; sourceTree = "<group>"; };
-		C0D76E2F28CF7F2500F69320 /* GoogleService-Info-production.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-production.plist"; sourceTree = "<group>"; };
+		C0D76E2628CF7CFF00F69320 /* development-internal.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "development-internal.xcconfig"; sourceTree = "<group>"; };
+		C0D76E2828CF7D0F00F69320 /* production-client.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "production-client.xcconfig"; sourceTree = "<group>"; };
 		C0EA13E328CF53FA00BE9110 /* ForgotPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModel.swift; sourceTree = "<group>"; };
 		C0EA13E928CF5A9D00BE9110 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		C0EA13EC28CF685E00BE9110 /* RoundButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundButton.swift; sourceTree = "<group>"; };
@@ -127,7 +133,9 @@
 		C0FA305C28CF461900E78843 /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		C0FA305E28CF4AF000E78843 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Login\U0010ViewModel.swift"; sourceTree = "<group>"; };
 		C0FA306128CF51EB00E78843 /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
+		D7378F13A7623FB5847701E2 /* Pods-Srila Prabhupada.debug-client.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Srila Prabhupada.debug-client.xcconfig"; path = "Target Support Files/Pods-Srila Prabhupada/Pods-Srila Prabhupada.debug-client.xcconfig"; sourceTree = "<group>"; };
 		ECD65E5E27758ADC85903139 /* Pods-Srila Prabhupada.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Srila Prabhupada.debug.xcconfig"; path = "Target Support Files/Pods-Srila Prabhupada/Pods-Srila Prabhupada.debug.xcconfig"; sourceTree = "<group>"; };
+		EEEFDC184A32F554530F4330 /* Pods-Srila Prabhupada.debug-internal.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Srila Prabhupada.debug-internal.xcconfig"; path = "Target Support Files/Pods-Srila Prabhupada/Pods-Srila Prabhupada.debug-internal.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +163,9 @@
 			children = (
 				ECD65E5E27758ADC85903139 /* Pods-Srila Prabhupada.debug.xcconfig */,
 				277C5557A9865640DB48AF50 /* Pods-Srila Prabhupada.release.xcconfig */,
+				EEEFDC184A32F554530F4330 /* Pods-Srila Prabhupada.debug-internal.xcconfig */,
+				D7378F13A7623FB5847701E2 /* Pods-Srila Prabhupada.debug-client.xcconfig */,
+				A81878F32167781392E62B86 /* Pods-Srila Prabhupada.release-client.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -283,6 +294,7 @@
 			children = (
 				C00AB21628D207AA00A62A2F /* Cell */,
 				C00E4DFE28CA39FE00F1A123 /* TabBarController.swift */,
+				C0CAF25C28D45B8C00DA9878 /* NavigationController.swift */,
 				C00E4E1B28CA462000F1A123 /* BaseSearchViewController.swift */,
 				C00E4E0228CA39FE00F1A123 /* LectureBaseViewController.swift */,
 			);
@@ -308,10 +320,12 @@
 			isa = PBXGroup;
 			children = (
 				C0D76E2328CF7C9A00F69320 /* Environment.swift */,
-				C0D76E2628CF7CFF00F69320 /* development.xcconfig */,
-				C0D76E2828CF7D0F00F69320 /* production.xcconfig */,
-				C0D76E2D28CF7E0700F69320 /* GoogleService-Info-development.plist */,
-				C0D76E2F28CF7F2500F69320 /* GoogleService-Info-production.plist */,
+				C0D76E2628CF7CFF00F69320 /* development-internal.xcconfig */,
+				C0118A7428D349F400F6002D /* development-client.xcconfig */,
+				C0D76E2828CF7D0F00F69320 /* production-client.xcconfig */,
+				C0118A7828D34AA700F6002D /* GoogleService-Info-development-internal.plist */,
+				C0118A7728D34AA700F6002D /* GoogleService-Info-development-client.plist */,
+				C0118A7B28D34AB400F6002D /* GoogleService-Info-production-client.plist */,
 			);
 			path = Configurations;
 			sourceTree = "<group>";
@@ -409,21 +423,22 @@
 				C00AB21C28D2080800A62A2F /* LectureCell.xib in Resources */,
 				C00E4DF228CA39CB00F1A123 /* Home.storyboard in Resources */,
 				C00E4DF528CA39CB00F1A123 /* Downloads.storyboard in Resources */,
-				C0D76E2E28CF7E0700F69320 /* GoogleService-Info-development.plist in Resources */,
 				C00E4DF328CA39CB00F1A123 /* Stats.storyboard in Resources */,
+				C0118A7928D34AA800F6002D /* GoogleService-Info-development-client.plist in Resources */,
 				C00E4DF028CA39CB00F1A123 /* Playlists.storyboard in Resources */,
 				C00E4DD728CA36F200F1A123 /* LaunchScreen.storyboard in Resources */,
 				C00E4DD428CA36F200F1A123 /* Assets.xcassets in Resources */,
-				C0D76E2928CF7D0F00F69320 /* production.xcconfig in Resources */,
+				C0D76E2928CF7D0F00F69320 /* production-client.xcconfig in Resources */,
 				C00E4DF428CA39CB00F1A123 /* History.storyboard in Resources */,
 				C00E4DF128CA39CB00F1A123 /* SideMenu.storyboard in Resources */,
+				C0118A7C28D34AB400F6002D /* GoogleService-Info-production-client.plist in Resources */,
 				C00E4DEF28CA39CB00F1A123 /* TopLectures.storyboard in Resources */,
 				C00AB20D28D1F56C00A62A2F /* Common.storyboard in Resources */,
 				C00E4DD228CA36F100F1A123 /* Main.storyboard in Resources */,
+				C0118A7A28D34AA800F6002D /* GoogleService-Info-development-internal.plist in Resources */,
 				C00E4DF628CA39CB00F1A123 /* Favorites.storyboard in Resources */,
 				C00E4DF828CA39CB00F1A123 /* PopularLecture.storyboard in Resources */,
-				C0D76E2728CF7CFF00F69320 /* development.xcconfig in Resources */,
-				C0D76E3028CF7F2500F69320 /* GoogleService-Info-production.plist in Resources */,
+				C0D76E2728CF7CFF00F69320 /* development-internal.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -485,7 +500,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "PATH_TO_GOOGLE_PLISTS=\"${PROJECT_DIR}/Srila Prabhupada/Configurations\"\n\ncase \"${CONFIGURATION}\" in\n\n   \"Debug\" )\n        cp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-development.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n\n   \"Release\" )\n        cp -r \"$PATH_TO_GOOGLE_PLISTS/GoogleService-Info-production.plist\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\" ;;\n\n    *)\n        ;;\nesac\n";
+			shellScript = "CURRENT_PATH_TO_GOOGLE_PLIST=\"${PROJECT_DIR}/Srila Prabhupada/Configurations/${GOOGLE_SERVICE_FILE_NAME}.plist\";\nEXPECTED_PATH_TO_GOOGLE_PLIST=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\";\n\ncp -r \"$CURRENT_PATH_TO_GOOGLE_PLIST\" \"$EXPECTED_PATH_TO_GOOGLE_PLIST\";\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -528,6 +543,7 @@
 				C00E4E0D28CA39FE00F1A123 /* PlaylistViewController.swift in Sources */,
 				C00E4E0828CA39FE00F1A123 /* TabBarController.swift in Sources */,
 				C00E4E1228CA3A1700F1A123 /* ForgotPasswordViewController.swift in Sources */,
+				C0CAF25D28D45B8C00DA9878 /* NavigationController.swift in Sources */,
 				C00E4E1028CA39FE00F1A123 /* TopLectureViewController.swift in Sources */,
 				C00E4E1C28CA462000F1A123 /* BaseSearchViewController.swift in Sources */,
 				C00E4DE128CA393600F1A123 /* LogInViewController.swift in Sources */,
@@ -557,8 +573,9 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		C00E4DD928CA36F200F1A123 /* Debug */ = {
+		C00E4DD928CA36F200F1A123 /* Debug-Internal */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C0D76E2628CF7CFF00F69320 /* development-internal.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -616,10 +633,11 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
-			name = Debug;
+			name = "Debug-Internal";
 		};
-		C00E4DDA28CA36F200F1A123 /* Release */ = {
+		C00E4DDA28CA36F200F1A123 /* Release-Client */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C0D76E2828CF7D0F00F69320 /* production-client.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -671,16 +689,18 @@
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};
-			name = Release;
+			name = "Release-Client";
 		};
-		C00E4DDC28CA36F200F1A123 /* Debug */ = {
+		C00E4DDC28CA36F200F1A123 /* Debug-Internal */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = ECD65E5E27758ADC85903139 /* Pods-Srila Prabhupada.debug.xcconfig */;
+			baseConfigurationReference = EEEFDC184A32F554530F4330 /* Pods-Srila Prabhupada.debug-internal.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -690,27 +710,31 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.iskcon.prabhupada;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bvksdigital.acbsp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = sp_development;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
-			name = Debug;
+			name = "Debug-Internal";
 		};
-		C00E4DDD28CA36F200F1A123 /* Release */ = {
+		C00E4DDD28CA36F200F1A123 /* Release-Client */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 277C5557A9865640DB48AF50 /* Pods-Srila Prabhupada.release.xcconfig */;
+			baseConfigurationReference = A81878F32167781392E62B86 /* Pods-Srila Prabhupada.release-client.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/Info.plist";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -720,18 +744,116 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.iskcon.prabhupada;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bvksdigital.acbsp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = sp_distribution;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
-			name = Release;
+			name = "Release-Client";
+		};
+		C0118A7528D34A0E00F6002D /* Debug-Client */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C0118A7428D349F400F6002D /* development-client.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++17";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.2;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = "Debug-Client";
+		};
+		C0118A7628D34A0E00F6002D /* Debug-Client */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D7378F13A7623FB5847701E2 /* Pods-Srila Prabhupada.debug-client.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = S92372RU6B;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Srila Prabhupada/Info.plist";
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.bvksdigital.acbsp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = sp_development;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = "Debug-Client";
 		};
 /* End XCBuildConfiguration section */
 
@@ -739,20 +861,22 @@
 		C00E4DC228CA36F100F1A123 /* Build configuration list for PBXProject "Srila Prabhupada" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C00E4DD928CA36F200F1A123 /* Debug */,
-				C00E4DDA28CA36F200F1A123 /* Release */,
+				C00E4DD928CA36F200F1A123 /* Debug-Internal */,
+				C0118A7528D34A0E00F6002D /* Debug-Client */,
+				C00E4DDA28CA36F200F1A123 /* Release-Client */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = "Release-Client";
 		};
 		C00E4DDB28CA36F200F1A123 /* Build configuration list for PBXNativeTarget "Srila Prabhupada" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				C00E4DDC28CA36F200F1A123 /* Debug */,
-				C00E4DDD28CA36F200F1A123 /* Release */,
+				C00E4DDC28CA36F200F1A123 /* Debug-Internal */,
+				C0118A7628D34A0E00F6002D /* Debug-Client */,
+				C00E4DDD28CA36F200F1A123 /* Release-Client */,
 			);
 			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
+			defaultConfigurationName = "Release-Client";
 		};
 /* End XCConfigurationList section */
 	};

@@ -35,7 +35,7 @@ struct Lecture: Hashable, Equatable {
     var resources: [String: Any]
     var search: [String: Any]
     var tags: [String]
-    var thumbnail: String
+    var thumbnail: URL?
     var title: [String]
 
     init(_ attributes: [String: Any]) {
@@ -57,7 +57,14 @@ struct Lecture: Hashable, Equatable {
         self.resources = attributes["resources"] as? [String: Any] ?? [:]
         self.search = attributes["resources"] as? [String: Any] ?? [:]
         self.tags = attributes["tags"] as? [String] ?? []
-        self.thumbnail = attributes["thumbnail"] as? String ?? ""
+        let thumbnailString = attributes["thumbnail"] as? String ?? ""
+
+        if !thumbnailString.isEmpty {
+            thumbnail = URL(string: thumbnailString)
+        } else {
+            thumbnail = nil
+        }
+
         self.title = attributes["title"] as? [String] ?? []
     }
 
