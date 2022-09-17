@@ -612,6 +612,10 @@ PODS:
   - BoringSSL-GRPC/Implementation (0.0.24):
     - BoringSSL-GRPC/Interface (= 0.0.24)
   - BoringSSL-GRPC/Interface (0.0.24)
+  - Charts (4.0.3):
+    - Charts/Core (= 4.0.3)
+  - Charts/Core (4.0.3):
+    - SwiftAlgorithms (~> 1.0)
   - DiffableDataSources (0.4.0):
     - DifferenceKit/AppKitExtension (~> 1.1)
     - DifferenceKit/UIKitExtension (~> 1.1)
@@ -807,11 +811,13 @@ PODS:
   - PromisesObjC (2.1.1)
   - SideMenu (6.5.0)
   - SkyFloatingLabelTextField (4.0.0)
+  - SwiftAlgorithms (1.0.0)
   - SwiftTryCatch (0.0.1)
 
 DEPENDENCIES:
   - AlamofireImage
   - BEMCheckBox
+  - Charts
   - Firebase/Auth
   - Firebase/Core
   - Firebase/Firestore
@@ -832,6 +838,7 @@ SPEC REPOS:
     - AppAuth
     - BEMCheckBox
     - BoringSSL-GRPC
+    - Charts
     - DiffableDataSources
     - DifferenceKit
     - Firebase
@@ -861,6 +868,7 @@ SPEC REPOS:
     - PromisesObjC
     - SideMenu
     - SkyFloatingLabelTextField
+    - SwiftAlgorithms
     - SwiftTryCatch
 
 SPEC CHECKSUMS:
@@ -870,6 +878,7 @@ SPEC CHECKSUMS:
   AppAuth: 80317d99ac7ff2801a2f18ff86b48cd315ed465d
   BEMCheckBox: 5ba6e37ade3d3657b36caecc35c8b75c6c2b1a4e
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
+  Charts: d959d6723c8eedfdd0735dfc28cb0a71762ac4d9
   DiffableDataSources: 80396cec405c9b29e1e07b55c9be7d11b46c8741
   DifferenceKit: ab185c4d7f9cef8af3fcf593e5b387fb81e999ca
   Firebase: 800f16f07af493d98d017446a315c27af0552f41
@@ -899,8 +908,9 @@ SPEC CHECKSUMS:
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   SideMenu: f583187d21c5b1dd04c72002be544b555a2627a2
   SkyFloatingLabelTextField: 79ddc40e4ad59707fedbb48d605417aee48bb78a
+  SwiftAlgorithms: 38dda4731d19027fdeee1125f973111bf3386b53
   SwiftTryCatch: fb6d2b34abe48efd69578dac919293a44f95b481
 
-PODFILE CHECKSUM: ab597ee8f3e77cd0eedca87273d64b781d1a6ab0
+PODFILE CHECKSUM: 518d64adebc881d6609531d88c68867a06bbf88a
 
 COCOAPODS: 1.11.3

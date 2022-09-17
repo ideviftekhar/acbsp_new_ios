@@ -94,7 +94,6 @@ class BaseLectureViewController: BaseSearchViewController {
         }
 
         do {
-
             var query: Query = firestore.collection(Environment.current.lectureCollectionName)
 
             if let searchText = searchController.searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines), !searchText.isEmpty  {

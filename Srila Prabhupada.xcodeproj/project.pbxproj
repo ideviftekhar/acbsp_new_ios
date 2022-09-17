@@ -54,6 +54,7 @@
 		C0118A7928D34AA800F6002D /* GoogleService-Info-development-client.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0118A7728D34AA700F6002D /* GoogleService-Info-development-client.plist */; };
 		C0118A7A28D34AA800F6002D /* GoogleService-Info-development-internal.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0118A7828D34AA700F6002D /* GoogleService-Info-development-internal.plist */; };
 		C0118A7C28D34AB400F6002D /* GoogleService-Info-production-client.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0118A7B28D34AB400F6002D /* GoogleService-Info-production-client.plist */; };
+		C0BC771028D5AE1000C2629F /* TappableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BC770F28D5AE1000C2629F /* TappableLabel.swift */; };
 		C0CAF25D28D45B8C00DA9878 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CAF25C28D45B8C00DA9878 /* NavigationController.swift */; };
 		C0D76E2528CF7C9B00F69320 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D76E2328CF7C9A00F69320 /* Environment.swift */; };
 		C0D76E2728CF7CFF00F69320 /* development-internal.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C0D76E2628CF7CFF00F69320 /* development-internal.xcconfig */; };
@@ -122,6 +123,7 @@
 		C0118A7728D34AA700F6002D /* GoogleService-Info-development-client.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-development-client.plist"; sourceTree = "<group>"; };
 		C0118A7828D34AA700F6002D /* GoogleService-Info-development-internal.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-development-internal.plist"; sourceTree = "<group>"; };
 		C0118A7B28D34AB400F6002D /* GoogleService-Info-production-client.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-production-client.plist"; sourceTree = "<group>"; };
+		C0BC770F28D5AE1000C2629F /* TappableLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TappableLabel.swift; sourceTree = "<group>"; };
 		C0CAF25C28D45B8C00DA9878 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		C0D76E2328CF7C9A00F69320 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		C0D76E2628CF7CFF00F69320 /* development-internal.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "development-internal.xcconfig"; sourceTree = "<group>"; };
@@ -333,6 +335,7 @@
 		C0EA13EB28CF684800BE9110 /* Subclasses */ = {
 			isa = PBXGroup;
 			children = (
+				C0BC770F28D5AE1000C2629F /* TappableLabel.swift */,
 				C0EA13EC28CF685E00BE9110 /* RoundButton.swift */,
 			);
 			path = Subclasses;
@@ -547,6 +550,7 @@
 				C00E4E1028CA39FE00F1A123 /* TopLectureViewController.swift in Sources */,
 				C00E4E1C28CA462000F1A123 /* BaseSearchViewController.swift in Sources */,
 				C00E4DE128CA393600F1A123 /* LogInViewController.swift in Sources */,
+				C0BC771028D5AE1000C2629F /* TappableLabel.swift in Sources */,
 				C00E4DFC28CA39F400F1A123 /* SideMenuTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
