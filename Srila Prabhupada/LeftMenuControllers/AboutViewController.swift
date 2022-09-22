@@ -10,11 +10,11 @@ import SafariServices
 
 class AboutViewController: UIViewController {
 
-    @IBOutlet weak var aboutImage : UIImageView!
+    @IBOutlet weak var aboutImage: UIImageView!
 
-    @IBOutlet weak var aboutAttributedLabel : TappableLabel!
-    @IBOutlet weak var titleLabel : UILabel!
-    @IBOutlet weak var aboutLabel : UILabel!
+    @IBOutlet weak var aboutAttributedLabel: TappableLabel!
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var aboutLabel: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,13 +35,12 @@ class AboutViewController: UIViewController {
 extension AboutViewController: TappableLabelDelegate {
     func tappableLabel(_ label: TappableLabel, didTap string: String) {
 
-        if let aboutWebSite = URL (string: "https://bvks.com/about/srila-prabhupada/"){
-        let config = SFSafariViewController.Configuration()
-        config.entersReaderIfAvailable = true
-        let aboutWebPage = SFSafariViewController(url: aboutWebSite, configuration:config)
+        if let aboutWebSite = URL(string: Constants.aboutURLString) {
+            let config = SFSafariViewController.Configuration()
+            config.entersReaderIfAvailable = true
+            let aboutWebPage = SFSafariViewController(url: aboutWebSite, configuration: config)
 
-        present(aboutWebPage,animated: true)
-
+            present(aboutWebPage, animated: true)
         }
     }
 }

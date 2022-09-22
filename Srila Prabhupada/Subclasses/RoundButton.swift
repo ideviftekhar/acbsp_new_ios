@@ -9,7 +9,7 @@ import UIKit
 
 @IBDesignable final class RoundButton: UIButton {
 
-    var dictBackgroundColorState: [UIControl.State.RawValue : UIColor] = [:]
+    var dictBackgroundColorState: [UIControl.State.RawValue: UIColor] = [:]
 
     @IBInspectable var normalBackgroundColor: UIColor? {
         didSet {
@@ -35,7 +35,7 @@ import UIKit
         }
     }
 
-    func setBackgroundColor(color: UIColor?, state:UIControl.State)  {
+    func setBackgroundColor(color: UIColor?, state: UIControl.State) {
         self.dictBackgroundColorState[state.rawValue] = color
 
         if let color = color {
@@ -47,12 +47,10 @@ import UIKit
         }
     }
 
-    func backgroundColorForState(state:UIControl.State) -> UIColor? {
+    func backgroundColorForState(state: UIControl.State) -> UIColor? {
 
         return self.dictBackgroundColorState[state.rawValue]
     }
-
-
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -73,9 +71,9 @@ import UIKit
     }
 }
 
-extension UIImage {
+fileprivate extension UIImage {
 
-    fileprivate static func imageWithColor(color:UIColor) -> UIImage {
+    fileprivate static func imageWithColor(color: UIColor) -> UIImage {
         let rect = CGRect(x: 0, y: 0, width: 1, height: 1)
         UIGraphicsBeginImageContext(rect.size)
         let context = UIGraphicsGetCurrentContext()

@@ -23,6 +23,10 @@ class LectureCell: UITableViewCell, IQModelableCell {
     @IBOutlet private var progressView: MBCircularProgressBarView!
     @IBOutlet private var completedCheckbox: UIView!
 
+    var menu: UIMenu!
+
+    var allActions: [LectureOption: UIAction] = [:]
+
     override func awakeFromNib() {
         super.awakeFromNib()
         configureMenuButton()
@@ -57,21 +61,81 @@ class LectureCell: UITableViewCell, IQModelableCell {
             } else {
                 thumbnailImageView.image = UIImage(named: "logo_40")
             }
+
+            do {
+                var actions: [UIAction] = []
+
+                // Is Downloaded
+                if Bool.random(), let deleteDownload = allActions[.deleteFromDownloads] {
+                    actions.append(deleteDownload)
+                } else if let download = allActions[.download] {
+                    actions.append(download)
+                }
+
+                // Is Favorites
+                if Bool.random(), let removeFromFavorites = allActions[.removeFromFavorites] {
+                    actions.append(removeFromFavorites)
+                } else if let markAsFavorite = allActions[.markAsFavorite] {
+                    actions.append(markAsFavorite)
+                }
+
+                // addToPlaylist
+                if let addToPlaylist = allActions[.addToPlaylist] {
+                    actions.append(addToPlaylist)
+                }
+
+                // Is Heard
+                if Bool.random(), let resetProgress = allActions[.resetProgress] {
+                    actions.append(resetProgress)
+                } else if let markAsHeard = allActions[.markAsHeard] {
+                    actions.append(markAsHeard)
+                }
+
+                // share
+                if let share = allActions[.share] {
+                    actions.append(share)
+                }
+
+                menu.replacingChildren(actions)
+            }
         }
     }
 
     private func configureMenuButton() {
-        var actions: [UIAction] = []
 
-        let options = ["Download", "Mark as Favorite", "Add to playlist", "Mark as heard", "Share"]
+        for option in LectureOption.allCases {
+            let action: UIAction = UIAction(title: option.rawValue, image: nil, identifier: UIAction.Identifier(option.rawValue), handler: { [self] _ in
 
-        for option in options {
-            let action: UIAction = UIAction(title: option, image: nil, identifier: UIAction.Identifier(option), handler: { [self] action in
+                switch option {
+                case .download:
+                    break
+                case .deleteFromDownloads:
+                    break
+                case .markAsFavorite:
+                    break
+                case .removeFromFavorites:
+                    break
+                case .addToPlaylist:
+                    break
+                case .markAsHeard:
+                    break
+                case .resetProgress:
+                    break
+                case .share:
+                    break
+                }
             })
-            actions.append(action)
+
+            allActions[option] = action
         }
 
-        let menu = UIMenu(title: "", image: nil, identifier: UIMenu.Identifier.init(rawValue: "Option"), options: UIMenu.Options.displayInline, children: actions)
+        let childrens: [UIAction] = allActions.compactMap({ (key: LectureOption, _: UIAction) in
+            return allActions[key]
+        })
+
+        menu = UIMenu(title: "", image: nil, identifier: UIMenu.Identifier.init(rawValue: "Option"), options: UIMenu.Options.displayInline, children: childrens)
+
+        menuButton.showsMenuAsPrimaryAction = true
         menuButton.menu = menu
     }
 }

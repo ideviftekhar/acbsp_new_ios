@@ -50,4 +50,3 @@ enum SortType: String, CaseIterable {
         }
     }
 }
-

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C0065D4828D881A400B18AA6 /* SideMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0065D4728D881A400B18AA6 /* SideMenuItem.swift */; };
+		C0065D4B28D883F300B18AA6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0065D4A28D883F300B18AA6 /* Constants.swift */; };
+		C0065D4D28D884AF00B18AA6 /* LectureOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0065D4C28D884AF00B18AA6 /* LectureOption.swift */; };
 		C00AB20428D1E6DD00A62A2F /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00AB20328D1E6DD00A62A2F /* FilterViewController.swift */; };
 		C00AB20628D1F19500A62A2F /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00AB20528D1F19500A62A2F /* Filter.swift */; };
 		C00AB20A28D1F52D00A62A2F /* FilterDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00AB20828D1F52D00A62A2F /* FilterDetailTableViewCell.swift */; };
@@ -39,7 +42,7 @@
 		C00E4E0828CA39FE00F1A123 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4DFE28CA39FE00F1A123 /* TabBarController.swift */; };
 		C00E4E0928CA39FE00F1A123 /* DownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E0028CA39FE00F1A123 /* DownloadViewController.swift */; };
 		C00E4E0A28CA39FE00F1A123 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E0128CA39FE00F1A123 /* FavoritesViewController.swift */; };
-		C00E4E0B28CA39FE00F1A123 /* LectureBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E0228CA39FE00F1A123 /* LectureBaseViewController.swift */; };
+		C00E4E0B28CA39FE00F1A123 /* BaseLectureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E0228CA39FE00F1A123 /* BaseLectureViewController.swift */; };
 		C00E4E0C28CA39FE00F1A123 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E0328CA39FE00F1A123 /* HomeViewController.swift */; };
 		C00E4E0D28CA39FE00F1A123 /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E0428CA39FE00F1A123 /* PlaylistViewController.swift */; };
 		C00E4E0E28CA39FE00F1A123 /* PopularLectureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E0528CA39FE00F1A123 /* PopularLectureViewController.swift */; };
@@ -54,15 +57,24 @@
 		C0118A7928D34AA800F6002D /* GoogleService-Info-development-client.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0118A7728D34AA700F6002D /* GoogleService-Info-development-client.plist */; };
 		C0118A7A28D34AA800F6002D /* GoogleService-Info-development-internal.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0118A7828D34AA700F6002D /* GoogleService-Info-development-internal.plist */; };
 		C0118A7C28D34AB400F6002D /* GoogleService-Info-production-client.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0118A7B28D34AB400F6002D /* GoogleService-Info-production-client.plist */; };
+		C0B7990228DC3FF700681649 /* TopLectures.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B7990028DC3FF700681649 /* TopLectures.swift */; };
+		C0B7990328DC3FF700681649 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B7990128DC3FF700681649 /* Playlist.swift */; };
+		C0B7990728DC41AE00681649 /* PlaylistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B7990528DC41AE00681649 /* PlaylistCell.swift */; };
+		C0B7990828DC41AE00681649 /* PlaylistCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0B7990628DC41AE00681649 /* PlaylistCell.xib */; };
+		C0B7990A28DC427B00681649 /* PlaylistOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B7990928DC427B00681649 /* PlaylistOption.swift */; };
+		C0B7990C28DC4DCE00681649 /* LectureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B7990B28DC4DCE00681649 /* LectureViewModel.swift */; };
+		C0B7991128DC524500681649 /* PlaylistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B7991028DC524500681649 /* PlaylistViewModel.swift */; };
 		C0BC771028D5AE1000C2629F /* TappableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BC770F28D5AE1000C2629F /* TappableLabel.swift */; };
 		C0CAF25D28D45B8C00DA9878 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CAF25C28D45B8C00DA9878 /* NavigationController.swift */; };
 		C0D76E2528CF7C9B00F69320 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D76E2328CF7C9A00F69320 /* Environment.swift */; };
 		C0D76E2728CF7CFF00F69320 /* development-internal.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C0D76E2628CF7CFF00F69320 /* development-internal.xcconfig */; };
 		C0D76E2928CF7D0F00F69320 /* production-client.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C0D76E2828CF7D0F00F69320 /* production-client.xcconfig */; };
+		C0E9CC3928DC723B0089A9E8 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E9CC3828DC723B0089A9E8 /* Date+Extension.swift */; };
 		C0EA13E428CF53FA00BE9110 /* ForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EA13E328CF53FA00BE9110 /* ForgotPasswordViewModel.swift */; };
 		C0EA13EA28CF5A9D00BE9110 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EA13E928CF5A9D00BE9110 /* UIViewController+Alert.swift */; };
 		C0EA13ED28CF685E00BE9110 /* RoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EA13EC28CF685E00BE9110 /* RoundButton.swift */; };
 		C0EA13EF28CF6D0D00BE9110 /* UIView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EA13EE28CF6D0D00BE9110 /* UIView+extension.swift */; };
+		C0FA049F28DB37FA003177DA /* LectureInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FA049E28DB37FA003177DA /* LectureInfo.swift */; };
 		C0FA305D28CF461900E78843 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FA305C28CF461900E78843 /* String+Extension.swift */; };
 		C0FA305F28CF4AF000E78843 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FA305E28CF4AF000E78843 /* LoginViewModel.swift */; };
 		C0FA306228CF51EB00E78843 /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FA306128CF51EB00E78843 /* SignupViewModel.swift */; };
@@ -74,6 +86,9 @@
 		3320FB8F92398ED70E906DB5 /* Pods_Srila_Prabhupada.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Srila_Prabhupada.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A81878F32167781392E62B86 /* Pods-Srila Prabhupada.release-client.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Srila Prabhupada.release-client.xcconfig"; path = "Target Support Files/Pods-Srila Prabhupada/Pods-Srila Prabhupada.release-client.xcconfig"; sourceTree = "<group>"; };
 		C003CD9E28D8491600A11039 /* Srila Prabhupada.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Srila Prabhupada.entitlements"; sourceTree = "<group>"; };
+		C0065D4728D881A400B18AA6 /* SideMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuItem.swift; sourceTree = "<group>"; };
+		C0065D4A28D883F300B18AA6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		C0065D4C28D884AF00B18AA6 /* LectureOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureOption.swift; sourceTree = "<group>"; };
 		C00AB20328D1E6DD00A62A2F /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		C00AB20528D1F19500A62A2F /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		C00AB20828D1F52D00A62A2F /* FilterDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterDetailTableViewCell.swift; sourceTree = "<group>"; };
@@ -108,7 +123,7 @@
 		C00E4DFE28CA39FE00F1A123 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		C00E4E0028CA39FE00F1A123 /* DownloadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadViewController.swift; sourceTree = "<group>"; };
 		C00E4E0128CA39FE00F1A123 /* FavoritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
-		C00E4E0228CA39FE00F1A123 /* LectureBaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LectureBaseViewController.swift; sourceTree = "<group>"; };
+		C00E4E0228CA39FE00F1A123 /* BaseLectureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseLectureViewController.swift; sourceTree = "<group>"; };
 		C00E4E0328CA39FE00F1A123 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		C00E4E0428CA39FE00F1A123 /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
 		C00E4E0528CA39FE00F1A123 /* PopularLectureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopularLectureViewController.swift; sourceTree = "<group>"; };
@@ -124,15 +139,24 @@
 		C0118A7728D34AA700F6002D /* GoogleService-Info-development-client.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-development-client.plist"; sourceTree = "<group>"; };
 		C0118A7828D34AA700F6002D /* GoogleService-Info-development-internal.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-development-internal.plist"; sourceTree = "<group>"; };
 		C0118A7B28D34AB400F6002D /* GoogleService-Info-production-client.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-production-client.plist"; sourceTree = "<group>"; };
+		C0B7990028DC3FF700681649 /* TopLectures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopLectures.swift; sourceTree = "<group>"; };
+		C0B7990128DC3FF700681649 /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
+		C0B7990528DC41AE00681649 /* PlaylistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistCell.swift; sourceTree = "<group>"; };
+		C0B7990628DC41AE00681649 /* PlaylistCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlaylistCell.xib; sourceTree = "<group>"; };
+		C0B7990928DC427B00681649 /* PlaylistOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistOption.swift; sourceTree = "<group>"; };
+		C0B7990B28DC4DCE00681649 /* LectureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureViewModel.swift; sourceTree = "<group>"; };
+		C0B7991028DC524500681649 /* PlaylistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistViewModel.swift; sourceTree = "<group>"; };
 		C0BC770F28D5AE1000C2629F /* TappableLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TappableLabel.swift; sourceTree = "<group>"; };
 		C0CAF25C28D45B8C00DA9878 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		C0D76E2328CF7C9A00F69320 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		C0D76E2628CF7CFF00F69320 /* development-internal.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "development-internal.xcconfig"; sourceTree = "<group>"; };
 		C0D76E2828CF7D0F00F69320 /* production-client.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "production-client.xcconfig"; sourceTree = "<group>"; };
+		C0E9CC3828DC723B0089A9E8 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		C0EA13E328CF53FA00BE9110 /* ForgotPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModel.swift; sourceTree = "<group>"; };
 		C0EA13E928CF5A9D00BE9110 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		C0EA13EC28CF685E00BE9110 /* RoundButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundButton.swift; sourceTree = "<group>"; };
 		C0EA13EE28CF6D0D00BE9110 /* UIView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+extension.swift"; sourceTree = "<group>"; };
+		C0FA049E28DB37FA003177DA /* LectureInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LectureInfo.swift; sourceTree = "<group>"; };
 		C0FA305C28CF461900E78843 /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		C0FA305E28CF4AF000E78843 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Login\U0010ViewModel.swift"; sourceTree = "<group>"; };
 		C0FA306128CF51EB00E78843 /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
@@ -173,6 +197,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		C0065D4928D881AC00B18AA6 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				C0065D4728D881A400B18AA6 /* SideMenuItem.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		C00AB20228D1E6D000A62A2F /* Supporting Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -194,11 +226,11 @@
 		C00AB21328D1FD6D00A62A2F /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				C00AB21028D1FD5600A62A2F /* SortType.swift */,
-				C00AB20528D1F19500A62A2F /* Filter.swift */,
+				C0B7990428DC3FFA00681649 /* Supporting Model */,
 				C00AB21428D204D700A62A2F /* Lecture.swift */,
-				C00AB21D28D20DD300A62A2F /* Day.swift */,
-				C00AB21F28D2137C00A62A2F /* Time.swift */,
+				C0FA049E28DB37FA003177DA /* LectureInfo.swift */,
+				C0B7990128DC3FF700681649 /* Playlist.swift */,
+				C0B7990028DC3FF700681649 /* TopLectures.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -206,8 +238,12 @@
 		C00AB21628D207AA00A62A2F /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				C0065D4C28D884AF00B18AA6 /* LectureOption.swift */,
+				C0B7990928DC427B00681649 /* PlaylistOption.swift */,
 				C00AB21928D2080800A62A2F /* LectureCell.swift */,
 				C00AB21A28D2080800A62A2F /* LectureCell.xib */,
+				C0B7990528DC41AE00681649 /* PlaylistCell.swift */,
+				C0B7990628DC41AE00681649 /* PlaylistCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -242,7 +278,7 @@
 				C00E4DFA28CA39F400F1A123 /* LeftMenuControllers */,
 				C00E4DFD28CA39FE00F1A123 /* CommonControllers */,
 				C00E4DFF28CA39FE00F1A123 /* LectureControllers */,
-				C00E4E0428CA39FE00F1A123 /* PlaylistViewController.swift */,
+				C0B7990E28DC521900681649 /* Playlist Controllers */,
 				C00E4DE328CA393B00F1A123 /* Storyboards */,
 				C00E4DD328CA36F200F1A123 /* Assets.xcassets */,
 				C00E4DCA28CA36F100F1A123 /* AppDelegate.swift */,
@@ -285,6 +321,7 @@
 		C00E4DFA28CA39F400F1A123 /* LeftMenuControllers */ = {
 			isa = PBXGroup;
 			children = (
+				C0065D4928D881AC00B18AA6 /* Model */,
 				C00E4DFB28CA39F400F1A123 /* SideMenuTableViewController.swift */,
 				C00E4E1428CA433A00F1A123 /* AboutViewController.swift */,
 				C00E4E1528CA433A00F1A123 /* CopyrightViewController.swift */,
@@ -300,7 +337,7 @@
 				C00E4DFE28CA39FE00F1A123 /* TabBarController.swift */,
 				C0CAF25C28D45B8C00DA9878 /* NavigationController.swift */,
 				C00E4E1B28CA462000F1A123 /* BaseSearchViewController.swift */,
-				C00E4E0228CA39FE00F1A123 /* LectureBaseViewController.swift */,
+				C00E4E0228CA39FE00F1A123 /* BaseLectureViewController.swift */,
 			);
 			path = CommonControllers;
 			sourceTree = "<group>";
@@ -308,16 +345,53 @@
 		C00E4DFF28CA39FE00F1A123 /* LectureControllers */ = {
 			isa = PBXGroup;
 			children = (
+				C0B7990D28DC4E0700681649 /* ViewModel */,
 				C00AB20228D1E6D000A62A2F /* Supporting Controllers */,
 				C00E4E0328CA39FE00F1A123 /* HomeViewController.swift */,
+				C00E4E1928CA45E000F1A123 /* PlaylistLecturesViewController.swift */,
+				C00E4E0728CA39FE00F1A123 /* TopLectureViewController.swift */,
 				C00E4E0028CA39FE00F1A123 /* DownloadViewController.swift */,
 				C00E4E0128CA39FE00F1A123 /* FavoritesViewController.swift */,
-				C00E4E1928CA45E000F1A123 /* PlaylistLecturesViewController.swift */,
 				C00E4E0528CA39FE00F1A123 /* PopularLectureViewController.swift */,
 				C00E4E0628CA39FE00F1A123 /* HistoryViewController.swift */,
-				C00E4E0728CA39FE00F1A123 /* TopLectureViewController.swift */,
 			);
 			path = LectureControllers;
+			sourceTree = "<group>";
+		};
+		C0B7990428DC3FFA00681649 /* Supporting Model */ = {
+			isa = PBXGroup;
+			children = (
+				C00AB21028D1FD5600A62A2F /* SortType.swift */,
+				C00AB20528D1F19500A62A2F /* Filter.swift */,
+				C00AB21D28D20DD300A62A2F /* Day.swift */,
+				C00AB21F28D2137C00A62A2F /* Time.swift */,
+			);
+			path = "Supporting Model";
+			sourceTree = "<group>";
+		};
+		C0B7990D28DC4E0700681649 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C0B7990B28DC4DCE00681649 /* LectureViewModel.swift */,
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C0B7990E28DC521900681649 /* Playlist Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				C0B7990F28DC523100681649 /* ViewModel */,
+				C00E4E0428CA39FE00F1A123 /* PlaylistViewController.swift */,
+			);
+			path = "Playlist Controllers";
+			sourceTree = "<group>";
+		};
+		C0B7990F28DC523100681649 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				C0B7991028DC524500681649 /* PlaylistViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		C0D76E2128CF7C9A00F69320 /* Configurations */ = {
@@ -330,6 +404,7 @@
 				C0118A7828D34AA700F6002D /* GoogleService-Info-development-internal.plist */,
 				C0118A7728D34AA700F6002D /* GoogleService-Info-development-client.plist */,
 				C0118A7B28D34AB400F6002D /* GoogleService-Info-production-client.plist */,
+				C0065D4A28D883F300B18AA6 /* Constants.swift */,
 			);
 			path = Configurations;
 			sourceTree = "<group>";
@@ -350,6 +425,7 @@
 				C0EA13E928CF5A9D00BE9110 /* UIViewController+Alert.swift */,
 				C0EA13EE28CF6D0D00BE9110 /* UIView+extension.swift */,
 				C00AB20E28D1F6CB00A62A2F /* UIStoryboard+Extension.swift */,
+				C0E9CC3828DC723B0089A9E8 /* Date+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -376,7 +452,9 @@
 				C00E4DC428CA36F100F1A123 /* Frameworks */,
 				C00E4DC528CA36F100F1A123 /* Resources */,
 				AD18E0F8ED7A0605A0F37E78 /* [CP] Embed Pods Frameworks */,
+				C0FA049D28DB2A9A003177DA /* SwiftLint */,
 				C0D76E2A28CF7DC400F69320 /* Copy Google Plist */,
+				C0065D4628D87E2200B18AA6 /* Crashlytics */,
 			);
 			buildRules = (
 			);
@@ -428,6 +506,7 @@
 				C00AB21C28D2080800A62A2F /* LectureCell.xib in Resources */,
 				C00E4DF228CA39CB00F1A123 /* Home.storyboard in Resources */,
 				C00E4DF528CA39CB00F1A123 /* Downloads.storyboard in Resources */,
+				C0B7990828DC41AE00681649 /* PlaylistCell.xib in Resources */,
 				C00E4DF328CA39CB00F1A123 /* Stats.storyboard in Resources */,
 				C0118A7928D34AA800F6002D /* GoogleService-Info-development-client.plist in Resources */,
 				C00E4DF028CA39CB00F1A123 /* Playlists.storyboard in Resources */,
@@ -489,6 +568,24 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Srila Prabhupada/Pods-Srila Prabhupada-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		C0065D4628D87E2200B18AA6 /* Crashlytics */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Crashlytics;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
+		};
 		C0D76E2A28CF7DC400F69320 /* Copy Google Plist */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -507,6 +604,24 @@
 			shellPath = /bin/sh;
 			shellScript = "CURRENT_PATH_TO_GOOGLE_PLIST=\"${PROJECT_DIR}/Srila Prabhupada/Configurations/${GOOGLE_SERVICE_FILE_NAME}.plist\";\nEXPECTED_PATH_TO_GOOGLE_PLIST=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\";\n\ncp -r \"$CURRENT_PATH_TO_GOOGLE_PLIST\" \"$EXPECTED_PATH_TO_GOOGLE_PLIST\";\n";
 		};
+		C0FA049D28DB2A9A003177DA /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -517,9 +632,12 @@
 				C00AB21B28D2080800A62A2F /* LectureCell.swift in Sources */,
 				C0EA13E428CF53FA00BE9110 /* ForgotPasswordViewModel.swift in Sources */,
 				C00AB20628D1F19500A62A2F /* Filter.swift in Sources */,
+				C0B7990C28DC4DCE00681649 /* LectureViewModel.swift in Sources */,
 				C00E4DE228CA393600F1A123 /* CreateAccountViewController.swift in Sources */,
+				C0FA049F28DB37FA003177DA /* LectureInfo.swift in Sources */,
 				C00AB20B28D1F52D00A62A2F /* FilterTypeTableViewCell.swift in Sources */,
 				C00AB21528D204D700A62A2F /* Lecture.swift in Sources */,
+				C0065D4D28D884AF00B18AA6 /* LectureOption.swift in Sources */,
 				C0FA305D28CF461900E78843 /* String+Extension.swift in Sources */,
 				C00E4DCB28CA36F100F1A123 /* AppDelegate.swift in Sources */,
 				C00E4E1628CA433A00F1A123 /* StatsViewController.swift in Sources */,
@@ -527,30 +645,38 @@
 				C00E4E1A28CA45E000F1A123 /* PlaylistLecturesViewController.swift in Sources */,
 				C00AB21E28D20DD300A62A2F /* Day.swift in Sources */,
 				C00E4E0A28CA39FE00F1A123 /* FavoritesViewController.swift in Sources */,
+				C0065D4828D881A400B18AA6 /* SideMenuItem.swift in Sources */,
 				C00E4DCD28CA36F100F1A123 /* SceneDelegate.swift in Sources */,
 				C00E4E0F28CA39FE00F1A123 /* HistoryViewController.swift in Sources */,
-				C00E4E0B28CA39FE00F1A123 /* LectureBaseViewController.swift in Sources */,
+				C00E4E0B28CA39FE00F1A123 /* BaseLectureViewController.swift in Sources */,
 				C0FA306228CF51EB00E78843 /* SignupViewModel.swift in Sources */,
 				C0EA13EF28CF6D0D00BE9110 /* UIView+extension.swift in Sources */,
 				C00AB20A28D1F52D00A62A2F /* FilterDetailTableViewCell.swift in Sources */,
 				C0FA305F28CF4AF000E78843 /* LoginViewModel.swift in Sources */,
 				C00AB22028D2137C00A62A2F /* Time.swift in Sources */,
 				C00E4E0C28CA39FE00F1A123 /* HomeViewController.swift in Sources */,
+				C0E9CC3928DC723B0089A9E8 /* Date+Extension.swift in Sources */,
 				C00E4E0928CA39FE00F1A123 /* DownloadViewController.swift in Sources */,
 				C00AB20428D1E6DD00A62A2F /* FilterViewController.swift in Sources */,
 				C0D76E2528CF7C9B00F69320 /* Environment.swift in Sources */,
 				C00AB21128D1FD5600A62A2F /* SortType.swift in Sources */,
 				C00E4E1728CA433A00F1A123 /* AboutViewController.swift in Sources */,
 				C00E4E1828CA433A00F1A123 /* CopyrightViewController.swift in Sources */,
+				C0B7991128DC524500681649 /* PlaylistViewModel.swift in Sources */,
 				C00AB20F28D1F6CB00A62A2F /* UIStoryboard+Extension.swift in Sources */,
+				C0B7990728DC41AE00681649 /* PlaylistCell.swift in Sources */,
 				C00E4E0E28CA39FE00F1A123 /* PopularLectureViewController.swift in Sources */,
+				C0B7990328DC3FF700681649 /* Playlist.swift in Sources */,
 				C0EA13ED28CF685E00BE9110 /* RoundButton.swift in Sources */,
 				C00E4E0D28CA39FE00F1A123 /* PlaylistViewController.swift in Sources */,
 				C00E4E0828CA39FE00F1A123 /* TabBarController.swift in Sources */,
+				C0B7990228DC3FF700681649 /* TopLectures.swift in Sources */,
 				C00E4E1228CA3A1700F1A123 /* ForgotPasswordViewController.swift in Sources */,
 				C0CAF25D28D45B8C00DA9878 /* NavigationController.swift in Sources */,
 				C00E4E1028CA39FE00F1A123 /* TopLectureViewController.swift in Sources */,
+				C0B7990A28DC427B00681649 /* PlaylistOption.swift in Sources */,
 				C00E4E1C28CA462000F1A123 /* BaseSearchViewController.swift in Sources */,
+				C0065D4B28D883F300B18AA6 /* Constants.swift in Sources */,
 				C00E4DE128CA393600F1A123 /* LogInViewController.swift in Sources */,
 				C0BC771028D5AE1000C2629F /* TappableLabel.swift in Sources */,
 				C00E4DFC28CA39F400F1A123 /* SideMenuTableViewController.swift in Sources */,

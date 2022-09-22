@@ -9,16 +9,16 @@ import UIKit
 import GoogleSignIn
 
 class LogInViewController: UIViewController {
-    
-    @IBOutlet weak var imageView : UIImageView!
-    
-    @IBOutlet weak var emailTextField : UITextField!
-    @IBOutlet weak var passwordTextField : UITextField!
 
-    @IBOutlet weak var signInButton : UIButton!
-    @IBOutlet weak var forgotPasswordButton : UIButton!
-    @IBOutlet weak var createAccountButton : UIButton!
-    @IBOutlet weak var signWithGoogleButton : GIDSignInButton!
+    @IBOutlet weak var imageView: UIImageView!
+
+    @IBOutlet weak var emailTextField: UITextField!
+    @IBOutlet weak var passwordTextField: UITextField!
+
+    @IBOutlet weak var signInButton: UIButton!
+    @IBOutlet weak var forgotPasswordButton: UIButton!
+    @IBOutlet weak var createAccountButton: UIButton!
+    @IBOutlet weak var signWithGoogleButton: GIDSignInButton!
     @IBOutlet weak var loadingIndicatorView: UIActivityIndicatorView!
 
     private let emailLoginViewModel: LoginViewModel = FirebaseEmailLoginViewModel()
@@ -30,8 +30,8 @@ class LogInViewController: UIViewController {
         emailTextField.addTarget(self, action: #selector(textFieldDidChanged(_:)), for: .editingChanged)
         passwordTextField.addTarget(self, action: #selector(textFieldDidChanged(_:)), for: .editingChanged)
     }
-    
-    @IBAction func signInTapped(_ sender: UIButton){
+
+    @IBAction func signInTapped(_ sender: UIButton) {
 
         let validationResult = emailLoginViewModel.isValidCredentials()
         switch validationResult {
@@ -120,5 +120,3 @@ extension LogInViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
     }
 }
-
-

@@ -13,8 +13,6 @@ import IQKeyboardManagerSwift
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-
-
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         IQKeyboardManager.shared.enable = true
@@ -42,8 +40,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     @available(iOS 9.0, *)
-    func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any])  -> Bool {
+    func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
       return GIDSignIn.sharedInstance.handle(url)
     }
 }
-

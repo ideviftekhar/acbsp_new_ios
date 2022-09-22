@@ -22,7 +22,6 @@ extension UIStoryboard {
     static let stats = UIStoryboard(name: "Stats", bundle: nil)
     static let common = UIStoryboard(name: "Common", bundle: nil)
 
-
     func instantiate<T: UIViewController>(_ controllerType: T.Type, identifier: String? = nil) -> T {
 
         let identifier: String = identifier ?? String(describing: T.self)

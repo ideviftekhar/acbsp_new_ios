@@ -59,7 +59,6 @@ class FirebaseEmailLoginViewModel: NSObject, LoginViewModel {
             return
         }
 
-
         Auth.auth().signIn(withEmail: username, password: password) { authResult, error in
 
             if let error = error {

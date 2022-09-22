@@ -17,7 +17,7 @@ class FilterViewController: UIViewController {
     @IBOutlet weak var filterTypeTableView: UITableView!
     @IBOutlet weak var filterDetailTableView: UITableView!
     weak var delegate: FilterViewControllerDelegate?
-    
+
     var filters: [Filter] = Filter.allCases
 
     lazy var activeFilter: Filter = filters[0]
@@ -56,7 +56,7 @@ class FilterViewController: UIViewController {
     @IBAction private func cancelButtonPressed(_ : UIBarButtonItem) {
         goBack()
     }
-    
+
     @IBAction func applyFilterAction(_ sender: Any) {
 
         self.delegate?.filterController(self, didSelected: self.selectedFilters)
@@ -75,7 +75,7 @@ class FilterViewController: UIViewController {
 }
 
 extension FilterViewController: UITableViewDelegate, UITableViewDataSource {
-    
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if tableView == filterTypeTableView {
             return self.filters.count
@@ -84,9 +84,9 @@ extension FilterViewController: UITableViewDelegate, UITableViewDataSource {
         }
         return 0
     }
-    
+
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+
         if tableView == filterTypeTableView { //
             let filter = filters[indexPath.row]
 
@@ -99,7 +99,6 @@ extension FilterViewController: UITableViewDelegate, UITableViewDataSource {
             } else {
                 cell.filterCountLabel.isHidden = true
             }
-
 
             return cell
 
@@ -120,7 +119,7 @@ extension FilterViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
     }
-    
+
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
         if tableView == filterTypeTableView { //

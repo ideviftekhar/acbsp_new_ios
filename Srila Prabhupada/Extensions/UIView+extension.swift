@@ -10,7 +10,7 @@ import UIKit
 
 @IBDesignable extension UIView {
 
-    @IBInspectable var shadowRadius:CGFloat {
+    @IBInspectable var shadowRadius: CGFloat {
         set {
             layer.shadowRadius = newValue
         }
@@ -19,7 +19,7 @@ import UIKit
         }
     }
 
-    @IBInspectable var shadowOffset:CGSize {
+    @IBInspectable var shadowOffset: CGSize {
         set {
             layer.shadowOffset = newValue
         }
@@ -37,30 +37,28 @@ import UIKit
         }
     }
 
-    @IBInspectable var shadowColor:UIColor? {
+    @IBInspectable var shadowColor: UIColor? {
         set {
             layer.shadowColor = newValue?.cgColor
         }
         get {
             if let color = layer.shadowColor {
-                return UIColor(cgColor:color)
-            }
-            else {
+                return UIColor(cgColor: color)
+            } else {
                 return nil
             }
         }
     }
 
-    @IBInspectable var borderColor:UIColor? {
+    @IBInspectable var borderColor: UIColor? {
         set {
             layer.borderColor = newValue?.cgColor
         }
 
         get {
             if let color = layer.borderColor {
-                return UIColor(cgColor:color)
-            }
-            else {
+                return UIColor(cgColor: color)
+            } else {
                 return nil
             }
         }
@@ -76,7 +74,7 @@ import UIKit
         }
     }
 
-    @IBInspectable var cornerRadius:CGFloat {
+    @IBInspectable var cornerRadius: CGFloat {
         set {
             layer.cornerRadius = newValue
         }

@@ -55,9 +55,9 @@ enum Filter: String, CaseIterable {
         case .month:
             return Self.monthNames
         case .categories:
-            return ["Addresses","Darsana","Lectures"]
+            return ["Addresses", "Darsana", "Lectures"]
         case .translation:
-            return ["French","Italian","Hindi"]
+            return ["French", "Italian", "Hindi"]
         }
     }
 

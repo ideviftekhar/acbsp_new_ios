@@ -12,7 +12,7 @@ class FilterDetailTableViewCell: UITableViewCell {
 
     @IBOutlet weak var checkView: BEMCheckBox!
     @IBOutlet weak var detailTypeLabel: UILabel!
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
         addAnimationToCheckView()
@@ -24,10 +24,10 @@ class FilterDetailTableViewCell: UITableViewCell {
         self.checkView.onAnimationType = .fill
         self.checkView.offAnimationType = .fill
         self.checkView.tintColor = .white
-        
+
         self.checkView.layer.borderWidth = 2.0
         self.checkView.layer.borderColor = UIColor(named: "ThemeColor")?.cgColor
         self.checkView.layer.cornerRadius = 3.0
-  
+
     }
 }

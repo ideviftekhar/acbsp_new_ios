@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -10,55 +11,13 @@
     </dependencies>
     <scenes>
         <!--Top Lectures-->
-        <scene sceneID="rcO-3T-3aE">
-            <objects>
-                <viewController storyboardIdentifier="TopLectureViewController" id="QTW-zx-NJQ" customClass="TopLectureViewController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="9oY-ZB-EI0">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="Gld-oL-C25">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="QTW-zx-NJQ" id="liM-UK-XUl"/>
-                                    <outlet property="delegate" destination="QTW-zx-NJQ" id="A0o-DS-f5R"/>
-                                </connections>
-                            </tableView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="mvt-aw-hfm"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                        <constraints>
-                            <constraint firstAttribute="trailing" secondItem="Gld-oL-C25" secondAttribute="trailing" id="IOd-hP-L4d"/>
-                            <constraint firstAttribute="bottom" secondItem="Gld-oL-C25" secondAttribute="bottom" id="bI5-el-5p3"/>
-                            <constraint firstItem="Gld-oL-C25" firstAttribute="top" secondItem="9oY-ZB-EI0" secondAttribute="top" id="h7c-AT-sdu"/>
-                            <constraint firstItem="Gld-oL-C25" firstAttribute="leading" secondItem="9oY-ZB-EI0" secondAttribute="leading" id="p9e-gL-0jE"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" title="Top Lectures" id="Tfc-hT-ZLO">
-                        <barButtonItem key="leftBarButtonItem" image="humberger" id="1nR-WJ-J7e">
-                            <connections>
-                                <action selector="humburgerBarButtonTapped:" destination="QTW-zx-NJQ" id="z0E-6G-7WF"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <connections>
-                        <outlet property="hamburgerBarButton" destination="1nR-WJ-J7e" id="rzv-Ky-bD7"/>
-                        <outlet property="lectureTebleView" destination="Gld-oL-C25" id="L7z-ea-Jfp"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gDK-Dr-Gci" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3881" y="-259"/>
-        </scene>
-        <!--Top Lectures-->
         <scene sceneID="WGu-QM-DlK">
             <objects>
                 <navigationController storyboardIdentifier="TopLectureNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="Rto-Sa-HFt" customClass="NavigationController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Top Lectures" image="chart.bar.xaxis" catalog="system" id="NCU-3f-JCK"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="WbR-bu-YQm">
-                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="barTintColor" name="ThemeColor"/>
@@ -107,17 +66,73 @@
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
-                        <segue destination="QTW-zx-NJQ" kind="relationship" relationship="rootViewController" id="ige-HM-6eI"/>
+                        <segue destination="DeK-Gp-UKt" kind="relationship" relationship="rootViewController" id="ftN-aY-Eei"/>
                     </connections>
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WqB-dj-XzS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2888" y="-259"/>
         </scene>
+        <!--Top Lectures-->
+        <scene sceneID="BvV-o4-6Iw">
+            <objects>
+                <viewController storyboardIdentifier="TopLectureViewController" id="DeK-Gp-UKt" customClass="TopLectureViewController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Zcu-R6-5hb">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="E2N-Vu-7JO">
+                                <rect key="frame" x="0.0" y="144" width="414" height="32"/>
+                                <segments>
+                                    <segment title="This week"/>
+                                    <segment title="This month"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segmentAction:" destination="DeK-Gp-UKt" eventType="valueChanged" id="E7X-4M-SLG"/>
+                                </connections>
+                            </segmentedControl>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="hcR-fg-S6D">
+                                <rect key="frame" x="0.0" y="175" width="414" height="721"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="DeK-Gp-UKt" id="Sjl-AW-Z0G"/>
+                                    <outlet property="delegate" destination="DeK-Gp-UKt" id="8DV-jM-Y4b"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Tp0-8u-5Kt"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="hcR-fg-S6D" firstAttribute="leading" secondItem="Zcu-R6-5hb" secondAttribute="leading" id="6wf-zu-a0o"/>
+                            <constraint firstItem="E2N-Vu-7JO" firstAttribute="leading" secondItem="Tp0-8u-5Kt" secondAttribute="leading" id="87U-W8-Avj"/>
+                            <constraint firstItem="Tp0-8u-5Kt" firstAttribute="trailing" secondItem="E2N-Vu-7JO" secondAttribute="trailing" id="8nG-ty-ddN"/>
+                            <constraint firstItem="hcR-fg-S6D" firstAttribute="top" secondItem="E2N-Vu-7JO" secondAttribute="bottom" id="BjY-8d-Sme"/>
+                            <constraint firstAttribute="trailing" secondItem="hcR-fg-S6D" secondAttribute="trailing" id="cvc-Si-bgr"/>
+                            <constraint firstItem="E2N-Vu-7JO" firstAttribute="top" secondItem="Tp0-8u-5Kt" secondAttribute="top" id="e3z-1F-siH"/>
+                            <constraint firstAttribute="bottom" secondItem="hcR-fg-S6D" secondAttribute="bottom" id="hvq-5A-mB3"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Top Lectures" id="USS-pV-lu7">
+                        <barButtonItem key="leftBarButtonItem" image="humberger" id="ok1-9W-6Ps">
+                            <connections>
+                                <action selector="humburgerBarButtonTapped:" destination="DeK-Gp-UKt" id="lJS-MK-YoY"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="hamburgerBarButton" destination="ok1-9W-6Ps" id="hbf-zU-X4k"/>
+                        <outlet property="lectureTebleView" destination="hcR-fg-S6D" id="jhe-FA-eTc"/>
+                        <outlet property="topLecturesSegmentControl" destination="E2N-Vu-7JO" id="3e8-of-He4"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2eL-Wy-4b8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3879.7101449275365" y="-259.15178571428572"/>
+        </scene>
     </scenes>
     <color key="tintColor" name="0099CA"/>
     <resources>
-        <image name="chart.bar.xaxis" catalog="system" width="128" height="98"/>
+        <image name="chart.bar.xaxis" catalog="system" width="128" height="99"/>
         <image name="humberger" width="24" height="24"/>
         <namedColor name="0099CA">
             <color red="0.0" green="0.59999999999999998" blue="0.792156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -126,7 +141,7 @@
             <color red="1" green="0.39215686274509803" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

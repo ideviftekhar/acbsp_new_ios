@@ -8,36 +8,36 @@
 import UIKit
 import Charts
 
-class StatsViewController: UIViewController,ChartViewDelegate{
+class StatsViewController: UIViewController, ChartViewDelegate {
 
-    @IBOutlet weak var totalFileCountLabel : UILabel!
-    @IBOutlet weak var totalListenedCountLabel : UILabel!
+    @IBOutlet weak var totalFileCountLabel: UILabel!
+    @IBOutlet weak var totalListenedCountLabel: UILabel!
 
-    @IBOutlet weak var lastMonthListenedTimeLabel : UILabel!
-    @IBOutlet weak var lastWeekListenedTimeLabel : UILabel!
+    @IBOutlet weak var lastMonthListenedTimeLabel: UILabel!
+    @IBOutlet weak var lastWeekListenedTimeLabel: UILabel!
 
-    @IBOutlet weak var lastMonthSBLabel : UILabel!
-    @IBOutlet weak var lastMonthBGLabel : UILabel!
-    @IBOutlet weak var lastMonthCCLabel : UILabel!
-    @IBOutlet weak var lastMonthBhajansLabel : UILabel!
+    @IBOutlet weak var lastMonthSBLabel: UILabel!
+    @IBOutlet weak var lastMonthBGLabel: UILabel!
+    @IBOutlet weak var lastMonthCCLabel: UILabel!
+    @IBOutlet weak var lastMonthBhajansLabel: UILabel!
 
-    @IBOutlet weak var lastWeekSBLabel : UILabel!
-    @IBOutlet weak var lastWeekBGLabel : UILabel!
-    @IBOutlet weak var lastWeekCCLabel : UILabel!
-    @IBOutlet weak var lastWeekBhajansLabel : UILabel!
+    @IBOutlet weak var lastWeekSBLabel: UILabel!
+    @IBOutlet weak var lastWeekBGLabel: UILabel!
+    @IBOutlet weak var lastWeekCCLabel: UILabel!
+    @IBOutlet weak var lastWeekBhajansLabel: UILabel!
 
-    @IBOutlet weak var startDateLabel : UILabel!
-    @IBOutlet weak var endDateLabel : UILabel!
+    @IBOutlet weak var startDateLabel: UILabel!
+    @IBOutlet weak var endDateLabel: UILabel!
 
-    @IBOutlet weak var monthProgressView : UIProgressView!
-    @IBOutlet weak var weekProgressView : UIProgressView!
+    @IBOutlet weak var monthProgressView: UIProgressView!
+    @IBOutlet weak var weekProgressView: UIProgressView!
 
-    @IBOutlet weak var startDatePicker : UIDatePicker!
-    @IBOutlet weak var EndDatePicker : UIDatePicker!
+    @IBOutlet weak var startDatePicker: UIDatePicker!
+    @IBOutlet weak var EndDatePicker: UIDatePicker!
 
-    @IBOutlet weak var allTimeButton : UIButton!
+    @IBOutlet weak var allTimeButton: UIButton!
 
-    @IBOutlet weak var totalListenedTimeLabel : UILabel!
+    @IBOutlet weak var totalListenedTimeLabel: UILabel!
 
     @IBOutlet weak var chartView: BarChartView!
 
@@ -45,9 +45,6 @@ class StatsViewController: UIViewController,ChartViewDelegate{
 
     let datapicker = UIDatePicker()
     let dateformet = DateFormatter()
-
-
-
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,25 +65,25 @@ class StatsViewController: UIViewController,ChartViewDelegate{
         setUpChart()
     }
 
-    @IBAction func choosStartDate(sender : UIDatePicker){
+    @IBAction func choosStartDate(sender: UIDatePicker) {
 
         dateformet.dateFormat = "dd-MM-yyyy"
         startDateLabel.text = dateformet.string(from: sender.date)
 
     }
 
-    @IBAction func choosEndDate(sender : UIDatePicker){
+    @IBAction func choosEndDate(sender: UIDatePicker) {
 
         dateformet.dateFormat = "dd-MM-yyyy"
         endDateLabel.text = dateformet.string(from: sender.date)
     }
 
-    @IBAction func allButtonTapped(sender : UIButton){
+    @IBAction func allButtonTapped(sender: UIButton) {
         startDateLabel.text = "Start-Date"
         endDateLabel.text = "End-Date"
     }
     func setUpData() {
-        let dataEntries = items.map{ $0.transformToBarChartDataEntry() }
+        let dataEntries = items.map { $0.transformToBarChartDataEntry() }
 
         let set1 = BarChartDataSet(entries: dataEntries)
         set1.setColor(UIColor.systemOrange)
@@ -101,7 +98,7 @@ class StatsViewController: UIViewController,ChartViewDelegate{
         chartView.data = data
     }
 
-    func setUpChart(){
+    func setUpChart() {
 
         chartView.delegate = self
 
@@ -147,7 +144,6 @@ class StatsViewController: UIViewController,ChartViewDelegate{
         let rightAxis = chartView.rightAxis
         rightAxis.enabled = false
 
-
     }
 
     func getFormattedItemValue() -> [audioItem] {
@@ -174,4 +170,3 @@ struct audioItem {
         return entry
     }
 }
-

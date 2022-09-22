@@ -12,21 +12,37 @@ import FirebaseFirestore
 
 class BaseSearchViewController: UIViewController {
 
-    let firestore: Firestore = {
-        let firestore = Firestore.firestore()
-        let settings = FirestoreSettings()
-        settings.isPersistenceEnabled = true
-        firestore.settings = settings
-
-        return firestore
-    }()
-
     @IBOutlet weak var hamburgerBarButton: UIBarButtonItem!
-    let searchController = UISearchController(searchResultsController: nil)
+    private let searchController = UISearchController(searchResultsController: nil)
     private var lastSearchText: String = ""
+
+    private let sortButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.up.arrow.down"), style: .plain, target: nil, action: nil)
+    private lazy var filterButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal.decrease"), style: .plain, target: self, action: #selector(filterAction(_:)))
+
+    var selectedFilters: [Filter: [String]] = [:]
+
+    var searchText: String? {
+        if let text = searchController.searchBar.text?.trimmingCharacters(in: .whitespacesAndNewlines), !text.isEmpty {
+            return text
+        } else {
+            return nil
+        }
+    }
+
+    var selectedSortType: SortType {
+        guard let selectedSortAction = sortButton.menu?.selectedElements.first as? UIAction, let selectedSortType = SortType(rawValue: selectedSortAction.identifier.rawValue) else {
+            return SortType.default
+        }
+        return selectedSortType
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        var rightButtons = self.navigationItem.rightBarButtonItems ?? []
+        rightButtons.append(sortButton)
+        rightButtons.append(filterButton)
+        self.navigationItem.rightBarButtonItems = rightButtons
 
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search..."
@@ -39,6 +55,31 @@ class BaseSearchViewController: UIViewController {
         searchController.searchResultsUpdater = self
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = true
+
+        configureSortButton()
+    }
+
+    func configureSortButton() {
+        var actions: [UIAction] = []
+
+        for (index, sortType) in SortType.allCases.enumerated() {
+
+            let action: UIAction = UIAction(title: sortType.rawValue, image: nil, identifier: UIAction.Identifier(sortType.rawValue), state: (index == 0 ? .on : .off), handler: { [self] action in
+
+                for anAction in actions {
+                    if anAction.identifier == action.identifier { anAction.state = .on  } else {  anAction.state = .off }
+                }
+
+                self.sortButton.menu = self.sortButton.menu?.replacingChildren(actions)
+
+                refreshAsynchronous()
+            })
+
+            actions.append(action)
+        }
+
+        let menu = UIMenu(title: "Sort", image: nil, identifier: UIMenu.Identifier.init(rawValue: "Sort"), options: UIMenu.Options.displayInline, children: actions)
+        sortButton.menu = menu
     }
 
     @objc func refreshAsynchronous() {
@@ -47,6 +88,22 @@ class BaseSearchViewController: UIViewController {
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+}
+
+extension BaseSearchViewController: FilterViewControllerDelegate {
+
+    @objc private func filterAction(_ sender: Any) {
+        let viewController = UIStoryboard.common.instantiate(FilterViewController.self)
+        viewController.delegate = self
+        viewController.selectedFilters = self.selectedFilters
+        self.navigationController?.pushViewController(viewController, animated: true)
+    }
+
+    func filterController(_ controller: FilterViewController, didSelected filters: [Filter: [String]]) {
+
+        self.selectedFilters = filters
+        refreshAsynchronous()
     }
 }
 
@@ -71,7 +128,7 @@ extension BaseSearchViewController: UISearchControllerDelegate, UISearchResultsU
 
 extension BaseSearchViewController: SideMenuControllerDelegate {
 
-    @IBAction func humburgerBarButtonTapped(_ sender : UIBarButtonItem){
+    @IBAction func humburgerBarButtonTapped(_ sender: UIBarButtonItem) {
         let sideMenuNavigationController = UIStoryboard.sideMenu.instantiate(SideMenuNavigationController.self)
         sideMenuNavigationController.settings.presentationStyle = .menuSlideIn
         sideMenuNavigationController .settings.presentationStyle.presentingEndAlpha = 0.7
@@ -84,7 +141,7 @@ extension BaseSearchViewController: SideMenuControllerDelegate {
         present(sideMenuNavigationController, animated: true, completion: nil)
     }
 
-    func sideMenuController(_ controller: SideMenuTableViewController, didSelected menu: SideMenuTableViewController.Menu) {
+    func sideMenuController(_ controller: SideMenuTableViewController, didSelected menu: SideMenuItem) {
         switch menu {
         case .mediaLibrary:
             self.tabBarController?.selectedIndex = 0
@@ -104,12 +161,12 @@ extension BaseSearchViewController: SideMenuControllerDelegate {
         case .share:
             let appLink = [URL(string: "https://play.google.com/store/apps/details?id=com.iskcon.prabhupada")!]
             let shareController = UIActivityViewController(activityItems: appLink, applicationActivities: nil)
-            controller.present(shareController,animated: true)
+            controller.present(shareController, animated: true)
         case .donate:
-            if let donateWebsite = URL (string: "https://bvks.com/donate/"){
+            if let donateWebsite = URL(string: "https://bvks.com/donate/") {
                 let config = SFSafariViewController.Configuration()
                 config.entersReaderIfAvailable = true
-                let safariController = SFSafariViewController(url: donateWebsite, configuration:config)
+                let safariController = SFSafariViewController(url: donateWebsite, configuration: config)
                 controller.present(safariController, animated: true, completion: nil)
             }
         case .copyright:

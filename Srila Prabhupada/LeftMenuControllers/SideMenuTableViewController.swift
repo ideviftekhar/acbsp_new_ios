@@ -8,36 +8,27 @@
 import UIKit
 import FirebaseAuth
 
-//Protocol
+// Protocol
 protocol SideMenuControllerDelegate: AnyObject {
 
-    func sideMenuController(_ controller: SideMenuTableViewController, didSelected menu: SideMenuTableViewController.Menu)
+    func sideMenuController(_ controller: SideMenuTableViewController, didSelected menu: SideMenuItem)
 }
 
-class SideMenuTableViewController: UITableViewController{
-    
-    @IBOutlet weak var sideMenuTableView : UITableView!
+class SideMenuTableViewController: UITableViewController {
 
-    enum Menu: String, CaseIterable {
-        case mediaLibrary = "Media library"
-        case history = "History"
-        case stats = "Stats"
-        case popularLectures = "Popular Lectures"
-        case about = "About"
-        case share = "Share"
-        case donate = "Donate"
-        case copyright = "Copyright"
-        case signOut = "Logout"
-    }
+    @IBOutlet weak var sideMenuTableView: UITableView!
 
-    let menus: [Menu] = Menu.allCases
+    let menus: [SideMenuItem] = SideMenuItem.allCases
 
-    //delegate property
-    weak var delegate : SideMenuControllerDelegate?
-    
+    // delegate property
+    weak var delegate: SideMenuControllerDelegate?
+
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+}
+
+extension SideMenuTableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return menus.count
@@ -45,14 +36,14 @@ class SideMenuTableViewController: UITableViewController{
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "SideMenuCell", for: indexPath)
-        
+
         let menu = menus[indexPath.row]
         cell.textLabel?.text = menu.rawValue
-        
+
         return cell
     }
-    
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath){
+
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
         let menu = menus[indexPath.row]
@@ -66,15 +57,25 @@ class SideMenuTableViewController: UITableViewController{
                 do {
                     try FirebaseAuth.Auth.auth().signOut()
 
-                    if let window = UIApplication.shared.keyWindow {
+                    let keyWindow: UIWindow?
+                    if #available(iOS 13, *) {
+                        keyWindow = UIApplication.shared.connectedScenes
+                            .compactMap { $0 as? UIWindowScene }
+                            .flatMap { $0.windows }
+                            .first(where: { $0.isKeyWindow })
+                    } else {
+                        keyWindow = UIApplication.shared.keyWindow
+                    }
+
+                    if let keyWindow = keyWindow {
                         // A mask of options indicating how you want to perform the animations.
-                        UIView.transition(with: window, duration: 0.5, options: [.transitionFlipFromLeft]) {
+                        UIView.transition(with: keyWindow, duration: 0.5, options: [.transitionFlipFromLeft]) {
                             let initialController = UIStoryboard.main.instantiateInitialViewController()
-                            window.rootViewController = initialController
+                            keyWindow.rootViewController = initialController
                         } completion: { _ in
                         }
                     }
-                } catch (let error) {
+                } catch let error {
 
                     let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
                     alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
@@ -88,5 +89,4 @@ class SideMenuTableViewController: UITableViewController{
             delegate?.sideMenuController(self, didSelected: menu)
         }
     }
-
 }

@@ -12,11 +12,11 @@ protocol TappableLabelDelegate: AnyObject {
     func tappableLabel(_ label: TappableLabel, didTap string: String)
 }
 
-//Custom label used for terms and condition like tapable string in it
+// Custom label used for terms and condition like tapable string in it
 class TappableLabel: UILabel {
-    
+
     private let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer()
-    
+
     weak var delegate: TappableLabelDelegate?
 
     private var links: Set<String> = []
@@ -36,7 +36,7 @@ class TappableLabel: UILabel {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    
+
     func commonInit() {
         self.isUserInteractionEnabled = true
         lineBreakMode = .byWordWrapping
@@ -49,7 +49,9 @@ class TappableLabel: UILabel {
         linkAttributes[.foregroundColor] = UIColor.systemRed
         linkAttributes[.underlineStyle] = NSNumber(value: 1)
     }
-    
+}
+
+extension TappableLabel {
     func addLink(_ string: String) {
         links.insert(string)
 
@@ -126,4 +128,3 @@ extension TappableLabel {
         return NSLocationInRange(indexOfCharacter, targetRange)
     }
 }
-

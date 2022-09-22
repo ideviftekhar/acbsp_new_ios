@@ -33,7 +33,7 @@ class CreateAccountViewController: UIViewController {
             showLoading()
             view.endEditing(true)
 
-            signupViewModel.signup(completion:{ [self] result in
+            signupViewModel.signup(completion: { [self] result in
                 self.hideLoading()
 
                 switch result {
@@ -92,5 +92,3 @@ extension CreateAccountViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
     }
 }
-
-
