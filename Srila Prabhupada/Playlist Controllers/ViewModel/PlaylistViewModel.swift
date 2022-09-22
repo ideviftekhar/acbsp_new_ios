@@ -6,8 +6,6 @@
 //
 
 import Foundation
-
-import Foundation
 import FirebaseFirestore
 import FirebaseAuth
 
@@ -60,8 +58,13 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
                 completion(.failure(error))
             } else if let documents: [QueryDocumentSnapshot] = snapshot?.documents {
 
-                let playlists = documents.map({ Playlist($0.data()) })
-                completion(.success(playlists))
+                do {
+                    let remotePlaylist = try documents.map({ try $0.data(as: Playlist.self) })
+                    completion(.success(remotePlaylist))
+                } catch {
+                    print(error)
+                    completion(.failure(error))
+                }
             }
         }
     }
@@ -85,8 +88,13 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
                 completion(.failure(error))
             } else if let documents: [QueryDocumentSnapshot] = snapshot?.documents {
 
-                let playlists = documents.map({ Playlist($0.data()) })
-                completion(.success(playlists))
+                do {
+                    let remotePlaylist = try documents.map({ try $0.data(as: Playlist.self) })
+                    completion(.success(remotePlaylist))
+                } catch {
+                    print(error)
+                    completion(.failure(error))
+                }
             }
         }
     }

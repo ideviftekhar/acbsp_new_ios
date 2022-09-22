@@ -22,6 +22,11 @@ class HomeViewController: BaseLectureViewController {
 
             switch result {
             case .success(let lectures):
+
+                if searchText == nil, selectedSortType == .default, selectedFilters.isEmpty {
+                    Filter.updateFilterSubtypes(lectures: lectures)
+                }
+
                 reloadData(with: lectures)
             case .failure(let error):
                 showAlert(title: "Error", message: error.localizedDescription)

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Time: Hashable {
+struct Time: Hashable, Codable {
 
     static func == (lhs: Self, rhs: Self) -> Bool {
         return lhs.totalSeconds == rhs.totalSeconds

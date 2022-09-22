@@ -31,33 +31,10 @@ enum Filter: String, CaseIterable {
 
     var subtypes: [String] {
         switch self {
-        case .languages:
-            return ["English", "Hindi", "Bangali"]
-        case .countries:
-            return ["Australia", "Canada", "China"]
-        case .place:
-            return ["Chhindwara, MP, India", "Boston, USA", "Delhi, India"]
-        case .years:
-            return [
-                "1977",
-                "1976",
-                "1975",
-                "1974",
-                "1973",
-                "1972",
-                "1971",
-                "1970",
-                "1969",
-                "1968",
-                "1967",
-                "1966"
-            ]
         case .month:
             return Self.monthNames
-        case .categories:
-            return ["Addresses", "Darsana", "Lectures"]
-        case .translation:
-            return ["French", "Italian", "Hindi"]
+        default:
+            return UserDefaults.standard.array(forKey: firebaseKey) as? [String] ?? []
         }
     }
 
@@ -94,6 +71,67 @@ enum Filter: String, CaseIterable {
             return query.whereField(firebaseKey, in: monthNumbers)
         case .place, .categories:
             return query.whereField(firebaseKey, arrayContainsAny: selectedSubtypes)
+        }
+    }
+
+    static func updateFilterSubtypes(lectures: [Lecture]) {
+        DispatchQueue.global().async {
+
+            do {
+                var languages: Set<String> = []
+
+                for lecture in lectures where !lecture.language.main.isEmpty {
+                    languages.insert(lecture.language.main)
+                }
+                UserDefaults.standard.set(languages.sorted(), forKey: Filter.languages.firebaseKey)
+            }
+
+            do {
+                var countries: Set<String> = []
+
+                for lecture in lectures where !lecture.location.country.isEmpty {
+                    countries.insert(lecture.location.country)
+                }
+
+                UserDefaults.standard.set(countries.sorted(), forKey: Filter.countries.firebaseKey)
+            }
+
+            do {
+                var place: Set<String> = []
+
+                for lecture in lectures where !lecture.place.isEmpty {
+                    place.formUnion(lecture.place)
+                }
+                UserDefaults.standard.set(place.sorted(), forKey: Filter.place.firebaseKey)
+            }
+
+            do {
+                var years: Set<String> = []
+
+                for lecture in lectures where !lecture.dateOfRecording.year.isEmpty {
+                    years.insert(lecture.dateOfRecording.year)
+                }
+                UserDefaults.standard.set(years.sorted(), forKey: Filter.years.firebaseKey)
+            }
+
+            do {
+                var categories: Set<String> = []
+
+                for lecture in lectures where !lecture.category.isEmpty {
+                    categories.formUnion(lecture.category)
+                }
+                UserDefaults.standard.set(categories.sorted(), forKey: Filter.categories.firebaseKey)
+            }
+
+            do {
+                var translation: Set<String> = []
+
+                for lecture in lectures where !lecture.language.translations.isEmpty {
+                    translation.formUnion(lecture.language.translations)
+                }
+                UserDefaults.standard.set(translation.sorted(), forKey: Filter.translation.firebaseKey)
+            }
+            UserDefaults.standard.synchronize()
         }
     }
 }

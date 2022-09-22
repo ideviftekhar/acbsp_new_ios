@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina3_5" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -14,28 +15,28 @@
             <objects>
                 <viewController storyboardIdentifier="FilterViewController" title="Filter" id="5fP-8M-h1D" customClass="FilterViewController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zj5-A6-CTX">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bnC-3Z-rFC">
-                                <rect key="frame" x="0.0" y="44" width="320" height="371"/>
+                                <rect key="frame" x="0.0" y="91" width="390" height="654"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="tmq-e0-9hJ">
-                                        <rect key="frame" x="0.0" y="0.0" width="140" height="371"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="140" height="654"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="140" id="Ibh-P1-kO1"/>
                                         </constraints>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FilterTypeTableViewCell" rowHeight="50" id="JuC-hG-V6l" customClass="FilterTypeTableViewCell" customModule="Srila_Prabhupada" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="44.5" width="140" height="50"/>
+                                                <rect key="frame" x="0.0" y="50" width="140" height="50"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JuC-hG-V6l" id="7fF-Z4-i91">
                                                     <rect key="frame" x="0.0" y="0.0" width="140" height="50"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Languages" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vuC-N2-pqd">
-                                                            <rect key="frame" x="15" y="16" width="75.5" height="18"/>
+                                                            <rect key="frame" x="15" y="16" width="75.666666666666671" height="18"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -76,18 +77,18 @@
                                         </connections>
                                     </tableView>
                                     <tableView clipsSubviews="YES" tag="1" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="coc-WZ-we1">
-                                        <rect key="frame" x="140" y="0.0" width="180" height="371"/>
+                                        <rect key="frame" x="140" y="0.0" width="250" height="654"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FilterDetailTableViewCell" rowHeight="51" id="bGo-0b-cEw" customClass="FilterDetailTableViewCell" customModule="Srila_Prabhupada" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="44.5" width="180" height="51"/>
+                                                <rect key="frame" x="0.0" y="50" width="250" height="51"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bGo-0b-cEw" id="T4B-wQ-1gS">
-                                                    <rect key="frame" x="0.0" y="0.0" width="180" height="51"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="250" height="51"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kdI-3p-94k" customClass="BEMCheckBox">
-                                                            <rect key="frame" x="15" y="15.5" width="20" height="20"/>
+                                                            <rect key="frame" x="15" y="15.666666666666664" width="20" height="20"/>
                                                             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <constraints>
@@ -113,7 +114,7 @@
                                                             </userDefinedRuntimeAttributes>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="a3Y-Pk-bDc">
-                                                            <rect key="frame" x="50" y="16.5" width="114" height="18"/>
+                                                            <rect key="frame" x="50" y="16.666666666666668" width="184" height="18.000000000000004"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -139,7 +140,7 @@
                                         </connections>
                                     </tableView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Dwa-ye-AVX">
-                                        <rect key="frame" x="139.5" y="0.0" width="0.5" height="371"/>
+                                        <rect key="frame" x="139.66666666666666" y="0.0" width="0.33333333333334281" height="654"/>
                                         <color key="backgroundColor" systemColor="systemGray2Color"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="0.5" id="waY-k0-gsW"/>
@@ -161,7 +162,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dL3-B5-RVy" customClass="RoundButton" customModule="Srila_Prabhupada" customModuleProvider="target">
-                                <rect key="frame" x="20" y="430" width="280" height="40"/>
+                                <rect key="frame" x="20" y="760" width="350" height="40"/>
                                 <color key="backgroundColor" name="0099CA"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="2i2-8T-sod"/>
@@ -200,7 +201,7 @@
                             <constraint firstItem="m8y-fW-OAH" firstAttribute="trailing" secondItem="dL3-B5-RVy" secondAttribute="trailing" constant="20" id="sP3-1z-XVP"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="WKq-7i-Kxe">
+                    <navigationItem key="navigationItem" title="Filter" id="WKq-7i-Kxe">
                         <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="VBV-Ug-y9c">
                             <connections>
                                 <action selector="cancelButtonPressed:" destination="5fP-8M-h1D" id="UDR-jZ-5vL"/>
@@ -224,10 +225,10 @@
         <!--Navigation Controller-->
         <scene sceneID="zLD-4I-Q9I">
             <objects>
-                <navigationController storyboardIdentifier="HomeNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="q8o-ig-Vgg" customClass="NavigationController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="FilterNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="q8o-ig-Vgg" customClass="NavigationController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="el8-1Y-5R2">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="96"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="el8-1Y-5R2">
+                        <rect key="frame" x="0.0" y="47" width="390" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="barTintColor" name="ThemeColor"/>
@@ -304,7 +305,7 @@
             <color red="1" green="0.39215686274509803" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

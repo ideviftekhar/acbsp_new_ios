@@ -50,13 +50,13 @@ class LectureCell: UITableViewCell, IQModelableCell {
 
             titleLabel.text = model.titleDisplay
 //            verseLabel.text = model.language["main"] as? String
-            verseLabel.text = model.legacyData["verse"] as? String
-            durationLabel.text = model.length.displayString
-            locationLabel.text = model.locationDisplay
+            verseLabel.text = model.legacyData.verse
+            durationLabel.text = model.lengthTime.displayString
+            locationLabel.text = model.location.displayString
             dateLabel.text = "\(model.dateOfRecording.year)/\(model.dateOfRecording.month)/\(model.dateOfRecording.day)/"
             progressView.value = CGFloat.random(in: 0...100)
 
-            if let url = model.thumbnail {
+            if let url = model.thumbnailURL {
                 thumbnailImageView.af.setImage(withURL: url, placeholderImage: UIImage(named: "logo_40"))
             } else {
                 thumbnailImageView.image = UIImage(named: "logo_40")

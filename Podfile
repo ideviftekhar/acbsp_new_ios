@@ -8,6 +8,7 @@ target 'Srila Prabhupada' do
 
 	pod 'SideMenu'
 
+  pod 'FirebaseFirestoreSwift'
   pod 'FirebaseCore'
   pod 'FirebaseAuth'
   pod 'FirebaseFirestore'

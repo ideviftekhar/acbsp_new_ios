@@ -94,10 +94,14 @@ class BaseSearchViewController: UIViewController {
 extension BaseSearchViewController: FilterViewControllerDelegate {
 
     @objc private func filterAction(_ sender: Any) {
-        let viewController = UIStoryboard.common.instantiate(FilterViewController.self)
+        let navController = UIStoryboard.common.instantiate(UINavigationController.self, identifier: "FilterNavigationController")
+        guard let viewController = navController.viewControllers.first as? FilterViewController else {
+            return
+        }
+
         viewController.delegate = self
         viewController.selectedFilters = self.selectedFilters
-        self.navigationController?.pushViewController(viewController, animated: true)
+        self.present(navController, animated: true)
     }
 
     func filterController(_ controller: FilterViewController, didSelected filters: [Filter: [String]]) {

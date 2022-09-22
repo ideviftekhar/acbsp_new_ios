@@ -7,20 +7,8 @@
 
 import Foundation
 
-struct TopLectures {
+struct TopLecture: Hashable, Codable {
+
     var documentId: String
     var playedIds: [Int]
-
-    init(_ attributes: [String: Any]) {
-        self.documentId = attributes["documentId"] as? String ?? ""
-
-        if let arrplayedIds = attributes["playedIds"] as? [Int] {
-            self.playedIds = []
-            for arrplayedId in arrplayedIds {
-                self.playedIds.append(arrplayedId)
-            }
-        } else {
-            self.playedIds = []
-        }
-    }
 }

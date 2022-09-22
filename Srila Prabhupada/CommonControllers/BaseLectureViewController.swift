@@ -67,15 +67,13 @@ extension BaseLectureViewController: UITableViewDelegate, UITableViewDataSource 
 
         let aLecture = lectures[indexPath.row]
 
-        guard let audios = aLecture.resources["audios"] as? [[String: Any]],
-        let firstAudio = audios.first,
-        let urlString = firstAudio["url"] as? String,
-        let url = URL(string: urlString) else {
+        guard let firstAudio = aLecture.resources.audios.first,
+              let audioURL = firstAudio.audioURL else {
             return
         }
 
         let playerController = AVPlayerViewController()
-        playerController.player = AVPlayer(url: url)
+        playerController.player = AVPlayer(url: audioURL)
         self.present(playerController, animated: true) {
             playerController.player?.play()
         }

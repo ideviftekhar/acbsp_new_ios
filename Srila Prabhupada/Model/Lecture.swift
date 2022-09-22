@@ -6,88 +6,163 @@
 //
 
 import Foundation
+import FirebaseFirestoreSwift
 
-struct Lecture: Hashable, Equatable {
+struct Lecture: Hashable, Codable {
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
-
-    }
-
-    static func == (lhs: Self, rhs: Self) -> Bool {
-        return lhs.id == rhs.id &&
-        lhs.title == rhs.title &&
-        lhs.length == rhs.length
     }
 
     var category: [String]
     var creationTimestamp: String
     var dateOfRecording: Day
-    var descriptions: [String]
+    var description: [String]
     var id: Int
-    var language: [String: Any]
+    var language: LectureLanguage
     var lastModifiedTimestamp: String
-    var legacyData: [String: Any]
-    var length: Time
+    var legacyData: LegacyData
+    var length: Int
     var lengthType: [String]
-    var location: [String: Any]
+    var location: Location
     var place: [String]
-    var resources: [String: Any]
-    var search: [String: Any]
+    var resources: Resources
+    var search: Search
     var tags: [String]
-    var thumbnail: URL?
+    var thumbnail: String
     var title: [String]
 
-    init(_ attributes: [String: Any]) {
-
-        self.category = attributes["category"] as? [String] ?? []
-        self.creationTimestamp = attributes["creationTimestamp"] as? String ?? ""
-        let dateOfRecording = attributes["dateOfRecording"] as? [String: String] ?? [:]
-        self.dateOfRecording = Day(day: dateOfRecording["day"] ?? "", month: dateOfRecording["month"] ?? "", year: dateOfRecording["year"] ?? "")
-        self.descriptions = attributes["description"] as? [String] ?? []
-        self.id = attributes["id"] as? Int ?? 0
-        self.language = attributes["language"] as? [String: Any] ?? [:]
-        self.lastModifiedTimestamp = attributes["lastModifiedTimestamp"] as? String ?? ""
-        self.legacyData = attributes["legacyData"] as? [String: Any] ?? [:]
-        let length = attributes["length"] as? Int ?? 0
-        self.length = Time(totalSeconds: length)
-        self.lengthType = attributes["lengthType"] as? [String] ?? []
-        self.location = attributes["location"] as? [String: Any] ?? [:]
-        self.place = attributes["place"] as? [String] ?? []
-        self.resources = attributes["resources"] as? [String: Any] ?? [:]
-        self.search = attributes["resources"] as? [String: Any] ?? [:]
-        self.tags = attributes["tags"] as? [String] ?? []
-        let thumbnailString = attributes["thumbnail"] as? String ?? ""
-
-        if !thumbnailString.isEmpty {
-            thumbnail = URL(string: thumbnailString)
-        } else {
-            thumbnail = nil
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        do {
+            self.id = try container.decode(Int.self, forKey: .id)
+            self.category = try container.decode([String].self, forKey: .category)
+            self.creationTimestamp = try container.decode(String.self, forKey: .creationTimestamp)
+            self.dateOfRecording = try container.decode(Day.self, forKey: .dateOfRecording)
+            self.description = try container.decode([String].self, forKey: .description)
+            self.language = try container.decode(LectureLanguage.self, forKey: .language)
+            self.lastModifiedTimestamp = try container.decode(String.self, forKey: .lastModifiedTimestamp)
+            self.legacyData = try container.decode(LegacyData.self, forKey: .legacyData)
+            self.length = try container.decodeIfPresent(Int.self, forKey: .length) ?? 0
+            self.lengthType = try container.decode([String].self, forKey: .lengthType)
+            self.location = try container.decode(Location.self, forKey: .location)
+            self.place = try container.decode([String].self, forKey: .place)
+            self.resources = try container.decode(Resources.self, forKey: .resources)
+            self.search = try container.decode(Search.self, forKey: .search)
+            self.tags = try container.decode([String].self, forKey: .tags)
+            self.thumbnail = try container.decode(String.self, forKey: .thumbnail)
+            self.title = try container.decode([String].self, forKey: .title)
+        } catch {
+            print(error)
+            fatalError(error.localizedDescription)
         }
-
-        self.title = attributes["title"] as? [String] ?? []
     }
 
     var titleDisplay: String {
         title.joined(separator: " ")
     }
 
-    var locationDisplay: String {
+    var lengthTime: Time {
+        return Time(totalSeconds: length)
+    }
+
+    var thumbnailURL: URL? {
+        guard !thumbnail.isEmpty else {
+            return nil
+        }
+        return URL(string: thumbnail)
+    }
+}
+
+struct Day: Hashable, Codable {
+    let day: String
+    let month: String
+    let year: String
+}
+
+struct LectureLanguage: Hashable, Codable {
+
+    var main: String
+    var translations: [String]
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.main = try container.decode(String.self, forKey: .main)
+
+        if let value = try? container.decode([String].self, forKey: .translations) {
+            self.translations = value
+        } else if let value = try? container.decode(String.self, forKey: .translations) {
+            self.translations = [value]
+        } else {
+            self.translations = []
+        }
+    }
+}
+
+struct LegacyData: Hashable, Codable {
+
+    var lectureCode: String
+    var slug: String
+    var verse: String
+    var wpId: Int
+}
+
+struct Location: Hashable, Codable {
+
+    var city: String
+    var state: String
+    var country: String
+
+    var displayString: String {
 
         var locations: [String] = []
 
-        if let value = self.location["city"] as? String, !value.isEmpty {
-            locations.append(value)
+        if !city.isEmpty {
+            locations.append(city)
         }
 
-        if let value = self.location["state"] as? String, !value.isEmpty {
-            locations.append(value)
+        if !state.isEmpty {
+            locations.append(state)
         }
 
-        if let value = self.location["country"] as? String, !value.isEmpty {
-            locations.append(value)
+        if !country.isEmpty {
+            locations.append(country)
         }
 
         return locations.joined(separator: ", ")
     }
+}
+
+struct Resources: Hashable, Codable {
+    var audios: [Audio]
+}
+
+struct Audio: Hashable, Codable {
+    var creationTimestamp: String
+    var downloads: Int
+    var lastModifiedTimestamp: String
+    var views: Int
+    var url: String?
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        self.creationTimestamp = try container.decode(String.self, forKey: .creationTimestamp)
+        self.downloads = try container.decode(Int.self, forKey: .downloads)
+        self.lastModifiedTimestamp = try container.decode(String.self, forKey: .lastModifiedTimestamp)
+        self.views = try container.decode(Int.self, forKey: .views)
+        self.url = try? container.decode(String.self, forKey: .url)
+    }
+
+    var audioURL: URL? {
+        guard let url = url, !url.isEmpty else {
+            return nil
+        }
+        return URL(string: url)
+    }
+
+}
+
+struct Search: Hashable, Codable {
+    var advanced: [String]
+    var simple: [String]
 }

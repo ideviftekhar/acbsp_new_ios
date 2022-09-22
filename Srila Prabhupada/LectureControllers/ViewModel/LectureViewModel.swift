@@ -8,6 +8,7 @@
 import Foundation
 import FirebaseFirestore
 import FirebaseAuth
+import FirebaseFirestoreSwift
 
 protocol LectureViewModel: AnyObject {
 
@@ -61,16 +62,17 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
                     }
 
                     query = sortyType.applyOn(query: query)
-
                     query.getDocuments { snapshot, _ in
 
                         completedCount += 1
-
                         if let documents: [QueryDocumentSnapshot] = snapshot?.documents {
 
-                            let remoteLectures = documents.map({ Lecture($0.data()) })
-
-                            lectures.append(contentsOf: remoteLectures)
+                            do {
+                                let remoteLectures = try documents.map({ try $0.data(as: Lecture.self) })
+                                lectures.append(contentsOf: remoteLectures)
+                            } catch {
+                                completion(.failure(error))
+                            }
                         }
 
                         if completedCount == lectureIdsGroup.count {
@@ -98,8 +100,13 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
                     completion(.failure(error))
                } else if let documents: [QueryDocumentSnapshot] = snapshot?.documents {
 
-                   let lectures = documents.map({ Lecture($0.data()) })
-                   completion(.success(lectures))
+                   do {
+                       let remoteLectures = try documents.map({ try $0.data(as: Lecture.self) })
+                       completion(.success(remoteLectures))
+                   } catch {
+                       print(error)
+                       completion(.failure(error))
+                   }
                 }
             }
         }
@@ -147,12 +154,14 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
                 completion(.failure(error))
            } else if let documents: [QueryDocumentSnapshot] = snapshot?.documents {
 
-               let lectureIDs: [Int] = documents.flatMap({
-                   let lecture: TopLectures = TopLectures($0.data())
-                   return lecture.playedIds
-               })
-
-               completion(.success(lectureIDs))
+               do {
+                   let remoteTopLectures = try documents.map({ try $0.data(as: TopLecture.self) })
+                   let lectureIDs: [Int] = remoteTopLectures.flatMap({ $0.playedIds })
+                   completion(.success(lectureIDs))
+               } catch {
+                   print(error)
+                   completion(.failure(error))
+               }
             }
         }
     }
@@ -170,12 +179,14 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
                 completion(.failure(error))
            } else if let documents: [QueryDocumentSnapshot] = snapshot?.documents {
 
-               let lectureIDs: [Int] = documents.flatMap({
-                   let lecture: TopLectures = TopLectures($0.data())
-                   return lecture.playedIds
-               })
-
-               completion(.success(lectureIDs))
+               do {
+                   let remoteTopLectures = try documents.map({ try $0.data(as: TopLecture.self) })
+                   let lectureIDs: [Int] = remoteTopLectures.flatMap({ $0.playedIds })
+                   completion(.success(lectureIDs))
+               } catch {
+                   print(error)
+                   completion(.failure(error))
+               }
             }
         }
     }
