@@ -9,6 +9,6 @@ import Foundation
 
 struct TopLecture: Hashable, Codable {
 
-    var documentId: String
-    var playedIds: [Int]
+    let documentId: String
+    let playedIds: [Int]
 }

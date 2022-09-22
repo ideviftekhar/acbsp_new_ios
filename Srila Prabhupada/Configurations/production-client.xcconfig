@@ -9,5 +9,3 @@
 // https://help.apple.com/xcode/#/dev745c5c974
 
 GOOGLE_SERVICE_FILE_NAME = GoogleService-Info-production-client
-
-LECTURES_COLLECTION_NAME = lectures

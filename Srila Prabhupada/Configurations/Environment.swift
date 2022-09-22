@@ -13,16 +13,12 @@ struct Environment {
 
     let googleServiceFileName: String
 
-    let lectureCollectionName: String
-
     private init(infoDictionary: [String: Any]?) {
         guard let infoDictionary = infoDictionary else {
             googleServiceFileName = ""
-            lectureCollectionName = ""
             return
         }
 
         googleServiceFileName = (infoDictionary["GOOGLE_SERVICE_FILE_NAME"] as? String) ?? ""
-        lectureCollectionName = (infoDictionary["LECTURES_COLLECTION_NAME"] as? String) ?? ""
     }
 }

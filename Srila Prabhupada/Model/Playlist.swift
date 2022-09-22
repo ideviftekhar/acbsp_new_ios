@@ -8,6 +8,6 @@
 import Foundation
 
 struct Playlist: Hashable, Codable {
-    var title: String
-    var lectureIds: [Int]
+    let title: String
+    let lectureIds: [Int]
 }

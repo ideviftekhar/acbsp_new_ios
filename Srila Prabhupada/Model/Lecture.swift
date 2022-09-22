@@ -14,23 +14,23 @@ struct Lecture: Hashable, Codable {
         hasher.combine(id)
     }
 
-    var category: [String]
-    var creationTimestamp: String
-    var dateOfRecording: Day
-    var description: [String]
-    var id: Int
-    var language: LectureLanguage
-    var lastModifiedTimestamp: String
-    var legacyData: LegacyData
-    var length: Int
-    var lengthType: [String]
-    var location: Location
-    var place: [String]
-    var resources: Resources
-    var search: Search
-    var tags: [String]
-    var thumbnail: String
-    var title: [String]
+    let category: [String]
+    let creationTimestamp: String
+    let dateOfRecording: Day
+    let description: [String]
+    let id: Int
+    let language: LectureLanguage
+    let lastModifiedTimestamp: String
+    let legacyData: LegacyData
+    let length: Int
+    let lengthType: [String]
+    let location: Location
+    let place: [String]
+    let resources: Resources
+    let search: Search
+    let tags: [String]
+    let thumbnail: String
+    let title: [String]
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -82,8 +82,8 @@ struct Day: Hashable, Codable {
 
 struct LectureLanguage: Hashable, Codable {
 
-    var main: String
-    var translations: [String]
+    let main: String
+    let translations: [String]
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -101,17 +101,17 @@ struct LectureLanguage: Hashable, Codable {
 
 struct LegacyData: Hashable, Codable {
 
-    var lectureCode: String
-    var slug: String
-    var verse: String
-    var wpId: Int
+    let lectureCode: String
+    let slug: String
+    let verse: String
+    let wpId: Int
 }
 
 struct Location: Hashable, Codable {
 
-    var city: String
-    var state: String
-    var country: String
+    let city: String
+    let state: String
+    let country: String
 
     var displayString: String {
 
@@ -134,15 +134,15 @@ struct Location: Hashable, Codable {
 }
 
 struct Resources: Hashable, Codable {
-    var audios: [Audio]
+    let audios: [Audio]
 }
 
 struct Audio: Hashable, Codable {
-    var creationTimestamp: String
-    var downloads: Int
-    var lastModifiedTimestamp: String
-    var views: Int
-    var url: String?
+    let creationTimestamp: String
+    let downloads: Int
+    let lastModifiedTimestamp: String
+    let views: Int
+    let url: String?
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -163,6 +163,6 @@ struct Audio: Hashable, Codable {
 }
 
 struct Search: Hashable, Codable {
-    var advanced: [String]
-    var simple: [String]
+    let advanced: [String]
+    let simple: [String]
 }

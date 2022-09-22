@@ -56,6 +56,8 @@
 		C0118A7928D34AA800F6002D /* GoogleService-Info-development-client.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0118A7728D34AA700F6002D /* GoogleService-Info-development-client.plist */; };
 		C0118A7A28D34AA800F6002D /* GoogleService-Info-development-internal.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0118A7828D34AA700F6002D /* GoogleService-Info-development-internal.plist */; };
 		C0118A7C28D34AB400F6002D /* GoogleService-Info-production-client.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0118A7B28D34AB400F6002D /* GoogleService-Info-production-client.plist */; };
+		C03E3F2628DCC20A00B987DD /* FirestoreCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03E3F2528DCC20A00B987DD /* FirestoreCollection.swift */; };
+		C03E3F2828DCC6C500B987DD /* ListenInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03E3F2728DCC6C500B987DD /* ListenInfo.swift */; };
 		C0B7990228DC3FF700681649 /* TopLectures.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B7990028DC3FF700681649 /* TopLectures.swift */; };
 		C0B7990328DC3FF700681649 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B7990128DC3FF700681649 /* Playlist.swift */; };
 		C0B7990728DC41AE00681649 /* PlaylistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B7990528DC41AE00681649 /* PlaylistCell.swift */; };
@@ -137,6 +139,8 @@
 		C0118A7728D34AA700F6002D /* GoogleService-Info-development-client.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-development-client.plist"; sourceTree = "<group>"; };
 		C0118A7828D34AA700F6002D /* GoogleService-Info-development-internal.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-development-internal.plist"; sourceTree = "<group>"; };
 		C0118A7B28D34AB400F6002D /* GoogleService-Info-production-client.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-production-client.plist"; sourceTree = "<group>"; };
+		C03E3F2528DCC20A00B987DD /* FirestoreCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreCollection.swift; sourceTree = "<group>"; };
+		C03E3F2728DCC6C500B987DD /* ListenInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenInfo.swift; sourceTree = "<group>"; };
 		C0B7990028DC3FF700681649 /* TopLectures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopLectures.swift; sourceTree = "<group>"; };
 		C0B7990128DC3FF700681649 /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 		C0B7990528DC41AE00681649 /* PlaylistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistCell.swift; sourceTree = "<group>"; };
@@ -227,6 +231,7 @@
 				C0B7990428DC3FFA00681649 /* Supporting Model */,
 				C00AB21428D204D700A62A2F /* Lecture.swift */,
 				C0FA049E28DB37FA003177DA /* LectureInfo.swift */,
+				C03E3F2728DCC6C500B987DD /* ListenInfo.swift */,
 				C0B7990128DC3FF700681649 /* Playlist.swift */,
 				C0B7990028DC3FF700681649 /* TopLectures.swift */,
 			);
@@ -270,6 +275,7 @@
 				C003CD9E28D8491600A11039 /* Srila Prabhupada.entitlements */,
 				C0D76E2128CF7C9A00F69320 /* Configurations */,
 				C0EA13EB28CF684800BE9110 /* Subclasses */,
+				C03E3F2428DCC1EB00B987DD /* Firebase Firestore */,
 				C0FA305B28CF461900E78843 /* Extensions */,
 				C00AB21328D1FD6D00A62A2F /* Model */,
 				C00E4DDE28CA393600F1A123 /* PreLogIn */,
@@ -354,6 +360,14 @@
 				C00E4E0628CA39FE00F1A123 /* HistoryViewController.swift */,
 			);
 			path = LectureControllers;
+			sourceTree = "<group>";
+		};
+		C03E3F2428DCC1EB00B987DD /* Firebase Firestore */ = {
+			isa = PBXGroup;
+			children = (
+				C03E3F2528DCC20A00B987DD /* FirestoreCollection.swift */,
+			);
+			path = "Firebase Firestore";
 			sourceTree = "<group>";
 		};
 		C0B7990428DC3FFA00681649 /* Supporting Model */ = {
@@ -648,6 +662,7 @@
 				C0FA306228CF51EB00E78843 /* SignupViewModel.swift in Sources */,
 				C0EA13EF28CF6D0D00BE9110 /* UIView+extension.swift in Sources */,
 				C00AB20A28D1F52D00A62A2F /* FilterDetailTableViewCell.swift in Sources */,
+				C03E3F2828DCC6C500B987DD /* ListenInfo.swift in Sources */,
 				C0FA305F28CF4AF000E78843 /* LoginViewModel.swift in Sources */,
 				C00AB22028D2137C00A62A2F /* Time.swift in Sources */,
 				C00E4E0C28CA39FE00F1A123 /* HomeViewController.swift in Sources */,
@@ -655,6 +670,7 @@
 				C00E4E0928CA39FE00F1A123 /* DownloadViewController.swift in Sources */,
 				C00AB20428D1E6DD00A62A2F /* FilterViewController.swift in Sources */,
 				C0D76E2528CF7C9B00F69320 /* Environment.swift in Sources */,
+				C03E3F2628DCC20A00B987DD /* FirestoreCollection.swift in Sources */,
 				C00AB21128D1FD5600A62A2F /* SortType.swift in Sources */,
 				C00E4E1728CA433A00F1A123 /* AboutViewController.swift in Sources */,
 				C00E4E1828CA433A00F1A123 /* CopyrightViewController.swift in Sources */,

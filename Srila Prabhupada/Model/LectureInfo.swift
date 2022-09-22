@@ -7,12 +7,7 @@
 
 import Foundation
 
-struct LectureInfo {
-    var isFavourite: Bool
-    var id: Int
-
-    init(_ attributes: [String: Any]) {
-        self.isFavourite = attributes["isFavourite"] as? Bool ?? false
-        self.id = attributes["id"] as? Int ?? 0
-    }
+struct LectureInfo: Hashable, Codable {
+    let isFavourite: Bool
+    let id: Int
 }

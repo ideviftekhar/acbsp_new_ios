@@ -70,7 +70,7 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
     }
 
     func getPublicPlaylist(searchText: String?, sortyType: SortType, filter: [Filter: [String]], completion: @escaping (Swift.Result<[Playlist], Error>) -> Void) {
-        var query: Query = firestore.collection("PublicPlaylists")
+        var query: Query = firestore.collection((FirestoreCollection.publicPlaylists.path))
 
         if let searchText = searchText, !searchText.isEmpty {
             query = query.whereField("title", arrayContains: searchText)

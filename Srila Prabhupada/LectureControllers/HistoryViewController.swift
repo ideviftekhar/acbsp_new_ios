@@ -11,7 +11,32 @@ class HistoryViewController: BaseLectureViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
 
-//        self.lectures = ["History 1", "History 2", "History 3", "History 4", "History 5"]
+    override func refreshAsynchronous() {
+
+        showLoading()
+
+        lectureViewModel.getListenedLectureIds(completion: { [self] result in
+
+            switch result {
+            case .success(let lectureIDs):
+
+                lectureViewModel.getLectures(searchText: searchText, sortyType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, completion: { [self] result in
+                    hideLoading()
+
+                    switch result {
+                    case .success(let lectures):
+                        reloadData(with: lectures)
+                    case .failure(let error):
+                        showAlert(title: "Error", message: error.localizedDescription)
+                    }
+                })
+
+            case .failure(let error):
+                hideLoading()
+                showAlert(title: "Error", message: error.localizedDescription)
+            }
+        })
     }
 }

@@ -17,6 +17,7 @@ protocol LectureViewModel: AnyObject {
     func getFavoriteLectureIds(completion: @escaping (Swift.Result<[Int], Error>) -> Void)
     func getWeekLecturesIds(weekDays: [String], completion: @escaping (Swift.Result<[Int], Error>) -> Void)
     func getMonthLecturesIds(month: Int, year: Int, completion: @escaping (Swift.Result<[Int], Error>) -> Void)
+    func getListenedLectureIds(completion: @escaping (Swift.Result<[Int], Error>) -> Void)
 }
 
 class DefaultLectureViewModel: NSObject, LectureViewModel {
@@ -49,7 +50,7 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
                 var completedCount = 0
                 for lectureIDs in lectureIdsGroup {
 
-                    var query: Query = firestore.collection(Environment.current.lectureCollectionName)
+                    var query: Query = firestore.collection(FirestoreCollection.lectures.path)
 
                     if let searchText = searchText, !searchText.isEmpty {
                         query = query.whereField("title", arrayContains: searchText)
@@ -82,7 +83,7 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
                 }
             }
         } else {
-            var query: Query = firestore.collection(Environment.current.lectureCollectionName)
+            var query: Query = firestore.collection(FirestoreCollection.lectures.path)
 
             if let searchText = searchText, !searchText.isEmpty {
                 query = query.whereField("title", arrayContains: searchText)
@@ -120,9 +121,7 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
             return
         }
 
-        let documentPath = "users/\(currentUser.uid)/lectureinfo"
-
-        var query: Query = firestore.collection(documentPath)
+        var query: Query = firestore.collection(FirestoreCollection.usersLectureInfo(userId: currentUser.uid).path)
 
         query = query.whereField("isFavourite", isEqualTo: true)
 
@@ -132,19 +131,49 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
                 completion(.failure(error))
             } else if let documents: [QueryDocumentSnapshot] = snapshot?.documents {
 
-                let lectureIDs: [Int] = documents.map({
-                    let info: LectureInfo = LectureInfo($0.data())
-                    return info.id
-                })
+                do {
+                    let remoteLectureInfos = try documents.map({ try $0.data(as: LectureInfo.self) })
+                    let lectureIDs: [Int] = remoteLectureInfos.map({ $0.id })
+                    completion(.success(lectureIDs))
+                } catch {
+                    print(error)
+                    completion(.failure(error))
+                }
+            }
+        }
+    }
 
-                completion(.success(lectureIDs))
+    func getListenedLectureIds(completion: @escaping (Swift.Result<[Int], Error>) -> Void) {
+
+        guard let currentUser = Auth.auth().currentUser else {
+            let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
+            completion(.failure(error))
+            return
+        }
+
+        var query: Query = firestore.collection(FirestoreCollection.usersListenInfo(userId: currentUser.uid).path)
+
+        query.getDocuments { snapshot, error in
+
+            if let error = error {
+                completion(.failure(error))
+            } else if let documents: [QueryDocumentSnapshot] = snapshot?.documents {
+
+                do {
+                    let remoteLectureInfos = try documents.map({ try $0.data(as: ListenInfo.self) })
+                    let lectureIDs: [Int] = remoteLectureInfos.flatMap({ $0.playedIds })
+                    completion(.success(lectureIDs))
+                } catch {
+                    print(error)
+                    completion(.failure(error))
+                }
             }
         }
     }
 
     func getWeekLecturesIds(weekDays: [String], completion: @escaping (Swift.Result<[Int], Error>) -> Void) {
 
-        var query: Query = firestore.collection("TopLectures")
+        var query: Query = firestore.collection(FirestoreCollection.topLectures.path)
 
         query = query.whereField("documentId", in: weekDays)
 
@@ -168,7 +197,7 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
 
     func getMonthLecturesIds(month: Int, year: Int, completion: @escaping (Swift.Result<[Int], Error>) -> Void) {
 
-        var query: Query = firestore.collection("TopLectures")
+        var query: Query = firestore.collection((FirestoreCollection.topLectures.path))
 
         query = query.whereField("creationDay.month", isEqualTo: month)
         query = query.whereField("creationDay.year", isEqualTo: year)
