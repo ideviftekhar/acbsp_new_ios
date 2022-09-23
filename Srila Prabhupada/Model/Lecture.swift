@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import FirebaseFirestoreSwift
 
 struct Lecture: Hashable, Codable {
 
@@ -31,6 +30,10 @@ struct Lecture: Hashable, Codable {
     let tags: [String]
     let thumbnail: String
     let title: [String]
+
+    let isDownloaded: Bool = Bool.random()
+    let isFavorites: Bool = Bool.random()
+    let playProgress: Int = Int.random(in: 0...100)
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -75,9 +78,37 @@ struct Lecture: Hashable, Codable {
 }
 
 struct Day: Hashable, Codable {
-    let day: String
-    let month: String
-    let year: String
+    let day: Int
+    let month: Int
+    let year: Int
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+
+        if let value = try? container.decode(String.self, forKey: .day), let valueInt = Int(value) {
+            day = valueInt
+        } else if let value = try? container.decode(Int.self, forKey: .day) {
+            day = value
+        } else {
+            day = 0
+        }
+
+        if let value = try? container.decode(String.self, forKey: .month), let valueInt = Int(value) {
+            month = valueInt
+        } else if let value = try? container.decode(Int.self, forKey: .month) {
+            month = value
+        } else {
+            month = 0
+        }
+
+        if let value = try? container.decode(String.self, forKey: .year), let valueInt = Int(value) {
+            year = valueInt
+        } else if let value = try? container.decode(Int.self, forKey: .year) {
+            year = value
+        } else {
+            year = 0
+        }
+    }
 }
 
 struct LectureLanguage: Hashable, Codable {

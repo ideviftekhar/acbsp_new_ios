@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import FirebaseAuth
 
 // Protocol
 protocol SideMenuControllerDelegate: AnyObject {
@@ -54,33 +53,34 @@ extension SideMenuTableViewController {
             let alertController = UIAlertController(title: "Logout", message: "Are you sure you would like to Logout?", preferredStyle: .actionSheet)
             alertController.addAction(UIAlertAction(title: "Logout", style: .destructive, handler: { _ in
 
-                do {
-                    try FirebaseAuth.Auth.auth().signOut()
-
-                    let keyWindow: UIWindow?
-                    if #available(iOS 13, *) {
-                        keyWindow = UIApplication.shared.connectedScenes
-                            .compactMap { $0 as? UIWindowScene }
-                            .flatMap { $0.windows }
-                            .first(where: { $0.isKeyWindow })
-                    } else {
-                        keyWindow = UIApplication.shared.keyWindow
-                    }
-
-                    if let keyWindow = keyWindow {
-                        // A mask of options indicating how you want to perform the animations.
-                        UIView.transition(with: keyWindow, duration: 0.5, options: [.transitionFlipFromLeft]) {
-                            let initialController = UIStoryboard.main.instantiateInitialViewController()
-                            keyWindow.rootViewController = initialController
-                        } completion: { _ in
+                FirestoreManager.shared.signOut(completion: { result in
+                    switch result {
+                    case .success:
+                        let keyWindow: UIWindow?
+                        if #available(iOS 13, *) {
+                            keyWindow = UIApplication.shared.connectedScenes
+                                .compactMap { $0 as? UIWindowScene }
+                                .flatMap { $0.windows }
+                                .first(where: { $0.isKeyWindow })
+                        } else {
+                            keyWindow = UIApplication.shared.keyWindow
                         }
-                    }
-                } catch let error {
 
-                    let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-                    alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-                    self.present(alertController, animated: true, completion: nil)
-                }
+                        if let keyWindow = keyWindow {
+                            // A mask of options indicating how you want to perform the animations.
+                            UIView.transition(with: keyWindow, duration: 0.5, options: [.transitionFlipFromLeft]) {
+                                let initialController = UIStoryboard.main.instantiateInitialViewController()
+                                keyWindow.rootViewController = initialController
+                            } completion: { _ in
+                            }
+                        }
+                    case .failure(let error):
+                        let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+                        alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                        self.present(alertController, animated: true, completion: nil)
+                    }
+
+                })
             }))
 
             alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))

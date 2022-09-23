@@ -18,8 +18,6 @@ class PlaylistCell: UITableViewCell, IQModelableCell {
     @IBOutlet private var emailLabel: UILabel!
     @IBOutlet private var menuButton: UIButton!
 
-    var menu: UIMenu!
-
     var allActions: [PlaylistOption: UIAction] = [:]
 
     override func awakeFromNib() {
@@ -50,21 +48,20 @@ class PlaylistCell: UITableViewCell, IQModelableCell {
             lectureCountLabel.text = "Lecture: \(model.lectureIds.count)"
             emailLabel.text = "TODO"
 
-//            if let url = model.thumbnail {
-//                thumbnailImageView.af.setImage(withURL: url, placeholderImage: UIImage(named: "logo_40"))
-//            } else {
+            if let url = model.thumbnailURL {
+                thumbnailImageView.af.setImage(withURL: url, placeholderImage: UIImage(named: "logo_40"))
+            } else {
                 thumbnailImageView.image = UIImage(named: "logo_40")
-//            }
+            }
 
             do {
                 var actions: [UIAction] = []
 
-                // Is Private
-                if Bool.random(), let deletePlaylist = allActions[.deletePlaylist] {
+                if model.isPrivate, let deletePlaylist = allActions[.deletePlaylist] {
                     actions.append(deletePlaylist)
                 }
 
-                menu.replacingChildren(actions)
+                self.menuButton.menu = self.menuButton.menu?.replacingChildren(actions)
             }
         }
     }
@@ -88,9 +85,7 @@ class PlaylistCell: UITableViewCell, IQModelableCell {
             return allActions[key]
         })
 
-        menu = UIMenu(title: "", image: nil, identifier: UIMenu.Identifier.init(rawValue: "Option"), options: UIMenu.Options.displayInline, children: childrens)
-
         menuButton.showsMenuAsPrimaryAction = true
-        menuButton.menu = menu
+        menuButton.menu = UIMenu(title: "", image: nil, identifier: UIMenu.Identifier.init(rawValue: "Option"), options: UIMenu.Options.displayInline, children: childrens)
     }
 }

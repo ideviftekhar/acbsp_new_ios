@@ -12,7 +12,7 @@ import FirebaseFirestoreSwift
 
 protocol LectureViewModel: AnyObject {
 
-    func getLectures(searchText: String?, sortyType: SortType, filter: [Filter: [String]], lectureIDs: [Int]?, completion: @escaping (Swift.Result<[Lecture], Error>) -> Void)
+    func getLectures(searchText: String?, sortType: LectureSortType, filter: [Filter: [String]], lectureIDs: [Int]?, source: FirestoreSource, completion: @escaping (Swift.Result<[Lecture], Error>) -> Void)
 
     func getFavoriteLectureIds(completion: @escaping (Swift.Result<[Int], Error>) -> Void)
     func getWeekLecturesIds(weekDays: [String], completion: @escaping (Swift.Result<[Int], Error>) -> Void)
@@ -22,94 +22,43 @@ protocol LectureViewModel: AnyObject {
 
 class DefaultLectureViewModel: NSObject, LectureViewModel {
 
-    let firestore: Firestore = {
-        let firestore = Firestore.firestore()
-        let settings = FirestoreSettings()
-        settings.isPersistenceEnabled = true
-        firestore.settings = settings
+    func getLectures(searchText: String?, sortType: LectureSortType, filter: [Filter: [String]], lectureIDs: [Int]?, source: FirestoreSource, completion: @escaping (Swift.Result<[Lecture], Error>) -> Void) {
 
-        return firestore
-    }()
+        if let lectureIDs = lectureIDs, lectureIDs.isEmpty {
+            completion(.success([]))
+        } else {
+            let query: Query = FirestoreManager.shared.firestore.collection(FirestoreCollection.lectures.path)
 
-    func getLectures(searchText: String?, sortyType: SortType, filter: [Filter: [String]], lectureIDs: [Int]?, completion: @escaping (Swift.Result<[Lecture], Error>) -> Void) {
+            FirestoreManager.shared.getDocuments(query: query, source: source, completion: { (result: Swift.Result<[Lecture], Error>) in
+                switch result {
+                case .success(var success):
 
-        if var lectureIDs = lectureIDs {
-            if lectureIDs.isEmpty {
-                completion(.success([]))
-            } else {
-
-                var lectureIdsGroup: [[Int]] = []
-
-                while !lectureIDs.isEmpty {
-                    let ids = Array(lectureIDs.suffix(10))
-                    lectureIdsGroup.append(ids)
-                    lectureIDs = Array(lectureIDs.dropFirst(10))
-                }
-
-                var lectures: [Lecture] = []
-                var completedCount = 0
-                for lectureIDs in lectureIdsGroup {
-
-                    var query: Query = firestore.collection(FirestoreCollection.lectures.path)
+                    if let lectureIDs = lectureIDs {
+                        success = success.filter({ lectureIDs.contains($0.id) })
+                    }
 
                     if let searchText = searchText, !searchText.isEmpty {
-                        query = query.whereField("title", arrayContains: searchText)
-                    }
+                        let selectedSubtypes: [String] = searchText.split(separator: " ").map { String($0) }
 
-                    query = query.whereField("id", in: lectureIDs)
+                        success = success.filter { (lecture: Lecture) in
+                            return selectedSubtypes.first(where: { (subtype: String) in
+                                return lecture.title.first(where: { (title: String) in
+                                    title.localizedCaseInsensitiveContains(subtype)
+                                }) != nil
+                            }) != nil
+                        }
+                    }
 
                     for (filter, subtypes) in filter {
-                        query = filter.applyOn(query: query, selectedSubtypes: subtypes)
+                        success = filter.filter(success, selectedSubtypes: subtypes)
                     }
 
-                    query = sortyType.applyOn(query: query)
-                    query.getDocuments { snapshot, _ in
-
-                        completedCount += 1
-                        if let documents: [QueryDocumentSnapshot] = snapshot?.documents {
-
-                            do {
-                                let remoteLectures = try documents.map({ try $0.data(as: Lecture.self) })
-                                lectures.append(contentsOf: remoteLectures)
-                            } catch {
-                                completion(.failure(error))
-                            }
-                        }
-
-                        if completedCount == lectureIdsGroup.count {
-                            completion(.success(lectures))
-                        }
-                    }
-                }
-            }
-        } else {
-            var query: Query = firestore.collection(FirestoreCollection.lectures.path)
-
-            if let searchText = searchText, !searchText.isEmpty {
-                query = query.whereField("title", arrayContains: searchText)
-            }
-
-            for (filter, subtypes) in filter {
-                query = filter.applyOn(query: query, selectedSubtypes: subtypes)
-            }
-
-            query = sortyType.applyOn(query: query)
-
-            query.getDocuments { snapshot, error in
-
-                if let error = error {
+                    success = sortType.sort(success)
+                    completion(.success(success))
+                case .failure(let error):
                     completion(.failure(error))
-               } else if let documents: [QueryDocumentSnapshot] = snapshot?.documents {
-
-                   do {
-                       let remoteLectures = try documents.map({ try $0.data(as: Lecture.self) })
-                       completion(.success(remoteLectures))
-                   } catch {
-                       print(error)
-                       completion(.failure(error))
-                   }
                 }
-            }
+            })
         }
     }
 
@@ -121,26 +70,19 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
             return
         }
 
-        var query: Query = firestore.collection(FirestoreCollection.usersLectureInfo(userId: currentUser.uid).path)
+        var query: Query = FirestoreManager.shared.firestore.collection(FirestoreCollection.usersLectureInfo(userId: currentUser.uid).path)
 
         query = query.whereField("isFavourite", isEqualTo: true)
 
-        query.getDocuments { snapshot, error in
-
-            if let error = error {
+        FirestoreManager.shared.getDocuments(query: query, source: FirestoreSource.default, completion: { (result: Swift.Result<[LectureInfo], Error>) in
+            switch result {
+            case .success(let success):
+                let lectureIDs: [Int] = success.map({ $0.id })
+                completion(.success(lectureIDs))
+            case .failure(let error):
                 completion(.failure(error))
-            } else if let documents: [QueryDocumentSnapshot] = snapshot?.documents {
-
-                do {
-                    let remoteLectureInfos = try documents.map({ try $0.data(as: LectureInfo.self) })
-                    let lectureIDs: [Int] = remoteLectureInfos.map({ $0.id })
-                    completion(.success(lectureIDs))
-                } catch {
-                    print(error)
-                    completion(.failure(error))
-                }
             }
-        }
+        })
     }
 
     func getListenedLectureIds(completion: @escaping (Swift.Result<[Int], Error>) -> Void) {
@@ -151,72 +93,57 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
             return
         }
 
-        var query: Query = firestore.collection(FirestoreCollection.usersListenInfo(userId: currentUser.uid).path)
+        let query: Query = FirestoreManager.shared.firestore.collection(FirestoreCollection.usersListenInfo(userId: currentUser.uid).path)
 
-        query.getDocuments { snapshot, error in
-
-            if let error = error {
+        FirestoreManager.shared.getDocuments(query: query, source: FirestoreSource.default, completion: { (result: Swift.Result<[ListenInfo], Error>) in
+            switch result {
+            case .success(let success):
+                let lectureIDs: [Int] = success.flatMap({ obj -> [Int] in
+                    obj.playedIds
+                })
+                completion(.success(lectureIDs))
+            case .failure(let error):
                 completion(.failure(error))
-            } else if let documents: [QueryDocumentSnapshot] = snapshot?.documents {
-
-                do {
-                    let remoteLectureInfos = try documents.map({ try $0.data(as: ListenInfo.self) })
-                    let lectureIDs: [Int] = remoteLectureInfos.flatMap({ $0.playedIds })
-                    completion(.success(lectureIDs))
-                } catch {
-                    print(error)
-                    completion(.failure(error))
-                }
             }
-        }
+        })
     }
 
     func getWeekLecturesIds(weekDays: [String], completion: @escaping (Swift.Result<[Int], Error>) -> Void) {
 
-        var query: Query = firestore.collection(FirestoreCollection.topLectures.path)
+        var query: Query =  FirestoreManager.shared.firestore.collection(FirestoreCollection.topLectures.path)
 
         query = query.whereField("documentId", in: weekDays)
 
-        query.getDocuments { snapshot, error in
-
-            if let error = error {
+        FirestoreManager.shared.getDocuments(query: query, source: FirestoreSource.default, completion: { (result: Swift.Result<[TopLecture], Error>) in
+            switch result {
+            case .success(let success):
+                let lectureIDs: [Int] = success.flatMap({ obj -> [Int] in
+                    obj.playedIds
+                })
+                completion(.success(lectureIDs))
+            case .failure(let error):
                 completion(.failure(error))
-           } else if let documents: [QueryDocumentSnapshot] = snapshot?.documents {
-
-               do {
-                   let remoteTopLectures = try documents.map({ try $0.data(as: TopLecture.self) })
-                   let lectureIDs: [Int] = remoteTopLectures.flatMap({ $0.playedIds })
-                   completion(.success(lectureIDs))
-               } catch {
-                   print(error)
-                   completion(.failure(error))
-               }
             }
-        }
+        })
     }
 
     func getMonthLecturesIds(month: Int, year: Int, completion: @escaping (Swift.Result<[Int], Error>) -> Void) {
 
-        var query: Query = firestore.collection((FirestoreCollection.topLectures.path))
+        var query: Query =  FirestoreManager.shared.firestore.collection((FirestoreCollection.topLectures.path))
 
         query = query.whereField("creationDay.month", isEqualTo: month)
         query = query.whereField("creationDay.year", isEqualTo: year)
 
-        query.getDocuments { snapshot, error in
-
-            if let error = error {
+        FirestoreManager.shared.getDocuments(query: query, source: FirestoreSource.default, completion: { (result: Swift.Result<[TopLecture], Error>) in
+            switch result {
+            case .success(let success):
+                let lectureIDs: [Int] = success.flatMap({ obj -> [Int] in
+                    obj.playedIds
+                })
+                completion(.success(lectureIDs))
+            case .failure(let error):
                 completion(.failure(error))
-           } else if let documents: [QueryDocumentSnapshot] = snapshot?.documents {
-
-               do {
-                   let remoteTopLectures = try documents.map({ try $0.data(as: TopLecture.self) })
-                   let lectureIDs: [Int] = remoteTopLectures.flatMap({ $0.playedIds })
-                   completion(.success(lectureIDs))
-               } catch {
-                   print(error)
-                   completion(.failure(error))
-               }
             }
-        }
+        })
     }
 }

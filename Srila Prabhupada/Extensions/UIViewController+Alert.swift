@@ -29,7 +29,7 @@ extension UIViewController {
         }
 
         for button in buttons {
-            alert.addAction(UIAlertAction(title: button.title, style: .destructive, handler: { _ in
+            alert.addAction(UIAlertAction(title: button.title, style: .default, handler: { _ in
                 button.handler?()
             }))
         }

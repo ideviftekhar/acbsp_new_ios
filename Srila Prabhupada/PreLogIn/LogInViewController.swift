@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import GoogleSignIn
+import AuthenticationServices
 
 class LogInViewController: UIViewController {
 
@@ -18,14 +18,21 @@ class LogInViewController: UIViewController {
     @IBOutlet weak var signInButton: UIButton!
     @IBOutlet weak var forgotPasswordButton: UIButton!
     @IBOutlet weak var createAccountButton: UIButton!
-    @IBOutlet weak var signWithGoogleButton: GIDSignInButton!
+    @IBOutlet weak var signWithGoogleButton: UIControl!
     @IBOutlet weak var loadingIndicatorView: UIActivityIndicatorView!
+
+    @IBOutlet weak var googleAppleSignInStackView: UIStackView!
+    private let signWithAppleButton: ASAuthorizationAppleIDButton = ASAuthorizationAppleIDButton()
 
     private let emailLoginViewModel: LoginViewModel = FirebaseEmailLoginViewModel()
     private let googleLoginViewModel: LoginViewModel = FirebaseGoogleLoginViewModel()
+    private let appleLoginViewModel: LoginViewModel = FirebaseAppleLoginViewModel()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        googleAppleSignInStackView.addArrangedSubview(signWithAppleButton)
+        signWithAppleButton.addTarget(self, action: #selector(signWithAppleTapped(_:)), for: .touchUpInside)
 
         emailTextField.addTarget(self, action: #selector(textFieldDidChanged(_:)), for: .editingChanged)
         passwordTextField.addTarget(self, action: #selector(textFieldDidChanged(_:)), for: .editingChanged)
@@ -63,6 +70,24 @@ class LogInViewController: UIViewController {
         view.endEditing(true)
 
         googleLoginViewModel.login(presentingController: self) { [self] result in
+            self.hideLoading()
+
+            switch result {
+            case .success:
+                let tabBarController = UIStoryboard.main.instantiate(TabBarController.self)
+                self.present(tabBarController, animated: true, completion: nil)
+            case .failure(let error):
+                self.showAlert(title: "Error", message: error.localizedDescription)
+            }
+        }
+    }
+
+    @objc func signWithAppleTapped(_ sender: UIButton) {
+
+        showLoading()
+        view.endEditing(true)
+
+        appleLoginViewModel.login(presentingController: self) { [self] result in
             self.hideLoading()
 
             switch result {

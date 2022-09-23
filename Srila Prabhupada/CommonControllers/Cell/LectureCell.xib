@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -31,7 +32,7 @@
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="toB-kP-27M">
-                        <rect key="frame" x="60" y="5" width="230" height="57"/>
+                        <rect key="frame" x="60" y="5" width="225" height="57"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7cs-uh-SL9">
                                 <rect key="frame" x="0.0" y="0.0" width="22" height="20"/>
@@ -88,7 +89,7 @@
                         </subviews>
                     </stackView>
                     <view contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="f6l-Bp-fUH" customClass="MBCircularProgressBarView">
-                        <rect key="frame" x="295" y="16" width="35" height="35"/>
+                        <rect key="frame" x="290" y="16" width="35" height="35"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="35" id="e6q-TU-Yc1"/>
@@ -137,29 +138,73 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q0B-mL-dK8">
-                        <rect key="frame" x="330" y="0.0" width="45" height="67"/>
+                        <rect key="frame" x="325" y="0.0" width="50" height="67"/>
+                        <color key="tintColor" name="0099CA"/>
                         <state key="normal" title="Button"/>
                         <buttonConfiguration key="configuration" style="plain" image="ellipsis.circle" catalog="system"/>
                     </button>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Mfu-JH-XN3">
+                        <rect key="frame" x="290" y="16.5" width="35" height="34"/>
+                        <color key="tintColor" systemColor="systemBlueColor"/>
+                    </imageView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.down.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="AdV-AQ-xel">
+                        <rect key="frame" x="4" y="8" width="12" height="11"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" systemColor="systemGreenColor"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="12" id="R3c-nt-G9s"/>
+                            <constraint firstAttribute="height" constant="12" id="e5b-dA-bgT"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="6"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="eiF-YO-8YM">
+                        <rect key="frame" x="4" y="48" width="12" height="11"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" systemColor="systemOrangeColor"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="12" id="hZc-C2-3GW"/>
+                            <constraint firstAttribute="width" constant="12" id="iX7-gS-PON"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="6"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="f6l-Bp-fUH" firstAttribute="leading" secondItem="toB-kP-27M" secondAttribute="trailing" constant="5" id="34a-Mu-aop"/>
+                    <constraint firstItem="f6l-Bp-fUH" firstAttribute="bottom" secondItem="Mfu-JH-XN3" secondAttribute="bottom" id="3R8-V1-gue"/>
                     <constraint firstItem="1Pj-Yk-u2T" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="4BB-Tf-aAh"/>
+                    <constraint firstItem="f6l-Bp-fUH" firstAttribute="leading" secondItem="Mfu-JH-XN3" secondAttribute="leading" id="4NH-zl-wAT"/>
                     <constraint firstAttribute="bottom" secondItem="Q0B-mL-dK8" secondAttribute="bottom" id="7NZ-Rw-l1C"/>
                     <constraint firstAttribute="bottom" secondItem="toB-kP-27M" secondAttribute="bottom" constant="5" id="96i-gw-Ptn"/>
                     <constraint firstItem="toB-kP-27M" firstAttribute="leading" secondItem="1Pj-Yk-u2T" secondAttribute="trailing" constant="10" id="A3j-iB-hV2"/>
+                    <constraint firstItem="f6l-Bp-fUH" firstAttribute="trailing" secondItem="Mfu-JH-XN3" secondAttribute="trailing" id="AP3-fe-Mkw"/>
+                    <constraint firstItem="AdV-AQ-xel" firstAttribute="centerX" secondItem="1Pj-Yk-u2T" secondAttribute="leading" id="Cah-A3-wzd"/>
                     <constraint firstItem="f6l-Bp-fUH" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Ibi-ZE-P5r"/>
+                    <constraint firstItem="AdV-AQ-xel" firstAttribute="centerY" secondItem="1Pj-Yk-u2T" secondAttribute="top" id="NOL-yy-TBw"/>
                     <constraint firstItem="Q0B-mL-dK8" firstAttribute="leading" secondItem="f6l-Bp-fUH" secondAttribute="trailing" id="STR-57-w8h"/>
+                    <constraint firstItem="eiF-YO-8YM" firstAttribute="centerX" secondItem="1Pj-Yk-u2T" secondAttribute="leading" id="c7c-5K-Fqh"/>
                     <constraint firstItem="1Pj-Yk-u2T" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="iWZ-Fv-PPJ"/>
                     <constraint firstItem="toB-kP-27M" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="jBX-0u-U10"/>
                     <constraint firstItem="Q0B-mL-dK8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="kmP-ad-XZj"/>
                     <constraint firstAttribute="trailing" secondItem="Q0B-mL-dK8" secondAttribute="trailing" id="oxx-FM-xiV"/>
+                    <constraint firstItem="f6l-Bp-fUH" firstAttribute="top" secondItem="Mfu-JH-XN3" secondAttribute="top" id="xqT-8o-lMg"/>
+                    <constraint firstItem="eiF-YO-8YM" firstAttribute="centerY" secondItem="1Pj-Yk-u2T" secondAttribute="bottom" id="yB9-me-6Hv"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="completedIconImageView" destination="Mfu-JH-XN3" id="dP6-IE-XwB"/>
                 <outlet property="dateLabel" destination="Z5O-MH-zt7" id="f9x-rJ-oOv"/>
+                <outlet property="downloadedIconImageView" destination="AdV-AQ-xel" id="zaf-uL-f7m"/>
                 <outlet property="durationLabel" destination="N9l-9l-L9l" id="98h-lU-srK"/>
+                <outlet property="favoritesIconImageView" destination="eiF-YO-8YM" id="Dvz-os-Nga"/>
                 <outlet property="locationLabel" destination="j2s-UD-Jnl" id="A9J-F7-CYm"/>
                 <outlet property="menuButton" destination="Q0B-mL-dK8" id="wRP-cu-9aA"/>
                 <outlet property="progressView" destination="f6l-Bp-fUH" id="AST-dg-4IU"/>
@@ -171,8 +216,11 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="ellipsis.circle" catalog="system" width="128" height="121"/>
+        <image name="arrow.down.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="checkmark.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="ellipsis.circle" catalog="system" width="128" height="123"/>
         <image name="logo_40" width="40" height="40"/>
+        <image name="star.circle.fill" catalog="system" width="128" height="123"/>
         <namedColor name="0099CA">
             <color red="0.0" green="0.59999999999999998" blue="0.792156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -181,6 +229,15 @@
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBlueColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemGreenColor">
+            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+        <systemColor name="systemOrangeColor">
+            <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

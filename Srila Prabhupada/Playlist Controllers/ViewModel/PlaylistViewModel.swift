@@ -11,8 +11,8 @@ import FirebaseAuth
 
 protocol PlaylistViewModel: AnyObject {
 
-    func getPrivatePlaylist(searchText: String?, sortyType: SortType, filter: [Filter: [String]], completion: @escaping (Swift.Result<[Playlist], Error>) -> Void)
-    func getPublicPlaylist(searchText: String?, sortyType: SortType, filter: [Filter: [String]], completion: @escaping (Swift.Result<[Playlist], Error>) -> Void)
+    func getPrivatePlaylist(searchText: String?, sortType: PlaylistSortType, completion: @escaping (Swift.Result<[Playlist], Error>) -> Void)
+    func getPublicPlaylist(searchText: String?, sortType: PlaylistSortType, completion: @escaping (Swift.Result<[Playlist], Error>) -> Void)
 }
 
 class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
@@ -26,7 +26,7 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
         return firestore
     }()
 
-    func getPrivatePlaylist(searchText: String?, sortyType: SortType, filter: [Filter: [String]], completion: @escaping (Swift.Result<[Playlist], Error>) -> Void) {
+    func getPrivatePlaylist(searchText: String?, sortType: PlaylistSortType, completion: @escaping (Swift.Result<[Playlist], Error>) -> Void) {
 
         guard let currentUser = Auth.auth().currentUser else {
             let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
@@ -40,62 +40,46 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
             return
         }
 
-        var query = firestore.collectionGroup(email)
+        let query = firestore.collectionGroup(email)
 
-        if let searchText = searchText, !searchText.isEmpty {
-            query = query.whereField("title", arrayContains: searchText)
-        }
+        FirestoreManager.shared.getDocuments(query: query, source: .default, completion: { (result: Swift.Result<[Playlist], Error>) in
+            switch result {
+            case .success(var success):
 
-        for (filter, subtypes) in filter {
-            query = filter.applyOn(query: query, selectedSubtypes: subtypes)
-        }
-
-        query = sortyType.applyOn(query: query)
-
-        query.getDocuments { snapshot, error in
-
-            if let error = error {
-                completion(.failure(error))
-            } else if let documents: [QueryDocumentSnapshot] = snapshot?.documents {
-
-                do {
-                    let remotePlaylist = try documents.map({ try $0.data(as: Playlist.self) })
-                    completion(.success(remotePlaylist))
-                } catch {
-                    print(error)
-                    completion(.failure(error))
+                if let searchText = searchText, !searchText.isEmpty {
+                    let selectedSubtypes: [String] = searchText.split(separator: " ").map { String($0) }
+                    success = success.filter { playlist in
+                        selectedSubtypes.first(where: { playlist.title.localizedCaseInsensitiveContains($0) }) != nil
+                    }
                 }
+
+                success = sortType.sort(success)
+                completion(.success(success))
+            case .failure(let error):
+                completion(.failure(error))
             }
-        }
+        })
     }
 
-    func getPublicPlaylist(searchText: String?, sortyType: SortType, filter: [Filter: [String]], completion: @escaping (Swift.Result<[Playlist], Error>) -> Void) {
-        var query: Query = firestore.collection((FirestoreCollection.publicPlaylists.path))
+    func getPublicPlaylist(searchText: String?, sortType: PlaylistSortType, completion: @escaping (Swift.Result<[Playlist], Error>) -> Void) {
+        let query: Query = firestore.collection((FirestoreCollection.publicPlaylists.path))
 
-        if let searchText = searchText, !searchText.isEmpty {
-            query = query.whereField("title", arrayContains: searchText)
-        }
+        FirestoreManager.shared.getDocuments(query: query, source: .default, completion: { (result: Swift.Result<[Playlist], Error>) in
+            switch result {
+            case .success(var success):
 
-        for (filter, subtypes) in filter {
-            query = filter.applyOn(query: query, selectedSubtypes: subtypes)
-        }
-
-        query = sortyType.applyOn(query: query)
-
-        query.getDocuments { snapshot, error in
-
-            if let error = error {
-                completion(.failure(error))
-            } else if let documents: [QueryDocumentSnapshot] = snapshot?.documents {
-
-                do {
-                    let remotePlaylist = try documents.map({ try $0.data(as: Playlist.self) })
-                    completion(.success(remotePlaylist))
-                } catch {
-                    print(error)
-                    completion(.failure(error))
+                if let searchText = searchText, !searchText.isEmpty {
+                    let selectedSubtypes: [String] = searchText.split(separator: " ").map { String($0) }
+                    success = success.filter { playlist in
+                        selectedSubtypes.first(where: { playlist.title.localizedCaseInsensitiveContains($0) }) != nil
+                    }
                 }
+
+                success = sortType.sort(success)
+                completion(.success(success))
+            case .failure(let error):
+                completion(.failure(error))
             }
-        }
+        })
     }
 }

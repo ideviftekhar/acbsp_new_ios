@@ -13,7 +13,8 @@ target 'Srila Prabhupada' do
   pod 'FirebaseAuth'
   pod 'FirebaseFirestore'
   pod 'FirebaseCrashlytics'
-
+  pod 'FirebaseMessaging'
+  
   pod 'GoogleSignIn'
   pod 'GoogleSignInSwiftSupport'
 

@@ -13,6 +13,9 @@ import AlamofireImage
 class LectureCell: UITableViewCell, IQModelableCell {
 
     @IBOutlet private var downloadedIconImageView: UIImageView!
+    @IBOutlet private var favoritesIconImageView: UIImageView!
+    @IBOutlet private var completedIconImageView: UIImageView!
+
     @IBOutlet private var thumbnailImageView: UIImageView!
     @IBOutlet private var titleLabel: UILabel!
     @IBOutlet private var verseLabel: UILabel!
@@ -21,9 +24,6 @@ class LectureCell: UITableViewCell, IQModelableCell {
     @IBOutlet private var dateLabel: UILabel!
     @IBOutlet private var menuButton: UIButton!
     @IBOutlet private var progressView: MBCircularProgressBarView!
-    @IBOutlet private var completedCheckbox: UIView!
-
-    var menu: UIMenu!
 
     var allActions: [LectureOption: UIAction] = [:]
 
@@ -54,7 +54,10 @@ class LectureCell: UITableViewCell, IQModelableCell {
             durationLabel.text = model.lengthTime.displayString
             locationLabel.text = model.location.displayString
             dateLabel.text = "\(model.dateOfRecording.year)/\(model.dateOfRecording.month)/\(model.dateOfRecording.day)/"
-            progressView.value = CGFloat.random(in: 0...100)
+            progressView.value = CGFloat(model.playProgress)
+
+            progressView.isHidden = model.playProgress == 100
+            completedIconImageView.isHidden = model.playProgress != 100
 
             if let url = model.thumbnailURL {
                 thumbnailImageView.af.setImage(withURL: url, placeholderImage: UIImage(named: "logo_40"))
@@ -62,18 +65,20 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 thumbnailImageView.image = UIImage(named: "logo_40")
             }
 
+            downloadedIconImageView.isHidden = !model.isDownloaded
+            favoritesIconImageView.isHidden = !model.isFavorites
+
             do {
                 var actions: [UIAction] = []
 
-                // Is Downloaded
-                if Bool.random(), let deleteDownload = allActions[.deleteFromDownloads] {
+                if model.isDownloaded, let deleteDownload = allActions[.deleteFromDownloads] {
                     actions.append(deleteDownload)
                 } else if let download = allActions[.download] {
                     actions.append(download)
                 }
 
                 // Is Favorites
-                if Bool.random(), let removeFromFavorites = allActions[.removeFromFavorites] {
+                if model.isFavorites, let removeFromFavorites = allActions[.removeFromFavorites] {
                     actions.append(removeFromFavorites)
                 } else if let markAsFavorite = allActions[.markAsFavorite] {
                     actions.append(markAsFavorite)
@@ -85,7 +90,7 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 }
 
                 // Is Heard
-                if Bool.random(), let resetProgress = allActions[.resetProgress] {
+                if model.playProgress == 100, let resetProgress = allActions[.resetProgress] {
                     actions.append(resetProgress)
                 } else if let markAsHeard = allActions[.markAsHeard] {
                     actions.append(markAsHeard)
@@ -96,7 +101,7 @@ class LectureCell: UITableViewCell, IQModelableCell {
                     actions.append(share)
                 }
 
-                menu.replacingChildren(actions)
+                self.menuButton.menu = self.menuButton.menu?.replacingChildren(actions)
             }
         }
     }
@@ -133,9 +138,7 @@ class LectureCell: UITableViewCell, IQModelableCell {
             return allActions[key]
         })
 
-        menu = UIMenu(title: "", image: nil, identifier: UIMenu.Identifier.init(rawValue: "Option"), options: UIMenu.Options.displayInline, children: childrens)
-
         menuButton.showsMenuAsPrimaryAction = true
-        menuButton.menu = menu
+        menuButton.menu = UIMenu(title: "", image: nil, identifier: UIMenu.Identifier.init(rawValue: "Option"), options: UIMenu.Options.displayInline, children: childrens)
     }
 }

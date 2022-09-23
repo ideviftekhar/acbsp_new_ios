@@ -14,10 +14,10 @@ class HomeViewController: BaseLectureViewController {
         super.viewDidLoad()
     }
 
-    override func refreshAsynchronous() {
+    override func refreshAsynchronous(source: FirestoreSource) {
 
         showLoading()
-        lectureViewModel.getLectures(searchText: searchText, sortyType: selectedSortType, filter: selectedFilters, lectureIDs: nil, completion: { [self] result in
+        lectureViewModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: nil, source: source, completion: { [self] result in
             hideLoading()
 
             switch result {

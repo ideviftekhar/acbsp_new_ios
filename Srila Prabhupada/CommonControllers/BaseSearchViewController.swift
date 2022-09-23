@@ -16,8 +16,7 @@ class BaseSearchViewController: UIViewController {
     private let searchController = UISearchController(searchResultsController: nil)
     private var lastSearchText: String = ""
 
-    private let sortButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.up.arrow.down"), style: .plain, target: nil, action: nil)
-    private lazy var filterButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal.decrease"), style: .plain, target: self, action: #selector(filterAction(_:)))
+    private(set) lazy var filterButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal.decrease.circle"), style: .plain, target: self, action: #selector(filterAction(_:)))
 
     var selectedFilters: [Filter: [String]] = [:]
 
@@ -29,60 +28,48 @@ class BaseSearchViewController: UIViewController {
         }
     }
 
-    var selectedSortType: SortType {
-        guard let selectedSortAction = sortButton.menu?.selectedElements.first as? UIAction, let selectedSortType = SortType(rawValue: selectedSortAction.identifier.rawValue) else {
-            return SortType.default
-        }
-        return selectedSortType
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
 
         var rightButtons = self.navigationItem.rightBarButtonItems ?? []
-        rightButtons.append(sortButton)
         rightButtons.append(filterButton)
         self.navigationItem.rightBarButtonItems = rightButtons
 
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search..."
-        searchController.searchBar.searchTextField.leftView?.tintColor = UIColor.systemGray4
-        searchController.searchBar.searchTextField.rightView?.tintColor = UIColor.systemGray4
-        searchController.searchBar.barStyle = .black
-        searchController.searchBar.searchTextField.defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-        searchController.searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: "Search...", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray4])
-        searchController.delegate = self
-        searchController.searchResultsUpdater = self
-        navigationItem.searchController = searchController
-        navigationItem.hidesSearchBarWhenScrolling = true
+        do {
+            let userDefaultKey: String = "\(Self.self).\(UISearchController.self)"
+            let searchText = UserDefaults.standard.string(forKey: userDefaultKey)
 
-        configureSortButton()
-    }
-
-    func configureSortButton() {
-        var actions: [UIAction] = []
-
-        for (index, sortType) in SortType.allCases.enumerated() {
-
-            let action: UIAction = UIAction(title: sortType.rawValue, image: nil, identifier: UIAction.Identifier(sortType.rawValue), state: (index == 0 ? .on : .off), handler: { [self] action in
-
-                for anAction in actions {
-                    if anAction.identifier == action.identifier { anAction.state = .on  } else {  anAction.state = .off }
-                }
-
-                self.sortButton.menu = self.sortButton.menu?.replacingChildren(actions)
-
-                refreshAsynchronous()
-            })
-
-            actions.append(action)
+            searchController.obscuresBackgroundDuringPresentation = false
+            searchController.searchBar.text = searchText
+            searchController.searchBar.placeholder = "Search..."
+            searchController.searchBar.searchTextField.leftView?.tintColor = UIColor.systemGray4
+            searchController.searchBar.searchTextField.rightView?.tintColor = UIColor.systemGray4
+            searchController.searchBar.barStyle = .black
+            searchController.searchBar.searchTextField.defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+            searchController.searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: "Search...", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray4])
+            searchController.delegate = self
+            searchController.searchResultsUpdater = self
+            navigationItem.searchController = searchController
+            navigationItem.hidesSearchBarWhenScrolling = true
         }
 
-        let menu = UIMenu(title: "Sort", image: nil, identifier: UIMenu.Identifier.init(rawValue: "Sort"), options: UIMenu.Options.displayInline, children: actions)
-        sortButton.menu = menu
+        let userDefaultKey: String = "\(Self.self).\(Filter.self)"
+        selectedFilters = Filter.get(userDefaultKey: userDefaultKey)
+        updateFilterButtonUI()
     }
 
-    @objc func refreshAsynchronous() {
+    var isFirstTime: Bool = true
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        if isFirstTime {
+            isFirstTime = false
+            refreshAsynchronous(source: .default)
+        }
+    }
+
+    @objc func refreshAsynchronous(source: FirestoreSource) {
 
     }
 
@@ -93,6 +80,20 @@ class BaseSearchViewController: UIViewController {
 
 extension BaseSearchViewController: FilterViewControllerDelegate {
 
+    private func updateFilterButtonUI() {
+
+        var count = 0
+        for filter in selectedFilters {
+            count += filter.value.count
+        }
+
+        if count == 0 {
+            filterButton.image = UIImage(systemName: "line.3.horizontal.decrease.circle")
+        } else {
+            filterButton.image = UIImage(systemName: "line.3.horizontal.decrease.circle.fill")
+        }
+    }
+
     @objc private func filterAction(_ sender: Any) {
         let navController = UIStoryboard.common.instantiate(UINavigationController.self, identifier: "FilterNavigationController")
         guard let viewController = navController.viewControllers.first as? FilterViewController else {
@@ -101,13 +102,20 @@ extension BaseSearchViewController: FilterViewControllerDelegate {
 
         viewController.delegate = self
         viewController.selectedFilters = self.selectedFilters
+
         self.present(navController, animated: true)
     }
 
     func filterController(_ controller: FilterViewController, didSelected filters: [Filter: [String]]) {
 
         self.selectedFilters = filters
-        refreshAsynchronous()
+
+        updateFilterButtonUI()
+
+        let userDefaultKey: String = "\(Self.self).\(Filter.self)"
+        Filter.set(filters: filters, userDefaultKey: userDefaultKey)
+
+        refreshAsynchronous(source: .cache)
     }
 }
 
@@ -122,11 +130,17 @@ extension BaseSearchViewController: UISearchControllerDelegate, UISearchResultsU
     }
 
     func updateSearchResults(for searchController: UISearchController) {
-        Self.cancelPreviousPerformRequests(withTarget: self, selector: #selector(refreshAsynchronous), object: nil)
         if let text = searchController.searchBar.text, !text.elementsEqual(lastSearchText) {
-            self.perform(#selector(refreshAsynchronous), with: nil, afterDelay: 1)
+            Self.cancelPreviousPerformRequests(withTarget: self, selector: #selector(userDidStoppedTyping), object: nil)
+            self.perform(#selector(userDidStoppedTyping), with: nil, afterDelay: 1)
             lastSearchText = text
+            let userDefaultKey: String = "\(Self.self).\(UISearchController.self)"
+            UserDefaults.standard.set(lastSearchText, forKey: userDefaultKey)
         }
+    }
+
+    @objc private func userDidStoppedTyping() {
+        refreshAsynchronous(source: .cache)
     }
 }
 

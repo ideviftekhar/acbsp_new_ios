@@ -53,25 +53,65 @@ enum Filter: String, CaseIterable {
         "December"
     ]
 
-    func applyOn(query: Query, selectedSubtypes: [String]) -> Query {
+    func filter(_ lectures: [Lecture], selectedSubtypes: [String]) -> [Lecture] {
 
         switch self {
-        case .languages, .countries, .years, .translation:
-            return query.whereField(firebaseKey, in: selectedSubtypes)
+        case .languages:
+            return lectures.filter { selectedSubtypes.contains($0.language.main) }
+        case .countries:
+            return lectures.filter { selectedSubtypes.contains($0.location.country) }
+        case .place:
+            let subTypesSet = Set(selectedSubtypes)
+            return lectures.filter { !subTypesSet.intersection($0.place).isEmpty }
+        case .years:
+            return lectures.filter { selectedSubtypes.contains("\($0.dateOfRecording.year)") }
         case .month:
 
-            let monthNumbers: [String] = selectedSubtypes.map { monthName in
+            let selectedMonthNumbers: [Int] = selectedSubtypes.map { monthName in
                 if let index = Self.monthNames.firstIndex(of: monthName) {
-                    return "\(index+1)"
+                    return index+1
                 } else {
-                    return "0"
+                    return 0
                 }
             }
 
-            return query.whereField(firebaseKey, in: monthNumbers)
-        case .place, .categories:
-            return query.whereField(firebaseKey, arrayContainsAny: selectedSubtypes)
+            return lectures.filter { selectedMonthNumbers.contains($0.dateOfRecording.month) }
+        case .categories:
+            let subTypesSet = Set(selectedSubtypes)
+            return lectures.filter { !subTypesSet.intersection($0.category).isEmpty }
+        case .translation:
+            let subTypesSet = Set(selectedSubtypes)
+            return lectures.filter { !subTypesSet.intersection($0.language.translations).isEmpty }
         }
+    }
+
+    static func get(userDefaultKey: String) -> [Filter: [String]] {
+
+        guard let filterDict: [String: [String]] = UserDefaults.standard.dictionary(forKey: userDefaultKey) as? [String: [String]] else {
+            return [:]
+        }
+
+        var filters: [Filter: [String]] = [:]
+
+        for aFilter in filterDict {
+            if let filter = Filter(rawValue: aFilter.key) {
+                filters[filter] = aFilter.value
+            }
+        }
+
+        return filters
+    }
+
+    static func set(filters: [Filter: [String]], userDefaultKey: String) {
+
+        var filterDict: [String: [String]] = [:]
+
+        for filter in filters {
+            filterDict[filter.key.rawValue] = filter.value
+        }
+
+        UserDefaults.standard.set(filterDict, forKey: userDefaultKey)
+        UserDefaults.standard.synchronize()
     }
 
     static func updateFilterSubtypes(lectures: [Lecture]) {
@@ -108,8 +148,8 @@ enum Filter: String, CaseIterable {
             do {
                 var years: Set<String> = []
 
-                for lecture in lectures where !lecture.dateOfRecording.year.isEmpty {
-                    years.insert(lecture.dateOfRecording.year)
+                for lecture in lectures where lecture.dateOfRecording.year != 0 {
+                    years.insert("\(lecture.dateOfRecording.year)")
                 }
                 UserDefaults.standard.set(years.sorted(), forKey: Filter.years.firebaseKey)
             }

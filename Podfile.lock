@@ -666,6 +666,15 @@ PODS:
     - GoogleUtilities/Environment (~> 7.7)
     - GoogleUtilities/UserDefaults (~> 7.7)
     - PromisesObjC (~> 2.1)
+  - FirebaseMessaging (9.6.0):
+    - FirebaseCore (~> 9.0)
+    - FirebaseInstallations (~> 9.0)
+    - GoogleDataTransport (< 10.0.0, >= 9.1.4)
+    - GoogleUtilities/AppDelegateSwizzler (~> 7.7)
+    - GoogleUtilities/Environment (~> 7.7)
+    - GoogleUtilities/Reachability (~> 7.7)
+    - GoogleUtilities/UserDefaults (~> 7.7)
+    - nanopb (< 2.30910.0, >= 2.30908.0)
   - GoogleDataTransport (9.2.0):
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
@@ -781,6 +790,7 @@ DEPENDENCIES:
   - FirebaseCrashlytics
   - FirebaseFirestore
   - FirebaseFirestoreSwift
+  - FirebaseMessaging
   - GoogleSignIn
   - GoogleSignInSwiftSupport
   - IQKeyboardManagerSwift
@@ -809,6 +819,7 @@ SPEC REPOS:
     - FirebaseFirestore
     - FirebaseFirestoreSwift
     - FirebaseInstallations
+    - FirebaseMessaging
     - GoogleDataTransport
     - GoogleSignIn
     - GoogleSignInSwiftSupport
@@ -848,6 +859,7 @@ SPEC CHECKSUMS:
   FirebaseFirestore: e4136560a4bdd1de5f02bc79ccb8414325b08823
   FirebaseFirestoreSwift: d86a0fef1225c6c1ddfae15b3250700867d63013
   FirebaseInstallations: 41f811b530c41dd90973d0174381cdb3fcb5e839
+  FirebaseMessaging: a4d7910e4af663c9cbfc1071c5bef34651690949
   GoogleDataTransport: 1c8145da7117bd68bbbed00cf304edb6a24de00f
   GoogleSignIn: f4d3939cc0d9264d7509c4b9a924a6c987e30b54
   GoogleSignInSwiftSupport: f76e00ac6ba4653af48372c765d45f327219b3ff
@@ -869,6 +881,6 @@ SPEC CHECKSUMS:
   SwiftLint: 414d099c0f305c6c73e56139efb468666e535ece
   SwiftTryCatch: fb6d2b34abe48efd69578dac919293a44f95b481
 
-PODFILE CHECKSUM: c0980f1d45ea3da0b7b1810e2c252d96f321d569
+PODFILE CHECKSUM: 8c3113bc6bd6de97215f3d7095ad65ce5ccf6d16
 
 COCOAPODS: 1.11.3

@@ -41,6 +41,8 @@
 	<string>$(GOOGLE_SERVICE_FILE_NAME)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
 	<key>LECTURES_COLLECTION_NAME</key>
 	<string>$(LECTURES_COLLECTION_NAME)</string>
 	<key>UIApplicationSceneManifest</key>

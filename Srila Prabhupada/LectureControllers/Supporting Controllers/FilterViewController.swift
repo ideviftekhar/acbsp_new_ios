@@ -40,7 +40,7 @@ class FilterViewController: UIViewController {
         }
     }
 
-    @IBAction private func clearBarButtonPressed(_ : UIBarButtonItem) {
+    @IBAction private func clearBarButtonPressed(_: UIBarButtonItem) {
         self.selectedFilters = [:]
         self.reloadData()
     }
@@ -53,7 +53,7 @@ class FilterViewController: UIViewController {
         }
     }
 
-    @IBAction private func cancelButtonPressed(_ : UIBarButtonItem) {
+    @IBAction private func cancelButtonPressed(_: UIBarButtonItem) {
         goBack()
     }
 

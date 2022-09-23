@@ -32,7 +32,7 @@ class ForgotPasswordViewController: UIViewController {
             showLoading()
             view.endEditing(true)
 
-            forgotPasswordViewModel.signup(completion: { [self] result in
+            forgotPasswordViewModel.passwordReset(completion: { [self] result in
                 self.hideLoading()
 
                 switch result {

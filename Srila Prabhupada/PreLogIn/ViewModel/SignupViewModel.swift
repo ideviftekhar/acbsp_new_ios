@@ -60,7 +60,7 @@ class FirebaseEmailSignupViewModel: NSObject, SignupViewModel {
         return .valid
     }
 
-    func signup(completion: @escaping (Result<User, Error>) -> Void) {
+    func signup(completion: @escaping (Result<FirebaseAuth.User, Error>) -> Void) {
 
         guard let username = username, let password = password else {
             let error = NSError(domain: "Signup", code: 0, userInfo: [NSLocalizedDescriptionKey: "Email or Password is blank"])
@@ -68,16 +68,6 @@ class FirebaseEmailSignupViewModel: NSObject, SignupViewModel {
             return
         }
 
-        Auth.auth().createUser(withEmail: username, password: password) { authResult, error in
-
-            if let error = error {
-                completion(.failure(error))
-            } else if let authResult = authResult {
-                completion(.success(authResult.user))
-            } else {
-                let error = NSError(domain: "Signup", code: 0, userInfo: [NSLocalizedDescriptionKey: "Something went wrong"])
-                completion(.failure(error))
-            }
-        }
+        FirestoreManager.shared.signUp(username: username, password: password, completion: completion)
     }
 }

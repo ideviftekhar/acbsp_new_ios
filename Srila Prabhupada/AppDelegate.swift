@@ -9,6 +9,7 @@ import UIKit
 import FirebaseCore
 import GoogleSignIn
 import IQKeyboardManagerSwift
+import FirebaseMessaging
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -43,4 +44,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
       return GIDSignIn.sharedInstance.handle(url)
     }
+
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+
+        Messaging.messaging().apnsToken = deviceToken
+    }
 }
+

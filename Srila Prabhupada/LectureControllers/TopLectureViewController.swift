@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class TopLectureViewController: BaseLectureViewController {
 
@@ -13,14 +14,27 @@ class TopLectureViewController: BaseLectureViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        do {
+            let userDefaultKey: String = "\(Self.self).\(UISegmentedControl.self)"
+            let lastSelectedIndex: Int = UserDefaults.standard.integer(forKey: userDefaultKey)
+            topLecturesSegmentControl.selectedSegmentIndex = lastSelectedIndex
+        }
     }
 
     @IBAction func segmentAction(_ sender: UISegmentedControl) {
+
+        do {
+            let userDefaultKey: String = "\(Self.self).\(UISegmentedControl.self)"
+            UserDefaults.standard.set(sender.selectedSegmentIndex, forKey: userDefaultKey)
+            UserDefaults.standard.synchronize()
+        }
+
         reloadData(with: [])
-        refreshAsynchronous()
+        refreshAsynchronous(source: .cache)
     }
 
-    override func refreshAsynchronous() {
+    override func refreshAsynchronous(source: FirestoreSource) {
 
         switch topLecturesSegmentControl.selectedSegmentIndex {
         case 0:
@@ -31,7 +45,7 @@ class TopLectureViewController: BaseLectureViewController {
                 switch result {
                 case .success(let lectureIDs):
 
-                    lectureViewModel.getLectures(searchText: searchText, sortyType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, completion: { [self] result in
+                    lectureViewModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, completion: { [self] result in
                         hideLoading()
 
                         switch result {
@@ -59,7 +73,7 @@ class TopLectureViewController: BaseLectureViewController {
                 switch result {
                 case .success(let lectureIDs):
 
-                    lectureViewModel.getLectures(searchText: searchText, sortyType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, completion: { [self] result in
+                    lectureViewModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, completion: { [self] result in
                         hideLoading()
 
                         switch result {

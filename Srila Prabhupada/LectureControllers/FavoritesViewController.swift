@@ -7,7 +7,6 @@
 
 import UIKit
 import FirebaseFirestore
-import FirebaseAuth
 
 class FavoritesViewController: BaseLectureViewController {
 
@@ -15,7 +14,7 @@ class FavoritesViewController: BaseLectureViewController {
         super.viewDidLoad()
     }
 
-    override func refreshAsynchronous() {
+    override func refreshAsynchronous(source: FirestoreSource) {
 
         showLoading()
 
@@ -24,7 +23,7 @@ class FavoritesViewController: BaseLectureViewController {
             switch result {
             case .success(let lectureIDs):
 
-                lectureViewModel.getLectures(searchText: searchText, sortyType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, completion: { [self] result in
+                lectureViewModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, completion: { [self] result in
                     hideLoading()
 
                     switch result {

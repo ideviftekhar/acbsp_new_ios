@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import FirebaseAuth
 
 enum ForgotPasswordValidationResult {
     case valid
@@ -19,7 +18,7 @@ protocol ForgotPasswordViewModel: AnyObject {
 
     func isValidCredentials() -> ForgotPasswordValidationResult
 
-    func signup(completion: @escaping (Swift.Result<String, Error>) -> Void)
+    func passwordReset(completion: @escaping (Swift.Result<String, Error>) -> Void)
 }
 
 class FirebaseForgotPasswordViewModel: NSObject, ForgotPasswordViewModel {
@@ -38,7 +37,7 @@ class FirebaseForgotPasswordViewModel: NSObject, ForgotPasswordViewModel {
         return .valid
     }
 
-    func signup(completion: @escaping (Result<String, Error>) -> Void) {
+    func passwordReset(completion: @escaping (Result<String, Error>) -> Void) {
 
         guard let username = username else {
             let error = NSError(domain: "ForgotPassword", code: 0, userInfo: [NSLocalizedDescriptionKey: "Email is blank"])
@@ -46,13 +45,6 @@ class FirebaseForgotPasswordViewModel: NSObject, ForgotPasswordViewModel {
             return
         }
 
-        Auth.auth().sendPasswordReset(withEmail: username) { error in
-
-            if let error = error {
-                completion(.failure(error))
-            } else {
-                completion(.success("We have successully sent reset password link to your email."))
-            }
-        }
+        FirestoreManager.shared.sendPasswordReset(username: username, completion: completion)
     }
 }
