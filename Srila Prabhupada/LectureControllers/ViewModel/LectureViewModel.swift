@@ -22,43 +22,92 @@ protocol LectureViewModel: AnyObject {
 
 class DefaultLectureViewModel: NSObject, LectureViewModel {
 
+    static let lectureUpdateNotification = Notification.Name(rawValue: "lectureUpdateNotification")
+
+    var allLectures: [Lecture] = []
+
+    override init() {
+        super.init()
+
+        NotificationCenter.default.addObserver(self, selector: #selector(downloadAddedNotification(_:)), name: Persistant.downloadAddedNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(downloadRemovedNotification(_:)), name: Persistant.downloadRemovedNotification, object: nil)
+    }
+
+    @objc func downloadAddedNotification(_ notification: Notification) {
+        guard let dbLecture = notification.object as? DBLecture else { return }
+        if let index = allLectures.firstIndex(where: { $0.id == dbLecture.id }) {
+            allLectures[index].downloadingState = dbLecture.downloadStateEnum
+            NotificationCenter.default.post(name: DefaultLectureViewModel.lectureUpdateNotification, object: nil)
+        }
+    }
+
+    @objc func downloadRemovedNotification(_ notification: Notification) {
+        guard let dbLecture = notification.object as? DBLecture else { return }
+        if let index = allLectures.firstIndex(where: { $0.id == dbLecture.id }) {
+            allLectures[index].downloadingState = dbLecture.downloadStateEnum
+            NotificationCenter.default.post(name: DefaultLectureViewModel.lectureUpdateNotification, object: nil)
+        }
+    }
+
+    static func filter(lectures: [Lecture], searchText: String?, sortType: LectureSortType, filter: [Filter: [String]], lectureIDs: [Int]?) -> [Lecture] {
+        var lectures: [Lecture] = lectures
+
+        if let lectureIDs = lectureIDs {
+            lectures = lectures.filter({ lectureIDs.contains($0.id) })
+        }
+
+        if let searchText = searchText, !searchText.isEmpty {
+            let selectedSubtypes: [String] = searchText.split(separator: " ").map { String($0) }
+
+            lectures = lectures.filter { (lecture: Lecture) in
+                return selectedSubtypes.first(where: { (subtype: String) in
+                    return lecture.title.first(where: { (title: String) in
+                        title.localizedCaseInsensitiveContains(subtype)
+                    }) != nil
+                }) != nil
+            }
+        }
+
+        for (filter, subtypes) in filter {
+            lectures = filter.filter(lectures, selectedSubtypes: subtypes)
+        }
+
+        lectures = sortType.sort(lectures)
+        return lectures
+    }
+
     func getLectures(searchText: String?, sortType: LectureSortType, filter: [Filter: [String]], lectureIDs: [Int]?, source: FirestoreSource, completion: @escaping (Swift.Result<[Lecture], Error>) -> Void) {
 
         if let lectureIDs = lectureIDs, lectureIDs.isEmpty {
             completion(.success([]))
         } else {
-            let query: Query = FirestoreManager.shared.firestore.collection(FirestoreCollection.lectures.path)
 
-            FirestoreManager.shared.getDocuments(query: query, source: source, completion: { (result: Swift.Result<[Lecture], Error>) in
-                switch result {
-                case .success(var success):
-
-                    if let lectureIDs = lectureIDs {
-                        success = success.filter({ lectureIDs.contains($0.id) })
+            if source == .cache {
+                DispatchQueue.global().async {
+                    let success = Self.filter(lectures: self.allLectures, searchText: searchText, sortType: sortType, filter: filter, lectureIDs: lectureIDs)
+                    DispatchQueue.main.async {
+                        completion(.success(success))
                     }
-
-                    if let searchText = searchText, !searchText.isEmpty {
-                        let selectedSubtypes: [String] = searchText.split(separator: " ").map { String($0) }
-
-                        success = success.filter { (lecture: Lecture) in
-                            return selectedSubtypes.first(where: { (subtype: String) in
-                                return lecture.title.first(where: { (title: String) in
-                                    title.localizedCaseInsensitiveContains(subtype)
-                                }) != nil
-                            }) != nil
-                        }
-                    }
-
-                    for (filter, subtypes) in filter {
-                        success = filter.filter(success, selectedSubtypes: subtypes)
-                    }
-
-                    success = sortType.sort(success)
-                    completion(.success(success))
-                case .failure(let error):
-                    completion(.failure(error))
                 }
-            })
+            } else {
+                let query: Query = FirestoreManager.shared.firestore.collection(FirestoreCollection.lectures.path)
+
+                FirestoreManager.shared.getDocuments(query: query, source: source, completion: { (result: Swift.Result<[Lecture], Error>) in
+                    switch result {
+                    case .success(let success):
+                        self.allLectures = success
+
+                        DispatchQueue.global().async {
+                            let success = Self.filter(lectures: success, searchText: searchText, sortType: sortType, filter: filter, lectureIDs: lectureIDs)
+                            DispatchQueue.main.async {
+                                completion(.success(success))
+                            }
+                        }
+                    case .failure(let error):
+                        completion(.failure(error))
+                    }
+                })
+            }
         }
     }
 

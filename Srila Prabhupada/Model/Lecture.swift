@@ -13,6 +13,15 @@ struct Lecture: Hashable, Codable {
         hasher.combine(id)
     }
 
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return lhs.id == rhs.id &&
+        lhs.creationTimestamp == rhs.creationTimestamp &&
+        lhs.resources == rhs.resources &&
+        lhs.downloadingState == rhs.downloadingState &&
+        lhs.isFavorites == rhs.isFavorites &&
+        lhs.playProgress == rhs.playProgress
+    }
+
     let category: [String]
     let creationTimestamp: String
     let dateOfRecording: Day
@@ -31,34 +40,97 @@ struct Lecture: Hashable, Codable {
     let thumbnail: String
     let title: [String]
 
-    let isDownloaded: Bool = Bool.random()
-    let isFavorites: Bool = Bool.random()
-    let playProgress: Int = Int.random(in: 0...100)
+    var downloadingState: DBLecture.DownloadState = .notDownloaded
+    private(set) var isFavorites: Bool = false
+    private(set) var playProgress: Int = 0
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        do {
-            self.id = try container.decode(Int.self, forKey: .id)
-            self.category = try container.decode([String].self, forKey: .category)
-            self.creationTimestamp = try container.decode(String.self, forKey: .creationTimestamp)
-            self.dateOfRecording = try container.decode(Day.self, forKey: .dateOfRecording)
-            self.description = try container.decode([String].self, forKey: .description)
-            self.language = try container.decode(LectureLanguage.self, forKey: .language)
-            self.lastModifiedTimestamp = try container.decode(String.self, forKey: .lastModifiedTimestamp)
-            self.legacyData = try container.decode(LegacyData.self, forKey: .legacyData)
-            self.length = try container.decodeIfPresent(Int.self, forKey: .length) ?? 0
-            self.lengthType = try container.decode([String].self, forKey: .lengthType)
-            self.location = try container.decode(Location.self, forKey: .location)
-            self.place = try container.decode([String].self, forKey: .place)
-            self.resources = try container.decode(Resources.self, forKey: .resources)
-            self.search = try container.decode(Search.self, forKey: .search)
-            self.tags = try container.decode([String].self, forKey: .tags)
-            self.thumbnail = try container.decode(String.self, forKey: .thumbnail)
-            self.title = try container.decode([String].self, forKey: .title)
-        } catch {
-            print(error)
-            fatalError(error.localizedDescription)
+        self.id = try container.decode(Int.self, forKey: .id)
+        self.category = try container.decode([String].self, forKey: .category)
+        self.creationTimestamp = try container.decode(String.self, forKey: .creationTimestamp)
+        self.dateOfRecording = try container.decode(Day.self, forKey: .dateOfRecording)
+        self.description = try container.decode([String].self, forKey: .description)
+        self.language = try container.decode(LectureLanguage.self, forKey: .language)
+        self.lastModifiedTimestamp = try container.decode(String.self, forKey: .lastModifiedTimestamp)
+        self.legacyData = try container.decode(LegacyData.self, forKey: .legacyData)
+        self.length = try container.decodeIfPresent(Int.self, forKey: .length) ?? 0
+        self.lengthType = try container.decode([String].self, forKey: .lengthType)
+        self.location = try container.decode(Location.self, forKey: .location)
+        self.place = try container.decode([String].self, forKey: .place)
+        self.resources = try container.decode(Resources.self, forKey: .resources)
+        self.search = try container.decode(Search.self, forKey: .search)
+        self.tags = try container.decode([String].self, forKey: .tags)
+        self.thumbnail = try container.decode(String.self, forKey: .thumbnail)
+        self.title = try container.decode([String].self, forKey: .title)
+
+        downloadingState = Persistant.shared.lectureDownloadState(lecture: self)
+        isFavorites = Bool.random()
+        playProgress = Int.random(in: 0...100)
+    }
+
+    init(from dbLecture: DBLecture) {
+
+        self.id = dbLecture.id
+        self.category = dbLecture.category
+        self.creationTimestamp = dbLecture.creationTimestamp
+        self.dateOfRecording = Day(day: dbLecture.dateOfRecording_day, month: dbLecture.dateOfRecording_month, year: dbLecture.dateOfRecording_year)
+        self.description = dbLecture.aDescription
+        self.language = LectureLanguage(main: dbLecture.language_main, translations: dbLecture.language_translations)
+        self.lastModifiedTimestamp =  dbLecture.lastModifiedTimestamp
+        self.legacyData = LegacyData(lectureCode: dbLecture.legacyData_lectureCode, slug: dbLecture.legacyData_slug, verse: dbLecture.legacyData_verse, wpId: dbLecture.legacyData_wpId)
+        self.length = dbLecture.length
+        self.lengthType = dbLecture.lengthType
+        self.location = Location(city: dbLecture.location_city, state: dbLecture.location_state, country: dbLecture.location_country)
+        self.place = dbLecture.place
+
+        var audios: [Audio] = []
+        for url in dbLecture.resources_audios_url {
+            audios.append(Audio(creationTimestamp: "", downloads: 0, lastModifiedTimestamp: "", views: 0, url: url))
         }
+
+        self.resources =  Resources(audios: audios)
+        self.search = Search(advanced: dbLecture.search_advanced, simple: dbLecture.search_simple)
+        self.tags = dbLecture.tags
+        self.thumbnail = dbLecture.thumbnail
+        self.title = dbLecture.title
+
+        downloadingState = Persistant.shared.lectureDownloadState(lecture: self)
+        isFavorites = Bool.random()
+        playProgress = Int.random(in: 0...100)
+    }
+
+    static func createNewDBLecture(lecture: Lecture) -> DBLecture {
+
+        let dbLecture = DBLecture.insertInContext(context: nil)
+        dbLecture.aDescription = lecture.description
+        dbLecture.category = lecture.category
+        dbLecture.creationTimestamp = lecture.creationTimestamp
+        dbLecture.dateOfRecording_day = lecture.dateOfRecording.day
+        dbLecture.dateOfRecording_month = lecture.dateOfRecording.month
+        dbLecture.dateOfRecording_year = lecture.dateOfRecording.year
+        dbLecture.id = lecture.id
+        dbLecture.language_main = lecture.language.main
+        dbLecture.language_translations = lecture.language.translations
+        dbLecture.lastModifiedTimestamp = lecture.lastModifiedTimestamp
+        dbLecture.legacyData_lectureCode = lecture.legacyData.lectureCode
+        dbLecture.legacyData_slug = lecture.legacyData.slug
+        dbLecture.legacyData_verse = lecture.legacyData.verse
+        dbLecture.legacyData_wpId = lecture.legacyData.wpId
+        dbLecture.length = lecture.length
+        dbLecture.lengthType = lecture.lengthType
+        dbLecture.location_city = lecture.location.city
+        dbLecture.location_state = lecture.location.state
+        dbLecture.location_country = lecture.location.country
+        dbLecture.place = lecture.place
+        dbLecture.resources_audios_url = lecture.resources.audios.map({ $0.url ?? "" })
+        dbLecture.search_advanced = lecture.search.advanced
+        dbLecture.search_simple = lecture.search.simple
+        dbLecture.tags = lecture.tags
+        dbLecture.thumbnail = lecture.thumbnail
+        dbLecture.title = lecture.title
+
+        return dbLecture
     }
 
     var titleDisplay: String {
@@ -81,6 +153,12 @@ struct Day: Hashable, Codable {
     let day: Int
     let month: Int
     let year: Int
+
+    init(day: Int, month: Int, year: Int) {
+        self.day = day
+        self.month = month
+        self.year = year
+    }
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -116,6 +194,11 @@ struct LectureLanguage: Hashable, Codable {
     let main: String
     let translations: [String]
 
+    init(main: String, translations: [String]) {
+        self.main = main
+        self.translations = translations
+    }
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.main = try container.decode(String.self, forKey: .main)
@@ -136,6 +219,13 @@ struct LegacyData: Hashable, Codable {
     let slug: String
     let verse: String
     let wpId: Int
+
+    init(lectureCode: String, slug: String, verse: String, wpId: Int) {
+        self.lectureCode = lectureCode
+        self.slug = slug
+        self.verse = verse
+        self.wpId = wpId
+    }
 }
 
 struct Location: Hashable, Codable {
@@ -166,6 +256,10 @@ struct Location: Hashable, Codable {
 
 struct Resources: Hashable, Codable {
     let audios: [Audio]
+
+    init(audios: [Audio]) {
+        self.audios = audios
+    }
 }
 
 struct Audio: Hashable, Codable {
@@ -174,6 +268,14 @@ struct Audio: Hashable, Codable {
     let lastModifiedTimestamp: String
     let views: Int
     let url: String?
+
+    init(creationTimestamp: String, downloads: Int, lastModifiedTimestamp: String, views: Int, url: String?) {
+        self.creationTimestamp = creationTimestamp
+        self.downloads = downloads
+        self.lastModifiedTimestamp = lastModifiedTimestamp
+        self.views = views
+        self.url = url
+    }
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)

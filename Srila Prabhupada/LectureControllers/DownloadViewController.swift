@@ -6,12 +6,34 @@
 //
 
 import UIKit
+import FirebaseFirestore
 
 class DownloadViewController: BaseLectureViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-//        self.lectures = ["Download 1", "Download 2", "Download 3", "Download 4", "Download 5"]
+        do {
+            list.noItemTitle = "No Downloaded Lectures"
+            list.noItemMessage = "Your downloaded lectures will display here.\nYou can download the lectures from home tab"
+        }
+    }
+
+    override func refreshAsynchronous(source: FirestoreSource) {
+
+        var lectures = [Model]()
+        for dbLecture in Persistant.shared.dbLectures {
+            lectures.append(Lecture(from: dbLecture))
+        }
+
+        let searchText = self.searchText
+        let selectedSortType = self.selectedSortType
+        let selectedFilters = self.selectedFilters
+        DispatchQueue.global().async {
+            let lectures = DefaultLectureViewModel.filter(lectures: lectures, searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: nil)
+            DispatchQueue.main.async {
+                self.reloadData(with: lectures)
+            }
+        }
     }
 }

@@ -123,7 +123,7 @@ class PlaylistViewController: BaseSearchViewController {
         case 0:
 
             showLoading()
-            playlistViewModel.getPublicPlaylist(searchText: searchText, sortType: selectedSortType, completion: { [self] result in
+            playlistViewModel.getPrivatePlaylist(searchText: searchText, sortType: selectedSortType, completion: { [self] result in
                 hideLoading()
 
                 switch result {
@@ -136,7 +136,7 @@ class PlaylistViewController: BaseSearchViewController {
         case 1:
 
             showLoading()
-            playlistViewModel.getPrivatePlaylist(searchText: searchText, sortType: selectedSortType, completion: { [self] result in
+            playlistViewModel.getPublicPlaylist(searchText: searchText, sortType: selectedSortType, completion: { [self] result in
                 hideLoading()
 
                 switch result {

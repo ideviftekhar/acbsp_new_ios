@@ -2,7 +2,6 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -106,7 +105,7 @@
                             <userDefinedRuntimeAttribute type="boolean" keyPath="showUnitString" value="YES"/>
                             <userDefinedRuntimeAttribute type="string" keyPath="unitString" value="%"/>
                             <userDefinedRuntimeAttribute type="color" keyPath="progressColor">
-                                <color key="value" name="0099CA"/>
+                                <color key="value" systemColor="systemBlueColor"/>
                             </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="number" keyPath="valueFontSize">
                                 <real key="value" value="8"/>
@@ -124,7 +123,7 @@
                                 <real key="value" value="2"/>
                             </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="color" keyPath="progressStrokeColor">
-                                <color key="value" name="0099CA"/>
+                                <color key="value" systemColor="systemBlueColor"/>
                             </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="color" keyPath="emptyLineColor">
                                 <color key="value" name="B8B8B8"/>
@@ -148,30 +147,30 @@
                         <color key="tintColor" systemColor="systemBlueColor"/>
                     </imageView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow.down.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="AdV-AQ-xel">
-                        <rect key="frame" x="4" y="8" width="12" height="11"/>
+                        <rect key="frame" x="2" y="6" width="16" height="15"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="tintColor" systemColor="systemGreenColor"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="12" id="R3c-nt-G9s"/>
-                            <constraint firstAttribute="height" constant="12" id="e5b-dA-bgT"/>
+                            <constraint firstAttribute="width" constant="16" id="R3c-nt-G9s"/>
+                            <constraint firstAttribute="height" constant="16" id="e5b-dA-bgT"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="6"/>
+                                <real key="value" value="8"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="eiF-YO-8YM">
-                        <rect key="frame" x="4" y="48" width="12" height="11"/>
+                        <rect key="frame" x="2" y="46" width="16" height="15"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="tintColor" systemColor="systemOrangeColor"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="12" id="hZc-C2-3GW"/>
-                            <constraint firstAttribute="width" constant="12" id="iX7-gS-PON"/>
+                            <constraint firstAttribute="height" constant="16" id="hZc-C2-3GW"/>
+                            <constraint firstAttribute="width" constant="16" id="iX7-gS-PON"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="6"/>
+                                <real key="value" value="8"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </imageView>

@@ -21,6 +21,11 @@
 		C00AB21B28D2080800A62A2F /* LectureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00AB21928D2080800A62A2F /* LectureCell.swift */; };
 		C00AB21C28D2080800A62A2F /* LectureCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C00AB21A28D2080800A62A2F /* LectureCell.xib */; };
 		C00AB22028D2137C00A62A2F /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00AB21F28D2137C00A62A2F /* Time.swift */; };
+		C00DC56F28E1DA66001EDE95 /* Persistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00DC56928E1DA65001EDE95 /* Persistant.swift */; };
+		C00DC57028E1DA66001EDE95 /* SrilaDatabase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C00DC56A28E1DA65001EDE95 /* SrilaDatabase.xcdatamodeld */; };
+		C00DC57128E1DA66001EDE95 /* DBLecture+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00DC56C28E1DA65001EDE95 /* DBLecture+CoreDataClass.swift */; };
+		C00DC57228E1DA66001EDE95 /* DBLecture+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00DC56D28E1DA66001EDE95 /* DBLecture+CoreDataProperties.swift */; };
+		C00DC57328E1DA66001EDE95 /* NSManagedObject+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00DC56E28E1DA66001EDE95 /* NSManagedObject+Extensions.swift */; };
 		C00E4DCB28CA36F100F1A123 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4DCA28CA36F100F1A123 /* AppDelegate.swift */; };
 		C00E4DCD28CA36F100F1A123 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4DCC28CA36F100F1A123 /* SceneDelegate.swift */; };
 		C00E4DD228CA36F100F1A123 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C00E4DD028CA36F100F1A123 /* Main.storyboard */; };
@@ -104,6 +109,11 @@
 		C00AB21928D2080800A62A2F /* LectureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureCell.swift; sourceTree = "<group>"; };
 		C00AB21A28D2080800A62A2F /* LectureCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LectureCell.xib; sourceTree = "<group>"; };
 		C00AB21F28D2137C00A62A2F /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
+		C00DC56928E1DA65001EDE95 /* Persistant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistant.swift; sourceTree = "<group>"; };
+		C00DC56B28E1DA65001EDE95 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
+		C00DC56C28E1DA65001EDE95 /* DBLecture+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBLecture+CoreDataClass.swift"; sourceTree = "<group>"; };
+		C00DC56D28E1DA66001EDE95 /* DBLecture+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBLecture+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		C00DC56E28E1DA66001EDE95 /* NSManagedObject+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+Extensions.swift"; sourceTree = "<group>"; };
 		C00E4DC728CA36F100F1A123 /* Srila Prabhupada.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Srila Prabhupada.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C00E4DCA28CA36F100F1A123 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C00E4DCC28CA36F100F1A123 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -257,6 +267,26 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		C00DC56828E1DA65001EDE95 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+				C00DC57428E1DA80001EDE95 /* CoreData Classes */,
+				C00DC56A28E1DA65001EDE95 /* SrilaDatabase.xcdatamodeld */,
+				C00DC56928E1DA65001EDE95 /* Persistant.swift */,
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		C00DC57428E1DA80001EDE95 /* CoreData Classes */ = {
+			isa = PBXGroup;
+			children = (
+				C00DC56E28E1DA66001EDE95 /* NSManagedObject+Extensions.swift */,
+				C00DC56C28E1DA65001EDE95 /* DBLecture+CoreDataClass.swift */,
+				C00DC56D28E1DA66001EDE95 /* DBLecture+CoreDataProperties.swift */,
+			);
+			path = "CoreData Classes";
+			sourceTree = "<group>";
+		};
 		C00E4DBE28CA36F100F1A123 = {
 			isa = PBXGroup;
 			children = (
@@ -284,6 +314,7 @@
 				C03E3F2428DCC1EB00B987DD /* Firebase Firestore */,
 				C0FA305B28CF461900E78843 /* Extensions */,
 				C00AB21328D1FD6D00A62A2F /* Model */,
+				C00DC56828E1DA65001EDE95 /* Database */,
 				C00E4DDE28CA393600F1A123 /* PreLogIn */,
 				C00E4DFA28CA39F400F1A123 /* LeftMenuControllers */,
 				C00E4DFD28CA39FE00F1A123 /* CommonControllers */,
@@ -660,6 +691,7 @@
 				C0065D4D28D884AF00B18AA6 /* LectureOption.swift in Sources */,
 				C0FA305D28CF461900E78843 /* String+Extension.swift in Sources */,
 				C00E4DCB28CA36F100F1A123 /* AppDelegate.swift in Sources */,
+				C00DC57228E1DA66001EDE95 /* DBLecture+CoreDataProperties.swift in Sources */,
 				C00E4E1628CA433A00F1A123 /* StatsViewController.swift in Sources */,
 				C0EA13EA28CF5A9D00BE9110 /* UIViewController+Alert.swift in Sources */,
 				C00E4E1A28CA45E000F1A123 /* PlaylistLecturesViewController.swift in Sources */,
@@ -670,9 +702,11 @@
 				C00E4E0B28CA39FE00F1A123 /* BaseLectureViewController.swift in Sources */,
 				C0FA306228CF51EB00E78843 /* SignupViewModel.swift in Sources */,
 				C0EA13EF28CF6D0D00BE9110 /* UIView+extension.swift in Sources */,
+				C00DC57328E1DA66001EDE95 /* NSManagedObject+Extensions.swift in Sources */,
 				C00AB20A28D1F52D00A62A2F /* FilterDetailTableViewCell.swift in Sources */,
 				C03E3F2828DCC6C500B987DD /* ListenInfo.swift in Sources */,
 				C0FA305F28CF4AF000E78843 /* LoginViewModel.swift in Sources */,
+				C00DC56F28E1DA66001EDE95 /* Persistant.swift in Sources */,
 				C00AB22028D2137C00A62A2F /* Time.swift in Sources */,
 				C00E4E0C28CA39FE00F1A123 /* HomeViewController.swift in Sources */,
 				C0E9CC3928DC723B0089A9E8 /* Date+Extension.swift in Sources */,
@@ -698,11 +732,13 @@
 				C00E4E1228CA3A1700F1A123 /* ForgotPasswordViewController.swift in Sources */,
 				C0CAF25D28D45B8C00DA9878 /* NavigationController.swift in Sources */,
 				C00E4E1028CA39FE00F1A123 /* TopLectureViewController.swift in Sources */,
+				C00DC57128E1DA66001EDE95 /* DBLecture+CoreDataClass.swift in Sources */,
 				C0B7990A28DC427B00681649 /* PlaylistOption.swift in Sources */,
 				C00E4E1C28CA462000F1A123 /* BaseSearchViewController.swift in Sources */,
 				C0065D4B28D883F300B18AA6 /* Constants.swift in Sources */,
 				C00E4DE128CA393600F1A123 /* LogInViewController.swift in Sources */,
 				C0BC771028D5AE1000C2629F /* TappableLabel.swift in Sources */,
+				C00DC57028E1DA66001EDE95 /* SrilaDatabase.xcdatamodeld in Sources */,
 				C00E4DFC28CA39F400F1A123 /* SideMenuTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1038,6 +1074,19 @@
 			defaultConfigurationName = "Release-Client";
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		C00DC56A28E1DA65001EDE95 /* SrilaDatabase.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				C00DC56B28E1DA65001EDE95 /* Model.xcdatamodel */,
+			);
+			currentVersion = C00DC56B28E1DA65001EDE95 /* Model.xcdatamodel */;
+			path = SrilaDatabase.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = C00E4DBF28CA36F100F1A123 /* Project object */;
 }

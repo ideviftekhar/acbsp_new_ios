@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21279" systemVersion="21G115" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="DBLecture" representedClassName="DBLecture" syncable="YES">
+        <attribute name="aDescription" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
+        <attribute name="category" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
+        <attribute name="creationTimestamp" attributeType="String" defaultValueString=""/>
+        <attribute name="dateOfRecording_day" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="dateOfRecording_month" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="dateOfRecording_year" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="documentFilePath" optional="YES" attributeType="String"/>
+        <attribute name="downloadState" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="language_main" attributeType="String" defaultValueString=""/>
+        <attribute name="language_translations" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
+        <attribute name="lastModifiedTimestamp" attributeType="String" defaultValueString=""/>
+        <attribute name="legacyData_lectureCode" attributeType="String" defaultValueString=""/>
+        <attribute name="legacyData_slug" attributeType="String" defaultValueString=""/>
+        <attribute name="legacyData_verse" attributeType="String" defaultValueString=""/>
+        <attribute name="legacyData_wpId" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="length" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="lengthType" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
+        <attribute name="location_city" attributeType="String" defaultValueString=""/>
+        <attribute name="location_country" attributeType="String" defaultValueString=""/>
+        <attribute name="location_state" attributeType="String" defaultValueString=""/>
+        <attribute name="place" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
+        <attribute name="resources_audios_url" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
+        <attribute name="search_advanced" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
+        <attribute name="search_simple" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
+        <attribute name="tags" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
+        <attribute name="thumbnail" attributeType="String" defaultValueString=""/>
+        <attribute name="title" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
+    </entity>
+</model>

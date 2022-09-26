@@ -16,6 +16,11 @@ class TopLectureViewController: BaseLectureViewController {
         super.viewDidLoad()
 
         do {
+            list.noItemTitle = "No Top Lectures"
+            list.noItemMessage = "Top lectures will display here"
+        }
+
+        do {
             let userDefaultKey: String = "\(Self.self).\(UISegmentedControl.self)"
             let lastSelectedIndex: Int = UserDefaults.standard.integer(forKey: userDefaultKey)
             topLecturesSegmentControl.selectedSegmentIndex = lastSelectedIndex
@@ -40,12 +45,12 @@ class TopLectureViewController: BaseLectureViewController {
         case 0:
             showLoading()
 
-            lectureViewModel.getWeekLecturesIds(weekDays: currentWeekDates, completion: { [self] result in
+            Self.lectureViewModel.getWeekLecturesIds(weekDays: currentWeekDates, completion: { [self] result in
 
                 switch result {
                 case .success(let lectureIDs):
 
-                    lectureViewModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, completion: { [self] result in
+                    Self.lectureViewModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, completion: { [self] result in
                         hideLoading()
 
                         switch result {
@@ -68,12 +73,12 @@ class TopLectureViewController: BaseLectureViewController {
             let currentMonth = calendar.component(.month, from: Date())
             let currentYear = calendar.component(.year, from: Date())
 
-            lectureViewModel.getMonthLecturesIds(month: currentMonth, year: currentYear, completion: { [self] result in
+            Self.lectureViewModel.getMonthLecturesIds(month: currentMonth, year: currentYear, completion: { [self] result in
 
                 switch result {
                 case .success(let lectureIDs):
 
-                    lectureViewModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, completion: { [self] result in
+                    Self.lectureViewModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, completion: { [self] result in
                         hideLoading()
 
                         switch result {

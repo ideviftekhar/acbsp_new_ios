@@ -65,13 +65,23 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 thumbnailImageView.image = UIImage(named: "logo_40")
             }
 
-            downloadedIconImageView.isHidden = !model.isDownloaded
+            switch model.downloadingState {
+            case .notDownloaded:
+                downloadedIconImageView.isHidden = true
+            case .downloading:
+                downloadedIconImageView.isHidden = false
+                downloadedIconImageView.tintColor = UIColor.systemGray
+            case .downloaded:
+                downloadedIconImageView.isHidden = false
+                downloadedIconImageView.tintColor = UIColor.systemGreen
+            }
+
             favoritesIconImageView.isHidden = !model.isFavorites
 
             do {
                 var actions: [UIAction] = []
 
-                if model.isDownloaded, let deleteDownload = allActions[.deleteFromDownloads] {
+                if model.downloadingState != .notDownloaded, let deleteDownload = allActions[.deleteFromDownloads] {
                     actions.append(deleteDownload)
                 } else if let download = allActions[.download] {
                     actions.append(download)
@@ -111,11 +121,15 @@ class LectureCell: UITableViewCell, IQModelableCell {
         for option in LectureOption.allCases {
             let action: UIAction = UIAction(title: option.rawValue, image: nil, identifier: UIAction.Identifier(option.rawValue), handler: { [self] _ in
 
+                guard let model = model else {
+                    return
+                }
+
                 switch option {
                 case .download:
-                    break
+                    Persistant.shared.save(lecture: model)
                 case .deleteFromDownloads:
-                    break
+                    Persistant.shared.delete(lecture: model)
                 case .markAsFavorite:
                     break
                 case .removeFromFavorites:
@@ -140,5 +154,16 @@ class LectureCell: UITableViewCell, IQModelableCell {
 
         menuButton.showsMenuAsPrimaryAction = true
         menuButton.menu = UIMenu(title: "", image: nil, identifier: UIMenu.Identifier.init(rawValue: "Option"), options: UIMenu.Options.displayInline, children: childrens)
+    }
+}
+
+extension LectureCell {
+
+    static func estimatedSize(for model: AnyHashable?, listView: IQListView) -> CGSize {
+        size(for: model, listView: listView)
+    }
+
+    static func size(for model: AnyHashable?, listView: IQListView) -> CGSize {
+        return CGSize(width: listView.frame.width, height: 60)
     }
 }

@@ -8,17 +8,21 @@
 import UIKit
 import AVKit
 import FirebaseFirestore
+import IQListKit
 
 class BaseLectureViewController: BaseSearchViewController {
 
     @IBOutlet private var lectureTebleView: UITableView!
-    private let cellIdentifier =  "LectureCell"
     private let loadingIndicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .medium)
     private let sortButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.up.arrow.down.circle"), style: .plain, target: nil, action: nil)
 
-    let lectureViewModel: LectureViewModel = DefaultLectureViewModel()
+    static let lectureViewModel: LectureViewModel = DefaultLectureViewModel()
 
-    private(set) var lectures: [Lecture] = []
+    typealias Model = Lecture
+    typealias Cell = LectureCell
+
+    private(set) var lectures: [Model] = []
+    private(set) lazy var list = IQList(listView: lectureTebleView, delegateDataSource: self)
 
     var selectedSortType: LectureSortType {
         guard let selectedSortAction = sortButton.menu?.selectedElements.first as? UIAction, let selectedSortType = LectureSortType(rawValue: selectedSortAction.identifier.rawValue) else {
@@ -34,8 +38,10 @@ class BaseLectureViewController: BaseSearchViewController {
         rightButtons.append(sortButton)
         self.navigationItem.rightBarButtonItems = rightButtons
 
-        lectureTebleView.register(UINib(nibName: cellIdentifier, bundle: nil), forCellReuseIdentifier: cellIdentifier)
-
+        do {
+            list.registerCell(type: Cell.self, registerType: .nib)
+            refreshUI(animated: false)
+        }
         do {
             loadingIndicator.color = UIColor.gray
             self.view.addSubview(loadingIndicator)
@@ -97,45 +103,35 @@ class BaseLectureViewController: BaseSearchViewController {
     }
 }
 
-extension BaseLectureViewController: UITableViewDelegate, UITableViewDataSource {
+extension BaseLectureViewController: IQListViewDelegateDataSource {
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    private func refreshUI(animated: Bool? = nil) {
 
-        return lectures.count
+        let animated: Bool = animated ?? (lectures.count <= 1000)
+        list.performUpdates({
+
+            let section = IQSection(identifier: "lectures", headerSize: CGSize.zero, footerSize: CGSize.zero)
+            list.append(section)
+
+            list.append(Cell.self, models: lectures, section: section)
+
+        }, animatingDifferences: animated, completion: nil)
     }
 
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
-    }
+    func listView(_ listView: IQListView, didSelect item: IQItem, at indexPath: IndexPath) {
 
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
-    }
+        if let model = item.model as? Cell.Model {
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! LectureCell
+            guard let firstAudio = model.resources.audios.first,
+                  let audioURL = firstAudio.audioURL else {
+                return
+            }
 
-        let aLecture = lectures[indexPath.row]
-
-        cell.model = aLecture
-
-        return cell
-    }
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-
-        let aLecture = lectures[indexPath.row]
-
-        guard let firstAudio = aLecture.resources.audios.first,
-              let audioURL = firstAudio.audioURL else {
-            return
-        }
-
-        let playerController = AVPlayerViewController()
-        playerController.player = AVPlayer(url: audioURL)
-        self.present(playerController, animated: true) {
-            playerController.player?.play()
+            let playerController = AVPlayerViewController()
+            playerController.player = AVPlayer(url: audioURL)
+            self.present(playerController, animated: true) {
+                playerController.player?.play()
+            }
         }
     }
 }
@@ -150,8 +146,8 @@ extension BaseLectureViewController {
         loadingIndicator.stopAnimating()
     }
 
-    func reloadData(with lectures: [Lecture]) {
+    func reloadData(with lectures: [Model]) {
         self.lectures = lectures
-        self.lectureTebleView.reloadData()
+        refreshUI()
     }
 }

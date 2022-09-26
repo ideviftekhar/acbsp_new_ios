@@ -38,7 +38,7 @@ class BaseSearchViewController: UIViewController {
         do {
             let userDefaultKey: String = "\(Self.self).\(UISearchController.self)"
             let searchText = UserDefaults.standard.string(forKey: userDefaultKey)
-
+            lastSearchText = searchText ?? ""
             searchController.obscuresBackgroundDuringPresentation = false
             searchController.searchBar.text = searchText
             searchController.searchBar.placeholder = "Search..."
@@ -63,10 +63,26 @@ class BaseSearchViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
+        NotificationCenter.default.addObserver(self, selector: #selector(lectureUpdateNotification(_:)), name: DefaultLectureViewModel.lectureUpdateNotification, object: nil)
+
         if isFirstTime {
             isFirstTime = false
-            refreshAsynchronous(source: .default)
+
+            let source: FirestoreSource = self is HomeViewController ? .default : .cache
+
+            refreshAsynchronous(source: source)
+        } else {
+            refreshAsynchronous(source: .cache)
         }
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self, name: DefaultLectureViewModel.lectureUpdateNotification, object: nil)
+    }
+
+    @objc private func lectureUpdateNotification(_ notification: Notification) {
+        refreshAsynchronous(source: .cache)
     }
 
     @objc func refreshAsynchronous(source: FirestoreSource) {
@@ -132,7 +148,7 @@ extension BaseSearchViewController: UISearchControllerDelegate, UISearchResultsU
     func updateSearchResults(for searchController: UISearchController) {
         if let text = searchController.searchBar.text, !text.elementsEqual(lastSearchText) {
             Self.cancelPreviousPerformRequests(withTarget: self, selector: #selector(userDidStoppedTyping), object: nil)
-            self.perform(#selector(userDidStoppedTyping), with: nil, afterDelay: 1)
+            self.perform(#selector(userDidStoppedTyping), with: nil, afterDelay: 0.1)
             lastSearchText = text
             let userDefaultKey: String = "\(Self.self).\(UISearchController.self)"
             UserDefaults.standard.set(lastSearchText, forKey: userDefaultKey)
