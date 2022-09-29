@@ -129,6 +129,13 @@ struct Lecture: Hashable, Codable {
         dbLecture.tags = lecture.tags
         dbLecture.thumbnail = lecture.thumbnail
         dbLecture.title = lecture.title
+        dbLecture.downloadState = DBLecture.DownloadState.notDownloaded.rawValue
+
+        if let audios = lecture.resources.audios.first, let audioURL = audios.audioURL {
+            dbLecture.fileName = "\(lecture.id).\(audioURL.pathExtension)"
+        } else {
+            dbLecture.fileName = "\(lecture.id)"
+        }
 
         return dbLecture
     }
@@ -146,6 +153,27 @@ struct Lecture: Hashable, Codable {
             return nil
         }
         return URL(string: thumbnail)
+    }
+
+    var downloadedFileURL: URL? {
+        guard downloadingState == .downloaded,
+              let audios = resources.audios.first,
+              let audioURL = audios.audioURL else {
+            return nil
+        }
+
+        do {
+            let fileName = "\(id).\(audioURL.pathExtension)"
+            let documentDirectoryURL = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            let destinationURL = documentDirectoryURL.appendingPathComponent(fileName)
+
+            if FileManager.default.fileExists(atPath: destinationURL.path) {
+                return destinationURL
+            }
+        } catch {
+            return nil
+        }
+        return nil
     }
 }
 

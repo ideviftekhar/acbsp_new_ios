@@ -30,10 +30,19 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
         super.init()
 
         NotificationCenter.default.addObserver(self, selector: #selector(downloadAddedNotification(_:)), name: Persistant.downloadAddedNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(downloadUpdatedNotification(_:)), name: Persistant.downloadUpdatedNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(downloadRemovedNotification(_:)), name: Persistant.downloadRemovedNotification, object: nil)
     }
 
     @objc func downloadAddedNotification(_ notification: Notification) {
+        guard let dbLecture = notification.object as? DBLecture else { return }
+        if let index = allLectures.firstIndex(where: { $0.id == dbLecture.id }) {
+            allLectures[index].downloadingState = dbLecture.downloadStateEnum
+            NotificationCenter.default.post(name: DefaultLectureViewModel.lectureUpdateNotification, object: nil)
+        }
+    }
+
+    @objc func downloadUpdatedNotification(_ notification: Notification) {
         guard let dbLecture = notification.object as? DBLecture else { return }
         if let index = allLectures.firstIndex(where: { $0.id == dbLecture.id }) {
             allLectures[index].downloadingState = dbLecture.downloadStateEnum

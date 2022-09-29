@@ -122,15 +122,24 @@ extension BaseLectureViewController: IQListViewDelegateDataSource {
 
         if let model = item.model as? Cell.Model {
 
-            guard let firstAudio = model.resources.audios.first,
-                  let audioURL = firstAudio.audioURL else {
-                return
-            }
+            if model.downloadingState == .downloaded, let audioURL = model.downloadedFileURL {
 
-            let playerController = AVPlayerViewController()
-            playerController.player = AVPlayer(url: audioURL)
-            self.present(playerController, animated: true) {
-                playerController.player?.play()
+                let playerController = AVPlayerViewController()
+                playerController.player = AVPlayer(url: audioURL)
+                self.present(playerController, animated: true) {
+                    playerController.player?.play()
+                }
+            } else {
+                guard let firstAudio = model.resources.audios.first,
+                      let audioURL = firstAudio.audioURL else {
+                    return
+                }
+
+                let playerController = AVPlayerViewController()
+                playerController.player = AVPlayer(url: audioURL)
+                self.present(playerController, animated: true) {
+                    playerController.player?.play()
+                }
             }
         }
     }

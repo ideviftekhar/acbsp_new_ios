@@ -68,12 +68,21 @@ class LectureCell: UITableViewCell, IQModelableCell {
             switch model.downloadingState {
             case .notDownloaded:
                 downloadedIconImageView.isHidden = true
+
             case .downloading:
                 downloadedIconImageView.isHidden = false
-                downloadedIconImageView.tintColor = UIColor.systemGray
+                downloadedIconImageView.tintColor = UIColor.systemBlue
+                downloadedIconImageView.image = UIImage(systemName: "arrow.triangle.2.circlepath.circle.fill")
+
             case .downloaded:
                 downloadedIconImageView.isHidden = false
                 downloadedIconImageView.tintColor = UIColor.systemGreen
+                downloadedIconImageView.image = UIImage(systemName: "arrow.down.circle.fill")
+
+            case .error:
+                downloadedIconImageView.isHidden = false
+                downloadedIconImageView.tintColor = UIColor.systemRed
+                downloadedIconImageView.image = UIImage(systemName: "exclamationmark.circle.fill")
             }
 
             favoritesIconImageView.isHidden = !model.isFavorites
@@ -81,10 +90,19 @@ class LectureCell: UITableViewCell, IQModelableCell {
             do {
                 var actions: [UIAction] = []
 
-                if model.downloadingState != .notDownloaded, let deleteDownload = allActions[.deleteFromDownloads] {
-                    actions.append(deleteDownload)
-                } else if let download = allActions[.download] {
-                    actions.append(download)
+                switch model.downloadingState {
+                case .notDownloaded, .error:
+                    if let download = allActions[.download] {
+                        actions.append(download)
+                    }
+                case .downloading:
+                    if let downloading = allActions[.downloading] {
+                        actions.append(downloading)
+                    }
+                case .downloaded:
+                    if let deleteFromDownloads = allActions[.deleteFromDownloads] {
+                        actions.append(deleteFromDownloads)
+                    }
                 }
 
                 // Is Favorites
@@ -128,6 +146,8 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 switch option {
                 case .download:
                     Persistant.shared.save(lecture: model)
+                case .downloading:
+                    break
                 case .deleteFromDownloads:
                     Persistant.shared.delete(lecture: model)
                 case .markAsFavorite:

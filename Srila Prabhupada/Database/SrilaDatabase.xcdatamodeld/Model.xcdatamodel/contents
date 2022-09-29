@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21279" systemVersion="21G115" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21G115" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="DBLecture" representedClassName="DBLecture" syncable="YES">
         <attribute name="aDescription" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
         <attribute name="category" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
@@ -7,8 +7,9 @@
         <attribute name="dateOfRecording_day" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="dateOfRecording_month" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="dateOfRecording_year" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="documentFilePath" optional="YES" attributeType="String"/>
+        <attribute name="downloadError" optional="YES" attributeType="String"/>
         <attribute name="downloadState" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="fileName" optional="YES" attributeType="String"/>
         <attribute name="id" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="language_main" attributeType="String" defaultValueString=""/>
         <attribute name="language_translations" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
@@ -30,4 +31,7 @@
         <attribute name="thumbnail" attributeType="String" defaultValueString=""/>
         <attribute name="title" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[String]"/>
     </entity>
+    <elements>
+        <element name="DBLecture" positionX="160" positionY="192" width="128" height="464"/>
+    </elements>
 </model>

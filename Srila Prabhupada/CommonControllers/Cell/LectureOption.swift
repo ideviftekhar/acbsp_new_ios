@@ -11,6 +11,8 @@ enum LectureOption: String, CaseIterable {
 
     case download               =   "Download"
 
+    case downloading            =   "Downloading..."
+
     case deleteFromDownloads     =   "Delete from Downloads"
 
     case markAsFavorite         =   "Mark as Favorite"

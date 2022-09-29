@@ -23,6 +23,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             FirebaseApp.configure(options: fileopts)
         }
 
+        Persistant.shared.reschedulePendingDownloads()
         return true
     }
 
@@ -50,4 +51,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Messaging.messaging().apnsToken = deviceToken
     }
 }
-

@@ -11,6 +11,7 @@ import CoreData
 class Persistant: NSObject {
 
     static let downloadAddedNotification = Notification.Name(rawValue: "downloadAddedNotification")
+    static let downloadUpdatedNotification = Notification.Name(rawValue: "downloadUpdatedNotification")
     static let downloadRemovedNotification = Notification.Name(rawValue: "downloadRemovedNotification")
 
     static let shared = Persistant()
@@ -82,7 +83,7 @@ class Persistant: NSObject {
         return container
     }()
 
-    var mainContext: NSManagedObjectContext{
+    var mainContext: NSManagedObjectContext {
         return self.persistentContainer.viewContext
     }
 
@@ -172,26 +173,56 @@ class Persistant: NSObject {
 
 extension Persistant {
 
+    func reschedulePendingDownloads() {
+
+        let dbPendingDownloadedLectures: [DBLecture] = dbLectures.filter { $0.downloadStateEnum != .downloaded }
+
+        for dbLecture in dbPendingDownloadedLectures {
+            downloadStage1(dbLecture: dbLecture)
+        }
+    }
+
     func save(lecture: Lecture) {
 
-        if dbLectures.firstIndex(where: { $0.id == lecture.id }) == nil {
-            let dbLecture = Lecture.createNewDBLecture(lecture: lecture)
-            dbLecture.downloadState = DBLecture.DownloadState.downloaded.rawValue
-            saveMainContext(nil)
+        if let dbLecture = dbLectures.first(where: { $0.id == lecture.id }) {
 
-            dbLectures.insert(dbLecture, at: 0)
-            NotificationCenter.default.post(name: Self.downloadAddedNotification, object: dbLecture)
+            switch dbLecture.downloadStateEnum {
+            case .notDownloaded, .error:
+                downloadStage1(dbLecture: dbLecture)
+            case .downloading, .downloaded:
+                break
+            }
+
+        } else {
+            let dbLecture = Lecture.createNewDBLecture(lecture: lecture)
+            self.dbLectures.insert(dbLecture, at: 0)
+            downloadStage1(dbLecture: dbLecture)
         }
     }
 
     func delete(lecture: Lecture) {
 
-        if let index = dbLectures.firstIndex(where: { $0.id == lecture.id }) {
-            let dbLecture = dbLectures.remove(at: index)
+        guard let index = dbLectures.firstIndex(where: { $0.id == lecture.id }) else {
+            return
+        }
+
+        do {
+            let dbLecture = dbLectures[index]
+            let documentDirectoryURL = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            let destinationURL = documentDirectoryURL.appendingPathComponent(dbLecture.fileName)
+
+            // Delete file in document directory
+            if FileManager.default.fileExists(atPath: destinationURL.path) {
+                try FileManager.default.removeItem(at: destinationURL)
+            }
+
+            dbLectures.remove(at: index)
             dbLecture.downloadState = DBLecture.DownloadState.notDownloaded.rawValue
             NotificationCenter.default.post(name: Self.downloadRemovedNotification, object: dbLecture)
             deleteObject(object: dbLecture)
             saveMainContext(nil)
+        } catch {
+
         }
     }
 
@@ -218,6 +249,83 @@ extension Persistant {
             return object.downloadStateEnum
         } else {
             return .notDownloaded
+        }
+    }
+}
+
+extension Persistant {
+
+    private func downloadStage1(dbLecture: DBLecture) {
+
+        do {
+            let documentDirectoryURL = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+
+            let destinationURL = documentDirectoryURL.appendingPathComponent(dbLecture.fileName)
+
+            // check if it exists before downloading it
+            if FileManager.default.fileExists(atPath: destinationURL.path) {
+                dbLecture.downloadState = DBLecture.DownloadState.downloaded.rawValue
+            } else {
+                dbLecture.downloadState = DBLecture.DownloadState.downloading.rawValue
+            }
+
+            self.saveMainContext(nil)
+            NotificationCenter.default.post(name: Self.downloadAddedNotification, object: dbLecture)
+
+            if dbLecture.downloadStateEnum != .downloaded {
+                downloadStage2(dbLecture: dbLecture)
+            }
+        } catch let error {
+            dbLecture.downloadState = DBLecture.DownloadState.error.rawValue
+            dbLecture.downloadError = error.localizedDescription
+            self.saveMainContext(nil)
+            NotificationCenter.default.post(name: Self.downloadUpdatedNotification, object: dbLecture)
+        }
+    }
+
+    private func downloadStage2(dbLecture: DBLecture) {
+
+        guard let audioURLString = dbLecture.resources_audios_url.first, let audioURL = URL(string: audioURLString) else {
+            return
+        }
+
+        do {
+            let documentDirectoryURL = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            let destinationURL = documentDirectoryURL.appendingPathComponent(dbLecture.fileName)
+
+            let downloadTask = URLSession.shared.downloadTask(with: audioURL, completionHandler: { (downloadedURL, response, error) in
+
+                DispatchQueue.main.async {
+                    if let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
+                       let mimeType = httpURLResponse.mimeType, mimeType.hasPrefix("audio"),
+                       let downloadedURL = downloadedURL {
+
+                        do {
+                            try FileManager.default.moveItem(at: downloadedURL, to: destinationURL)
+                            dbLecture.downloadState = DBLecture.DownloadState.downloaded.rawValue
+                            self.saveMainContext(nil)
+                            NotificationCenter.default.post(name: Self.downloadUpdatedNotification, object: dbLecture)
+                        } catch let error {
+                            dbLecture.downloadState = DBLecture.DownloadState.error.rawValue
+                            dbLecture.downloadError = error.localizedDescription
+                            self.saveMainContext(nil)
+                            NotificationCenter.default.post(name: Self.downloadUpdatedNotification, object: dbLecture)
+                        }
+                    } else {
+                        dbLecture.downloadState = DBLecture.DownloadState.error.rawValue
+                        dbLecture.downloadError = error?.localizedDescription ?? "Unable to download the audio file"
+                        self.saveMainContext(nil)
+                        NotificationCenter.default.post(name: Self.downloadUpdatedNotification, object: dbLecture)
+                    }
+                }
+            })
+
+            downloadTask.resume()
+        } catch let error {
+            dbLecture.downloadState = DBLecture.DownloadState.error.rawValue
+            dbLecture.downloadError = error.localizedDescription
+            self.saveMainContext(nil)
+            NotificationCenter.default.post(name: Self.downloadUpdatedNotification, object: dbLecture)
         }
     }
 }
