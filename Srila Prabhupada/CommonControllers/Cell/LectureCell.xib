@@ -31,7 +31,7 @@
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="toB-kP-27M">
-                        <rect key="frame" x="60" y="5" width="230" height="57"/>
+                        <rect key="frame" x="60" y="5" width="231" height="57"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7cs-uh-SL9">
                                 <rect key="frame" x="0.0" y="0.0" width="22" height="20"/>
@@ -88,11 +88,11 @@
                         </subviews>
                     </stackView>
                     <view contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="f6l-Bp-fUH" customClass="MBCircularProgressBarView">
-                        <rect key="frame" x="295" y="16" width="35" height="35"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <rect key="frame" x="296" y="16.5" width="34" height="34"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="35" id="e6q-TU-Yc1"/>
-                            <constraint firstAttribute="width" constant="35" id="rtt-Uu-pTq"/>
+                            <constraint firstAttribute="height" constant="34" id="e6q-TU-Yc1"/>
+                            <constraint firstAttribute="width" constant="34" id="rtt-Uu-pTq"/>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="showValueString" value="YES"/>
@@ -120,19 +120,26 @@
                                 <real key="value" value="2"/>
                             </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="number" keyPath="emptyLineWidth">
-                                <real key="value" value="2"/>
+                                <real key="value" value="0.5"/>
                             </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="color" keyPath="progressStrokeColor">
                                 <color key="value" systemColor="systemBlueColor"/>
                             </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="color" keyPath="emptyLineColor">
-                                <color key="value" name="B8B8B8"/>
+                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="color" keyPath="emptyLineStrokeColor">
-                                <color key="value" name="B8B8B8"/>
+                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="number" keyPath="progressRotationAngle">
                                 <real key="value" value="50"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="17"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="masksToBounds" value="YES"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="progressCapType">
+                                <integer key="value" value="2"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </view>
@@ -143,22 +150,65 @@
                         <buttonConfiguration key="configuration" style="plain" image="ellipsis.circle" catalog="system"/>
                     </button>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Mfu-JH-XN3">
-                        <rect key="frame" x="295" y="16.5" width="35" height="34"/>
+                        <rect key="frame" x="296" y="17" width="34" height="33"/>
                         <color key="tintColor" systemColor="systemBlueColor"/>
                     </imageView>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="downlo" translatesAutoresizingMaskIntoConstraints="NO" id="AdV-AQ-xel">
+                    <view contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="ZTZ-0b-Ptx" customClass="MBCircularProgressBarView">
                         <rect key="frame" x="2" y="5.5" width="16" height="16"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="16" id="0F3-hb-UnC"/>
+                            <constraint firstAttribute="height" constant="16" id="jv9-Zi-92D"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="showValueString" value="NO"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="maxValue">
+                                <real key="value" value="100"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="value">
+                                <real key="value" value="0.0"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="showUnitString" value="NO"/>
+                            <userDefinedRuntimeAttribute type="color" keyPath="progressColor">
+                                <color key="value" systemColor="systemBlueColor"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="progressAngle">
+                                <real key="value" value="100"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="progressLineWidth">
+                                <real key="value" value="0.5"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="emptyLineWidth">
+                                <real key="value" value="0.5"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="progressStrokeColor">
+                                <color key="value" systemColor="systemBlueColor"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="emptyLineColor">
+                                <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="emptyLineStrokeColor">
+                                <color key="value" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="progressRotationAngle">
+                                <real key="value" value="50"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="8"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="masksToBounds" value="YES"/>
+                            <userDefinedRuntimeAttribute type="number" keyPath="progressCapType">
+                                <integer key="value" value="2"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" image="arrow.down.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="AdV-AQ-xel">
+                        <rect key="frame" x="2" y="5.5" width="16" height="15"/>
                         <color key="tintColor" systemColor="systemGreenColor"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="16" id="R3c-nt-G9s"/>
                             <constraint firstAttribute="height" constant="16" id="e5b-dA-bgT"/>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="8"/>
-                            </userDefinedRuntimeAttribute>
-                        </userDefinedRuntimeAttributes>
                     </imageView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="eiF-YO-8YM">
                         <rect key="frame" x="2" y="46" width="16" height="15"/>
@@ -184,29 +234,32 @@
                     <constraint firstAttribute="bottom" secondItem="toB-kP-27M" secondAttribute="bottom" constant="5" id="96i-gw-Ptn"/>
                     <constraint firstItem="toB-kP-27M" firstAttribute="leading" secondItem="1Pj-Yk-u2T" secondAttribute="trailing" constant="10" id="A3j-iB-hV2"/>
                     <constraint firstItem="f6l-Bp-fUH" firstAttribute="trailing" secondItem="Mfu-JH-XN3" secondAttribute="trailing" id="AP3-fe-Mkw"/>
-                    <constraint firstItem="AdV-AQ-xel" firstAttribute="centerX" secondItem="1Pj-Yk-u2T" secondAttribute="leading" id="Cah-A3-wzd"/>
                     <constraint firstItem="f6l-Bp-fUH" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Ibi-ZE-P5r"/>
-                    <constraint firstItem="AdV-AQ-xel" firstAttribute="centerY" secondItem="1Pj-Yk-u2T" secondAttribute="top" id="NOL-yy-TBw"/>
                     <constraint firstItem="Q0B-mL-dK8" firstAttribute="leading" secondItem="f6l-Bp-fUH" secondAttribute="trailing" id="STR-57-w8h"/>
                     <constraint firstItem="eiF-YO-8YM" firstAttribute="centerX" secondItem="1Pj-Yk-u2T" secondAttribute="leading" id="c7c-5K-Fqh"/>
+                    <constraint firstItem="1Pj-Yk-u2T" firstAttribute="top" secondItem="ZTZ-0b-Ptx" secondAttribute="centerY" id="ggF-kH-JDH"/>
                     <constraint firstItem="1Pj-Yk-u2T" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="iWZ-Fv-PPJ"/>
                     <constraint firstItem="toB-kP-27M" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="jBX-0u-U10"/>
                     <constraint firstItem="Q0B-mL-dK8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="kmP-ad-XZj"/>
+                    <constraint firstItem="AdV-AQ-xel" firstAttribute="centerX" secondItem="ZTZ-0b-Ptx" secondAttribute="centerX" id="mua-PG-0Zk"/>
                     <constraint firstAttribute="trailing" secondItem="Q0B-mL-dK8" secondAttribute="trailing" id="oxx-FM-xiV"/>
+                    <constraint firstItem="1Pj-Yk-u2T" firstAttribute="leading" secondItem="ZTZ-0b-Ptx" secondAttribute="centerX" id="vEY-H7-bw3"/>
                     <constraint firstItem="f6l-Bp-fUH" firstAttribute="top" secondItem="Mfu-JH-XN3" secondAttribute="top" id="xqT-8o-lMg"/>
                     <constraint firstItem="eiF-YO-8YM" firstAttribute="centerY" secondItem="1Pj-Yk-u2T" secondAttribute="bottom" id="yB9-me-6Hv"/>
+                    <constraint firstItem="AdV-AQ-xel" firstAttribute="centerY" secondItem="ZTZ-0b-Ptx" secondAttribute="centerY" constant="-0.5" id="z5o-u1-kNh"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
                 <outlet property="completedIconImageView" destination="Mfu-JH-XN3" id="dP6-IE-XwB"/>
                 <outlet property="dateLabel" destination="Z5O-MH-zt7" id="f9x-rJ-oOv"/>
+                <outlet property="downloadProgressView" destination="ZTZ-0b-Ptx" id="zp5-4D-fZ9"/>
                 <outlet property="downloadedIconImageView" destination="AdV-AQ-xel" id="zaf-uL-f7m"/>
                 <outlet property="durationLabel" destination="N9l-9l-L9l" id="98h-lU-srK"/>
-                <outlet property="favoritesIconImageView" destination="eiF-YO-8YM" id="Dvz-os-Nga"/>
+                <outlet property="favouritesIconImageView" destination="eiF-YO-8YM" id="Dvz-os-Nga"/>
+                <outlet property="listenProgressView" destination="f6l-Bp-fUH" id="DDZ-eX-bNG"/>
                 <outlet property="locationLabel" destination="j2s-UD-Jnl" id="A9J-F7-CYm"/>
                 <outlet property="menuButton" destination="Q0B-mL-dK8" id="wRP-cu-9aA"/>
-                <outlet property="progressView" destination="f6l-Bp-fUH" id="AST-dg-4IU"/>
                 <outlet property="thumbnailImageView" destination="1Pj-Yk-u2T" id="UHT-hM-G1o"/>
                 <outlet property="titleLabel" destination="7cs-uh-SL9" id="bjy-Rl-STU"/>
                 <outlet property="verseLabel" destination="nQB-Ua-gsO" id="hJf-Jn-kJG"/>
@@ -214,21 +267,20 @@
             <point key="canvasLocation" x="131.8840579710145" y="114.50892857142857"/>
         </tableViewCell>
     </objects>
+    <designables>
+        <designable name="AdV-AQ-xel">
+            <size key="intrinsicContentSize" width="20" height="20"/>
+        </designable>
+    </designables>
     <resources>
+        <image name="arrow.down.circle.fill" catalog="system" width="128" height="121"/>
         <image name="checkmark.circle.fill" catalog="system" width="128" height="121"/>
-        <image name="downlo" width="128" height="128"/>
         <image name="ellipsis.circle" catalog="system" width="128" height="121"/>
         <image name="logo_40" width="40" height="40"/>
         <image name="star.circle.fill" catalog="system" width="128" height="121"/>
         <namedColor name="0099CA">
             <color red="0.0" green="0.59999999999999998" blue="0.792156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="B8B8B8">
-            <color red="0.72156862745098038" green="0.72156862745098038" blue="0.72156862745098038" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

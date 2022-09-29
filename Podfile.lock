@@ -782,6 +782,7 @@ PODS:
   - SwiftTryCatch (0.0.1)
 
 DEPENDENCIES:
+  - Alamofire
   - AlamofireImage
   - BEMCheckBox
   - Charts
@@ -881,6 +882,6 @@ SPEC CHECKSUMS:
   SwiftLint: 414d099c0f305c6c73e56139efb468666e535ece
   SwiftTryCatch: fb6d2b34abe48efd69578dac919293a44f95b481
 
-PODFILE CHECKSUM: 8c3113bc6bd6de97215f3d7095ad65ce5ccf6d16
+PODFILE CHECKSUM: 659052c2f830f5b5d320ffce3d86dc74a5e1d28a
 
 COCOAPODS: 1.11.3

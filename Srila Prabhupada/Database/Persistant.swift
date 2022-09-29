@@ -206,24 +206,17 @@ extension Persistant {
             return
         }
 
-        do {
-            let dbLecture = dbLectures[index]
-            let documentDirectoryURL = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            let destinationURL = documentDirectoryURL.appendingPathComponent(dbLecture.fileName)
+        let dbLecture = dbLectures[index]
 
-            // Delete file in document directory
-            if FileManager.default.fileExists(atPath: destinationURL.path) {
-                try FileManager.default.removeItem(at: destinationURL)
-            }
-
-            dbLectures.remove(at: index)
-            dbLecture.downloadState = DBLecture.DownloadState.notDownloaded.rawValue
-            NotificationCenter.default.post(name: Self.downloadRemovedNotification, object: dbLecture)
-            deleteObject(object: dbLecture)
-            saveMainContext(nil)
-        } catch {
-
+        if let localFileURL = DownloadManager.shared.localFileURL(for: dbLecture) {
+            DownloadManager.shared.deleteLocalFile(localFileURL: localFileURL)
         }
+
+        dbLectures.remove(at: index)
+        dbLecture.downloadState = DBLecture.DownloadState.notDownloaded.rawValue
+        NotificationCenter.default.post(name: Self.downloadRemovedNotification, object: dbLecture)
+        deleteObject(object: dbLecture)
+        saveMainContext(nil)
     }
 
     private func getDbLectures() -> [DBLecture] {
@@ -257,75 +250,37 @@ extension Persistant {
 
     private func downloadStage1(dbLecture: DBLecture) {
 
-        do {
-            let documentDirectoryURL = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        // check if it exists before downloading it
+        if DownloadManager.shared.localFileExists(for: dbLecture) {
+            dbLecture.downloadState = DBLecture.DownloadState.downloaded.rawValue
+        } else {
+            dbLecture.downloadState = DBLecture.DownloadState.downloading.rawValue
+        }
 
-            let destinationURL = documentDirectoryURL.appendingPathComponent(dbLecture.fileName)
+        self.saveMainContext(nil)
+        NotificationCenter.default.post(name: Self.downloadAddedNotification, object: dbLecture)
 
-            // check if it exists before downloading it
-            if FileManager.default.fileExists(atPath: destinationURL.path) {
-                dbLecture.downloadState = DBLecture.DownloadState.downloaded.rawValue
-            } else {
-                dbLecture.downloadState = DBLecture.DownloadState.downloading.rawValue
-            }
-
-            self.saveMainContext(nil)
-            NotificationCenter.default.post(name: Self.downloadAddedNotification, object: dbLecture)
-
-            if dbLecture.downloadStateEnum != .downloaded {
-                downloadStage2(dbLecture: dbLecture)
-            }
-        } catch let error {
-            dbLecture.downloadState = DBLecture.DownloadState.error.rawValue
-            dbLecture.downloadError = error.localizedDescription
-            self.saveMainContext(nil)
-            NotificationCenter.default.post(name: Self.downloadUpdatedNotification, object: dbLecture)
+        if dbLecture.downloadStateEnum != .downloaded {
+            downloadStage2(dbLecture: dbLecture)
         }
     }
 
     private func downloadStage2(dbLecture: DBLecture) {
 
-        guard let audioURLString = dbLecture.resources_audios_url.first, let audioURL = URL(string: audioURLString) else {
-            return
-        }
+        DownloadManager.shared.downloadFile(for: dbLecture) { result in
+            switch result {
 
-        do {
-            let documentDirectoryURL = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            let destinationURL = documentDirectoryURL.appendingPathComponent(dbLecture.fileName)
+            case .success:
+                dbLecture.downloadState = DBLecture.DownloadState.downloaded.rawValue
+                self.saveMainContext(nil)
+                NotificationCenter.default.post(name: Self.downloadUpdatedNotification, object: dbLecture)
 
-            let downloadTask = URLSession.shared.downloadTask(with: audioURL, completionHandler: { (downloadedURL, response, error) in
-
-                DispatchQueue.main.async {
-                    if let httpURLResponse = response as? HTTPURLResponse, httpURLResponse.statusCode == 200,
-                       let mimeType = httpURLResponse.mimeType, mimeType.hasPrefix("audio"),
-                       let downloadedURL = downloadedURL {
-
-                        do {
-                            try FileManager.default.moveItem(at: downloadedURL, to: destinationURL)
-                            dbLecture.downloadState = DBLecture.DownloadState.downloaded.rawValue
-                            self.saveMainContext(nil)
-                            NotificationCenter.default.post(name: Self.downloadUpdatedNotification, object: dbLecture)
-                        } catch let error {
-                            dbLecture.downloadState = DBLecture.DownloadState.error.rawValue
-                            dbLecture.downloadError = error.localizedDescription
-                            self.saveMainContext(nil)
-                            NotificationCenter.default.post(name: Self.downloadUpdatedNotification, object: dbLecture)
-                        }
-                    } else {
-                        dbLecture.downloadState = DBLecture.DownloadState.error.rawValue
-                        dbLecture.downloadError = error?.localizedDescription ?? "Unable to download the audio file"
-                        self.saveMainContext(nil)
-                        NotificationCenter.default.post(name: Self.downloadUpdatedNotification, object: dbLecture)
-                    }
-                }
-            })
-
-            downloadTask.resume()
-        } catch let error {
-            dbLecture.downloadState = DBLecture.DownloadState.error.rawValue
-            dbLecture.downloadError = error.localizedDescription
-            self.saveMainContext(nil)
-            NotificationCenter.default.post(name: Self.downloadUpdatedNotification, object: dbLecture)
+            case .failure(let error):
+                dbLecture.downloadState = DBLecture.DownloadState.error.rawValue
+                dbLecture.downloadError = error.localizedDescription
+                self.saveMainContext(nil)
+                NotificationCenter.default.post(name: Self.downloadUpdatedNotification, object: dbLecture)
+            }
         }
     }
 }

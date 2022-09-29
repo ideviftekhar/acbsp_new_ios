@@ -118,11 +118,17 @@ extension BaseLectureViewController: IQListViewDelegateDataSource {
         }, animatingDifferences: animated, completion: nil)
     }
 
+    func listView(_ listView: IQListView, modifyCell cell: IQListCell, at indexPath: IndexPath) {
+        if let cell = cell as? Cell {
+            cell.delegate = self
+        }
+    }
+
     func listView(_ listView: IQListView, didSelect item: IQItem, at indexPath: IndexPath) {
 
         if let model = item.model as? Cell.Model {
 
-            if model.downloadingState == .downloaded, let audioURL = model.downloadedFileURL {
+            if model.downloadingState == .downloaded, let audioURL = model.localFileURL {
 
                 let playerController = AVPlayerViewController()
                 playerController.player = AVPlayer(url: audioURL)
@@ -141,6 +147,32 @@ extension BaseLectureViewController: IQListViewDelegateDataSource {
                     playerController.player?.play()
                 }
             }
+        }
+    }
+}
+
+extension BaseLectureViewController: LectureCellDelegate {
+    func lectureCell(_ cell: LectureCell, didSelected option: LectureOption, with lecture: Lecture) {
+
+        switch option {
+        case .download:
+            Persistant.shared.save(lecture: lecture)
+        case .deleteFromDownloads:
+            Persistant.shared.delete(lecture: lecture)
+        case .markAsFavourite:
+            Self.lectureViewModel.favourite(lectureId: lecture.id, isFavourite: true, completion: {_ in })
+        case .removeFromFavourites:
+            Self.lectureViewModel.favourite(lectureId: lecture.id, isFavourite: false, completion: {_ in })
+        case .addToPlaylist:
+            break
+        case .markAsHeard:
+            break
+        case .resetProgress:
+            break
+        case .share:
+            break
+        case .downloading:
+            break
         }
     }
 }

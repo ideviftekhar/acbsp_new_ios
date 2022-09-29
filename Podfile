@@ -23,6 +23,8 @@ target 'Srila Prabhupada' do
   pod 'IQListKit'
 
   pod 'BEMCheckBox'
+
+  pod 'Alamofire'
   pod 'AlamofireImage'
 
   pod "MBCircularProgressBar"

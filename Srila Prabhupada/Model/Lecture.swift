@@ -18,7 +18,7 @@ struct Lecture: Hashable, Codable {
         lhs.creationTimestamp == rhs.creationTimestamp &&
         lhs.resources == rhs.resources &&
         lhs.downloadingState == rhs.downloadingState &&
-        lhs.isFavorites == rhs.isFavorites &&
+        lhs.isFavourites == rhs.isFavourites &&
         lhs.playProgress == rhs.playProgress
     }
 
@@ -41,7 +41,7 @@ struct Lecture: Hashable, Codable {
     let title: [String]
 
     var downloadingState: DBLecture.DownloadState = .notDownloaded
-    private(set) var isFavorites: Bool = false
+    var isFavourites: Bool = false
     private(set) var playProgress: Int = 0
 
     init(from decoder: Decoder) throws {
@@ -65,7 +65,7 @@ struct Lecture: Hashable, Codable {
         self.title = try container.decode([String].self, forKey: .title)
 
         downloadingState = Persistant.shared.lectureDownloadState(lecture: self)
-        isFavorites = Bool.random()
+        isFavourites = false
         playProgress = Int.random(in: 0...100)
     }
 
@@ -96,7 +96,7 @@ struct Lecture: Hashable, Codable {
         self.title = dbLecture.title
 
         downloadingState = Persistant.shared.lectureDownloadState(lecture: self)
-        isFavorites = Bool.random()
+        isFavourites = false
         playProgress = Int.random(in: 0...100)
     }
 
@@ -155,25 +155,9 @@ struct Lecture: Hashable, Codable {
         return URL(string: thumbnail)
     }
 
-    var downloadedFileURL: URL? {
-        guard downloadingState == .downloaded,
-              let audios = resources.audios.first,
-              let audioURL = audios.audioURL else {
-            return nil
-        }
+    var localFileURL: URL? {
 
-        do {
-            let fileName = "\(id).\(audioURL.pathExtension)"
-            let documentDirectoryURL = try FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            let destinationURL = documentDirectoryURL.appendingPathComponent(fileName)
-
-            if FileManager.default.fileExists(atPath: destinationURL.path) {
-                return destinationURL
-            }
-        } catch {
-            return nil
-        }
-        return nil
+        return DownloadManager.shared.localFileURL(for: self)
     }
 }
 

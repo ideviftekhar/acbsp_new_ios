@@ -13,11 +13,11 @@ enum LectureOption: String, CaseIterable {
 
     case downloading            =   "Downloading..."
 
-    case deleteFromDownloads     =   "Delete from Downloads"
+    case deleteFromDownloads    =   "Delete from Downloads"
 
-    case markAsFavorite         =   "Mark as Favorite"
+    case markAsFavourite        =   "Mark as Favourite"
 
-    case removeFromFavorites    =   "Remove From Favorites"
+    case removeFromFavourites   =   "Remove From Favourite"
 
     case addToPlaylist          =   "Add to playlist"
 

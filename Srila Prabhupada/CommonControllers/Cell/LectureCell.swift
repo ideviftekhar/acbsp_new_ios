@@ -10,10 +10,14 @@ import IQListKit
 import MBCircularProgressBar
 import AlamofireImage
 
+protocol LectureCellDelegate: AnyObject {
+    func lectureCell(_ cell: LectureCell, didSelected option: LectureOption, with lecture: Lecture)
+}
+
 class LectureCell: UITableViewCell, IQModelableCell {
 
     @IBOutlet private var downloadedIconImageView: UIImageView!
-    @IBOutlet private var favoritesIconImageView: UIImageView!
+    @IBOutlet private var favouritesIconImageView: UIImageView!
     @IBOutlet private var completedIconImageView: UIImageView!
 
     @IBOutlet private var thumbnailImageView: UIImageView!
@@ -23,7 +27,10 @@ class LectureCell: UITableViewCell, IQModelableCell {
     @IBOutlet private var locationLabel: UILabel!
     @IBOutlet private var dateLabel: UILabel!
     @IBOutlet private var menuButton: UIButton!
-    @IBOutlet private var progressView: MBCircularProgressBarView!
+    @IBOutlet private var downloadProgressView: MBCircularProgressBarView!
+    @IBOutlet private var listenProgressView: MBCircularProgressBarView!
+
+    weak var delegate: LectureCellDelegate?
 
     var allActions: [LectureOption: UIAction] = [:]
 
@@ -40,6 +47,16 @@ class LectureCell: UITableViewCell, IQModelableCell {
         super.init(coder: coder)
     }
 
+    override func prepareForReuse() {
+        super.prepareForReuse()
+
+        guard let model = model else {
+            return
+        }
+
+        DownloadManager.shared.unregisterProgress(observer: self, lectureID: model.id)
+    }
+
     typealias Model = Lecture
 
     var model: Model? {
@@ -54,9 +71,9 @@ class LectureCell: UITableViewCell, IQModelableCell {
             durationLabel.text = model.lengthTime.displayString
             locationLabel.text = model.location.displayString
             dateLabel.text = "\(model.dateOfRecording.year)/\(model.dateOfRecording.month)/\(model.dateOfRecording.day)/"
-            progressView.value = CGFloat(model.playProgress)
+            listenProgressView.value = CGFloat(model.playProgress)
 
-            progressView.isHidden = model.playProgress == 100
+            listenProgressView.isHidden = model.playProgress == 100
             completedIconImageView.isHidden = model.playProgress != 100
 
             if let url = model.thumbnailURL {
@@ -68,24 +85,31 @@ class LectureCell: UITableViewCell, IQModelableCell {
             switch model.downloadingState {
             case .notDownloaded:
                 downloadedIconImageView.isHidden = true
-
+                downloadProgressView.isHidden = true
             case .downloading:
                 downloadedIconImageView.isHidden = false
                 downloadedIconImageView.tintColor = UIColor.systemBlue
-                downloadedIconImageView.image = UIImage(systemName: "arrow.triangle.2.circlepath.circle.fill")
+                downloadedIconImageView.image = UIImage(systemName: "arrow.down.circle.fill")
+                downloadProgressView.isHidden = false
 
+                DownloadManager.shared.registerProgress(observer: self, lectureID: model.id) { [weak self] progress in
+                    self?.downloadProgressView.value = progress * 100
+                }
             case .downloaded:
                 downloadedIconImageView.isHidden = false
                 downloadedIconImageView.tintColor = UIColor.systemGreen
                 downloadedIconImageView.image = UIImage(systemName: "arrow.down.circle.fill")
-
+                downloadProgressView.isHidden = false
+                downloadProgressView.value = 0
             case .error:
                 downloadedIconImageView.isHidden = false
                 downloadedIconImageView.tintColor = UIColor.systemRed
                 downloadedIconImageView.image = UIImage(systemName: "exclamationmark.circle.fill")
+                downloadProgressView.isHidden = false
+                downloadProgressView.value = 0
             }
 
-            favoritesIconImageView.isHidden = !model.isFavorites
+            favouritesIconImageView.isHidden = !model.isFavourites
 
             do {
                 var actions: [UIAction] = []
@@ -105,11 +129,11 @@ class LectureCell: UITableViewCell, IQModelableCell {
                     }
                 }
 
-                // Is Favorites
-                if model.isFavorites, let removeFromFavorites = allActions[.removeFromFavorites] {
-                    actions.append(removeFromFavorites)
-                } else if let markAsFavorite = allActions[.markAsFavorite] {
-                    actions.append(markAsFavorite)
+                // Is Favourites
+                if model.isFavourites, let removeFromFavourites = allActions[.removeFromFavourites] {
+                    actions.append(removeFromFavourites)
+                } else if let markAsFavourite = allActions[.markAsFavourite] {
+                    actions.append(markAsFavourite)
                 }
 
                 // addToPlaylist
@@ -143,27 +167,12 @@ class LectureCell: UITableViewCell, IQModelableCell {
                     return
                 }
 
-                switch option {
-                case .download:
-                    Persistant.shared.save(lecture: model)
-                case .downloading:
-                    break
-                case .deleteFromDownloads:
-                    Persistant.shared.delete(lecture: model)
-                case .markAsFavorite:
-                    break
-                case .removeFromFavorites:
-                    break
-                case .addToPlaylist:
-                    break
-                case .markAsHeard:
-                    break
-                case .resetProgress:
-                    break
-                case .share:
-                    break
-                }
+                delegate?.lectureCell(self, didSelected: option, with: model)
             })
+
+            if option == .downloading {
+                action.attributes = .disabled
+            }
 
             allActions[option] = action
         }

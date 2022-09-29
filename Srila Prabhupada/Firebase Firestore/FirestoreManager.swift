@@ -29,6 +29,10 @@ class FirestoreManager: NSObject {
     func getDocuments<T: Decodable>(query: Query, source: FirestoreSource, completion: @escaping ((Swift.Result<[T], Error>) -> Void)) {
         query.getDocuments(source: source, completion: completion)
     }
+
+    func getRawDocuments(query: Query, source: FirestoreSource, completion: @escaping ((Swift.Result<[QueryDocumentSnapshot], Error>) -> Void)) {
+        query.getRawDocuments(source: source, completion: completion)
+    }
 }
 
 extension Query {
@@ -47,6 +51,20 @@ extension Query {
                    print(error)
                    completion(.failure(error))
                }
+            }
+        }
+    }
+
+    fileprivate func getRawDocuments(source: FirestoreSource, completion: @escaping ((Swift.Result<[QueryDocumentSnapshot], Error>) -> Void)) {
+        getDocuments(source: source) { snapshot, error in
+
+            if let error = error {
+                completion(.failure(error))
+            } else if let documents: [QueryDocumentSnapshot] = snapshot?.documents {
+                completion(.success(documents))
+            } else {
+                let error = NSError(domain: "Firestore Database", code: 0, userInfo: [NSLocalizedDescriptionKey: "Documents are not available"])
+                completion(.failure(error))
             }
         }
     }

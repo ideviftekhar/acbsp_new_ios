@@ -15,6 +15,7 @@ enum FirestoreCollection {
     case usersSettings(userId: String)
     case usersLectureInfo(userId: String)
     case usersListenInfo(userId: String)
+    case users
 
     var path: String {
         switch self {
@@ -32,6 +33,8 @@ enum FirestoreCollection {
             return "users/\(userId)/lectureInfo"
         case .usersListenInfo(userId: let userId):
             return "users/\(userId)/listenInfo"
+        case .users:
+            return "users"
         }
     }
 }

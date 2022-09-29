@@ -1,5 +1,5 @@
 //
-//  FavoritesViewController.swift
+//  FavouritesViewController.swift
 //  SrilaPrabhupada
 //
 //  Created by IE06 on 20/08/22.
@@ -8,14 +8,14 @@
 import UIKit
 import FirebaseFirestore
 
-class FavoritesViewController: BaseLectureViewController {
+class FavouritesViewController: BaseLectureViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         do {
-            list.noItemTitle = "No Favorite Lectures"
-            list.noItemMessage = "You can star your favorite lectures from home tab"
+            list.noItemTitle = "No Favourite Lectures"
+            list.noItemMessage = "You can star your favourite lectures from home tab"
         }
     }
 
@@ -23,7 +23,7 @@ class FavoritesViewController: BaseLectureViewController {
 
         showLoading()
 
-        Self.lectureViewModel.getFavoriteLectureIds(completion: { [self] result in
+        Self.lectureViewModel.getFavouriteLectureIds(completion: { [self] result in
 
             switch result {
             case .success(let lectureIDs):

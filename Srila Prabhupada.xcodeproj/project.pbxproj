@@ -10,6 +10,7 @@
 		C0065D4828D881A400B18AA6 /* SideMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0065D4728D881A400B18AA6 /* SideMenuItem.swift */; };
 		C0065D4B28D883F300B18AA6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0065D4A28D883F300B18AA6 /* Constants.swift */; };
 		C0065D4D28D884AF00B18AA6 /* LectureOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0065D4C28D884AF00B18AA6 /* LectureOption.swift */; };
+		C007586628E5BF2F0010EBE6 /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C007586528E5BF2F0010EBE6 /* DownloadManager.swift */; };
 		C00AB20428D1E6DD00A62A2F /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00AB20328D1E6DD00A62A2F /* FilterViewController.swift */; };
 		C00AB20628D1F19500A62A2F /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00AB20528D1F19500A62A2F /* Filter.swift */; };
 		C00AB20A28D1F52D00A62A2F /* FilterDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00AB20828D1F52D00A62A2F /* FilterDetailTableViewCell.swift */; };
@@ -40,12 +41,12 @@
 		C00E4DF328CA39CB00F1A123 /* Stats.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C00E4DE828CA39CB00F1A123 /* Stats.storyboard */; };
 		C00E4DF428CA39CB00F1A123 /* History.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C00E4DE928CA39CB00F1A123 /* History.storyboard */; };
 		C00E4DF528CA39CB00F1A123 /* Downloads.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C00E4DEA28CA39CB00F1A123 /* Downloads.storyboard */; };
-		C00E4DF628CA39CB00F1A123 /* Favorites.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C00E4DEB28CA39CB00F1A123 /* Favorites.storyboard */; };
+		C00E4DF628CA39CB00F1A123 /* Favourites.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C00E4DEB28CA39CB00F1A123 /* Favourites.storyboard */; };
 		C00E4DF828CA39CB00F1A123 /* PopularLecture.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C00E4DED28CA39CB00F1A123 /* PopularLecture.storyboard */; };
 		C00E4DFC28CA39F400F1A123 /* SideMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4DFB28CA39F400F1A123 /* SideMenuTableViewController.swift */; };
 		C00E4E0828CA39FE00F1A123 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4DFE28CA39FE00F1A123 /* TabBarController.swift */; };
 		C00E4E0928CA39FE00F1A123 /* DownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E0028CA39FE00F1A123 /* DownloadViewController.swift */; };
-		C00E4E0A28CA39FE00F1A123 /* FavoritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E0128CA39FE00F1A123 /* FavoritesViewController.swift */; };
+		C00E4E0A28CA39FE00F1A123 /* FavouritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E0128CA39FE00F1A123 /* FavouritesViewController.swift */; };
 		C00E4E0B28CA39FE00F1A123 /* BaseLectureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E0228CA39FE00F1A123 /* BaseLectureViewController.swift */; };
 		C00E4E0C28CA39FE00F1A123 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E0328CA39FE00F1A123 /* HomeViewController.swift */; };
 		C00E4E0D28CA39FE00F1A123 /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E0428CA39FE00F1A123 /* PlaylistViewController.swift */; };
@@ -98,6 +99,7 @@
 		C0065D4728D881A400B18AA6 /* SideMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuItem.swift; sourceTree = "<group>"; };
 		C0065D4A28D883F300B18AA6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C0065D4C28D884AF00B18AA6 /* LectureOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureOption.swift; sourceTree = "<group>"; };
+		C007586528E5BF2F0010EBE6 /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
 		C00AB20328D1E6DD00A62A2F /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		C00AB20528D1F19500A62A2F /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		C00AB20828D1F52D00A62A2F /* FilterDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterDetailTableViewCell.swift; sourceTree = "<group>"; };
@@ -130,12 +132,12 @@
 		C00E4DE828CA39CB00F1A123 /* Stats.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Stats.storyboard; sourceTree = "<group>"; };
 		C00E4DE928CA39CB00F1A123 /* History.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = History.storyboard; sourceTree = "<group>"; };
 		C00E4DEA28CA39CB00F1A123 /* Downloads.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Downloads.storyboard; sourceTree = "<group>"; };
-		C00E4DEB28CA39CB00F1A123 /* Favorites.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Favorites.storyboard; sourceTree = "<group>"; };
+		C00E4DEB28CA39CB00F1A123 /* Favourites.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Favourites.storyboard; sourceTree = "<group>"; };
 		C00E4DED28CA39CB00F1A123 /* PopularLecture.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PopularLecture.storyboard; sourceTree = "<group>"; };
 		C00E4DFB28CA39F400F1A123 /* SideMenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewController.swift; sourceTree = "<group>"; };
 		C00E4DFE28CA39FE00F1A123 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		C00E4E0028CA39FE00F1A123 /* DownloadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadViewController.swift; sourceTree = "<group>"; };
-		C00E4E0128CA39FE00F1A123 /* FavoritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoritesViewController.swift; sourceTree = "<group>"; };
+		C00E4E0128CA39FE00F1A123 /* FavouritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavouritesViewController.swift; sourceTree = "<group>"; };
 		C00E4E0228CA39FE00F1A123 /* BaseLectureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseLectureViewController.swift; sourceTree = "<group>"; };
 		C00E4E0328CA39FE00F1A123 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		C00E4E0428CA39FE00F1A123 /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
@@ -221,6 +223,14 @@
 				C0065D4728D881A400B18AA6 /* SideMenuItem.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		C007586728E5D9100010EBE6 /* DownloadManager */ = {
+			isa = PBXGroup;
+			children = (
+				C007586528E5BF2F0010EBE6 /* DownloadManager.swift */,
+			);
+			path = DownloadManager;
 			sourceTree = "<group>";
 		};
 		C00AB20228D1E6D000A62A2F /* Supporting Controllers */ = {
@@ -315,6 +325,7 @@
 				C0FA305B28CF461900E78843 /* Extensions */,
 				C00AB21328D1FD6D00A62A2F /* Model */,
 				C00DC56828E1DA65001EDE95 /* Database */,
+				C007586728E5D9100010EBE6 /* DownloadManager */,
 				C00E4DDE28CA393600F1A123 /* PreLogIn */,
 				C00E4DFA28CA39F400F1A123 /* LeftMenuControllers */,
 				C00E4DFD28CA39FE00F1A123 /* CommonControllers */,
@@ -348,7 +359,7 @@
 				C00E4DE628CA39CB00F1A123 /* SideMenu.storyboard */,
 				C00E4DE728CA39CB00F1A123 /* Home.storyboard */,
 				C00E4DEA28CA39CB00F1A123 /* Downloads.storyboard */,
-				C00E4DEB28CA39CB00F1A123 /* Favorites.storyboard */,
+				C00E4DEB28CA39CB00F1A123 /* Favourites.storyboard */,
 				C00E4DE928CA39CB00F1A123 /* History.storyboard */,
 				C00E4DE528CA39CB00F1A123 /* Playlists.storyboard */,
 				C00E4DED28CA39CB00F1A123 /* PopularLecture.storyboard */,
@@ -392,7 +403,7 @@
 				C00E4E1928CA45E000F1A123 /* PlaylistLecturesViewController.swift */,
 				C00E4E0728CA39FE00F1A123 /* TopLectureViewController.swift */,
 				C00E4E0028CA39FE00F1A123 /* DownloadViewController.swift */,
-				C00E4E0128CA39FE00F1A123 /* FavoritesViewController.swift */,
+				C00E4E0128CA39FE00F1A123 /* FavouritesViewController.swift */,
 				C00E4E0528CA39FE00F1A123 /* PopularLectureViewController.swift */,
 				C00E4E0628CA39FE00F1A123 /* HistoryViewController.swift */,
 			);
@@ -571,7 +582,7 @@
 				C00E4DEF28CA39CB00F1A123 /* TopLectures.storyboard in Resources */,
 				C00AB20D28D1F56C00A62A2F /* Common.storyboard in Resources */,
 				C00E4DD228CA36F100F1A123 /* Main.storyboard in Resources */,
-				C00E4DF628CA39CB00F1A123 /* Favorites.storyboard in Resources */,
+				C00E4DF628CA39CB00F1A123 /* Favourites.storyboard in Resources */,
 				C00E4DF828CA39CB00F1A123 /* PopularLecture.storyboard in Resources */,
 				C0D76E2728CF7CFF00F69320 /* development-internal.xcconfig in Resources */,
 			);
@@ -695,7 +706,7 @@
 				C00E4E1628CA433A00F1A123 /* StatsViewController.swift in Sources */,
 				C0EA13EA28CF5A9D00BE9110 /* UIViewController+Alert.swift in Sources */,
 				C00E4E1A28CA45E000F1A123 /* PlaylistLecturesViewController.swift in Sources */,
-				C00E4E0A28CA39FE00F1A123 /* FavoritesViewController.swift in Sources */,
+				C00E4E0A28CA39FE00F1A123 /* FavouritesViewController.swift in Sources */,
 				C0065D4828D881A400B18AA6 /* SideMenuItem.swift in Sources */,
 				C00E4DCD28CA36F100F1A123 /* SceneDelegate.swift in Sources */,
 				C00E4E0F28CA39FE00F1A123 /* HistoryViewController.swift in Sources */,
@@ -706,6 +717,7 @@
 				C00AB20A28D1F52D00A62A2F /* FilterDetailTableViewCell.swift in Sources */,
 				C03E3F2828DCC6C500B987DD /* ListenInfo.swift in Sources */,
 				C0FA305F28CF4AF000E78843 /* LoginViewModel.swift in Sources */,
+				C007586628E5BF2F0010EBE6 /* DownloadManager.swift in Sources */,
 				C00DC56F28E1DA66001EDE95 /* Persistant.swift in Sources */,
 				C00AB22028D2137C00A62A2F /* Time.swift in Sources */,
 				C00E4E0C28CA39FE00F1A123 /* HomeViewController.swift in Sources */,

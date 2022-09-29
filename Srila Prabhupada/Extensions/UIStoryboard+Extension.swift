@@ -14,7 +14,7 @@ extension UIStoryboard {
     static let sideMenu = UIStoryboard(name: "SideMenu", bundle: nil)
     static let home = UIStoryboard(name: "Home", bundle: nil)
     static let downloads = UIStoryboard(name: "Downloads", bundle: nil)
-    static let favorites = UIStoryboard(name: "Favorites", bundle: nil)
+    static let favourites = UIStoryboard(name: "Favourites", bundle: nil)
     static let history = UIStoryboard(name: "History", bundle: nil)
     static let playlists = UIStoryboard(name: "Playlists", bundle: nil)
     static let popularLecture = UIStoryboard(name: "PopularLecture", bundle: nil)

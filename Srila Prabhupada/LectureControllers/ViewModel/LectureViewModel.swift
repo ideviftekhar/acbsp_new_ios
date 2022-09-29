@@ -14,10 +14,13 @@ protocol LectureViewModel: AnyObject {
 
     func getLectures(searchText: String?, sortType: LectureSortType, filter: [Filter: [String]], lectureIDs: [Int]?, source: FirestoreSource, completion: @escaping (Swift.Result<[Lecture], Error>) -> Void)
 
-    func getFavoriteLectureIds(completion: @escaping (Swift.Result<[Int], Error>) -> Void)
+    func getFavouriteLectureIds(completion: @escaping (Swift.Result<[Int], Error>) -> Void)
     func getWeekLecturesIds(weekDays: [String], completion: @escaping (Swift.Result<[Int], Error>) -> Void)
     func getMonthLecturesIds(month: Int, year: Int, completion: @escaping (Swift.Result<[Int], Error>) -> Void)
     func getListenedLectureIds(completion: @escaping (Swift.Result<[Int], Error>) -> Void)
+    func getPopularLectureIds(completion: @escaping (Swift.Result<[Int], Error>) -> Void)
+
+    func favourite(lectureId: Int, isFavourite: Bool, completion: @escaping (Swift.Result<Bool, Error>) -> Void)
 }
 
 class DefaultLectureViewModel: NSObject, LectureViewModel {
@@ -32,30 +35,6 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(downloadAddedNotification(_:)), name: Persistant.downloadAddedNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(downloadUpdatedNotification(_:)), name: Persistant.downloadUpdatedNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(downloadRemovedNotification(_:)), name: Persistant.downloadRemovedNotification, object: nil)
-    }
-
-    @objc func downloadAddedNotification(_ notification: Notification) {
-        guard let dbLecture = notification.object as? DBLecture else { return }
-        if let index = allLectures.firstIndex(where: { $0.id == dbLecture.id }) {
-            allLectures[index].downloadingState = dbLecture.downloadStateEnum
-            NotificationCenter.default.post(name: DefaultLectureViewModel.lectureUpdateNotification, object: nil)
-        }
-    }
-
-    @objc func downloadUpdatedNotification(_ notification: Notification) {
-        guard let dbLecture = notification.object as? DBLecture else { return }
-        if let index = allLectures.firstIndex(where: { $0.id == dbLecture.id }) {
-            allLectures[index].downloadingState = dbLecture.downloadStateEnum
-            NotificationCenter.default.post(name: DefaultLectureViewModel.lectureUpdateNotification, object: nil)
-        }
-    }
-
-    @objc func downloadRemovedNotification(_ notification: Notification) {
-        guard let dbLecture = notification.object as? DBLecture else { return }
-        if let index = allLectures.firstIndex(where: { $0.id == dbLecture.id }) {
-            allLectures[index].downloadingState = dbLecture.downloadStateEnum
-            NotificationCenter.default.post(name: DefaultLectureViewModel.lectureUpdateNotification, object: nil)
-        }
     }
 
     static func filter(lectures: [Lecture], searchText: String?, sortType: LectureSortType, filter: [Filter: [String]], lectureIDs: [Int]?) -> [Lecture] {
@@ -120,7 +99,7 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
         }
     }
 
-    func getFavoriteLectureIds(completion: @escaping (Swift.Result<[Int], Error>) -> Void) {
+    func getFavouriteLectureIds(completion: @escaping (Swift.Result<[Int], Error>) -> Void) {
 
         guard let currentUser = Auth.auth().currentUser else {
             let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
@@ -203,5 +182,120 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
                 completion(.failure(error))
             }
         })
+    }
+
+    func favourite(lectureId: Int, isFavourite: Bool, completion: @escaping (Swift.Result<Bool, Error>) -> Void) {
+        guard let currentUser = Auth.auth().currentUser else {
+            let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
+            completion(.failure(error))
+            return
+        }
+
+        var query: Query = FirestoreManager.shared.firestore.collection(FirestoreCollection.usersLectureInfo(userId: currentUser.uid).path)
+        query = query.whereField("id", isEqualTo: lectureId)
+
+        FirestoreManager.shared.getRawDocuments(query: query, source: .default) { result in
+            switch result {
+            case .success(let success):
+
+                if let foundInfo = success.first {
+                    let isFavouriteData: [String: Any] = ["isFavourite": isFavourite]
+                    foundInfo.reference.updateData(isFavouriteData) { error in
+                        if let error = error {
+                            completion(.failure(error))
+                        } else {
+
+                            if let index = self.allLectures.firstIndex(where: { $0.id == lectureId }) {
+                                self.allLectures[index].isFavourites = isFavourite
+                                NotificationCenter.default.post(name: DefaultLectureViewModel.lectureUpdateNotification, object: nil)
+                            }
+                            completion(.success(true))
+                        }
+                    }
+                } else {
+                    let query: CollectionReference = FirestoreManager.shared.firestore.collection(FirestoreCollection.usersLectureInfo(userId: currentUser.uid).path)
+
+                    let isFavouriteData: [String: Any] = [
+                        "id": lectureId,
+                        "isFavourite": isFavourite
+                    ]
+
+                    query.addDocument(data: isFavouriteData) { error in
+                        if let error = error {
+                            completion(.failure(error))
+                        } else {
+
+                            if let index = self.allLectures.firstIndex(where: { $0.id == lectureId }) {
+                                self.allLectures[index].isFavourites = isFavourite
+                                NotificationCenter.default.post(name: DefaultLectureViewModel.lectureUpdateNotification, object: nil)
+                            }
+
+                            completion(.success(true))
+                        }
+                    }
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+
+    func getPopularLectureIds(completion: @escaping (Swift.Result<[Int], Error>) -> Void) {
+
+        let query: Query = FirestoreManager.shared.firestore.collection(FirestoreCollection.topLectures.path)
+
+        FirestoreManager.shared.getDocuments(query: query, source: .default) { (result: Swift.Result<[TopLecture], Error>) in
+
+            switch result {
+            case .success(let success):
+                let lectureIDs: [Int] = success.flatMap({ obj -> [Int] in
+                    obj.playedIds
+                })
+
+                var counts: [Int: Int] = [:]
+                lectureIDs.forEach { counts[$0, default: 0] += 1 }
+
+                let tuplesSortedByValue: [Dictionary<Int, Int>.Element] = counts.sorted { $0.value > $1.value }
+
+                let sortedLectureIDs: [Int] = tuplesSortedByValue.map { $0.key }
+                completion(.success(sortedLectureIDs))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+}
+
+extension DefaultLectureViewModel {
+
+    @objc func downloadAddedNotification(_ notification: Notification) {
+        guard let dbLecture = notification.object as? DBLecture else { return }
+        if let index = allLectures.firstIndex(where: { $0.id == dbLecture.id }) {
+            allLectures[index].downloadingState = dbLecture.downloadStateEnum
+            NotificationCenter.default.post(name: DefaultLectureViewModel.lectureUpdateNotification, object: nil)
+        }
+    }
+
+    @objc func downloadUpdatedNotification(_ notification: Notification) {
+        guard let dbLecture = notification.object as? DBLecture else { return }
+        if let index = allLectures.firstIndex(where: { $0.id == dbLecture.id }) {
+            allLectures[index].downloadingState = dbLecture.downloadStateEnum
+            NotificationCenter.default.post(name: DefaultLectureViewModel.lectureUpdateNotification, object: nil)
+        }
+    }
+
+    @objc func downloadRemovedNotification(_ notification: Notification) {
+        guard let dbLecture = notification.object as? DBLecture else { return }
+        if let index = allLectures.firstIndex(where: { $0.id == dbLecture.id }) {
+            allLectures[index].downloadingState = dbLecture.downloadStateEnum
+            NotificationCenter.default.post(name: DefaultLectureViewModel.lectureUpdateNotification, object: nil)
+        }
+    }
+
+    private func favouriteUpdated(lectureId: Int, isFavourite: Bool) {
+        if let index = self.allLectures.firstIndex(where: { $0.id == lectureId }) {
+            self.allLectures[index].isFavourites = isFavourite
+            NotificationCenter.default.post(name: DefaultLectureViewModel.lectureUpdateNotification, object: nil)
+        }
     }
 }
