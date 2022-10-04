@@ -11,6 +11,14 @@
 		C0065D4B28D883F300B18AA6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0065D4A28D883F300B18AA6 /* Constants.swift */; };
 		C0065D4D28D884AF00B18AA6 /* LectureOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0065D4C28D884AF00B18AA6 /* LectureOption.swift */; };
 		C007586628E5BF2F0010EBE6 /* DownloadManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C007586528E5BF2F0010EBE6 /* DownloadManager.swift */; };
+		C007D37828E8096D00CFBED0 /* Day.swift in Sources */ = {isa = PBXBuildFile; fileRef = C007D37728E8096D00CFBED0 /* Day.swift */; };
+		C007D37A28E809D900CFBED0 /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = C007D37928E809D900CFBED0 /* Language.swift */; };
+		C007D37C28E80AAB00CFBED0 /* LegacyData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C007D37B28E80AAB00CFBED0 /* LegacyData.swift */; };
+		C007D37E28E80ABB00CFBED0 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = C007D37D28E80ABB00CFBED0 /* Location.swift */; };
+		C007D38028E80AD000CFBED0 /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = C007D37F28E80AD000CFBED0 /* Resources.swift */; };
+		C007D38228E80ADC00CFBED0 /* Audio.swift in Sources */ = {isa = PBXBuildFile; fileRef = C007D38128E80ADC00CFBED0 /* Audio.swift */; };
+		C007D38428E80AEE00CFBED0 /* Search.swift in Sources */ = {isa = PBXBuildFile; fileRef = C007D38328E80AEE00CFBED0 /* Search.swift */; };
+		C007D38628E80EC200CFBED0 /* Persistent+DBLecture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C007D38528E80EC200CFBED0 /* Persistent+DBLecture.swift */; };
 		C00AB20428D1E6DD00A62A2F /* FilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00AB20328D1E6DD00A62A2F /* FilterViewController.swift */; };
 		C00AB20628D1F19500A62A2F /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00AB20528D1F19500A62A2F /* Filter.swift */; };
 		C00AB20A28D1F52D00A62A2F /* FilterDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00AB20828D1F52D00A62A2F /* FilterDetailTableViewCell.swift */; };
@@ -47,7 +55,7 @@
 		C00E4E0828CA39FE00F1A123 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4DFE28CA39FE00F1A123 /* TabBarController.swift */; };
 		C00E4E0928CA39FE00F1A123 /* DownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E0028CA39FE00F1A123 /* DownloadViewController.swift */; };
 		C00E4E0A28CA39FE00F1A123 /* FavouritesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E0128CA39FE00F1A123 /* FavouritesViewController.swift */; };
-		C00E4E0B28CA39FE00F1A123 /* BaseLectureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E0228CA39FE00F1A123 /* BaseLectureViewController.swift */; };
+		C00E4E0B28CA39FE00F1A123 /* LectureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E0228CA39FE00F1A123 /* LectureViewController.swift */; };
 		C00E4E0C28CA39FE00F1A123 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E0328CA39FE00F1A123 /* HomeViewController.swift */; };
 		C00E4E0D28CA39FE00F1A123 /* PlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E0428CA39FE00F1A123 /* PlaylistViewController.swift */; };
 		C00E4E0E28CA39FE00F1A123 /* PopularLectureViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E0528CA39FE00F1A123 /* PopularLectureViewController.swift */; };
@@ -58,7 +66,7 @@
 		C00E4E1728CA433A00F1A123 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E1428CA433A00F1A123 /* AboutViewController.swift */; };
 		C00E4E1828CA433A00F1A123 /* CopyrightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E1528CA433A00F1A123 /* CopyrightViewController.swift */; };
 		C00E4E1A28CA45E000F1A123 /* PlaylistLecturesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E1928CA45E000F1A123 /* PlaylistLecturesViewController.swift */; };
-		C00E4E1C28CA462000F1A123 /* BaseSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E1B28CA462000F1A123 /* BaseSearchViewController.swift */; };
+		C00E4E1C28CA462000F1A123 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E1B28CA462000F1A123 /* SearchViewController.swift */; };
 		C0118A7928D34AA800F6002D /* GoogleService-Info-development-client.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0118A7728D34AA700F6002D /* GoogleService-Info-development-client.plist */; };
 		C0118A7C28D34AB400F6002D /* GoogleService-Info-production-client.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0118A7B28D34AB400F6002D /* GoogleService-Info-production-client.plist */; };
 		C03E3F2628DCC20A00B987DD /* FirestoreCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03E3F2528DCC20A00B987DD /* FirestoreCollection.swift */; };
@@ -75,6 +83,9 @@
 		C0B7991128DC524500681649 /* PlaylistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B7991028DC524500681649 /* PlaylistViewModel.swift */; };
 		C0BC771028D5AE1000C2629F /* TappableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BC770F28D5AE1000C2629F /* TappableLabel.swift */; };
 		C0CAF25D28D45B8C00DA9878 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CAF25C28D45B8C00DA9878 /* NavigationController.swift */; };
+		C0CE0D1428E86EF500C2C825 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CE0D1328E86EF500C2C825 /* UIImage+Extension.swift */; };
+		C0CE0D1828E870DB00C2C825 /* SideMenuCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CE0D1628E870DB00C2C825 /* SideMenuCell.swift */; };
+		C0CE0D1928E870DB00C2C825 /* SideMenuCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0CE0D1728E870DB00C2C825 /* SideMenuCell.xib */; };
 		C0D76E2528CF7C9B00F69320 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D76E2328CF7C9A00F69320 /* Environment.swift */; };
 		C0D76E2728CF7CFF00F69320 /* development-internal.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C0D76E2628CF7CFF00F69320 /* development-internal.xcconfig */; };
 		C0D76E2928CF7D0F00F69320 /* production-client.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C0D76E2828CF7D0F00F69320 /* production-client.xcconfig */; };
@@ -83,6 +94,7 @@
 		C0EA13EA28CF5A9D00BE9110 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EA13E928CF5A9D00BE9110 /* UIViewController+Alert.swift */; };
 		C0EA13ED28CF685E00BE9110 /* RoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EA13EC28CF685E00BE9110 /* RoundButton.swift */; };
 		C0EA13EF28CF6D0D00BE9110 /* UIView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EA13EE28CF6D0D00BE9110 /* UIView+extension.swift */; };
+		C0EA5CBE28EC6C96007D9E4C /* DateFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EA5CBD28EC6C96007D9E4C /* DateFormatter+Extension.swift */; };
 		C0F9956A28DE04290057A48C /* GoogleService-Info-development-internal.plist.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0F9956928DE04290057A48C /* GoogleService-Info-development-internal.plist.plist */; };
 		C0FA049F28DB37FA003177DA /* LectureInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FA049E28DB37FA003177DA /* LectureInfo.swift */; };
 		C0FA305D28CF461900E78843 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FA305C28CF461900E78843 /* String+Extension.swift */; };
@@ -100,6 +112,14 @@
 		C0065D4A28D883F300B18AA6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		C0065D4C28D884AF00B18AA6 /* LectureOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureOption.swift; sourceTree = "<group>"; };
 		C007586528E5BF2F0010EBE6 /* DownloadManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DownloadManager.swift; sourceTree = "<group>"; };
+		C007D37728E8096D00CFBED0 /* Day.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Day.swift; sourceTree = "<group>"; };
+		C007D37928E809D900CFBED0 /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
+		C007D37B28E80AAB00CFBED0 /* LegacyData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyData.swift; sourceTree = "<group>"; };
+		C007D37D28E80ABB00CFBED0 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		C007D37F28E80AD000CFBED0 /* Resources.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Resources.swift; sourceTree = "<group>"; };
+		C007D38128E80ADC00CFBED0 /* Audio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Audio.swift; sourceTree = "<group>"; };
+		C007D38328E80AEE00CFBED0 /* Search.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Search.swift; sourceTree = "<group>"; };
+		C007D38528E80EC200CFBED0 /* Persistent+DBLecture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Persistent+DBLecture.swift"; sourceTree = "<group>"; };
 		C00AB20328D1E6DD00A62A2F /* FilterViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterViewController.swift; sourceTree = "<group>"; };
 		C00AB20528D1F19500A62A2F /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		C00AB20828D1F52D00A62A2F /* FilterDetailTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FilterDetailTableViewCell.swift; sourceTree = "<group>"; };
@@ -138,7 +158,7 @@
 		C00E4DFE28CA39FE00F1A123 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		C00E4E0028CA39FE00F1A123 /* DownloadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadViewController.swift; sourceTree = "<group>"; };
 		C00E4E0128CA39FE00F1A123 /* FavouritesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavouritesViewController.swift; sourceTree = "<group>"; };
-		C00E4E0228CA39FE00F1A123 /* BaseLectureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseLectureViewController.swift; sourceTree = "<group>"; };
+		C00E4E0228CA39FE00F1A123 /* LectureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LectureViewController.swift; sourceTree = "<group>"; };
 		C00E4E0328CA39FE00F1A123 /* HomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		C00E4E0428CA39FE00F1A123 /* PlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistViewController.swift; sourceTree = "<group>"; };
 		C00E4E0528CA39FE00F1A123 /* PopularLectureViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopularLectureViewController.swift; sourceTree = "<group>"; };
@@ -149,7 +169,7 @@
 		C00E4E1428CA433A00F1A123 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		C00E4E1528CA433A00F1A123 /* CopyrightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyrightViewController.swift; sourceTree = "<group>"; };
 		C00E4E1928CA45E000F1A123 /* PlaylistLecturesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistLecturesViewController.swift; sourceTree = "<group>"; };
-		C00E4E1B28CA462000F1A123 /* BaseSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSearchViewController.swift; sourceTree = "<group>"; };
+		C00E4E1B28CA462000F1A123 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		C0118A7428D349F400F6002D /* development-client.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "development-client.xcconfig"; sourceTree = "<group>"; };
 		C0118A7728D34AA700F6002D /* GoogleService-Info-development-client.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-development-client.plist"; sourceTree = "<group>"; };
 		C0118A7B28D34AB400F6002D /* GoogleService-Info-production-client.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-production-client.plist"; sourceTree = "<group>"; };
@@ -167,6 +187,9 @@
 		C0B7991028DC524500681649 /* PlaylistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistViewModel.swift; sourceTree = "<group>"; };
 		C0BC770F28D5AE1000C2629F /* TappableLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TappableLabel.swift; sourceTree = "<group>"; };
 		C0CAF25C28D45B8C00DA9878 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
+		C0CE0D1328E86EF500C2C825 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		C0CE0D1628E870DB00C2C825 /* SideMenuCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuCell.swift; sourceTree = "<group>"; };
+		C0CE0D1728E870DB00C2C825 /* SideMenuCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SideMenuCell.xib; sourceTree = "<group>"; };
 		C0D76E2328CF7C9A00F69320 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		C0D76E2628CF7CFF00F69320 /* development-internal.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "development-internal.xcconfig"; sourceTree = "<group>"; };
 		C0D76E2828CF7D0F00F69320 /* production-client.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "production-client.xcconfig"; sourceTree = "<group>"; };
@@ -175,6 +198,7 @@
 		C0EA13E928CF5A9D00BE9110 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
 		C0EA13EC28CF685E00BE9110 /* RoundButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundButton.swift; sourceTree = "<group>"; };
 		C0EA13EE28CF6D0D00BE9110 /* UIView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+extension.swift"; sourceTree = "<group>"; };
+		C0EA5CBD28EC6C96007D9E4C /* DateFormatter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extension.swift"; sourceTree = "<group>"; };
 		C0F9956928DE04290057A48C /* GoogleService-Info-development-internal.plist.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-development-internal.plist.plist"; sourceTree = "<group>"; };
 		C0FA049E28DB37FA003177DA /* LectureInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LectureInfo.swift; sourceTree = "<group>"; };
 		C0FA305C28CF461900E78843 /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
@@ -233,13 +257,13 @@
 			path = DownloadManager;
 			sourceTree = "<group>";
 		};
-		C00AB20228D1E6D000A62A2F /* Supporting Controllers */ = {
+		C00AB20228D1E6D000A62A2F /* Filter Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				C00AB20728D1F51E00A62A2F /* Cell */,
 				C00AB20328D1E6DD00A62A2F /* FilterViewController.swift */,
 			);
-			path = "Supporting Controllers";
+			path = "Filter Controllers";
 			sourceTree = "<group>";
 		};
 		C00AB20728D1F51E00A62A2F /* Cell */ = {
@@ -268,11 +292,8 @@
 			isa = PBXGroup;
 			children = (
 				C0065D4C28D884AF00B18AA6 /* LectureOption.swift */,
-				C0B7990928DC427B00681649 /* PlaylistOption.swift */,
 				C00AB21928D2080800A62A2F /* LectureCell.swift */,
 				C00AB21A28D2080800A62A2F /* LectureCell.xib */,
-				C0B7990528DC41AE00681649 /* PlaylistCell.swift */,
-				C0B7990628DC41AE00681649 /* PlaylistCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -283,6 +304,7 @@
 				C00DC57428E1DA80001EDE95 /* CoreData Classes */,
 				C00DC56A28E1DA65001EDE95 /* SrilaDatabase.xcdatamodeld */,
 				C00DC56928E1DA65001EDE95 /* Persistant.swift */,
+				C007D38528E80EC200CFBED0 /* Persistent+DBLecture.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -329,6 +351,7 @@
 				C00E4DDE28CA393600F1A123 /* PreLogIn */,
 				C00E4DFA28CA39F400F1A123 /* LeftMenuControllers */,
 				C00E4DFD28CA39FE00F1A123 /* CommonControllers */,
+				C00AB20228D1E6D000A62A2F /* Filter Controllers */,
 				C00E4DFF28CA39FE00F1A123 /* LectureControllers */,
 				C0B7990E28DC521900681649 /* Playlist Controllers */,
 				C00E4DE328CA393B00F1A123 /* Storyboards */,
@@ -373,6 +396,7 @@
 		C00E4DFA28CA39F400F1A123 /* LeftMenuControllers */ = {
 			isa = PBXGroup;
 			children = (
+				C0CE0D1528E870C800C2C825 /* Cell */,
 				C0065D4928D881AC00B18AA6 /* Model */,
 				C00E4DFB28CA39F400F1A123 /* SideMenuTableViewController.swift */,
 				C00E4E1428CA433A00F1A123 /* AboutViewController.swift */,
@@ -388,8 +412,8 @@
 				C00AB21628D207AA00A62A2F /* Cell */,
 				C00E4DFE28CA39FE00F1A123 /* TabBarController.swift */,
 				C0CAF25C28D45B8C00DA9878 /* NavigationController.swift */,
-				C00E4E1B28CA462000F1A123 /* BaseSearchViewController.swift */,
-				C00E4E0228CA39FE00F1A123 /* BaseLectureViewController.swift */,
+				C00E4E1B28CA462000F1A123 /* SearchViewController.swift */,
+				C00E4E0228CA39FE00F1A123 /* LectureViewController.swift */,
 			);
 			path = CommonControllers;
 			sourceTree = "<group>";
@@ -398,7 +422,6 @@
 			isa = PBXGroup;
 			children = (
 				C0B7990D28DC4E0700681649 /* ViewModel */,
-				C00AB20228D1E6D000A62A2F /* Supporting Controllers */,
 				C00E4E0328CA39FE00F1A123 /* HomeViewController.swift */,
 				C00E4E1928CA45E000F1A123 /* PlaylistLecturesViewController.swift */,
 				C00E4E0728CA39FE00F1A123 /* TopLectureViewController.swift */,
@@ -427,6 +450,13 @@
 				C088178B28DDE69600D3106C /* PlaylistSortType.swift */,
 				C00AB20528D1F19500A62A2F /* Filter.swift */,
 				C00AB21F28D2137C00A62A2F /* Time.swift */,
+				C007D37728E8096D00CFBED0 /* Day.swift */,
+				C007D37928E809D900CFBED0 /* Language.swift */,
+				C007D37B28E80AAB00CFBED0 /* LegacyData.swift */,
+				C007D37D28E80ABB00CFBED0 /* Location.swift */,
+				C007D37F28E80AD000CFBED0 /* Resources.swift */,
+				C007D38128E80ADC00CFBED0 /* Audio.swift */,
+				C007D38328E80AEE00CFBED0 /* Search.swift */,
 			);
 			path = "Supporting Model";
 			sourceTree = "<group>";
@@ -442,6 +472,7 @@
 		C0B7990E28DC521900681649 /* Playlist Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				C0EA5CBC28EC69DF007D9E4C /* Cell */,
 				C0B7990F28DC523100681649 /* ViewModel */,
 				C00E4E0428CA39FE00F1A123 /* PlaylistViewController.swift */,
 			);
@@ -454,6 +485,15 @@
 				C0B7991028DC524500681649 /* PlaylistViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C0CE0D1528E870C800C2C825 /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				C0CE0D1728E870DB00C2C825 /* SideMenuCell.xib */,
+				C0CE0D1628E870DB00C2C825 /* SideMenuCell.swift */,
+			);
+			path = Cell;
 			sourceTree = "<group>";
 		};
 		C0D76E2128CF7C9A00F69320 /* Configurations */ = {
@@ -480,6 +520,16 @@
 			path = Subclasses;
 			sourceTree = "<group>";
 		};
+		C0EA5CBC28EC69DF007D9E4C /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+				C0B7990928DC427B00681649 /* PlaylistOption.swift */,
+				C0B7990528DC41AE00681649 /* PlaylistCell.swift */,
+				C0B7990628DC41AE00681649 /* PlaylistCell.xib */,
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
 		C0FA305B28CF461900E78843 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -488,6 +538,8 @@
 				C0EA13EE28CF6D0D00BE9110 /* UIView+extension.swift */,
 				C00AB20E28D1F6CB00A62A2F /* UIStoryboard+Extension.swift */,
 				C0E9CC3828DC723B0089A9E8 /* Date+Extension.swift */,
+				C0EA5CBD28EC6C96007D9E4C /* DateFormatter+Extension.swift */,
+				C0CE0D1328E86EF500C2C825 /* UIImage+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -573,6 +625,7 @@
 				C00E4DF328CA39CB00F1A123 /* Stats.storyboard in Resources */,
 				C0118A7928D34AA800F6002D /* GoogleService-Info-development-client.plist in Resources */,
 				C00E4DF028CA39CB00F1A123 /* Playlists.storyboard in Resources */,
+				C0CE0D1928E870DB00C2C825 /* SideMenuCell.xib in Resources */,
 				C00E4DD728CA36F200F1A123 /* LaunchScreen.storyboard in Resources */,
 				C00E4DD428CA36F200F1A123 /* Assets.xcassets in Resources */,
 				C0D76E2928CF7D0F00F69320 /* production-client.xcconfig in Resources */,
@@ -692,8 +745,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				C00AB21B28D2080800A62A2F /* LectureCell.swift in Sources */,
+				C007D38628E80EC200CFBED0 /* Persistent+DBLecture.swift in Sources */,
 				C0EA13E428CF53FA00BE9110 /* ForgotPasswordViewModel.swift in Sources */,
 				C00AB20628D1F19500A62A2F /* Filter.swift in Sources */,
+				C007D37A28E809D900CFBED0 /* Language.swift in Sources */,
 				C0B7990C28DC4DCE00681649 /* LectureViewModel.swift in Sources */,
 				C00E4DE228CA393600F1A123 /* CreateAccountViewController.swift in Sources */,
 				C0FA049F28DB37FA003177DA /* LectureInfo.swift in Sources */,
@@ -710,7 +765,8 @@
 				C0065D4828D881A400B18AA6 /* SideMenuItem.swift in Sources */,
 				C00E4DCD28CA36F100F1A123 /* SceneDelegate.swift in Sources */,
 				C00E4E0F28CA39FE00F1A123 /* HistoryViewController.swift in Sources */,
-				C00E4E0B28CA39FE00F1A123 /* BaseLectureViewController.swift in Sources */,
+				C00E4E0B28CA39FE00F1A123 /* LectureViewController.swift in Sources */,
+				C007D38428E80AEE00CFBED0 /* Search.swift in Sources */,
 				C0FA306228CF51EB00E78843 /* SignupViewModel.swift in Sources */,
 				C0EA13EF28CF6D0D00BE9110 /* UIView+extension.swift in Sources */,
 				C00DC57328E1DA66001EDE95 /* NSManagedObject+Extensions.swift in Sources */,
@@ -722,19 +778,23 @@
 				C00AB22028D2137C00A62A2F /* Time.swift in Sources */,
 				C00E4E0C28CA39FE00F1A123 /* HomeViewController.swift in Sources */,
 				C0E9CC3928DC723B0089A9E8 /* Date+Extension.swift in Sources */,
+				C007D37E28E80ABB00CFBED0 /* Location.swift in Sources */,
 				C00E4E0928CA39FE00F1A123 /* DownloadViewController.swift in Sources */,
 				C00AB20428D1E6DD00A62A2F /* FilterViewController.swift in Sources */,
 				C0D76E2528CF7C9B00F69320 /* Environment.swift in Sources */,
 				C03E3F2628DCC20A00B987DD /* FirestoreCollection.swift in Sources */,
+				C0CE0D1828E870DB00C2C825 /* SideMenuCell.swift in Sources */,
 				C088178C28DDE69600D3106C /* PlaylistSortType.swift in Sources */,
 				C088178A28DDBC9100D3106C /* FirestoreManager+SignIn.swift in Sources */,
 				C00AB21128D1FD5600A62A2F /* LectureSortType.swift in Sources */,
 				C00E4E1728CA433A00F1A123 /* AboutViewController.swift in Sources */,
+				C007D37828E8096D00CFBED0 /* Day.swift in Sources */,
 				C00E4E1828CA433A00F1A123 /* CopyrightViewController.swift in Sources */,
 				C0B7991128DC524500681649 /* PlaylistViewModel.swift in Sources */,
 				C00AB20F28D1F6CB00A62A2F /* UIStoryboard+Extension.swift in Sources */,
 				C0B7990728DC41AE00681649 /* PlaylistCell.swift in Sources */,
 				C088178828DDB8FA00D3106C /* FirestoreManager.swift in Sources */,
+				C0EA5CBE28EC6C96007D9E4C /* DateFormatter+Extension.swift in Sources */,
 				C00E4E0E28CA39FE00F1A123 /* PopularLectureViewController.swift in Sources */,
 				C0B7990328DC3FF700681649 /* Playlist.swift in Sources */,
 				C0EA13ED28CF685E00BE9110 /* RoundButton.swift in Sources */,
@@ -743,13 +803,17 @@
 				C0B7990228DC3FF700681649 /* TopLectures.swift in Sources */,
 				C00E4E1228CA3A1700F1A123 /* ForgotPasswordViewController.swift in Sources */,
 				C0CAF25D28D45B8C00DA9878 /* NavigationController.swift in Sources */,
+				C0CE0D1428E86EF500C2C825 /* UIImage+Extension.swift in Sources */,
+				C007D38228E80ADC00CFBED0 /* Audio.swift in Sources */,
 				C00E4E1028CA39FE00F1A123 /* TopLectureViewController.swift in Sources */,
 				C00DC57128E1DA66001EDE95 /* DBLecture+CoreDataClass.swift in Sources */,
 				C0B7990A28DC427B00681649 /* PlaylistOption.swift in Sources */,
-				C00E4E1C28CA462000F1A123 /* BaseSearchViewController.swift in Sources */,
+				C00E4E1C28CA462000F1A123 /* SearchViewController.swift in Sources */,
+				C007D37C28E80AAB00CFBED0 /* LegacyData.swift in Sources */,
 				C0065D4B28D883F300B18AA6 /* Constants.swift in Sources */,
 				C00E4DE128CA393600F1A123 /* LogInViewController.swift in Sources */,
 				C0BC771028D5AE1000C2629F /* TappableLabel.swift in Sources */,
+				C007D38028E80AD000CFBED0 /* Resources.swift in Sources */,
 				C00DC57028E1DA66001EDE95 /* SrilaDatabase.xcdatamodeld in Sources */,
 				C00E4DFC28CA39F400F1A123 /* SideMenuTableViewController.swift in Sources */,
 			);
@@ -829,7 +893,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -885,7 +949,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -904,7 +968,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Srila Prabhupada.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/Info.plist";
@@ -915,7 +979,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -939,7 +1003,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Srila Prabhupada.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/Info.plist";
@@ -950,7 +1014,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1017,7 +1081,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1036,7 +1100,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Srila Prabhupada.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/Info.plist";
@@ -1047,7 +1111,7 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseFirestore
 
-class FavouritesViewController: BaseLectureViewController {
+class FavouritesViewController: LectureViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

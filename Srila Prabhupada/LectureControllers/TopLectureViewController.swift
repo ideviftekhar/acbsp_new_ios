@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseFirestore
 
-class TopLectureViewController: BaseLectureViewController {
+class TopLectureViewController: LectureViewController {
 
     @IBOutlet weak var topLecturesSegmentControl: UISegmentedControl!
 

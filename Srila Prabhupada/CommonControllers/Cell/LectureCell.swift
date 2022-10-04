@@ -9,6 +9,7 @@ import UIKit
 import IQListKit
 import MBCircularProgressBar
 import AlamofireImage
+import IQKeyboardManagerSwift
 
 protocol LectureCellDelegate: AnyObject {
     func lectureCell(_ cell: LectureCell, didSelected option: LectureOption, with lecture: Lecture)
@@ -32,19 +33,12 @@ class LectureCell: UITableViewCell, IQModelableCell {
 
     weak var delegate: LectureCellDelegate?
 
+    private var optionMenu: UIMenu!
     var allActions: [LectureOption: UIAction] = [:]
 
     override func awakeFromNib() {
         super.awakeFromNib()
         configureMenuButton()
-    }
-
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-    }
-
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
     }
 
     override func prepareForReuse() {
@@ -66,11 +60,10 @@ class LectureCell: UITableViewCell, IQModelableCell {
             }
 
             titleLabel.text = model.titleDisplay
-//            verseLabel.text = model.language["main"] as? String
             verseLabel.text = model.legacyData.verse
             durationLabel.text = model.lengthTime.displayString
             locationLabel.text = model.location.displayString
-            dateLabel.text = "\(model.dateOfRecording.year)/\(model.dateOfRecording.month)/\(model.dateOfRecording.day)/"
+            dateLabel.text = model.dateOfRecording.display_yyyy_mm_dd
             listenProgressView.value = CGFloat(model.playProgress)
 
             listenProgressView.isHidden = model.playProgress == 100
@@ -89,7 +82,7 @@ class LectureCell: UITableViewCell, IQModelableCell {
             case .downloading:
                 downloadedIconImageView.isHidden = false
                 downloadedIconImageView.tintColor = UIColor.systemBlue
-                downloadedIconImageView.image = UIImage(systemName: "arrow.down.circle.fill")
+                downloadedIconImageView.image = UIImage(compatibleSystemName: "arrow.down.circle.fill")
                 downloadProgressView.isHidden = false
 
                 DownloadManager.shared.registerProgress(observer: self, lectureID: model.id) { [weak self] progress in
@@ -98,13 +91,13 @@ class LectureCell: UITableViewCell, IQModelableCell {
             case .downloaded:
                 downloadedIconImageView.isHidden = false
                 downloadedIconImageView.tintColor = UIColor.systemGreen
-                downloadedIconImageView.image = UIImage(systemName: "arrow.down.circle.fill")
+                downloadedIconImageView.image = UIImage(compatibleSystemName: "arrow.down.circle.fill")
                 downloadProgressView.isHidden = false
                 downloadProgressView.value = 0
             case .error:
                 downloadedIconImageView.isHidden = false
                 downloadedIconImageView.tintColor = UIColor.systemRed
-                downloadedIconImageView.image = UIImage(systemName: "exclamationmark.circle.fill")
+                downloadedIconImageView.image = UIImage(compatibleSystemName: "exclamationmark.circle.fill")
                 downloadProgressView.isHidden = false
                 downloadProgressView.value = 0
             }
@@ -153,10 +146,18 @@ class LectureCell: UITableViewCell, IQModelableCell {
                     actions.append(share)
                 }
 
-                self.menuButton.menu = self.menuButton.menu?.replacingChildren(actions)
+                self.optionMenu = self.optionMenu.replacingChildren(actions)
+                self.menuButton.isHidden = actions.isEmpty
+
+                if #available(iOS 14.0, *) {
+                    self.menuButton.menu = self.optionMenu
+                }
             }
         }
     }
+}
+
+extension LectureCell {
 
     private func configureMenuButton() {
 
@@ -181,8 +182,33 @@ class LectureCell: UITableViewCell, IQModelableCell {
             return allActions[key]
         })
 
-        menuButton.showsMenuAsPrimaryAction = true
-        menuButton.menu = UIMenu(title: "", image: nil, identifier: UIMenu.Identifier.init(rawValue: "Option"), options: UIMenu.Options.displayInline, children: childrens)
+        self.optionMenu = UIMenu(title: "", image: nil, identifier: UIMenu.Identifier.init(rawValue: "Option"), options: UIMenu.Options.displayInline, children: childrens)
+
+        if #available(iOS 14.0, *) {
+            menuButton.showsMenuAsPrimaryAction = true
+            menuButton.menu = optionMenu
+        } else {
+            menuButton.addTarget(self, action: #selector(optionMenuActioniOS13(_:)), for: .touchUpInside)
+        }
+    }
+
+    // Backward compatibility for iOS 13
+    @objc private func optionMenuActioniOS13(_ sender: UIButton) {
+
+        var buttons: [UIViewController.ButtonConfig] = []
+        let actions: [UIAction] = self.optionMenu.children as? [UIAction] ?? []
+        for action in actions {
+            buttons.append((title: action.title, handler: { [self] in
+
+                guard let model = model, let option: LectureOption = allActions.first(where: { $0.value == action})?.key else {
+                    return
+                }
+
+                delegate?.lectureCell(self, didSelected: option, with: model)
+            }))
+        }
+
+        self.parentViewController?.showAlert(title: "", message: "", preferredStyle: .actionSheet, buttons: buttons)
     }
 }
 

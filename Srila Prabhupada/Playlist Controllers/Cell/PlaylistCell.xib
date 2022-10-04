@@ -88,7 +88,7 @@
                     </stackView>
                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fQG-Rf-zkX">
                         <rect key="frame" x="295" y="0.0" width="49.666666666666686" height="67"/>
-                        <state key="normal" title="Button"/>
+                        <state key="normal" title=""/>
                         <buttonConfiguration key="configuration" style="plain" image="ellipsis.circle" catalog="system"/>
                     </button>
                 </subviews>

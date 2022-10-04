@@ -26,7 +26,9 @@ extension UIStoryboard {
 
         let identifier: String = identifier ?? String(describing: T.self)
 
-        return instantiateViewController(withIdentifier: identifier) as! T
+        guard let controller = instantiateViewController(withIdentifier: identifier) as? T else {
+            fatalError("Could not instantiate view controller of type '\(T.self)'")
+        }
+        return controller
     }
-
 }

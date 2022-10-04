@@ -1,5 +1,5 @@
 //
-//  BaseSearchViewController.swift
+//  SearchViewController.swift
 //  Srila Prabhupada
 //
 //  Created by IE06 on 08/09/22.
@@ -10,13 +10,13 @@ import SideMenu
 import SafariServices
 import FirebaseFirestore
 
-class BaseSearchViewController: UIViewController {
+class SearchViewController: UIViewController {
 
     @IBOutlet weak var hamburgerBarButton: UIBarButtonItem!
     private let searchController = UISearchController(searchResultsController: nil)
     private var lastSearchText: String = ""
 
-    private(set) lazy var filterButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "line.3.horizontal.decrease.circle"), style: .plain, target: self, action: #selector(filterAction(_:)))
+    private(set) lazy var filterButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(compatibleSystemName: "line.3.horizontal.decrease.circle"), style: .plain, target: self, action: #selector(filterAction(_:)))
 
     var selectedFilters: [Filter: [String]] = [:]
 
@@ -42,11 +42,14 @@ class BaseSearchViewController: UIViewController {
             searchController.obscuresBackgroundDuringPresentation = false
             searchController.searchBar.text = searchText
             searchController.searchBar.placeholder = "Search..."
-            searchController.searchBar.searchTextField.leftView?.tintColor = UIColor.systemGray4
-            searchController.searchBar.searchTextField.rightView?.tintColor = UIColor.systemGray4
             searchController.searchBar.barStyle = .black
-            searchController.searchBar.searchTextField.defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-            searchController.searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: "Search...", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray4])
+
+            if #available(iOS 13.0, *) {
+                searchController.searchBar.searchTextField.leftView?.tintColor = UIColor.systemGray4
+                searchController.searchBar.searchTextField.rightView?.tintColor = UIColor.systemGray4
+                searchController.searchBar.searchTextField.defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+                searchController.searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: "Search...", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray4])
+            }
             searchController.delegate = self
             searchController.searchResultsUpdater = self
             navigationItem.searchController = searchController
@@ -63,22 +66,24 @@ class BaseSearchViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(lectureUpdateNotification(_:)), name: DefaultLectureViewModel.lectureUpdateNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(lectureUpdateNotification(_:)), name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
+
+        // Reloading with local cached
+        refreshAsynchronous(source: .cache)
 
         if isFirstTime {
             isFirstTime = false
 
-            let source: FirestoreSource = self is HomeViewController ? .default : .cache
-
-            refreshAsynchronous(source: source)
-        } else {
-            refreshAsynchronous(source: .cache)
+            // If it is requesting from dashboad screen, then we'll be reaching to firebase for the first time to get latest records.
+            if self is HomeViewController {
+                refreshAsynchronous(source: .default)
+            }
         }
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        NotificationCenter.default.removeObserver(self, name: DefaultLectureViewModel.lectureUpdateNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
     }
 
     @objc private func lectureUpdateNotification(_ notification: Notification) {
@@ -94,7 +99,7 @@ class BaseSearchViewController: UIViewController {
     }
 }
 
-extension BaseSearchViewController: FilterViewControllerDelegate {
+extension SearchViewController: FilterViewControllerDelegate {
 
     private func updateFilterButtonUI() {
 
@@ -104,9 +109,9 @@ extension BaseSearchViewController: FilterViewControllerDelegate {
         }
 
         if count == 0 {
-            filterButton.image = UIImage(systemName: "line.3.horizontal.decrease.circle")
+            filterButton.image = UIImage(compatibleSystemName: "line.3.horizontal.decrease.circle")
         } else {
-            filterButton.image = UIImage(systemName: "line.3.horizontal.decrease.circle.fill")
+            filterButton.image = UIImage(compatibleSystemName: "line.3.horizontal.decrease.circle.fill")
         }
     }
 
@@ -135,14 +140,13 @@ extension BaseSearchViewController: FilterViewControllerDelegate {
     }
 }
 
-extension BaseSearchViewController: UISearchControllerDelegate, UISearchResultsUpdating {
+extension SearchViewController: UISearchControllerDelegate, UISearchResultsUpdating {
 
     func willPresentSearchController(_ searchController: UISearchController) {
         lastSearchText = searchController.searchBar.text ?? ""
     }
 
     func willDismissSearchController(_ searchController: UISearchController) {
-
     }
 
     func updateSearchResults(for searchController: UISearchController) {
@@ -160,7 +164,7 @@ extension BaseSearchViewController: UISearchControllerDelegate, UISearchResultsU
     }
 }
 
-extension BaseSearchViewController: SideMenuControllerDelegate {
+extension SearchViewController: SideMenuControllerDelegate {
 
     @IBAction func humburgerBarButtonTapped(_ sender: UIBarButtonItem) {
         let sideMenuNavigationController = UIStoryboard.sideMenu.instantiate(SideMenuNavigationController.self)

@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseFirestore
 
-class PlaylistLecturesViewController: BaseLectureViewController {
+class PlaylistLecturesViewController: LectureViewController {
 
     var playlist: Playlist!
 

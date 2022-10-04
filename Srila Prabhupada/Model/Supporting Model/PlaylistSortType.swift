@@ -21,27 +21,27 @@ enum PlaylistSortType: String, CaseIterable {
         case .default:
             return playlists
         case .lecturesLessToMore:
-            return playlists.sorted { obj1, obj2 in
-                obj1.lectureCount < obj2.lectureCount
+            return playlists.sorted { (obj1: Playlist, obj2: Playlist) in
+                obj1.lectureIds.count < obj2.lectureIds.count
             }
         case .lecturesMoreToLess:
-            return playlists.sorted { obj1, obj2 in
-                obj1.lectureCount > obj2.lectureCount
+            return playlists.sorted { (obj1: Playlist, obj2: Playlist) in
+                obj1.lectureIds.count > obj2.lectureIds.count
             }
         case .dateOldestFirst:
-            return playlists.sorted { obj1, obj2 in
+            return playlists.sorted { (obj1: Playlist, obj2: Playlist) in
                 obj1.creationTime < obj2.creationTime
             }
         case .dateLatestFirst:
-            return playlists.sorted { obj1, obj2 in
+            return playlists.sorted { (obj1: Playlist, obj2: Playlist) in
                 obj1.creationTime > obj2.creationTime
             }
         case .aToZ:
-            return playlists.sorted { obj1, obj2 in
+            return playlists.sorted { (obj1: Playlist, obj2: Playlist) in
                 obj1.title.caseInsensitiveCompare(obj2.title) == .orderedAscending
             }
         case .zToA:
-            return playlists.sorted { obj1, obj2 in
+            return playlists.sorted { (obj1: Playlist, obj2: Playlist) in
                 obj1.title.caseInsensitiveCompare(obj2.title) == .orderedDescending
             }
         }

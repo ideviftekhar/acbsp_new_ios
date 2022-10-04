@@ -14,7 +14,7 @@ class TabBarController: UITabBarController {
 
         UNUserNotificationCenter.current().delegate = self
         let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
-        UNUserNotificationCenter.current().requestAuthorization(options: authOptions, completionHandler: { success, error in
+        UNUserNotificationCenter.current().requestAuthorization(options: authOptions, completionHandler: { success, _ in
 
             if success {
                 DispatchQueue.main.async {

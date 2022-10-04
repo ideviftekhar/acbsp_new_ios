@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseFirestore
 
-class HistoryViewController: BaseLectureViewController {
+class HistoryViewController: LectureViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

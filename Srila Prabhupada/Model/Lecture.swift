@@ -27,7 +27,7 @@ struct Lecture: Hashable, Codable {
     let dateOfRecording: Day
     let description: [String]
     let id: Int
-    let language: LectureLanguage
+    let language: Language
     let lastModifiedTimestamp: String
     let legacyData: LegacyData
     let length: Int
@@ -51,7 +51,7 @@ struct Lecture: Hashable, Codable {
         self.creationTimestamp = try container.decode(String.self, forKey: .creationTimestamp)
         self.dateOfRecording = try container.decode(Day.self, forKey: .dateOfRecording)
         self.description = try container.decode([String].self, forKey: .description)
-        self.language = try container.decode(LectureLanguage.self, forKey: .language)
+        self.language = try container.decode(Language.self, forKey: .language)
         self.lastModifiedTimestamp = try container.decode(String.self, forKey: .lastModifiedTimestamp)
         self.legacyData = try container.decode(LegacyData.self, forKey: .legacyData)
         self.length = try container.decodeIfPresent(Int.self, forKey: .length) ?? 0
@@ -76,7 +76,7 @@ struct Lecture: Hashable, Codable {
         self.creationTimestamp = dbLecture.creationTimestamp
         self.dateOfRecording = Day(day: dbLecture.dateOfRecording_day, month: dbLecture.dateOfRecording_month, year: dbLecture.dateOfRecording_year)
         self.description = dbLecture.aDescription
-        self.language = LectureLanguage(main: dbLecture.language_main, translations: dbLecture.language_translations)
+        self.language = Language(main: dbLecture.language_main, translations: dbLecture.language_translations)
         self.lastModifiedTimestamp =  dbLecture.lastModifiedTimestamp
         self.legacyData = LegacyData(lectureCode: dbLecture.legacyData_lectureCode, slug: dbLecture.legacyData_slug, verse: dbLecture.legacyData_verse, wpId: dbLecture.legacyData_wpId)
         self.length = dbLecture.length
@@ -159,155 +159,4 @@ struct Lecture: Hashable, Codable {
 
         return DownloadManager.shared.localFileURL(for: self)
     }
-}
-
-struct Day: Hashable, Codable {
-    let day: Int
-    let month: Int
-    let year: Int
-
-    init(day: Int, month: Int, year: Int) {
-        self.day = day
-        self.month = month
-        self.year = year
-    }
-
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-
-        if let value = try? container.decode(String.self, forKey: .day), let valueInt = Int(value) {
-            day = valueInt
-        } else if let value = try? container.decode(Int.self, forKey: .day) {
-            day = value
-        } else {
-            day = 0
-        }
-
-        if let value = try? container.decode(String.self, forKey: .month), let valueInt = Int(value) {
-            month = valueInt
-        } else if let value = try? container.decode(Int.self, forKey: .month) {
-            month = value
-        } else {
-            month = 0
-        }
-
-        if let value = try? container.decode(String.self, forKey: .year), let valueInt = Int(value) {
-            year = valueInt
-        } else if let value = try? container.decode(Int.self, forKey: .year) {
-            year = value
-        } else {
-            year = 0
-        }
-    }
-}
-
-struct LectureLanguage: Hashable, Codable {
-
-    let main: String
-    let translations: [String]
-
-    init(main: String, translations: [String]) {
-        self.main = main
-        self.translations = translations
-    }
-
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.main = try container.decode(String.self, forKey: .main)
-
-        if let value = try? container.decode([String].self, forKey: .translations) {
-            self.translations = value
-        } else if let value = try? container.decode(String.self, forKey: .translations) {
-            self.translations = [value]
-        } else {
-            self.translations = []
-        }
-    }
-}
-
-struct LegacyData: Hashable, Codable {
-
-    let lectureCode: String
-    let slug: String
-    let verse: String
-    let wpId: Int
-
-    init(lectureCode: String, slug: String, verse: String, wpId: Int) {
-        self.lectureCode = lectureCode
-        self.slug = slug
-        self.verse = verse
-        self.wpId = wpId
-    }
-}
-
-struct Location: Hashable, Codable {
-
-    let city: String
-    let state: String
-    let country: String
-
-    var displayString: String {
-
-        var locations: [String] = []
-
-        if !city.isEmpty {
-            locations.append(city)
-        }
-
-        if !state.isEmpty {
-            locations.append(state)
-        }
-
-        if !country.isEmpty {
-            locations.append(country)
-        }
-
-        return locations.joined(separator: ", ")
-    }
-}
-
-struct Resources: Hashable, Codable {
-    let audios: [Audio]
-
-    init(audios: [Audio]) {
-        self.audios = audios
-    }
-}
-
-struct Audio: Hashable, Codable {
-    let creationTimestamp: String
-    let downloads: Int
-    let lastModifiedTimestamp: String
-    let views: Int
-    let url: String?
-
-    init(creationTimestamp: String, downloads: Int, lastModifiedTimestamp: String, views: Int, url: String?) {
-        self.creationTimestamp = creationTimestamp
-        self.downloads = downloads
-        self.lastModifiedTimestamp = lastModifiedTimestamp
-        self.views = views
-        self.url = url
-    }
-
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.creationTimestamp = try container.decode(String.self, forKey: .creationTimestamp)
-        self.downloads = try container.decode(Int.self, forKey: .downloads)
-        self.lastModifiedTimestamp = try container.decode(String.self, forKey: .lastModifiedTimestamp)
-        self.views = try container.decode(Int.self, forKey: .views)
-        self.url = try? container.decode(String.self, forKey: .url)
-    }
-
-    var audioURL: URL? {
-        guard let url = url, !url.isEmpty else {
-            return nil
-        }
-        return URL(string: url)
-    }
-
-}
-
-struct Search: Hashable, Codable {
-    let advanced: [String]
-    let simple: [String]
 }

@@ -11,4 +11,5 @@ struct TopLecture: Hashable, Codable {
 
     let documentId: String
     let playedIds: [Int]
+    let createdDay: Day
 }

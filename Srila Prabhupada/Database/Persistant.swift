@@ -10,13 +10,17 @@ import CoreData
 
 class Persistant: NSObject {
 
-    static let downloadAddedNotification = Notification.Name(rawValue: "downloadAddedNotification")
-    static let downloadUpdatedNotification = Notification.Name(rawValue: "downloadUpdatedNotification")
-    static let downloadRemovedNotification = Notification.Name(rawValue: "downloadRemovedNotification")
+    struct Notification {
+        static let downloadAdded = Foundation.Notification.Name(rawValue: "downloadAddedNotification")
+        static let downloadUpdated = Foundation.Notification.Name(rawValue: "downloadUpdatedNotification")
+        static let downloadRemoved = Foundation.Notification.Name(rawValue: "downloadRemovedNotification")
+    }
+
+    private let storeName: String = "SrilaDatabase"
 
     static let shared = Persistant()
 
-    private(set) var dbLectures: [DBLecture] = []
+    var dbLectures: [DBLecture] = []
 
     override init () {
         super.init()
@@ -25,7 +29,6 @@ class Persistant: NSObject {
     }
 
     // MARK: - Core Data stack
-    private let storeName: String = "SrilaDatabase"
     lazy var storeURL: URL = {
         let storePaths = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)
         let storePath = storePaths[0] as NSString
@@ -145,6 +148,20 @@ class Persistant: NSObject {
         }
     }
 
+    func fetch<T: NSManagedObject>(in context: NSManagedObjectContext) -> [T] {
+
+        let fetchRequest = NSFetchRequest<T>(entityName: T.entityName)
+
+        do {
+            var objects: [T] = try context.fetch(fetchRequest)
+            return objects
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+
+        return []
+    }
+
     func deleteObject(object: NSManagedObject?) {
         if let object = object {
             object.managedObjectContext?.delete(object)
@@ -166,120 +183,6 @@ class Persistant: NSObject {
             } catch let error as NSError {
                 print("Error: \(error.localizedDescription)")
                 abort()
-            }
-        }
-    }
-}
-
-extension Persistant {
-
-    func reschedulePendingDownloads() {
-
-        let dbPendingDownloadedLectures: [DBLecture] = dbLectures.filter { $0.downloadStateEnum != .downloaded }
-
-        for dbLecture in dbPendingDownloadedLectures {
-            downloadStage1(dbLecture: dbLecture)
-        }
-    }
-
-    func save(lecture: Lecture) {
-
-        if let dbLecture = dbLectures.first(where: { $0.id == lecture.id }) {
-
-            switch dbLecture.downloadStateEnum {
-            case .notDownloaded, .error:
-                downloadStage1(dbLecture: dbLecture)
-            case .downloading, .downloaded:
-                break
-            }
-
-        } else {
-            let dbLecture = Lecture.createNewDBLecture(lecture: lecture)
-            self.dbLectures.insert(dbLecture, at: 0)
-            downloadStage1(dbLecture: dbLecture)
-        }
-    }
-
-    func delete(lecture: Lecture) {
-
-        guard let index = dbLectures.firstIndex(where: { $0.id == lecture.id }) else {
-            return
-        }
-
-        let dbLecture = dbLectures[index]
-
-        if let localFileURL = DownloadManager.shared.localFileURL(for: dbLecture) {
-            DownloadManager.shared.deleteLocalFile(localFileURL: localFileURL)
-        }
-
-        dbLectures.remove(at: index)
-        dbLecture.downloadState = DBLecture.DownloadState.notDownloaded.rawValue
-        NotificationCenter.default.post(name: Self.downloadRemovedNotification, object: dbLecture)
-        deleteObject(object: dbLecture)
-        saveMainContext(nil)
-    }
-
-    private func getDbLectures() -> [DBLecture] {
-
-        let finalContext = mainContext
-
-        var objects = [DBLecture]()
-
-        let fetchRequest = NSFetchRequest<DBLecture>(entityName: DBLecture.entityName)
-
-        do {
-            objects = try finalContext.fetch(fetchRequest)
-
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }
-
-        return objects
-    }
-
-    func lectureDownloadState(lecture: Lecture) -> DBLecture.DownloadState {
-        if let object = dbLectures.first(where: { $0.id == lecture.id }) {
-            return object.downloadStateEnum
-        } else {
-            return .notDownloaded
-        }
-    }
-}
-
-extension Persistant {
-
-    private func downloadStage1(dbLecture: DBLecture) {
-
-        // check if it exists before downloading it
-        if DownloadManager.shared.localFileExists(for: dbLecture) {
-            dbLecture.downloadState = DBLecture.DownloadState.downloaded.rawValue
-        } else {
-            dbLecture.downloadState = DBLecture.DownloadState.downloading.rawValue
-        }
-
-        self.saveMainContext(nil)
-        NotificationCenter.default.post(name: Self.downloadAddedNotification, object: dbLecture)
-
-        if dbLecture.downloadStateEnum != .downloaded {
-            downloadStage2(dbLecture: dbLecture)
-        }
-    }
-
-    private func downloadStage2(dbLecture: DBLecture) {
-
-        DownloadManager.shared.downloadFile(for: dbLecture) { result in
-            switch result {
-
-            case .success:
-                dbLecture.downloadState = DBLecture.DownloadState.downloaded.rawValue
-                self.saveMainContext(nil)
-                NotificationCenter.default.post(name: Self.downloadUpdatedNotification, object: dbLecture)
-
-            case .failure(let error):
-                dbLecture.downloadState = DBLecture.DownloadState.error.rawValue
-                dbLecture.downloadError = error.localizedDescription
-                self.saveMainContext(nil)
-                NotificationCenter.default.post(name: Self.downloadUpdatedNotification, object: dbLecture)
             }
         }
     }

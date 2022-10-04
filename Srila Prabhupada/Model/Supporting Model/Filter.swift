@@ -17,24 +17,12 @@ enum Filter: String, CaseIterable {
     case categories = "Categories"
     case translation = "Translation"
 
-    var firebaseKey: String {
-        switch self {
-        case .languages:    return "language.main"
-        case .countries:    return "location.country"
-        case .place:        return "place"
-        case .years:        return "dateOfRecording.year"
-        case .month:        return "dateOfRecording.month"
-        case .categories:   return "category"
-        case .translation:  return "language.translations"
-        }
-    }
-
     var subtypes: [String] {
         switch self {
         case .month:
             return Self.monthNames
         default:
-            return UserDefaults.standard.array(forKey: firebaseKey) as? [String] ?? []
+            return UserDefaults.standard.array(forKey: self.rawValue) as? [String] ?? []
         }
     }
 
@@ -62,7 +50,7 @@ enum Filter: String, CaseIterable {
             return lectures.filter { selectedSubtypes.contains($0.location.country) }
         case .place:
             let subTypesSet = Set(selectedSubtypes)
-            return lectures.filter { !subTypesSet.intersection($0.place).isEmpty }
+            return lectures.filter { !subTypesSet.isDisjoint(with: $0.place) }
         case .years:
             return lectures.filter { selectedSubtypes.contains("\($0.dateOfRecording.year)") }
         case .month:
@@ -78,10 +66,10 @@ enum Filter: String, CaseIterable {
             return lectures.filter { selectedMonthNumbers.contains($0.dateOfRecording.month) }
         case .categories:
             let subTypesSet = Set(selectedSubtypes)
-            return lectures.filter { !subTypesSet.intersection($0.category).isEmpty }
+            return lectures.filter { !subTypesSet.isDisjoint(with: $0.category) }
         case .translation:
             let subTypesSet = Set(selectedSubtypes)
-            return lectures.filter { !subTypesSet.intersection($0.language.translations).isEmpty }
+            return lectures.filter { !subTypesSet.isDisjoint(with: $0.language.translations) }
         }
     }
 
@@ -123,7 +111,7 @@ enum Filter: String, CaseIterable {
                 for lecture in lectures where !lecture.language.main.isEmpty {
                     languages.insert(lecture.language.main)
                 }
-                UserDefaults.standard.set(languages.sorted(), forKey: Filter.languages.firebaseKey)
+                UserDefaults.standard.set(languages.sorted(), forKey: Filter.languages.rawValue)
             }
 
             do {
@@ -133,7 +121,7 @@ enum Filter: String, CaseIterable {
                     countries.insert(lecture.location.country)
                 }
 
-                UserDefaults.standard.set(countries.sorted(), forKey: Filter.countries.firebaseKey)
+                UserDefaults.standard.set(countries.sorted(), forKey: Filter.countries.rawValue)
             }
 
             do {
@@ -142,7 +130,7 @@ enum Filter: String, CaseIterable {
                 for lecture in lectures where !lecture.place.isEmpty {
                     place.formUnion(lecture.place)
                 }
-                UserDefaults.standard.set(place.sorted(), forKey: Filter.place.firebaseKey)
+                UserDefaults.standard.set(place.sorted(), forKey: Filter.place.rawValue)
             }
 
             do {
@@ -151,7 +139,7 @@ enum Filter: String, CaseIterable {
                 for lecture in lectures where lecture.dateOfRecording.year != 0 {
                     years.insert("\(lecture.dateOfRecording.year)")
                 }
-                UserDefaults.standard.set(years.sorted(), forKey: Filter.years.firebaseKey)
+                UserDefaults.standard.set(years.sorted(), forKey: Filter.years.rawValue)
             }
 
             do {
@@ -160,7 +148,7 @@ enum Filter: String, CaseIterable {
                 for lecture in lectures where !lecture.category.isEmpty {
                     categories.formUnion(lecture.category)
                 }
-                UserDefaults.standard.set(categories.sorted(), forKey: Filter.categories.firebaseKey)
+                UserDefaults.standard.set(categories.sorted(), forKey: Filter.categories.rawValue)
             }
 
             do {
@@ -169,7 +157,7 @@ enum Filter: String, CaseIterable {
                 for lecture in lectures where !lecture.language.translations.isEmpty {
                     translation.formUnion(lecture.language.translations)
                 }
-                UserDefaults.standard.set(translation.sorted(), forKey: Filter.translation.firebaseKey)
+                UserDefaults.standard.set(translation.sorted(), forKey: Filter.translation.rawValue)
             }
             UserDefaults.standard.synchronize()
         }

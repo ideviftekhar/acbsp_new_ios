@@ -274,7 +274,7 @@
                                                                             <constraint firstAttribute="height" constant="50" id="q4p-P6-Trf"/>
                                                                         </constraints>
                                                                         <color key="tintColor" systemColor="systemRedColor"/>
-                                                                        <state key="normal" title="Button"/>
+                                                                        <state key="normal" title=""/>
                                                                         <buttonConfiguration key="configuration" style="plain" title="All time"/>
                                                                         <userDefinedRuntimeAttributes>
                                                                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">

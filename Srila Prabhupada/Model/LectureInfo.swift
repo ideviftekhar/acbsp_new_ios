@@ -8,6 +8,9 @@
 import Foundation
 
 struct LectureInfo: Hashable, Codable {
-    let isFavourite: Bool
     let id: Int
+    let isFavourite: Bool
+    let isInPrivateList: Bool
+    let isInPublicList: Bool
+    let lastPlayedPoint: Int
 }

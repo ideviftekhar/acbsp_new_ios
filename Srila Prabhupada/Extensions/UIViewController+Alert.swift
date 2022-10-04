@@ -13,11 +13,22 @@ extension UIViewController {
 
     func showAlert(title: String,
                    message: String,
+                   preferredStyle: UIAlertController.Style = .alert,
                    cancel: ButtonConfig = (title: "OK", handler: nil),
                    destructive: ButtonConfig? = nil,
                    buttons: ButtonConfig...) {
 
-        let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
+        showAlert(title: title, message: message, preferredStyle: preferredStyle, cancel: cancel, destructive: destructive, buttons: buttons)
+    }
+
+    func showAlert(title: String,
+                   message: String,
+                   preferredStyle: UIAlertController.Style = .alert,
+                   cancel: ButtonConfig = (title: "OK", handler: nil),
+                   destructive: ButtonConfig? = nil,
+                   buttons: [ButtonConfig]) {
+
+        let alert = UIAlertController(title: title, message: message, preferredStyle: preferredStyle)
         alert.addAction(UIAlertAction(title: cancel.title, style: .cancel, handler: { _ in
             cancel.handler?()
         }))

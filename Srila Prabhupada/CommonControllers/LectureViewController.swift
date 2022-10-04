@@ -1,5 +1,5 @@
 //
-//  BaseLectureViewController.swift
+//  LectureViewController.swift
 //  SrilaPrabhupada
 //
 //  Created by IE06 on 08/09/22.
@@ -10,26 +10,44 @@ import AVKit
 import FirebaseFirestore
 import IQListKit
 
-class BaseLectureViewController: BaseSearchViewController {
+class LectureViewController: SearchViewController {
 
     @IBOutlet private var lectureTebleView: UITableView!
-    private let loadingIndicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .medium)
-    private let sortButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.up.arrow.down.circle"), style: .plain, target: nil, action: nil)
+    private let loadingIndicator: UIActivityIndicatorView = {
+        if #available(iOS 13.0, *) {
+            return UIActivityIndicatorView(style: .medium)
+        } else {
+            return UIActivityIndicatorView(style: .gray)
+        }
+    }()
+
+    private let sortButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(compatibleSystemName: "arrow.up.arrow.down.circle"), style: .plain, target: nil, action: nil)
+    private var sortMenu: UIMenu!
 
     static let lectureViewModel: LectureViewModel = DefaultLectureViewModel()
+
+    var selectedSortType: LectureSortType {
+        if #available(iOS 15.0, *) {
+            guard let selectedSortAction = sortMenu.selectedElements.first as? UIAction,
+                  let selectedSortType = LectureSortType(rawValue: selectedSortAction.identifier.rawValue) else {
+                return LectureSortType.default
+            }
+            return selectedSortType
+        } else {
+            guard let children: [UIAction] = sortMenu.children as? [UIAction],
+                  let selectedSortAction = children.first(where: { $0.state == .on }),
+                    let selectedSortType = LectureSortType(rawValue: selectedSortAction.identifier.rawValue) else {
+                return LectureSortType.default
+            }
+            return selectedSortType
+        }
+    }
 
     typealias Model = Lecture
     typealias Cell = LectureCell
 
-    private(set) var lectures: [Model] = []
+    private var models: [Model] = []
     private(set) lazy var list = IQList(listView: lectureTebleView, delegateDataSource: self)
-
-    var selectedSortType: LectureSortType {
-        guard let selectedSortAction = sortButton.menu?.selectedElements.first as? UIAction, let selectedSortType = LectureSortType(rawValue: selectedSortAction.identifier.rawValue) else {
-            return LectureSortType.default
-        }
-        return selectedSortType
-    }
 
     override func viewDidLoad() {
        super.viewDidLoad()
@@ -53,8 +71,11 @@ class BaseLectureViewController: BaseSearchViewController {
 
         configureSortButton()
     }
+}
 
-    func configureSortButton() {
+extension LectureViewController {
+
+    private func configureSortButton() {
         var actions: [UIAction] = []
 
         let userDefaultKey: String = "\(Self.self).\(LectureSortType.self)"
@@ -71,49 +92,78 @@ class BaseLectureViewController: BaseSearchViewController {
             let state: UIAction.State = (lastType == sortType ? .on : .off)
 
             let action: UIAction = UIAction(title: sortType.rawValue, image: nil, identifier: UIAction.Identifier(sortType.rawValue), state: state, handler: { [self] action in
-
-                for anAction in actions {
-                    if anAction.identifier == action.identifier { anAction.state = .on  } else {  anAction.state = .off }
-                }
-
-                updateSortButtonUI()
-
-                UserDefaults.standard.set(action.identifier.rawValue, forKey: userDefaultKey)
-                UserDefaults.standard.synchronize()
-
-                self.sortButton.menu = self.sortButton.menu?.replacingChildren(actions)
-
-                refreshAsynchronous(source: .cache)
+                sortActionSelected(action: action)
             })
 
             actions.append(action)
         }
 
-        let menu = UIMenu(title: "", image: nil, identifier: UIMenu.Identifier.init(rawValue: "Sort"), options: UIMenu.Options.displayInline, children: actions)
-        sortButton.menu = menu
+        self.sortMenu = UIMenu(title: "", image: nil, identifier: UIMenu.Identifier.init(rawValue: "Sort"), options: UIMenu.Options.displayInline, children: actions)
+
+        if #available(iOS 14.0, *) {
+            sortButton.menu = self.sortMenu
+        } else {
+            sortButton.target = self
+            sortButton.action = #selector(sortActioniOS13(_:))
+        }
         updateSortButtonUI()
+    }
+
+    // Backward compatibility for iOS 13
+    @objc private func sortActioniOS13(_ sender: UIBarButtonItem) {
+
+        var buttons: [UIViewController.ButtonConfig] = []
+        let actions: [UIAction] = self.sortMenu.children as? [UIAction] ?? []
+        for action in actions {
+            buttons.append((title: action.title, handler: { [self] in
+                sortActionSelected(action: action)
+            }))
+        }
+
+        self.showAlert(title: "Sort", message: "", preferredStyle: .actionSheet, buttons: buttons)
+    }
+
+    private func sortActionSelected(action: UIAction) {
+        let userDefaultKey: String = "\(Self.self).\(LectureSortType.self)"
+        let actions: [UIAction] = self.sortMenu.children as? [UIAction] ?? []
+       for anAction in actions {
+            if anAction.identifier == action.identifier { anAction.state = .on  } else {  anAction.state = .off }
+        }
+
+        updateSortButtonUI()
+
+        UserDefaults.standard.set(action.identifier.rawValue, forKey: userDefaultKey)
+        UserDefaults.standard.synchronize()
+
+        self.sortMenu = self.sortMenu.replacingChildren(actions)
+
+        if #available(iOS 14.0, *) {
+            self.sortButton.menu = self.sortMenu
+        }
+
+        refreshAsynchronous(source: .cache)
     }
 
     private func updateSortButtonUI() {
         if selectedSortType == .default {
-            sortButton.image = UIImage(systemName: "arrow.up.arrow.down.circle")
+            sortButton.image = UIImage(compatibleSystemName: "arrow.up.arrow.down.circle")
         } else {
-            sortButton.image = UIImage(systemName: "arrow.up.arrow.down.circle.fill")
+            sortButton.image = UIImage(compatibleSystemName: "arrow.up.arrow.down.circle.fill")
         }
     }
 }
 
-extension BaseLectureViewController: IQListViewDelegateDataSource {
+extension LectureViewController: IQListViewDelegateDataSource {
 
     private func refreshUI(animated: Bool? = nil) {
 
-        let animated: Bool = animated ?? (lectures.count <= 1000)
+        let animated: Bool = animated ?? (models.count <= 1000)
         list.performUpdates({
 
-            let section = IQSection(identifier: "lectures", headerSize: CGSize.zero, footerSize: CGSize.zero)
+            let section = IQSection(identifier: "Cell", headerSize: CGSize.zero, footerSize: CGSize.zero)
             list.append(section)
 
-            list.append(Cell.self, models: lectures, section: section)
+            list.append(Cell.self, models: models, section: section)
 
         }, animatingDifferences: animated, completion: nil)
     }
@@ -151,7 +201,7 @@ extension BaseLectureViewController: IQListViewDelegateDataSource {
     }
 }
 
-extension BaseLectureViewController: LectureCellDelegate {
+extension LectureViewController: LectureCellDelegate {
     func lectureCell(_ cell: LectureCell, didSelected option: LectureOption, with lecture: Lecture) {
 
         switch option {
@@ -164,7 +214,14 @@ extension BaseLectureViewController: LectureCellDelegate {
         case .removeFromFavourites:
             Self.lectureViewModel.favourite(lectureId: lecture.id, isFavourite: false, completion: {_ in })
         case .addToPlaylist:
-            break
+
+            let navigationController = UIStoryboard.playlists.instantiate(UINavigationController.self, identifier: "PlaylistNavigationController")
+            guard let playlistController = navigationController.viewControllers.first as? PlaylistViewController else {
+                return
+            }
+            playlistController.lectureToAdd = lecture
+            self.present(navigationController, animated: true, completion: nil)
+
         case .markAsHeard:
             break
         case .resetProgress:
@@ -177,7 +234,7 @@ extension BaseLectureViewController: LectureCellDelegate {
     }
 }
 
-extension BaseLectureViewController {
+extension LectureViewController {
 
     @objc func showLoading() {
         loadingIndicator.startAnimating()
@@ -188,7 +245,7 @@ extension BaseLectureViewController {
     }
 
     func reloadData(with lectures: [Model]) {
-        self.lectures = lectures
+        self.models = lectures
         refreshUI()
     }
 }

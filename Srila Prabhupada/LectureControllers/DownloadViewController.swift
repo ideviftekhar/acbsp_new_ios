@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseFirestore
 
-class DownloadViewController: BaseLectureViewController {
+class DownloadViewController: LectureViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()

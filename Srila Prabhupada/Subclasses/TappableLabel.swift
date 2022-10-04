@@ -13,7 +13,7 @@ protocol TappableLabelDelegate: AnyObject {
 }
 
 // Custom label used for terms and condition like tapable string in it
-class TappableLabel: UILabel {
+final class TappableLabel: UILabel {
 
     private let tapGesture: UITapGestureRecognizer = UITapGestureRecognizer()
 
@@ -83,7 +83,7 @@ extension TappableLabel {
     }
 }
 
-extension TappableLabel {
+private extension TappableLabel {
 
     @objc func handleLabelTap(gesture: UITapGestureRecognizer) {
 

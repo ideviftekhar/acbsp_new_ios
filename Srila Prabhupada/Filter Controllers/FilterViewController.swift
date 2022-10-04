@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import IQListKit
 import BEMCheckBox
 
 protocol FilterViewControllerDelegate: AnyObject {
@@ -24,8 +25,24 @@ class FilterViewController: UIViewController {
 
     var selectedFilters: [Filter: [String]] = [:]
 
+//    typealias TypeModel = Filter
+//    typealias TypeCell = FilterTypeTableViewCell
+//    typealias DetailsModel = String
+//    typealias DetailsCell = FilterDetailTableViewCell
+//
+//    private var typeModels: [TypeModel] = []
+//    private var detailsModels: [DetailsModel] = []
+//    private(set) lazy var typeList = IQList(listView: filterTypeTableView, delegateDataSource: self)
+//    private(set) lazy var detailsList = IQList(listView: filterDetailTableView, delegateDataSource: self)
+
     override func viewDidLoad() {
         super.viewDidLoad()
+
+//        do {
+//            typeList.registerCell(type: TypeCell.self, registerType: .storyboard)
+//            detailsList.registerCell(type: DetailsCell.self, registerType: .storyboard)
+//            refreshUI(animated: false)
+//        }
 
         do {
             let initialSelectedIndex: Int

@@ -6,27 +6,54 @@
 //
 
 import UIKit
+import IQListKit
 import FirebaseFirestore
+import ProgressHUD
+import FirebaseAuth
 
-class PlaylistViewController: BaseSearchViewController {
+class PlaylistViewController: SearchViewController {
 
     @IBOutlet weak var playlistSegmentControl: UISegmentedControl!
-
     @IBOutlet weak var playlistTableView: UITableView!
 
-    private let cellIdentifier = "PlaylistCell"
-    private let loadingIndicator: UIActivityIndicatorView = UIActivityIndicatorView(style: .medium)
-    private let sortButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.up.arrow.down"), style: .plain, target: nil, action: nil)
+    private let loadingIndicator: UIActivityIndicatorView = {
+        if #available(iOS 13.0, *) {
+            return UIActivityIndicatorView(style: .medium)
+        } else {
+            return UIActivityIndicatorView(style: .gray)
+        }
+    }()
 
-    let playlistViewModel: PlaylistViewModel = DefaultPlaylistViewModel()
-    var playlists: [Playlist] = []
+    private let sortButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(compatibleSystemName: "arrow.up.arrow.down"), style: .plain, target: nil, action: nil)
+    private var sortMenu: UIMenu!
 
     var selectedSortType: PlaylistSortType {
-        guard let selectedSortAction = sortButton.menu?.selectedElements.first as? UIAction, let selectedSortType = PlaylistSortType(rawValue: selectedSortAction.identifier.rawValue) else {
-            return PlaylistSortType.default
+
+        if #available(iOS 15.0, *) {
+            guard let selectedSortAction = sortMenu.selectedElements.first as? UIAction,
+                  let selectedSortType = PlaylistSortType(rawValue: selectedSortAction.identifier.rawValue) else {
+                return PlaylistSortType.default
+            }
+            return selectedSortType
+        } else {
+            guard let children: [UIAction] = sortMenu.children as? [UIAction],
+                  let selectedSortAction = children.first(where: { $0.state == .on }),
+                    let selectedSortType = PlaylistSortType(rawValue: selectedSortAction.identifier.rawValue) else {
+                return PlaylistSortType.default
+            }
+            return selectedSortType
         }
-        return selectedSortType
     }
+
+    let playlistViewModel: PlaylistViewModel = DefaultPlaylistViewModel()
+
+    typealias Model = Playlist
+    typealias Cell = PlaylistCell
+
+    private var models: [Model] = []
+    private lazy var list = IQList(listView: playlistTableView, delegateDataSource: self)
+
+    var lectureToAdd: Lecture?
 
     override func viewDidLoad() {
 
@@ -37,7 +64,26 @@ class PlaylistViewController: BaseSearchViewController {
         rightButtons.append(sortButton)
         self.navigationItem.rightBarButtonItems = rightButtons
 
-        playlistTableView.register(UINib(nibName: cellIdentifier, bundle: nil), forCellReuseIdentifier: cellIdentifier)
+        do {
+            playlistSegmentControl.removeAllSegments()
+
+            for (index, listType) in PlaylistType.allCases.enumerated() {
+                playlistSegmentControl.insertSegment(withTitle: listType.rawValue, at: index, animated: false)
+            }
+
+            let userDefaultKey: String = "\(Self.self).\(UISegmentedControl.self)"
+            let lastSelectedIndex: Int = UserDefaults.standard.integer(forKey: userDefaultKey)
+            if lastSelectedIndex < playlistSegmentControl.numberOfSegments {
+                playlistSegmentControl.selectedSegmentIndex = lastSelectedIndex
+            } else {
+                playlistSegmentControl.selectedSegmentIndex = 0
+            }
+        }
+
+        do {
+            list.registerCell(type: Cell.self, registerType: .nib)
+            refreshUI(animated: false)
+        }
 
         do {
             loadingIndicator.color = UIColor.gray
@@ -48,61 +94,16 @@ class PlaylistViewController: BaseSearchViewController {
             loadingIndicator.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
         }
 
-        do {
-            let userDefaultKey: String = "\(Self.self).\(UISegmentedControl.self)"
-            let lastSelectedIndex: Int = UserDefaults.standard.integer(forKey: userDefaultKey)
-            playlistSegmentControl.selectedSegmentIndex = lastSelectedIndex
-        }
-
         configureSortButton()
+
+        if lectureToAdd != nil {
+            let cancelBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(cancelAction(_:)))
+            self.navigationItem.leftBarButtonItem  = cancelBarButtonItem
+        }
     }
 
-    func configureSortButton() {
-        var actions: [UIAction] = []
-
-        let userDefaultKey: String = "\(Self.self).\(PlaylistSortType.self)"
-        let lastType: PlaylistSortType
-
-        if let typeString = UserDefaults.standard.string(forKey: userDefaultKey), let type = PlaylistSortType(rawValue: typeString) {
-            lastType = type
-        } else {
-            lastType = .default
-        }
-
-        for sortType in PlaylistSortType.allCases {
-
-            let state: UIAction.State = (lastType == sortType ? .on : .off)
-
-            let action: UIAction = UIAction(title: sortType.rawValue, image: nil, identifier: UIAction.Identifier(sortType.rawValue), state: state, handler: { [self] action in
-
-                for anAction in actions {
-                    if anAction.identifier == action.identifier { anAction.state = .on  } else {  anAction.state = .off }
-                }
-
-                self.sortButton.menu = self.sortButton.menu?.replacingChildren(actions)
-
-                UserDefaults.standard.set(action.identifier.rawValue, forKey: userDefaultKey)
-                UserDefaults.standard.synchronize()
-
-                updateSortButtonUI()
-
-                refreshAsynchronous(source: .cache)
-            })
-
-            actions.append(action)
-        }
-
-        let menu = UIMenu(title: "", image: nil, identifier: UIMenu.Identifier.init(rawValue: "Sort"), options: UIMenu.Options.displayInline, children: actions)
-        sortButton.menu = menu
-        updateSortButtonUI()
-    }
-
-    private func updateSortButtonUI() {
-        if selectedSortType == .default {
-            sortButton.image = UIImage(systemName: "arrow.up.arrow.down.circle")
-        } else {
-            sortButton.image = UIImage(systemName: "arrow.up.arrow.down.circle.fill")
-        }
+    @objc func cancelAction(_ sender: UIBarButtonItem) {
+        self.dismiss(animated: true)
     }
 
     @IBAction func segmentChanged(_ sender: UISegmentedControl) {
@@ -136,7 +137,15 @@ class PlaylistViewController: BaseSearchViewController {
         case 1:
 
             showLoading()
-            playlistViewModel.getPublicPlaylist(searchText: searchText, sortType: selectedSortType, completion: { [self] result in
+
+            let userEmail: String?
+            if lectureToAdd != nil {
+                userEmail = Auth.auth().currentUser?.email ?? ""
+            } else {
+                userEmail = nil
+            }
+
+            playlistViewModel.getPublicPlaylist(searchText: searchText, sortType: selectedSortType, userEmail: userEmail, completion: { [self] result in
                 hideLoading()
 
                 switch result {
@@ -153,39 +162,171 @@ class PlaylistViewController: BaseSearchViewController {
     }
 }
 
-extension PlaylistViewController: UITableViewDelegate, UITableViewDataSource {
+extension PlaylistViewController {
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    private func configureSortButton() {
+        var actions: [UIAction] = []
 
-        return playlists.count
+        let userDefaultKey: String = "\(Self.self).\(PlaylistSortType.self)"
+        let lastType: PlaylistSortType
+
+        if let typeString = UserDefaults.standard.string(forKey: userDefaultKey), let type = PlaylistSortType(rawValue: typeString) {
+            lastType = type
+        } else {
+            lastType = .default
+        }
+
+        for sortType in PlaylistSortType.allCases {
+
+            let state: UIAction.State = (lastType == sortType ? .on : .off)
+
+            let action: UIAction = UIAction(title: sortType.rawValue, image: nil, identifier: UIAction.Identifier(sortType.rawValue), state: state, handler: { [self] action in
+                sortActionSelected(action: action)
+            })
+
+            actions.append(action)
+        }
+
+        self.sortMenu = UIMenu(title: "", image: nil, identifier: UIMenu.Identifier.init(rawValue: "Sort"), options: UIMenu.Options.displayInline, children: actions)
+
+        if #available(iOS 14.0, *) {
+            sortButton.menu = self.sortMenu
+        } else {
+            sortButton.target = self
+            sortButton.action = #selector(sortActioniOS13(_:))
+        }
+        updateSortButtonUI()
     }
 
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 60
+    // Backward compatibility for iOS 13
+    @objc private func sortActioniOS13(_ sender: UIBarButtonItem) {
+
+        var buttons: [UIViewController.ButtonConfig] = []
+        let actions: [UIAction] = self.sortMenu.children as? [UIAction] ?? []
+        for action in actions {
+            buttons.append((title: action.title, handler: { [self] in
+                sortActionSelected(action: action)
+            }))
+        }
+
+        self.showAlert(title: "Sort", message: "", preferredStyle: .actionSheet, buttons: buttons)
     }
 
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+    private func sortActionSelected(action: UIAction) {
+        let userDefaultKey: String = "\(Self.self).\(PlaylistSortType.self)"
+        let actions: [UIAction] = self.sortMenu.children as? [UIAction] ?? []
+       for anAction in actions {
+            if anAction.identifier == action.identifier { anAction.state = .on  } else {  anAction.state = .off }
+        }
+
+        updateSortButtonUI()
+
+        UserDefaults.standard.set(action.identifier.rawValue, forKey: userDefaultKey)
+        UserDefaults.standard.synchronize()
+
+        self.sortMenu = self.sortMenu.replacingChildren(actions)
+
+        if #available(iOS 14.0, *) {
+            self.sortButton.menu = self.sortMenu
+        }
+
+        refreshAsynchronous(source: .cache)
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: cellIdentifier, for: indexPath) as! PlaylistCell
+    private func updateSortButtonUI() {
+        if selectedSortType == .default {
+            sortButton.image = UIImage(compatibleSystemName: "arrow.up.arrow.down.circle")
+        } else {
+            sortButton.image = UIImage(compatibleSystemName: "arrow.up.arrow.down.circle.fill")
+        }
+    }
+}
 
-        let playlist = playlists[indexPath.row]
+extension PlaylistViewController: IQListViewDelegateDataSource {
 
-        cell.model = playlist
+    private func refreshUI(animated: Bool? = nil) {
 
-        return cell
+        let animated: Bool = animated ?? (models.count <= 1000)
+        list.performUpdates({
+
+            let section = IQSection(identifier: "Cell", headerSize: CGSize.zero, footerSize: CGSize.zero)
+            list.append(section)
+
+            list.append(Cell.self, models: models, section: section)
+
+        }, animatingDifferences: animated, completion: nil)
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+    func listView(_ listView: IQListView, modifyCell cell: IQListCell, at indexPath: IndexPath) {
+        if let cell = cell as? Cell {
+            cell.delegate = self
 
-        let playlist = playlists[indexPath.row]
+            if lectureToAdd != nil {
+                cell.accessoryType = .none
+            } else {
+                cell.accessoryType = .disclosureIndicator
+            }
+        }
+    }
 
-        let controller = UIStoryboard.playlists.instantiate(PlaylistLecturesViewController.self)
-        controller.playlist = playlist
-        self.navigationController?.pushViewController(controller, animated: true)
+    func listView(_ listView: IQListView, didSelect item: IQItem, at indexPath: IndexPath) {
+
+        if let model = item.model as? Cell.Model {
+
+            if let lectureToAdd = lectureToAdd {
+                self.showAlert(title: "Add to '\(model.title)'?", message: "Would you like to add '\(lectureToAdd.titleDisplay)' to '\(model.title)' playlist?", cancel: (title: "Cancel", {
+                }), buttons: (title: "Add", {
+
+                    ProgressHUD.show("Adding...", interaction: false)
+                    self.playlistViewModel.add(lecture: lectureToAdd, to: model) { result in
+                        ProgressHUD.dismiss()
+
+                        switch result {
+                        case .success:
+                            self.dismiss(animated: true)
+                        case .failure(let error):
+                            self.showAlert(title: "Error", message: error.localizedDescription)
+                        }
+                    }
+                }))
+            } else {
+                let controller = UIStoryboard.playlists.instantiate(PlaylistLecturesViewController.self)
+                controller.playlist = model
+                self.navigationController?.pushViewController(controller, animated: true)
+            }
+        }
+    }
+}
+
+extension PlaylistViewController: PlaylistCellDelegate {
+
+    func playlistCell(_ cell: PlaylistCell, didSelected option: PlaylistOption, with playlist: Playlist) {
+        switch option {
+        case .deletePlaylist:
+
+            self.showAlert(title: "Delete '\(playlist.title)'?",message: "Would you really like to delete '\(playlist.title)' playlist?",
+                           cancel: (title: "Cancel", {}),
+                           destructive: (title: "Delete", {
+
+                ProgressHUD.show("Deleting...", interaction: false)
+                self.playlistViewModel.delete(playlist: playlist) { result in
+                    ProgressHUD.dismiss()
+
+                    switch result {
+                    case .success:
+
+                        if let index = self.models.firstIndex(where: { $0.listID == playlist.listID }) {
+                            var models = self.models
+                            models.remove(at: index)
+                            self.reloadData(with: models)
+                        }
+
+                    case .failure(let error):
+                        self.showAlert(title: "Error", message: error.localizedDescription)
+                    }
+                }
+            }))
+        }
     }
 }
 
@@ -202,7 +343,7 @@ extension PlaylistViewController {
    }
 
     func reloadData(with playlists: [Playlist]) {
-        self.playlists = playlists
-        self.playlistTableView.reloadData()
+        self.models = playlists
+        refreshUI()
     }
 }
