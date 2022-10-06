@@ -20,7 +20,7 @@ protocol LectureViewModel: AnyObject {
     func getListenedLectureIds(completion: @escaping (Swift.Result<[Int], Error>) -> Void)
     func getPopularLectureIds(completion: @escaping (Swift.Result<[Int], Error>) -> Void)
 
-    func favourite(lectureId: Int, isFavourite: Bool, completion: @escaping (Swift.Result<Bool, Error>) -> Void)
+    func favourite(lecture: Lecture, isFavourite: Bool, completion: @escaping (Swift.Result<Bool, Error>) -> Void)
 }
 
 class DefaultLectureViewModel: NSObject, LectureViewModel {
@@ -186,7 +186,7 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
         })
     }
 
-    func favourite(lectureId: Int, isFavourite: Bool, completion: @escaping (Swift.Result<Bool, Error>) -> Void) {
+    func favourite(lecture: Lecture, isFavourite: Bool, completion: @escaping (Swift.Result<Bool, Error>) -> Void) {
         guard let currentUser = Auth.auth().currentUser else {
             let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
             completion(.failure(error))
@@ -194,7 +194,7 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
         }
 
         var query: Query = FirestoreManager.shared.firestore.collection(FirestoreCollection.usersLectureInfo(userId: currentUser.uid).path)
-        query = query.whereField("id", isEqualTo: lectureId).limit(to: 1)
+        query = query.whereField("id", isEqualTo: lecture.id).limit(to: 1)
 
         FirestoreManager.shared.getRawDocuments(query: query, source: .server) { result in
             switch result {
@@ -207,7 +207,7 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
                             completion(.failure(error))
                         } else {
 
-                            if let index = self.allLectures.firstIndex(where: { $0.id == lectureId }) {
+                            if let index = self.allLectures.firstIndex(where: { $0.id == lecture.id && $0.creationTimestamp == lecture.creationTimestamp }) {
                                 self.allLectures[index].isFavourites = isFavourite
                                 NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
                             }
@@ -218,7 +218,7 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
                     let query: CollectionReference = FirestoreManager.shared.firestore.collection(FirestoreCollection.usersLectureInfo(userId: currentUser.uid).path)
 
                     let isFavouriteData: [String: Any] = [
-                        "id": lectureId,
+                        "id":  lecture.id,
                         "isFavourite": isFavourite
                     ]
 
@@ -227,7 +227,7 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
                             completion(.failure(error))
                         } else {
 
-                            if let index = self.allLectures.firstIndex(where: { $0.id == lectureId }) {
+                            if let index = self.allLectures.firstIndex(where: { $0.id == lecture.id && $0.creationTimestamp == lecture.creationTimestamp }) {
                                 self.allLectures[index].isFavourites = isFavourite
                                 NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
                             }
@@ -272,7 +272,7 @@ extension DefaultLectureViewModel {
 
     @objc func downloadAddedNotification(_ notification: Foundation.Notification) {
         guard let dbLecture = notification.object as? DBLecture else { return }
-        if let index = allLectures.firstIndex(where: { $0.id == dbLecture.id }) {
+        if let index = allLectures.firstIndex(where: { $0.id == dbLecture.id && $0.creationTimestamp == dbLecture.creationTimestamp }) {
             allLectures[index].downloadingState = dbLecture.downloadStateEnum
             NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
         }
@@ -280,7 +280,7 @@ extension DefaultLectureViewModel {
 
     @objc func downloadUpdatedNotification(_ notification: Foundation.Notification) {
         guard let dbLecture = notification.object as? DBLecture else { return }
-        if let index = allLectures.firstIndex(where: { $0.id == dbLecture.id }) {
+        if let index = allLectures.firstIndex(where: { $0.id == dbLecture.id && $0.creationTimestamp == dbLecture.creationTimestamp }) {
             allLectures[index].downloadingState = dbLecture.downloadStateEnum
             NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
         }
@@ -288,14 +288,14 @@ extension DefaultLectureViewModel {
 
     @objc func downloadRemovedNotification(_ notification: Foundation.Notification) {
         guard let dbLecture = notification.object as? DBLecture else { return }
-        if let index = allLectures.firstIndex(where: { $0.id == dbLecture.id }) {
+        if let index = allLectures.firstIndex(where: { $0.id == dbLecture.id && $0.creationTimestamp == dbLecture.creationTimestamp }) {
             allLectures[index].downloadingState = dbLecture.downloadStateEnum
             NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
         }
     }
 
-    private func favouriteUpdated(lectureId: Int, isFavourite: Bool) {
-        if let index = self.allLectures.firstIndex(where: { $0.id == lectureId }) {
+    private func favouriteUpdated(lecture: Lecture, isFavourite: Bool) {
+        if let index = self.allLectures.firstIndex(where: { $0.id == lecture.id && $0.creationTimestamp == lecture.creationTimestamp }) {
             self.allLectures[index].isFavourites = isFavourite
             NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
         }

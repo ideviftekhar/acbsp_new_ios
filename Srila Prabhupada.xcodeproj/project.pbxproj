@@ -67,6 +67,8 @@
 		C00E4E1828CA433A00F1A123 /* CopyrightViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E1528CA433A00F1A123 /* CopyrightViewController.swift */; };
 		C00E4E1A28CA45E000F1A123 /* PlaylistLecturesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E1928CA45E000F1A123 /* PlaylistLecturesViewController.swift */; };
 		C00E4E1C28CA462000F1A123 /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E1B28CA462000F1A123 /* SearchViewController.swift */; };
+		C00F8A4128EF13AE00FA9A7B /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00F8A4028EF13AE00FA9A7B /* PlayerViewController.swift */; };
+		C00F8A4328EF192A00FA9A7B /* PlayRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00F8A4228EF192A00FA9A7B /* PlayRate.swift */; };
 		C0118A7928D34AA800F6002D /* GoogleService-Info-development-client.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0118A7728D34AA700F6002D /* GoogleService-Info-development-client.plist */; };
 		C0118A7C28D34AB400F6002D /* GoogleService-Info-production-client.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0118A7B28D34AB400F6002D /* GoogleService-Info-production-client.plist */; };
 		C03E3F2628DCC20A00B987DD /* FirestoreCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03E3F2528DCC20A00B987DD /* FirestoreCollection.swift */; };
@@ -170,6 +172,8 @@
 		C00E4E1528CA433A00F1A123 /* CopyrightViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CopyrightViewController.swift; sourceTree = "<group>"; };
 		C00E4E1928CA45E000F1A123 /* PlaylistLecturesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistLecturesViewController.swift; sourceTree = "<group>"; };
 		C00E4E1B28CA462000F1A123 /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		C00F8A4028EF13AE00FA9A7B /* PlayerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
+		C00F8A4228EF192A00FA9A7B /* PlayRate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayRate.swift; sourceTree = "<group>"; };
 		C0118A7428D349F400F6002D /* development-client.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "development-client.xcconfig"; sourceTree = "<group>"; };
 		C0118A7728D34AA700F6002D /* GoogleService-Info-development-client.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-development-client.plist"; sourceTree = "<group>"; };
 		C0118A7B28D34AB400F6002D /* GoogleService-Info-production-client.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-production-client.plist"; sourceTree = "<group>"; };
@@ -414,6 +418,7 @@
 				C0CAF25C28D45B8C00DA9878 /* NavigationController.swift */,
 				C00E4E1B28CA462000F1A123 /* SearchViewController.swift */,
 				C00E4E0228CA39FE00F1A123 /* LectureViewController.swift */,
+				C00F8A4028EF13AE00FA9A7B /* PlayerViewController.swift */,
 			);
 			path = CommonControllers;
 			sourceTree = "<group>";
@@ -457,6 +462,7 @@
 				C007D37F28E80AD000CFBED0 /* Resources.swift */,
 				C007D38128E80ADC00CFBED0 /* Audio.swift */,
 				C007D38328E80AEE00CFBED0 /* Search.swift */,
+				C00F8A4228EF192A00FA9A7B /* PlayRate.swift */,
 			);
 			path = "Supporting Model";
 			sourceTree = "<group>";
@@ -749,6 +755,7 @@
 				C0EA13E428CF53FA00BE9110 /* ForgotPasswordViewModel.swift in Sources */,
 				C00AB20628D1F19500A62A2F /* Filter.swift in Sources */,
 				C007D37A28E809D900CFBED0 /* Language.swift in Sources */,
+				C00F8A4328EF192A00FA9A7B /* PlayRate.swift in Sources */,
 				C0B7990C28DC4DCE00681649 /* LectureViewModel.swift in Sources */,
 				C00E4DE228CA393600F1A123 /* CreateAccountViewController.swift in Sources */,
 				C0FA049F28DB37FA003177DA /* LectureInfo.swift in Sources */,
@@ -763,6 +770,7 @@
 				C00E4E1A28CA45E000F1A123 /* PlaylistLecturesViewController.swift in Sources */,
 				C00E4E0A28CA39FE00F1A123 /* FavouritesViewController.swift in Sources */,
 				C0065D4828D881A400B18AA6 /* SideMenuItem.swift in Sources */,
+				C00F8A4128EF13AE00FA9A7B /* PlayerViewController.swift in Sources */,
 				C00E4DCD28CA36F100F1A123 /* SceneDelegate.swift in Sources */,
 				C00E4E0F28CA39FE00F1A123 /* HistoryViewController.swift in Sources */,
 				C00E4E0B28CA39FE00F1A123 /* LectureViewController.swift in Sources */,

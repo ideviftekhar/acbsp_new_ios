@@ -20,7 +20,7 @@ extension Persistant {
 
     func save(lecture: Lecture) {
 
-        if let dbLecture = dbLectures.first(where: { $0.id == lecture.id }) {
+        if let dbLecture = dbLectures.first(where: { $0.id == lecture.id && $0.creationTimestamp == lecture.creationTimestamp }) {
 
             switch dbLecture.downloadStateEnum {
             case .notDownloaded, .error:
@@ -38,7 +38,7 @@ extension Persistant {
 
     func delete(lecture: Lecture) {
 
-        guard let index = dbLectures.firstIndex(where: { $0.id == lecture.id }) else {
+        guard let index = dbLectures.firstIndex(where: { $0.id == lecture.id && $0.creationTimestamp == lecture.creationTimestamp }) else {
             return
         }
 
@@ -65,7 +65,7 @@ extension Persistant {
     }
 
     func lectureDownloadState(lecture: Lecture) -> DBLecture.DownloadState {
-        if let object = dbLectures.first(where: { $0.id == lecture.id }) {
+        if let object = dbLectures.first(where: { $0.id == lecture.id && $0.creationTimestamp == lecture.creationTimestamp }) {
             return object.downloadStateEnum
         } else {
             return .notDownloaded

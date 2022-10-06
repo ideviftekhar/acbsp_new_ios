@@ -71,6 +71,10 @@ class LectureViewController: SearchViewController {
 
         configureSortButton()
     }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
 }
 
 extension LectureViewController {
@@ -178,25 +182,30 @@ extension LectureViewController: IQListViewDelegateDataSource {
 
         if let model = item.model as? Cell.Model {
 
-            if model.downloadingState == .downloaded, let audioURL = model.localFileURL {
-
-                let playerController = AVPlayerViewController()
-                playerController.player = AVPlayer(url: audioURL)
-                self.present(playerController, animated: true) {
-                    playerController.player?.play()
-                }
-            } else {
-                guard let firstAudio = model.resources.audios.first,
-                      let audioURL = firstAudio.audioURL else {
-                    return
-                }
-
-                let playerController = AVPlayerViewController()
-                playerController.player = AVPlayer(url: audioURL)
-                self.present(playerController, animated: true) {
-                    playerController.player?.play()
-                }
+            if let tabController = self.tabBarController as? TabBarController {
+                tabController.showPlayer(currentLecture: model, playlistLectures: self.models)
             }
+
+
+//            if model.downloadingState == .downloaded, let audioURL = model.localFileURL {
+//
+//                let playerController = AVPlayerViewController()
+//                playerController.player = AVPlayer(url: audioURL)
+//                self.present(playerController, animated: true) {
+//                    playerController.player?.play()
+//                }
+//            } else {
+//                guard let firstAudio = model.resources.audios.first,
+//                      let audioURL = firstAudio.audioURL else {
+//                    return
+//                }
+//
+//                let playerController = AVPlayerViewController()
+//                playerController.player = AVPlayer(url: audioURL)
+//                self.present(playerController, animated: true) {
+//                    playerController.player?.play()
+//                }
+//            }
         }
     }
 }
@@ -210,9 +219,9 @@ extension LectureViewController: LectureCellDelegate {
         case .deleteFromDownloads:
             Persistant.shared.delete(lecture: lecture)
         case .markAsFavourite:
-            Self.lectureViewModel.favourite(lectureId: lecture.id, isFavourite: true, completion: {_ in })
+            Self.lectureViewModel.favourite(lecture: lecture, isFavourite: true, completion: {_ in })
         case .removeFromFavourites:
-            Self.lectureViewModel.favourite(lectureId: lecture.id, isFavourite: false, completion: {_ in })
+            Self.lectureViewModel.favourite(lecture: lecture, isFavourite: false, completion: {_ in })
         case .addToPlaylist:
 
             let navigationController = UIStoryboard.playlists.instantiate(UINavigationController.self, identifier: "PlaylistNavigationController")

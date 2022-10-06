@@ -11,6 +11,7 @@ struct Lecture: Hashable, Codable {
 
     func hash(into hasher: inout Hasher) {
         hasher.combine(id)
+        hasher.combine(creationTimestamp)
     }
 
     static func == (lhs: Self, rhs: Self) -> Bool {

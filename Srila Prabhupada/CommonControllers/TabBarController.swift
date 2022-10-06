@@ -9,6 +9,9 @@ import UIKit
 import FirebaseMessaging
 
 class TabBarController: UITabBarController {
+
+    let playerViewController = UIStoryboard.common.instantiate(PlayerViewController.self)
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -26,6 +29,36 @@ class TabBarController: UITabBarController {
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+}
+
+extension TabBarController {
+
+    func showPlayer(currentLecture: Lecture, playlistLectures: [Lecture]) {
+
+//        if currentLecture.downloadingState == .downloaded, let audioURL = currentLecture.localFileURL {
+//
+//            let playerController = AVPlayerViewController()
+//            playerController.player = AVPlayer(url: audioURL)
+//            self.present(playerController, animated: true) {
+//                playerController.player?.play()
+//            }
+//        } else {
+//            guard let firstAudio = currentLecture.resources.audios.first,
+//                  let audioURL = firstAudio.audioURL else {
+//                return
+//            }
+//
+//            let playerController = AVPlayerViewController()
+//            playerController.player = AVPlayer(url: audioURL)
+//            self.present(playerController, animated: true) {
+//                playerController.player?.play()
+//            }
+//        }
+
+        playerViewController.playlistLectures = playlistLectures
+        playerViewController.currentLecture = currentLecture
+        self.present(playerViewController, animated: true, completion: nil)
     }
 }
 
