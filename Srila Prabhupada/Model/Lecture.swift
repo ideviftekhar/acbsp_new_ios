@@ -41,6 +41,8 @@ struct Lecture: Hashable, Codable {
     let thumbnail: String
     let title: [String]
 
+    let searchableTexts: [String]
+
     var downloadingState: DBLecture.DownloadState = .notDownloaded
     var isFavourites: Bool = false
     private(set) var playProgress: Int = 0
@@ -65,6 +67,24 @@ struct Lecture: Hashable, Codable {
         self.thumbnail = try container.decode(String.self, forKey: .thumbnail)
         self.title = try container.decode([String].self, forKey: .title)
 
+        var searchableTexts: [String] = []
+        searchableTexts.append(contentsOf: title)
+        searchableTexts.append(contentsOf: category)
+        searchableTexts.append(contentsOf: description)
+        searchableTexts.append(language.main)
+        searchableTexts.append(contentsOf: language.translations)
+        searchableTexts.append(legacyData.lectureCode)
+        searchableTexts.append(legacyData.slug)
+        searchableTexts.append(legacyData.verse)
+        searchableTexts.append(contentsOf: lengthType)
+        searchableTexts.append(location.city)
+        searchableTexts.append(location.state)
+        searchableTexts.append(location.country)
+        searchableTexts.append(contentsOf: search.simple)
+        searchableTexts.append(contentsOf: search.advanced)
+        searchableTexts.append(contentsOf: tags)
+
+        self.searchableTexts = searchableTexts
         downloadingState = Persistant.shared.lectureDownloadState(lecture: self)
         isFavourites = false
         playProgress = Int.random(in: 0...100)
@@ -95,6 +115,25 @@ struct Lecture: Hashable, Codable {
         self.tags = dbLecture.tags
         self.thumbnail = dbLecture.thumbnail
         self.title = dbLecture.title
+
+        var searchableTexts: [String] = []
+        searchableTexts.append(contentsOf: title)
+        searchableTexts.append(contentsOf: category)
+        searchableTexts.append(contentsOf: description)
+        searchableTexts.append(language.main)
+        searchableTexts.append(contentsOf: language.translations)
+        searchableTexts.append(legacyData.lectureCode)
+        searchableTexts.append(legacyData.slug)
+        searchableTexts.append(legacyData.verse)
+        searchableTexts.append(contentsOf: lengthType)
+        searchableTexts.append(location.city)
+        searchableTexts.append(location.state)
+        searchableTexts.append(location.country)
+        searchableTexts.append(contentsOf: search.simple)
+        searchableTexts.append(contentsOf: search.advanced)
+        searchableTexts.append(contentsOf: tags)
+
+        self.searchableTexts = searchableTexts
 
         downloadingState = Persistant.shared.lectureDownloadState(lecture: self)
         isFavourites = false

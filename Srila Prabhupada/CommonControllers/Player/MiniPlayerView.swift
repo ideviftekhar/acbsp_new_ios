@@ -25,6 +25,8 @@ class MiniPlayerView: UIView {
     @IBOutlet private var playButton: UIButton!
     @IBOutlet private var progressView: UIProgressView!
 
+    @IBOutlet private var currentTimeLabel: UILabel!
+
     private lazy var seekGesture = UIPanGestureRecognizer(target: self, action: #selector(panRecognized(_:)))
 
     weak var delegate: MiniPlayerViewDelegate?
@@ -48,6 +50,7 @@ class MiniPlayerView: UIView {
                 durationLabel.text = model.lengthTime.displayString
                 locationLabel.text = model.location.displayString
                 dateLabel.text = model.dateOfRecording.display_yyyy_mm_dd
+                currentTimeLabel.text = 0.toHHMMSS
 
                 if let url = model.thumbnailURL {
                     thumbnailImageView.af.setImage(withURL: url, placeholderImage: UIImage(named: "logo_40"))
@@ -71,6 +74,9 @@ class MiniPlayerView: UIView {
             if totalSeconds > 0 {
                 let progress = playedSeconds / Float(totalSeconds)
                 if seekGesture.state != .changed {
+
+                    currentTimeLabel.text = Int(playedSeconds).toHHMMSS
+
                     progressView.progress = progress
                 }
             }
@@ -106,16 +112,16 @@ extension MiniPlayerView: UIGestureRecognizerDelegate {
         let maxSeekSeconds: Float = totalSeconds // 10*60 // 10 minutes
         let changedSeconds: Float = maxSeekSeconds*seekProgress
         var proposedSeek: Float = playedSeconds + changedSeconds
+        proposedSeek = Float.maximum(proposedSeek, 0)
+        proposedSeek = Float.minimum(proposedSeek, totalSeconds-1.0)    // 1 seconds to not reach at the end instantly
 
         switch sender.state {
         case .began, .changed:
             progressView.progress =  proposedSeek / totalSeconds
+            currentTimeLabel.text = Int(proposedSeek).toHHMMSS
         case .ended, .cancelled:
-            proposedSeek = Float.maximum(proposedSeek, 0)
-            proposedSeek = Float.minimum(proposedSeek, totalSeconds-1.0)    // 1 seconds to not reach at the end instantly
 
             delegate?.miniPlayerView(self, didSeekTo: Int(proposedSeek))
-            progressView.progress =  proposedSeek / totalSeconds
         case .possible, .failed:
             break
         @unknown default:

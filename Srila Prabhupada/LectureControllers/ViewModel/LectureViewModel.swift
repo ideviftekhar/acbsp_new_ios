@@ -51,9 +51,8 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
 
             lectures = lectures.filter { (lecture: Lecture) in
                 return selectedSubtypes.first(where: { (subtype: String) in
-                    return lecture.title.first(where: { (title: String) in
-                        title.localizedCaseInsensitiveContains(subtype)
-                    }) != nil
+                    let matched: Bool = lecture.searchableTexts.first(where: { $0.localizedCaseInsensitiveContains(subtype) }) != nil
+                    return matched
                 }) != nil
             }
         }

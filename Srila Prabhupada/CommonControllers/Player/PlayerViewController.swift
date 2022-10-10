@@ -152,8 +152,7 @@ extension PlayerViewController {
                     miniPlayerView.playedSeconds = timeSlider.value
                 }
             }
-            let timeDisplay = timeDisplay(totalSecond: Int(timeSlider.value))
-            timeLabel.text = timeDisplay
+            timeLabel.text = Int(timeSlider.value).toHHMMSS
         }
     }
 }
@@ -207,32 +206,6 @@ extension PlayerViewController {
             self.currentLecture = newLecture
             play()
         }
-    }
-}
-
-extension PlayerViewController {
-
-    private func timeDisplay(totalSecond: Int) -> String {
-        var hour = Int()
-        var minute = Int()
-        var second = totalSecond
-
-        if second >=  60 {
-            minute = second/60
-            second = second%60
-            if minute >= 60 {
-                hour = minute/60
-                minute = minute%60
-            }
-        }
-        var time: String {
-            if hour <= 0 {
-                return String(format: "%02i:%02i", minute, second)
-            } else {
-                return String(format: "%02i:%02i:%02i", hour, minute, second)
-            }
-        }
-        return time
     }
 }
 

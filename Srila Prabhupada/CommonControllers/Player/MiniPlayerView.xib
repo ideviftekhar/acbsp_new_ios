@@ -114,6 +114,12 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" text="00:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mYP-fd-TrD">
+                                <rect key="frame" x="370" y="39.5" width="40" height="16.5"/>
+                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
+                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="kAB-6f-T9x">
                                 <rect key="frame" x="0.0" y="56" width="414" height="4"/>
                             </progressView>
@@ -128,7 +134,9 @@
                         </subviews>
                         <constraints>
                             <constraint firstItem="di4-rx-Tla" firstAttribute="top" secondItem="Zln-PC-Yf1" secondAttribute="top" id="27f-h7-som"/>
+                            <constraint firstItem="t2u-9c-W9z" firstAttribute="trailing" secondItem="mYP-fd-TrD" secondAttribute="trailing" id="4y0-BP-gcM"/>
                             <constraint firstAttribute="trailing" secondItem="D9O-7B-COT" secondAttribute="trailing" constant="4" id="4za-fo-fjF"/>
+                            <constraint firstItem="t2u-9c-W9z" firstAttribute="leading" secondItem="mYP-fd-TrD" secondAttribute="leading" id="51S-FN-SRw"/>
                             <constraint firstItem="D9O-7B-COT" firstAttribute="leading" secondItem="Zln-PC-Yf1" secondAttribute="leading" constant="4" id="6ri-Fn-8Dc"/>
                             <constraint firstItem="t2u-9c-W9z" firstAttribute="leading" secondItem="di4-rx-Tla" secondAttribute="trailing" id="7su-E4-rgs"/>
                             <constraint firstAttribute="trailing" secondItem="1Bh-6f-5ce" secondAttribute="trailing" id="BNo-CR-6qM"/>
@@ -138,6 +146,7 @@
                             <constraint firstItem="di4-rx-Tla" firstAttribute="leading" secondItem="Zln-PC-Yf1" secondAttribute="leading" id="OyM-VJ-asF"/>
                             <constraint firstAttribute="trailing" secondItem="kAB-6f-T9x" secondAttribute="trailing" id="TST-2R-VBi"/>
                             <constraint firstItem="kAB-6f-T9x" firstAttribute="leading" secondItem="Zln-PC-Yf1" secondAttribute="leading" id="VVg-hK-R0q"/>
+                            <constraint firstItem="kAB-6f-T9x" firstAttribute="top" secondItem="mYP-fd-TrD" secondAttribute="bottom" id="YqK-69-ccA"/>
                             <constraint firstItem="1Bh-6f-5ce" firstAttribute="leading" secondItem="Zln-PC-Yf1" secondAttribute="leading" id="kuk-p7-nj5"/>
                             <constraint firstAttribute="bottom" secondItem="kAB-6f-T9x" secondAttribute="bottom" id="lNi-wB-CSy"/>
                         </constraints>
@@ -155,6 +164,7 @@
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
+                <outlet property="currentTimeLabel" destination="mYP-fd-TrD" id="J6m-BA-WVp"/>
                 <outlet property="dateLabel" destination="rLz-RR-NXV" id="nsq-gP-K97"/>
                 <outlet property="durationLabel" destination="ndw-so-Hxd" id="Zjo-Vt-Crp"/>
                 <outlet property="expandButton" destination="di4-rx-Tla" id="UM5-m7-2Ew"/>
