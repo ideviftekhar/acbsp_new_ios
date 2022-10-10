@@ -16,8 +16,8 @@ class TopLectureViewController: LectureViewController {
         super.viewDidLoad()
 
         do {
-            list.noItemTitle = "No Top Lectures"
-            list.noItemMessage = "Top lectures will display here"
+            noItemTitle = "No Top Lectures"
+            noItemMessage = "Top lectures will display here"
         }
 
         do {
@@ -40,6 +40,7 @@ class TopLectureViewController: LectureViewController {
     }
 
     override func refreshAsynchronous(source: FirestoreSource) {
+        super.refreshAsynchronous(source: source)
 
         switch topLecturesSegmentControl.selectedSegmentIndex {
         case 0:

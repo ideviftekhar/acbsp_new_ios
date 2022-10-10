@@ -47,7 +47,10 @@ class LectureViewController: SearchViewController {
     typealias Cell = LectureCell
 
     private var models: [Model] = []
-    private(set) lazy var list = IQList(listView: lectureTebleView, delegateDataSource: self)
+    private lazy var list = IQList(listView: lectureTebleView, delegateDataSource: self)
+
+    var noItemTitle: String?
+    var noItemMessage: String?
 
     override func viewDidLoad() {
        super.viewDidLoad()
@@ -74,6 +77,10 @@ class LectureViewController: SearchViewController {
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+
+    override func refreshAsynchronous(source: FirestoreSource) {
+        super.refreshAsynchronous(source: source)
     }
 }
 
@@ -169,7 +176,10 @@ extension LectureViewController: IQListViewDelegateDataSource {
 
             list.append(Cell.self, models: models, section: section)
 
-        }, animatingDifferences: animated, completion: nil)
+        }, animatingDifferences: animated, completion: {
+            self.list.noItemTitle = self.noItemTitle
+            self.list.noItemMessage = self.noItemMessage
+        })
     }
 
     func listView(_ listView: IQListView, modifyCell cell: IQListCell, at indexPath: IndexPath) {
@@ -185,7 +195,6 @@ extension LectureViewController: IQListViewDelegateDataSource {
             if let tabController = self.tabBarController as? TabBarController {
                 tabController.showPlayer(currentLecture: model, playlistLectures: self.models)
             }
-
 
 //            if model.downloadingState == .downloaded, let audioURL = model.localFileURL {
 //
@@ -247,6 +256,8 @@ extension LectureViewController {
 
     @objc func showLoading() {
         loadingIndicator.startAnimating()
+        self.list.noItemTitle = nil
+        self.list.noItemMessage = nil
     }
 
     @objc func hideLoading() {

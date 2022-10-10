@@ -78,6 +78,8 @@ class PlaylistViewController: SearchViewController {
             } else {
                 playlistSegmentControl.selectedSegmentIndex = 0
             }
+
+            updateEmptyPlaylistMessage()
         }
 
         do {
@@ -114,11 +116,27 @@ class PlaylistViewController: SearchViewController {
             UserDefaults.standard.synchronize()
         }
 
+        updateEmptyPlaylistMessage()
+
         reloadData(with: [])
         refreshAsynchronous(source: .cache)
     }
 
+    private func updateEmptyPlaylistMessage() {
+        if let selectedPlaylistType = PlaylistType(rawValue: playlistSegmentControl.selectedSegmentIndex) {
+            switch selectedPlaylistType {
+            case .private:
+                list.noItemTitle = "No Private Playlist"
+                list.noItemMessage = "No private playlist to display here"
+            case .public:
+                list.noItemTitle = "No Public Playlist"
+                list.noItemMessage = "No public playlist to display here"
+            }
+        }
+    }
+
     override func refreshAsynchronous(source: FirestoreSource) {
+        super.refreshAsynchronous(source: source)
 
         switch playlistSegmentControl.selectedSegmentIndex {
         case 0:

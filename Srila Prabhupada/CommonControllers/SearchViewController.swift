@@ -68,16 +68,15 @@ class SearchViewController: UIViewController {
 
         NotificationCenter.default.addObserver(self, selector: #selector(lectureUpdateNotification(_:)), name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
 
-        // Reloading with local cached
-        refreshAsynchronous(source: .cache)
-
         if isFirstTime {
             isFirstTime = false
 
-            // If it is requesting from dashboad screen, then we'll be reaching to firebase for the first time to get latest records.
+            // If it is requesting from dashboad screen, then we are interested in getting all records and we'll be reaching to firebase for the first time to get latest records.
             if self is HomeViewController {
                 refreshAsynchronous(source: .default)
             }
+
+            refreshAsynchronous(source: .default)
         }
     }
 
@@ -91,7 +90,6 @@ class SearchViewController: UIViewController {
     }
 
     @objc func refreshAsynchronous(source: FirestoreSource) {
-
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -194,9 +192,10 @@ extension SearchViewController: SideMenuControllerDelegate {
             let popularLectureController = UIStoryboard.popularLecture.instantiate(PopularLectureViewController.self)
             controller.navigationController?.pushViewController(popularLectureController, animated: true)
         case .about:
-            let aboutController = UIStoryboard.sideMenu.instantiate(AboutViewController.self)
+            let aboutController = UIStoryboard.sideMenu.instantiate(UINavigationController.self, identifier: "AboutNavigationController")
             controller.present(aboutController, animated: true, completion: nil)
         case .share:
+            //https://appstoreconnect.apple.com/apps/1645287937/appstore/ios/version/inflight
             let appLink = [URL(string: "https://play.google.com/store/apps/details?id=com.iskcon.prabhupada")!]
             let shareController = UIActivityViewController(activityItems: appLink, applicationActivities: nil)
             controller.present(shareController, animated: true)
@@ -208,7 +207,7 @@ extension SearchViewController: SideMenuControllerDelegate {
                 controller.present(safariController, animated: true, completion: nil)
             }
         case .copyright:
-            let copyrightController = UIStoryboard.sideMenu.instantiate(CopyrightViewController.self)
+            let copyrightController = UIStoryboard.sideMenu.instantiate(UINavigationController.self, identifier: "CopyrightNavigationController")
             controller.present(copyrightController, animated: true, completion: nil)
         case .signOut:
             break

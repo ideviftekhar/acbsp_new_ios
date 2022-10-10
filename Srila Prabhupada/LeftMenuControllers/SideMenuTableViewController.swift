@@ -7,6 +7,7 @@
 
 import UIKit
 import IQListKit
+import FirebaseAuth
 
 // Protocol
 protocol SideMenuControllerDelegate: AnyObject {
@@ -29,6 +30,16 @@ class SideMenuTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        do {
+            if let currentUser = Auth.auth().currentUser {
+                self.navigationItem.title = currentUser.displayName
+                self.navigationItem.prompt = currentUser.email
+            } else {
+                self.navigationItem.title = nil
+                self.navigationItem.prompt = nil
+            }
+        }
 
         do {
             list.registerCell(type: Cell.self, registerType: .nib)

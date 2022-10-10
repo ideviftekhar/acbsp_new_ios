@@ -34,6 +34,8 @@ target 'Srila Prabhupada' do
 
   pod 'ARNTransitionAnimator'
 
+  pod 'ReachabilitySwift'
+
   pod'Charts'
   pod'SwiftLint'
 end

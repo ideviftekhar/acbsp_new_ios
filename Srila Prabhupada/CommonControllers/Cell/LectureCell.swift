@@ -17,19 +17,19 @@ protocol LectureCellDelegate: AnyObject {
 
 class LectureCell: UITableViewCell, IQModelableCell {
 
-    @IBOutlet private var downloadedIconImageView: UIImageView!
-    @IBOutlet private var favouritesIconImageView: UIImageView!
-    @IBOutlet private var completedIconImageView: UIImageView!
+    @IBOutlet private var downloadedIconImageView: UIImageView?
+    @IBOutlet private var favouritesIconImageView: UIImageView?
+    @IBOutlet private var completedIconImageView: UIImageView?
 
-    @IBOutlet private var thumbnailImageView: UIImageView!
-    @IBOutlet private var titleLabel: UILabel!
-    @IBOutlet private var verseLabel: UILabel!
-    @IBOutlet private var durationLabel: UILabel!
-    @IBOutlet private var locationLabel: UILabel!
-    @IBOutlet private var dateLabel: UILabel!
-    @IBOutlet private var menuButton: UIButton!
-    @IBOutlet private var downloadProgressView: MBCircularProgressBarView!
-    @IBOutlet private var listenProgressView: MBCircularProgressBarView!
+    @IBOutlet private var thumbnailImageView: UIImageView?
+    @IBOutlet private var titleLabel: UILabel?
+    @IBOutlet private var verseLabel: UILabel?
+    @IBOutlet private var durationLabel: UILabel?
+    @IBOutlet private var locationLabel: UILabel?
+    @IBOutlet private var dateLabel: UILabel?
+    @IBOutlet private var menuButton: UIButton?
+    @IBOutlet private var downloadProgressView: MBCircularProgressBarView?
+    @IBOutlet private var listenProgressView: MBCircularProgressBarView?
 
     weak var delegate: LectureCellDelegate?
 
@@ -59,50 +59,58 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 return
             }
 
-            titleLabel.text = model.titleDisplay
-            verseLabel.text = model.legacyData.verse
-            durationLabel.text = model.lengthTime.displayString
-            locationLabel.text = model.location.displayString
-            dateLabel.text = model.dateOfRecording.display_yyyy_mm_dd
-            listenProgressView.value = CGFloat(model.playProgress)
+            titleLabel?.text = model.titleDisplay
+            verseLabel?.text = model.legacyData.verse
+            durationLabel?.text = model.lengthTime.displayString
+            locationLabel?.text = model.location.displayString
+            dateLabel?.text = model.dateOfRecording.display_yyyy_mm_dd
 
-            listenProgressView.isHidden = model.playProgress == 100
-            completedIconImageView.isHidden = model.playProgress != 100
+            let progress: CGFloat
+            if model.length != 0 {
+                progress = CGFloat(model.lastPlayedPoint) / CGFloat(model.length)
+            } else {
+                progress = 0
+            }
+
+            listenProgressView?.value = progress * 100
+
+            listenProgressView?.isHidden = progress >= 1.0
+            completedIconImageView?.isHidden = progress < 1.0
 
             if let url = model.thumbnailURL {
-                thumbnailImageView.af.setImage(withURL: url, placeholderImage: UIImage(named: "logo_40"))
+                thumbnailImageView?.af.setImage(withURL: url, placeholderImage: UIImage(named: "logo_40"))
             } else {
-                thumbnailImageView.image = UIImage(named: "logo_40")
+                thumbnailImageView?.image = UIImage(named: "logo_40")
             }
 
             switch model.downloadingState {
             case .notDownloaded:
-                downloadedIconImageView.isHidden = true
-                downloadProgressView.isHidden = true
+                downloadedIconImageView?.isHidden = true
+                downloadProgressView?.isHidden = true
             case .downloading:
-                downloadedIconImageView.isHidden = false
-                downloadedIconImageView.tintColor = UIColor.systemBlue
-                downloadedIconImageView.image = UIImage(compatibleSystemName: "arrow.down.circle.fill")
-                downloadProgressView.isHidden = false
+                downloadedIconImageView?.isHidden = false
+                downloadedIconImageView?.tintColor = UIColor.systemBlue
+                downloadedIconImageView?.image = UIImage(compatibleSystemName: "arrow.down.circle.fill")
+                downloadProgressView?.isHidden = false
 
                 DownloadManager.shared.registerProgress(observer: self, lectureID: model.id) { [weak self] progress in
-                    self?.downloadProgressView.value = progress * 100
+                    self?.downloadProgressView?.value = progress * 100
                 }
             case .downloaded:
-                downloadedIconImageView.isHidden = false
-                downloadedIconImageView.tintColor = UIColor.systemGreen
-                downloadedIconImageView.image = UIImage(compatibleSystemName: "arrow.down.circle.fill")
-                downloadProgressView.isHidden = false
-                downloadProgressView.value = 0
+                downloadedIconImageView?.isHidden = false
+                downloadedIconImageView?.tintColor = UIColor.systemGreen
+                downloadedIconImageView?.image = UIImage(compatibleSystemName: "arrow.down.circle.fill")
+                downloadProgressView?.isHidden = false
+                downloadProgressView?.value = 0
             case .error:
-                downloadedIconImageView.isHidden = false
-                downloadedIconImageView.tintColor = UIColor.systemRed
-                downloadedIconImageView.image = UIImage(compatibleSystemName: "exclamationmark.circle.fill")
-                downloadProgressView.isHidden = false
-                downloadProgressView.value = 0
+                downloadedIconImageView?.isHidden = false
+                downloadedIconImageView?.tintColor = UIColor.systemRed
+                downloadedIconImageView?.image = UIImage(compatibleSystemName: "exclamationmark.circle.fill")
+                downloadProgressView?.isHidden = false
+                downloadProgressView?.value = 0
             }
 
-            favouritesIconImageView.isHidden = !model.isFavourites
+            favouritesIconImageView?.isHidden = !model.isFavourites
 
             do {
                 var actions: [UIAction] = []
@@ -135,7 +143,7 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 }
 
                 // Is Heard
-                if model.playProgress == 100, let resetProgress = allActions[.resetProgress] {
+                if progress >= 1.0, let resetProgress = allActions[.resetProgress] {
                     actions.append(resetProgress)
                 } else if let markAsHeard = allActions[.markAsHeard] {
                     actions.append(markAsHeard)
@@ -147,10 +155,10 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 }
 
                 self.optionMenu = self.optionMenu.replacingChildren(actions)
-                self.menuButton.isHidden = actions.isEmpty
+                self.menuButton?.isHidden = actions.isEmpty
 
                 if #available(iOS 14.0, *) {
-                    self.menuButton.menu = self.optionMenu
+                    self.menuButton?.menu = self.optionMenu
                 }
             }
         }
@@ -185,10 +193,10 @@ extension LectureCell {
         self.optionMenu = UIMenu(title: "", image: nil, identifier: UIMenu.Identifier.init(rawValue: "Option"), options: UIMenu.Options.displayInline, children: childrens)
 
         if #available(iOS 14.0, *) {
-            menuButton.showsMenuAsPrimaryAction = true
-            menuButton.menu = optionMenu
+            menuButton?.showsMenuAsPrimaryAction = true
+            menuButton?.menu = optionMenu
         } else {
-            menuButton.addTarget(self, action: #selector(optionMenuActioniOS13(_:)), for: .touchUpInside)
+            menuButton?.addTarget(self, action: #selector(optionMenuActioniOS13(_:)), for: .touchUpInside)
         }
     }
 

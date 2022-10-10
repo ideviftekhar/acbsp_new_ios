@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import AlamofireImage
 
 protocol MiniPlayerViewDelegate: AnyObject {
     func miniPlayerViewDidExpand(_ playerView: MiniPlayerView)

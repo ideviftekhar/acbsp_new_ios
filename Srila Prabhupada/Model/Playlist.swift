@@ -10,6 +10,17 @@ import Foundation
 enum PlaylistType: String, Codable, CaseIterable {
     case `private`  = "Private"
     case `public`   = "Public"
+
+    init?(rawValue: Int) {
+        switch rawValue {
+        case 0:
+            self = .private
+        case 1:
+            self = .public
+        default:
+            self = .private
+        }
+    }
 }
 
 struct Playlist: Hashable, Codable {

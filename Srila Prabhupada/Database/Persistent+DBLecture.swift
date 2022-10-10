@@ -59,7 +59,7 @@ extension Persistant {
 
         let finalContext = mainContext
 
-        var objects: [DBLecture] = self.fetch(in: finalContext)
+        let objects: [DBLecture] = self.fetch(in: finalContext)
 
         return objects
     }

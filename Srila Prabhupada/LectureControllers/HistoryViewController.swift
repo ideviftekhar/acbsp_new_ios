@@ -14,19 +14,22 @@ class HistoryViewController: LectureViewController {
         super.viewDidLoad()
 
         do {
-            list.noItemTitle = "No Lectures"
-            list.noItemMessage = "Your past played lectures will display here"
+            noItemTitle = "No Lectures"
+            noItemMessage = "Your past played lectures will display here"
         }
     }
 
     override func refreshAsynchronous(source: FirestoreSource) {
+        super.refreshAsynchronous(source: source)
 
         showLoading()
 
-        Self.lectureViewModel.getListenedLectureIds(completion: { [self] result in
+        Self.lectureViewModel.getUsersListenInfo(source: source, completion: { [self] result in
 
             switch result {
-            case .success(let lectureIDs):
+            case .success(let success):
+
+                let lectureIDs: [Int] = success.flatMap({ $0.playedIds })
 
                 Self.lectureViewModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, completion: { [self] result in
                     hideLoading()

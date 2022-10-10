@@ -14,12 +14,13 @@ class PopularLectureViewController: LectureViewController {
         super.viewDidLoad()
 
         do {
-            list.noItemTitle = "No Popular Lectures"
-            list.noItemMessage = "Popular lectures will display here"
+            noItemTitle = "No Popular Lectures"
+            noItemMessage = "Popular lectures will display here"
         }
     }
 
     override func refreshAsynchronous(source: FirestoreSource) {
+        super.refreshAsynchronous(source: source)
 
         showLoading()
 

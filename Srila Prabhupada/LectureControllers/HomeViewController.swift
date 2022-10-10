@@ -14,12 +14,23 @@ class HomeViewController: LectureViewController {
         super.viewDidLoad()
 
         do {
-            list.noItemTitle = "No Lectures"
-            list.noItemMessage = "No lectures to display here"
+            noItemTitle = "No Lectures"
+            noItemMessage = "No lectures to display here"
         }
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+
+        if isFirstTime {
+            Self.lectureViewModel.getUsersLectureInfo(source: .default) { _ in }
+            Self.lectureViewModel.getUsersListenInfo(source: .default) { _ in }
+        }
+
+        super.viewWillAppear(animated)
+    }
+
     override func refreshAsynchronous(source: FirestoreSource) {
+        super.refreshAsynchronous(source: source)
 
         showLoading()
         Self.lectureViewModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: nil, source: source, completion: { [self] result in

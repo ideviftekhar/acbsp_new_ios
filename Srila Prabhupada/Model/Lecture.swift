@@ -20,7 +20,7 @@ struct Lecture: Hashable, Codable {
         lhs.resources == rhs.resources &&
         lhs.downloadingState == rhs.downloadingState &&
         lhs.isFavourites == rhs.isFavourites &&
-        lhs.playProgress == rhs.playProgress
+        lhs.lastPlayedPoint == rhs.lastPlayedPoint
     }
 
     let category: [String]
@@ -44,8 +44,8 @@ struct Lecture: Hashable, Codable {
     let searchableTexts: [String]
 
     var downloadingState: DBLecture.DownloadState = .notDownloaded
-    var isFavourites: Bool = false
-    private(set) var playProgress: Int = 0
+    var isFavourites: Bool
+    var lastPlayedPoint: Int = 0
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -85,9 +85,9 @@ struct Lecture: Hashable, Codable {
         searchableTexts.append(contentsOf: tags)
 
         self.searchableTexts = searchableTexts
-        downloadingState = Persistant.shared.lectureDownloadState(lecture: self)
         isFavourites = false
-        playProgress = Int.random(in: 0...100)
+        lastPlayedPoint = 0
+        downloadingState = Persistant.shared.lectureDownloadState(lecture: self)
     }
 
     init(from dbLecture: DBLecture) {
@@ -135,9 +135,9 @@ struct Lecture: Hashable, Codable {
 
         self.searchableTexts = searchableTexts
 
-        downloadingState = Persistant.shared.lectureDownloadState(lecture: self)
         isFavourites = false
-        playProgress = Int.random(in: 0...100)
+        lastPlayedPoint = 0
+        downloadingState = Persistant.shared.lectureDownloadState(lecture: self)
     }
 
     static func createNewDBLecture(lecture: Lecture) -> DBLecture {

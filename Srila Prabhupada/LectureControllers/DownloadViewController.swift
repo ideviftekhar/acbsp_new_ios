@@ -14,12 +14,13 @@ class DownloadViewController: LectureViewController {
         super.viewDidLoad()
 
         do {
-            list.noItemTitle = "No Downloaded Lectures"
-            list.noItemMessage = "Your downloaded lectures will display here.\nYou can download the lectures from home tab"
+            noItemTitle = "No Downloaded Lectures"
+            noItemMessage = "Your downloaded lectures will display here.\nYou can download the lectures from home tab"
         }
     }
 
     override func refreshAsynchronous(source: FirestoreSource) {
+        super.refreshAsynchronous(source: source)
 
         var lectures = [Model]()
         for dbLecture in Persistant.shared.dbLectures {

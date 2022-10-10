@@ -20,14 +20,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = scene as? UIWindowScene else { return }
 
         if let user = Auth.auth().currentUser {
-            user.getIDToken { [self] _, error in
-                if let error = error {
+            DispatchQueue.global().async {
+                user.getIDToken { _, error in
+                    if let error = error {
 
-                    let loginNavigationController = UIStoryboard.main.instantiateViewController(withIdentifier: "LoginNavigationController") as! UINavigationController
+                        DispatchQueue.main.async { [self] in
+                            let loginNavigationController = UIStoryboard.main.instantiateViewController(withIdentifier: "LoginNavigationController") as! UINavigationController
 
-                    window = UIWindow(windowScene: windowScene)
-                    window?.rootViewController = loginNavigationController
-                    window?.makeKeyAndVisible()
+                            window = UIWindow(windowScene: windowScene)
+                            window?.rootViewController = loginNavigationController
+                            window?.makeKeyAndVisible()
+                        }
+                    }
                 }
             }
 

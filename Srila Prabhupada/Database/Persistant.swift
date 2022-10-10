@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreData
+import Reachability
 
 class Persistant: NSObject {
 
@@ -20,12 +21,43 @@ class Persistant: NSObject {
 
     static let shared = Persistant()
 
+    private let reachability: Reachability?
+
     var dbLectures: [DBLecture] = []
 
     override init () {
+
+        reachability = try? Reachability()
+
         super.init()
 
         dbLectures = getDbLectures()
+
+        addReachabilityObserver()
+    }
+
+    private func addReachabilityObserver() {
+        guard let reachability = reachability else {
+            return
+        }
+        reachability.whenReachable = { reachability in
+            if reachability.connection == .wifi {
+                print("Reachable via WiFi")
+            } else {
+                print("Reachable via Cellular")
+            }
+
+            self.reschedulePendingDownloads()
+        }
+        reachability.whenUnreachable = { _ in
+            print("Not reachable")
+        }
+
+        do {
+            try reachability.startNotifier()
+        } catch {
+            print("Unable to start notifier")
+        }
     }
 
     // MARK: - Core Data stack
@@ -153,7 +185,7 @@ class Persistant: NSObject {
         let fetchRequest = NSFetchRequest<T>(entityName: T.entityName)
 
         do {
-            var objects: [T] = try context.fetch(fetchRequest)
+            let objects: [T] = try context.fetch(fetchRequest)
             return objects
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")

@@ -16,12 +16,13 @@ class PlaylistLecturesViewController: LectureViewController {
         super.viewDidLoad()
 
         do {
-            list.noItemTitle = "No Lectures"
-            list.noItemMessage = "No lectures in '\(playlist.title)' playlist"
+            noItemTitle = "No Lectures"
+            noItemMessage = "No lectures in '\(playlist.title)' playlist"
         }
     }
 
     override func refreshAsynchronous(source: FirestoreSource) {
+        super.refreshAsynchronous(source: source)
 
         showLoading()
         Self.lectureViewModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: playlist.lectureIds, source: source, completion: { [self] result in

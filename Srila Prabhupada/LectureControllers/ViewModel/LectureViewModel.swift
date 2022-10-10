@@ -14,10 +14,10 @@ protocol LectureViewModel: AnyObject {
 
     func getLectures(searchText: String?, sortType: LectureSortType, filter: [Filter: [String]], lectureIDs: [Int]?, source: FirestoreSource, completion: @escaping (Swift.Result<[Lecture], Error>) -> Void)
 
-    func getFavouriteLectureIds(completion: @escaping (Swift.Result<[Int], Error>) -> Void)
+    func getUsersLectureInfo(source: FirestoreSource, completion: @escaping (Swift.Result<[LectureInfo], Error>) -> Void)
+    func getUsersListenInfo(source: FirestoreSource, completion: @escaping (Swift.Result<[ListenInfo], Error>) -> Void)
     func getWeekLecturesIds(weekDays: [String], completion: @escaping (Swift.Result<[Int], Error>) -> Void)
     func getMonthLecturesIds(month: Int, year: Int, completion: @escaping (Swift.Result<[Int], Error>) -> Void)
-    func getListenedLectureIds(completion: @escaping (Swift.Result<[Int], Error>) -> Void)
     func getPopularLectureIds(completion: @escaping (Swift.Result<[Int], Error>) -> Void)
 
     func favourite(lecture: Lecture, isFavourite: Bool, completion: @escaping (Swift.Result<Bool, Error>) -> Void)
@@ -30,6 +30,9 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
     }
 
     var allLectures: [Lecture] = []
+
+    var userLectureInfo: [LectureInfo] = []
+    var userListenInfo: [ListenInfo] = []
 
     override init() {
         super.init()
@@ -65,6 +68,19 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
         return lectures
     }
 
+    static private func refreshLectureWithLectureInfo(lectures: [Lecture], lectureInfo: [LectureInfo]) -> [Lecture] {
+        let lectures = lectures.map { lecture -> Lecture in
+            var lecture = lecture
+            if let lectureInfo = lectureInfo.first(where: { $0.id == lecture.id }) {
+                lecture.isFavourites = lectureInfo.isFavourite
+                lecture.lastPlayedPoint = lectureInfo.lastPlayedPoint
+            }
+
+            return lecture
+        }
+        return lectures
+    }
+
     func getLectures(searchText: String?, sortType: LectureSortType, filter: [Filter: [String]], lectureIDs: [Int]?, source: FirestoreSource, completion: @escaping (Swift.Result<[Lecture], Error>) -> Void) {
 
         if let lectureIDs = lectureIDs, lectureIDs.isEmpty {
@@ -73,7 +89,9 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
 
             if source == .cache {
                 DispatchQueue.global().async {
-                    let success = Self.filter(lectures: self.allLectures, searchText: searchText, sortType: sortType, filter: filter, lectureIDs: lectureIDs)
+                    var success: [Lecture] = Self.filter(lectures: self.allLectures, searchText: searchText, sortType: sortType, filter: filter, lectureIDs: lectureIDs)
+                    success = Self.refreshLectureWithLectureInfo(lectures: success, lectureInfo: self.userLectureInfo)
+
                     DispatchQueue.main.async {
                         completion(.success(success))
                     }
@@ -83,8 +101,11 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
 
                 FirestoreManager.shared.getDocuments(query: query, source: source, completion: { (result: Swift.Result<[Lecture], Error>) in
                     switch result {
-                    case .success(let success):
+                    case .success(var success):
+
                         self.allLectures = success
+
+                        success = Self.refreshLectureWithLectureInfo(lectures: success, lectureInfo: self.userLectureInfo)
 
                         DispatchQueue.global().async {
                             let success = Self.filter(lectures: success, searchText: searchText, sortType: sortType, filter: filter, lectureIDs: lectureIDs)
@@ -99,9 +120,44 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
             }
         }
     }
+}
 
-    func getFavouriteLectureIds(completion: @escaping (Swift.Result<[Int], Error>) -> Void) {
+extension DefaultLectureViewModel {
 
+    func getUsersLectureInfo(source: FirestoreSource, completion: @escaping (Swift.Result<[LectureInfo], Error>) -> Void) {
+        guard let currentUser = Auth.auth().currentUser else {
+            let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
+            completion(.failure(error))
+            return
+        }
+
+        if source == .cache {
+            DispatchQueue.global().async {
+                DispatchQueue.main.async {
+                    completion(.success(self.userLectureInfo))
+                }
+            }
+        } else {
+            var query: Query = FirestoreManager.shared.firestore.collection(FirestoreCollection.usersLectureInfo(userId: currentUser.uid).path)
+
+            FirestoreManager.shared.getDocuments(query: query, source: .default, completion: { (result: Swift.Result<[LectureInfo], Error>) in
+                switch result {
+                case .success(let success):
+                    self.userLectureInfo = success
+                    completion(.success(success))
+
+                    if source != .cache {
+                        self.allLectures = Self.refreshLectureWithLectureInfo(lectures: self.allLectures, lectureInfo: success)
+                        NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
+                    }
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            })
+        }
+    }
+
+    func favourite(lecture: Lecture, isFavourite: Bool, completion: @escaping (Swift.Result<Bool, Error>) -> Void) {
         guard let currentUser = Auth.auth().currentUser else {
             let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
             completion(.failure(error))
@@ -109,42 +165,100 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
         }
 
         var query: Query = FirestoreManager.shared.firestore.collection(FirestoreCollection.usersLectureInfo(userId: currentUser.uid).path)
+        query = query.whereField("id", isEqualTo: lecture.id).limit(to: 1)
 
-        query = query.whereField("isFavourite", isEqualTo: true)
-
-        FirestoreManager.shared.getDocuments(query: query, source: .default, completion: { (result: Swift.Result<[LectureInfo], Error>) in
+        FirestoreManager.shared.getRawDocuments(query: query, source: .server) { result in
             switch result {
             case .success(let success):
-                let lectureIDs: [Int] = success.map({ $0.id })
-                completion(.success(lectureIDs))
+
+                if let foundInfo = success.first {
+                    let isFavouriteData: [String: Any] = ["isFavourite": isFavourite]
+                    foundInfo.reference.updateData(isFavouriteData) { error in
+                        if let error = error {
+                            completion(.failure(error))
+                        } else {
+
+                            if let index = self.userLectureInfo.firstIndex(where: { $0.id == lecture.id }) {
+                                self.userLectureInfo[index].isFavourite = isFavourite
+                                NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
+                            }
+                            if let index = self.allLectures.firstIndex(where: { $0.id == lecture.id && $0.creationTimestamp == lecture.creationTimestamp }) {
+                                self.allLectures[index].isFavourites = isFavourite
+                                NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
+                            }
+                            completion(.success(true))
+                        }
+                    }
+                } else {
+                    let query: CollectionReference = FirestoreManager.shared.firestore.collection(FirestoreCollection.usersLectureInfo(userId: currentUser.uid).path)
+
+                    let currentTimestamp = Int(Date().timeIntervalSince1970*1000)
+                    let isFavouriteData: [String: Any] = [
+                        "id": lecture.id,
+                        "isFavourite": isFavourite,
+                        "creationTimestamp": currentTimestamp,
+                        "lastModifiedTimestamp": currentTimestamp,
+                        "isCompleted": false,
+                        "isDownloaded": false,
+                        "isInPrivateList": false,
+                        "isInPublicList": false,
+                        "lastPlayedPoint": 0,
+                    ]
+
+                    query.addDocument(data: isFavouriteData) { error in
+                        if let error = error {
+                            completion(.failure(error))
+                        } else {
+
+                            if let index = self.allLectures.firstIndex(where: { $0.id == lecture.id && $0.creationTimestamp == lecture.creationTimestamp }) {
+                                self.allLectures[index].isFavourites = isFavourite
+                                NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
+                            }
+
+                            completion(.success(true))
+                        }
+                    }
+                }
             case .failure(let error):
                 completion(.failure(error))
             }
-        })
+        }
     }
+}
 
-    func getListenedLectureIds(completion: @escaping (Swift.Result<[Int], Error>) -> Void) {
+extension DefaultLectureViewModel {
 
+    func getUsersListenInfo(source: FirestoreSource, completion: @escaping (Swift.Result<[ListenInfo], Error>) -> Void) {
         guard let currentUser = Auth.auth().currentUser else {
             let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
             completion(.failure(error))
             return
         }
 
-        let query: Query = FirestoreManager.shared.firestore.collection(FirestoreCollection.usersListenInfo(userId: currentUser.uid).path)
-
-        FirestoreManager.shared.getDocuments(query: query, source: .default, completion: { (result: Swift.Result<[ListenInfo], Error>) in
-            switch result {
-            case .success(let success):
-                let lectureIDs: [Int] = success.flatMap({ obj -> [Int] in
-                    obj.playedIds
-                })
-                completion(.success(lectureIDs))
-            case .failure(let error):
-                completion(.failure(error))
+        if source == .cache {
+            DispatchQueue.global().async {
+                DispatchQueue.main.async {
+                    completion(.success(self.userListenInfo))
+                }
             }
-        })
+        } else {
+            let query: Query = FirestoreManager.shared.firestore.collection(FirestoreCollection.usersListenInfo(userId: currentUser.uid).path)
+
+            FirestoreManager.shared.getDocuments(query: query, source: .default, completion: { (result: Swift.Result<[ListenInfo], Error>) in
+                switch result {
+                case .success(let success):
+                    self.userListenInfo = success
+                    completion(.success(success))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            })
+        }
     }
+
+}
+
+extension DefaultLectureViewModel {
 
     func getWeekLecturesIds(weekDays: [String], completion: @escaping (Swift.Result<[Int], Error>) -> Void) {
 
@@ -183,62 +297,6 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
                 completion(.failure(error))
             }
         })
-    }
-
-    func favourite(lecture: Lecture, isFavourite: Bool, completion: @escaping (Swift.Result<Bool, Error>) -> Void) {
-        guard let currentUser = Auth.auth().currentUser else {
-            let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
-            completion(.failure(error))
-            return
-        }
-
-        var query: Query = FirestoreManager.shared.firestore.collection(FirestoreCollection.usersLectureInfo(userId: currentUser.uid).path)
-        query = query.whereField("id", isEqualTo: lecture.id).limit(to: 1)
-
-        FirestoreManager.shared.getRawDocuments(query: query, source: .server) { result in
-            switch result {
-            case .success(let success):
-
-                if let foundInfo = success.first {
-                    let isFavouriteData: [String: Any] = ["isFavourite": isFavourite]
-                    foundInfo.reference.updateData(isFavouriteData) { error in
-                        if let error = error {
-                            completion(.failure(error))
-                        } else {
-
-                            if let index = self.allLectures.firstIndex(where: { $0.id == lecture.id && $0.creationTimestamp == lecture.creationTimestamp }) {
-                                self.allLectures[index].isFavourites = isFavourite
-                                NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
-                            }
-                            completion(.success(true))
-                        }
-                    }
-                } else {
-                    let query: CollectionReference = FirestoreManager.shared.firestore.collection(FirestoreCollection.usersLectureInfo(userId: currentUser.uid).path)
-
-                    let isFavouriteData: [String: Any] = [
-                        "id": lecture.id,
-                        "isFavourite": isFavourite
-                    ]
-
-                    query.addDocument(data: isFavouriteData) { error in
-                        if let error = error {
-                            completion(.failure(error))
-                        } else {
-
-                            if let index = self.allLectures.firstIndex(where: { $0.id == lecture.id && $0.creationTimestamp == lecture.creationTimestamp }) {
-                                self.allLectures[index].isFavourites = isFavourite
-                                NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
-                            }
-
-                            completion(.success(true))
-                        }
-                    }
-                }
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        }
     }
 
     func getPopularLectureIds(completion: @escaping (Swift.Result<[Int], Error>) -> Void) {

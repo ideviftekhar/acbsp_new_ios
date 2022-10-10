@@ -10,7 +10,6 @@ import FirebaseAuth
 import AuthenticationServices
 import CryptoKit
 
-
 enum LoginValidationResult {
     case valid
     case invalidUsername(message: String)

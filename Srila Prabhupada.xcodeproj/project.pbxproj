@@ -101,7 +101,7 @@
 		C0F1A08928F05F06009578BA /* MiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F1A08828F05F06009578BA /* MiniPlayerView.swift */; };
 		C0F1A08B28F05F18009578BA /* MiniPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0F1A08A28F05F18009578BA /* MiniPlayerView.xib */; };
 		C0F1A08D28F080E8009578BA /* MusicPlayerTransitionAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F1A08C28F080E8009578BA /* MusicPlayerTransitionAnimation.swift */; };
-		C0F9956A28DE04290057A48C /* GoogleService-Info-development-internal.plist.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0F9956928DE04290057A48C /* GoogleService-Info-development-internal.plist.plist */; };
+		C0F9956A28DE04290057A48C /* GoogleService-Info-development-internal.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0F9956928DE04290057A48C /* GoogleService-Info-development-internal.plist */; };
 		C0FA049F28DB37FA003177DA /* LectureInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FA049E28DB37FA003177DA /* LectureInfo.swift */; };
 		C0FA305D28CF461900E78843 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FA305C28CF461900E78843 /* String+Extension.swift */; };
 		C0FA305F28CF4AF000E78843 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FA305E28CF4AF000E78843 /* LoginViewModel.swift */; };
@@ -211,7 +211,7 @@
 		C0F1A08828F05F06009578BA /* MiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerView.swift; sourceTree = "<group>"; };
 		C0F1A08A28F05F18009578BA /* MiniPlayerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MiniPlayerView.xib; sourceTree = "<group>"; };
 		C0F1A08C28F080E8009578BA /* MusicPlayerTransitionAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicPlayerTransitionAnimation.swift; sourceTree = "<group>"; };
-		C0F9956928DE04290057A48C /* GoogleService-Info-development-internal.plist.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-development-internal.plist.plist"; sourceTree = "<group>"; };
+		C0F9956928DE04290057A48C /* GoogleService-Info-development-internal.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-development-internal.plist"; sourceTree = "<group>"; };
 		C0FA049E28DB37FA003177DA /* LectureInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LectureInfo.swift; sourceTree = "<group>"; };
 		C0FA305C28CF461900E78843 /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		C0FA305E28CF4AF000E78843 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Login\U0010ViewModel.swift"; sourceTree = "<group>"; };
@@ -517,7 +517,7 @@
 				C0D76E2628CF7CFF00F69320 /* development-internal.xcconfig */,
 				C0118A7428D349F400F6002D /* development-client.xcconfig */,
 				C0D76E2828CF7D0F00F69320 /* production-client.xcconfig */,
-				C0F9956928DE04290057A48C /* GoogleService-Info-development-internal.plist.plist */,
+				C0F9956928DE04290057A48C /* GoogleService-Info-development-internal.plist */,
 				C0118A7728D34AA700F6002D /* GoogleService-Info-development-client.plist */,
 				C0118A7B28D34AB400F6002D /* GoogleService-Info-production-client.plist */,
 				C0065D4A28D883F300B18AA6 /* Constants.swift */,
@@ -643,7 +643,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C0F9956A28DE04290057A48C /* GoogleService-Info-development-internal.plist.plist in Resources */,
+				C0F9956A28DE04290057A48C /* GoogleService-Info-development-internal.plist in Resources */,
 				C00AB21C28D2080800A62A2F /* LectureCell.xib in Resources */,
 				C00E4DF228CA39CB00F1A123 /* Home.storyboard in Resources */,
 				C00E4DF528CA39CB00F1A123 /* Downloads.storyboard in Resources */,

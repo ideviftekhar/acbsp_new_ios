@@ -66,7 +66,7 @@ final class MusicPlayerTransitionAnimation: TransitionAnimatable {
         if transitionType.isPresenting {
             self.rootVC.beginAppearanceTransition(true, animated: false)
 
-            self.modalVC.view.frame.origin.y = self.rootVC.miniPlayerView.frame.origin.y + self.rootVC.miniPlayerView.frame.size.height
+            self.modalVC.view.frame.origin.y = self.rootVC.miniPlayerView.frame.maxY
         } else {
             self.rootVC.beginAppearanceTransition(false, animated: false)
 
@@ -84,14 +84,15 @@ final class MusicPlayerTransitionAnimation: TransitionAnimatable {
             // miniPlayerView
             let startOriginY = self.miniPlayerStartFrame.origin.y
             let endOriginY = -self.miniPlayerStartFrame.size.height
-            let diff = -endOriginY + startOriginY
+            let diff = startOriginY - endOriginY
+            let playerY = startOriginY - (diff * percentComplete)
+            self.rootVC.miniPlayerView.frame.origin.y = max(min(playerY,  self.miniPlayerStartFrame.origin.y), endOriginY)
+
             // tabBar
             let tabStartOriginY = self.tabBarStartFrame.origin.y
             let tabEndOriginY = self.modalVC.view.frame.size.height
             let tabDiff = tabEndOriginY - tabStartOriginY
 
-            let playerY = startOriginY - (diff * percentComplete)
-            self.rootVC.miniPlayerView.frame.origin.y = max(min(playerY,  self.miniPlayerStartFrame.origin.y), endOriginY)
 
             self.modalVC.view.frame.origin.y = self.rootVC.miniPlayerView.frame.origin.y + self.rootVC.miniPlayerView.frame.size.height
             let tabY = tabStartOriginY + (tabDiff * percentComplete)

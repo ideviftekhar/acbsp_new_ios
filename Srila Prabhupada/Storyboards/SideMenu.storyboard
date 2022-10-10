@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QfZ-UK-gEc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QfZ-UK-gEc">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -19,7 +20,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SideMenuCell" textLabel="RL8-9l-swh" style="IBUITableViewCellStyleDefault" id="CS7-UT-uMV">
-                                <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
+                                <rect key="frame" x="0.0" y="50" width="414" height="43.5"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="CS7-UT-uMV" id="RvB-yc-UDY">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="43.5"/>
@@ -44,8 +45,6 @@
                     <navigationItem key="navigationItem" title="Menu" id="TuL-pE-ZPR"/>
                     <connections>
                         <outlet property="sideMenuTableView" destination="JTC-Qz-sWt" id="MnY-4y-lb9"/>
-                        <segue destination="ogI-jQ-tB8" kind="show" id="7Qc-Qm-TyC"/>
-                        <segue destination="O0F-tR-YVh" kind="show" id="ECz-PG-tNL"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C5H-J8-jW6" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -57,7 +56,7 @@
             <objects>
                 <navigationController storyboardIdentifier="SideMenuNavigationController" id="QfZ-UK-gEc" customClass="SideMenuNavigationController" customModule="SideMenu" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="l40-Wd-fGA">
-                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="barTintColor" name="ThemeColor"/>
@@ -124,11 +123,11 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u9F-q3-6jd">
-                                <rect key="frame" x="20" y="190" width="374" height="430"/>
-                                <mutableString key="text">His Divine Grace A.C. Bhaktivedanta Swami Prabhupāda, Founder-Ācārya of the International Society for Krishna Consciousness.
+                                <rect key="frame" x="20" y="194" width="374" height="286.5"/>
+                                <string key="text">His Divine Grace A.C. Bhaktivedanta Swami Prabhupāda, Founder-Ācārya of the International Society for Krishna Consciousness.
 Content used with permission of The Bhaktivedanta Book Trust International, Inc. All rights reserved. © Copyright 2022.
-This material may not be reproduced in whole or in part by any means, without written permission from the publisher, the Bhaktivedanta Archives, 1453 Tom Shelton Rd., Sandy Ridge, NC 27046.</mutableString>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+This material may not be reproduced in whole or in part by any means, without written permission from the publisher, the Bhaktivedanta Archives, 1453 Tom Shelton Rd., Sandy Ridge, NC 27046.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <color key="textColor" red="0.95724251339999999" green="0.56006360570000002" blue="0.010658564779999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -145,7 +144,7 @@ This material may not be reproduced in whole or in part by any means, without wr
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nz9-qZ-44f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-491" y="852"/>
+            <point key="canvasLocation" x="-481" y="1600"/>
         </scene>
         <!--About-->
         <scene sceneID="nIn-su-joN">
@@ -156,7 +155,7 @@ This material may not be reproduced in whole or in part by any means, without wr
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="stO-VG-Fwj">
-                                <rect key="frame" x="0.0" y="88" width="414" height="808"/>
+                                <rect key="frame" x="0.0" y="92" width="414" height="804"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="efI-fg-47e">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="4052"/>
@@ -187,7 +186,7 @@ This material may not be reproduced in whole or in part by any means, without wr
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M9y-B0-ncA">
                                                         <rect key="frame" x="0.0" y="163" width="374" height="3672"/>
-                                                        <mutableString key="text">The honorific title Prabhupāda is properly used for designating those very great spiritual masters who have made an outstanding contribution of literature or preaching to the world. Examples are Śrīla Rūpa Gosvami Prabhupāda, Śrīla Jīva Gosvami Prabhupāda, and Śrīla Bhaktisiddhānta Sarasvati Goswami Prabhupāda.
+                                                        <string key="text">The honorific title Prabhupāda is properly used for designating those very great spiritual masters who have made an outstanding contribution of literature or preaching to the world. Examples are Śrīla Rūpa Gosvami Prabhupāda, Śrīla Jīva Gosvami Prabhupāda, and Śrīla Bhaktisiddhānta Sarasvati Goswami Prabhupāda.
      When members of ISKCON speak of “Srila Prabhupada," they refer to His Divine Grace A.C. Bhaktivedanta Swami Prabhupada. A.C. Bhaktivedanta Swami is correctly addressed as Srila Prabhupada because he occupies a unique position in the religious history of the world.
      In Śrīmad-Bhāgavatam (1.5.11), Vyāsadeva states that the Bhagavatam "is meant to bring about a revolution in the impious life of a misdirected civilization." This statement clearly refers to the preaching mission heralded by Śrīla A.C. Bhaktivedanta Swami Prabhupāda, whose purports on śrīmad-Bhāgavatam, composed five thousand years after Śrīla Vyāsadeva's compilation of the Bhāgavatam, have become the most important contribution for the revolutionary respiritualization of the entire human society, which was lost in the darkness of materialism.
      Lord Caitanya Mahāprabhu also predicted that His holy name would be broadcast in every town and village of the world. Ācāryas of His sampradāya predicted that the spread of Krsna consciousness would usher in a ten-thousand year Golden Age within the dark age of Kali. And in Caitanya Mangala, Locana dāsa Thākura foretold that a great senapati (military general) would appear to widely and powerfully preach Lord Caitanya's message. That confidential task of spreading Krsna consciousness all over the world was entrusted to His Divine Grace A.C. Bhaktivedanta Swami Prabhupāda.
@@ -203,7 +202,7 @@ This material may not be reproduced in whole or in part by any means, without wr
      Śrīla Prabhupāda gave many instructions, but certain ones are absolutely necessary for initiated disciples to follow if they claim to be genuine and serious followers of Prabhupāda. For instance, Śrīla Prabhupāda demanded that initiated devotees rise by 4.00 a.m., attend mangala-āratī, chant at least sixteen rounds of the mahā-mantra every day, and undeviatingly follow the four regulative principles.
      All such standards that Śrīla Prabhupāda clearly defined are the standards to be followed in ISKCON. A rightly situated, successful follower of Śrīla Prabhupāda is simply a faithful standard-bearer. He does not try to change or interpret the standards and programs given by Prabhupāda, for he knows that whatever Śrīla Prabhupāda has given us is perfect and complete for the respiritualization of the entire human society - not only for the present, but for the next ten thousand years.
      -From Beginner's Guide to Krsna Consciousness
-     How can “The Significance of Śrīla Prabhupāda” be rendered in three pages? Even if we could write millions of books, we could hardly begin to expound his glories. If we were to take the entire universe – with its planets, outer space, continents, oceans, mountains, men, demigods, and demons on one side – and one drop of dust from Śrīla Prabhupāda's lotus feet on the other, there would be no comparison. One drop of dust from Śrīla Prabhupāda's lotus feet is millions of times more valuable than anything the material world has to offer.  </mutableString>
+     How can “The Significance of Śrīla Prabhupāda” be rendered in three pages? Even if we could write millions of books, we could hardly begin to expound his glories. If we were to take the entire universe – with its planets, outer space, continents, oceans, mountains, men, demigods, and demons on one side – and one drop of dust from Śrīla Prabhupāda's lotus feet on the other, there would be no comparison. One drop of dust from Śrīla Prabhupāda's lotus feet is millions of times more valuable than anything the material world has to offer.  </string>
                                                         <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -250,7 +249,131 @@ This material may not be reproduced in whole or in part by any means, without wr
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WQz-1N-Wg0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="422" y="852"/>
+            <point key="canvasLocation" x="378" y="1600"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="fSd-DF-JKq">
+            <objects>
+                <navigationController storyboardIdentifier="CopyrightNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="RRc-k1-jnX" customClass="NavigationController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="LLn-fd-33z">
+                        <rect key="frame" x="0.0" y="48" width="414" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" name="ThemeColor"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <navigationBarAppearance key="standardAppearance">
+                            <color key="backgroundColor" name="ThemeColor"/>
+                            <textAttributes key="titleTextAttributes">
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </textAttributes>
+                            <textAttributes key="largeTitleTextAttributes">
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </textAttributes>
+                        </navigationBarAppearance>
+                        <navigationBarAppearance key="compactAppearance">
+                            <color key="backgroundColor" name="ThemeColor"/>
+                            <textAttributes key="titleTextAttributes">
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </textAttributes>
+                            <textAttributes key="largeTitleTextAttributes">
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </textAttributes>
+                        </navigationBarAppearance>
+                        <navigationBarAppearance key="scrollEdgeAppearance">
+                            <color key="backgroundColor" name="ThemeColor"/>
+                            <textAttributes key="titleTextAttributes">
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </textAttributes>
+                            <textAttributes key="largeTitleTextAttributes">
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </textAttributes>
+                        </navigationBarAppearance>
+                        <navigationBarAppearance key="compactScrollEdgeAppearance">
+                            <color key="backgroundColor" name="ThemeColor"/>
+                            <textAttributes key="titleTextAttributes">
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </textAttributes>
+                            <textAttributes key="largeTitleTextAttributes">
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </textAttributes>
+                        </navigationBarAppearance>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="ogI-jQ-tB8" kind="relationship" relationship="rootViewController" id="vWJ-jD-yHF"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="S8g-3f-skd" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-481" y="852"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="ih2-M3-vwt">
+            <objects>
+                <navigationController storyboardIdentifier="AboutNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="9At-2x-DJn" customClass="NavigationController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="m3a-6g-EHw">
+                        <rect key="frame" x="0.0" y="48" width="414" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" name="ThemeColor"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </textAttributes>
+                        <navigationBarAppearance key="standardAppearance">
+                            <color key="backgroundColor" name="ThemeColor"/>
+                            <textAttributes key="titleTextAttributes">
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </textAttributes>
+                            <textAttributes key="largeTitleTextAttributes">
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </textAttributes>
+                        </navigationBarAppearance>
+                        <navigationBarAppearance key="compactAppearance">
+                            <color key="backgroundColor" name="ThemeColor"/>
+                            <textAttributes key="titleTextAttributes">
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </textAttributes>
+                            <textAttributes key="largeTitleTextAttributes">
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </textAttributes>
+                        </navigationBarAppearance>
+                        <navigationBarAppearance key="scrollEdgeAppearance">
+                            <color key="backgroundColor" name="ThemeColor"/>
+                            <textAttributes key="titleTextAttributes">
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </textAttributes>
+                            <textAttributes key="largeTitleTextAttributes">
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </textAttributes>
+                        </navigationBarAppearance>
+                        <navigationBarAppearance key="compactScrollEdgeAppearance">
+                            <color key="backgroundColor" name="ThemeColor"/>
+                            <textAttributes key="titleTextAttributes">
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </textAttributes>
+                            <textAttributes key="largeTitleTextAttributes">
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </textAttributes>
+                        </navigationBarAppearance>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="O0F-tR-YVh" kind="relationship" relationship="rootViewController" id="v7U-se-C8M"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="xiD-Td-KEL" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="409" y="852"/>
         </scene>
     </scenes>
     <designables>
@@ -268,7 +391,7 @@ This material may not be reproduced in whole or in part by any means, without wr
             <color red="1" green="0.39215686274509803" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

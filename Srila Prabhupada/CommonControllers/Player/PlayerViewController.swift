@@ -7,12 +7,18 @@
 
 import AVFoundation
 import AVKit
+import AlamofireImage
+import IQListKit
 
 class PlayerViewController: UIViewController {
 
     @IBOutlet weak var lectureTitleLabel: UILabel!
     @IBOutlet weak var timeLabel: UILabel!
     @IBOutlet weak var totalTimeLabel: UILabel!
+    @IBOutlet weak var lectureDurationLabel: UILabel!
+    @IBOutlet weak var lectureDateLabel: UILabel!
+
+    @IBOutlet weak var thumbnailImageView: UIImageView!
 
     @IBOutlet weak var timeSlider: UISlider!
 
@@ -22,13 +28,23 @@ class PlayerViewController: UIViewController {
     @IBOutlet weak var previousLectureButton: UIButton!
     @IBOutlet weak var nextLectureButton: UIButton!
 
+    @IBOutlet weak var loopLectureButton: UIButton!
+    @IBOutlet weak var shuffleLectureButton: UIButton!
+
+    @IBOutlet private var lectureTebleView: UITableView!
+    typealias Model = Lecture
+    typealias Cell = LectureCell
+
+    private(set) lazy var list = IQList(listView: lectureTebleView, delegateDataSource: self)
+
     var player: AVPlayer! {
         didSet {
             addPeriodicTimeObserver()
+            addPlayerItemNotificationObserver()
         }
     }
 
-    var miniPlayerView: MiniPlayerView = MiniPlayerView.loadFromXIB()
+    let miniPlayerView: MiniPlayerView = MiniPlayerView.loadFromXIB()
 
     var playRateMenu: UIMenu!
     var selectedRate: PlayRate {
@@ -48,25 +64,34 @@ class PlayerViewController: UIViewController {
         }
     }
 
-    var currentLecture: Lecture? {
+    var currentLecture: Model? {
         didSet {
             loadViewIfNeeded()
 
             miniPlayerView.currentLecture = currentLecture
 
+            self.pause()
             if let currentLecture = currentLecture {
                 lectureTitleLabel.text = currentLecture.titleDisplay
+                lectureDurationLabel.text = currentLecture.lengthTime.displayString
+                lectureDateLabel.text = currentLecture.dateOfRecording.display_yyyy_mm_dd
                 totalTimeLabel.text = currentLecture.lengthTime.displayString
                 timeSlider.maximumValue = Float(currentLecture.lengthTime.totalSeconds)
 
+                if let url = currentLecture.thumbnailURL {
+                    thumbnailImageView.af.setImage(withURL: url, placeholderImage: UIImage(named: "logo_40"))
+                } else {
+                    thumbnailImageView.image = UIImage(named: "logo_40")
+                }
+
                 if currentLecture.downloadingState == .downloaded,
                    let audioURL = currentLecture.localFileURL {
-                    player = AVPlayer(url: audioURL)
+                    let item = AVPlayerItem(url: audioURL)
+                    player = AVPlayer(playerItem: item)
                 } else if let firstAudio = currentLecture.resources.audios.first,
                           let audioURL = firstAudio.audioURL {
-                    player = AVPlayer(url: audioURL)
-                } else {
-                    pause()
+                    let item = AVPlayerItem(url: audioURL)
+                    player = AVPlayer(playerItem: item)
                 }
 
                 if let index = playlistLectures.firstIndex(where: { $0.id == currentLecture.id && $0.creationTimestamp == currentLecture.creationTimestamp }) {
@@ -87,13 +112,28 @@ class PlayerViewController: UIViewController {
         }
     }
 
-    var playlistLectures: [Lecture] = []
+    var playlistLectures: [Model] = [] {
+        didSet {
+            loadViewIfNeeded()
+            refreshUI()
+        }
+    }
 
     override func viewDidLoad() {
 
         super.viewDidLoad()
 
         configurePlayRateMenu()
+
+        do {
+            loopLectureButton.isSelected = false
+            shuffleLectureButton.isSelected = false
+        }
+
+        do {
+            list.registerCell(type: Cell.self, registerType: .storyboard)
+            refreshUI(animated: false)
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -108,27 +148,32 @@ class PlayerViewController: UIViewController {
 extension PlayerViewController {
 
     var isPaused: Bool {
-        player.rate == 0.0
+        player?.rate == 0.0
     }
 
     func play() {
-        player.play()
-        player.rate = self.selectedRate.rate
+        try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, policy: .longFormAudio)
+        try? AVAudioSession.sharedInstance().setActive(true)
+        player?.play()
+        player?.rate = self.selectedRate.rate
         playPauseButton.setImage(UIImage(compatibleSystemName: "pause.fill"), for: .normal)
         miniPlayerView.isPlaying = true
     }
 
     func pause() {
-        player.pause()
+        player?.pause()
         playPauseButton.setImage(UIImage(compatibleSystemName: "play.fill"), for: .normal)
         miniPlayerView.isPlaying = false
+
+        try? AVAudioSession.sharedInstance().setCategory(.ambient)
+        try? AVAudioSession.sharedInstance().setActive(true)
     }
 
     func seekTo(seconds: Int) {
         let seconds: Int64 = Int64(seconds)
         let targetTime: CMTime = CMTimeMake(value: seconds, timescale: 1)
 
-        player.seek(to: targetTime)
+        player?.seek(to: targetTime)
     }
 }
 
@@ -143,6 +188,8 @@ extension PlayerViewController {
     }
 
     private func addPeriodicTimeObserver() {
+
+        guard let player = player else { return }
 
         player.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(1, preferredTimescale: 1), queue: DispatchQueue.main) { [self] (time) -> Void in
             if player.currentItem?.status == .readyToPlay {
@@ -160,6 +207,8 @@ extension PlayerViewController {
 extension PlayerViewController {
 
     @IBAction func backwardXSecondsPressed(_ sender: UIButton) {
+        guard let player = player else { return }
+
         let currentTime = CMTimeGetSeconds(player.currentTime())
         var newTime = currentTime - 10.0
         if newTime < 0 {
@@ -174,6 +223,8 @@ extension PlayerViewController {
     }
 
     @IBAction func forwardXSecondPressed(_ sender: UIButton) {
+        guard let player = player else { return }
+
         guard let duration = player.currentItem?.duration else { return }
         let currentTime = CMTimeGetSeconds(player.currentTime())
         let newTime = currentTime + 10.0
@@ -185,6 +236,31 @@ extension PlayerViewController {
 }
 
 extension PlayerViewController {
+
+    private func addPlayerItemNotificationObserver() {
+
+        guard let item = player?.currentItem else {
+            return
+        }
+
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: item, queue: nil) { [self] _ in
+            if loopLectureButton.isSelected == true {
+                player.seek(to: CMTime.zero)
+            } else if shuffleLectureButton.isSelected == true {
+                if currentLecture != nil {
+                    let newLecture = playlistLectures.randomElement()
+                    self.currentLecture = newLecture
+                }
+            } else {
+                if let currentLecture = currentLecture,
+                   let index = playlistLectures.firstIndex(where: { $0.id == currentLecture.id && $0.creationTimestamp == currentLecture.creationTimestamp }), (index+1) < playlistLectures.count {
+                    let newLecture = playlistLectures[index+1]
+                    self.currentLecture = newLecture
+                }
+            }
+            play()
+        }
+    }
 
     @IBAction func nextLecturePressed(_ sender: UIButton) {
 
@@ -205,6 +281,24 @@ extension PlayerViewController {
             let newLecture = playlistLectures[index-1]
             self.currentLecture = newLecture
             play()
+        }
+    }
+
+    @IBAction func loopLectureButtonPressed(_ sender: UIButton) {
+        if loopLectureButton.isSelected == true {
+            loopLectureButton.isSelected = false
+        } else {
+            loopLectureButton.isSelected = true
+            shuffleLectureButton.isSelected = false
+        }
+    }
+
+    @IBAction func shuffleLectureButtonPressed(_ sender: UIButton) {
+        if shuffleLectureButton.isSelected == true {
+            shuffleLectureButton.isSelected = false
+        } else {
+            loopLectureButton.isSelected = false
+            shuffleLectureButton.isSelected = true
         }
     }
 }
@@ -279,8 +373,32 @@ extension PlayerViewController {
 
         let playRate = self.selectedRate
         if !isPaused {
-            player.rate = playRate.rate
+            player?.rate = playRate.rate
         }
         speedMenuButton.setTitle(playRate.rawValue, for: .normal)
+    }
+}
+
+extension PlayerViewController: IQListViewDelegateDataSource {
+
+    private func refreshUI(animated: Bool? = nil) {
+
+        let animated: Bool = animated ?? (playlistLectures.count <= 1000)
+        list.performUpdates({
+
+            let section = IQSection(identifier: "Cell", headerSize: CGSize.zero, footerSize: CGSize.zero)
+            list.append(section)
+
+            list.append(Cell.self, models: playlistLectures, section: section)
+
+        }, animatingDifferences: animated, completion: nil)
+    }
+
+    func listView(_ listView: IQListView, didSelect item: IQItem, at indexPath: IndexPath) {
+
+        if let model = item.model as? Cell.Model {
+
+            self.currentLecture = model
+        }
     }
 }

@@ -14,19 +14,22 @@ class FavouritesViewController: LectureViewController {
         super.viewDidLoad()
 
         do {
-            list.noItemTitle = "No Favourite Lectures"
-            list.noItemMessage = "You can star your favourite lectures from home tab"
+            noItemTitle = "No Favourite Lectures"
+            noItemMessage = "You can star your favourite lectures from home tab"
         }
     }
 
     override func refreshAsynchronous(source: FirestoreSource) {
+        super.refreshAsynchronous(source: source)
 
         showLoading()
 
-        Self.lectureViewModel.getFavouriteLectureIds(completion: { [self] result in
+        Self.lectureViewModel.getUsersLectureInfo(source: source, completion: { [self] result in
 
             switch result {
-            case .success(let lectureIDs):
+            case .success(var success):
+                success = success.filter({ $0.isFavourite })
+                let lectureIDs: [Int] = success.map({ $0.id })
 
                 Self.lectureViewModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, completion: { [self] result in
                     hideLoading()
