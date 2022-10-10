@@ -19,7 +19,7 @@ enum PlaylistSortType: String, CaseIterable {
     func sort(_ playlists: [Playlist]) -> [Playlist] {
         switch self {
         case .default:
-            return playlists
+            return PlaylistSortType.dateOldestFirst.sort(playlists)
         case .lecturesLessToMore:
             return playlists.sorted { (obj1: Playlist, obj2: Playlist) in
                 obj1.lectureIds.count < obj2.lectureIds.count

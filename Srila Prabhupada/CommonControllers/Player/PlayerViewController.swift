@@ -28,6 +28,8 @@ class PlayerViewController: UIViewController {
         }
     }
 
+    var miniPlayerView: MiniPlayerView = MiniPlayerView.loadFromXIB()
+
     var playRateMenu: UIMenu!
     var selectedRate: PlayRate {
         if #available(iOS 15.0, *) {
@@ -49,6 +51,8 @@ class PlayerViewController: UIViewController {
     var currentLecture: Lecture? {
         didSet {
             loadViewIfNeeded()
+
+            miniPlayerView.currentLecture = currentLecture
 
             if let currentLecture = currentLecture {
                 lectureTitleLabel.text = currentLecture.titleDisplay
@@ -94,30 +98,37 @@ class PlayerViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-        play()
     }
 
     @IBAction func backButtonTapped(_ sender: UIButton) {
-        pause()
-        self.dismiss(animated: false, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
 extension PlayerViewController {
 
-    private var isPaused: Bool {
+    var isPaused: Bool {
         player.rate == 0.0
     }
-    private func play() {
+
+    func play() {
         player.play()
         player.rate = self.selectedRate.rate
         playPauseButton.setImage(UIImage(compatibleSystemName: "pause.fill"), for: .normal)
+        miniPlayerView.isPlaying = true
     }
 
-    private func pause() {
+    func pause() {
         player.pause()
         playPauseButton.setImage(UIImage(compatibleSystemName: "play.fill"), for: .normal)
+        miniPlayerView.isPlaying = false
+    }
+
+    func seekTo(seconds: Int) {
+        let seconds: Int64 = Int64(seconds)
+        let targetTime: CMTime = CMTimeMake(value: seconds, timescale: 1)
+
+        player.seek(to: targetTime)
     }
 }
 
@@ -138,6 +149,7 @@ extension PlayerViewController {
                 let time: Float64 = CMTimeGetSeconds(time)
                 if !timeSlider.isTracking {
                     timeSlider.value = Float(time)
+                    miniPlayerView.playedSeconds = timeSlider.value
                 }
             }
             let timeDisplay = timeDisplay(totalSecond: Int(timeSlider.value))
@@ -154,16 +166,12 @@ extension PlayerViewController {
         if newTime < 0 {
             newTime = 0
         }
-        let time: CMTime = CMTimeMake(value: Int64(newTime*1), timescale: 1)
-        player.seek(to: time)
+
+        seekTo(seconds: Int(newTime))
     }
 
     @IBAction func timeSlider(_ sender: UISlider) {
-
-        let seconds: Int64 = Int64(timeSlider.value)
-        let targetTime: CMTime = CMTimeMake(value: seconds, timescale: 1)
-
-        player.seek(to: targetTime)
+        seekTo(seconds: Int(sender.value))
     }
 
     @IBAction func forwardXSecondPressed(_ sender: UIButton) {
@@ -172,8 +180,7 @@ extension PlayerViewController {
         let newTime = currentTime + 10.0
 
         if newTime < (CMTimeGetSeconds(duration) - 10.0) {
-            let time: CMTime = CMTimeMake(value: Int64(newTime)*1, timescale: 1)
-            player.seek(to: time)
+            seekTo(seconds: Int(newTime))
         }
     }
 }
@@ -204,12 +211,12 @@ extension PlayerViewController {
 }
 
 extension PlayerViewController {
-    
+
     private func timeDisplay(totalSecond: Int) -> String {
         var hour = Int()
         var minute = Int()
         var second = totalSecond
-        
+
         if second >=  60 {
             minute = second/60
             second = second%60

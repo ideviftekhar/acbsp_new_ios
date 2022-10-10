@@ -605,6 +605,7 @@ PODS:
   - AppAuth/Core (1.5.0)
   - AppAuth/ExternalUserAgent (1.5.0):
     - AppAuth/Core
+  - ARNTransitionAnimator (3.2.0)
   - BEMCheckBox (1.4.1)
   - BoringSSL-GRPC (0.0.24):
     - BoringSSL-GRPC/Implementation (= 0.0.24)
@@ -785,6 +786,7 @@ PODS:
 DEPENDENCIES:
   - Alamofire
   - AlamofireImage
+  - ARNTransitionAnimator
   - BEMCheckBox
   - Charts
   - FirebaseAuth
@@ -809,6 +811,7 @@ SPEC REPOS:
     - Alamofire
     - AlamofireImage
     - AppAuth
+    - ARNTransitionAnimator
     - BEMCheckBox
     - BoringSSL-GRPC
     - Charts
@@ -850,6 +853,7 @@ SPEC CHECKSUMS:
   Alamofire: d368e1ff8a298e6dde360e35a3e68e6c610e7204
   AlamofireImage: 34a2d90b0e5fe6a5605f85ae4b7b01e784c60192
   AppAuth: 80317d99ac7ff2801a2f18ff86b48cd315ed465d
+  ARNTransitionAnimator: 6fea1fe318b251abfd3cbd06d91215deb374ae40
   BEMCheckBox: 5ba6e37ade3d3657b36caecc35c8b75c6c2b1a4e
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
   Charts: 354f86803d11d9c35de280587fef50d1af063978
@@ -886,6 +890,6 @@ SPEC CHECKSUMS:
   SwiftLint: 414d099c0f305c6c73e56139efb468666e535ece
   SwiftTryCatch: fb6d2b34abe48efd69578dac919293a44f95b481
 
-PODFILE CHECKSUM: 3dd66b2617305cafa527f5911a37d44f0011dfed
+PODFILE CHECKSUM: ffb7dec0e6e3548735e28482d2fa82d587485741
 
 COCOAPODS: 1.11.3

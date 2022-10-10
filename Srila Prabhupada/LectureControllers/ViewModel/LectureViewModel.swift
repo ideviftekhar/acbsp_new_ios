@@ -218,7 +218,7 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
                     let query: CollectionReference = FirestoreManager.shared.firestore.collection(FirestoreCollection.usersLectureInfo(userId: currentUser.uid).path)
 
                     let isFavouriteData: [String: Any] = [
-                        "id":  lecture.id,
+                        "id": lecture.id,
                         "isFavourite": isFavourite
                     ]
 

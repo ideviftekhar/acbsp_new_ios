@@ -139,7 +139,7 @@ enum Filter: String, CaseIterable {
                 for lecture in lectures where lecture.dateOfRecording.year != 0 {
                     years.insert("\(lecture.dateOfRecording.year)")
                 }
-                UserDefaults.standard.set(years.sorted(), forKey: Filter.years.rawValue)
+                UserDefaults.standard.set(years.sorted().reversed(), forKey: Filter.years.rawValue)
             }
 
             do {

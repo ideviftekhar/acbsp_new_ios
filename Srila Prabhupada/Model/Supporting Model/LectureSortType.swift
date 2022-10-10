@@ -19,7 +19,7 @@ enum LectureSortType: String, CaseIterable {
     func sort(_ lectures: [Lecture]) -> [Lecture] {
         switch self {
         case .default:
-            return lectures
+            return LectureSortType.dateLatestFirst.sort(lectures)
         case .durationLowToHigh:
             return lectures.sorted { obj1, obj2 in
                 obj1.length < obj2.length
@@ -30,11 +30,19 @@ enum LectureSortType: String, CaseIterable {
             }
         case .dateOldestFirst:
             return lectures.sorted { obj1, obj2 in
-                obj1.creationTimestamp < obj2.creationTimestamp
+                if obj1.dateOfRecording == obj2.dateOfRecording {
+                    return obj1.creationTimestamp < obj2.creationTimestamp
+                } else {
+                    return obj1.dateOfRecording < obj2.dateOfRecording
+                }
             }
         case .dateLatestFirst:
             return lectures.sorted { obj1, obj2 in
-                obj1.creationTimestamp > obj2.creationTimestamp
+                if obj1.dateOfRecording == obj2.dateOfRecording {
+                    return obj1.creationTimestamp > obj2.creationTimestamp
+                } else {
+                    return obj1.dateOfRecording > obj2.dateOfRecording
+                }
             }
         case .aToZ:
             return lectures.sorted { obj1, obj2 in
