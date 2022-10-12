@@ -12,7 +12,7 @@ import FirebaseFirestore
 
 class SearchViewController: UIViewController {
 
-    @IBOutlet weak var hamburgerBarButton: UIBarButtonItem!
+    @IBOutlet private var hamburgerBarButton: UIBarButtonItem!
     private let searchController = UISearchController(searchResultsController: nil)
     private var lastSearchText: String = ""
 

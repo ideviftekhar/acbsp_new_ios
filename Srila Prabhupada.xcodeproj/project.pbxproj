@@ -92,6 +92,7 @@
 		C0D76E2528CF7C9B00F69320 /* Environment.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0D76E2328CF7C9A00F69320 /* Environment.swift */; };
 		C0D76E2728CF7CFF00F69320 /* development-internal.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C0D76E2628CF7CFF00F69320 /* development-internal.xcconfig */; };
 		C0D76E2928CF7D0F00F69320 /* production-client.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = C0D76E2828CF7D0F00F69320 /* production-client.xcconfig */; };
+		C0E4748628F5A0FA001B69EE /* CreatePlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E4748528F5A0FA001B69EE /* CreatePlaylistViewController.swift */; };
 		C0E9CC3928DC723B0089A9E8 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E9CC3828DC723B0089A9E8 /* Date+Extension.swift */; };
 		C0EA13E428CF53FA00BE9110 /* ForgotPasswordViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EA13E328CF53FA00BE9110 /* ForgotPasswordViewModel.swift */; };
 		C0EA13EA28CF5A9D00BE9110 /* UIViewController+Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EA13E928CF5A9D00BE9110 /* UIViewController+Alert.swift */; };
@@ -99,8 +100,6 @@
 		C0EA13EF28CF6D0D00BE9110 /* UIView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EA13EE28CF6D0D00BE9110 /* UIView+extension.swift */; };
 		C0EA5CBE28EC6C96007D9E4C /* DateFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EA5CBD28EC6C96007D9E4C /* DateFormatter+Extension.swift */; };
 		C0F1A08928F05F06009578BA /* MiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F1A08828F05F06009578BA /* MiniPlayerView.swift */; };
-		C0F1A08B28F05F18009578BA /* MiniPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C0F1A08A28F05F18009578BA /* MiniPlayerView.xib */; };
-		C0F1A08D28F080E8009578BA /* MusicPlayerTransitionAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F1A08C28F080E8009578BA /* MusicPlayerTransitionAnimation.swift */; };
 		C0F9956A28DE04290057A48C /* GoogleService-Info-development-internal.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0F9956928DE04290057A48C /* GoogleService-Info-development-internal.plist */; };
 		C0FA049F28DB37FA003177DA /* LectureInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FA049E28DB37FA003177DA /* LectureInfo.swift */; };
 		C0FA305D28CF461900E78843 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FA305C28CF461900E78843 /* String+Extension.swift */; };
@@ -202,6 +201,7 @@
 		C0D76E2328CF7C9A00F69320 /* Environment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Environment.swift; sourceTree = "<group>"; };
 		C0D76E2628CF7CFF00F69320 /* development-internal.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "development-internal.xcconfig"; sourceTree = "<group>"; };
 		C0D76E2828CF7D0F00F69320 /* production-client.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "production-client.xcconfig"; sourceTree = "<group>"; };
+		C0E4748528F5A0FA001B69EE /* CreatePlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePlaylistViewController.swift; sourceTree = "<group>"; };
 		C0E9CC3828DC723B0089A9E8 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		C0EA13E328CF53FA00BE9110 /* ForgotPasswordViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewModel.swift; sourceTree = "<group>"; };
 		C0EA13E928CF5A9D00BE9110 /* UIViewController+Alert.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Alert.swift"; sourceTree = "<group>"; };
@@ -209,8 +209,6 @@
 		C0EA13EE28CF6D0D00BE9110 /* UIView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+extension.swift"; sourceTree = "<group>"; };
 		C0EA5CBD28EC6C96007D9E4C /* DateFormatter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extension.swift"; sourceTree = "<group>"; };
 		C0F1A08828F05F06009578BA /* MiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerView.swift; sourceTree = "<group>"; };
-		C0F1A08A28F05F18009578BA /* MiniPlayerView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MiniPlayerView.xib; sourceTree = "<group>"; };
-		C0F1A08C28F080E8009578BA /* MusicPlayerTransitionAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicPlayerTransitionAnimation.swift; sourceTree = "<group>"; };
 		C0F9956928DE04290057A48C /* GoogleService-Info-development-internal.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-development-internal.plist"; sourceTree = "<group>"; };
 		C0FA049E28DB37FA003177DA /* LectureInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LectureInfo.swift; sourceTree = "<group>"; };
 		C0FA305C28CF461900E78843 /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
@@ -488,6 +486,7 @@
 			children = (
 				C0EA5CBC28EC69DF007D9E4C /* Cell */,
 				C0B7990F28DC523100681649 /* ViewModel */,
+				C0E4748528F5A0FA001B69EE /* CreatePlaylistViewController.swift */,
 				C00E4E0428CA39FE00F1A123 /* PlaylistViewController.swift */,
 			);
 			path = "Playlist Controllers";
@@ -547,10 +546,8 @@
 		C0F1A08728F05EE5009578BA /* Player */ = {
 			isa = PBXGroup;
 			children = (
-				C0F1A08C28F080E8009578BA /* MusicPlayerTransitionAnimation.swift */,
 				C00F8A4028EF13AE00FA9A7B /* PlayerViewController.swift */,
 				C0F1A08828F05F06009578BA /* MiniPlayerView.swift */,
-				C0F1A08A28F05F18009578BA /* MiniPlayerView.xib */,
 			);
 			path = Player;
 			sourceTree = "<group>";
@@ -663,7 +660,6 @@
 				C00E4DD228CA36F100F1A123 /* Main.storyboard in Resources */,
 				C00E4DF628CA39CB00F1A123 /* Favourites.storyboard in Resources */,
 				C00E4DF828CA39CB00F1A123 /* PopularLecture.storyboard in Resources */,
-				C0F1A08B28F05F18009578BA /* MiniPlayerView.xib in Resources */,
 				C0D76E2728CF7CFF00F69320 /* development-internal.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -832,6 +828,7 @@
 				C00E4E0828CA39FE00F1A123 /* TabBarController.swift in Sources */,
 				C0B7990228DC3FF700681649 /* TopLectures.swift in Sources */,
 				C00E4E1228CA3A1700F1A123 /* ForgotPasswordViewController.swift in Sources */,
+				C0E4748628F5A0FA001B69EE /* CreatePlaylistViewController.swift in Sources */,
 				C0CAF25D28D45B8C00DA9878 /* NavigationController.swift in Sources */,
 				C0CE0D1428E86EF500C2C825 /* UIImage+Extension.swift in Sources */,
 				C007D38228E80ADC00CFBED0 /* Audio.swift in Sources */,
@@ -840,7 +837,6 @@
 				C00DC57128E1DA66001EDE95 /* DBLecture+CoreDataClass.swift in Sources */,
 				C0B7990A28DC427B00681649 /* PlaylistOption.swift in Sources */,
 				C00E4E1C28CA462000F1A123 /* SearchViewController.swift in Sources */,
-				C0F1A08D28F080E8009578BA /* MusicPlayerTransitionAnimation.swift in Sources */,
 				C007D37C28E80AAB00CFBED0 /* LegacyData.swift in Sources */,
 				C0065D4B28D883F300B18AA6 /* Constants.swift in Sources */,
 				C00E4DE128CA393600F1A123 /* LogInViewController.swift in Sources */,
@@ -1010,7 +1006,6 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1045,7 +1040,6 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1142,7 +1136,6 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

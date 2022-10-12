@@ -10,18 +10,18 @@ import AuthenticationServices
 
 class LogInViewController: UIViewController {
 
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet private var imageView: UIImageView!
 
-    @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet private var emailTextField: UITextField!
+    @IBOutlet private var passwordTextField: UITextField!
 
-    @IBOutlet weak var signInButton: UIButton!
-    @IBOutlet weak var forgotPasswordButton: UIButton!
-    @IBOutlet weak var createAccountButton: UIButton!
-    @IBOutlet weak var signWithGoogleButton: UIControl!
-    @IBOutlet weak var loadingIndicatorView: UIActivityIndicatorView!
+    @IBOutlet private var signInButton: UIButton!
+    @IBOutlet private var forgotPasswordButton: UIButton!
+    @IBOutlet private var createAccountButton: UIButton!
+    @IBOutlet private var signWithGoogleButton: UIControl!
+    @IBOutlet private var loadingIndicatorView: UIActivityIndicatorView!
 
-    @IBOutlet weak var googleAppleSignInStackView: UIStackView!
+    @IBOutlet private var googleAppleSignInStackView: UIStackView!
     private let signWithAppleButton: ASAuthorizationAppleIDButton = ASAuthorizationAppleIDButton()
 
     private let emailLoginViewModel: LoginViewModel = FirebaseEmailLoginViewModel()

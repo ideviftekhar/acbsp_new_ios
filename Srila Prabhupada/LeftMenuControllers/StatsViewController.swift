@@ -10,36 +10,36 @@ import Charts
 
 class StatsViewController: UIViewController, ChartViewDelegate {
 
-    @IBOutlet weak var totalFileCountLabel: UILabel!
-    @IBOutlet weak var totalListenedCountLabel: UILabel!
+    @IBOutlet private var totalFileCountLabel: UILabel!
+    @IBOutlet private var totalListenedCountLabel: UILabel!
 
-    @IBOutlet weak var lastMonthListenedTimeLabel: UILabel!
-    @IBOutlet weak var lastWeekListenedTimeLabel: UILabel!
+    @IBOutlet private var lastMonthListenedTimeLabel: UILabel!
+    @IBOutlet private var lastWeekListenedTimeLabel: UILabel!
 
-    @IBOutlet weak var lastMonthSBLabel: UILabel!
-    @IBOutlet weak var lastMonthBGLabel: UILabel!
-    @IBOutlet weak var lastMonthCCLabel: UILabel!
-    @IBOutlet weak var lastMonthBhajansLabel: UILabel!
+    @IBOutlet private var lastMonthSBLabel: UILabel!
+    @IBOutlet private var lastMonthBGLabel: UILabel!
+    @IBOutlet private var lastMonthCCLabel: UILabel!
+    @IBOutlet private var lastMonthBhajansLabel: UILabel!
 
-    @IBOutlet weak var lastWeekSBLabel: UILabel!
-    @IBOutlet weak var lastWeekBGLabel: UILabel!
-    @IBOutlet weak var lastWeekCCLabel: UILabel!
-    @IBOutlet weak var lastWeekBhajansLabel: UILabel!
+    @IBOutlet private var lastWeekSBLabel: UILabel!
+    @IBOutlet private var lastWeekBGLabel: UILabel!
+    @IBOutlet private var lastWeekCCLabel: UILabel!
+    @IBOutlet private var lastWeekBhajansLabel: UILabel!
 
-    @IBOutlet weak var startDateLabel: UILabel!
-    @IBOutlet weak var endDateLabel: UILabel!
+    @IBOutlet private var startDateLabel: UILabel!
+    @IBOutlet private var endDateLabel: UILabel!
 
-    @IBOutlet weak var monthProgressView: UIProgressView!
-    @IBOutlet weak var weekProgressView: UIProgressView!
+    @IBOutlet private var monthProgressView: UIProgressView!
+    @IBOutlet private var weekProgressView: UIProgressView!
 
-    @IBOutlet weak var startDatePicker: UIDatePicker!
-    @IBOutlet weak var EndDatePicker: UIDatePicker!
+    @IBOutlet private var startDatePicker: UIDatePicker!
+    @IBOutlet private var EndDatePicker: UIDatePicker!
 
-    @IBOutlet weak var allTimeButton: UIButton!
+    @IBOutlet private var allTimeButton: UIButton!
 
-    @IBOutlet weak var totalListenedTimeLabel: UILabel!
+    @IBOutlet private var totalListenedTimeLabel: UILabel!
 
-    @IBOutlet weak var chartView: BarChartView!
+    @IBOutlet private var chartView: BarChartView!
 
     var items = [audioItem]()
 

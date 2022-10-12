@@ -23,6 +23,9 @@ class PlaylistCell: UITableViewCell, IQModelableCell {
     @IBOutlet private var emailLabel: UILabel!
     @IBOutlet private var menuButton: UIButton!
 
+    @IBOutlet private var firstDotLabel: UILabel?
+    @IBOutlet private var secondDotLabel: UILabel?
+
     weak var delegate: PlaylistCellDelegate?
 
     private var optionMenu: UIMenu!
@@ -43,10 +46,14 @@ class PlaylistCell: UITableViewCell, IQModelableCell {
 
             titleLabel.text = model.title
             categoryLabel.text = model.lecturesCategory
-            dateLabel.text = DateFormatter.dd_MMM_yyyy.string(from: model.creationTime)
+            let dateString = DateFormatter.dd_MMM_yyyy.string(from: model.creationTime)
+            dateLabel.text = dateString
 
             lectureCountLabel.text = "Lecture: \(model.lectureIds.count)"
             emailLabel.text = model.authorEmail
+
+            firstDotLabel?.isHidden = model.lecturesCategory.isEmpty || dateString.isEmpty
+            secondDotLabel?.isHidden = model.authorEmail.isEmpty
 
             if let url = model.thumbnailURL {
                 thumbnailImageView.af.setImage(withURL: url, placeholderImage: UIImage(named: "logo_40"))
@@ -59,8 +66,15 @@ class PlaylistCell: UITableViewCell, IQModelableCell {
 
                 if let user = Auth.auth().currentUser,
                    let email = user.email,
-                   model.authorEmail.elementsEqual(email), let deletePlaylist = allActions[.deletePlaylist] {
-                    actions.append(deletePlaylist)
+                   model.authorEmail.elementsEqual(email) {
+
+                    if let deletePlaylist = allActions[.delete] {
+                        actions.append(deletePlaylist)
+                    }
+
+                    if let editPlaylist = allActions[.edit] {
+                        actions.append(editPlaylist)
+                    }
                 }
 
                 self.optionMenu = self.optionMenu.replacingChildren(actions)
@@ -79,6 +93,7 @@ extension PlaylistCell {
     private func configureMenuButton() {
 
         for option in PlaylistOption.allCases {
+
             let action: UIAction = UIAction(title: option.rawValue, image: nil, identifier: UIAction.Identifier(option.rawValue), handler: { [self] _ in
 
                 guard let model = model else {
@@ -87,6 +102,10 @@ extension PlaylistCell {
 
                 delegate?.playlistCell(self, didSelected: option, with: model)
             })
+
+            if option == .delete {
+                action.attributes = .destructive
+            }
 
             allActions[option] = action
         }
@@ -110,17 +129,27 @@ extension PlaylistCell {
 
         var buttons: [UIViewController.ButtonConfig] = []
         let actions: [UIAction] = self.optionMenu.children as? [UIAction] ?? []
+
+        var destructive: UIViewController.ButtonConfig?
+
         for action in actions {
-            buttons.append((title: action.title, handler: { [self] in
+
+            let button: UIViewController.ButtonConfig = (title: action.title, handler: { [self] in
 
                 guard let model = model, let option: PlaylistOption = allActions.first(where: { $0.value == action})?.key else {
                     return
                 }
 
                 delegate?.playlistCell(self, didSelected: option, with: model)
-            }))
+            })
+
+            if PlaylistOption.delete.rawValue == action.identifier.rawValue {
+                destructive = button
+            } else {
+                buttons.append(button)
+            }
         }
 
-        self.parentViewController?.showAlert(title: "", message: "", preferredStyle: .actionSheet, buttons: buttons)
+        self.parentViewController?.showAlert(title: "", message: "", preferredStyle: .actionSheet, destructive: destructive, buttons: buttons)
     }
 }

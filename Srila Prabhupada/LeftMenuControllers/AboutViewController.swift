@@ -10,11 +10,11 @@ import SafariServices
 
 class AboutViewController: UIViewController {
 
-    @IBOutlet weak var aboutImage: UIImageView!
+    @IBOutlet private var aboutImage: UIImageView!
 
-    @IBOutlet weak var aboutAttributedLabel: TappableLabel!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var aboutLabel: UILabel!
+    @IBOutlet private var aboutAttributedLabel: TappableLabel!
+    @IBOutlet private var titleLabel: UILabel!
+    @IBOutlet private var aboutLabel: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()

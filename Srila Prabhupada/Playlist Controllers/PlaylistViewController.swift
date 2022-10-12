@@ -13,8 +13,8 @@ import FirebaseAuth
 
 class PlaylistViewController: SearchViewController {
 
-    @IBOutlet weak var playlistSegmentControl: UISegmentedControl!
-    @IBOutlet weak var playlistTableView: UITableView!
+    @IBOutlet private var playlistSegmentControl: UISegmentedControl!
+    @IBOutlet private var playlistTableView: UITableView!
 
     private let loadingIndicator: UIActivityIndicatorView = {
         if #available(iOS 13.0, *) {
@@ -23,6 +23,8 @@ class PlaylistViewController: SearchViewController {
             return UIActivityIndicatorView(style: .gray)
         }
     }()
+
+    private lazy var addPlaylistButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addPlaylistButtonAction(_:)))
 
     private let sortButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(compatibleSystemName: "arrow.up.arrow.down"), style: .plain, target: nil, action: nil)
     private var sortMenu: UIMenu!
@@ -61,6 +63,7 @@ class PlaylistViewController: SearchViewController {
 
         var rightButtons = self.navigationItem.rightBarButtonItems ?? []
         rightButtons.removeAll { $0 == filterButton }
+        rightButtons.append(addPlaylistButton)
         rightButtons.append(sortButton)
         self.navigationItem.rightBarButtonItems = rightButtons
 
@@ -106,6 +109,15 @@ class PlaylistViewController: SearchViewController {
 
     @objc func cancelAction(_ sender: UIBarButtonItem) {
         self.dismiss(animated: true)
+    }
+
+    @objc func addPlaylistButtonAction(_ sender: UIBarButtonItem) {
+        let navController = UIStoryboard.playlists.instantiate(UINavigationController.self, identifier: "CreatePlaylistNavigationController")
+        if let addPlaylistController = navController.viewControllers.first as? CreatePlaylistViewController {
+            addPlaylistController.delegate = self
+
+        }
+        present(navController, animated: true, completion: nil)
     }
 
     @IBAction func segmentChanged(_ sender: UISegmentedControl) {
@@ -316,11 +328,32 @@ extension PlaylistViewController: IQListViewDelegateDataSource {
     }
 }
 
+extension PlaylistViewController: CreatePlaylistViewControllerDelegate {
+    func controller(_ controller: CreatePlaylistViewController, didAdd playlist: Playlist) {
+
+        guard let selectedPlaylistType = PlaylistType(rawValue: playlistSegmentControl.selectedSegmentIndex) else {
+            refreshAsynchronous(source: .default)
+            return
+        }
+
+        if playlist.listType == selectedPlaylistType {
+            var models = models
+            if let index = models.firstIndex(where: { $0.listID == playlist.listID }) {
+                models[index] = playlist
+            } else {
+                models.insert(playlist, at: 0)
+            }
+            reloadData(with: models)
+        }
+        refreshAsynchronous(source: .default)
+    }
+}
+
 extension PlaylistViewController: PlaylistCellDelegate {
 
     func playlistCell(_ cell: PlaylistCell, didSelected option: PlaylistOption, with playlist: Playlist) {
         switch option {
-        case .deletePlaylist:
+        case .delete:
 
             self.showAlert(title: "Delete '\(playlist.title)'?",message: "Would you really like to delete '\(playlist.title)' playlist?",
                            cancel: (title: "Cancel", {}),
@@ -344,6 +377,15 @@ extension PlaylistViewController: PlaylistCellDelegate {
                     }
                 }
             }))
+        case .edit:
+            let navController = UIStoryboard.playlists.instantiate(UINavigationController.self, identifier: "CreatePlaylistNavigationController")
+            if let addPlaylistController = navController.viewControllers.first as? CreatePlaylistViewController {
+                addPlaylistController.playlist = playlist
+                addPlaylistController.delegate = self
+
+            }
+            present(navController, animated: true, completion: nil)
+            break
         }
     }
 }

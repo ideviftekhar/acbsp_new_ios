@@ -68,21 +68,19 @@ struct Lecture: Hashable, Codable {
         self.title = try container.decode([String].self, forKey: .title)
 
         var searchableTexts: [String] = []
-        searchableTexts.append(contentsOf: title)
+        searchableTexts.append(title.joined(separator: " "))
         searchableTexts.append(contentsOf: category)
         searchableTexts.append(contentsOf: description)
         searchableTexts.append(language.main)
         searchableTexts.append(contentsOf: language.translations)
-        searchableTexts.append(legacyData.lectureCode)
-        searchableTexts.append(legacyData.slug)
         searchableTexts.append(legacyData.verse)
-        searchableTexts.append(contentsOf: lengthType)
         searchableTexts.append(location.city)
         searchableTexts.append(location.state)
         searchableTexts.append(location.country)
         searchableTexts.append(contentsOf: search.simple)
         searchableTexts.append(contentsOf: search.advanced)
         searchableTexts.append(contentsOf: tags)
+        searchableTexts.removeAll { $0.isEmpty }
 
         self.searchableTexts = searchableTexts
         isFavourites = false
@@ -117,22 +115,19 @@ struct Lecture: Hashable, Codable {
         self.title = dbLecture.title
 
         var searchableTexts: [String] = []
-        searchableTexts.append(contentsOf: title)
+        searchableTexts.append(title.joined(separator: " "))
         searchableTexts.append(contentsOf: category)
         searchableTexts.append(contentsOf: description)
         searchableTexts.append(language.main)
         searchableTexts.append(contentsOf: language.translations)
-        searchableTexts.append(legacyData.lectureCode)
-        searchableTexts.append(legacyData.slug)
         searchableTexts.append(legacyData.verse)
-        searchableTexts.append(contentsOf: lengthType)
         searchableTexts.append(location.city)
         searchableTexts.append(location.state)
         searchableTexts.append(location.country)
         searchableTexts.append(contentsOf: search.simple)
         searchableTexts.append(contentsOf: search.advanced)
         searchableTexts.append(contentsOf: tags)
-
+        searchableTexts.removeAll { $0.isEmpty }
         self.searchableTexts = searchableTexts
 
         isFavourites = false

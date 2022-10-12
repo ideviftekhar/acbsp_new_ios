@@ -9,11 +9,11 @@ import UIKit
 
 class CreateAccountViewController: UIViewController {
 
-    @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var passwordTextField: UITextField!
-    @IBOutlet weak var rePasswordTextField: UITextField!
-    @IBOutlet weak var createButton: UIButton!
-    @IBOutlet weak var loadingIndicatorView: UIActivityIndicatorView!
+    @IBOutlet private var emailTextField: UITextField!
+    @IBOutlet private var passwordTextField: UITextField!
+    @IBOutlet private var rePasswordTextField: UITextField!
+    @IBOutlet private var createButton: UIButton!
+    @IBOutlet private var loadingIndicatorView: UIActivityIndicatorView!
 
     private let signupViewModel: SignupViewModel = FirebaseEmailSignupViewModel()
 

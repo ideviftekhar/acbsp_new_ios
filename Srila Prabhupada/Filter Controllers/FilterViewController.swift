@@ -15,8 +15,8 @@ protocol FilterViewControllerDelegate: AnyObject {
 
 class FilterViewController: UIViewController {
 
-    @IBOutlet weak var filterTypeTableView: UITableView!
-    @IBOutlet weak var filterDetailTableView: UITableView!
+    @IBOutlet private var filterTypeTableView: UITableView!
+    @IBOutlet private var filterDetailTableView: UITableView!
     weak var delegate: FilterViewControllerDelegate?
 
     var filters: [Filter] = Filter.allCases

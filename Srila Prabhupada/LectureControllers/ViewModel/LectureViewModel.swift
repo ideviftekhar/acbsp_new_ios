@@ -50,13 +50,10 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
         }
 
         if let searchText = searchText, !searchText.isEmpty {
-            let selectedSubtypes: [String] = searchText.split(separator: " ").map { String($0) }
 
             lectures = lectures.filter { (lecture: Lecture) in
-                return selectedSubtypes.first(where: { (subtype: String) in
-                    let matched: Bool = lecture.searchableTexts.first(where: { $0.localizedCaseInsensitiveContains(subtype) }) != nil
-                    return matched
-                }) != nil
+                let matched: Bool = lecture.searchableTexts.first(where: { $0.localizedCaseInsensitiveContains(searchText) }) != nil
+                return matched
             }
         }
 

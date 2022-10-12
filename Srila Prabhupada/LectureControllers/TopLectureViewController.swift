@@ -10,7 +10,7 @@ import FirebaseFirestore
 
 class TopLectureViewController: LectureViewController {
 
-    @IBOutlet weak var topLecturesSegmentControl: UISegmentedControl!
+    @IBOutlet private var topLecturesSegmentControl: UISegmentedControl!
 
     override func viewDidLoad() {
         super.viewDidLoad()

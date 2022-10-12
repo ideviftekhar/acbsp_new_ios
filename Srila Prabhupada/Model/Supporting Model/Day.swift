@@ -34,7 +34,7 @@ struct Day: Hashable, Codable, Comparable {
         self.day = day
         self.month = month
         self.year = year
-        dateComponents = DateComponents(year: year, month: month, day: day)
+        dateComponents = DateComponents(calendar: Calendar.current, year: year, month: month, day: day)
     }
 
     init(from decoder: Decoder) throws {
@@ -63,11 +63,7 @@ struct Day: Hashable, Codable, Comparable {
         } else {
             year = 0
         }
-        dateComponents = DateComponents(year: year, month: month, day: day)
-    }
-
-    var display_yyyy_mm_dd: String {
-        "\(year)/\(month)/\(day)"
+        dateComponents = DateComponents(calendar: Calendar.current, year: year, month: month, day: day)
     }
 
     var display_dd_MMM_yyyy: String {

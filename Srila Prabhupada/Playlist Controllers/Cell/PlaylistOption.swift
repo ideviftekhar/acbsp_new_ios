@@ -9,5 +9,7 @@ import Foundation
 
 enum PlaylistOption: String, CaseIterable {
 
-    case deletePlaylist =   "Delete Playlist"
+    case edit =   "Edit"
+
+    case delete =   "Delete"
 }

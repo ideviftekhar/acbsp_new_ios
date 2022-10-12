@@ -9,42 +9,63 @@ import AVFoundation
 import AVKit
 import AlamofireImage
 import IQListKit
+import FirebaseFirestore
 
-class PlayerViewController: UIViewController {
+class PlayerViewController: LectureViewController {
 
-    @IBOutlet weak var lectureTitleLabel: UILabel!
-    @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var totalTimeLabel: UILabel!
-    @IBOutlet weak var lectureDurationLabel: UILabel!
-    @IBOutlet weak var lectureDateLabel: UILabel!
+    enum State {
+        case close
+        case minimize
+        case expanded
+    }
 
-    @IBOutlet weak var thumbnailImageView: UIImageView!
+    @IBOutlet private var thumbnailImageView: UIImageView!
+    @IBOutlet private var titleLabel: UILabel!
+    @IBOutlet private var verseLabel: UILabel!
+    @IBOutlet private var languageLabel: UILabel!
+    @IBOutlet private var categoryLabel: UILabel!
+    @IBOutlet private var locationLabel: UILabel!
+    @IBOutlet private var dateLabel: UILabel!
+    @IBOutlet private var firstDotLabel: UILabel?
+    @IBOutlet private var secondDotLabel: UILabel?
 
-    @IBOutlet weak var timeSlider: UISlider!
+    @IBOutlet private var currentTimeLabel: UILabel!
+    @IBOutlet private var totalTimeLabel: UILabel!
+    @IBOutlet private var timeSlider: UISlider!
 
-    @IBOutlet weak var playPauseButton: UIButton!
-    @IBOutlet weak var speedMenuButton: UIButton!
+    @IBOutlet private var playPauseButton: UIButton!
+    @IBOutlet private var speedMenuButton: UIButton!
 
-    @IBOutlet weak var previousLectureButton: UIButton!
-    @IBOutlet weak var nextLectureButton: UIButton!
+    @IBOutlet private var previousLectureButton: UIButton!
+    @IBOutlet private var nextLectureButton: UIButton!
 
-    @IBOutlet weak var loopLectureButton: UIButton!
-    @IBOutlet weak var shuffleLectureButton: UIButton!
+    @IBOutlet private var loopLectureButton: UIButton!
+    @IBOutlet private var shuffleLectureButton: UIButton!
 
-    @IBOutlet private var lectureTebleView: UITableView!
-    typealias Model = Lecture
-    typealias Cell = LectureCell
+    @IBOutlet private var miniPlayerView: MiniPlayerView!
+    @IBOutlet private var fullPlayerContainerView: UIView!
 
-    private(set) lazy var list = IQList(listView: lectureTebleView, delegateDataSource: self)
+    private let playerContainerView: UIView = UIView()
 
+    var itemStatusObserver: NSKeyValueObservation?
+    var itemDidPlayToEndObserver: AnyObject?
+
+    private var isSeeking = false
     var player: AVPlayer! {
+        willSet {
+            if let item = player?.currentItem {
+                removePlayerItemNotificationObserver(item: item)
+            }
+        }
         didSet {
             addPeriodicTimeObserver()
-            addPlayerItemNotificationObserver()
+            if let item = player?.currentItem {
+                addPlayerItemNotificationObserver(item: item)
+            }
         }
     }
 
-    let miniPlayerView: MiniPlayerView = MiniPlayerView.loadFromXIB()
+    var visibleState: State = .close
 
     var playRateMenu: UIMenu!
     var selectedRate: PlayRate {
@@ -72,11 +93,24 @@ class PlayerViewController: UIViewController {
 
             self.pause()
             if let currentLecture = currentLecture {
-                lectureTitleLabel.text = currentLecture.titleDisplay
-                lectureDurationLabel.text = currentLecture.lengthTime.displayString
-                lectureDateLabel.text = currentLecture.dateOfRecording.display_yyyy_mm_dd
-                totalTimeLabel.text = currentLecture.lengthTime.displayString
+                titleLabel.text = currentLecture.titleDisplay
+                verseLabel.text = currentLecture.legacyData.verse
+                languageLabel.text = currentLecture.language.main
+                let categoryString = currentLecture.category.joined(separator: ", ")
+                categoryLabel.text = categoryString
+                locationLabel.text = currentLecture.location.displayString
+                dateLabel.text = currentLecture.dateOfRecording.display_dd_MMM_yyyy
                 timeSlider.maximumValue = Float(currentLecture.lengthTime.totalSeconds)
+                totalTimeLabel.text = currentLecture.lengthTime.displayString
+
+                if !currentLecture.location.displayString.isEmpty {
+                    locationLabel?.text = currentLecture.location.displayString
+                } else {
+                    locationLabel?.text = currentLecture.place.joined(separator: ", ")
+                }
+
+                firstDotLabel?.isHidden = currentLecture.legacyData.verse.isEmpty || categoryString.isEmpty
+                secondDotLabel?.isHidden = locationLabel?.text?.isEmpty ?? true
 
                 if let url = currentLecture.thumbnailURL {
                     thumbnailImageView.af.setImage(withURL: url, placeholderImage: UIImage(named: "logo_40"))
@@ -101,13 +135,23 @@ class PlayerViewController: UIViewController {
                     previousLectureButton.isEnabled = false
                     nextLectureButton.isEnabled = false
                 }
+                if visibleState == .close {
+                    minimize(animated: true)
+                }
             } else {
                 previousLectureButton.isEnabled = false
                 nextLectureButton.isEnabled = false
 
-                lectureTitleLabel.text = "--"
-                totalTimeLabel.text = "--"
+                titleLabel.text = "--"
+                verseLabel.text = "--"
+                languageLabel.text = "--"
+                categoryLabel.text = "--"
+                locationLabel.text = "--"
+                dateLabel.text = "--"
+                firstDotLabel?.isHidden = false
+                secondDotLabel?.isHidden = false
                 timeSlider.maximumValue = 0
+                close(animated: true)
             }
         }
     }
@@ -115,11 +159,13 @@ class PlayerViewController: UIViewController {
     var playlistLectures: [Model] = [] {
         didSet {
             loadViewIfNeeded()
-            refreshUI()
+            refreshAsynchronous(source: .cache)
         }
     }
 
     override func viewDidLoad() {
+
+        list.registerCell(type: Cell.self, registerType: .storyboard)
 
         super.viewDidLoad()
 
@@ -131,8 +177,24 @@ class PlayerViewController: UIViewController {
         }
 
         do {
-            list.registerCell(type: Cell.self, registerType: .storyboard)
-            refreshUI(animated: false)
+            miniPlayerView.delegate = self
+        }
+
+        timeSlider.setThumbImage(UIImage(compatibleSystemName: "circle.fill"), for: .normal)
+        do {
+            self.playerContainerView.clipsToBounds = true
+        }
+
+        do {
+            let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeRecognized(_:)))
+            swipeGesture.direction = .down
+            self.view.addGestureRecognizer(swipeGesture)
+        }
+    }
+
+    @objc private func swipeRecognized(_ sender: UISwipeGestureRecognizer) {
+        if sender.state == .ended {
+            minimize(animated: true)
         }
     }
 
@@ -140,8 +202,142 @@ class PlayerViewController: UIViewController {
         super.viewWillAppear(animated)
     }
 
+    override func refreshAsynchronous(source: FirestoreSource) {
+        super.refreshAsynchronous(source: source)
+
+        reloadData(with: self.playlistLectures)
+    }
+
     @IBAction func backButtonTapped(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
+        minimize(animated: true)
+    }
+
+    func addToTabBarController(_ tabBarController: UITabBarController) {
+        loadViewIfNeeded()
+
+        do {
+            tabBarController.addChild(self)
+            self.view.frame = tabBarController.view.bounds
+            self.view.autoresizingMask = []
+            tabBarController.view.addSubview(playerContainerView)
+            self.playerContainerView.addSubview(self.view)
+            self.didMove(toParent: tabBarController)
+        }
+        close(animated: false)
+    }
+
+    func reposition() {
+
+        switch self.visibleState {
+        case .close:
+            close(animated: true)
+        case .minimize:
+            minimize(animated: true)
+        case .expanded:
+            expand(animated: true)
+        }
+    }
+
+    func expand(animated: Bool) {
+
+        guard let tabBarController = self.parent as? UITabBarController else {
+            return
+        }
+
+        tabBarController.view.insertSubview(playerContainerView, aboveSubview: tabBarController.tabBar)
+
+        let middleAnimationBlock = { [self] in
+            miniPlayerView.alpha = 0.0
+            fullPlayerContainerView.alpha = 1.0
+        }
+
+        let animationBlock = { [self] in
+            playerContainerView.frame = tabBarController.view.bounds
+        }
+
+        visibleState = .expanded
+        setNeedsStatusBarAppearanceUpdate()
+        if animated {
+            UIView.animate(withDuration: 0.3, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [], animations: middleAnimationBlock)
+            UIView.animate(withDuration: 0.6, delay: 0.0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.3, options: .curveEaseInOut, animations: animationBlock)
+        } else {
+            middleAnimationBlock()
+            animationBlock()
+        }
+    }
+
+    func minimize(animated: Bool) {
+
+        guard let tabBarController = self.parent as? UITabBarController else {
+            return
+        }
+
+        let middleAnimationBlock = { [self] in
+            miniPlayerView.alpha = 1.0
+            fullPlayerContainerView.alpha = 0.0
+        }
+
+        let animationBlock = { [self] in
+            let y = tabBarController.tabBar.frame.minY - 60
+            let rect = CGRect(x: 0, y: y, width: tabBarController.view.frame.width, height: 60)
+            playerContainerView.frame = rect
+        }
+
+        let options: UIView.AnimationOptions
+        if visibleState == .close {
+            options = .curveEaseOut
+        } else {
+            options = .curveEaseInOut
+        }
+
+        visibleState = .minimize
+        setNeedsStatusBarAppearanceUpdate()
+        if animated {
+            UIView.animate(withDuration: 0.3, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [], animations: middleAnimationBlock)
+            UIView.animate(withDuration: 0.6, delay: 0.0, usingSpringWithDamping: 0.85, initialSpringVelocity: 0.1, options: options, animations: animationBlock)
+        } else {
+            animationBlock()
+        }
+    }
+
+    func close(animated: Bool) {
+
+        guard let tabBarController = self.parent as? UITabBarController else {
+            return
+        }
+
+        tabBarController.view.insertSubview(playerContainerView, belowSubview: tabBarController.tabBar)
+
+        let animationBlock = { [self] in
+            let y = tabBarController.tabBar.frame.minY
+            let rect = CGRect(x: 0, y: y, width: tabBarController.view.frame.width, height: 60)
+            playerContainerView.frame = rect
+            miniPlayerView.alpha = 1.0
+            fullPlayerContainerView.alpha = 0.0
+        }
+
+        visibleState = .close
+        setNeedsStatusBarAppearanceUpdate()
+        if animated {
+            UIView.animate(withDuration: 0.6, delay: 0.0, usingSpringWithDamping: 0.85, initialSpringVelocity: 0.1, options: .curveEaseInOut, animations: animationBlock)
+        } else {
+            animationBlock()
+        }
+    }
+
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        switch visibleState {
+        case .close:
+            return .lightContent
+        case .minimize:
+            return .lightContent
+        case .expanded:
+            return .darkContent
+        }
+    }
+
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        return .fade
     }
 }
 
@@ -173,7 +369,10 @@ extension PlayerViewController {
         let seconds: Int64 = Int64(seconds)
         let targetTime: CMTime = CMTimeMake(value: seconds, timescale: 1)
 
-        player?.seek(to: targetTime)
+        isSeeking = true
+        player?.seek(to: targetTime, completionHandler: { _ in
+            self.isSeeking = false
+        })
     }
 }
 
@@ -194,12 +393,12 @@ extension PlayerViewController {
         player.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(1, preferredTimescale: 1), queue: DispatchQueue.main) { [self] (time) -> Void in
             if player.currentItem?.status == .readyToPlay {
                 let time: Float64 = CMTimeGetSeconds(time)
-                if !timeSlider.isTracking {
+                if !timeSlider.isTracking && !isSeeking {
                     timeSlider.value = Float(time)
                     miniPlayerView.playedSeconds = timeSlider.value
                 }
             }
-            timeLabel.text = Int(timeSlider.value).toHHMMSS
+            currentTimeLabel.text = Int(timeSlider.value).toHHMMSS
         }
     }
 }
@@ -237,13 +436,29 @@ extension PlayerViewController {
 
 extension PlayerViewController {
 
-    private func addPlayerItemNotificationObserver() {
-
-        guard let item = player?.currentItem else {
-            return
+    private func removePlayerItemNotificationObserver(item: AVPlayerItem) {
+        self.itemStatusObserver?.invalidate()
+        if let itemDidPlayToEndObserver = itemDidPlayToEndObserver {
+            NotificationCenter.default.removeObserver(itemDidPlayToEndObserver, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: item)
         }
+    }
 
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: item, queue: nil) { [self] _ in
+    private func addPlayerItemNotificationObserver(item: AVPlayerItem) {
+
+        self.itemStatusObserver = item.observe(\.status, options: [.new, .old], changeHandler: { [self] (playerItem, change) in
+            if playerItem.status == .readyToPlay {
+
+                if playerItem.duration.isValid {
+                    let duration = CMTimeGetSeconds(playerItem.duration)
+                    let time = Time(totalSeconds: Int(duration))
+                    timeSlider.maximumValue = Float(duration)
+                    totalTimeLabel.text = time.displayString
+                    miniPlayerView.lectureDuration = time
+                }
+            }
+        })
+
+        itemDidPlayToEndObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: item, queue: nil) { [self] _ in
             if loopLectureButton.isSelected == true {
                 player.seek(to: CMTime.zero)
             } else if shuffleLectureButton.isSelected == true {
@@ -379,26 +594,25 @@ extension PlayerViewController {
     }
 }
 
-extension PlayerViewController: IQListViewDelegateDataSource {
-
-    private func refreshUI(animated: Bool? = nil) {
-
-        let animated: Bool = animated ?? (playlistLectures.count <= 1000)
-        list.performUpdates({
-
-            let section = IQSection(identifier: "Cell", headerSize: CGSize.zero, footerSize: CGSize.zero)
-            list.append(section)
-
-            list.append(Cell.self, models: playlistLectures, section: section)
-
-        }, animatingDifferences: animated, completion: nil)
+extension PlayerViewController: MiniPlayerViewDelegate {
+    func miniPlayerViewDidClose(_ playerView: MiniPlayerView) {
+        self.currentLecture = nil
+        self.playlistLectures = []
     }
 
-    func listView(_ listView: IQListView, didSelect item: IQItem, at indexPath: IndexPath) {
+    func miniPlayerView(_ playerView: MiniPlayerView, didSeekTo seconds: Int) {
+        seekTo(seconds: seconds)
+    }
 
-        if let model = item.model as? Cell.Model {
-
-            self.currentLecture = model
+    func miniPlayerView(_ playerView: MiniPlayerView, didChangePlay isPlay: Bool) {
+        if isPlay {
+            play()
+        } else {
+            pause()
         }
+    }
+
+    func miniPlayerViewDidExpand(_ playerView: MiniPlayerView) {
+        expand(animated: true)
     }
 }

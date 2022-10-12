@@ -47,7 +47,7 @@ class LectureViewController: SearchViewController {
     typealias Cell = LectureCell
 
     private var models: [Model] = []
-    private lazy var list = IQList(listView: lectureTebleView, delegateDataSource: self)
+    private(set) lazy var list = IQList(listView: lectureTebleView, delegateDataSource: self)
 
     var noItemTitle: String?
     var noItemMessage: String?
@@ -193,28 +193,8 @@ extension LectureViewController: IQListViewDelegateDataSource {
         if let model = item.model as? Cell.Model {
 
             if let tabController = self.tabBarController as? TabBarController {
-                tabController.showPlayer(currentLecture: model, playlistLectures: self.models)
+                tabController.showPlayer(lecture: model, playlistLectures: self.models)
             }
-
-//            if model.downloadingState == .downloaded, let audioURL = model.localFileURL {
-//
-//                let playerController = AVPlayerViewController()
-//                playerController.player = AVPlayer(url: audioURL)
-//                self.present(playerController, animated: true) {
-//                    playerController.player?.play()
-//                }
-//            } else {
-//                guard let firstAudio = model.resources.audios.first,
-//                      let audioURL = firstAudio.audioURL else {
-//                    return
-//                }
-//
-//                let playerController = AVPlayerViewController()
-//                playerController.player = AVPlayer(url: audioURL)
-//                self.present(playerController, animated: true) {
-//                    playerController.player?.play()
-//                }
-//            }
         }
     }
 }

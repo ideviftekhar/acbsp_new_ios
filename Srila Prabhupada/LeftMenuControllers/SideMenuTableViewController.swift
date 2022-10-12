@@ -17,7 +17,7 @@ protocol SideMenuControllerDelegate: AnyObject {
 
 class SideMenuTableViewController: UITableViewController {
 
-    @IBOutlet weak var sideMenuTableView: UITableView!
+    @IBOutlet private var sideMenuTableView: UITableView!
 
     typealias Model = SideMenuItem
     typealias Cell = SideMenuCell

@@ -9,9 +9,9 @@ import UIKit
 
 class ForgotPasswordViewController: UIViewController {
 
-    @IBOutlet weak var emailTextField: UITextField!
-    @IBOutlet weak var submitButton: UIButton!
-    @IBOutlet weak var loadingIndicatorView: UIActivityIndicatorView!
+    @IBOutlet private var emailTextField: UITextField!
+    @IBOutlet private var submitButton: UIButton!
+    @IBOutlet private var loadingIndicatorView: UIActivityIndicatorView!
 
     private let forgotPasswordViewModel: ForgotPasswordViewModel = FirebaseForgotPasswordViewModel()
 

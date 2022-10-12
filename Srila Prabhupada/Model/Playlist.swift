@@ -47,7 +47,7 @@ struct Playlist: Hashable, Codable {
         self.authorEmail = try container.decode(String.self, forKey: .authorEmail)
         self.description = try? container.decode(String.self, forKey: .description)
         let creationTime = try container.decode(Int.self, forKey: .creationTime)
-        self.creationTime = Date(timeIntervalSince1970: TimeInterval(creationTime))
+        self.creationTime = Date(timeIntervalSince1970: TimeInterval(creationTime/1000))
         self.lectureIds = try container.decode([Int].self, forKey: .lectureIds)
         self.lecturesCategory = try container.decode(String.self, forKey: .lecturesCategory)
         self.title = try container.decode(String.self, forKey: .title)

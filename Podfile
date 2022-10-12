@@ -32,8 +32,6 @@ target 'Srila Prabhupada' do
 
   pod 'ProgressHUD'
 
-  pod 'ARNTransitionAnimator'
-
   pod 'ReachabilitySwift'
 
   pod'Charts'

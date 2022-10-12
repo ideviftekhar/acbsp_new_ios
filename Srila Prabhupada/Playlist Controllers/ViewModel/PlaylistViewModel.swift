@@ -11,6 +11,8 @@ import FirebaseAuth
 
 protocol PlaylistViewModel: AnyObject {
 
+    func createPlaylist(title: String, category: String, description: String, listType: PlaylistType, completion: @escaping (Swift.Result<Playlist, Error>) -> Void)
+
     func getPrivatePlaylist(searchText: String?, sortType: PlaylistSortType, completion: @escaping (Swift.Result<[Playlist], Error>) -> Void)
     func getPublicPlaylist(searchText: String?, sortType: PlaylistSortType, userEmail: String?, completion: @escaping (Swift.Result<[Playlist], Error>) -> Void)
 
@@ -20,6 +22,77 @@ protocol PlaylistViewModel: AnyObject {
 
 class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
 
+    func createPlaylist(title: String, category: String, description: String, listType: PlaylistType, completion: @escaping (Swift.Result<Playlist, Error>) -> Void) {
+
+        guard let currentUser = Auth.auth().currentUser, let email = currentUser.email else {
+            let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
+            completion(.failure(error))
+            return
+        }
+
+        switch listType {
+        case .private:
+            let collectionReference: FirebaseFirestore.CollectionReference = FirestoreManager.shared.firestore.collection(FirestoreCollection.privatePlaylists.path).document(currentUser.uid).collection(email)
+
+            let newDocument = collectionReference.document()
+
+            let currentTimestamp = Int(Date().timeIntervalSince1970*1000)
+
+            var document: [String: Any] = [:]
+            document["authorEmail"] = email
+            document["creationTime"] = currentTimestamp
+            document["description"] = description
+            document["lastUpdate"] = currentTimestamp
+            document["lectureCount"] = 0
+            document["lectureIds"] = []
+            document["lecturesCategory"] = category
+            document["listType"] = listType.rawValue
+            document["thumbnail"] = ""
+            document["title"] = title
+            document["docPath"] = "PublicPlaylists/\(newDocument.documentID)"
+            document["listID"] = newDocument.documentID
+
+            newDocument.setData(document, completion: { error in
+                if let error = error {
+                    completion(.failure(error))
+                } else {
+                    FirestoreManager.shared.getDocument(documentReference: newDocument, source: .default, completion: completion)
+                }
+            })
+
+        case .public:
+            let publicPlaylistsPath = FirestoreCollection.publicPlaylists.path
+
+            let collectionReference: FirebaseFirestore.CollectionReference = FirestoreManager.shared.firestore.collection(publicPlaylistsPath)
+
+            let newDocument = collectionReference.document()
+
+            let currentTimestamp = Int(Date().timeIntervalSince1970*1000)
+
+            var document: [String: Any] = [:]
+            document["authorEmail"] = email
+            document["creationTime"] = currentTimestamp
+            document["description"] = description
+            document["lastUpdate"] = currentTimestamp
+            document["lectureCount"] = 0
+            document["lectureIds"] = []
+            document["lecturesCategory"] = category
+            document["listType"] = listType.rawValue
+            document["thumbnail"] = ""
+            document["title"] = title
+            document["docPath"] = "PublicPlaylists/\(newDocument.documentID)"
+            document["listID"] = newDocument.documentID
+
+            newDocument.setData(document, completion: { error in
+                if let error = error {
+                    completion(.failure(error))
+                } else {
+                    FirestoreManager.shared.getDocument(documentReference: newDocument, source: .default, completion: completion)
+                }
+            })
+        }
+    }
+
     func getPrivatePlaylist(searchText: String?, sortType: PlaylistSortType, completion: @escaping (Swift.Result<[Playlist], Error>) -> Void) {
 
         guard let currentUser = Auth.auth().currentUser, let email = currentUser.email else {
@@ -28,9 +101,9 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
             return
         }
 
-        let query = FirestoreManager.shared.firestore.collectionGroup(email)
+        let collectionReference: FirebaseFirestore.CollectionReference = FirestoreManager.shared.firestore.collection(FirestoreCollection.privatePlaylists.path).document(currentUser.uid).collection(email)
 
-        FirestoreManager.shared.getDocuments(query: query, source: .default, completion: { (result: Swift.Result<[Playlist], Error>) in
+        FirestoreManager.shared.getDocuments(query: collectionReference, source: .default, completion: { (result: Swift.Result<[Playlist], Error>) in
             switch result {
             case .success(var success):
 
@@ -84,18 +157,14 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
                 return
             }
 
-            let query = FirestoreManager.shared.firestore.collectionGroup(email)
+            let collectionReference: FirebaseFirestore.CollectionReference = FirestoreManager.shared.firestore.collection(FirestoreCollection.privatePlaylists.path).document(currentUser.uid).collection(email)
 
-            FirestoreManager.shared.getRawDocuments(query: query, source: .server, completion: { result in
+            let documentReference = collectionReference.document(playlist.listID)
+
+            FirestoreManager.shared.getRawDocument(documentReference: documentReference, source: .server, completion: { result in
                 switch result {
 
-                case .success(let success):
-
-                    guard let document = success.first(where: { ($0["listID"] as? String) == playlist.listID }) else {
-                        let error: NSError = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "playlist does not exist"])
-                        completion(.failure(error))
-                        return
-                    }
+                case .success(let document):
 
                     var lectureIds: [Int] = (document["lectureIds"] as? [Int]) ?? []
                     lectureIds.append(lecture.id)
@@ -148,29 +217,13 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
                 return
             }
 
-            let query = FirestoreManager.shared.firestore.collectionGroup(email)
-
-            FirestoreManager.shared.getRawDocuments(query: query, source: .server) { result in
-
-                switch result {
-
-                case .success(let success):
-
-                    guard let document = success.first(where: { ($0["listID"] as? String) == playlist.listID }) else {
-                        let error: NSError = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "playlist does not exist"])
-                        completion(.failure(error))
-                        return
-                    }
-
-                    document.reference.delete { error in
-                        if let error = error {
-                            completion(.failure(error))
-                        } else {
-                            completion(.success(true))
-                        }
-                    }
-                case .failure(let error):
+            let collectionReference: FirebaseFirestore.CollectionReference = FirestoreManager.shared.firestore.collection(FirestoreCollection.privatePlaylists.path).document(currentUser.uid).collection(email)
+            let documentReference = collectionReference.document(playlist.listID)
+            documentReference.delete { error in
+                if let error = error {
                     completion(.failure(error))
+                } else {
+                    completion(.success(true))
                 }
             }
         case .public:

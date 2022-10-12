@@ -21,6 +21,9 @@ class LectureCell: UITableViewCell, IQModelableCell {
     @IBOutlet private var favouritesIconImageView: UIImageView?
     @IBOutlet private var completedIconImageView: UIImageView?
 
+    @IBOutlet private var firstDotLabel: UILabel?
+    @IBOutlet private var secondDotLabel: UILabel?
+
     @IBOutlet private var thumbnailImageView: UIImageView?
     @IBOutlet private var titleLabel: UILabel?
     @IBOutlet private var verseLabel: UILabel?
@@ -60,10 +63,23 @@ class LectureCell: UITableViewCell, IQModelableCell {
             }
 
             titleLabel?.text = model.titleDisplay
-            verseLabel?.text = model.legacyData.verse
+            if !model.legacyData.verse.isEmpty {
+                verseLabel?.text = model.legacyData.verse
+            } else {
+                verseLabel?.text = model.category.joined(separator: ", ")
+            }
+
+            if !model.location.displayString.isEmpty {
+                locationLabel?.text = model.location.displayString
+            } else {
+                locationLabel?.text = model.place.joined(separator: ", ")
+            }
+
             durationLabel?.text = model.lengthTime.displayString
-            locationLabel?.text = model.location.displayString
-            dateLabel?.text = model.dateOfRecording.display_yyyy_mm_dd
+            dateLabel?.text = model.dateOfRecording.display_dd_MMM_yyyy
+
+            firstDotLabel?.isHidden = verseLabel?.text?.isEmpty ?? true
+            secondDotLabel?.isHidden = locationLabel?.text?.isEmpty ?? true
 
             let progress: CGFloat
             if model.length != 0 {
