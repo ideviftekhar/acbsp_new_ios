@@ -99,6 +99,13 @@ class LectureViewController: SearchViewController {
     override func refreshAsynchronous(source: FirestoreSource) {
         super.refreshAsynchronous(source: source)
     }
+
+    //This delegate Declared here because some subclasses are overriding it.
+    func listView(_ listView: IQListView, modifyCell cell: IQListCell, at indexPath: IndexPath) {
+        if let cell = cell as? Cell {
+            cell.delegate = self
+        }
+    }
 }
 
 extension LectureViewController {
@@ -203,12 +210,6 @@ extension LectureViewController: IQListViewDelegateDataSource {
                 self.list.noItemTitle = self.noItemTitle
                 self.list.noItemMessage = self.noItemMessage
             })
-        }
-    }
-
-    func listView(_ listView: IQListView, modifyCell cell: IQListCell, at indexPath: IndexPath) {
-        if let cell = cell as? Cell {
-            cell.delegate = self
         }
     }
 

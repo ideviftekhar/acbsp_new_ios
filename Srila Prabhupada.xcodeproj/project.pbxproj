@@ -76,7 +76,9 @@
 		C018A99428F421A000C0E002 /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C018A99328F421A000C0E002 /* Int+Extension.swift */; };
 		C03E3F2628DCC20A00B987DD /* FirestoreCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03E3F2528DCC20A00B987DD /* FirestoreCollection.swift */; };
 		C03E3F2828DCC6C500B987DD /* ListenInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03E3F2728DCC6C500B987DD /* ListenInfo.swift */; };
-		C07A8F3028F7E9CE001A6162 /* SPAudioVisualizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07A8F2F28F7E9CE001A6162 /* SPAudioVisualizerView.swift */; };
+		C07A8F3A28F7FD44001A6162 /* ESTMusicIndicatorContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07A8F3828F7FD44001A6162 /* ESTMusicIndicatorContentView.swift */; };
+		C07A8F3B28F7FD44001A6162 /* ESTMusicIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07A8F3928F7FD44001A6162 /* ESTMusicIndicatorView.swift */; };
+		C07A8F3D28F8033A001A6162 /* PlayerViewController+Observers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07A8F3C28F8033A001A6162 /* PlayerViewController+Observers.swift */; };
 		C088178828DDB8FA00D3106C /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C088178728DDB8FA00D3106C /* FirestoreManager.swift */; };
 		C088178A28DDBC9100D3106C /* FirestoreManager+SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = C088178928DDBC9100D3106C /* FirestoreManager+SignIn.swift */; };
 		C088178C28DDE69600D3106C /* PlaylistSortType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C088178B28DDE69600D3106C /* PlaylistSortType.swift */; };
@@ -188,7 +190,9 @@
 		C018A99328F421A000C0E002 /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		C03E3F2528DCC20A00B987DD /* FirestoreCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreCollection.swift; sourceTree = "<group>"; };
 		C03E3F2728DCC6C500B987DD /* ListenInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenInfo.swift; sourceTree = "<group>"; };
-		C07A8F2F28F7E9CE001A6162 /* SPAudioVisualizerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPAudioVisualizerView.swift; sourceTree = "<group>"; };
+		C07A8F3828F7FD44001A6162 /* ESTMusicIndicatorContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ESTMusicIndicatorContentView.swift; sourceTree = "<group>"; };
+		C07A8F3928F7FD44001A6162 /* ESTMusicIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ESTMusicIndicatorView.swift; sourceTree = "<group>"; };
+		C07A8F3C28F8033A001A6162 /* PlayerViewController+Observers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerViewController+Observers.swift"; sourceTree = "<group>"; };
 		C088178728DDB8FA00D3106C /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		C088178928DDBC9100D3106C /* FirestoreManager+SignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirestoreManager+SignIn.swift"; sourceTree = "<group>"; };
 		C088178B28DDE69600D3106C /* PlaylistSortType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistSortType.swift; sourceTree = "<group>"; };
@@ -362,8 +366,8 @@
 				C03E3F2428DCC1EB00B987DD /* Firebase Firestore */,
 				C0FA305B28CF461900E78843 /* Extensions */,
 				C00AB21328D1FD6D00A62A2F /* Model */,
-				C07A8F2E28F7E9B0001A6162 /* Third Party */,
 				C00DC56828E1DA65001EDE95 /* Database */,
+				C07A8F3128F7FCF2001A6162 /* Third Party */,
 				C007586728E5D9100010EBE6 /* DownloadManager */,
 				C00E4DDE28CA393600F1A123 /* PreLogIn */,
 				C00E4DFA28CA39F400F1A123 /* LeftMenuControllers */,
@@ -461,20 +465,21 @@
 			path = "Firebase Firestore";
 			sourceTree = "<group>";
 		};
-		C07A8F2D28F7E9A4001A6162 /* AudioVisualizer */ = {
+		C07A8F3128F7FCF2001A6162 /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
-				C07A8F2F28F7E9CE001A6162 /* SPAudioVisualizerView.swift */,
-			);
-			path = AudioVisualizer;
-			sourceTree = "<group>";
-		};
-		C07A8F2E28F7E9B0001A6162 /* Third Party */ = {
-			isa = PBXGroup;
-			children = (
-				C07A8F2D28F7E9A4001A6162 /* AudioVisualizer */,
+				C07A8F3728F7FD44001A6162 /* ESTMusicIndicatorView */,
 			);
 			path = "Third Party";
+			sourceTree = "<group>";
+		};
+		C07A8F3728F7FD44001A6162 /* ESTMusicIndicatorView */ = {
+			isa = PBXGroup;
+			children = (
+				C07A8F3828F7FD44001A6162 /* ESTMusicIndicatorContentView.swift */,
+				C07A8F3928F7FD44001A6162 /* ESTMusicIndicatorView.swift */,
+			);
+			path = ESTMusicIndicatorView;
 			sourceTree = "<group>";
 		};
 		C0B7990428DC3FFA00681649 /* Supporting Model */ = {
@@ -570,6 +575,7 @@
 			isa = PBXGroup;
 			children = (
 				C00F8A4028EF13AE00FA9A7B /* PlayerViewController.swift */,
+				C07A8F3C28F8033A001A6162 /* PlayerViewController+Observers.swift */,
 				C002119928F6A03200BE94EC /* SPNowPlayingInfoCenter.swift */,
 				C002119B28F6AD5300BE94EC /* SPNowPlayableCommand.swift */,
 				C0F1A08828F05F06009578BA /* MiniPlayerView.swift */,
@@ -795,6 +801,7 @@
 				C00AB21B28D2080800A62A2F /* LectureCell.swift in Sources */,
 				C007D38628E80EC200CFBED0 /* Persistent+DBLecture.swift in Sources */,
 				C0EA13E428CF53FA00BE9110 /* ForgotPasswordViewModel.swift in Sources */,
+				C07A8F3D28F8033A001A6162 /* PlayerViewController+Observers.swift in Sources */,
 				C00AB20628D1F19500A62A2F /* Filter.swift in Sources */,
 				C007D37A28E809D900CFBED0 /* Language.swift in Sources */,
 				C00F8A4328EF192A00FA9A7B /* PlayRate.swift in Sources */,
@@ -841,6 +848,7 @@
 				C00E4E1728CA433A00F1A123 /* AboutViewController.swift in Sources */,
 				C007D37828E8096D00CFBED0 /* Day.swift in Sources */,
 				C00E4E1828CA433A00F1A123 /* CopyrightViewController.swift in Sources */,
+				C07A8F3A28F7FD44001A6162 /* ESTMusicIndicatorContentView.swift in Sources */,
 				C0B7991128DC524500681649 /* PlaylistViewModel.swift in Sources */,
 				C00AB20F28D1F6CB00A62A2F /* UIStoryboard+Extension.swift in Sources */,
 				C0B7990728DC41AE00681649 /* PlaylistCell.swift in Sources */,
@@ -858,10 +866,10 @@
 				C0E4748628F5A0FA001B69EE /* CreatePlaylistViewController.swift in Sources */,
 				C0CAF25D28D45B8C00DA9878 /* NavigationController.swift in Sources */,
 				C0CE0D1428E86EF500C2C825 /* UIImage+Extension.swift in Sources */,
+				C07A8F3B28F7FD44001A6162 /* ESTMusicIndicatorView.swift in Sources */,
 				C007D38228E80ADC00CFBED0 /* Audio.swift in Sources */,
 				C0F1A08928F05F06009578BA /* MiniPlayerView.swift in Sources */,
 				C00E4E1028CA39FE00F1A123 /* TopLectureViewController.swift in Sources */,
-				C07A8F3028F7E9CE001A6162 /* SPAudioVisualizerView.swift in Sources */,
 				C00DC57128E1DA66001EDE95 /* DBLecture+CoreDataClass.swift in Sources */,
 				C0B7990A28DC427B00681649 /* PlaylistOption.swift in Sources */,
 				C00E4E1C28CA462000F1A123 /* SearchViewController.swift in Sources */,

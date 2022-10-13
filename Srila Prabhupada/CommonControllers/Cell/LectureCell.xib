@@ -32,6 +32,16 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </imageView>
+                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CnE-6x-y4s" customClass="ESTMusicIndicatorView" customModule="Srila_Prabhupada" customModuleProvider="target">
+                        <rect key="frame" x="10" y="13.5" width="40" height="40"/>
+                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.69999999999999996" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="4"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="toB-kP-27M">
                         <rect key="frame" x="60" y="5" width="231" height="57"/>
                         <subviews>
@@ -249,12 +259,16 @@
                     <constraint firstItem="f6l-Bp-fUH" firstAttribute="trailing" secondItem="Mfu-JH-XN3" secondAttribute="trailing" id="AP3-fe-Mkw"/>
                     <constraint firstItem="f6l-Bp-fUH" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Ibi-ZE-P5r"/>
                     <constraint firstItem="Q0B-mL-dK8" firstAttribute="leading" secondItem="f6l-Bp-fUH" secondAttribute="trailing" id="STR-57-w8h"/>
+                    <constraint firstItem="CnE-6x-y4s" firstAttribute="trailing" secondItem="1Pj-Yk-u2T" secondAttribute="trailing" id="TYu-Sa-Wyn"/>
+                    <constraint firstItem="CnE-6x-y4s" firstAttribute="bottom" secondItem="1Pj-Yk-u2T" secondAttribute="bottom" id="Y4M-yD-ugQ"/>
                     <constraint firstItem="vfZ-ce-T4q" firstAttribute="centerY" secondItem="Q0B-mL-dK8" secondAttribute="centerY" id="Ycn-q9-J9x"/>
                     <constraint firstItem="eiF-YO-8YM" firstAttribute="centerX" secondItem="1Pj-Yk-u2T" secondAttribute="leading" id="c7c-5K-Fqh"/>
                     <constraint firstItem="1Pj-Yk-u2T" firstAttribute="top" secondItem="ZTZ-0b-Ptx" secondAttribute="centerY" id="ggF-kH-JDH"/>
                     <constraint firstItem="1Pj-Yk-u2T" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="iWZ-Fv-PPJ"/>
                     <constraint firstItem="toB-kP-27M" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="jBX-0u-U10"/>
                     <constraint firstItem="Q0B-mL-dK8" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="kmP-ad-XZj"/>
+                    <constraint firstItem="CnE-6x-y4s" firstAttribute="leading" secondItem="1Pj-Yk-u2T" secondAttribute="leading" id="ldd-SF-aUd"/>
+                    <constraint firstItem="CnE-6x-y4s" firstAttribute="top" secondItem="1Pj-Yk-u2T" secondAttribute="top" id="mjG-me-soE"/>
                     <constraint firstItem="AdV-AQ-xel" firstAttribute="centerX" secondItem="ZTZ-0b-Ptx" secondAttribute="centerX" id="mua-PG-0Zk"/>
                     <constraint firstAttribute="trailing" secondItem="Q0B-mL-dK8" secondAttribute="trailing" id="oxx-FM-xiV"/>
                     <constraint firstItem="1Pj-Yk-u2T" firstAttribute="leading" secondItem="ZTZ-0b-Ptx" secondAttribute="centerX" id="vEY-H7-bw3"/>
@@ -265,6 +279,7 @@
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="audioVisualizerView" destination="CnE-6x-y4s" id="90x-tb-5eW"/>
                 <outlet property="completedIconImageView" destination="Mfu-JH-XN3" id="dP6-IE-XwB"/>
                 <outlet property="dateLabel" destination="Z5O-MH-zt7" id="f9x-rJ-oOv"/>
                 <outlet property="downloadProgressView" destination="ZTZ-0b-Ptx" id="zp5-4D-fZ9"/>

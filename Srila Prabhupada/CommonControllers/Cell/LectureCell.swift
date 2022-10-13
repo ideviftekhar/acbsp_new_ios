@@ -34,6 +34,7 @@ class LectureCell: UITableViewCell, IQModelableCell {
     @IBOutlet private var selectedImageView: UIImageView?
     @IBOutlet private var downloadProgressView: MBCircularProgressBarView?
     @IBOutlet private var listenProgressView: MBCircularProgressBarView?
+    @IBOutlet private var audioVisualizerView: ESTMusicIndicatorView!
 
     weak var delegate: LectureCellDelegate?
 
@@ -52,6 +53,7 @@ class LectureCell: UITableViewCell, IQModelableCell {
             return
         }
 
+        PlayerViewController.unregister(observer: self, lectureID: model.lecture.id)
         DownloadManager.shared.unregisterProgress(observer: self, lectureID: model.lecture.id)
     }
 
@@ -104,6 +106,10 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 thumbnailImageView?.af.setImage(withURL: url, placeholderImage: UIImage(named: "logo_40"))
             } else {
                 thumbnailImageView?.image = UIImage(named: "logo_40")
+            }
+
+            PlayerViewController.register(observer: self, lectureID: lecture.id) { state in
+                self.audioVisualizerView.state = state
             }
 
             switch lecture.downloadingState {

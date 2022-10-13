@@ -68,7 +68,11 @@ final class DownloadManager {
         if var observers = lectureDownloadTasks[lectureID] {
             if let index = observers.firstIndex(where: { $0.observer == observer }) {
                 observers.remove(at: index)
-                lectureDownloadTasks[lectureID] = observers
+                if observers.isEmpty {
+                    lectureDownloadTasks[lectureID] = nil
+                } else {
+                    lectureDownloadTasks[lectureID] = observers
+                }
             }
         }
     }

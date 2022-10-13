@@ -19,6 +19,16 @@ class PlayerViewController: LectureViewController {
         case expanded
     }
 
+    class PlayStateObserver {
+        let observer: NSObject
+        var stateHandler: ((_ state: ESTMusicIndicatorViewState) -> Void)
+
+        init(observer: NSObject, playStateHandler: @escaping ((_ state: ESTMusicIndicatorViewState) -> Void)) {
+            self.observer = observer
+            self.stateHandler = playStateHandler
+        }
+    }
+
     @IBOutlet private var thumbnailImageView: UIImageView!
     @IBOutlet private var titleLabel: UILabel!
     @IBOutlet private var verseLabel: UILabel!
@@ -44,13 +54,32 @@ class PlayerViewController: LectureViewController {
 
     @IBOutlet private var miniPlayerView: MiniPlayerView!
     @IBOutlet private var fullPlayerContainerView: UIView!
-    @IBOutlet private var audioVisualizerView: UIView!
 
     private let playerContainerView: UIView = UIView()
 
     var itemStatusObserver: NSKeyValueObservation?
     var itemRateObserver: NSKeyValueObservation?
     var itemDidPlayToEndObserver: AnyObject?
+
+    static var lecturePlayStateObservers = [Int: [PlayStateObserver]]()
+    static var nowPlaying: (lecture: Lecture, state: ESTMusicIndicatorViewState)? {
+        didSet {
+            if nowPlaying?.lecture.id != oldValue?.lecture.id || nowPlaying?.state != oldValue?.state {
+
+                if let lastPlaying = oldValue, lastPlaying.lecture.id != nowPlaying?.lecture.id, let observers = self.lecturePlayStateObservers[lastPlaying.lecture.id] {
+                    for observer in observers {
+                        observer.stateHandler(.stopped)
+                    }
+                }
+
+                if let nowPlaying = nowPlaying, let observers = self.lecturePlayStateObservers[nowPlaying.lecture.id] {
+                    for observer in observers {
+                        observer.stateHandler(nowPlaying.state)
+                    }
+                }
+            }
+        }
+    }
 
     private var isSeeking = false
     private var player: AVPlayer? {
@@ -161,6 +190,12 @@ class PlayerViewController: LectureViewController {
                     player = AVPlayer(playerItem: item)
                 }
 
+                do {
+                    if loopLectureButton.isSelected == true {
+                        currentLectureQueue = [currentLecture]
+                    }
+                }
+
                 if let index = currentLectureQueue.firstIndex(where: { $0.id == currentLecture.id && $0.creationTimestamp == currentLecture.creationTimestamp }) {
                     previousLectureButton.isEnabled = (index != 0)
                     nextLectureButton.isEnabled = (index+1 < currentLectureQueue.count)
@@ -171,6 +206,7 @@ class PlayerViewController: LectureViewController {
                 if visibleState == .close {
                     minimize(animated: true)
                 }
+                Self.nowPlaying = (currentLecture, .paused)
             } else {
                 try? AVAudioSession.sharedInstance().setCategory(.ambient)
                 try? AVAudioSession.sharedInstance().setActive(true)
@@ -188,6 +224,14 @@ class PlayerViewController: LectureViewController {
                 secondDotLabel?.isHidden = false
                 timeSlider.maximumValue = 0
                 close(animated: true)
+                Self.nowPlaying = nil
+
+                do {
+                    if loopLectureButton.isSelected == true {
+                        currentLectureQueue.removeAll()
+                    }
+                }
+
                 UIApplication.shared.endReceivingRemoteControlEvents()
             }
 
@@ -199,7 +243,12 @@ class PlayerViewController: LectureViewController {
         didSet {
             loadViewIfNeeded()
             if loopLectureButton.isSelected == true {
-                currentLectureQueue.removeAll()
+
+                if let currentLecture = currentLecture {
+                    currentLectureQueue = [currentLecture]
+                } else {
+                    currentLectureQueue.removeAll()
+                }
             } else if shuffleLectureButton.isSelected == true {
                 currentLectureQueue = playlistLectures.shuffled()
             } else {
@@ -216,8 +265,6 @@ class PlayerViewController: LectureViewController {
     }
 
     override func viewDidLoad() {
-
-        list.registerCell(type: Cell.self, registerType: .storyboard)
 
         super.viewDidLoad()
 
@@ -260,7 +307,15 @@ class PlayerViewController: LectureViewController {
     override func refreshAsynchronous(source: FirestoreSource) {
         super.refreshAsynchronous(source: source)
 
-        reloadData(with: self.currentLectureQueue)
+        let lectureIds = self.currentLectureQueue.map { $0.id }
+        Self.lectureViewModel.getLectures(searchText: nil, sortType: .default, filter: [:], lectureIDs: lectureIds, source: source, completion: { result in
+            switch result {
+            case .success(let success):
+                self.reloadData(with: success)
+            default:
+                self.reloadData(with: self.currentLectureQueue)
+            }
+        })
     }
 
     @IBAction func backButtonTapped(_ sender: UIButton) {
@@ -393,6 +448,10 @@ class PlayerViewController: LectureViewController {
 
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
         return .fade
+    }
+
+    override func listView(_ listView: IQListView, modifyCell cell: IQListCell, at indexPath: IndexPath) {
+        cell.backgroundColor = UIColor.clear
     }
 }
 
@@ -599,10 +658,20 @@ extension PlayerViewController {
                 playPauseButton.setImage(UIImage(compatibleSystemName: "pause.fill"), for: .normal)
                 miniPlayerView.isPlaying = true
                 SPNowPlayingInfoCenter.shared.update(lecture: currentLecture, player: player, selectedRate: selectedRate)
+                if let currentLecture = currentLecture {
+                    Self.nowPlaying = (currentLecture, .playing)
+                } else {
+                    Self.nowPlaying = nil
+                }
             } else {
                 playPauseButton.setImage(UIImage(compatibleSystemName: "play.fill"), for: .normal)
                 miniPlayerView.isPlaying = false
                 SPNowPlayingInfoCenter.shared.update(lecture: currentLecture, player: player, selectedRate: selectedRate)
+                if let currentLecture = currentLecture {
+                    Self.nowPlaying = (currentLecture, .paused)
+                } else {
+                    Self.nowPlaying = nil
+                }
             }
         })
 
