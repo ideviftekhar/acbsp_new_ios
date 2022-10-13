@@ -154,6 +154,13 @@
                         <state key="normal" title=""/>
                         <buttonConfiguration key="configuration" style="plain" image="ellipsis.circle" catalog="system"/>
                     </button>
+                    <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="vfZ-ce-T4q">
+                        <rect key="frame" x="340" y="21.5" width="25" height="24"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="25" id="9gU-FC-Ww5"/>
+                            <constraint firstAttribute="width" constant="25" id="end-3i-Xuh"/>
+                        </constraints>
+                    </imageView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Mfu-JH-XN3">
                         <rect key="frame" x="296" y="17" width="34" height="33"/>
                         <color key="tintColor" systemColor="systemBlueColor"/>
@@ -231,6 +238,7 @@
                     </imageView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="vfZ-ce-T4q" firstAttribute="centerX" secondItem="Q0B-mL-dK8" secondAttribute="centerX" id="0cM-nb-efh"/>
                     <constraint firstItem="f6l-Bp-fUH" firstAttribute="leading" secondItem="toB-kP-27M" secondAttribute="trailing" constant="5" id="34a-Mu-aop"/>
                     <constraint firstItem="f6l-Bp-fUH" firstAttribute="bottom" secondItem="Mfu-JH-XN3" secondAttribute="bottom" id="3R8-V1-gue"/>
                     <constraint firstItem="1Pj-Yk-u2T" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="4BB-Tf-aAh"/>
@@ -241,6 +249,7 @@
                     <constraint firstItem="f6l-Bp-fUH" firstAttribute="trailing" secondItem="Mfu-JH-XN3" secondAttribute="trailing" id="AP3-fe-Mkw"/>
                     <constraint firstItem="f6l-Bp-fUH" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Ibi-ZE-P5r"/>
                     <constraint firstItem="Q0B-mL-dK8" firstAttribute="leading" secondItem="f6l-Bp-fUH" secondAttribute="trailing" id="STR-57-w8h"/>
+                    <constraint firstItem="vfZ-ce-T4q" firstAttribute="centerY" secondItem="Q0B-mL-dK8" secondAttribute="centerY" id="Ycn-q9-J9x"/>
                     <constraint firstItem="eiF-YO-8YM" firstAttribute="centerX" secondItem="1Pj-Yk-u2T" secondAttribute="leading" id="c7c-5K-Fqh"/>
                     <constraint firstItem="1Pj-Yk-u2T" firstAttribute="top" secondItem="ZTZ-0b-Ptx" secondAttribute="centerY" id="ggF-kH-JDH"/>
                     <constraint firstItem="1Pj-Yk-u2T" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="iWZ-Fv-PPJ"/>
@@ -267,6 +276,7 @@
                 <outlet property="locationLabel" destination="j2s-UD-Jnl" id="A9J-F7-CYm"/>
                 <outlet property="menuButton" destination="Q0B-mL-dK8" id="wRP-cu-9aA"/>
                 <outlet property="secondDotLabel" destination="m6b-nj-VnU" id="kyJ-pt-F0a"/>
+                <outlet property="selectedImageView" destination="vfZ-ce-T4q" id="2xL-wJ-r5f"/>
                 <outlet property="thumbnailImageView" destination="1Pj-Yk-u2T" id="UHT-hM-G1o"/>
                 <outlet property="titleLabel" destination="7cs-uh-SL9" id="bjy-Rl-STU"/>
                 <outlet property="verseLabel" destination="nQB-Ua-gsO" id="hJf-Jn-kJG"/>
@@ -276,6 +286,7 @@
     </objects>
     <resources>
         <image name="arrow.down.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="checkmark.circle" catalog="system" width="128" height="121"/>
         <image name="checkmark.circle.fill" catalog="system" width="128" height="121"/>
         <image name="ellipsis.circle" catalog="system" width="128" height="121"/>
         <image name="logo_40" width="40" height="40"/>

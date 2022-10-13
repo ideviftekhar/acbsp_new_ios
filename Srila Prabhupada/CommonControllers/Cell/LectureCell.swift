@@ -31,6 +31,7 @@ class LectureCell: UITableViewCell, IQModelableCell {
     @IBOutlet private var locationLabel: UILabel?
     @IBOutlet private var dateLabel: UILabel?
     @IBOutlet private var menuButton: UIButton?
+    @IBOutlet private var selectedImageView: UIImageView?
     @IBOutlet private var downloadProgressView: MBCircularProgressBarView?
     @IBOutlet private var listenProgressView: MBCircularProgressBarView?
 
@@ -51,10 +52,14 @@ class LectureCell: UITableViewCell, IQModelableCell {
             return
         }
 
-        DownloadManager.shared.unregisterProgress(observer: self, lectureID: model.id)
+        DownloadManager.shared.unregisterProgress(observer: self, lectureID: model.lecture.id)
     }
 
-    typealias Model = Lecture
+    struct Model: Hashable {
+        let lecture: Lecture
+        let isSelectionEnabled: Bool
+        let isSelected: Bool
+    }
 
     var model: Model? {
         didSet {
@@ -62,28 +67,30 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 return
             }
 
-            titleLabel?.text = model.titleDisplay
-            if !model.legacyData.verse.isEmpty {
-                verseLabel?.text = model.legacyData.verse
+            let lecture = model.lecture
+
+            titleLabel?.text = lecture.titleDisplay
+            if !lecture.legacyData.verse.isEmpty {
+                verseLabel?.text = lecture.legacyData.verse
             } else {
-                verseLabel?.text = model.category.joined(separator: ", ")
+                verseLabel?.text = lecture.category.joined(separator: ", ")
             }
 
-            if !model.location.displayString.isEmpty {
-                locationLabel?.text = model.location.displayString
+            if !lecture.location.displayString.isEmpty {
+                locationLabel?.text = lecture.location.displayString
             } else {
-                locationLabel?.text = model.place.joined(separator: ", ")
+                locationLabel?.text = lecture.place.joined(separator: ", ")
             }
 
-            durationLabel?.text = model.lengthTime.displayString
-            dateLabel?.text = model.dateOfRecording.display_dd_MMM_yyyy
+            durationLabel?.text = lecture.lengthTime.displayString
+            dateLabel?.text = lecture.dateOfRecording.display_dd_MMM_yyyy
 
             firstDotLabel?.isHidden = verseLabel?.text?.isEmpty ?? true
             secondDotLabel?.isHidden = locationLabel?.text?.isEmpty ?? true
 
             let progress: CGFloat
-            if model.length != 0 {
-                progress = CGFloat(model.lastPlayedPoint) / CGFloat(model.length)
+            if model.lecture.length != 0 {
+                progress = CGFloat(lecture.lastPlayedPoint) / CGFloat(lecture.length)
             } else {
                 progress = 0
             }
@@ -93,13 +100,13 @@ class LectureCell: UITableViewCell, IQModelableCell {
             listenProgressView?.isHidden = progress >= 1.0
             completedIconImageView?.isHidden = progress < 1.0
 
-            if let url = model.thumbnailURL {
+            if let url = lecture.thumbnailURL {
                 thumbnailImageView?.af.setImage(withURL: url, placeholderImage: UIImage(named: "logo_40"))
             } else {
                 thumbnailImageView?.image = UIImage(named: "logo_40")
             }
 
-            switch model.downloadingState {
+            switch lecture.downloadingState {
             case .notDownloaded:
                 downloadedIconImageView?.isHidden = true
                 downloadProgressView?.isHidden = true
@@ -109,7 +116,7 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 downloadedIconImageView?.image = UIImage(compatibleSystemName: "arrow.down.circle.fill")
                 downloadProgressView?.isHidden = false
 
-                DownloadManager.shared.registerProgress(observer: self, lectureID: model.id) { [weak self] progress in
+                DownloadManager.shared.registerProgress(observer: self, lectureID: lecture.id) { [weak self] progress in
                     self?.downloadProgressView?.value = progress * 100
                 }
             case .downloaded:
@@ -126,12 +133,12 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 downloadProgressView?.value = 0
             }
 
-            favouritesIconImageView?.isHidden = !model.isFavourites
+            favouritesIconImageView?.isHidden = !lecture.isFavourites
 
             do {
                 var actions: [UIAction] = []
 
-                switch model.downloadingState {
+                switch lecture.downloadingState {
                 case .notDownloaded, .error:
                     if let download = allActions[.download] {
                         actions.append(download)
@@ -147,7 +154,7 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 }
 
                 // Is Favourites
-                if model.isFavourites, let removeFromFavourites = allActions[.removeFromFavourites] {
+                if lecture.isFavourites, let removeFromFavourites = allActions[.removeFromFavourites] {
                     actions.append(removeFromFavourites)
                 } else if let markAsFavourite = allActions[.markAsFavourite] {
                     actions.append(markAsFavourite)
@@ -170,8 +177,12 @@ class LectureCell: UITableViewCell, IQModelableCell {
                     actions.append(share)
                 }
 
+                let isSelected = model.isSelectionEnabled && model.isSelected
+
                 self.optionMenu = self.optionMenu.replacingChildren(actions)
-                self.menuButton?.isHidden = actions.isEmpty
+                self.menuButton?.isHidden = actions.isEmpty || model.isSelectionEnabled
+                self.selectedImageView?.isHidden = !isSelected
+                self.backgroundColor = isSelected ? UIColor.systemGray3 : nil
 
                 if #available(iOS 14.0, *) {
                     self.menuButton?.menu = self.optionMenu
@@ -192,7 +203,7 @@ extension LectureCell {
                     return
                 }
 
-                delegate?.lectureCell(self, didSelected: option, with: model)
+                delegate?.lectureCell(self, didSelected: option, with: model.lecture)
             })
 
             if option == .downloading {
@@ -228,7 +239,7 @@ extension LectureCell {
                     return
                 }
 
-                delegate?.lectureCell(self, didSelected: option, with: model)
+                delegate?.lectureCell(self, didSelected: option, with: model.lecture)
             }))
         }
 

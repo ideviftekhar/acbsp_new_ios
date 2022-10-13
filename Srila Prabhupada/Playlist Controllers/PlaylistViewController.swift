@@ -275,16 +275,18 @@ extension PlaylistViewController {
 extension PlaylistViewController: IQListViewDelegateDataSource {
 
     private func refreshUI(animated: Bool? = nil) {
-
-        let animated: Bool = animated ?? (models.count <= 1000)
-        list.performUpdates({
-
-            let section = IQSection(identifier: "Cell", headerSize: CGSize.zero, footerSize: CGSize.zero)
-            list.append(section)
-
-            list.append(Cell.self, models: models, section: section)
-
-        }, animatingDifferences: animated, completion: nil)
+        
+        DispatchQueue.global().async { [self] in
+            let animated: Bool = animated ?? (models.count <= 1000)
+            list.performUpdates({
+                
+                let section = IQSection(identifier: "Cell", headerSize: CGSize.zero, footerSize: CGSize.zero)
+                list.append(section)
+                
+                list.append(Cell.self, models: models, section: section)
+                
+            }, animatingDifferences: animated, completion: nil)
+        }
     }
 
     func listView(_ listView: IQListView, modifyCell cell: IQListCell, at indexPath: IndexPath) {
@@ -308,7 +310,7 @@ extension PlaylistViewController: IQListViewDelegateDataSource {
                 }), buttons: (title: "Add", {
 
                     ProgressHUD.show("Adding...", interaction: false)
-                    self.playlistViewModel.add(lecture: lectureToAdd, to: model) { result in
+                    self.playlistViewModel.add(lectures: [lectureToAdd], to: model, completion: { result in
                         ProgressHUD.dismiss()
 
                         switch result {
@@ -317,7 +319,7 @@ extension PlaylistViewController: IQListViewDelegateDataSource {
                         case .failure(let error):
                             self.showAlert(title: "Error", message: error.localizedDescription)
                         }
-                    }
+                    })
                 }))
             } else {
                 let controller = UIStoryboard.playlists.instantiate(PlaylistLecturesViewController.self)
@@ -331,6 +333,24 @@ extension PlaylistViewController: IQListViewDelegateDataSource {
 extension PlaylistViewController: CreatePlaylistViewControllerDelegate {
     func controller(_ controller: CreatePlaylistViewController, didAdd playlist: Playlist) {
 
+        guard let selectedPlaylistType = PlaylistType(rawValue: playlistSegmentControl.selectedSegmentIndex) else {
+            refreshAsynchronous(source: .default)
+            return
+        }
+
+        if playlist.listType == selectedPlaylistType {
+            var models = models
+            if let index = models.firstIndex(where: { $0.listID == playlist.listID }) {
+                models[index] = playlist
+            } else {
+                models.insert(playlist, at: 0)
+            }
+            reloadData(with: models)
+        }
+        refreshAsynchronous(source: .default)
+    }
+
+    func controller(_ controller: CreatePlaylistViewController, didUpdate playlist: Playlist) {
         guard let selectedPlaylistType = PlaylistType(rawValue: playlistSegmentControl.selectedSegmentIndex) else {
             refreshAsynchronous(source: .default)
             return

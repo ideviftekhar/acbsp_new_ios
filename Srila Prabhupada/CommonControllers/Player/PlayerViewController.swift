@@ -44,20 +44,24 @@ class PlayerViewController: LectureViewController {
 
     @IBOutlet private var miniPlayerView: MiniPlayerView!
     @IBOutlet private var fullPlayerContainerView: UIView!
+    @IBOutlet private var audioVisualizerView: UIView!
 
     private let playerContainerView: UIView = UIView()
 
     var itemStatusObserver: NSKeyValueObservation?
+    var itemRateObserver: NSKeyValueObservation?
     var itemDidPlayToEndObserver: AnyObject?
 
     private var isSeeking = false
-    var player: AVPlayer! {
+    private var player: AVPlayer? {
         willSet {
             if let item = player?.currentItem {
                 removePlayerItemNotificationObserver(item: item)
             }
         }
         didSet {
+
+            player?.allowsExternalPlayback = true
             addPeriodicTimeObserver()
             if let item = player?.currentItem {
                 addPlayerItemNotificationObserver(item: item)
@@ -69,19 +73,44 @@ class PlayerViewController: LectureViewController {
 
     var playRateMenu: UIMenu!
     var selectedRate: PlayRate {
-        if #available(iOS 15.0, *) {
-            guard let selectedSortAction = playRateMenu.selectedElements.first as? UIAction,
-                  let selectedPlayRate = PlayRate(rawValue: selectedSortAction.identifier.rawValue) else {
-                return PlayRate.one
+        get {
+            if #available(iOS 15.0, *) {
+                guard let selectedSortAction = playRateMenu.selectedElements.first as? UIAction,
+                      let selectedPlayRate = PlayRate(rawValue: selectedSortAction.identifier.rawValue) else {
+                    return PlayRate.one
+                }
+                return selectedPlayRate
+            } else {
+                guard let children: [UIAction] = playRateMenu.children as? [UIAction],
+                      let selectedSortAction = children.first(where: { $0.state == .on }),
+                        let selectedPlayRate = PlayRate(rawValue: selectedSortAction.identifier.rawValue) else {
+                    return PlayRate.one
+                }
+                return selectedPlayRate
             }
-            return selectedPlayRate
-        } else {
-            guard let children: [UIAction] = playRateMenu.children as? [UIAction],
-                  let selectedSortAction = children.first(where: { $0.state == .on }),
-                    let selectedPlayRate = PlayRate(rawValue: selectedSortAction.identifier.rawValue) else {
-                return PlayRate.one
+        }
+        set {
+            let userDefaultKey: String = "\(Self.self).\(PlayRate.self)"
+            let actions: [UIAction] = self.playRateMenu.children as? [UIAction] ?? []
+           for anAction in actions {
+               if anAction.identifier.rawValue == newValue.rawValue { anAction.state = .on  } else {  anAction.state = .off }
             }
-            return selectedPlayRate
+
+            UserDefaults.standard.set(newValue.rawValue, forKey: userDefaultKey)
+            UserDefaults.standard.synchronize()
+
+            self.playRateMenu = self.playRateMenu.replacingChildren(actions)
+
+            if #available(iOS 14.0, *) {
+                self.speedMenuButton.menu = self.playRateMenu
+            }
+
+            let playRate = self.selectedRate
+            if !isPaused {
+                player?.rate = playRate.rate
+            }
+            speedMenuButton.setTitle(playRate.rawValue, for: .normal)
+            SPNowPlayingInfoCenter.shared.update(lecture: currentLecture, player: player, selectedRate: selectedRate)
         }
     }
 
@@ -93,6 +122,10 @@ class PlayerViewController: LectureViewController {
 
             self.pause()
             if let currentLecture = currentLecture {
+                UIApplication.shared.beginReceivingRemoteControlEvents()
+
+                try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+                try? AVAudioSession.sharedInstance().setActive(true)
                 titleLabel.text = currentLecture.titleDisplay
                 verseLabel.text = currentLecture.legacyData.verse
                 languageLabel.text = currentLecture.language.main
@@ -128,9 +161,9 @@ class PlayerViewController: LectureViewController {
                     player = AVPlayer(playerItem: item)
                 }
 
-                if let index = playlistLectures.firstIndex(where: { $0.id == currentLecture.id && $0.creationTimestamp == currentLecture.creationTimestamp }) {
+                if let index = currentLectureQueue.firstIndex(where: { $0.id == currentLecture.id && $0.creationTimestamp == currentLecture.creationTimestamp }) {
                     previousLectureButton.isEnabled = (index != 0)
-                    nextLectureButton.isEnabled = (index+1 < playlistLectures.count)
+                    nextLectureButton.isEnabled = (index+1 < currentLectureQueue.count)
                 } else {
                     previousLectureButton.isEnabled = false
                     nextLectureButton.isEnabled = false
@@ -139,6 +172,9 @@ class PlayerViewController: LectureViewController {
                     minimize(animated: true)
                 }
             } else {
+                try? AVAudioSession.sharedInstance().setCategory(.ambient)
+                try? AVAudioSession.sharedInstance().setActive(true)
+                player = nil
                 previousLectureButton.isEnabled = false
                 nextLectureButton.isEnabled = false
 
@@ -152,11 +188,27 @@ class PlayerViewController: LectureViewController {
                 secondDotLabel?.isHidden = false
                 timeSlider.maximumValue = 0
                 close(animated: true)
+                UIApplication.shared.endReceivingRemoteControlEvents()
             }
+
+            SPNowPlayingInfoCenter.shared.update(lecture: currentLecture, player: player, selectedRate: self.selectedRate)
         }
     }
 
     var playlistLectures: [Model] = [] {
+        didSet {
+            loadViewIfNeeded()
+            if loopLectureButton.isSelected == true {
+                currentLectureQueue.removeAll()
+            } else if shuffleLectureButton.isSelected == true {
+                currentLectureQueue = playlistLectures.shuffled()
+            } else {
+                currentLectureQueue = playlistLectures
+            }
+        }
+    }
+
+    private var currentLectureQueue: [Model] = [] {
         didSet {
             loadViewIfNeeded()
             refreshAsynchronous(source: .cache)
@@ -190,6 +242,9 @@ class PlayerViewController: LectureViewController {
             swipeGesture.direction = .down
             self.view.addGestureRecognizer(swipeGesture)
         }
+
+        registerNowPlayingCommands()
+        registerAudioSessionObservers()
     }
 
     @objc private func swipeRecognized(_ sender: UISwipeGestureRecognizer) {
@@ -205,7 +260,7 @@ class PlayerViewController: LectureViewController {
     override func refreshAsynchronous(source: FirestoreSource) {
         super.refreshAsynchronous(source: source)
 
-        reloadData(with: self.playlistLectures)
+        reloadData(with: self.currentLectureQueue)
     }
 
     @IBAction func backButtonTapped(_ sender: UIButton) {
@@ -343,26 +398,80 @@ class PlayerViewController: LectureViewController {
 
 extension PlayerViewController {
 
+    private func registerNowPlayingCommands() {
+        SPNowPlayingInfoCenter.shared.registerNowPlayingInfoCenterCommands { [self] (command, value) in
+            switch command {
+            case .pause:
+                pause()
+            case .play:
+                play()
+            case .stop:
+                currentLecture = nil
+            case .togglePausePlay:
+                if isPaused {
+                    play()
+                } else {
+                    pause()
+                }
+            case .nextTrack:
+                playNext()
+            case .previousTrack:
+                playPrevious()
+            case .changeRepeatMode:
+                if let value = value as? Bool {
+                    change(shuffle: false, loop: value)
+                }
+            case .changeShuffleMode:
+                if let value = value as? Bool {
+                    change(shuffle: value, loop: false)
+                }
+            case .changePlaybackRate:
+                if let value = value as? Float, let rate = PlayRate(rawValue: value) {
+                    self.selectedRate = rate
+                }
+
+            case .skipBackward, .skipForward:
+                if let value = value as? TimeInterval {
+                    seek(seconds: Int(value))
+                }
+            case .changePlaybackPosition:
+                if let value = value as? TimeInterval {
+                    seekTo(seconds: Int(value))
+                }
+            }
+        }
+    }
+
     var isPaused: Bool {
         player?.rate == 0.0
     }
 
     func play() {
-        try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default, policy: .longFormAudio)
-        try? AVAudioSession.sharedInstance().setActive(true)
         player?.play()
         player?.rate = self.selectedRate.rate
-        playPauseButton.setImage(UIImage(compatibleSystemName: "pause.fill"), for: .normal)
-        miniPlayerView.isPlaying = true
     }
 
     func pause() {
         player?.pause()
-        playPauseButton.setImage(UIImage(compatibleSystemName: "play.fill"), for: .normal)
-        miniPlayerView.isPlaying = false
+    }
 
-        try? AVAudioSession.sharedInstance().setCategory(.ambient)
-        try? AVAudioSession.sharedInstance().setActive(true)
+    func seek(seconds: Int) {
+
+        guard let player = player, let currentItem = player.currentItem else { return }
+
+        let duration = Int(CMTimeGetSeconds(currentItem.duration))
+
+        let currentTime = Int(CMTimeGetSeconds(player.currentTime()))
+        var newTime = currentTime + seconds
+        if newTime < 0 {
+            newTime = 0
+        }
+
+        if newTime > duration {
+            newTime = duration
+        }
+
+        seekTo(seconds: newTime)
     }
 
     func seekTo(seconds: Int) {
@@ -372,6 +481,7 @@ extension PlayerViewController {
         isSeeking = true
         player?.seek(to: targetTime, completionHandler: { _ in
             self.isSeeking = false
+            SPNowPlayingInfoCenter.shared.update(lecture: self.currentLecture, player: self.player, selectedRate: self.selectedRate)
         })
     }
 }
@@ -406,15 +516,7 @@ extension PlayerViewController {
 extension PlayerViewController {
 
     @IBAction func backwardXSecondsPressed(_ sender: UIButton) {
-        guard let player = player else { return }
-
-        let currentTime = CMTimeGetSeconds(player.currentTime())
-        var newTime = currentTime - 10.0
-        if newTime < 0 {
-            newTime = 0
-        }
-
-        seekTo(seconds: Int(newTime))
+        seek(seconds: -10)
     }
 
     @IBAction func timeSlider(_ sender: UISlider) {
@@ -422,22 +524,68 @@ extension PlayerViewController {
     }
 
     @IBAction func forwardXSecondPressed(_ sender: UIButton) {
-        guard let player = player else { return }
+        seek(seconds: 10)
+    }
+}
 
-        guard let duration = player.currentItem?.duration else { return }
-        let currentTime = CMTimeGetSeconds(player.currentTime())
-        let newTime = currentTime + 10.0
+extension PlayerViewController {
 
-        if newTime < (CMTimeGetSeconds(duration) - 10.0) {
-            seekTo(seconds: Int(newTime))
+    func playNext() {
+        if loopLectureButton.isSelected == true {
+            seekTo(seconds: 0)
+        } else {
+            if let currentLecture = currentLecture,
+               let index = currentLectureQueue.firstIndex(where: { $0.id == currentLecture.id && $0.creationTimestamp == currentLecture.creationTimestamp }), (index+1) < currentLectureQueue.count {
+                let newLecture = currentLectureQueue[index+1]
+                self.currentLecture = newLecture
+                play()
+            }
+        }
+    }
+
+    func playPrevious() {
+        if loopLectureButton.isSelected == true {
+            seekTo(seconds: 0)
+        } else {
+            if let currentLecture = currentLecture,
+               let index = currentLectureQueue.firstIndex(where: { $0.id == currentLecture.id && $0.creationTimestamp == currentLecture.creationTimestamp }), index > 0 {
+
+                let newLecture = currentLectureQueue[index-1]
+                self.currentLecture = newLecture
+                play()
+            }
         }
     }
 }
 
 extension PlayerViewController {
 
+    private func registerAudioSessionObservers() {
+        NotificationCenter.default.addObserver(forName: AVAudioSession.interruptionNotification, object: nil, queue: nil) { [self] notification in
+
+            if let interruptionTypeInt = notification.userInfo?[AVAudioSessionInterruptionTypeKey] as? UInt,
+               let interruptionType = AVAudioSession.InterruptionType(rawValue: interruptionTypeInt) {
+
+                switch interruptionType {
+                case .began:
+                    pause()
+                case .ended:
+                    if let interruptionOptionInt = notification.userInfo?[AVAudioSessionInterruptionOptionKey] as? UInt {
+                        let interruptionOption = AVAudioSession.InterruptionOptions(rawValue: interruptionOptionInt)
+                        if interruptionOption == .shouldResume {
+                            play()
+                        }
+                    }
+                @unknown default:
+                    break
+                }
+            }
+        }
+    }
+
     private func removePlayerItemNotificationObserver(item: AVPlayerItem) {
         self.itemStatusObserver?.invalidate()
+        self.itemRateObserver?.invalidate()
         if let itemDidPlayToEndObserver = itemDidPlayToEndObserver {
             NotificationCenter.default.removeObserver(itemDidPlayToEndObserver, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: item)
         }
@@ -445,7 +593,21 @@ extension PlayerViewController {
 
     private func addPlayerItemNotificationObserver(item: AVPlayerItem) {
 
+        self.itemRateObserver = player?.observe(\.rate, options: [.new, .old], changeHandler: { [self] (_, change) in
+
+            if let newValue = change.newValue, newValue != 0.0 {
+                playPauseButton.setImage(UIImage(compatibleSystemName: "pause.fill"), for: .normal)
+                miniPlayerView.isPlaying = true
+                SPNowPlayingInfoCenter.shared.update(lecture: currentLecture, player: player, selectedRate: selectedRate)
+            } else {
+                playPauseButton.setImage(UIImage(compatibleSystemName: "play.fill"), for: .normal)
+                miniPlayerView.isPlaying = false
+                SPNowPlayingInfoCenter.shared.update(lecture: currentLecture, player: player, selectedRate: selectedRate)
+            }
+        })
+
         self.itemStatusObserver = item.observe(\.status, options: [.new, .old], changeHandler: { [self] (playerItem, change) in
+
             if playerItem.status == .readyToPlay {
 
                 if playerItem.duration.isValid {
@@ -459,61 +621,51 @@ extension PlayerViewController {
         })
 
         itemDidPlayToEndObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: item, queue: nil) { [self] _ in
-            if loopLectureButton.isSelected == true {
-                player.seek(to: CMTime.zero)
-            } else if shuffleLectureButton.isSelected == true {
-                if currentLecture != nil {
-                    let newLecture = playlistLectures.randomElement()
-                    self.currentLecture = newLecture
-                }
-            } else {
-                if let currentLecture = currentLecture,
-                   let index = playlistLectures.firstIndex(where: { $0.id == currentLecture.id && $0.creationTimestamp == currentLecture.creationTimestamp }), (index+1) < playlistLectures.count {
-                    let newLecture = playlistLectures[index+1]
-                    self.currentLecture = newLecture
-                }
-            }
-            play()
+            playNext()
         }
     }
 
     @IBAction func nextLecturePressed(_ sender: UIButton) {
-
-        if let currentLecture = currentLecture,
-           let index = playlistLectures.firstIndex(where: { $0.id == currentLecture.id && $0.creationTimestamp == currentLecture.creationTimestamp }), (index+1) < playlistLectures.count {
-
-            let newLecture = playlistLectures[index+1]
-            self.currentLecture = newLecture
-            play()
-        }
+        playNext()
     }
 
     @IBAction func previousLecturePressed(_ sender: UIButton) {
+        playPrevious()
+    }
+}
 
-        if let currentLecture = currentLecture,
-           let index = playlistLectures.firstIndex(where: { $0.id == currentLecture.id && $0.creationTimestamp == currentLecture.creationTimestamp }), index > 0 {
+extension PlayerViewController {
+    private func change(shuffle: Bool, loop: Bool) {
 
-            let newLecture = playlistLectures[index-1]
-            self.currentLecture = newLecture
-            play()
+        if shuffle {
+            shuffleLectureButton.isSelected = true
+            loopLectureButton.isSelected = false
+        } else if loop {
+            loopLectureButton.isSelected = true
+            shuffleLectureButton.isSelected = false
+        } else {
+            loopLectureButton.isSelected = false
+            shuffleLectureButton.isSelected = false
         }
+
+        let allLectures = self.playlistLectures
+        self.playlistLectures = allLectures // This is to reload current playlist
     }
 
     @IBAction func loopLectureButtonPressed(_ sender: UIButton) {
         if loopLectureButton.isSelected == true {
-            loopLectureButton.isSelected = false
+            change(shuffle: false, loop: false)
         } else {
-            loopLectureButton.isSelected = true
-            shuffleLectureButton.isSelected = false
+            change(shuffle: false, loop: true)
         }
     }
 
     @IBAction func shuffleLectureButtonPressed(_ sender: UIButton) {
+
         if shuffleLectureButton.isSelected == true {
-            shuffleLectureButton.isSelected = false
+            change(shuffle: false, loop: false)
         } else {
-            loopLectureButton.isSelected = false
-            shuffleLectureButton.isSelected = true
+            change(shuffle: true, loop: false)
         }
     }
 }
@@ -571,26 +723,10 @@ extension PlayerViewController {
     }
 
     private func playRateActionSelected(action: UIAction) {
-        let userDefaultKey: String = "\(Self.self).\(PlayRate.self)"
-        let actions: [UIAction] = self.playRateMenu.children as? [UIAction] ?? []
-       for anAction in actions {
-            if anAction.identifier == action.identifier { anAction.state = .on  } else {  anAction.state = .off }
+
+        if let newRate = PlayRate(rawValue: action.identifier.rawValue) {
+            self.selectedRate = newRate
         }
-
-        UserDefaults.standard.set(action.identifier.rawValue, forKey: userDefaultKey)
-        UserDefaults.standard.synchronize()
-
-        self.playRateMenu = self.playRateMenu.replacingChildren(actions)
-
-        if #available(iOS 14.0, *) {
-            self.speedMenuButton.menu = self.playRateMenu
-        }
-
-        let playRate = self.selectedRate
-        if !isPaused {
-            player?.rate = playRate.rate
-        }
-        speedMenuButton.setTitle(playRate.rawValue, for: .normal)
     }
 }
 

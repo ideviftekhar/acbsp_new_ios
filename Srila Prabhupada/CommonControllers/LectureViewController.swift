@@ -10,6 +10,10 @@ import AVKit
 import FirebaseFirestore
 import IQListKit
 
+protocol LectureViewControllerDelegate: AnyObject {
+    func lectureController(_ controller: LectureViewController, didSelected lectures: [Lecture])
+}
+
 class LectureViewController: SearchViewController {
 
     @IBOutlet private var lectureTebleView: UITableView!
@@ -21,8 +25,14 @@ class LectureViewController: SearchViewController {
         }
     }()
 
+    weak var delegate: LectureViewControllerDelegate?
+
     private let sortButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(compatibleSystemName: "arrow.up.arrow.down.circle"), style: .plain, target: nil, action: nil)
     private var sortMenu: UIMenu!
+
+    private lazy var doneSelectionButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneSelectionAction(_:)))
+    var isSelectionEnabled: Bool = false
+    var selectedModels: [Model] = []
 
     static let lectureViewModel: LectureViewModel = DefaultLectureViewModel()
 
@@ -57,6 +67,9 @@ class LectureViewController: SearchViewController {
 
         var rightButtons = self.navigationItem.rightBarButtonItems ?? []
         rightButtons.append(sortButton)
+        if isSelectionEnabled {
+            rightButtons.insert(doneSelectionButton, at: 0)
+        }
         self.navigationItem.rightBarButtonItems = rightButtons
 
         do {
@@ -73,6 +86,10 @@ class LectureViewController: SearchViewController {
         }
 
         configureSortButton()
+    }
+
+    @objc private func doneSelectionAction(_ sender: UIBarButtonItem) {
+        delegate?.lectureController(self, didSelected: selectedModels)
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -168,18 +185,25 @@ extension LectureViewController: IQListViewDelegateDataSource {
 
     private func refreshUI(animated: Bool? = nil) {
 
-        let animated: Bool = animated ?? (models.count <= 1000)
-        list.performUpdates({
-
-            let section = IQSection(identifier: "Cell", headerSize: CGSize.zero, footerSize: CGSize.zero)
-            list.append(section)
-
-            list.append(Cell.self, models: models, section: section)
-
-        }, animatingDifferences: animated, completion: {
-            self.list.noItemTitle = self.noItemTitle
-            self.list.noItemMessage = self.noItemMessage
-        })
+        DispatchQueue.global().async { [self] in
+            
+            let animated: Bool = animated ?? (models.count <= 1000)
+            list.performUpdates({
+                
+                let section = IQSection(identifier: "Cell", headerSize: CGSize.zero, footerSize: CGSize.zero)
+                list.append(section)
+                
+                let newModels: [Cell.Model] = models.map { modelLecture in
+                    Cell.Model(lecture: modelLecture, isSelectionEnabled: isSelectionEnabled, isSelected: selectedModels.contains(where: { modelLecture.id == $0.id }))
+                }
+                
+                list.append(Cell.self, models: newModels, section: section)
+                
+            }, animatingDifferences: animated, completion: {
+                self.list.noItemTitle = self.noItemTitle
+                self.list.noItemMessage = self.noItemMessage
+            })
+        }
     }
 
     func listView(_ listView: IQListView, modifyCell cell: IQListCell, at indexPath: IndexPath) {
@@ -192,8 +216,17 @@ extension LectureViewController: IQListViewDelegateDataSource {
 
         if let model = item.model as? Cell.Model {
 
-            if let tabController = self.tabBarController as? TabBarController {
-                tabController.showPlayer(lecture: model, playlistLectures: self.models)
+            if isSelectionEnabled {
+                if let index = selectedModels.firstIndex(of: model.lecture) {
+                    selectedModels.remove(at: index)
+                } else {
+                    selectedModels.append(model.lecture)
+                }
+                refreshUI(animated: false)
+            } else {
+                if let tabController = self.tabBarController as? TabBarController {
+                    tabController.showPlayer(lecture: model.lecture, playlistLectures: self.models)
+                }
             }
         }
     }

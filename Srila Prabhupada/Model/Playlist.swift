@@ -27,7 +27,7 @@ struct Playlist: Hashable, Codable {
 
     let authorEmail: String
     let description: String?
-    let lectureIds: [Int]
+    var lectureIds: [Int]
     let creationTime: Date
     let lecturesCategory: String
     let title: String

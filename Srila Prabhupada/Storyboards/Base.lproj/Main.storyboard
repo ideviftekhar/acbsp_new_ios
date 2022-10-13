@@ -214,7 +214,7 @@
         <!--Navigation Controller-->
         <scene sceneID="PIa-cY-TFM">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="gmZ-qk-tiz" customClass="NavigationController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="LoginNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="gmZ-qk-tiz" customClass="NavigationController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="gWd-yd-kJZ">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="91"/>

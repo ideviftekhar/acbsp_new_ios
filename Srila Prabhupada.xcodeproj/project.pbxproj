@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		C002119A28F6A03200BE94EC /* SPNowPlayingInfoCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C002119928F6A03200BE94EC /* SPNowPlayingInfoCenter.swift */; };
+		C002119C28F6AD5300BE94EC /* SPNowPlayableCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C002119B28F6AD5300BE94EC /* SPNowPlayableCommand.swift */; };
 		C0065D4828D881A400B18AA6 /* SideMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0065D4728D881A400B18AA6 /* SideMenuItem.swift */; };
 		C0065D4B28D883F300B18AA6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0065D4A28D883F300B18AA6 /* Constants.swift */; };
 		C0065D4D28D884AF00B18AA6 /* LectureOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0065D4C28D884AF00B18AA6 /* LectureOption.swift */; };
@@ -74,6 +76,7 @@
 		C018A99428F421A000C0E002 /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C018A99328F421A000C0E002 /* Int+Extension.swift */; };
 		C03E3F2628DCC20A00B987DD /* FirestoreCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03E3F2528DCC20A00B987DD /* FirestoreCollection.swift */; };
 		C03E3F2828DCC6C500B987DD /* ListenInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03E3F2728DCC6C500B987DD /* ListenInfo.swift */; };
+		C07A8F3028F7E9CE001A6162 /* SPAudioVisualizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07A8F2F28F7E9CE001A6162 /* SPAudioVisualizerView.swift */; };
 		C088178828DDB8FA00D3106C /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C088178728DDB8FA00D3106C /* FirestoreManager.swift */; };
 		C088178A28DDBC9100D3106C /* FirestoreManager+SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = C088178928DDBC9100D3106C /* FirestoreManager+SignIn.swift */; };
 		C088178C28DDE69600D3106C /* PlaylistSortType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C088178B28DDE69600D3106C /* PlaylistSortType.swift */; };
@@ -112,6 +115,8 @@
 		277C5557A9865640DB48AF50 /* Pods-Srila Prabhupada.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Srila Prabhupada.release.xcconfig"; path = "Target Support Files/Pods-Srila Prabhupada/Pods-Srila Prabhupada.release.xcconfig"; sourceTree = "<group>"; };
 		3320FB8F92398ED70E906DB5 /* Pods_Srila_Prabhupada.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Srila_Prabhupada.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A81878F32167781392E62B86 /* Pods-Srila Prabhupada.release-client.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Srila Prabhupada.release-client.xcconfig"; path = "Target Support Files/Pods-Srila Prabhupada/Pods-Srila Prabhupada.release-client.xcconfig"; sourceTree = "<group>"; };
+		C002119928F6A03200BE94EC /* SPNowPlayingInfoCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPNowPlayingInfoCenter.swift; sourceTree = "<group>"; };
+		C002119B28F6AD5300BE94EC /* SPNowPlayableCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPNowPlayableCommand.swift; sourceTree = "<group>"; };
 		C003CD9E28D8491600A11039 /* Srila Prabhupada.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Srila Prabhupada.entitlements"; sourceTree = "<group>"; };
 		C0065D4728D881A400B18AA6 /* SideMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuItem.swift; sourceTree = "<group>"; };
 		C0065D4A28D883F300B18AA6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -183,6 +188,7 @@
 		C018A99328F421A000C0E002 /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		C03E3F2528DCC20A00B987DD /* FirestoreCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreCollection.swift; sourceTree = "<group>"; };
 		C03E3F2728DCC6C500B987DD /* ListenInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenInfo.swift; sourceTree = "<group>"; };
+		C07A8F2F28F7E9CE001A6162 /* SPAudioVisualizerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPAudioVisualizerView.swift; sourceTree = "<group>"; };
 		C088178728DDB8FA00D3106C /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		C088178928DDBC9100D3106C /* FirestoreManager+SignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirestoreManager+SignIn.swift"; sourceTree = "<group>"; };
 		C088178B28DDE69600D3106C /* PlaylistSortType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistSortType.swift; sourceTree = "<group>"; };
@@ -356,6 +362,7 @@
 				C03E3F2428DCC1EB00B987DD /* Firebase Firestore */,
 				C0FA305B28CF461900E78843 /* Extensions */,
 				C00AB21328D1FD6D00A62A2F /* Model */,
+				C07A8F2E28F7E9B0001A6162 /* Third Party */,
 				C00DC56828E1DA65001EDE95 /* Database */,
 				C007586728E5D9100010EBE6 /* DownloadManager */,
 				C00E4DDE28CA393600F1A123 /* PreLogIn */,
@@ -454,6 +461,22 @@
 			path = "Firebase Firestore";
 			sourceTree = "<group>";
 		};
+		C07A8F2D28F7E9A4001A6162 /* AudioVisualizer */ = {
+			isa = PBXGroup;
+			children = (
+				C07A8F2F28F7E9CE001A6162 /* SPAudioVisualizerView.swift */,
+			);
+			path = AudioVisualizer;
+			sourceTree = "<group>";
+		};
+		C07A8F2E28F7E9B0001A6162 /* Third Party */ = {
+			isa = PBXGroup;
+			children = (
+				C07A8F2D28F7E9A4001A6162 /* AudioVisualizer */,
+			);
+			path = "Third Party";
+			sourceTree = "<group>";
+		};
 		C0B7990428DC3FFA00681649 /* Supporting Model */ = {
 			isa = PBXGroup;
 			children = (
@@ -547,6 +570,8 @@
 			isa = PBXGroup;
 			children = (
 				C00F8A4028EF13AE00FA9A7B /* PlayerViewController.swift */,
+				C002119928F6A03200BE94EC /* SPNowPlayingInfoCenter.swift */,
+				C002119B28F6AD5300BE94EC /* SPNowPlayableCommand.swift */,
 				C0F1A08828F05F06009578BA /* MiniPlayerView.swift */,
 			);
 			path = Player;
@@ -821,6 +846,8 @@
 				C0B7990728DC41AE00681649 /* PlaylistCell.swift in Sources */,
 				C088178828DDB8FA00D3106C /* FirestoreManager.swift in Sources */,
 				C0EA5CBE28EC6C96007D9E4C /* DateFormatter+Extension.swift in Sources */,
+				C002119C28F6AD5300BE94EC /* SPNowPlayableCommand.swift in Sources */,
+				C002119A28F6A03200BE94EC /* SPNowPlayingInfoCenter.swift in Sources */,
 				C00E4E0E28CA39FE00F1A123 /* PopularLectureViewController.swift in Sources */,
 				C0B7990328DC3FF700681649 /* Playlist.swift in Sources */,
 				C0EA13ED28CF685E00BE9110 /* RoundButton.swift in Sources */,
@@ -834,6 +861,7 @@
 				C007D38228E80ADC00CFBED0 /* Audio.swift in Sources */,
 				C0F1A08928F05F06009578BA /* MiniPlayerView.swift in Sources */,
 				C00E4E1028CA39FE00F1A123 /* TopLectureViewController.swift in Sources */,
+				C07A8F3028F7E9CE001A6162 /* SPAudioVisualizerView.swift in Sources */,
 				C00DC57128E1DA66001EDE95 /* DBLecture+CoreDataClass.swift in Sources */,
 				C0B7990A28DC427B00681649 /* PlaylistOption.swift in Sources */,
 				C00E4E1C28CA462000F1A123 /* SearchViewController.swift in Sources */,
@@ -1000,12 +1028,14 @@
 				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1034,12 +1064,14 @@
 				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1130,12 +1162,14 @@
 				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/Info.plist";
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -8,6 +8,12 @@
 import Foundation
 import Alamofire
 
+enum State {
+    case playing
+    case paused
+    case stopped
+}
+
 private class ProgressObserver {
     let observer: NSObject
     var progressHandler: ((_ progress: CGFloat) -> Void)
@@ -82,7 +88,7 @@ extension DownloadManager {
         let localAudioURL = documentDirectoryURL.appendingPathComponent(fileName)
 
         if FileManager.default.fileExists(atPath: localAudioURL.path) {
-            return audioURL
+            return localAudioURL
         }
         return nil
     }

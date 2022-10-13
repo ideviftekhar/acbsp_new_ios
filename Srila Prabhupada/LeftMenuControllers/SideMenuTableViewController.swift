@@ -52,15 +52,17 @@ extension SideMenuTableViewController: IQListViewDelegateDataSource {
 
     private func refreshUI(animated: Bool? = nil) {
 
-        let animated: Bool = animated ?? (models.count <= 1000)
-        list.performUpdates({
+        DispatchQueue.global().async { [self] in
+            let animated: Bool = animated ?? (models.count <= 1000)
+            list.performUpdates({
 
-            let section = IQSection(identifier: "Cell", headerSize: CGSize.zero, footerSize: CGSize.zero)
-            list.append(section)
+                let section = IQSection(identifier: "Cell", headerSize: CGSize.zero, footerSize: CGSize.zero)
+                list.append(section)
 
-            list.append(Cell.self, models: models, section: section)
+                list.append(Cell.self, models: models, section: section)
 
-        }, animatingDifferences: animated, completion: nil)
+            }, animatingDifferences: animated, completion: nil)
+        }
     }
 
     func listView(_ listView: IQListView, didSelect item: IQItem, at indexPath: IndexPath) {

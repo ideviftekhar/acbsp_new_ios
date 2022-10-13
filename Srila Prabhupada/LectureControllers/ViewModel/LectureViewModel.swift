@@ -99,12 +99,9 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
                 FirestoreManager.shared.getDocuments(query: query, source: source, completion: { (result: Swift.Result<[Lecture], Error>) in
                     switch result {
                     case .success(var success):
-
-                        self.allLectures = success
-
-                        success = Self.refreshLectureWithLectureInfo(lectures: success, lectureInfo: self.userLectureInfo)
-
                         DispatchQueue.global().async {
+                            success = Self.refreshLectureWithLectureInfo(lectures: success, lectureInfo: self.userLectureInfo)
+                            self.allLectures = success
                             let success = Self.filter(lectures: success, searchText: searchText, sortType: sortType, filter: filter, lectureIDs: lectureIDs)
                             DispatchQueue.main.async {
                                 completion(.success(success))
@@ -144,8 +141,12 @@ extension DefaultLectureViewModel {
                     completion(.success(success))
 
                     if source != .cache {
-                        self.allLectures = Self.refreshLectureWithLectureInfo(lectures: self.allLectures, lectureInfo: success)
-                        NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
+                        DispatchQueue.global().async {
+                            self.allLectures = Self.refreshLectureWithLectureInfo(lectures: self.allLectures, lectureInfo: success)
+                            DispatchQueue.main.async {
+                                NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
+                            }
+                        }
                     }
                 case .failure(let error):
                     completion(.failure(error))
@@ -199,7 +200,7 @@ extension DefaultLectureViewModel {
                         "isDownloaded": false,
                         "isInPrivateList": false,
                         "isInPublicList": false,
-                        "lastPlayedPoint": 0,
+                        "lastPlayedPoint": 0
                     ]
 
                     query.addDocument(data: isFavouriteData) { error in
@@ -233,10 +234,8 @@ extension DefaultLectureViewModel {
         }
 
         if source == .cache {
-            DispatchQueue.global().async {
-                DispatchQueue.main.async {
-                    completion(.success(self.userListenInfo))
-                }
+            DispatchQueue.main.async {
+                completion(.success(self.userListenInfo))
             }
         } else {
             let query: Query = FirestoreManager.shared.firestore.collection(FirestoreCollection.usersListenInfo(userId: currentUser.uid).path)

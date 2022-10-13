@@ -17,6 +17,29 @@ enum PlayRate: String, CaseIterable {
     case onePoint75 = "1.75x"
     case two = "2.0x"
 
+    init?(rawValue: Float) {
+        switch rawValue {
+        case 0.5:
+            self = .point5
+        case 0.75:
+            self = .point75
+        case 1.0:
+            self = .one
+        case 1.15:
+            self = .onePoint15
+        case 1.25:
+            self = .onePoint25
+        case 1.5:
+            self = .onePoint5
+        case 1.75:
+            self = .onePoint75
+        case 2.0:
+            self = .two
+        default:
+            return nil
+        }
+    }
+
     var rate: Float {
         switch self {
         case .point5:

@@ -64,12 +64,16 @@ extension Query {
         getRawDocuments(source: source) { result in
             switch result {
             case .success(let documents):
-                do {
-                    let objects = try documents.map({ try $0.data(as: T.self) })
-                    completion(.success(objects))
-                } catch {
-                    print(error)
-                    completion(.failure(error))
+                DispatchQueue.global().async {
+                    do {
+                        let objects = try documents.map({ try $0.data(as: T.self) })
+                        DispatchQueue.main.async {
+                            completion(.success(objects))
+                        }
+                    } catch {
+                        print(error)
+                        completion(.failure(error))
+                    }
                 }
             case .failure(let error):
                 completion(.failure(error))
@@ -99,12 +103,17 @@ extension DocumentReference {
         getRawDocument(source: source) { result in
             switch result {
             case .success(let document):
-                do {
-                    let objects = try document.data(as: T.self)
-                    completion(.success(objects))
-                } catch {
-                    print(error)
-                    completion(.failure(error))
+
+                DispatchQueue.global().async {
+                    do {
+                        let object = try document.data(as: T.self)
+                        DispatchQueue.main.async {
+                            completion(.success(object))
+                        }
+                    } catch {
+                        print(error)
+                        completion(.failure(error))
+                    }
                 }
             case .failure(let error):
                 completion(.failure(error))

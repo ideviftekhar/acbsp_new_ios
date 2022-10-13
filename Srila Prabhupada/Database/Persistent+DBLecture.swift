@@ -9,11 +9,26 @@ import Foundation
 
 extension Persistant {
 
+    func verifyDownloads(_ completionHandler: @escaping (() -> Void)) {
+
+        for dbLecture in dbLectures {
+            let fileExist = DownloadManager.shared.localFileExists(for: dbLecture)
+
+            if fileExist && dbLecture.downloadStateEnum != .downloaded {
+                dbLecture.downloadState = DBLecture.DownloadState.downloaded.rawValue
+            } else if !fileExist && dbLecture.downloadStateEnum != .error {
+                dbLecture.downloadState = DBLecture.DownloadState.error.rawValue
+            }
+
+            saveMainContext(completionHandler)
+        }
+    }
+
     func reschedulePendingDownloads() {
 
-        let dbPendingDownloadedLectures: [DBLecture] = dbLectures.filter { $0.downloadStateEnum != .downloaded }
+        let dbPendingDownloadLectures: [DBLecture] = dbLectures.filter { $0.downloadStateEnum == .notDownloaded || $0.downloadStateEnum == .error }
 
-        for dbLecture in dbPendingDownloadedLectures {
+        for dbLecture in dbPendingDownloadLectures {
             downloadStage1(dbLecture: dbLecture)
         }
     }
