@@ -78,8 +78,21 @@ extension TabBarController {
                 playerViewController.pause()
             }
         } else {
+
+            let shouldPlay: Bool
+
+            if playerViewController.currentLecture == nil {
+                shouldPlay = true
+            } else if !playerViewController.isPaused {
+                shouldPlay = true
+            } else {
+                shouldPlay = false
+            }
+
             playerViewController.currentLecture = lecture
-            playerViewController.play()
+            if shouldPlay {
+                playerViewController.play()
+            }
         }
     }
 }

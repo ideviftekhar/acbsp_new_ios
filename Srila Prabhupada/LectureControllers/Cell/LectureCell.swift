@@ -249,7 +249,7 @@ extension LectureCell {
             }))
         }
 
-        self.parentViewController?.showAlert(title: "", message: "", preferredStyle: .actionSheet, buttons: buttons)
+        self.parentViewController?.showAlert(title: nil, message: nil, preferredStyle: .actionSheet, cancel: ("Cancel", nil), buttons: buttons)
     }
 }
 

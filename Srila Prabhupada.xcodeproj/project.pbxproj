@@ -104,6 +104,10 @@
 		C0EA13ED28CF685E00BE9110 /* RoundButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EA13EC28CF685E00BE9110 /* RoundButton.swift */; };
 		C0EA13EF28CF6D0D00BE9110 /* UIView+extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EA13EE28CF6D0D00BE9110 /* UIView+extension.swift */; };
 		C0EA5CBE28EC6C96007D9E4C /* DateFormatter+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EA5CBD28EC6C96007D9E4C /* DateFormatter+Extension.swift */; };
+		C0EE5BC828F8401E00528AA7 /* TopLectureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EE5BC728F8401E00528AA7 /* TopLectureViewModel.swift */; };
+		C0EE5BCA28F8403700528AA7 /* LectureInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EE5BC928F8403700528AA7 /* LectureInfoViewModel.swift */; };
+		C0EE5BCC28F8404000528AA7 /* ListenInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EE5BCB28F8404000528AA7 /* ListenInfoViewModel.swift */; };
+		C0EE5BD028F8589700528AA7 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EE5BCF28F8589700528AA7 /* Array+Extension.swift */; };
 		C0F1A08928F05F06009578BA /* MiniPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0F1A08828F05F06009578BA /* MiniPlayerView.swift */; };
 		C0F9956A28DE04290057A48C /* GoogleService-Info-development-internal.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0F9956928DE04290057A48C /* GoogleService-Info-development-internal.plist */; };
 		C0FA049F28DB37FA003177DA /* LectureInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FA049E28DB37FA003177DA /* LectureInfo.swift */; };
@@ -218,6 +222,10 @@
 		C0EA13EC28CF685E00BE9110 /* RoundButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundButton.swift; sourceTree = "<group>"; };
 		C0EA13EE28CF6D0D00BE9110 /* UIView+extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+extension.swift"; sourceTree = "<group>"; };
 		C0EA5CBD28EC6C96007D9E4C /* DateFormatter+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+Extension.swift"; sourceTree = "<group>"; };
+		C0EE5BC728F8401E00528AA7 /* TopLectureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopLectureViewModel.swift; sourceTree = "<group>"; };
+		C0EE5BC928F8403700528AA7 /* LectureInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureInfoViewModel.swift; sourceTree = "<group>"; };
+		C0EE5BCB28F8404000528AA7 /* ListenInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenInfoViewModel.swift; sourceTree = "<group>"; };
+		C0EE5BCF28F8589700528AA7 /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		C0F1A08828F05F06009578BA /* MiniPlayerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiniPlayerView.swift; sourceTree = "<group>"; };
 		C0F9956928DE04290057A48C /* GoogleService-Info-development-internal.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-development-internal.plist"; sourceTree = "<group>"; };
 		C0FA049E28DB37FA003177DA /* LectureInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LectureInfo.swift; sourceTree = "<group>"; };
@@ -371,6 +379,7 @@
 				C007586728E5D9100010EBE6 /* DownloadManager */,
 				C00E4DDE28CA393600F1A123 /* PreLogIn */,
 				C00E4DFA28CA39F400F1A123 /* LeftMenuControllers */,
+				C0F1A08728F05EE5009578BA /* Player */,
 				C00E4DFD28CA39FE00F1A123 /* CommonControllers */,
 				C00AB20228D1E6D000A62A2F /* Filter Controllers */,
 				C00E4DFF28CA39FE00F1A123 /* LectureControllers */,
@@ -430,12 +439,9 @@
 		C00E4DFD28CA39FE00F1A123 /* CommonControllers */ = {
 			isa = PBXGroup;
 			children = (
-				C0F1A08728F05EE5009578BA /* Player */,
-				C00AB21628D207AA00A62A2F /* Cell */,
 				C00E4DFE28CA39FE00F1A123 /* TabBarController.swift */,
 				C0CAF25C28D45B8C00DA9878 /* NavigationController.swift */,
 				C00E4E1B28CA462000F1A123 /* SearchViewController.swift */,
-				C00E4E0228CA39FE00F1A123 /* LectureViewController.swift */,
 			);
 			path = CommonControllers;
 			sourceTree = "<group>";
@@ -443,7 +449,9 @@
 		C00E4DFF28CA39FE00F1A123 /* LectureControllers */ = {
 			isa = PBXGroup;
 			children = (
+				C00AB21628D207AA00A62A2F /* Cell */,
 				C0B7990D28DC4E0700681649 /* ViewModel */,
+				C00E4E0228CA39FE00F1A123 /* LectureViewController.swift */,
 				C00E4E0328CA39FE00F1A123 /* HomeViewController.swift */,
 				C00E4E1928CA45E000F1A123 /* PlaylistLecturesViewController.swift */,
 				C00E4E0728CA39FE00F1A123 /* TopLectureViewController.swift */,
@@ -505,6 +513,9 @@
 			isa = PBXGroup;
 			children = (
 				C0B7990B28DC4DCE00681649 /* LectureViewModel.swift */,
+				C0EE5BC728F8401E00528AA7 /* TopLectureViewModel.swift */,
+				C0EE5BC928F8403700528AA7 /* LectureInfoViewModel.swift */,
+				C0EE5BCB28F8404000528AA7 /* ListenInfoViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -586,6 +597,7 @@
 		C0FA305B28CF461900E78843 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				C0EE5BCF28F8589700528AA7 /* Array+Extension.swift */,
 				C0FA305C28CF461900E78843 /* String+Extension.swift */,
 				C0EA13E928CF5A9D00BE9110 /* UIViewController+Alert.swift */,
 				C0EA13EE28CF6D0D00BE9110 /* UIView+extension.swift */,
@@ -801,6 +813,7 @@
 				C00AB21B28D2080800A62A2F /* LectureCell.swift in Sources */,
 				C007D38628E80EC200CFBED0 /* Persistent+DBLecture.swift in Sources */,
 				C0EA13E428CF53FA00BE9110 /* ForgotPasswordViewModel.swift in Sources */,
+				C0EE5BCC28F8404000528AA7 /* ListenInfoViewModel.swift in Sources */,
 				C07A8F3D28F8033A001A6162 /* PlayerViewController+Observers.swift in Sources */,
 				C00AB20628D1F19500A62A2F /* Filter.swift in Sources */,
 				C007D37A28E809D900CFBED0 /* Language.swift in Sources */,
@@ -814,6 +827,7 @@
 				C0FA305D28CF461900E78843 /* String+Extension.swift in Sources */,
 				C00E4DCB28CA36F100F1A123 /* AppDelegate.swift in Sources */,
 				C00DC57228E1DA66001EDE95 /* DBLecture+CoreDataProperties.swift in Sources */,
+				C0EE5BC828F8401E00528AA7 /* TopLectureViewModel.swift in Sources */,
 				C00E4E1628CA433A00F1A123 /* StatsViewController.swift in Sources */,
 				C0EA13EA28CF5A9D00BE9110 /* UIViewController+Alert.swift in Sources */,
 				C00E4E1A28CA45E000F1A123 /* PlaylistLecturesViewController.swift in Sources */,
@@ -826,12 +840,14 @@
 				C007D38428E80AEE00CFBED0 /* Search.swift in Sources */,
 				C0FA306228CF51EB00E78843 /* SignupViewModel.swift in Sources */,
 				C0EA13EF28CF6D0D00BE9110 /* UIView+extension.swift in Sources */,
+				C0EE5BCA28F8403700528AA7 /* LectureInfoViewModel.swift in Sources */,
 				C00DC57328E1DA66001EDE95 /* NSManagedObject+Extensions.swift in Sources */,
 				C00AB20A28D1F52D00A62A2F /* FilterDetailTableViewCell.swift in Sources */,
 				C03E3F2828DCC6C500B987DD /* ListenInfo.swift in Sources */,
 				C0FA305F28CF4AF000E78843 /* LoginViewModel.swift in Sources */,
 				C007586628E5BF2F0010EBE6 /* DownloadManager.swift in Sources */,
 				C00DC56F28E1DA66001EDE95 /* Persistant.swift in Sources */,
+				C0EE5BD028F8589700528AA7 /* Array+Extension.swift in Sources */,
 				C00AB22028D2137C00A62A2F /* Time.swift in Sources */,
 				C00E4E0C28CA39FE00F1A123 /* HomeViewController.swift in Sources */,
 				C0E9CC3928DC723B0089A9E8 /* Date+Extension.swift in Sources */,
@@ -1032,7 +1048,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Srila Prabhupada.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/Info.plist";
@@ -1068,7 +1084,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Srila Prabhupada.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/Info.plist";
@@ -1166,7 +1182,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Srila Prabhupada.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 7;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/Info.plist";

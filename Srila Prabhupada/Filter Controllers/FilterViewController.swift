@@ -38,6 +38,9 @@ class FilterViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        filterTypeTableView.tableFooterView = UIView()
+        filterDetailTableView.tableFooterView = UIView()
+
 //        do {
 //            typeList.registerCell(type: TypeCell.self, registerType: .storyboard)
 //            detailsList.registerCell(type: DetailsCell.self, registerType: .storyboard)

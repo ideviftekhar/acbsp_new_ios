@@ -11,8 +11,8 @@ extension UIViewController {
 
     typealias ButtonConfig = (title: String, handler: (() -> Void)?)
 
-    func showAlert(title: String,
-                   message: String,
+    func showAlert(title: String?,
+                   message: String?,
                    preferredStyle: UIAlertController.Style = .alert,
                    cancel: ButtonConfig = (title: "OK", handler: nil),
                    destructive: ButtonConfig? = nil,
@@ -21,8 +21,8 @@ extension UIViewController {
         showAlert(title: title, message: message, preferredStyle: preferredStyle, cancel: cancel, destructive: destructive, buttons: buttons)
     }
 
-    func showAlert(title: String,
-                   message: String,
+    func showAlert(title: String?,
+                   message: String?,
                    preferredStyle: UIAlertController.Style = .alert,
                    cancel: ButtonConfig = (title: "OK", handler: nil),
                    destructive: ButtonConfig? = nil,

@@ -87,6 +87,7 @@ class PlaylistViewController: SearchViewController {
 
         do {
             list.registerCell(type: Cell.self, registerType: .nib)
+            playlistTableView.tableFooterView = UIView()
             refreshUI(animated: false)
         }
 
@@ -239,7 +240,7 @@ extension PlaylistViewController {
             }))
         }
 
-        self.showAlert(title: "Sort", message: "", preferredStyle: .actionSheet, buttons: buttons)
+        self.showAlert(title: "Sort", message: nil, preferredStyle: .actionSheet, buttons: buttons)
     }
 
     private func sortActionSelected(action: UIAction) {

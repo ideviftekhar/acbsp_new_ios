@@ -93,7 +93,11 @@ final class SPNowPlayingInfoCenter {
         }
         nowPlayingInfo[MPMediaItemPropertyPlaybackDuration] = NSNumber(value: lecture.length)
 
-        nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = NSNumber(value: CMTimeGetSeconds(player.currentTime()))
+        if player.currentTime().isNumeric {
+            nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = NSNumber(value: player.currentTime().seconds)
+        } else {
+            nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = NSNumber(value: 0)
+        }
 
         nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = NSNumber(value: 1.0)
         nowPlayingInfo[MPNowPlayingInfoPropertyDefaultPlaybackRate] = NSNumber(value: selectedRate.rate)
@@ -121,7 +125,9 @@ final class SPNowPlayingInfoCenter {
         if let asset = player.currentItem?.asset as? AVURLAsset {
             nowPlayingInfo[MPNowPlayingInfoPropertyAssetURL] = asset.url
         }
-        nowPlayingInfo[MPNowPlayingInfoPropertyCurrentPlaybackDate] = player.currentItem?.currentDate
+        if #available(iOS 14.0, *) {
+            nowPlayingInfo[MPNowPlayingInfoPropertyCurrentPlaybackDate] = player.currentItem?.currentDate
+        }
 
         // MPMediaItemPropertyAlbumTrackCount
         // MPMediaItemPropertyAlbumTrackNumber

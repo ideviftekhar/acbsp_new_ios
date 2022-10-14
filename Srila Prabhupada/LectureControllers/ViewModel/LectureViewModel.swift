@@ -102,6 +102,7 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
                         DispatchQueue.global().async {
                             success = Self.refreshLectureWithLectureInfo(lectures: success, lectureInfo: self.userLectureInfo)
                             self.allLectures = success
+
                             let success = Self.filter(lectures: success, searchText: searchText, sortType: sortType, filter: filter, lectureIDs: lectureIDs)
                             DispatchQueue.main.async {
                                 completion(.success(success))
@@ -180,10 +181,15 @@ extension DefaultLectureViewModel {
                                 self.userLectureInfo[index].isFavourite = isFavourite
                                 NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
                             }
-                            if let index = self.allLectures.firstIndex(where: { $0.id == lecture.id && $0.creationTimestamp == lecture.creationTimestamp }) {
+
+                            let lectureIndexes = self.allLectures.allIndex (where: { $0.id == lecture.id })
+                            for index in lectureIndexes {
                                 self.allLectures[index].isFavourites = isFavourite
+                            }
+                            if !lectureIndexes.isEmpty {
                                 NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
                             }
+
                             completion(.success(true))
                         }
                     }
@@ -208,8 +214,11 @@ extension DefaultLectureViewModel {
                             completion(.failure(error))
                         } else {
 
-                            if let index = self.allLectures.firstIndex(where: { $0.id == lecture.id && $0.creationTimestamp == lecture.creationTimestamp }) {
+                            let lectureIndexes = self.allLectures.allIndex (where: { $0.id == lecture.id })
+                            for index in lectureIndexes {
                                 self.allLectures[index].isFavourites = isFavourite
+                            }
+                            if !lectureIndexes.isEmpty {
                                 NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
                             }
 
@@ -325,31 +334,47 @@ extension DefaultLectureViewModel {
 
     @objc func downloadAddedNotification(_ notification: Foundation.Notification) {
         guard let dbLecture = notification.object as? DBLecture else { return }
-        if let index = allLectures.firstIndex(where: { $0.id == dbLecture.id && $0.creationTimestamp == dbLecture.creationTimestamp }) {
+
+        let lectureIndexes = self.allLectures.allIndex (where: { $0.id == dbLecture.id })
+        for index in lectureIndexes {
             allLectures[index].downloadingState = dbLecture.downloadStateEnum
+        }
+        if !lectureIndexes.isEmpty {
             NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
         }
     }
 
     @objc func downloadUpdatedNotification(_ notification: Foundation.Notification) {
         guard let dbLecture = notification.object as? DBLecture else { return }
-        if let index = allLectures.firstIndex(where: { $0.id == dbLecture.id && $0.creationTimestamp == dbLecture.creationTimestamp }) {
+
+        let lectureIndexes = self.allLectures.allIndex (where: { $0.id == dbLecture.id })
+        for index in lectureIndexes {
             allLectures[index].downloadingState = dbLecture.downloadStateEnum
+        }
+        if !lectureIndexes.isEmpty {
             NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
         }
     }
 
     @objc func downloadRemovedNotification(_ notification: Foundation.Notification) {
         guard let dbLecture = notification.object as? DBLecture else { return }
-        if let index = allLectures.firstIndex(where: { $0.id == dbLecture.id && $0.creationTimestamp == dbLecture.creationTimestamp }) {
+
+        let lectureIndexes = self.allLectures.allIndex (where: { $0.id == dbLecture.id })
+        for index in lectureIndexes {
             allLectures[index].downloadingState = dbLecture.downloadStateEnum
+        }
+        if !lectureIndexes.isEmpty {
             NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
         }
     }
 
     private func favouriteUpdated(lecture: Lecture, isFavourite: Bool) {
-        if let index = self.allLectures.firstIndex(where: { $0.id == lecture.id && $0.creationTimestamp == lecture.creationTimestamp }) {
+
+        let lectureIndexes = self.allLectures.allIndex (where: { $0.id == lecture.id })
+        for index in lectureIndexes {
             self.allLectures[index].isFavourites = isFavourite
+        }
+        if !lectureIndexes.isEmpty {
             NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
         }
     }

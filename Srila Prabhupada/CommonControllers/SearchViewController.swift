@@ -75,9 +75,9 @@ class SearchViewController: UIViewController {
             if self is HomeViewController {
                 refreshAsynchronous(source: .default)
             }
-
-            refreshAsynchronous(source: .default)
         }
+
+        refreshAsynchronous(source: .cache)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -195,8 +195,7 @@ extension SearchViewController: SideMenuControllerDelegate {
             let aboutController = UIStoryboard.sideMenu.instantiate(UINavigationController.self, identifier: "AboutNavigationController")
             controller.present(aboutController, animated: true, completion: nil)
         case .share:
-            //https://appstoreconnect.apple.com/apps/1645287937/appstore/ios/version/inflight
-            let appLink = [URL(string: "https://play.google.com/store/apps/details?id=com.iskcon.prabhupada")!]
+            let appLink: [Any] = [URL(string: Constants.appStoreURLString)!, URL(string: Constants.playStoreURLString)!]
             let shareController = UIActivityViewController(activityItems: appLink, applicationActivities: nil)
             controller.present(shareController, animated: true)
         case .donate:

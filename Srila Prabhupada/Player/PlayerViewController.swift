@@ -307,15 +307,17 @@ class PlayerViewController: LectureViewController {
     override func refreshAsynchronous(source: FirestoreSource) {
         super.refreshAsynchronous(source: source)
 
-        let lectureIds = self.currentLectureQueue.map { $0.id }
-        Self.lectureViewModel.getLectures(searchText: nil, sortType: .default, filter: [:], lectureIDs: lectureIds, source: source, completion: { result in
-            switch result {
-            case .success(let success):
-                self.reloadData(with: success)
-            default:
-                self.reloadData(with: self.currentLectureQueue)
-            }
-        })
+        reloadData(with: self.currentLectureQueue)
+
+//        let lectureIds = self.currentLectureQueue.map { $0.id }
+//        Self.lectureViewModel.getLectures(searchText: nil, sortType: .default, filter: [:], lectureIDs: lectureIds, source: source, completion: { result in
+//            switch result {
+//            case .success(let success):
+//                self.reloadData(with: success)
+//            default:
+//                self.reloadData(with: self.currentLectureQueue)
+//            }
+//        })
     }
 
     @IBAction func backButtonTapped(_ sender: UIButton) {
@@ -473,9 +475,9 @@ extension PlayerViewController {
                     pause()
                 }
             case .nextTrack:
-                playNext()
+                gotoNext(play: !isPaused)
             case .previousTrack:
-                playPrevious()
+                gotoPrevious(play: !isPaused)
             case .changeRepeatMode:
                 if let value = value as? Bool {
                     change(shuffle: false, loop: value)
@@ -518,19 +520,21 @@ extension PlayerViewController {
 
         guard let player = player, let currentItem = player.currentItem else { return }
 
-        let duration = Int(CMTimeGetSeconds(currentItem.duration))
+        if currentItem.duration.isNumeric, player.currentTime().isNumeric {
+            let duration = Int(currentItem.duration.seconds)
 
-        let currentTime = Int(CMTimeGetSeconds(player.currentTime()))
-        var newTime = currentTime + seconds
-        if newTime < 0 {
-            newTime = 0
+            let currentTime = Int(player.currentTime().seconds)
+            var newTime = currentTime + seconds
+            if newTime < 0 {
+                newTime = 0
+            }
+
+            if newTime > duration {
+                newTime = duration
+            }
+
+            seekTo(seconds: newTime)
         }
-
-        if newTime > duration {
-            newTime = duration
-        }
-
-        seekTo(seconds: newTime)
     }
 
     func seekTo(seconds: Int) {
@@ -560,13 +564,20 @@ extension PlayerViewController {
         guard let player = player else { return }
 
         player.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(1, preferredTimescale: 1), queue: DispatchQueue.main) { [self] (time) -> Void in
-            if player.currentItem?.status == .readyToPlay {
-                let time: Float64 = CMTimeGetSeconds(time)
-                if !timeSlider.isTracking && !isSeeking {
+            if !timeSlider.isTracking && !isSeeking {
+                if time.isNumeric {
+                    let time: Double = time.seconds
                     timeSlider.value = Float(time)
                     miniPlayerView.playedSeconds = timeSlider.value
                 }
             }
+            currentTimeLabel.text = Int(timeSlider.value).toHHMMSS
+        }
+
+        if player.currentTime().isNumeric {
+            let time: Double = player.currentTime().seconds
+            timeSlider.value = Float(time)
+            miniPlayerView.playedSeconds = timeSlider.value
             currentTimeLabel.text = Int(timeSlider.value).toHHMMSS
         }
     }
@@ -589,7 +600,7 @@ extension PlayerViewController {
 
 extension PlayerViewController {
 
-    func playNext() {
+    func gotoNext(play: Bool) {
         if loopLectureButton.isSelected == true {
             seekTo(seconds: 0)
         } else {
@@ -597,12 +608,14 @@ extension PlayerViewController {
                let index = currentLectureQueue.firstIndex(where: { $0.id == currentLecture.id && $0.creationTimestamp == currentLecture.creationTimestamp }), (index+1) < currentLectureQueue.count {
                 let newLecture = currentLectureQueue[index+1]
                 self.currentLecture = newLecture
-                play()
+                if play {
+                    self.play()
+                }
             }
         }
     }
 
-    func playPrevious() {
+    func gotoPrevious(play: Bool) {
         if loopLectureButton.isSelected == true {
             seekTo(seconds: 0)
         } else {
@@ -611,7 +624,9 @@ extension PlayerViewController {
 
                 let newLecture = currentLectureQueue[index-1]
                 self.currentLecture = newLecture
-                play()
+                if play {
+                    self.play()
+                }
             }
         }
     }
@@ -677,29 +692,26 @@ extension PlayerViewController {
 
         self.itemStatusObserver = item.observe(\.status, options: [.new, .old], changeHandler: { [self] (playerItem, change) in
 
-            if playerItem.status == .readyToPlay {
-
-                if playerItem.duration.isValid {
-                    let duration = CMTimeGetSeconds(playerItem.duration)
-                    let time = Time(totalSeconds: Int(duration))
-                    timeSlider.maximumValue = Float(duration)
-                    totalTimeLabel.text = time.displayString
-                    miniPlayerView.lectureDuration = time
-                }
+            if playerItem.duration.isNumeric {
+                let duration: Double = playerItem.duration.seconds
+                let time = Time(totalSeconds: Int(duration))
+                timeSlider.maximumValue = Float(duration)
+                totalTimeLabel.text = time.displayString
+                miniPlayerView.lectureDuration = time
             }
         })
 
         itemDidPlayToEndObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: item, queue: nil) { [self] _ in
-            playNext()
+            gotoNext(play: true)
         }
     }
 
     @IBAction func nextLecturePressed(_ sender: UIButton) {
-        playNext()
+        gotoNext(play: !isPaused)
     }
 
     @IBAction func previousLecturePressed(_ sender: UIButton) {
-        playPrevious()
+        gotoPrevious(play: !isPaused)
     }
 }
 
@@ -788,7 +800,7 @@ extension PlayerViewController {
             }))
         }
 
-        self.showAlert(title: "Play Rate", message: "", preferredStyle: .actionSheet, buttons: buttons)
+        self.showAlert(title: "Play Rate", message: nil, preferredStyle: .actionSheet, cancel: ("Cancel", nil), buttons: buttons)
     }
 
     private func playRateActionSelected(action: UIAction) {

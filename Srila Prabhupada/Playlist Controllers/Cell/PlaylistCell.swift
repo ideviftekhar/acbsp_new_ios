@@ -150,6 +150,6 @@ extension PlaylistCell {
             }
         }
 
-        self.parentViewController?.showAlert(title: "", message: "", preferredStyle: .actionSheet, destructive: destructive, buttons: buttons)
+        self.parentViewController?.showAlert(title: nil, message: nil, preferredStyle: .actionSheet, destructive: destructive, buttons: buttons)
     }
 }

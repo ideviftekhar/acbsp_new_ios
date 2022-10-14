@@ -74,6 +74,7 @@ class LectureViewController: SearchViewController {
 
         do {
             list.registerCell(type: Cell.self, registerType: .nib)
+            lectureTebleView.tableFooterView = UIView()
             refreshUI(animated: false)
         }
         do {
@@ -155,13 +156,13 @@ extension LectureViewController {
             }))
         }
 
-        self.showAlert(title: "Sort", message: "", preferredStyle: .actionSheet, buttons: buttons)
+        self.showAlert(title: "Sort", message: nil, preferredStyle: .actionSheet, cancel: ("Cancel", nil), buttons: buttons)
     }
 
     private func sortActionSelected(action: UIAction) {
         let userDefaultKey: String = "\(Self.self).\(LectureSortType.self)"
         let actions: [UIAction] = self.sortMenu.children as? [UIAction] ?? []
-       for anAction in actions {
+        for anAction in actions {
             if anAction.identifier == action.identifier { anAction.state = .on  } else {  anAction.state = .off }
         }
 
@@ -218,7 +219,7 @@ extension LectureViewController: IQListViewDelegateDataSource {
         if let model = item.model as? Cell.Model {
 
             if isSelectionEnabled {
-                if let index = selectedModels.firstIndex(of: model.lecture) {
+                if let index = selectedModels.firstIndex(where: { $0.id == model.lecture.id }) {
                     selectedModels.remove(at: index)
                 } else {
                     selectedModels.append(model.lecture)

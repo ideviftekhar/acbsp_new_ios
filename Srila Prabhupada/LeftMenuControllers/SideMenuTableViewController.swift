@@ -43,6 +43,7 @@ class SideMenuTableViewController: UITableViewController {
 
         do {
             list.registerCell(type: Cell.self, registerType: .nib)
+            sideMenuTableView.tableFooterView = UIView()
             refreshUI(animated: false)
         }
     }
