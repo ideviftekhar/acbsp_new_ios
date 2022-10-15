@@ -59,8 +59,9 @@ final class DownloadManager {
             }
         }
 
-        let fractionCompleted: CGFloat = lastProgressInfo[lectureID] ?? 0
-        progressHandler(fractionCompleted)
+        if let fractionCompleted: CGFloat = lastProgressInfo[lectureID] {
+            progressHandler(fractionCompleted)
+        }
     }
 
     func unregisterProgress(observer: NSObject, lectureID: Int) {
@@ -140,6 +141,7 @@ extension DownloadManager {
         }.responseURL { response in
 
             self.lectureDownloadTasks.removeValue(forKey: dbLecture.id)
+            self.lastProgressInfo.removeValue(forKey: dbLecture.id)
 
             switch response.result {
             case .success(let url):

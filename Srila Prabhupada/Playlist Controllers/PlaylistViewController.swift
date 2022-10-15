@@ -55,7 +55,7 @@ class PlaylistViewController: SearchViewController {
     private var models: [Model] = []
     private lazy var list = IQList(listView: playlistTableView, delegateDataSource: self)
 
-    var lectureToAdd: Lecture?
+    var lecturesToAdd: [Lecture] = []
 
     override func viewDidLoad() {
 
@@ -102,7 +102,7 @@ class PlaylistViewController: SearchViewController {
 
         configureSortButton()
 
-        if lectureToAdd != nil {
+        if !lecturesToAdd.isEmpty {
             let cancelBarButtonItem = UIBarButtonItem(title: "Cancel", style: .done, target: self, action: #selector(cancelAction(_:)))
             self.navigationItem.leftBarButtonItem  = cancelBarButtonItem
         }
@@ -170,7 +170,7 @@ class PlaylistViewController: SearchViewController {
             showLoading()
 
             let userEmail: String?
-            if lectureToAdd != nil {
+            if !lecturesToAdd.isEmpty {
                 userEmail = Auth.auth().currentUser?.email ?? ""
             } else {
                 userEmail = nil
@@ -276,16 +276,16 @@ extension PlaylistViewController {
 extension PlaylistViewController: IQListViewDelegateDataSource {
 
     private func refreshUI(animated: Bool? = nil) {
-        
+
         DispatchQueue.global().async { [self] in
             let animated: Bool = animated ?? (models.count <= 1000)
             list.performUpdates({
-                
+
                 let section = IQSection(identifier: "Cell", headerSize: CGSize.zero, footerSize: CGSize.zero)
                 list.append(section)
-                
+
                 list.append(Cell.self, models: models, section: section)
-                
+
             }, animatingDifferences: animated, completion: nil)
         }
     }
@@ -294,7 +294,7 @@ extension PlaylistViewController: IQListViewDelegateDataSource {
         if let cell = cell as? Cell {
             cell.delegate = self
 
-            if lectureToAdd != nil {
+            if !lecturesToAdd.isEmpty {
                 cell.accessoryType = .none
             } else {
                 cell.accessoryType = .disclosureIndicator
@@ -306,12 +306,21 @@ extension PlaylistViewController: IQListViewDelegateDataSource {
 
         if let model = item.model as? Cell.Model {
 
-            if let lectureToAdd = lectureToAdd {
-                self.showAlert(title: "Add to '\(model.title)'?", message: "Would you like to add '\(lectureToAdd.titleDisplay)' to '\(model.title)' playlist?", cancel: (title: "Cancel", {
+            if !lecturesToAdd.isEmpty {
+
+                let message: String
+
+                if lecturesToAdd.count == 1, let lecture = lecturesToAdd.first {
+                    message = "Would you like to add '\(lecture.titleDisplay)' to '\(model.title)' playlist?"
+                } else {
+                    message = "Would you like to add \(lecturesToAdd.count) lectures to '\(model.title)' playlist?"
+                }
+
+                self.showAlert(title: "Add to '\(model.title)'?", message: message, cancel: (title: "Cancel", {
                 }), buttons: (title: "Add", {
 
                     ProgressHUD.show("Adding...", interaction: false)
-                    self.playlistViewModel.add(lectures: [lectureToAdd], to: model, completion: { result in
+                    self.playlistViewModel.add(lectures: self.lecturesToAdd, to: model, completion: { result in
                         ProgressHUD.dismiss()
 
                         switch result {
@@ -376,7 +385,7 @@ extension PlaylistViewController: PlaylistCellDelegate {
         switch option {
         case .delete:
 
-            self.showAlert(title: "Delete '\(playlist.title)'?",message: "Would you really like to delete '\(playlist.title)' playlist?",
+            self.showAlert(title: "Delete '\(playlist.title)'?", message: "Would you really like to delete '\(playlist.title)' playlist?",
                            cancel: (title: "Cancel", {}),
                            destructive: (title: "Delete", {
 
@@ -406,7 +415,6 @@ extension PlaylistViewController: PlaylistCellDelegate {
 
             }
             present(navController, animated: true, completion: nil)
-            break
         }
     }
 }

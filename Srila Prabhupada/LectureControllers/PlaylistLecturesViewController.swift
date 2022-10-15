@@ -20,6 +20,8 @@ class PlaylistLecturesViewController: LectureViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.navigationItem.title = "\(playlist.listType.rawValue) Playlist"
+        self.navigationItem.prompt = playlist.title
         do {
             noItemTitle = "No Lectures"
             noItemMessage = "No lectures in '\(playlist.title)' playlist"

@@ -121,10 +121,6 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 downloadedIconImageView?.tintColor = UIColor.systemBlue
                 downloadedIconImageView?.image = UIImage(compatibleSystemName: "arrow.down.circle.fill")
                 downloadProgressView?.isHidden = false
-
-                DownloadManager.shared.registerProgress(observer: self, lectureID: lecture.id) { [weak self] progress in
-                    self?.downloadProgressView?.value = progress * 100
-                }
             case .downloaded:
                 downloadedIconImageView?.isHidden = false
                 downloadedIconImageView?.tintColor = UIColor.systemGreen
@@ -137,6 +133,24 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 downloadedIconImageView?.image = UIImage(compatibleSystemName: "exclamationmark.circle.fill")
                 downloadProgressView?.isHidden = false
                 downloadProgressView?.value = 0
+            }
+
+            DownloadManager.shared.registerProgress(observer: self, lectureID: lecture.id) { [self] progress in
+                if progress >= 1.0 {
+                    downloadedIconImageView?.isHidden = false
+                    downloadedIconImageView?.tintColor = UIColor.systemGreen
+                    downloadedIconImageView?.image = UIImage(compatibleSystemName: "arrow.down.circle.fill")
+                    downloadProgressView?.isHidden = false
+                    downloadProgressView?.value = 0
+                } else if progress > 0 {
+                    downloadedIconImageView?.isHidden = false
+                    downloadedIconImageView?.tintColor = UIColor.systemBlue
+                    downloadedIconImageView?.image = UIImage(compatibleSystemName: "arrow.down.circle.fill")
+                    downloadProgressView?.isHidden = false
+                } else if progress == 0 {
+                    downloadedIconImageView?.isHidden = true
+                    downloadProgressView?.isHidden = true
+                }
             }
 
             favouritesIconImageView?.isHidden = !lecture.isFavourites

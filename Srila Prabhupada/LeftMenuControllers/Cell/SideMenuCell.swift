@@ -23,7 +23,15 @@ class SideMenuCell: UITableViewCell, IQModelableCell {
                 return
             }
 
-            textLabel?.text = model.rawValue
+            if model == .rateUs,
+               let infoDictionary = Bundle.main.infoDictionary,
+               let version = infoDictionary["CFBundleShortVersionString"] as? String,
+               let build = infoDictionary["CFBundleVersion"] as? String {
+
+                textLabel?.text = model.rawValue + " v\(version) (\(build))"
+            } else {
+                textLabel?.text = model.rawValue
+            }
         }
     }
 }

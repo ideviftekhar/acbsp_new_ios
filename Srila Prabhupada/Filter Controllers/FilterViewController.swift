@@ -25,27 +25,22 @@ class FilterViewController: UIViewController {
 
     var selectedFilters: [Filter: [String]] = [:]
 
-//    typealias TypeModel = Filter
-//    typealias TypeCell = FilterTypeTableViewCell
-//    typealias DetailsModel = String
-//    typealias DetailsCell = FilterDetailTableViewCell
-//
-//    private var typeModels: [TypeModel] = []
-//    private var detailsModels: [DetailsModel] = []
-//    private(set) lazy var typeList = IQList(listView: filterTypeTableView, delegateDataSource: self)
-//    private(set) lazy var detailsList = IQList(listView: filterDetailTableView, delegateDataSource: self)
+    typealias TypeCell = FilterTypeTableViewCell
+    typealias DetailsCell = FilterDetailTableViewCell
+
+    private(set) lazy var typeList = IQList(listView: filterTypeTableView, delegateDataSource: self)
+    private(set) lazy var detailsList = IQList(listView: filterDetailTableView, delegateDataSource: self)
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        filterTypeTableView.tableFooterView = UIView()
-        filterDetailTableView.tableFooterView = UIView()
-
-//        do {
-//            typeList.registerCell(type: TypeCell.self, registerType: .storyboard)
-//            detailsList.registerCell(type: DetailsCell.self, registerType: .storyboard)
-//            refreshUI(animated: false)
-//        }
+        do {
+            typeList.registerCell(type: TypeCell.self, registerType: .storyboard)
+            detailsList.registerCell(type: DetailsCell.self, registerType: .storyboard)
+            refreshUI(animated: false)
+            filterTypeTableView.tableFooterView = UIView()
+            filterDetailTableView.tableFooterView = UIView()
+        }
 
         do {
             let initialSelectedIndex: Int
@@ -56,13 +51,12 @@ class FilterViewController: UIViewController {
                 initialSelectedIndex = 0
             }
             activeFilter = filters[initialSelectedIndex]
-            filterTypeTableView.selectRow(at: IndexPath(row: initialSelectedIndex, section: 0), animated: false, scrollPosition: .middle)
         }
     }
 
     @IBAction private func clearBarButtonPressed(_: UIBarButtonItem) {
         self.selectedFilters = [:]
-        self.reloadData()
+        self.refreshUI(animated: false)
     }
 
     private func goBack() {
@@ -82,81 +76,77 @@ class FilterViewController: UIViewController {
         self.delegate?.filterController(self, didSelected: self.selectedFilters)
         goBack()
     }
-
-    private func reloadData() {
-
-        let selectedIndexPath = filterTypeTableView.indexPathForSelectedRow
-
-        self.filterTypeTableView.reloadData()
-        self.filterDetailTableView.reloadData()
-
-        self.filterTypeTableView.selectRow(at: selectedIndexPath, animated: false, scrollPosition: .none)
-    }
 }
 
-extension FilterViewController: UITableViewDelegate, UITableViewDataSource {
+extension FilterViewController: IQListViewDelegateDataSource {
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if tableView == filterTypeTableView {
-            return self.filters.count
-        } else if tableView == filterDetailTableView {
-            return activeFilter.subtypes.count
+    private func refreshUI(animated: Bool? = nil) {
+
+        DispatchQueue.global().async { [self] in
+            let animated: Bool = animated ?? true
+            typeList.performUpdates({
+
+                let section = IQSection(identifier: "Cell", headerSize: CGSize.zero, footerSize: CGSize.zero)
+                typeList.append(section)
+
+                let models: [TypeCell.Model] = filters.map { filter -> TypeCell.Model in
+
+                    let selectionCount: Int
+                    if let selectedSubtypes = selectedFilters[filter] {
+                        selectionCount = selectedSubtypes.count
+                    } else {
+                        selectionCount = 0
+                    }
+
+                    return TypeCell.Model(filter: filter, selectionCount: selectionCount)
+                }
+
+                typeList.append(TypeCell.self, models: models, section: section)
+
+            }, animatingDifferences: animated, completion: {
+
+                if let activeFilterIndex = filters.firstIndex(of: activeFilter) {
+                    self.filterTypeTableView.selectRow(at: IndexPath(row: activeFilterIndex, section: 0), animated: false, scrollPosition: .none)
+                }
+            })
+
+            detailsList.performUpdates({
+
+                let section = IQSection(identifier: "Cell", headerSize: CGSize.zero, footerSize: CGSize.zero)
+                detailsList.append(section)
+
+                let models: [DetailsCell.Model] = activeFilter.subtypes.map { subtype -> DetailsCell.Model in
+
+                    let isSelected: Bool
+
+                    if let selectedSubtypes = selectedFilters[activeFilter], selectedSubtypes.contains(subtype) {
+                        isSelected = true
+                    } else {
+                        isSelected = false
+                    }
+
+                    return DetailsCell.Model(details: subtype, isSelected: isSelected)
+                }
+
+                detailsList.append(DetailsCell.self, models: models, section: section)
+
+            }, animatingDifferences: animated, completion: nil)
         }
-        return 0
     }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func listView(_ listView: IQListView, didSelect item: IQItem, at indexPath: IndexPath) {
 
-        if tableView == filterTypeTableView { //
-            let filter = filters[indexPath.row]
+        if let model = item.model as? TypeCell.Model {
 
-            let cell = tableView.dequeueReusableCell(withIdentifier: "FilterTypeTableViewCell") as! FilterTypeTableViewCell
-            cell.filterTypeLabel.text = filter.rawValue
+            activeFilter = model.filter
 
-            if let selectedSubtypes = selectedFilters[filter], !selectedSubtypes.isEmpty {
-                cell.filterCountLabel.text = "\(selectedSubtypes.count)"
-                cell.filterCountLabel.isHidden = false
-            } else {
-                cell.filterCountLabel.isHidden = true
-            }
+            self.refreshUI(animated: true)
+        } else if let model = item.model as? DetailsCell.Model {
 
-            return cell
-
-        } else if tableView == filterDetailTableView {
-            let subtype = activeFilter.subtypes[indexPath.row]
-
-            let cell = tableView.dequeueReusableCell(withIdentifier: "FilterDetailTableViewCell") as! FilterDetailTableViewCell //
-            cell.detailTypeLabel.text = subtype
-
-            if let selectedSubtypes = selectedFilters[activeFilter], selectedSubtypes.contains(subtype) {
-                cell.checkView.setOn(true, animated: false)
-            } else {
-                cell.checkView.setOn(false, animated: false)
-            }
-
-            return cell
-        } else {
-            return UITableViewCell()
-        }
-    }
-
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-        if tableView == filterTypeTableView { //
-            let filter = filters[indexPath.row]
-            activeFilter = filter
-
-            self.reloadData()
-
-        } else {
-            tableView.deselectRow(at: indexPath, animated: true)
-
-            let subtype = activeFilter.subtypes[indexPath.row]
-
-            if let selectedSubtypes = selectedFilters[activeFilter], selectedSubtypes.contains(subtype) {
+            if let selectedSubtypes = selectedFilters[activeFilter], selectedSubtypes.contains(model.details) {
 
                 var existingSubtypes = selectedFilters[activeFilter] ?? []
-                existingSubtypes.removeAll(where: { $0 == subtype })
+                existingSubtypes.removeAll(where: { $0 == model.details })
                 if existingSubtypes.isEmpty {
                     selectedFilters[activeFilter] = nil
                 } else {
@@ -165,11 +155,10 @@ extension FilterViewController: UITableViewDelegate, UITableViewDataSource {
             } else {
 
                 var existingSubtypes = selectedFilters[activeFilter] ?? []
-                existingSubtypes.append(subtype)
+                existingSubtypes.append(model.details)
                 selectedFilters[activeFilter] = existingSubtypes
             }
-
-            self.reloadData()
+            self.refreshUI(animated: false)
         }
     }
 }

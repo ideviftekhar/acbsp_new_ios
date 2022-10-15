@@ -125,8 +125,8 @@ final class SPNowPlayingInfoCenter {
         if let asset = player.currentItem?.asset as? AVURLAsset {
             nowPlayingInfo[MPNowPlayingInfoPropertyAssetURL] = asset.url
         }
-        if #available(iOS 14.0, *) {
-            nowPlayingInfo[MPNowPlayingInfoPropertyCurrentPlaybackDate] = player.currentItem?.currentDate
+        if #available(iOS 14.0, *), let currentDate = player.currentItem?.currentDate() {
+            nowPlayingInfo[MPNowPlayingInfoPropertyCurrentPlaybackDate] = currentDate as NSDate
         }
 
         // MPMediaItemPropertyAlbumTrackCount
@@ -156,4 +156,3 @@ final class SPNowPlayingInfoCenter {
         MPNowPlayingInfoCenter.default().nowPlayingInfo = nowPlayingInfo
     }
 }
-

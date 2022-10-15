@@ -16,5 +16,6 @@ enum SideMenuItem: String, CaseIterable {
     case share = "Share"
     case donate = "Donate"
     case copyright = "Copyright"
+    case rateUs = "Rate Us on App Store"
     case signOut = "Logout"
 }

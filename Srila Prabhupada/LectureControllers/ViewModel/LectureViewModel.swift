@@ -12,7 +12,7 @@ import FirebaseFirestoreSwift
 
 protocol LectureViewModel: AnyObject {
 
-    func getLectures(searchText: String?, sortType: LectureSortType, filter: [Filter: [String]], lectureIDs: [Int]?, source: FirestoreSource, completion: @escaping (Swift.Result<[Lecture], Error>) -> Void)
+    func getLectures(searchText: String?, sortType: LectureSortType?, filter: [Filter: [String]], lectureIDs: [Int]?, source: FirestoreSource, completion: @escaping (Swift.Result<[Lecture], Error>) -> Void)
 
     func getUsersLectureInfo(source: FirestoreSource, completion: @escaping (Swift.Result<[LectureInfo], Error>) -> Void)
     func getUsersListenInfo(source: FirestoreSource, completion: @escaping (Swift.Result<[ListenInfo], Error>) -> Void)
@@ -42,11 +42,20 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(downloadRemovedNotification(_:)), name: Persistant.Notification.downloadRemoved, object: nil)
     }
 
-    static func filter(lectures: [Lecture], searchText: String?, sortType: LectureSortType, filter: [Filter: [String]], lectureIDs: [Int]?) -> [Lecture] {
+    static func filter(lectures: [Lecture], searchText: String?, sortType: LectureSortType?, filter: [Filter: [String]], lectureIDs: [Int]?) -> [Lecture] {
         var lectures: [Lecture] = lectures
 
         if let lectureIDs = lectureIDs {
-            lectures = lectures.filter({ lectureIDs.contains($0.id) })
+
+            var filteredLectures: [Lecture] = []
+
+            for lectureID in lectureIDs {
+                if let lecture = lectures.first(where: { $0.id == lectureID }) {
+                    filteredLectures.append(lecture)
+                }
+            }
+
+            lectures = filteredLectures
         }
 
         if let searchText = searchText, !searchText.isEmpty {
@@ -61,7 +70,9 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
             lectures = filter.filter(lectures, selectedSubtypes: subtypes)
         }
 
-        lectures = sortType.sort(lectures)
+        if let sortType = sortType {
+            lectures = sortType.sort(lectures)
+        }
         return lectures
     }
 
@@ -78,7 +89,7 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
         return lectures
     }
 
-    func getLectures(searchText: String?, sortType: LectureSortType, filter: [Filter: [String]], lectureIDs: [Int]?, source: FirestoreSource, completion: @escaping (Swift.Result<[Lecture], Error>) -> Void) {
+    func getLectures(searchText: String?, sortType: LectureSortType?, filter: [Filter: [String]], lectureIDs: [Int]?, source: FirestoreSource, completion: @escaping (Swift.Result<[Lecture], Error>) -> Void) {
 
         if let lectureIDs = lectureIDs, lectureIDs.isEmpty {
             completion(.success([]))
@@ -182,7 +193,7 @@ extension DefaultLectureViewModel {
                                 NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
                             }
 
-                            let lectureIndexes = self.allLectures.allIndex (where: { $0.id == lecture.id })
+                            let lectureIndexes = self.allLectures.allIndex(where: { $0.id == lecture.id })
                             for index in lectureIndexes {
                                 self.allLectures[index].isFavourites = isFavourite
                             }
@@ -214,7 +225,7 @@ extension DefaultLectureViewModel {
                             completion(.failure(error))
                         } else {
 
-                            let lectureIndexes = self.allLectures.allIndex (where: { $0.id == lecture.id })
+                            let lectureIndexes = self.allLectures.allIndex(where: { $0.id == lecture.id })
                             for index in lectureIndexes {
                                 self.allLectures[index].isFavourites = isFavourite
                             }
@@ -288,8 +299,8 @@ extension DefaultLectureViewModel {
 
         var query: Query =  FirestoreManager.shared.firestore.collection((FirestoreCollection.topLectures.path))
 
-        query = query.whereField("creationDay.month", isEqualTo: month)
-        query = query.whereField("creationDay.year", isEqualTo: year)
+        query = query.whereField("createdDay.month", isEqualTo: month)
+        query = query.whereField("createdDay.year", isEqualTo: year)
 
         FirestoreManager.shared.getDocuments(query: query, source: .default, completion: { (result: Swift.Result<[TopLecture], Error>) in
             switch result {
@@ -335,7 +346,7 @@ extension DefaultLectureViewModel {
     @objc func downloadAddedNotification(_ notification: Foundation.Notification) {
         guard let dbLecture = notification.object as? DBLecture else { return }
 
-        let lectureIndexes = self.allLectures.allIndex (where: { $0.id == dbLecture.id })
+        let lectureIndexes = self.allLectures.allIndex(where: { $0.id == dbLecture.id })
         for index in lectureIndexes {
             allLectures[index].downloadingState = dbLecture.downloadStateEnum
         }
@@ -347,7 +358,7 @@ extension DefaultLectureViewModel {
     @objc func downloadUpdatedNotification(_ notification: Foundation.Notification) {
         guard let dbLecture = notification.object as? DBLecture else { return }
 
-        let lectureIndexes = self.allLectures.allIndex (where: { $0.id == dbLecture.id })
+        let lectureIndexes = self.allLectures.allIndex(where: { $0.id == dbLecture.id })
         for index in lectureIndexes {
             allLectures[index].downloadingState = dbLecture.downloadStateEnum
         }
@@ -359,7 +370,7 @@ extension DefaultLectureViewModel {
     @objc func downloadRemovedNotification(_ notification: Foundation.Notification) {
         guard let dbLecture = notification.object as? DBLecture else { return }
 
-        let lectureIndexes = self.allLectures.allIndex (where: { $0.id == dbLecture.id })
+        let lectureIndexes = self.allLectures.allIndex(where: { $0.id == dbLecture.id })
         for index in lectureIndexes {
             allLectures[index].downloadingState = dbLecture.downloadStateEnum
         }

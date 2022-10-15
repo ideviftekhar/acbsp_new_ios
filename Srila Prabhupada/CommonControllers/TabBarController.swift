@@ -30,8 +30,24 @@ class TabBarController: UITabBarController {
         playerViewController.currentLecture = nil
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        playerViewController.beginAppearanceTransition(true, animated: animated)
+    }
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        playerViewController.endAppearanceTransition()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        playerViewController.beginAppearanceTransition(false, animated: animated)
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        playerViewController.endAppearanceTransition()
     }
 
     var viewFrame: CGRect = .zero

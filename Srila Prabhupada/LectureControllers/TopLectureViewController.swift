@@ -124,10 +124,10 @@ extension TopLectureViewController {
         var startOfWeek = Date().startOfWeek
 
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy"
+        dateFormatter.dateFormat = "d-M-yyyy"
         var weekDates: [String] = []
 
-        while let day = startOfWeek, day < endOfWeek {
+        while let day = startOfWeek, day <= endOfWeek {
             let dateString = dateFormatter.string(from: day)
             weekDates.append(dateString)
             startOfWeek = Date.gregorianCalenar.date(byAdding: .day, value: 1, to: day)

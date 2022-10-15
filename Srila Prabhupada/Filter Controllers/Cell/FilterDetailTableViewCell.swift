@@ -7,27 +7,41 @@
 
 import UIKit
 import BEMCheckBox
+import IQListKit
 
-class FilterDetailTableViewCell: UITableViewCell {
+class FilterDetailTableViewCell: UITableViewCell, IQModelableCell {
 
-    @IBOutlet weak var checkView: BEMCheckBox!
-    @IBOutlet weak var detailTypeLabel: UILabel!
+    @IBOutlet private var checkView: BEMCheckBox!
+    @IBOutlet private var detailTypeLabel: UILabel!
 
     override func awakeFromNib() {
         super.awakeFromNib()
-        addAnimationToCheckView()
+        setupCheckView()
         self.checkView.isUserInteractionEnabled = false
     }
 
-    func addAnimationToCheckView() {
+    func setupCheckView() {
         self.checkView.boxType = .square
-        self.checkView.onAnimationType = .fill
-        self.checkView.offAnimationType = .fill
         self.checkView.tintColor = .white
 
         self.checkView.layer.borderWidth = 2.0
         self.checkView.layer.borderColor = UIColor(named: "ThemeColor")?.cgColor
         self.checkView.layer.cornerRadius = 3.0
 
+    }
+
+    struct Model: Hashable {
+        let details: String
+        let isSelected: Bool
+    }
+
+    var model: Model? {
+        didSet {
+            guard let model = model else {
+                return
+            }
+            checkView.on = model.isSelected
+            detailTypeLabel.text = model.details
+        }
     }
 }

@@ -9,6 +9,7 @@ import UIKit
 import SideMenu
 import SafariServices
 import FirebaseFirestore
+import StoreKit
 
 class SearchViewController: UIViewController {
 
@@ -199,7 +200,7 @@ extension SearchViewController: SideMenuControllerDelegate {
             let shareController = UIActivityViewController(activityItems: appLink, applicationActivities: nil)
             controller.present(shareController, animated: true)
         case .donate:
-            if let donateWebsite = URL(string: "https://bvks.com/donate/") {
+            if let donateWebsite = URL(string: Constants.donateURLString) {
                 let config = SFSafariViewController.Configuration()
                 config.entersReaderIfAvailable = true
                 let safariController = SFSafariViewController(url: donateWebsite, configuration: config)
@@ -210,6 +211,27 @@ extension SearchViewController: SideMenuControllerDelegate {
             controller.present(copyrightController, animated: true, completion: nil)
         case .signOut:
             break
+        case .rateUs:
+            controller.dismiss(animated: true, completion: nil)
+
+            let storeViewController = SKStoreProductViewController()
+            storeViewController.delegate = self
+
+            let parameters = [ SKStoreProductParameterITunesItemIdentifier: Constants.appStoreIdentifier]
+            storeViewController.loadProduct(withParameters: parameters) { [weak self] (loaded, error) -> Void in
+                if loaded {
+                    // Parent class of self is UIViewContorller
+                    self?.present(storeViewController, animated: true, completion: nil)
+                } else if let error = error {
+                    self?.showAlert(title: "Error", message: error.localizedDescription)
+                }
+            }
         }
+    }
+}
+
+extension SearchViewController: SKStoreProductViewControllerDelegate {
+    func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
+        viewController.dismiss(animated: true, completion: nil)
     }
 }

@@ -252,7 +252,7 @@ extension LectureViewController: LectureCellDelegate {
             guard let playlistController = navigationController.viewControllers.first as? PlaylistViewController else {
                 return
             }
-            playlistController.lectureToAdd = lecture
+            playlistController.lecturesToAdd = [lecture]
             self.present(navigationController, animated: true, completion: nil)
 
         case .markAsHeard:

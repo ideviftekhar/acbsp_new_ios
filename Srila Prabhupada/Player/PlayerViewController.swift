@@ -307,17 +307,17 @@ class PlayerViewController: LectureViewController {
     override func refreshAsynchronous(source: FirestoreSource) {
         super.refreshAsynchronous(source: source)
 
-        reloadData(with: self.currentLectureQueue)
+//        reloadData(with: self.currentLectureQueue)
 
-//        let lectureIds = self.currentLectureQueue.map { $0.id }
-//        Self.lectureViewModel.getLectures(searchText: nil, sortType: .default, filter: [:], lectureIDs: lectureIds, source: source, completion: { result in
-//            switch result {
-//            case .success(let success):
-//                self.reloadData(with: success)
-//            default:
-//                self.reloadData(with: self.currentLectureQueue)
-//            }
-//        })
+        let lectureIds = self.currentLectureQueue.map { $0.id }
+        Self.lectureViewModel.getLectures(searchText: nil, sortType: nil, filter: [:], lectureIDs: lectureIds, source: source, completion: { result in
+            switch result {
+            case .success(let success):
+                self.reloadData(with: success)
+            default:
+                self.reloadData(with: self.currentLectureQueue)
+            }
+        })
     }
 
     @IBAction func backButtonTapped(_ sender: UIButton) {
@@ -453,6 +453,7 @@ class PlayerViewController: LectureViewController {
     }
 
     override func listView(_ listView: IQListView, modifyCell cell: IQListCell, at indexPath: IndexPath) {
+        super.listView(listView, modifyCell: cell, at: indexPath)
         cell.backgroundColor = UIColor.clear
     }
 }

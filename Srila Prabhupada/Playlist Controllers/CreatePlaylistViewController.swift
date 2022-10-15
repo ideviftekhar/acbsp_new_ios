@@ -14,15 +14,15 @@ protocol CreatePlaylistViewControllerDelegate: AnyObject {
 
 class CreatePlaylistViewController: UIViewController {
 
-    @IBOutlet weak var cancelButton: UIBarButtonItem!
-    @IBOutlet weak var doneButton: UIBarButtonItem!
-    @IBOutlet weak var privatePlaylistButton: UIButton!
-    @IBOutlet weak var publicPlaylistButton: UIButton!
+    @IBOutlet private var cancelButton: UIBarButtonItem!
+    @IBOutlet private var doneButton: UIBarButtonItem!
+    @IBOutlet private var privatePlaylistButton: UIButton!
+    @IBOutlet private var publicPlaylistButton: UIButton!
 
-    @IBOutlet weak var playlistTitleTextField: UITextField!
-    @IBOutlet weak var categoryTextField: UITextField!
+    @IBOutlet private var playlistTitleTextField: UITextField!
+    @IBOutlet private var categoryTextField: UITextField!
 
-    @IBOutlet weak var descriptionTextView: UITextView!
+    @IBOutlet private var descriptionTextView: UITextView!
 
     @IBOutlet private var loadingIndicatorView: UIActivityIndicatorView!
 
