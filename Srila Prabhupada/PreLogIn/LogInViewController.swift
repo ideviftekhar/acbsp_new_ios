@@ -116,6 +116,7 @@ class LogInViewController: UIViewController {
         forgotPasswordButton.isEnabled = false
         createAccountButton.isEnabled = false
         signWithGoogleButton.isEnabled = false
+        signWithAppleButton.isEnabled = false
     }
 
     private func hideLoading() {
@@ -128,6 +129,7 @@ class LogInViewController: UIViewController {
         forgotPasswordButton.isEnabled = true
         createAccountButton.isEnabled = true
         signWithGoogleButton.isEnabled = true
+        signWithAppleButton.isEnabled = true
     }
 }
 

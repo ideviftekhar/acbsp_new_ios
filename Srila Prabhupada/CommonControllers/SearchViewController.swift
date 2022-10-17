@@ -13,7 +13,7 @@ import StoreKit
 
 class SearchViewController: UIViewController {
 
-    @IBOutlet private var hamburgerBarButton: UIBarButtonItem!
+    @IBOutlet var hamburgerBarButton: UIBarButtonItem!
     private let searchController = UISearchController(searchResultsController: nil)
     private var lastSearchText: String = ""
 
@@ -171,14 +171,14 @@ extension SearchViewController: SideMenuControllerDelegate {
         sideMenuNavigationController .settings.presentationStyle.presentingEndAlpha = 0.7
         sideMenuNavigationController.settings.presentationStyle.onTopShadowOpacity = 0.3
 
-        if let sideMenuNavigationController = sideMenuNavigationController.viewControllers.first as? SideMenuTableViewController {
+        if let sideMenuNavigationController = sideMenuNavigationController.viewControllers.first as? SideMenuViewController {
             sideMenuNavigationController.delegate = self
         }
 
         present(sideMenuNavigationController, animated: true, completion: nil)
     }
 
-    func sideMenuController(_ controller: SideMenuTableViewController, didSelected menu: SideMenuItem) {
+    func sideMenuController(_ controller: SideMenuViewController, didSelected menu: SideMenuItem) {
         switch menu {
         case .mediaLibrary:
             self.tabBarController?.selectedIndex = 0

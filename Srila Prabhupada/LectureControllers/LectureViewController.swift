@@ -31,6 +31,8 @@ class LectureViewController: SearchViewController {
     private var sortMenu: UIMenu!
 
     private lazy var doneSelectionButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneSelectionAction(_:)))
+    private lazy var cancelSelectionButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonAction(_:)))
+
     var isSelectionEnabled: Bool = false
     var selectedModels: [Model] = []
 
@@ -87,10 +89,7 @@ class LectureViewController: SearchViewController {
         }
 
         configureSortButton()
-    }
-
-    @objc private func doneSelectionAction(_ sender: UIBarButtonItem) {
-        delegate?.lectureController(self, didSelected: selectedModels)
+        configureSelectionButton()
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -101,7 +100,7 @@ class LectureViewController: SearchViewController {
         super.refreshAsynchronous(source: source)
     }
 
-    //This delegate Declared here because some subclasses are overriding it.
+    // This delegate Declared here because some subclasses are overriding it.
     func listView(_ listView: IQListView, modifyCell cell: IQListCell, at indexPath: IndexPath) {
         if let cell = cell as? Cell {
             cell.delegate = self
@@ -187,6 +186,141 @@ extension LectureViewController {
             sortButton.image = UIImage(compatibleSystemName: "arrow.up.arrow.down.circle.fill")
         }
     }
+}
+
+extension LectureViewController {
+
+    @objc private func doneSelectionAction(_ sender: UIBarButtonItem) {
+        delegate?.lectureController(self, didSelected: selectedModels)
+    }
+
+    @objc private func cancelButtonAction(_ sender: UIBarButtonItem) {
+        print("cancel button tapped")
+        isSelectionEnabled = false
+        selectedModels = []
+        refreshUI(animated: false)
+        navigationItem.leftBarButtonItem = hamburgerBarButton
+
+    }
+
+    private func configureSelectionButton() {
+        var menuItems: [UIAction] {
+            return [
+                UIAction(title: "Select", image: nil, handler: { [self] (_) in
+                    isSelectionEnabled = true
+                    selectedModels = []
+                    refreshUI(animated: false)
+                    self.navigationItem.leftBarButtonItem = cancelSelectionButton
+                }),
+                UIAction(title: "Select All", image: nil, handler: { [self] (_) in
+                    isSelectionEnabled = true
+                    selectedModels = models
+                    refreshUI(animated: false)
+                 }),
+                UIAction(title: "Deselect All", image: nil, handler: { [self] (_) in
+                     isSelectionEnabled = false
+                     selectedModels = []
+                     refreshUI(animated: false)
+                  }),
+                UIAction(title: "Mark as Favorite", image: nil, handler: { [self] (_) in
+                    print("Mark as Favorite")
+                    guard !selectedModels.isEmpty else {
+                        return
+                    }
+
+                    for selectedModel in selectedModels{
+                        print(selectedModel.id)
+                    }
+                  }),
+                UIAction(title: "Download", image: nil, handler: { [self] (_) in
+                    print("Download")
+                    guard !selectedModels.isEmpty else {
+                        return
+                    }
+
+                    for selectedModel in selectedModels{
+                        print(selectedModel.id)
+                    }
+
+                  }),
+                UIAction(title: "Add to Playlist", image: nil, handler: { [self] (_) in
+
+                    guard !selectedModels.isEmpty else {
+                        return
+                    }
+
+                    let navigationController = UIStoryboard.playlists.instantiate(UINavigationController.self, identifier: "PlaylistNavigationController")
+                    guard let playlistController = navigationController.viewControllers.first as? PlaylistViewController else {
+                        return
+                    }
+                    playlistController.lecturesToAdd = selectedModels
+                    self.present(navigationController, animated: true, completion: nil)
+                }),
+                UIAction(title: "Reset Progress", image: nil, handler: { [self] (_) in
+                    print("reset Progress")
+                    guard !selectedModels.isEmpty else {
+                        return
+                    }
+
+                    for selectedModel in selectedModels {
+                        print(selectedModel.id)
+                    }
+
+                  })
+            ]
+        }
+        var menu: UIMenu = UIMenu(title: "", image: nil, identifier: nil, options: [], children: menuItems)
+
+        if #available(iOS 14.0, *) {
+            let moreButton =  UIBarButtonItem(title: "", image: UIImage(systemName: "ellipsis.circle"), primaryAction: nil, menu: menu)
+            navigationItem.rightBarButtonItems?.append(moreButton)
+        } else {
+            // Fallback on earlier versions
+        }
+    }
+
+//    // Backward compatibility for iOS 13
+//    @objc private func selectionActioniOS13(_ sender: UIBarButtonItem) {
+//
+//        var buttons: [UIViewController.ButtonConfig] = []
+//        let actions: [UIAction] = self.sortMenu.children as? [UIAction] ?? []
+//        for action in actions {
+//            buttons.append((title: action.title, handler: { [self] in
+//                sortActionSelected(action: action)
+//            }))
+//        }
+//
+//        self.showAlert(title: "Sort", message: nil, preferredStyle: .actionSheet, cancel: ("Cancel", nil), buttons: buttons)
+//    }
+//
+//    private func selectionActionSelected(action: UIAction) {
+//        let userDefaultKey: String = "\(Self.self).\(LectureSortType.self)"
+//        let actions: [UIAction] = self.sortMenu.children as? [UIAction] ?? []
+//        for anAction in actions {
+//            if anAction.identifier == action.identifier { anAction.state = .on  } else {  anAction.state = .off }
+//        }
+//
+//        updateSortButtonUI()
+//
+//        UserDefaults.standard.set(action.identifier.rawValue, forKey: userDefaultKey)
+//        UserDefaults.standard.synchronize()
+//
+//        self.sortMenu = self.sortMenu.replacingChildren(actions)
+//
+//        if #available(iOS 14.0, *) {
+//            self.sortButton.menu = self.sortMenu
+//        }
+//
+//        refreshAsynchronous(source: .cache)
+//    }
+//
+//    private func updateSelectionButtonUI() {
+//        if selectedSortType == .default {
+//            sortButton.image = UIImage(compatibleSystemName: "arrow.up.arrow.down.circle")
+//        } else {
+//            sortButton.image = UIImage(compatibleSystemName: "arrow.up.arrow.down.circle.fill")
+//        }
+//    }
 }
 
 extension LectureViewController: IQListViewDelegateDataSource {

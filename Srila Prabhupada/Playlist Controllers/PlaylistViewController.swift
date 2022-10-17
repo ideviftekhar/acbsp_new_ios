@@ -151,8 +151,12 @@ class PlaylistViewController: SearchViewController {
     override func refreshAsynchronous(source: FirestoreSource) {
         super.refreshAsynchronous(source: source)
 
-        switch playlistSegmentControl.selectedSegmentIndex {
-        case 0:
+        guard let selectedPlaylistType = PlaylistType(rawValue: playlistSegmentControl.selectedSegmentIndex) else {
+            return
+        }
+
+        switch selectedPlaylistType {
+        case .private:
 
             showLoading()
             playlistViewModel.getPrivatePlaylist(searchText: searchText, sortType: selectedSortType, completion: { [self] result in
@@ -165,7 +169,7 @@ class PlaylistViewController: SearchViewController {
                     showAlert(title: "Error", message: error.localizedDescription)
                 }
             })
-        case 1:
+        case .public:
 
             showLoading()
 
@@ -186,10 +190,7 @@ class PlaylistViewController: SearchViewController {
                     showAlert(title: "Error", message: error.localizedDescription)
                 }
             })
-        default:
-            break
         }
-
     }
 }
 

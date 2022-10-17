@@ -1,5 +1,5 @@
 //
-//  SideMenuTableViewController.swift
+//  SideMenuViewController.swift
 //  SrilaPrabhupada
 //
 //  Created by IE06 on 21/08/22.
@@ -12,12 +12,15 @@ import FirebaseAuth
 // Protocol
 protocol SideMenuControllerDelegate: AnyObject {
 
-    func sideMenuController(_ controller: SideMenuTableViewController, didSelected menu: SideMenuItem)
+    func sideMenuController(_ controller: SideMenuViewController, didSelected menu: SideMenuItem)
 }
 
-class SideMenuTableViewController: UITableViewController {
+class SideMenuViewController: UIViewController {
 
     @IBOutlet private var sideMenuTableView: UITableView!
+    @IBOutlet private var userImageView: UIImageView!
+    @IBOutlet private var userNameLabel: UILabel!
+    @IBOutlet private var userEmailLabel: UILabel!
 
     typealias Model = SideMenuItem
     typealias Cell = SideMenuCell
@@ -31,13 +34,13 @@ class SideMenuTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        do {
+        do {            
             if let currentUser = Auth.auth().currentUser {
-                self.navigationItem.title = currentUser.displayName
-                self.navigationItem.prompt = currentUser.email
+                userNameLabel.text = currentUser.displayName
+                userEmailLabel.text = currentUser.email
             } else {
-                self.navigationItem.title = nil
-                self.navigationItem.prompt = nil
+                userNameLabel.text = nil
+                userEmailLabel.text = nil
             }
         }
 
@@ -49,7 +52,7 @@ class SideMenuTableViewController: UITableViewController {
     }
 }
 
-extension SideMenuTableViewController: IQListViewDelegateDataSource {
+extension SideMenuViewController: IQListViewDelegateDataSource {
 
     private func refreshUI(animated: Bool? = nil) {
 
