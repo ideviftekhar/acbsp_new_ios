@@ -8,6 +8,7 @@
 import UIKit
 import IQListKit
 import FirebaseAuth
+import AlamofireImage
 
 // Protocol
 protocol SideMenuControllerDelegate: AnyObject {
@@ -27,6 +28,7 @@ class SideMenuViewController: UIViewController {
 
     private let models: [SideMenuItem] = SideMenuItem.allCases
     private lazy var list = IQList(listView: sideMenuTableView, delegateDataSource: self)
+    private lazy var serialListKitQueue = DispatchQueue(label: "ListKitQueue_\(Self.self)", qos: .userInteractive)
 
     // delegate property
     weak var delegate: SideMenuControllerDelegate?
@@ -34,13 +36,21 @@ class SideMenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        do {            
+        do {
             if let currentUser = Auth.auth().currentUser {
                 userNameLabel.text = currentUser.displayName
                 userEmailLabel.text = currentUser.email
+
+                let placeholderImage = userImageView.placeholderImage(text: currentUser.displayName)
+                if let photoURL = currentUser.photoURL {
+                    userImageView.af.setImage(withURL: photoURL, placeholderImage: placeholderImage)
+                } else {
+                    userImageView.image = placeholderImage
+                }
             } else {
                 userNameLabel.text = nil
                 userEmailLabel.text = nil
+                userImageView.image = userImageView.placeholderImage(text: nil)
             }
         }
 
@@ -56,7 +66,7 @@ extension SideMenuViewController: IQListViewDelegateDataSource {
 
     private func refreshUI(animated: Bool? = nil) {
 
-        DispatchQueue.global().async { [self] in
+        serialListKitQueue.async { [self] in
             let animated: Bool = animated ?? (models.count <= 1000)
             list.performUpdates({
 

@@ -114,13 +114,7 @@ final class SPNowPlayingInfoCenter {
         //        nowPlayingInfo[MPNowPlayingInfoPropertyExternalUserProfileIdentifier] =
         //        nowPlayingInfo[MPNowPlayingInfoPropertyServiceIdentifier] =
 
-        let lastPlayedPointProgress: CGFloat
-        if lecture.length != 0 {
-            lastPlayedPointProgress = CGFloat(lecture.lastPlayedPoint) / CGFloat(lecture.length)
-        } else {
-            lastPlayedPointProgress = 0
-        }
-        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackProgress] = NSNumber(value: lastPlayedPointProgress)
+        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackProgress] = NSNumber(value: lecture.playProgress)
         nowPlayingInfo[MPNowPlayingInfoPropertyMediaType] = NSNumber(value: MPNowPlayingInfoMediaType.audio.rawValue)
         if let asset = player.currentItem?.asset as? AVURLAsset {
             nowPlayingInfo[MPNowPlayingInfoPropertyAssetURL] = asset.url

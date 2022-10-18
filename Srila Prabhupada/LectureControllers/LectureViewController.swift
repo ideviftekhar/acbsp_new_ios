@@ -12,6 +12,7 @@ import IQListKit
 
 protocol LectureViewControllerDelegate: AnyObject {
     func lectureController(_ controller: LectureViewController, didSelected lectures: [Lecture])
+    func lectureControllerDidCancel(_ controller: LectureViewController)
 }
 
 class LectureViewController: SearchViewController {
@@ -28,31 +29,31 @@ class LectureViewController: SearchViewController {
     weak var delegate: LectureViewControllerDelegate?
 
     private let sortButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(compatibleSystemName: "arrow.up.arrow.down.circle"), style: .plain, target: nil, action: nil)
-    private var sortMenu: UIMenu!
+    private var sortMenu: SPMenu!
+
+    private let moreButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"), style: .plain, target: nil, action: nil)
+    private var moreMenu: SPMenu!
+    private var defaultSelectionActions: [SPAction] = []
+    private var defaultNormalActions: [SPAction] = []
+    private var allActions: [LectureOption: SPAction] = [:]
 
     private lazy var doneSelectionButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneSelectionAction(_:)))
     private lazy var cancelSelectionButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonAction(_:)))
 
     var isSelectionEnabled: Bool = false
-    var selectedModels: [Model] = []
-
-    static let lectureViewModel: LectureViewModel = DefaultLectureViewModel()
+    var selectedModels: [Model] = [] {
+        didSet {
+            doneSelectionButton.isEnabled = !selectedModels.isEmpty
+            refreshMoreOption()
+        }
+    }
 
     var selectedSortType: LectureSortType {
-        if #available(iOS 15.0, *) {
-            guard let selectedSortAction = sortMenu.selectedElements.first as? UIAction,
-                  let selectedSortType = LectureSortType(rawValue: selectedSortAction.identifier.rawValue) else {
-                return LectureSortType.default
-            }
-            return selectedSortType
-        } else {
-            guard let children: [UIAction] = sortMenu.children as? [UIAction],
-                  let selectedSortAction = children.first(where: { $0.state == .on }),
-                    let selectedSortType = LectureSortType(rawValue: selectedSortAction.identifier.rawValue) else {
-                return LectureSortType.default
-            }
-            return selectedSortType
+        guard let selectedSortAction = sortMenu.selectedAction,
+              let selectedSortType = LectureSortType(rawValue: selectedSortAction.action.identifier.rawValue) else {
+            return LectureSortType.default
         }
+        return selectedSortType
     }
 
     typealias Model = Lecture
@@ -60,6 +61,7 @@ class LectureViewController: SearchViewController {
 
     private var models: [Model] = []
     private(set) lazy var list = IQList(listView: lectureTebleView, delegateDataSource: self)
+    private lazy var serialListKitQueue = DispatchQueue(label: "ListKitQueue_\(Self.self)", qos: .userInteractive)
 
     var noItemTitle: String?
     var noItemMessage: String?
@@ -68,10 +70,14 @@ class LectureViewController: SearchViewController {
        super.viewDidLoad()
 
         var rightButtons = self.navigationItem.rightBarButtonItems ?? []
+
+        rightButtons.insert(moreButton, at: 0)
         rightButtons.append(sortButton)
         if isSelectionEnabled {
             rightButtons.insert(doneSelectionButton, at: 0)
+            self.navigationItem.leftBarButtonItem = cancelSelectionButton
         }
+
         self.navigationItem.rightBarButtonItems = rightButtons
 
         do {
@@ -111,7 +117,7 @@ class LectureViewController: SearchViewController {
 extension LectureViewController {
 
     private func configureSortButton() {
-        var actions: [UIAction] = []
+        var actions: [SPAction] = []
 
         let userDefaultKey: String = "\(Self.self).\(LectureSortType.self)"
         let lastType: LectureSortType
@@ -126,55 +132,30 @@ extension LectureViewController {
 
             let state: UIAction.State = (lastType == sortType ? .on : .off)
 
-            let action: UIAction = UIAction(title: sortType.rawValue, image: nil, identifier: UIAction.Identifier(sortType.rawValue), state: state, handler: { [self] action in
+            let action: SPAction = SPAction(title: sortType.rawValue, image: nil, identifier: .init(sortType.rawValue), state: state, handler: { [self] action in
                 sortActionSelected(action: action)
             })
 
             actions.append(action)
         }
 
-        self.sortMenu = UIMenu(title: "", image: nil, identifier: UIMenu.Identifier.init(rawValue: "Sort"), options: UIMenu.Options.displayInline, children: actions)
+        self.sortMenu = SPMenu(title: "", image: nil, identifier: .init(rawValue: "Sort"), options: .displayInline, children: actions, barButton: sortButton, parent: self)
 
-        if #available(iOS 14.0, *) {
-            sortButton.menu = self.sortMenu
-        } else {
-            sortButton.target = self
-            sortButton.action = #selector(sortActioniOS13(_:))
-        }
         updateSortButtonUI()
-    }
-
-    // Backward compatibility for iOS 13
-    @objc private func sortActioniOS13(_ sender: UIBarButtonItem) {
-
-        var buttons: [UIViewController.ButtonConfig] = []
-        let actions: [UIAction] = self.sortMenu.children as? [UIAction] ?? []
-        for action in actions {
-            buttons.append((title: action.title, handler: { [self] in
-                sortActionSelected(action: action)
-            }))
-        }
-
-        self.showAlert(title: "Sort", message: nil, preferredStyle: .actionSheet, cancel: ("Cancel", nil), buttons: buttons)
     }
 
     private func sortActionSelected(action: UIAction) {
         let userDefaultKey: String = "\(Self.self).\(LectureSortType.self)"
-        let actions: [UIAction] = self.sortMenu.children as? [UIAction] ?? []
-        for anAction in actions {
-            if anAction.identifier == action.identifier { anAction.state = .on  } else {  anAction.state = .off }
-        }
-
-        updateSortButtonUI()
-
         UserDefaults.standard.set(action.identifier.rawValue, forKey: userDefaultKey)
         UserDefaults.standard.synchronize()
 
-        self.sortMenu = self.sortMenu.replacingChildren(actions)
-
-        if #available(iOS 14.0, *) {
-            self.sortButton.menu = self.sortMenu
+        let children: [SPAction] = self.sortMenu.children
+        for anAction in children {
+            if anAction.action.identifier == action.identifier { anAction.action.state = .on  } else {  anAction.action.state = .off }
         }
+        self.sortMenu.children = children
+
+        updateSortButtonUI()
 
         refreshAsynchronous(source: .cache)
     }
@@ -195,140 +176,183 @@ extension LectureViewController {
     }
 
     @objc private func cancelButtonAction(_ sender: UIBarButtonItem) {
-        print("cancel button tapped")
-        isSelectionEnabled = false
-        selectedModels = []
-        refreshUI(animated: false)
-        navigationItem.leftBarButtonItem = hamburgerBarButton
-
+        if delegate != nil {
+            delegate?.lectureControllerDidCancel(self)
+        } else {
+            isSelectionEnabled = false
+            selectedModels = []
+            refreshUI(animated: false)
+            navigationItem.leftBarButtonItem = hamburgerBarButton
+        }
     }
 
     private func configureSelectionButton() {
-        var menuItems: [UIAction] {
-            return [
-                UIAction(title: "Select", image: nil, handler: { [self] (_) in
-                    isSelectionEnabled = true
-                    selectedModels = []
-                    refreshUI(animated: false)
-                    self.navigationItem.leftBarButtonItem = cancelSelectionButton
-                }),
-                UIAction(title: "Select All", image: nil, handler: { [self] (_) in
-                    isSelectionEnabled = true
-                    selectedModels = models
-                    refreshUI(animated: false)
-                 }),
-                UIAction(title: "Deselect All", image: nil, handler: { [self] (_) in
-                     isSelectionEnabled = false
-                     selectedModels = []
-                     refreshUI(animated: false)
-                  }),
-                UIAction(title: "Mark as Favorite", image: nil, handler: { [self] (_) in
-                    print("Mark as Favorite")
-                    guard !selectedModels.isEmpty else {
-                        return
-                    }
 
-                    for selectedModel in selectedModels{
-                        print(selectedModel.id)
-                    }
-                  }),
-                UIAction(title: "Download", image: nil, handler: { [self] (_) in
-                    print("Download")
-                    guard !selectedModels.isEmpty else {
-                        return
-                    }
+        let select: SPAction = SPAction(title: "Select", image: nil, handler: { [self] (_) in
+            isSelectionEnabled = true
+            selectedModels = []
+            refreshUI(animated: false)
+            navigationItem.leftBarButtonItem = cancelSelectionButton
+        })
 
-                    for selectedModel in selectedModels{
-                        print(selectedModel.id)
-                    }
+        let cancel: SPAction = SPAction(title: "Cancel", image: nil, handler: { [self] (_) in
+            isSelectionEnabled = false
+            selectedModels = []
+            refreshUI(animated: false)
+            navigationItem.leftBarButtonItem = hamburgerBarButton
+        })
 
-                  }),
-                UIAction(title: "Add to Playlist", image: nil, handler: { [self] (_) in
+        let selectAll: SPAction = SPAction(title: "Select All", image: nil, handler: { [self] (_) in
+            selectedModels = models
+            refreshUI(animated: false)
+        })
+        let deselectAll: SPAction = SPAction(title: "Deselect All", image: nil, handler: { [self] (_) in
+            selectedModels = []
+            refreshUI(animated: false)
+        })
 
-                    guard !selectedModels.isEmpty else {
-                        return
-                    }
+        for option in LectureOption.allCases {
+            let action: SPAction = SPAction(title: option.rawValue, image: nil, identifier: .init(option.rawValue), handler: { [self] _ in
 
+                guard !selectedModels.isEmpty else {
+                    return
+                }
+
+                switch option {
+                case .download:
+                    let eligibleDownloadModels: [Model] = selectedModels.filter { $0.downloadingState == .notDownloaded || $0.downloadingState == .error }
+                    Persistant.shared.save(lectures: eligibleDownloadModels)
+
+                    DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleDownloadModels, isCompleted: nil, isDownloaded: true, isFavourite: nil, lastPlayedPoint: nil, completion: {_ in })
+
+                case .deleteFromDownloads:
+                    let eligibleDeleteFromDownloadsModels: [Model] = selectedModels.filter { $0.downloadingState == .downloaded }
+                    Persistant.shared.delete(lectures: eligibleDeleteFromDownloadsModels)
+
+                    DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleDeleteFromDownloadsModels, isCompleted: nil, isDownloaded: false, isFavourite: nil, lastPlayedPoint: nil, completion: {_ in })
+                case .markAsFavourite:
+                    let eligibleMarkAsFavouriteModels: [Model] = selectedModels.filter { !$0.isFavourites }
+
+                    DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleMarkAsFavouriteModels, isCompleted: nil, isDownloaded: nil, isFavourite: true, lastPlayedPoint: nil, completion: {_ in })
+                case .removeFromFavourites:
+                    let eligibleRemoveFromFavouritesModels: [Model] = selectedModels.filter { $0.isFavourites }
+                    DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleRemoveFromFavouritesModels, isCompleted: nil, isDownloaded: nil, isFavourite: false, lastPlayedPoint: nil, completion: {_ in })
+                case .addToPlaylist:
                     let navigationController = UIStoryboard.playlists.instantiate(UINavigationController.self, identifier: "PlaylistNavigationController")
                     guard let playlistController = navigationController.viewControllers.first as? PlaylistViewController else {
                         return
                     }
                     playlistController.lecturesToAdd = selectedModels
                     self.present(navigationController, animated: true, completion: nil)
-                }),
-                UIAction(title: "Reset Progress", image: nil, handler: { [self] (_) in
-                    print("reset Progress")
-                    guard !selectedModels.isEmpty else {
-                        return
-                    }
-
-                    for selectedModel in selectedModels {
-                        print(selectedModel.id)
-                    }
-
-                  })
-            ]
+                case .markAsHeard:
+                    let eligibleMarkAsHeardModels: [Model] = selectedModels.filter { $0.playProgress < 1.0 }
+                    DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleMarkAsHeardModels, isCompleted: true, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: -1, completion: {_ in })
+                case .resetProgress:
+                    let eligibleResetProgressModels: [Model] = selectedModels.filter { $0.playProgress >= 1.0 }
+                    DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleResetProgressModels, isCompleted: false, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: 0, completion: {_ in })
+                case .share, .downloading:
+                    break
+               }
+            })
+            allActions[option] = action
         }
-        var menu: UIMenu = UIMenu(title: "", image: nil, identifier: nil, options: [], children: menuItems)
 
-        if #available(iOS 14.0, *) {
-            let moreButton =  UIBarButtonItem(title: "", image: UIImage(systemName: "ellipsis.circle"), primaryAction: nil, menu: menu)
-            navigationItem.rightBarButtonItems?.append(moreButton)
+        if delegate != nil {
+            defaultNormalActions = []
+            defaultSelectionActions = [selectAll, deselectAll]
+            moreMenu = SPMenu(title: "", image: nil, identifier: UIMenu.Identifier.init("More Menu"), options: [], children: defaultSelectionActions, barButton: moreButton, parent: self)
         } else {
-            // Fallback on earlier versions
+            defaultNormalActions = [select]
+            defaultSelectionActions = [cancel, selectAll, deselectAll]
+            moreMenu = SPMenu(title: "", image: nil, identifier: UIMenu.Identifier.init("More Menu"), options: [], children: defaultNormalActions, barButton: moreButton, parent: self)
         }
     }
 
-//    // Backward compatibility for iOS 13
-//    @objc private func selectionActioniOS13(_ sender: UIBarButtonItem) {
-//
-//        var buttons: [UIViewController.ButtonConfig] = []
-//        let actions: [UIAction] = self.sortMenu.children as? [UIAction] ?? []
-//        for action in actions {
-//            buttons.append((title: action.title, handler: { [self] in
-//                sortActionSelected(action: action)
-//            }))
-//        }
-//
-//        self.showAlert(title: "Sort", message: nil, preferredStyle: .actionSheet, cancel: ("Cancel", nil), buttons: buttons)
-//    }
-//
-//    private func selectionActionSelected(action: UIAction) {
-//        let userDefaultKey: String = "\(Self.self).\(LectureSortType.self)"
-//        let actions: [UIAction] = self.sortMenu.children as? [UIAction] ?? []
-//        for anAction in actions {
-//            if anAction.identifier == action.identifier { anAction.state = .on  } else {  anAction.state = .off }
-//        }
-//
-//        updateSortButtonUI()
-//
-//        UserDefaults.standard.set(action.identifier.rawValue, forKey: userDefaultKey)
-//        UserDefaults.standard.synchronize()
-//
-//        self.sortMenu = self.sortMenu.replacingChildren(actions)
-//
-//        if #available(iOS 14.0, *) {
-//            self.sortButton.menu = self.sortMenu
-//        }
-//
-//        refreshAsynchronous(source: .cache)
-//    }
-//
-//    private func updateSelectionButtonUI() {
-//        if selectedSortType == .default {
-//            sortButton.image = UIImage(compatibleSystemName: "arrow.up.arrow.down.circle")
-//        } else {
-//            sortButton.image = UIImage(compatibleSystemName: "arrow.up.arrow.down.circle.fill")
-//        }
-//    }
+    private func refreshMoreOption() {
+
+        guard delegate == nil else {
+            return
+        }
+
+        var menuItems: [SPAction] = []
+
+        if isSelectionEnabled {
+            menuItems.append(contentsOf: defaultSelectionActions)
+        } else {
+            menuItems.append(contentsOf: defaultNormalActions)
+        }
+
+        if !selectedModels.isEmpty {
+
+            let eligibleDownloadModels: [Model] = selectedModels.filter { $0.downloadingState == .notDownloaded || $0.downloadingState == .error }
+            if !eligibleDownloadModels.isEmpty, let download = allActions[.download] {
+                download.action.title = LectureOption.download.rawValue + " (\(eligibleDownloadModels.count))"
+                menuItems.append(download)
+            }
+
+            let eligibleDeleteFromDownloadsModels: [Model] = selectedModels.filter { $0.downloadingState == .downloaded }
+            if !eligibleDeleteFromDownloadsModels.isEmpty, let deleteFromDownloads = allActions[.deleteFromDownloads] {
+                deleteFromDownloads.action.title = LectureOption.deleteFromDownloads.rawValue + " (\(eligibleDeleteFromDownloadsModels.count))"
+                menuItems.append(deleteFromDownloads)
+            }
+
+            let eligibleMarkAsFavouriteModels: [Model] = selectedModels.filter { !$0.isFavourites }
+            if !eligibleMarkAsFavouriteModels.isEmpty, let markAsFavourite = allActions[.markAsFavourite] {
+                markAsFavourite.action.title = LectureOption.markAsFavourite.rawValue + " (\(eligibleMarkAsFavouriteModels.count))"
+                menuItems.append(markAsFavourite)
+            }
+
+            let eligibleRemoveFromFavouritesModels: [Model] = selectedModels.filter { $0.isFavourites }
+            if !eligibleRemoveFromFavouritesModels.isEmpty, let removeFromFavourites = allActions[.removeFromFavourites] {
+                removeFromFavourites.action.title = LectureOption.removeFromFavourites.rawValue + " (\(eligibleRemoveFromFavouritesModels.count))"
+                menuItems.append(removeFromFavourites)
+            }
+
+            if let addToPlaylist = allActions[.addToPlaylist] {
+                addToPlaylist.action.title = LectureOption.addToPlaylist.rawValue + " (\(selectedModels.count))"
+                menuItems.append(addToPlaylist)
+            }
+
+            let eligibleMarkAsHeardModels: [Model] = selectedModels.filter { $0.playProgress < 1.0 }
+            if !eligibleMarkAsHeardModels.isEmpty, let markAsHeard = allActions[.markAsHeard] {
+                markAsHeard.action.title = LectureOption.markAsHeard.rawValue + " (\(eligibleMarkAsHeardModels.count))"
+                menuItems.append(markAsHeard)
+            }
+
+            let eligibleResetProgressModels: [Model] = selectedModels.filter { $0.playProgress >= 1.0 }
+            if !eligibleResetProgressModels.isEmpty, let resetProgress = allActions[.resetProgress] {
+                resetProgress.action.title = LectureOption.resetProgress.rawValue + " (\(eligibleResetProgressModels.count))"
+                menuItems.append(resetProgress)
+            }
+        }
+
+        self.moreMenu.children = menuItems
+    }
 }
 
 extension LectureViewController: IQListViewDelegateDataSource {
 
     private func refreshUI(animated: Bool? = nil) {
 
-        DispatchQueue.global().async { [self] in
-            
+        serialListKitQueue.async { [self] in
+
+//            let sortedElements = models.sorted { $0.id < $1.id }
+//            var duplicatedElements = Set<Model>()
+//
+//            var previousElement: Model?
+//            for element in sortedElements {
+//               if previousElement == element {
+//                  duplicatedElements.insert(element)
+//               }
+//               previousElement = element
+//            }
+//
+//            let duplicates = Array(duplicatedElements)
+//
+//            if !duplicates.isEmpty {
+//                print(duplicates)
+//            }
+
             let animated: Bool = animated ?? (models.count <= 1000)
             list.performUpdates({
                 
@@ -373,13 +397,15 @@ extension LectureViewController: LectureCellDelegate {
 
         switch option {
         case .download:
-            Persistant.shared.save(lecture: lecture)
+            Persistant.shared.save(lectures: [lecture])
+            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: nil, isDownloaded: true, isFavourite: nil, lastPlayedPoint: nil, completion: {_ in })
         case .deleteFromDownloads:
-            Persistant.shared.delete(lecture: lecture)
+            Persistant.shared.delete(lectures: [lecture])
+            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: nil, isDownloaded: false, isFavourite: nil, lastPlayedPoint: nil, completion: {_ in })
         case .markAsFavourite:
-            Self.lectureViewModel.favourite(lecture: lecture, isFavourite: true, completion: {_ in })
+            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: nil, isDownloaded: nil, isFavourite: true, lastPlayedPoint: nil, completion: {_ in })
         case .removeFromFavourites:
-            Self.lectureViewModel.favourite(lecture: lecture, isFavourite: false, completion: {_ in })
+            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: nil, isDownloaded: nil, isFavourite: false, lastPlayedPoint: nil, completion: {_ in })
         case .addToPlaylist:
 
             let navigationController = UIStoryboard.playlists.instantiate(UINavigationController.self, identifier: "PlaylistNavigationController")
@@ -390,9 +416,9 @@ extension LectureViewController: LectureCellDelegate {
             self.present(navigationController, animated: true, completion: nil)
 
         case .markAsHeard:
-            break
+            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: true, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: -1, completion: {_ in })
         case .resetProgress:
-            break
+            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: false, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: 0, completion: {_ in })
         case .share:
             break
         case .downloading:

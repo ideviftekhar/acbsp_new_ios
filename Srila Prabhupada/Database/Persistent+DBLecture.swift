@@ -28,45 +28,55 @@ extension Persistant {
 
         let dbPendingDownloadLectures: [DBLecture] = dbLectures.filter { $0.downloadStateEnum == .notDownloaded || $0.downloadStateEnum == .error }
 
-        for dbLecture in dbPendingDownloadLectures {
-            downloadStage1(dbLecture: dbLecture)
-        }
+        downloadStage1(dbLectures: dbPendingDownloadLectures)
     }
 
-    func save(lecture: Lecture) {
+    func save(lectures: [Lecture]) {
 
-        if let dbLecture = dbLectures.first(where: { $0.id == lecture.id }) {
+        var downloadableLectures: [DBLecture] = []
 
-            switch dbLecture.downloadStateEnum {
-            case .notDownloaded, .error:
-                downloadStage1(dbLecture: dbLecture)
-            case .downloading, .downloaded:
-                break
+        for lecture in lectures {
+            if let dbLecture = dbLectures.first(where: { $0.id == lecture.id }) {
+
+                switch dbLecture.downloadStateEnum {
+                case .notDownloaded, .error:
+                    downloadableLectures.append(dbLecture)
+                case .downloading, .downloaded:
+                    break
+                }
+
+            } else {
+                let dbLecture = Lecture.createNewDBLecture(lecture: lecture)
+                self.dbLectures.insert(dbLecture, at: 0)
+                downloadableLectures.append(dbLecture)
             }
-
-        } else {
-            let dbLecture = Lecture.createNewDBLecture(lecture: lecture)
-            self.dbLectures.insert(dbLecture, at: 0)
-            downloadStage1(dbLecture: dbLecture)
         }
+
+        downloadStage1(dbLectures: downloadableLectures)
     }
 
-    func delete(lecture: Lecture) {
+    func delete(lectures: [Lecture]) {
 
-        guard let index = dbLectures.firstIndex(where: { $0.id == lecture.id }) else {
-            return
+        var deletedLectures: [DBLecture] = []
+
+        for lecture in lectures {
+            if let index = dbLectures.firstIndex(where: { $0.id == lecture.id }) {
+                let dbLecture = dbLectures[index]
+
+                if let localFileURL = DownloadManager.shared.localFileURL(for: dbLecture) {
+                    DownloadManager.shared.deleteLocalFile(localFileURL: localFileURL)
+                }
+
+                dbLectures.remove(at: index)
+                deletedLectures.append(dbLecture)
+
+                dbLecture.downloadState = DBLecture.DownloadState.notDownloaded.rawValue
+                deleteObject(object: dbLecture)
+            }
         }
 
-        let dbLecture = dbLectures[index]
+        NotificationCenter.default.post(name: Self.Notification.downloadsRemoved, object: deletedLectures)
 
-        if let localFileURL = DownloadManager.shared.localFileURL(for: dbLecture) {
-            DownloadManager.shared.deleteLocalFile(localFileURL: localFileURL)
-        }
-
-        dbLectures.remove(at: index)
-        dbLecture.downloadState = DBLecture.DownloadState.notDownloaded.rawValue
-        NotificationCenter.default.post(name: Self.Notification.downloadRemoved, object: dbLecture)
-        deleteObject(object: dbLecture)
         saveMainContext(nil)
     }
 
@@ -90,38 +100,49 @@ extension Persistant {
 
 extension Persistant {
 
-    private func downloadStage1(dbLecture: DBLecture) {
+    private func downloadStage1(dbLectures: [DBLecture]) {
 
-        // check if it exists before downloading it
-        if DownloadManager.shared.localFileExists(for: dbLecture) {
-            dbLecture.downloadState = DBLecture.DownloadState.downloaded.rawValue
-        } else {
-            dbLecture.downloadState = DBLecture.DownloadState.downloading.rawValue
+        var addedLectures: [DBLecture] = []
+        var downloadableLectures: [DBLecture] = []
+
+        for dbLecture in dbLectures {
+            // check if it exists before downloading it
+            if DownloadManager.shared.localFileExists(for: dbLecture) {
+                dbLecture.downloadState = DBLecture.DownloadState.downloaded.rawValue
+            } else {
+                dbLecture.downloadState = DBLecture.DownloadState.downloading.rawValue
+            }
+
+            addedLectures.append(dbLecture)
+
+            if dbLecture.downloadStateEnum != .downloaded {
+                downloadableLectures.append(dbLecture)
+            }
         }
 
         self.saveMainContext(nil)
-        NotificationCenter.default.post(name: Self.Notification.downloadAdded, object: dbLecture)
 
-        if dbLecture.downloadStateEnum != .downloaded {
-            downloadStage2(dbLecture: dbLecture)
-        }
+        NotificationCenter.default.post(name: Self.Notification.downloadsAdded, object: addedLectures)
+        downloadStage2(dbLectures: downloadableLectures)
     }
 
-    private func downloadStage2(dbLecture: DBLecture) {
+    private func downloadStage2(dbLectures: [DBLecture]) {
 
-        DownloadManager.shared.downloadFile(for: dbLecture) { result in
-            switch result {
+        for dbLecture in dbLectures {
+            DownloadManager.shared.downloadFile(for: dbLecture) { result in
+                switch result {
 
-            case .success:
-                dbLecture.downloadState = DBLecture.DownloadState.downloaded.rawValue
-                self.saveMainContext(nil)
-                NotificationCenter.default.post(name: Self.Notification.downloadUpdated, object: dbLecture)
+                case .success:
+                    dbLecture.downloadState = DBLecture.DownloadState.downloaded.rawValue
+                    self.saveMainContext(nil)
+                    NotificationCenter.default.post(name: Self.Notification.downloadUpdated, object: dbLecture)
 
-            case .failure(let error):
-                dbLecture.downloadState = DBLecture.DownloadState.error.rawValue
-                dbLecture.downloadError = error.localizedDescription
-                self.saveMainContext(nil)
-                NotificationCenter.default.post(name: Self.Notification.downloadUpdated, object: dbLecture)
+                case .failure(let error):
+                    dbLecture.downloadState = DBLecture.DownloadState.error.rawValue
+                    dbLecture.downloadError = error.localizedDescription
+                    self.saveMainContext(nil)
+                    NotificationCenter.default.post(name: Self.Notification.downloadUpdated, object: dbLecture)
+                }
             }
         }
     }

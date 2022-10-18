@@ -30,6 +30,7 @@ class FilterViewController: UIViewController {
 
     private(set) lazy var typeList = IQList(listView: filterTypeTableView, delegateDataSource: self)
     private(set) lazy var detailsList = IQList(listView: filterDetailTableView, delegateDataSource: self)
+    private lazy var serialListKitQueue = DispatchQueue(label: "ListKitQueue_\(Self.self)", qos: .userInteractive)
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,7 +83,7 @@ extension FilterViewController: IQListViewDelegateDataSource {
 
     private func refreshUI(animated: Bool? = nil) {
 
-        DispatchQueue.global().async { [self] in
+        serialListKitQueue.async { [self] in
             let animated: Bool = animated ?? true
             typeList.performUpdates({
 

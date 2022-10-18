@@ -13,7 +13,7 @@ import FirebaseCore
 extension FirestoreManager {
 
     func signUp(username: String, password: String, completion: @escaping (Result<FirebaseAuth.User, Error>) -> Void) {
-        Auth.auth().createUser(withEmail: username, password: password) { authResult, error in
+        Auth.auth().createUser(withEmail: username, password: password, completion: { authResult, error in
 
             if let error = error {
                 completion(.failure(error))
@@ -23,19 +23,19 @@ extension FirestoreManager {
                 let error = NSError(domain: "Signup", code: 0, userInfo: [NSLocalizedDescriptionKey: "Something went wrong"])
                 completion(.failure(error))
             }
-        }
+        })
     }
 
     func sendPasswordReset(username: String, completion: @escaping (Result<String, Error>) -> Void) {
 
-        Auth.auth().sendPasswordReset(withEmail: username) { error in
+        Auth.auth().sendPasswordReset(withEmail: username, completion: { error in
 
             if let error = error {
                 completion(.failure(error))
             } else {
                 completion(.success("We have successully sent reset password link to your email."))
             }
-        }
+        })
     }
 
     func signOut(completion: @escaping (Result<Bool, Error>) -> Void) {
@@ -48,7 +48,7 @@ extension FirestoreManager {
     }
 
     func signIn(username: String, password: String, completion: @escaping (Result<FirebaseAuth.User, Error>) -> Void) {
-        Auth.auth().signIn(withEmail: username, password: password) { authResult, error in
+        Auth.auth().signIn(withEmail: username, password: password, completion: { authResult, error in
 
             if let error = error {
                 completion(.failure(error))
@@ -58,7 +58,7 @@ extension FirestoreManager {
                 let error = NSError(domain: "Login", code: 0, userInfo: [NSLocalizedDescriptionKey: "Something went wrong"])
                 completion(.failure(error))
             }
-        }
+        })
     }
 
     func signInWithGoogle(presentingController: UIViewController, completion: @escaping (Result<FirebaseAuth.User, Error>) -> Void) {
@@ -70,7 +70,7 @@ extension FirestoreManager {
 
         let config = GIDConfiguration(clientID: clientID)
 
-        GIDSignIn.sharedInstance.signIn(with: config, presenting: presentingController) { [self] user, error in
+        GIDSignIn.sharedInstance.signIn(with: config, presenting: presentingController, callback: { [self] user, error in
 
             if let error = error {
                 completion(.failure(error))
@@ -85,11 +85,11 @@ extension FirestoreManager {
                 let error = NSError(domain: "Login", code: 0, userInfo: [NSLocalizedDescriptionKey: "Something went wrong"])
                 completion(.failure(error))
             }
-        }
+        })
     }
 
     func signIn(credential: AuthCredential, completion: @escaping (Result<FirebaseAuth.User, Error>) -> Void) {
-        Auth.auth().signIn(with: credential) { authResult, error in
+        Auth.auth().signIn(with: credential, completion: { authResult, error in
 
             if let error = error {
                 completion(.failure(error))
@@ -99,6 +99,6 @@ extension FirestoreManager {
                 let error = NSError(domain: "Login", code: 0, userInfo: [NSLocalizedDescriptionKey: "Something went wrong"])
                 completion(.failure(error))
             }
-        }
+        })
     }
 }

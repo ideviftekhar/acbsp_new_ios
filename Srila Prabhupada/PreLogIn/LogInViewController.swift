@@ -46,7 +46,7 @@ class LogInViewController: UIViewController {
 
             showLoading()
             view.endEditing(true)
-            emailLoginViewModel.login(presentingController: self) { [self] result in
+            emailLoginViewModel.login(presentingController: self, completion: { [self] result in
                 self.hideLoading()
 
                 switch result {
@@ -56,7 +56,7 @@ class LogInViewController: UIViewController {
                 case .failure(let error):
                     self.showAlert(title: "Error", message: error.localizedDescription)
                 }
-            }
+            })
         case .invalidUsername(let message):
             self.showAlert(title: "Invalid Email", message: message)
         case .invalidPassword(let message):
@@ -69,7 +69,7 @@ class LogInViewController: UIViewController {
         showLoading()
         view.endEditing(true)
 
-        googleLoginViewModel.login(presentingController: self) { [self] result in
+        googleLoginViewModel.login(presentingController: self, completion: { [self] result in
             self.hideLoading()
 
             switch result {
@@ -79,7 +79,7 @@ class LogInViewController: UIViewController {
             case .failure(let error):
                 self.showAlert(title: "Error", message: error.localizedDescription)
             }
-        }
+        })
     }
 
     @objc func signWithAppleTapped(_ sender: UIButton) {
@@ -87,7 +87,7 @@ class LogInViewController: UIViewController {
         showLoading()
         view.endEditing(true)
 
-        appleLoginViewModel.login(presentingController: self) { [self] result in
+        appleLoginViewModel.login(presentingController: self, completion: { [self] result in
             self.hideLoading()
 
             switch result {
@@ -97,7 +97,7 @@ class LogInViewController: UIViewController {
             case .failure(let error):
                 self.showAlert(title: "Error", message: error.localizedDescription)
             }
-        }
+        })
     }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -38,7 +38,7 @@ class PlaylistLecturesViewController: LectureViewController {
         super.refreshAsynchronous(source: source)
 
         showLoading()
-        Self.lectureViewModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: playlist.lectureIds, source: source, completion: { [self] result in
+        DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: playlist.lectureIds, source: source, completion: { [self] result in
             hideLoading()
             switch result {
             case .success(let lectures):
@@ -60,6 +60,10 @@ class PlaylistLecturesViewController: LectureViewController {
 }
 
 extension PlaylistLecturesViewController: LectureViewControllerDelegate {
+    func lectureControllerDidCancel(_ controller: LectureViewController) {
+        controller.dismiss(animated: true)
+    }
+
     func lectureController(_ controller: LectureViewController, didSelected lectures: [Lecture]) {
 
         ProgressHUD.show("Adding \(lectures.count) lectures to '\(playlist.title)' playlist...", interaction: false)

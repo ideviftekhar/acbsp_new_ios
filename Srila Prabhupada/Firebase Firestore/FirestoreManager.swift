@@ -46,7 +46,7 @@ class FirestoreManager: NSObject {
 extension Query {
 
     fileprivate func getRawDocuments(source: FirestoreSource, completion: @escaping ((Swift.Result<[QueryDocumentSnapshot], Error>) -> Void)) {
-        getDocuments(source: source) { snapshot, error in
+        getDocuments(completion: { snapshot, error in
 
             if let error = error {
                 completion(.failure(error))
@@ -56,12 +56,12 @@ extension Query {
                 let error = NSError(domain: "Firestore Database", code: 0, userInfo: [NSLocalizedDescriptionKey: "Documents are not available"])
                 completion(.failure(error))
             }
-        }
+        })
     }
 
     fileprivate func getDocuments<T: Decodable>(source: FirestoreSource, completion: @escaping ((Swift.Result<[T], Error>) -> Void)) {
 
-        getRawDocuments(source: source) { result in
+        getRawDocuments(source: source, completion: { result in
             switch result {
             case .success(let documents):
                 DispatchQueue.global().async {
@@ -78,14 +78,14 @@ extension Query {
             case .failure(let error):
                 completion(.failure(error))
             }
-        }
+        })
     }
 }
 
 extension DocumentReference {
 
     fileprivate func getRawDocument(source: FirestoreSource, completion: @escaping ((Swift.Result<DocumentSnapshot, Error>) -> Void)) {
-        getDocument(source: source) { snapshot, error in
+        getDocument(source: source, completion: { snapshot, error in
 
             if let error = error {
                 completion(.failure(error))
@@ -95,12 +95,12 @@ extension DocumentReference {
                 let error = NSError(domain: "Firestore Database", code: 0, userInfo: [NSLocalizedDescriptionKey: "Document is not available"])
                 completion(.failure(error))
             }
-        }
+        })
     }
 
     fileprivate func getDocument<T: Decodable>(source: FirestoreSource, completion: @escaping ((Swift.Result<T, Error>) -> Void)) {
 
-        getRawDocument(source: source) { result in
+        getRawDocument(source: source, completion: { result in
             switch result {
             case .success(let document):
 
@@ -118,6 +118,6 @@ extension DocumentReference {
             case .failure(let error):
                 completion(.failure(error))
             }
-        }
+        })
     }
 }

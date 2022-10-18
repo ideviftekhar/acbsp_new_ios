@@ -38,6 +38,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return UISceneConfiguration(name: "Default Configuration", sessionRole: connectingSceneSession.role)
     }
 
+    func applicationWillTerminate(_ application: UIApplication) {
+//        guard let tabBarController = self.window?.rootViewController as? TabBarController,
+//        let playerController = tabBarController.playerViewController else {
+//            return
+//        }
+    }
     @available(iOS 13.0, *)
     func application(_ application: UIApplication, didDiscardSceneSessions sceneSessions: Set<UISceneSession>) {
         // Called when the user discards a scene session.

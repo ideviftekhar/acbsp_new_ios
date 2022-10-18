@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -43,7 +43,7 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="toB-kP-27M">
-                        <rect key="frame" x="60" y="5" width="231" height="57"/>
+                        <rect key="frame" x="60" y="5" width="218" height="57"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7cs-uh-SL9">
                                 <rect key="frame" x="0.0" y="0.0" width="22" height="20"/>
@@ -100,7 +100,7 @@
                         </subviews>
                     </stackView>
                     <view contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="f6l-Bp-fUH" customClass="MBCircularProgressBarView">
-                        <rect key="frame" x="296" y="16.5" width="34" height="34"/>
+                        <rect key="frame" x="283" y="16.5" width="34" height="34"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="34" id="e6q-TU-Yc1"/>
@@ -159,20 +159,20 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q0B-mL-dK8">
-                        <rect key="frame" x="330" y="0.0" width="45" height="67"/>
+                        <rect key="frame" x="317" y="0.0" width="50" height="67"/>
                         <color key="tintColor" name="0099CA"/>
                         <state key="normal" title=""/>
                         <buttonConfiguration key="configuration" style="plain" image="ellipsis.circle" catalog="system"/>
                     </button>
                     <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="vfZ-ce-T4q">
-                        <rect key="frame" x="340" y="21.5" width="25" height="24"/>
+                        <rect key="frame" x="329.5" y="21.5" width="25" height="24"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="25" id="9gU-FC-Ww5"/>
                             <constraint firstAttribute="width" constant="25" id="end-3i-Xuh"/>
                         </constraints>
                     </imageView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Mfu-JH-XN3">
-                        <rect key="frame" x="296" y="17" width="34" height="33"/>
+                        <rect key="frame" x="283" y="17" width="34" height="33"/>
                         <color key="tintColor" systemColor="systemBlueColor"/>
                     </imageView>
                     <view contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="ZTZ-0b-Ptx" customClass="MBCircularProgressBarView">
@@ -270,7 +270,7 @@
                     <constraint firstItem="CnE-6x-y4s" firstAttribute="leading" secondItem="1Pj-Yk-u2T" secondAttribute="leading" id="ldd-SF-aUd"/>
                     <constraint firstItem="CnE-6x-y4s" firstAttribute="top" secondItem="1Pj-Yk-u2T" secondAttribute="top" id="mjG-me-soE"/>
                     <constraint firstItem="AdV-AQ-xel" firstAttribute="centerX" secondItem="ZTZ-0b-Ptx" secondAttribute="centerX" id="mua-PG-0Zk"/>
-                    <constraint firstAttribute="trailing" secondItem="Q0B-mL-dK8" secondAttribute="trailing" id="oxx-FM-xiV"/>
+                    <constraint firstAttribute="trailing" secondItem="Q0B-mL-dK8" secondAttribute="trailing" constant="8" id="oxx-FM-xiV"/>
                     <constraint firstItem="1Pj-Yk-u2T" firstAttribute="leading" secondItem="ZTZ-0b-Ptx" secondAttribute="centerX" id="vEY-H7-bw3"/>
                     <constraint firstItem="f6l-Bp-fUH" firstAttribute="top" secondItem="Mfu-JH-XN3" secondAttribute="top" id="xqT-8o-lMg"/>
                     <constraint firstItem="eiF-YO-8YM" firstAttribute="centerY" secondItem="1Pj-Yk-u2T" secondAttribute="bottom" id="yB9-me-6Hv"/>
@@ -300,12 +300,12 @@
         </tableViewCell>
     </objects>
     <resources>
-        <image name="arrow.down.circle.fill" catalog="system" width="128" height="121"/>
-        <image name="checkmark.circle" catalog="system" width="128" height="121"/>
-        <image name="checkmark.circle.fill" catalog="system" width="128" height="121"/>
-        <image name="ellipsis.circle" catalog="system" width="128" height="121"/>
+        <image name="arrow.down.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="checkmark.circle" catalog="system" width="128" height="123"/>
+        <image name="checkmark.circle.fill" catalog="system" width="128" height="123"/>
+        <image name="ellipsis.circle" catalog="system" width="128" height="123"/>
         <image name="logo_40" width="40" height="40"/>
-        <image name="star.circle.fill" catalog="system" width="128" height="121"/>
+        <image name="star.circle.fill" catalog="system" width="128" height="123"/>
         <namedColor name="0099CA">
             <color red="0.0" green="0.59999999999999998" blue="0.792156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

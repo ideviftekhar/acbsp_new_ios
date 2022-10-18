@@ -12,9 +12,9 @@ import Reachability
 class Persistant: NSObject {
 
     struct Notification {
-        static let downloadAdded = Foundation.Notification.Name(rawValue: "downloadAddedNotification")
+        static let downloadsAdded = Foundation.Notification.Name(rawValue: "downloadsAddedNotification")
         static let downloadUpdated = Foundation.Notification.Name(rawValue: "downloadUpdatedNotification")
-        static let downloadRemoved = Foundation.Notification.Name(rawValue: "downloadRemovedNotification")
+        static let downloadsRemoved = Foundation.Notification.Name(rawValue: "downloadsRemovedNotification")
     }
 
     private let storeName: String = "SrilaDatabase"

@@ -10,7 +10,7 @@ import UIKit
 
 extension PlayerViewController {
 
-    static func register(observer: NSObject, lectureID: Int, playStateHandler: @escaping (_ state: ESTMusicIndicatorViewState) -> Void) {
+    static func register(observer: NSObject, lectureID: Int, playStateHandler: @escaping (_ state: PlayState) -> Void) {
 
         if var observers = lecturePlayStateObservers[lectureID] {
             if let existing = observers.first(where: { $0.observer == observer }) {

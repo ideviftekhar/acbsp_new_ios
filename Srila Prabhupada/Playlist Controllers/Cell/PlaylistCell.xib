@@ -31,7 +31,7 @@
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="fZC-jx-OEg">
-                        <rect key="frame" x="60" y="5" width="241" height="57"/>
+                        <rect key="frame" x="60" y="5" width="233" height="57"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HQG-yb-jYz">
                                 <rect key="frame" x="0.0" y="0.0" width="22" height="19.666666666666668"/>
@@ -88,13 +88,13 @@
                         </subviews>
                     </stackView>
                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fQG-Rf-zkX">
-                        <rect key="frame" x="301" y="0.0" width="45.333333333333314" height="67"/>
+                        <rect key="frame" x="293" y="0.0" width="45.333333333333314" height="67"/>
                         <state key="normal" title=""/>
                         <buttonConfiguration key="configuration" style="plain" image="ellipsis.circle" catalog="system"/>
                     </button>
                 </subviews>
                 <constraints>
-                    <constraint firstAttribute="trailing" secondItem="fQG-Rf-zkX" secondAttribute="trailing" id="7kw-Iz-3Kd"/>
+                    <constraint firstAttribute="trailing" secondItem="fQG-Rf-zkX" secondAttribute="trailing" constant="8" id="7kw-Iz-3Kd"/>
                     <constraint firstItem="fQG-Rf-zkX" firstAttribute="top" secondItem="YxG-zk-TLG" secondAttribute="top" id="86R-aX-dRB"/>
                     <constraint firstItem="fZC-jx-OEg" firstAttribute="top" secondItem="YxG-zk-TLG" secondAttribute="top" constant="5" id="AaA-Ck-Dan"/>
                     <constraint firstItem="fZC-jx-OEg" firstAttribute="leading" secondItem="SaM-du-oZe" secondAttribute="trailing" constant="10" id="C74-rR-Tff"/>

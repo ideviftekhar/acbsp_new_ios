@@ -24,12 +24,12 @@ class PopularLectureViewController: LectureViewController {
 
         showLoading()
 
-        Self.lectureViewModel.getPopularLectureIds(completion: { [self] result in
+        DefaultLectureViewModel.defaultModel.getPopularLectureIds(completion: { [self] result in
 
             switch result {
             case .success(let lectureIDs):
 
-                Self.lectureViewModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, completion: { [self] result in
+                DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, completion: { [self] result in
                     hideLoading()
 
                     switch result {

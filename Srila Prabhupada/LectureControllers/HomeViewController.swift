@@ -22,8 +22,7 @@ class HomeViewController: LectureViewController {
     override func viewWillAppear(_ animated: Bool) {
 
         if isFirstTime {
-            Self.lectureViewModel.getUsersLectureInfo(source: .default) { _ in }
-            Self.lectureViewModel.getUsersListenInfo(source: .default) { _ in }
+            DefaultLectureViewModel.defaultModel.getUsersLectureInfo(source: .default, completion: { _ in })
         }
 
         super.viewWillAppear(animated)
@@ -33,7 +32,7 @@ class HomeViewController: LectureViewController {
         super.refreshAsynchronous(source: source)
 
         showLoading()
-        Self.lectureViewModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: nil, source: source, completion: { [self] result in
+        DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: nil, source: source, completion: { [self] result in
             hideLoading()
 
             switch result {

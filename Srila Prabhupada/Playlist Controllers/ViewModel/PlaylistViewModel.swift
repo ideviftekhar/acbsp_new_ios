@@ -32,19 +32,21 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
         }
 
         let currentTimestamp = Int(Date().timeIntervalSince1970*1000)
-        let newLectureIds: [Int] = lectures.map { $0.id }
+        var newLectureIds: [Int] = lectures.map { $0.id }
+        let uniqueIds: Set<Int> = Set(newLectureIds)
+        newLectureIds = Array(uniqueIds)
 
-        var document: [String: Any] = [:]
-        document["authorEmail"] = email
-        document["creationTime"] = currentTimestamp
-        document["description"] = description
-        document["lastUpdate"] = currentTimestamp
-        document["lecturesCategory"] = category
-        document["listType"] = listType.rawValue
-        document["thumbnail"] = ""
-        document["title"] = title
-        document["lectureCount"] = newLectureIds.count
-        document["lectureIds"] = newLectureIds
+        var data: [String: Any] = [:]
+        data["authorEmail"] = email
+        data["creationTime"] = currentTimestamp
+        data["description"] = description
+        data["lastUpdate"] = currentTimestamp
+        data["lecturesCategory"] = category
+        data["listType"] = listType.rawValue
+        data["thumbnail"] = ""
+        data["title"] = title
+        data["lectureCount"] = newLectureIds.count
+        data["lectureIds"] = newLectureIds
 
         switch listType {
         case .private:
@@ -52,10 +54,10 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
 
             let newDocument = collectionReference.document()
 
-            document["docPath"] = "PublicPlaylists/\(newDocument.documentID)"
-            document["listID"] = newDocument.documentID
+            data["docPath"] = newDocument.path
+            data["listID"] = newDocument.documentID
 
-            newDocument.setData(document, completion: { error in
+            newDocument.setData(data, completion: { error in
                 if let error = error {
                     completion(.failure(error))
                 } else {
@@ -70,10 +72,10 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
 
             let newDocument = collectionReference.document()
 
-            document["docPath"] = "PublicPlaylists/\(newDocument.documentID)"
-            document["listID"] = newDocument.documentID
+            data["docPath"] = newDocument.path
+            data["listID"] = newDocument.documentID
 
-            newDocument.setData(document, completion: { error in
+            newDocument.setData(data, completion: { error in
                 if let error = error {
                     completion(.failure(error))
                 } else {
@@ -93,11 +95,11 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
 
         let currentTimestamp = Int(Date().timeIntervalSince1970*1000)
 
-        var document: [String: Any] = [:]
-        document["description"] = description
-        document["lastUpdate"] = currentTimestamp
-        document["lecturesCategory"] = category
-        document["title"] = title
+        var data: [String: Any] = [:]
+        data["description"] = description
+        data["lastUpdate"] = currentTimestamp
+        data["lecturesCategory"] = category
+        data["title"] = title
 
         switch playlist.listType {
         case .private:
@@ -105,7 +107,7 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
             let collectionReference: FirebaseFirestore.CollectionReference = FirestoreManager.shared.firestore.collection(privatePlaylistsPath).document(currentUser.uid).collection(email)
             let existingDocument = collectionReference.document(playlist.listID)
 
-            existingDocument.setData(document, merge: true, completion: { error in
+            existingDocument.setData(data, merge: true, completion: { error in
                 if let error = error {
                     completion(.failure(error))
                 } else {
@@ -118,7 +120,7 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
             let collectionReference: FirebaseFirestore.CollectionReference = FirestoreManager.shared.firestore.collection(publicPlaylistsPath)
             let existingDocument = collectionReference.document(playlist.listID)
 
-            existingDocument.setData(document, completion: { error in
+            existingDocument.setData(data, completion: { error in
                 if let error = error {
                     completion(.failure(error))
                 } else {
@@ -202,18 +204,26 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
                 case .success(let document):
 
                     var lectureIds: [Int] = (document["lectureIds"] as? [Int]) ?? []
-                    let newLectureIds: [Int] = lectures.map { $0.id }
+                    var newLectureIds: [Int] = lectures.map { $0.id }
+                    let uniqueIds: Set<Int> = Set(newLectureIds)
+                    newLectureIds = Array(uniqueIds)
+
+                    let currentTimestamp = Int(Date().timeIntervalSince1970*1000)
+
                     lectureIds.append(contentsOf: newLectureIds)
                     lectureIds = Array(Set(lectureIds))
-                    let data: [String: Any] = ["lectureIds": lectureIds, "lectureCount": lectureIds.count]
+                    var data: [String: Any] = [:]
+                    data["lectureIds"] = lectureIds
+                    data["lectureCount"] = lectureIds.count
+                    data["lastUpdate"] = currentTimestamp
 
-                    document.reference.setData(data, merge: true) { error in
+                    document.reference.setData(data, merge: true, completion: { error in
                         if let error = error {
                             completion(.failure(error))
                         } else {
                             completion(.success(lectureIds))
                         }
-                    }
+                    })
                 case .failure(let error):
                     completion(.failure(error))
                 }
@@ -224,15 +234,24 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
 
             let documentReference: DocumentReference = FirestoreManager.shared.firestore.collection(publicPlaylistsPath).document(playlist.listID)
 
-            FirestoreManager.shared.getDocument(documentReference: documentReference, source: .server) { (result: Swift.Result<Playlist, Error>) in
+            FirestoreManager.shared.getDocument(documentReference: documentReference, source: .server, completion: { (result: Swift.Result<Playlist, Error>) in
                 switch result {
                 case .success(let document):
 
                     var lectureIds = document.lectureIds
-                    let newLectureIds: [Int] = lectures.map { $0.id }
+                    var newLectureIds: [Int] = lectures.map { $0.id }
+                    let uniqueIds: Set<Int> = Set(newLectureIds)
+                    newLectureIds = Array(uniqueIds)
+
+                    let currentTimestamp = Int(Date().timeIntervalSince1970*1000)
+
                     lectureIds.append(contentsOf: newLectureIds)
                     lectureIds = Array(Set(lectureIds))
-                    let data: [String: Any] = ["lectureIds": lectureIds, "lectureCount": lectureIds.count]
+                    var data: [String: Any] = [:]
+                    data["lectureIds"] = lectureIds
+                    data["lectureCount"] = lectureIds.count
+                    data["lastUpdate"] = currentTimestamp
+
                     documentReference.setData(data, merge: true) { error in
                         if let error = error {
                             completion(.failure(error))
@@ -243,7 +262,7 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
                 case .failure(let error):
                     completion(.failure(error))
                 }
-            }
+            })
         }
     }
 
@@ -258,25 +277,25 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
 
             let collectionReference: FirebaseFirestore.CollectionReference = FirestoreManager.shared.firestore.collection(FirestoreCollection.privatePlaylists.path).document(currentUser.uid).collection(email)
             let documentReference = collectionReference.document(playlist.listID)
-            documentReference.delete { error in
+            documentReference.delete(completion: { error in
                 if let error = error {
                     completion(.failure(error))
                 } else {
                     completion(.success(true))
                 }
-            }
+            })
         case .public:
             let publicPlaylistsPath = FirestoreCollection.publicPlaylists.path
             let documentReference: DocumentReference = FirestoreManager.shared.firestore.collection(publicPlaylistsPath).document(playlist.listID)
 
-            documentReference.delete() { error in
+            documentReference.delete(completion: { error in
 
                 if let error = error {
                     completion(.failure(error))
                 } else {
                     completion(.success(true))
                 }
-            }
+            })
         }
     }
 }

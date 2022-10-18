@@ -17,7 +17,7 @@ class SearchViewController: UIViewController {
     private let searchController = UISearchController(searchResultsController: nil)
     private var lastSearchText: String = ""
 
-    private(set) lazy var filterButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(compatibleSystemName: "line.3.horizontal.decrease.circle"), style: .plain, target: self, action: #selector(filterAction(_:)))
+    private(set) lazy var filterButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "line.3.horizontal.decrease.circle"), style: .plain, target: self, action: #selector(filterAction(_:)))
 
     var selectedFilters: [Filter: [String]] = [:]
 
@@ -75,10 +75,12 @@ class SearchViewController: UIViewController {
             // If it is requesting from dashboad screen, then we are interested in getting all records and we'll be reaching to firebase for the first time to get latest records.
             if self is HomeViewController {
                 refreshAsynchronous(source: .default)
+            } else {
+                refreshAsynchronous(source: .cache)
             }
+        } else {
+            refreshAsynchronous(source: .cache)
         }
-
-        refreshAsynchronous(source: .cache)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -108,9 +110,9 @@ extension SearchViewController: FilterViewControllerDelegate {
         }
 
         if count == 0 {
-            filterButton.image = UIImage(compatibleSystemName: "line.3.horizontal.decrease.circle")
+            filterButton.image = UIImage(named: "line.3.horizontal.decrease.circle")
         } else {
-            filterButton.image = UIImage(compatibleSystemName: "line.3.horizontal.decrease.circle.fill")
+            filterButton.image = UIImage(named: "line.3.horizontal.decrease.circle.fill")
         }
     }
 
@@ -218,14 +220,14 @@ extension SearchViewController: SideMenuControllerDelegate {
             storeViewController.delegate = self
 
             let parameters = [ SKStoreProductParameterITunesItemIdentifier: Constants.appStoreIdentifier]
-            storeViewController.loadProduct(withParameters: parameters) { [weak self] (loaded, error) -> Void in
+            storeViewController.loadProduct(withParameters: parameters, completionBlock: { [weak self] (loaded, error) -> Void in
                 if loaded {
                     // Parent class of self is UIViewContorller
                     self?.present(storeViewController, animated: true, completion: nil)
                 } else if let error = error {
                     self?.showAlert(title: "Error", message: error.localizedDescription)
                 }
-            }
+            })
         }
     }
 }

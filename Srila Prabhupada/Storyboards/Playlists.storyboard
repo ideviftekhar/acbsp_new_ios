@@ -16,7 +16,7 @@
                 <navigationController storyboardIdentifier="PlaylistNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="2ix-al-xMc" customClass="NavigationController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Playlists" image="music.note.list" catalog="system" id="OHl-3v-G7E"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="PUT-kO-Asm">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" largeTitles="YES" id="PUT-kO-Asm">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -132,7 +132,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Playlists" id="QMI-M4-4U7">
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="line.3.horizontal" catalog="system" id="atX-UL-MrT">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="line.3.horizontal" id="atX-UL-MrT">
                             <connections>
                                 <action selector="humburgerBarButtonTapped:" destination="gmj-55-TrK" id="Kel-Ki-srB"/>
                             </connections>
@@ -175,7 +175,7 @@
                             <constraint firstItem="21l-0e-ZhV" firstAttribute="top" secondItem="uFq-Tc-XYI" secondAttribute="top" id="j1w-bR-Y9O"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Playlist Lectures" id="lBq-Qx-Oki"/>
+                    <navigationItem key="navigationItem" title="Playlist Lectures" prompt="Playlist Title" id="lBq-Qx-Oki"/>
                     <connections>
                         <outlet property="lectureTebleView" destination="21l-0e-ZhV" id="RYR-ls-V43"/>
                     </connections>
@@ -337,7 +337,7 @@
                                             <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </activityIndicatorView>
                                     </subviews>
-                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <constraints>
                                         <constraint firstItem="Zcs-b0-F88" firstAttribute="centerY" secondItem="LmG-VC-saP" secondAttribute="centerY" id="ZT7-8V-wq2"/>
                                         <constraint firstItem="Zcs-b0-F88" firstAttribute="centerX" secondItem="LmG-VC-saP" secondAttribute="centerX" id="rte-ey-7s5"/>
@@ -367,7 +367,7 @@
                 <navigationController storyboardIdentifier="CreatePlaylistNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="7aN-3z-CaJ" customClass="NavigationController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Playlists" image="music.note.list" catalog="system" id="KNM-Hk-dkA"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="oqp-Lg-Ejm">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" largeTitles="YES" id="oqp-Lg-Ejm">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -437,7 +437,7 @@
     <resources>
         <image name="circle" catalog="system" width="128" height="121"/>
         <image name="circle.inset.filled" catalog="system" width="128" height="121"/>
-        <image name="line.3.horizontal" catalog="system" width="128" height="64"/>
+        <image name="line.3.horizontal" width="19.666666030883789" height="10"/>
         <image name="music.note.list" catalog="system" width="128" height="115"/>
         <namedColor name="0099CA">
             <color red="0.0" green="0.59999999999999998" blue="0.792156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -26,6 +26,12 @@ class TabBarController: UITabBarController {
             }
         })
 
+        let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+        let hasNotch: Bool = (keyWindow?.safeAreaInsets.bottom ?? 0) > 0
+        if !hasNotch {
+            tabBar.selectionIndicatorImage = nil
+        }
+
         playerViewController.addToTabBarController(self)
         playerViewController.currentLecture = nil
     }

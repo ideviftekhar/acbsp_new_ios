@@ -27,24 +27,14 @@ class PlaylistViewController: SearchViewController {
     private lazy var addPlaylistButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addPlaylistButtonAction(_:)))
 
     private let sortButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(compatibleSystemName: "arrow.up.arrow.down"), style: .plain, target: nil, action: nil)
-    private var sortMenu: UIMenu!
+    private var sortMenu: SPMenu!
 
     var selectedSortType: PlaylistSortType {
-
-        if #available(iOS 15.0, *) {
-            guard let selectedSortAction = sortMenu.selectedElements.first as? UIAction,
-                  let selectedSortType = PlaylistSortType(rawValue: selectedSortAction.identifier.rawValue) else {
-                return PlaylistSortType.default
-            }
-            return selectedSortType
-        } else {
-            guard let children: [UIAction] = sortMenu.children as? [UIAction],
-                  let selectedSortAction = children.first(where: { $0.state == .on }),
-                    let selectedSortType = PlaylistSortType(rawValue: selectedSortAction.identifier.rawValue) else {
-                return PlaylistSortType.default
-            }
-            return selectedSortType
+        guard let selectedSortAction = sortMenu.selectedAction,
+              let selectedSortType = PlaylistSortType(rawValue: selectedSortAction.action.identifier.rawValue) else {
+            return PlaylistSortType.default
         }
+        return selectedSortType
     }
 
     let playlistViewModel: PlaylistViewModel = DefaultPlaylistViewModel()
@@ -54,6 +44,7 @@ class PlaylistViewController: SearchViewController {
 
     private var models: [Model] = []
     private lazy var list = IQList(listView: playlistTableView, delegateDataSource: self)
+    private lazy var serialListKitQueue = DispatchQueue(label: "ListKitQueue_\(Self.self)", qos: .userInteractive)
 
     var lecturesToAdd: [Lecture] = []
 
@@ -197,7 +188,7 @@ class PlaylistViewController: SearchViewController {
 extension PlaylistViewController {
 
     private func configureSortButton() {
-        var actions: [UIAction] = []
+        var actions: [SPAction] = []
 
         let userDefaultKey: String = "\(Self.self).\(PlaylistSortType.self)"
         let lastType: PlaylistSortType
@@ -212,55 +203,30 @@ extension PlaylistViewController {
 
             let state: UIAction.State = (lastType == sortType ? .on : .off)
 
-            let action: UIAction = UIAction(title: sortType.rawValue, image: nil, identifier: UIAction.Identifier(sortType.rawValue), state: state, handler: { [self] action in
+            let action: SPAction = SPAction(title: sortType.rawValue, image: nil, identifier: .init(sortType.rawValue), state: state, handler: { [self] action in
                 sortActionSelected(action: action)
             })
 
             actions.append(action)
         }
 
-        self.sortMenu = UIMenu(title: "", image: nil, identifier: UIMenu.Identifier.init(rawValue: "Sort"), options: UIMenu.Options.displayInline, children: actions)
+        self.sortMenu = SPMenu(title: "", image: nil, identifier: UIMenu.Identifier.init(rawValue: "Sort"), options: UIMenu.Options.displayInline, children: actions, barButton: sortButton, parent: self)
 
-        if #available(iOS 14.0, *) {
-            sortButton.menu = self.sortMenu
-        } else {
-            sortButton.target = self
-            sortButton.action = #selector(sortActioniOS13(_:))
-        }
         updateSortButtonUI()
-    }
-
-    // Backward compatibility for iOS 13
-    @objc private func sortActioniOS13(_ sender: UIBarButtonItem) {
-
-        var buttons: [UIViewController.ButtonConfig] = []
-        let actions: [UIAction] = self.sortMenu.children as? [UIAction] ?? []
-        for action in actions {
-            buttons.append((title: action.title, handler: { [self] in
-                sortActionSelected(action: action)
-            }))
-        }
-
-        self.showAlert(title: "Sort", message: nil, preferredStyle: .actionSheet, buttons: buttons)
     }
 
     private func sortActionSelected(action: UIAction) {
         let userDefaultKey: String = "\(Self.self).\(PlaylistSortType.self)"
-        let actions: [UIAction] = self.sortMenu.children as? [UIAction] ?? []
-       for anAction in actions {
-            if anAction.identifier == action.identifier { anAction.state = .on  } else {  anAction.state = .off }
-        }
-
-        updateSortButtonUI()
-
+        let children: [SPAction] = self.sortMenu.children
         UserDefaults.standard.set(action.identifier.rawValue, forKey: userDefaultKey)
         UserDefaults.standard.synchronize()
 
-        self.sortMenu = self.sortMenu.replacingChildren(actions)
-
-        if #available(iOS 14.0, *) {
-            self.sortButton.menu = self.sortMenu
+       for anAction in children {
+           if anAction.action.identifier == action.identifier { anAction.action.state = .on  } else {  anAction.action.state = .off }
         }
+        self.sortMenu.children = children
+
+        updateSortButtonUI()
 
         refreshAsynchronous(source: .cache)
     }
@@ -278,7 +244,7 @@ extension PlaylistViewController: IQListViewDelegateDataSource {
 
     private func refreshUI(animated: Bool? = nil) {
 
-        DispatchQueue.global().async { [self] in
+        serialListKitQueue.async { [self] in
             let animated: Bool = animated ?? (models.count <= 1000)
             list.performUpdates({
 

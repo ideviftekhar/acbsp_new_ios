@@ -24,14 +24,16 @@ class HistoryViewController: LectureViewController {
 
         showLoading()
 
-        Self.lectureViewModel.getUsersListenInfo(source: source, completion: { [self] result in
+        DefaultLectureViewModel.defaultModel.getUsersListenInfo(source: source, completion: { [self] result in
 
             switch result {
             case .success(let success):
 
-                let lectureIDs: [Int] = success.flatMap({ $0.playedIds })
+                var lectureIDs: [Int] = success.flatMap({ $0.playedIds })
+                let uniqueIds: Set<Int> = Set(lectureIDs)
+                lectureIDs = Array(uniqueIds)
 
-                Self.lectureViewModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, completion: { [self] result in
+                DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, completion: { [self] result in
                     hideLoading()
 
                     switch result {

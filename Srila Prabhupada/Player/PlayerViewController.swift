@@ -13,17 +13,25 @@ import FirebaseFirestore
 
 class PlayerViewController: LectureViewController {
 
-    enum State {
+    enum ViewState {
         case close
         case minimize
         case expanded
     }
 
+    enum PlayState: Equatable {
+
+        case stopped
+        case playing(progress: CGFloat)
+        case paused
+    }
+
+
     class PlayStateObserver {
         let observer: NSObject
-        var stateHandler: ((_ state: ESTMusicIndicatorViewState) -> Void)
+        var stateHandler: ((_ state: PlayState) -> Void)
 
-        init(observer: NSObject, playStateHandler: @escaping ((_ state: ESTMusicIndicatorViewState) -> Void)) {
+        init(observer: NSObject, playStateHandler: @escaping ((_ state: PlayState) -> Void)) {
             self.observer = observer
             self.stateHandler = playStateHandler
         }
@@ -52,17 +60,17 @@ class PlayerViewController: LectureViewController {
     @IBOutlet private var loopLectureButton: UIButton!
     @IBOutlet private var shuffleLectureButton: UIButton!
 
-    @IBOutlet private var miniPlayerView: MiniPlayerView!
-    @IBOutlet private var fullPlayerContainerView: UIView!
+    @IBOutlet var miniPlayerView: MiniPlayerView!
+    @IBOutlet var fullPlayerContainerView: UIView!
 
-    private let playerContainerView: UIView = UIView()
+    let playerContainerView: UIView = UIView()
 
     var itemStatusObserver: NSKeyValueObservation?
     var itemRateObserver: NSKeyValueObservation?
     var itemDidPlayToEndObserver: AnyObject?
 
     static var lecturePlayStateObservers = [Int: [PlayStateObserver]]()
-    static var nowPlaying: (lecture: Lecture, state: ESTMusicIndicatorViewState)? {
+    static var nowPlaying: (lecture: Lecture, state: PlayState)? {
         didSet {
             if nowPlaying?.lecture.id != oldValue?.lecture.id || nowPlaying?.state != oldValue?.state {
 
@@ -98,41 +106,28 @@ class PlayerViewController: LectureViewController {
         }
     }
 
-    var visibleState: State = .close
+    var visibleState: ViewState = .close
 
-    var playRateMenu: UIMenu!
+    var playRateMenu: SPMenu!
     var selectedRate: PlayRate {
         get {
-            if #available(iOS 15.0, *) {
-                guard let selectedSortAction = playRateMenu.selectedElements.first as? UIAction,
-                      let selectedPlayRate = PlayRate(rawValue: selectedSortAction.identifier.rawValue) else {
-                    return PlayRate.one
-                }
-                return selectedPlayRate
-            } else {
-                guard let children: [UIAction] = playRateMenu.children as? [UIAction],
-                      let selectedSortAction = children.first(where: { $0.state == .on }),
-                        let selectedPlayRate = PlayRate(rawValue: selectedSortAction.identifier.rawValue) else {
-                    return PlayRate.one
-                }
-                return selectedPlayRate
+            guard let selectedRateAction = playRateMenu.selectedAction,
+                  let selectedPlayRate = PlayRate(rawValue: selectedRateAction.action.identifier.rawValue) else {
+                return PlayRate.one
             }
+            return selectedPlayRate
         }
         set {
             let userDefaultKey: String = "\(Self.self).\(PlayRate.self)"
-            let actions: [UIAction] = self.playRateMenu.children as? [UIAction] ?? []
-           for anAction in actions {
-               if anAction.identifier.rawValue == newValue.rawValue { anAction.state = .on  } else {  anAction.state = .off }
-            }
-
             UserDefaults.standard.set(newValue.rawValue, forKey: userDefaultKey)
             UserDefaults.standard.synchronize()
 
-            self.playRateMenu = self.playRateMenu.replacingChildren(actions)
-
-            if #available(iOS 14.0, *) {
-                self.speedMenuButton.menu = self.playRateMenu
+            let actions: [SPAction] = self.playRateMenu.children
+           for anAction in actions {
+               if anAction.action.identifier.rawValue == newValue.rawValue { anAction.action.state = .on  } else {  anAction.action.state = .off }
             }
+
+            self.playRateMenu.children = actions
 
             let playRate = self.selectedRate
             if !isPaused {
@@ -144,6 +139,11 @@ class PlayerViewController: LectureViewController {
     }
 
     var currentLecture: Model? {
+
+        willSet {
+            updateLectureProgress()
+        }
+
         didSet {
             loadViewIfNeeded()
 
@@ -207,6 +207,7 @@ class PlayerViewController: LectureViewController {
                     minimize(animated: true)
                 }
                 Self.nowPlaying = (currentLecture, .paused)
+                seekTo(seconds: currentLecture.lastPlayedPoint)
             } else {
                 try? AVAudioSession.sharedInstance().setCategory(.ambient)
                 try? AVAudioSession.sharedInstance().setActive(true)
@@ -307,10 +308,11 @@ class PlayerViewController: LectureViewController {
     override func refreshAsynchronous(source: FirestoreSource) {
         super.refreshAsynchronous(source: source)
 
-//        reloadData(with: self.currentLectureQueue)
+        var lectureIds = self.currentLectureQueue.map { $0.id }
+        let uniqueIds: Set<Int> = Set(lectureIds)
+        lectureIds = Array(uniqueIds)
 
-        let lectureIds = self.currentLectureQueue.map { $0.id }
-        Self.lectureViewModel.getLectures(searchText: nil, sortType: nil, filter: [:], lectureIDs: lectureIds, source: source, completion: { result in
+        DefaultLectureViewModel.defaultModel.getLectures(searchText: nil, sortType: nil, filter: [:], lectureIDs: lectureIds, source: source, completion: { result in
             switch result {
             case .success(let success):
                 self.reloadData(with: success)
@@ -322,119 +324,6 @@ class PlayerViewController: LectureViewController {
 
     @IBAction func backButtonTapped(_ sender: UIButton) {
         minimize(animated: true)
-    }
-
-    func addToTabBarController(_ tabBarController: UITabBarController) {
-        loadViewIfNeeded()
-
-        do {
-            tabBarController.addChild(self)
-            self.view.frame = tabBarController.view.bounds
-            self.view.autoresizingMask = []
-            tabBarController.view.addSubview(playerContainerView)
-            self.playerContainerView.addSubview(self.view)
-            self.didMove(toParent: tabBarController)
-        }
-        close(animated: false)
-    }
-
-    func reposition() {
-
-        switch self.visibleState {
-        case .close:
-            close(animated: true)
-        case .minimize:
-            minimize(animated: true)
-        case .expanded:
-            expand(animated: true)
-        }
-    }
-
-    func expand(animated: Bool) {
-
-        guard let tabBarController = self.parent as? UITabBarController else {
-            return
-        }
-
-        tabBarController.view.insertSubview(playerContainerView, aboveSubview: tabBarController.tabBar)
-
-        let middleAnimationBlock = { [self] in
-            miniPlayerView.alpha = 0.0
-            fullPlayerContainerView.alpha = 1.0
-        }
-
-        let animationBlock = { [self] in
-            playerContainerView.frame = tabBarController.view.bounds
-        }
-
-        visibleState = .expanded
-        setNeedsStatusBarAppearanceUpdate()
-        if animated {
-            UIView.animate(withDuration: 0.3, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [], animations: middleAnimationBlock)
-            UIView.animate(withDuration: 0.6, delay: 0.0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.3, options: .curveEaseInOut, animations: animationBlock)
-        } else {
-            middleAnimationBlock()
-            animationBlock()
-        }
-    }
-
-    func minimize(animated: Bool) {
-
-        guard let tabBarController = self.parent as? UITabBarController else {
-            return
-        }
-
-        let middleAnimationBlock = { [self] in
-            miniPlayerView.alpha = 1.0
-            fullPlayerContainerView.alpha = 0.0
-        }
-
-        let animationBlock = { [self] in
-            let y = tabBarController.tabBar.frame.minY - 60
-            let rect = CGRect(x: 0, y: y, width: tabBarController.view.frame.width, height: 60)
-            playerContainerView.frame = rect
-        }
-
-        let options: UIView.AnimationOptions
-        if visibleState == .close {
-            options = .curveEaseOut
-        } else {
-            options = .curveEaseInOut
-        }
-
-        visibleState = .minimize
-        setNeedsStatusBarAppearanceUpdate()
-        if animated {
-            UIView.animate(withDuration: 0.3, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [], animations: middleAnimationBlock)
-            UIView.animate(withDuration: 0.6, delay: 0.0, usingSpringWithDamping: 0.85, initialSpringVelocity: 0.1, options: options, animations: animationBlock)
-        } else {
-            animationBlock()
-        }
-    }
-
-    func close(animated: Bool) {
-
-        guard let tabBarController = self.parent as? UITabBarController else {
-            return
-        }
-
-        tabBarController.view.insertSubview(playerContainerView, belowSubview: tabBarController.tabBar)
-
-        let animationBlock = { [self] in
-            let y = tabBarController.tabBar.frame.minY
-            let rect = CGRect(x: 0, y: y, width: tabBarController.view.frame.width, height: 60)
-            playerContainerView.frame = rect
-            miniPlayerView.alpha = 1.0
-            fullPlayerContainerView.alpha = 0.0
-        }
-
-        visibleState = .close
-        setNeedsStatusBarAppearanceUpdate()
-        if animated {
-            UIView.animate(withDuration: 0.6, delay: 0.0, usingSpringWithDamping: 0.85, initialSpringVelocity: 0.1, options: .curveEaseInOut, animations: animationBlock)
-        } else {
-            animationBlock()
-        }
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -517,25 +406,61 @@ extension PlayerViewController {
         player?.pause()
     }
 
+    var currentTime: Int {
+        guard let player = player,
+              let currentItem = player.currentItem,
+              currentItem.currentTime().isNumeric else {
+            return currentLecture?.lastPlayedPoint ?? 0
+        }
+
+        let currentTime = Int(currentItem.currentTime().seconds)
+
+        return currentTime
+    }
+
+    var totalDuration: Int {
+        guard let player = player,
+              let currentItem = player.currentItem,
+              currentItem.duration.isNumeric else {
+            return currentLecture?.length ?? 0
+        }
+
+        let currentTime = Int(currentItem.duration.seconds)
+
+        return currentTime
+    }
+
+    var currentProgress: CGFloat {
+        let totalDuration = totalDuration
+        let currentTime = currentTime
+        guard totalDuration > 0 else {
+            return 0
+        }
+        return CGFloat(currentTime) / CGFloat(totalDuration)
+    }
+
+    private func updateLectureProgress() {
+        guard let currentLecture = currentLecture else {
+            return
+        }
+
+        DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [currentLecture], isCompleted: nil, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: currentTime, completion: { _ in })
+    }
+
     func seek(seconds: Int) {
 
-        guard let player = player, let currentItem = player.currentItem else { return }
-
-        if currentItem.duration.isNumeric, player.currentTime().isNumeric {
-            let duration = Int(currentItem.duration.seconds)
-
-            let currentTime = Int(player.currentTime().seconds)
-            var newTime = currentTime + seconds
-            if newTime < 0 {
-                newTime = 0
-            }
-
-            if newTime > duration {
-                newTime = duration
-            }
-
-            seekTo(seconds: newTime)
+        let currentTime = currentTime
+        var newTime = currentTime + seconds
+        if newTime < 0 {
+            newTime = 0
         }
+
+        let totalDuration = totalDuration
+        if newTime > totalDuration {
+            newTime = totalDuration
+        }
+
+        seekTo(seconds: newTime)
     }
 
     func seekTo(seconds: Int) {
@@ -546,6 +471,7 @@ extension PlayerViewController {
         player?.seek(to: targetTime, completionHandler: { _ in
             self.isSeeking = false
             SPNowPlayingInfoCenter.shared.update(lecture: self.currentLecture, player: self.player, selectedRate: self.selectedRate)
+
         })
     }
 }
@@ -564,7 +490,7 @@ extension PlayerViewController {
 
         guard let player = player else { return }
 
-        player.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(1, preferredTimescale: 1), queue: DispatchQueue.main) { [self] (time) -> Void in
+        player.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(1, preferredTimescale: 1), queue: DispatchQueue.main, using: { [self] (time) -> Void in
             if !timeSlider.isTracking && !isSeeking {
                 if time.isNumeric {
                     let time: Double = time.seconds
@@ -572,15 +498,21 @@ extension PlayerViewController {
                     miniPlayerView.playedSeconds = timeSlider.value
                 }
             }
-            currentTimeLabel.text = Int(timeSlider.value).toHHMMSS
-        }
 
-        if player.currentTime().isNumeric {
-            let time: Double = player.currentTime().seconds
-            timeSlider.value = Float(time)
-            miniPlayerView.playedSeconds = timeSlider.value
-            currentTimeLabel.text = Int(timeSlider.value).toHHMMSS
-        }
+            
+            let seconds: Int = Int(timeSlider.value)
+            if seconds % 60 == 0, let currentLecture = currentLecture {
+                DefaultLectureViewModel.defaultModel.offlineUpdateLectureProgress(lecture: currentLecture, lastPlayedPoint: seconds)
+            }
+            currentTimeLabel.text = seconds.toHHMMSS
+            if !isPaused, let currentLecture = currentLecture {
+                Self.nowPlaying = (currentLecture, .playing(progress: self.currentProgress))
+            }
+        })
+
+        timeSlider.value = Float(currentTime)
+        miniPlayerView.playedSeconds = timeSlider.value
+        currentTimeLabel.text = Int(timeSlider.value).toHHMMSS
     }
 }
 
@@ -636,7 +568,7 @@ extension PlayerViewController {
 extension PlayerViewController {
 
     private func registerAudioSessionObservers() {
-        NotificationCenter.default.addObserver(forName: AVAudioSession.interruptionNotification, object: nil, queue: nil) { [self] notification in
+        NotificationCenter.default.addObserver(forName: AVAudioSession.interruptionNotification, object: nil, queue: nil,using: { [self] notification in
 
             if let interruptionTypeInt = notification.userInfo?[AVAudioSessionInterruptionTypeKey] as? UInt,
                let interruptionType = AVAudioSession.InterruptionType(rawValue: interruptionTypeInt) {
@@ -655,7 +587,7 @@ extension PlayerViewController {
                     break
                 }
             }
-        }
+        })
     }
 
     private func removePlayerItemNotificationObserver(item: AVPlayerItem) {
@@ -675,7 +607,7 @@ extension PlayerViewController {
                 miniPlayerView.isPlaying = true
                 SPNowPlayingInfoCenter.shared.update(lecture: currentLecture, player: player, selectedRate: selectedRate)
                 if let currentLecture = currentLecture {
-                    Self.nowPlaying = (currentLecture, .playing)
+                    Self.nowPlaying = (currentLecture, .playing(progress: self.currentProgress))
                 } else {
                     Self.nowPlaying = nil
                 }
@@ -683,6 +615,7 @@ extension PlayerViewController {
                 playPauseButton.setImage(UIImage(compatibleSystemName: "play.fill"), for: .normal)
                 miniPlayerView.isPlaying = false
                 SPNowPlayingInfoCenter.shared.update(lecture: currentLecture, player: player, selectedRate: selectedRate)
+                updateLectureProgress()
                 if let currentLecture = currentLecture {
                     Self.nowPlaying = (currentLecture, .paused)
                 } else {
@@ -693,18 +626,16 @@ extension PlayerViewController {
 
         self.itemStatusObserver = item.observe(\.status, options: [.new, .old], changeHandler: { [self] (playerItem, change) in
 
-            if playerItem.duration.isNumeric {
-                let duration: Double = playerItem.duration.seconds
-                let time = Time(totalSeconds: Int(duration))
-                timeSlider.maximumValue = Float(duration)
-                totalTimeLabel.text = time.displayString
-                miniPlayerView.lectureDuration = time
-            }
+            let totalDuration: Int = self.totalDuration
+            timeSlider.maximumValue = Float(totalDuration)
+            let time = Time(totalSeconds: totalDuration)
+            totalTimeLabel.text = time.displayString
+            miniPlayerView.lectureDuration = time
         })
 
-        itemDidPlayToEndObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: item, queue: nil) { [self] _ in
+        itemDidPlayToEndObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: item, queue: nil, using: { [self] _ in
             gotoNext(play: true)
-        }
+        })
     }
 
     @IBAction func nextLecturePressed(_ sender: UIButton) {
@@ -755,7 +686,7 @@ extension PlayerViewController {
 extension PlayerViewController {
 
     private func configurePlayRateMenu() {
-        var actions: [UIAction] = []
+        var actions: [SPAction] = []
 
         let userDefaultKey: String = "\(Self.self).\(PlayRate.self)"
         let lastRate: PlayRate
@@ -770,38 +701,17 @@ extension PlayerViewController {
 
             let state: UIAction.State = (lastRate == playRate ? .on : .off)
 
-            let action: UIAction = UIAction(title: playRate.rawValue, image: nil, identifier: UIAction.Identifier(playRate.rawValue), state: state, handler: { [self] action in
+            let action: SPAction = SPAction(title: playRate.rawValue, image: nil, identifier: .init(playRate.rawValue), state: state, handler: { [self] action in
                 playRateActionSelected(action: action)
             })
 
             actions.append(action)
         }
 
-        self.playRateMenu = UIMenu(title: "", image: nil, identifier: UIMenu.Identifier.init(rawValue: "PlayRate"), options: UIMenu.Options.displayInline, children: actions)
-
-        if #available(iOS 14.0, *) {
-            speedMenuButton.menu = self.playRateMenu
-            speedMenuButton.showsMenuAsPrimaryAction = true
-        } else {
-            speedMenuButton.addTarget(self, action: #selector(playRateActioniOS13(_:)), for: .touchUpInside)
-        }
+        self.playRateMenu = SPMenu(title: "", image: nil, identifier: .init(rawValue: "PlayRate"), options: .displayInline, children: actions, button: speedMenuButton)
 
         let playRate = self.selectedRate
         speedMenuButton.setTitle(playRate.rawValue, for: .normal)
-    }
-
-    // Backward compatibility for iOS 13
-    @objc private func playRateActioniOS13(_ sender: UIBarButtonItem) {
-
-        var buttons: [UIViewController.ButtonConfig] = []
-        let actions: [UIAction] = self.playRateMenu.children as? [UIAction] ?? []
-        for action in actions {
-            buttons.append((title: action.title, handler: { [self] in
-                playRateActionSelected(action: action)
-            }))
-        }
-
-        self.showAlert(title: "Play Rate", message: nil, preferredStyle: .actionSheet, cancel: ("Cancel", nil), buttons: buttons)
     }
 
     private func playRateActionSelected(action: UIAction) {

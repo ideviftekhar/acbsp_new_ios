@@ -24,14 +24,16 @@ class FavouritesViewController: LectureViewController {
 
         showLoading()
 
-        Self.lectureViewModel.getUsersLectureInfo(source: source, completion: { [self] result in
+        DefaultLectureViewModel.defaultModel.getUsersLectureInfo(source: source, completion: { [self] result in
 
             switch result {
             case .success(var success):
                 success = success.filter({ $0.isFavourite })
-                let lectureIDs: [Int] = success.map({ $0.id })
+                var lectureIds: [Int] = success.map({ $0.id })
+                let uniqueIds: Set<Int> = Set(lectureIds)
+                lectureIds = Array(uniqueIds)
 
-                Self.lectureViewModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, completion: { [self] result in
+                DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIds, source: source, completion: { [self] result in
                     hideLoading()
 
                     switch result {

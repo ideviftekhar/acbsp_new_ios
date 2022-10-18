@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -14,10 +14,10 @@
         <scene sceneID="WGu-QM-DlK">
             <objects>
                 <navigationController storyboardIdentifier="TopLectureNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="Rto-Sa-HFt" customClass="NavigationController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Top Lectures" image="chart.bar.xaxis" catalog="system" id="NCU-3f-JCK"/>
+                    <tabBarItem key="tabBarItem" title="Top Lectures" image="chart.bar.xaxis" id="NCU-3f-JCK"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="WbR-bu-YQm">
-                        <rect key="frame" x="0.0" y="48" width="414" height="96"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" largeTitles="YES" id="WbR-bu-YQm">
+                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="barTintColor" name="ThemeColor"/>
@@ -82,7 +82,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="E2N-Vu-7JO">
-                                <rect key="frame" x="0.0" y="144" width="414" height="32"/>
+                                <rect key="frame" x="0.0" y="140" width="414" height="32"/>
                                 <segments>
                                     <segment title="This week"/>
                                     <segment title="This month"/>
@@ -92,7 +92,7 @@
                                 </connections>
                             </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="hcR-fg-S6D">
-                                <rect key="frame" x="0.0" y="175" width="414" height="721"/>
+                                <rect key="frame" x="0.0" y="171" width="414" height="725"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <connections>
                                     <outlet property="dataSource" destination="DeK-Gp-UKt" id="Sjl-AW-Z0G"/>
@@ -113,7 +113,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Top Lectures" id="USS-pV-lu7">
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="line.3.horizontal" catalog="system" id="ok1-9W-6Ps">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="line.3.horizontal" id="ok1-9W-6Ps">
                             <connections>
                                 <action selector="humburgerBarButtonTapped:" destination="DeK-Gp-UKt" id="lJS-MK-YoY"/>
                             </connections>
@@ -132,8 +132,8 @@
     </scenes>
     <color key="tintColor" name="0099CA"/>
     <resources>
-        <image name="chart.bar.xaxis" catalog="system" width="128" height="99"/>
-        <image name="line.3.horizontal" catalog="system" width="128" height="65"/>
+        <image name="chart.bar.xaxis" width="20.333333969116211" height="18.333333969116211"/>
+        <image name="line.3.horizontal" width="19.666666030883789" height="10"/>
         <namedColor name="0099CA">
             <color red="0.0" green="0.59999999999999998" blue="0.792156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -141,7 +141,7 @@
             <color red="1" green="0.39215686274509803" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
-            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

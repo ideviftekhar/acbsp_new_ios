@@ -28,8 +28,8 @@ class PlaylistCell: UITableViewCell, IQModelableCell {
 
     weak var delegate: PlaylistCellDelegate?
 
-    private var optionMenu: UIMenu!
-    var allActions: [PlaylistOption: UIAction] = [:]
+    private var optionMenu: SPMenu!
+    var allActions: [PlaylistOption: SPAction] = [:]
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -62,7 +62,7 @@ class PlaylistCell: UITableViewCell, IQModelableCell {
             }
 
             do {
-                var actions: [UIAction] = []
+                var actions: [SPAction] = []
 
                 if let user = Auth.auth().currentUser,
                    let email = user.email,
@@ -77,12 +77,8 @@ class PlaylistCell: UITableViewCell, IQModelableCell {
                     }
                 }
 
-                self.optionMenu = self.optionMenu.replacingChildren(actions)
+                self.optionMenu.children = actions
                 self.menuButton.isHidden = actions.isEmpty
-
-                if #available(iOS 14.0, *) {
-                    self.menuButton.menu = self.optionMenu
-                }
             }
         }
     }
@@ -94,7 +90,7 @@ extension PlaylistCell {
 
         for option in PlaylistOption.allCases {
 
-            let action: UIAction = UIAction(title: option.rawValue, image: nil, identifier: UIAction.Identifier(option.rawValue), handler: { [self] _ in
+            let action: SPAction = SPAction(title: option.rawValue, image: nil, identifier: .init(option.rawValue), handler: { [self] _ in
 
                 guard let model = model else {
                     return
@@ -104,52 +100,16 @@ extension PlaylistCell {
             })
 
             if option == .delete {
-                action.attributes = .destructive
+                action.action.attributes = .destructive
             }
 
             allActions[option] = action
         }
 
-        let childrens: [UIAction] = allActions.compactMap({ (key: PlaylistOption, _: UIAction) in
+        let childrens: [SPAction] = allActions.compactMap({ (key: PlaylistOption, _: SPAction) in
             return allActions[key]
         })
 
-        self.optionMenu = UIMenu(title: "", image: nil, identifier: UIMenu.Identifier.init(rawValue: "Option"), options: UIMenu.Options.displayInline, children: childrens)
-
-        if #available(iOS 14.0, *) {
-            menuButton.showsMenuAsPrimaryAction = true
-            menuButton.menu = optionMenu
-        } else {
-            menuButton.addTarget(self, action: #selector(optionMenuActioniOS13(_:)), for: .touchUpInside)
-        }
-    }
-
-    // Backward compatibility for iOS 13
-    @objc private func optionMenuActioniOS13(_ sender: UIButton) {
-
-        var buttons: [UIViewController.ButtonConfig] = []
-        let actions: [UIAction] = self.optionMenu.children as? [UIAction] ?? []
-
-        var destructive: UIViewController.ButtonConfig?
-
-        for action in actions {
-
-            let button: UIViewController.ButtonConfig = (title: action.title, handler: { [self] in
-
-                guard let model = model, let option: PlaylistOption = allActions.first(where: { $0.value == action})?.key else {
-                    return
-                }
-
-                delegate?.playlistCell(self, didSelected: option, with: model)
-            })
-
-            if PlaylistOption.delete.rawValue == action.identifier.rawValue {
-                destructive = button
-            } else {
-                buttons.append(button)
-            }
-        }
-
-        self.parentViewController?.showAlert(title: nil, message: nil, preferredStyle: .actionSheet, destructive: destructive, buttons: buttons)
+        self.optionMenu = SPMenu(title: "", image: nil, identifier: UIMenu.Identifier.init(rawValue: "Option"), options: .displayInline, children: childrens, button: menuButton)
     }
 }

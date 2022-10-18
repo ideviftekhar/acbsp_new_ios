@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -36,7 +37,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Favourites" id="8Mb-TQ-avA">
-                        <barButtonItem key="leftBarButtonItem" title="Item" image="line.3.horizontal" catalog="system" id="QD7-oW-auk">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="line.3.horizontal" id="QD7-oW-auk">
                             <connections>
                                 <action selector="humburgerBarButtonTapped:" destination="IvG-py-fhm" id="SWc-RV-Gbx"/>
                             </connections>
@@ -57,7 +58,7 @@
                 <navigationController storyboardIdentifier="FavouritesNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="L7r-T2-IEk" customClass="NavigationController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Favourites" image="star.fill" catalog="system" id="gtI-gu-TAS"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="r2g-NB-QOJ">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" largeTitles="YES" id="r2g-NB-QOJ">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -117,7 +118,7 @@
     </scenes>
     <color key="tintColor" name="0099CA"/>
     <resources>
-        <image name="line.3.horizontal" catalog="system" width="128" height="64"/>
+        <image name="line.3.horizontal" width="19.666666030883789" height="10"/>
         <image name="star.fill" catalog="system" width="128" height="116"/>
         <namedColor name="0099CA">
             <color red="0.0" green="0.59999999999999998" blue="0.792156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

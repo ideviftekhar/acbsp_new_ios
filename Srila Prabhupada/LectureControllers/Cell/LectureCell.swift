@@ -38,8 +38,8 @@ class LectureCell: UITableViewCell, IQModelableCell {
 
     weak var delegate: LectureCellDelegate?
 
-    private var optionMenu: UIMenu!
-    var allActions: [LectureOption: UIAction] = [:]
+    private var optionMenu: SPMenu!
+    var allActions: [LectureOption: SPAction] = [:]
 
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -90,17 +90,11 @@ class LectureCell: UITableViewCell, IQModelableCell {
             firstDotLabel?.isHidden = verseLabel?.text?.isEmpty ?? true
             secondDotLabel?.isHidden = locationLabel?.text?.isEmpty ?? true
 
-            let progress: CGFloat
-            if model.lecture.length != 0 {
-                progress = CGFloat(lecture.lastPlayedPoint) / CGFloat(lecture.length)
-            } else {
-                progress = 0
-            }
+            let playProgress: CGFloat = model.lecture.playProgress
 
-            listenProgressView?.value = progress * 100
-
-            listenProgressView?.isHidden = progress >= 1.0
-            completedIconImageView?.isHidden = progress < 1.0
+            listenProgressView?.value = playProgress * 100
+            listenProgressView?.isHidden = playProgress >= 1.0
+            completedIconImageView?.isHidden = playProgress < 1.0
 
             if let url = lecture.thumbnailURL {
                 thumbnailImageView?.af.setImage(withURL: url, placeholderImage: UIImage(named: "logo_40"))
@@ -108,9 +102,21 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 thumbnailImageView?.image = UIImage(named: "logo_40")
             }
 
-            PlayerViewController.register(observer: self, lectureID: lecture.id) { state in
-                self.audioVisualizerView.state = state
-            }
+            PlayerViewController.register(observer: self, lectureID: lecture.id, playStateHandler: { [self] state in
+                switch state {
+                case .stopped:
+                    audioVisualizerView.state = .stopped
+                case .playing(let playProgress):
+
+                    listenProgressView?.value = playProgress * 100
+                    listenProgressView?.isHidden = playProgress >= 1.0
+                    completedIconImageView?.isHidden = playProgress < 1.0
+
+                    audioVisualizerView.state = .playing
+                case .paused:
+                    audioVisualizerView.state = .paused
+                }
+            })
 
             switch lecture.downloadingState {
             case .notDownloaded:
@@ -135,28 +141,28 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 downloadProgressView?.value = 0
             }
 
-            DownloadManager.shared.registerProgress(observer: self, lectureID: lecture.id) { [self] progress in
-                if progress >= 1.0 {
+            DownloadManager.shared.registerProgress(observer: self, lectureID: lecture.id, progressHandler: { [self] downloadProgress in
+                if downloadProgress >= 1.0 {
                     downloadedIconImageView?.isHidden = false
                     downloadedIconImageView?.tintColor = UIColor.systemGreen
                     downloadedIconImageView?.image = UIImage(compatibleSystemName: "arrow.down.circle.fill")
                     downloadProgressView?.isHidden = false
                     downloadProgressView?.value = 0
-                } else if progress > 0 {
+                } else if downloadProgress > 0 {
                     downloadedIconImageView?.isHidden = false
                     downloadedIconImageView?.tintColor = UIColor.systemBlue
                     downloadedIconImageView?.image = UIImage(compatibleSystemName: "arrow.down.circle.fill")
                     downloadProgressView?.isHidden = false
-                } else if progress == 0 {
+                } else if downloadProgress == 0 {
                     downloadedIconImageView?.isHidden = true
                     downloadProgressView?.isHidden = true
                 }
-            }
+            })
 
             favouritesIconImageView?.isHidden = !lecture.isFavourites
 
             do {
-                var actions: [UIAction] = []
+                var actions: [SPAction] = []
 
                 switch lecture.downloadingState {
                 case .notDownloaded, .error:
@@ -186,7 +192,7 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 }
 
                 // Is Heard
-                if progress >= 1.0, let resetProgress = allActions[.resetProgress] {
+                if playProgress >= 1.0, let resetProgress = allActions[.resetProgress] {
                     actions.append(resetProgress)
                 } else if let markAsHeard = allActions[.markAsHeard] {
                     actions.append(markAsHeard)
@@ -199,14 +205,10 @@ class LectureCell: UITableViewCell, IQModelableCell {
 
                 let isSelected = model.isSelectionEnabled && model.isSelected
 
-                self.optionMenu = self.optionMenu.replacingChildren(actions)
+                self.optionMenu.children = actions
                 self.menuButton?.isHidden = actions.isEmpty || model.isSelectionEnabled
                 self.selectedImageView?.isHidden = !isSelected
                 self.backgroundColor = isSelected ? UIColor.systemGray3 : nil
-
-                if #available(iOS 14.0, *) {
-                    self.menuButton?.menu = self.optionMenu
-                }
             }
         }
     }
@@ -217,7 +219,7 @@ extension LectureCell {
     private func configureMenuButton() {
 
         for option in LectureOption.allCases {
-            let action: UIAction = UIAction(title: option.rawValue, image: nil, identifier: UIAction.Identifier(option.rawValue), handler: { [self] _ in
+            let action: SPAction = SPAction(title: option.rawValue, image: nil, identifier: .init(option.rawValue), handler: { [self] _ in
 
                 guard let model = model else {
                     return
@@ -227,43 +229,19 @@ extension LectureCell {
             })
 
             if option == .downloading {
-                action.attributes = .disabled
+                action.action.attributes = .disabled
             }
 
             allActions[option] = action
         }
 
-        let childrens: [UIAction] = allActions.compactMap({ (key: LectureOption, _: UIAction) in
+        let childrens: [SPAction] = allActions.compactMap({ (key: LectureOption, _: SPAction) in
             return allActions[key]
         })
 
-        self.optionMenu = UIMenu(title: "", image: nil, identifier: UIMenu.Identifier.init(rawValue: "Option"), options: UIMenu.Options.displayInline, children: childrens)
-
-        if #available(iOS 14.0, *) {
-            menuButton?.showsMenuAsPrimaryAction = true
-            menuButton?.menu = optionMenu
-        } else {
-            menuButton?.addTarget(self, action: #selector(optionMenuActioniOS13(_:)), for: .touchUpInside)
+        if let menuButton = menuButton {
+            self.optionMenu = SPMenu(title: "", image: nil, identifier: .init(rawValue: "Option"), options: .displayInline, children: childrens, button: menuButton)
         }
-    }
-
-    // Backward compatibility for iOS 13
-    @objc private func optionMenuActioniOS13(_ sender: UIButton) {
-
-        var buttons: [UIViewController.ButtonConfig] = []
-        let actions: [UIAction] = self.optionMenu.children as? [UIAction] ?? []
-        for action in actions {
-            buttons.append((title: action.title, handler: { [self] in
-
-                guard let model = model, let option: LectureOption = allActions.first(where: { $0.value == action})?.key else {
-                    return
-                }
-
-                delegate?.lectureCell(self, didSelected: option, with: model.lecture)
-            }))
-        }
-
-        self.parentViewController?.showAlert(title: nil, message: nil, preferredStyle: .actionSheet, cancel: ("Cancel", nil), buttons: buttons)
     }
 }
 

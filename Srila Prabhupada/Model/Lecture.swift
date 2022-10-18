@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 struct Lecture: Hashable, Codable {
 
@@ -46,6 +47,18 @@ struct Lecture: Hashable, Codable {
     var downloadingState: DBLecture.DownloadState = .notDownloaded
     var isFavourites: Bool
     var lastPlayedPoint: Int = 0
+
+    var playProgress: CGFloat {
+        let progress: CGFloat
+
+        if length != 0 {
+            progress = CGFloat(lastPlayedPoint) / CGFloat(length)
+        } else {
+            progress = 0
+        }
+
+        return progress
+    }
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
