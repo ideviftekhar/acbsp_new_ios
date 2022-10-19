@@ -51,12 +51,10 @@ class TopLectureViewController: LectureViewController {
             UserDefaults.standard.synchronize()
         }
 
-        reloadData(with: [])
-        refreshAsynchronous(source: .cache)
+        refresh(source: .cache, existing: [])
     }
 
-    override func refreshAsynchronous(source: FirestoreSource) {
-        super.refreshAsynchronous(source: source)
+    override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[Lecture], Error>) -> Void) {
 
         guard let selectedLectureType = TopLectureType(rawValue: topLecturesSegmentControl.selectedSegmentIndex) else {
             return
@@ -64,31 +62,17 @@ class TopLectureViewController: LectureViewController {
 
         switch selectedLectureType {
         case .thisWeek:
-            showLoading()
 
             DefaultLectureViewModel.defaultModel.getWeekLecturesIds(weekDays: currentWeekDates, completion: { [self] result in
 
                 switch result {
                 case .success(let lectureIDs):
-
-                    DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, completion: { [self] result in
-                        hideLoading()
-
-                        switch result {
-                        case .success(let lectures):
-                            reloadData(with: lectures)
-                        case .failure(let error):
-                            showAlert(title: "Error", message: error.localizedDescription)
-                        }
-                    })
-
+                    DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: completion)
                 case .failure(let error):
-                    hideLoading()
-                    showAlert(title: "Error", message: error.localizedDescription)
+                    completion(.failure(error))
                 }
             })
         case .thisMonth:
-            showLoading()
 
             let calendar = Calendar.current
             let currentMonth = calendar.component(.month, from: Date())
@@ -98,49 +82,23 @@ class TopLectureViewController: LectureViewController {
 
                 switch result {
                 case .success(let lectureIDs):
-
-                    DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, completion: { [self] result in
-                        hideLoading()
-
-                        switch result {
-                        case .success(let lectures):
-                            reloadData(with: lectures)
-                        case .failure(let error):
-                            showAlert(title: "Error", message: error.localizedDescription)
-                        }
-                    })
-
+                    DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: completion)
                 case .failure(let error):
-                    hideLoading()
-                    showAlert(title: "Error", message: error.localizedDescription)
+                    completion(.failure(error))
                 }
             })
         case .lastWeek:
-            showLoading()
 
             DefaultLectureViewModel.defaultModel.getWeekLecturesIds(weekDays: lastWeekDates, completion: { [self] result in
 
                 switch result {
                 case .success(let lectureIDs):
-
-                    DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, completion: { [self] result in
-                        hideLoading()
-
-                        switch result {
-                        case .success(let lectures):
-                            reloadData(with: lectures)
-                        case .failure(let error):
-                            showAlert(title: "Error", message: error.localizedDescription)
-                        }
-                    })
-
+                    DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: completion)
                 case .failure(let error):
-                    hideLoading()
-                    showAlert(title: "Error", message: error.localizedDescription)
+                    completion(.failure(error))
                 }
             })
         case .lastMonth:
-            showLoading()
 
             let calendar = Calendar.current
             let currentMonth = calendar.component(.month, from: Date())
@@ -156,21 +114,9 @@ class TopLectureViewController: LectureViewController {
 
                 switch result {
                 case .success(let lectureIDs):
-
-                    DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, completion: { [self] result in
-                        hideLoading()
-
-                        switch result {
-                        case .success(let lectures):
-                            reloadData(with: lectures)
-                        case .failure(let error):
-                            showAlert(title: "Error", message: error.localizedDescription)
-                        }
-                    })
-
+                    DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: completion)
                 case .failure(let error):
-                    hideLoading()
-                    showAlert(title: "Error", message: error.localizedDescription)
+                    completion(.failure(error))
                 }
             })
         }
@@ -179,13 +125,13 @@ class TopLectureViewController: LectureViewController {
 
 extension TopLectureViewController {
     override func showLoading() {
-        topLecturesSegmentControl.isEnabled = false
         super.showLoading()
+        topLecturesSegmentControl.isEnabled = false
     }
 
     override func hideLoading() {
-        topLecturesSegmentControl.isEnabled = true
         super.hideLoading()
+        topLecturesSegmentControl.isEnabled = true
     }
 }
 
@@ -197,15 +143,13 @@ extension TopLectureViewController {
             return []
         }
         var startOfWeek = Date().startOfWeek
-        startOfWeek = Date.gregorianCalenar.date(byAdding: .day, value: -7, to: startOfWeek!)
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "d-M-yyyy"
+        startOfWeek = Date.gregorianCalendar.date(byAdding: .day, value: -7, to: startOfWeek!)
         var weekDates: [String] = []
 
         while let day = startOfWeek, day < endOfWeek {
-            let dateString = dateFormatter.string(from: day)
+            let dateString = DateFormatter.d_M_yyyy.string(from: day)
             weekDates.append(dateString)
-            startOfWeek = Date.gregorianCalenar.date(byAdding: .day, value: 1, to: day)
+            startOfWeek = Date.gregorianCalendar.date(byAdding: .day, value: 1, to: day)
         }
         return weekDates
 
@@ -219,14 +163,12 @@ extension TopLectureViewController {
 
         var startOfWeek = Date().startOfWeek
 
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "d-M-yyyy"
         var weekDates: [String] = []
 
         while let day = startOfWeek, day <= endOfWeek {
-            let dateString = dateFormatter.string(from: day)
+            let dateString = DateFormatter.d_M_yyyy.string(from: day)
             weekDates.append(dateString)
-            startOfWeek = Date.gregorianCalenar.date(byAdding: .day, value: 1, to: day)
+            startOfWeek = Date.gregorianCalendar.date(byAdding: .day, value: 1, to: day)
         }
         return weekDates
     }

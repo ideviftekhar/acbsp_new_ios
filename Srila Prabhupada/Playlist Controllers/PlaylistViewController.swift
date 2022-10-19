@@ -72,14 +72,12 @@ class PlaylistViewController: SearchViewController {
             } else {
                 playlistSegmentControl.selectedSegmentIndex = 0
             }
-
-            updateEmptyPlaylistMessage()
         }
 
         do {
             list.registerCell(type: Cell.self, registerType: .nib)
             playlistTableView.tableFooterView = UIView()
-            refreshUI(animated: false)
+            refreshUI(animated: false, showNoItems: false)
         }
 
         do {
@@ -120,27 +118,38 @@ class PlaylistViewController: SearchViewController {
             UserDefaults.standard.synchronize()
         }
 
-        updateEmptyPlaylistMessage()
-
-        reloadData(with: [])
-        refreshAsynchronous(source: .cache)
+        refresh(source: .cache, existing: [])
     }
 
-    private func updateEmptyPlaylistMessage() {
-        if let selectedPlaylistType = PlaylistType(rawValue: playlistSegmentControl.selectedSegmentIndex) {
-            switch selectedPlaylistType {
-            case .private:
-                list.noItemTitle = "No Private Playlist"
-                list.noItemMessage = "No private playlist to display here"
-            case .public:
-                list.noItemTitle = "No Public Playlist"
-                list.noItemMessage = "No public playlist to display here"
-            }
+    override func refresh(source: FirestoreSource) {
+        refresh(source: source, existing: nil)
+    }
+
+    func refresh(source: FirestoreSource, existing: [Playlist]?) {
+        if let existing = existing {
+            self.models = existing
+            refreshUI(showNoItems: false)
         }
+
+        if self.models.isEmpty {
+            showLoading()
+            self.list.noItemTitle = nil
+            self.list.noItemMessage = "Loading..."
+        }
+
+        refreshAsynchronous(source: source, completion: { [self] result in
+            hideLoading()
+            switch result {
+            case .success(let success):
+                self.models = success
+                refreshUI(showNoItems: true)
+            case .failure(let error):
+                showAlert(title: "Error", message: error.localizedDescription)
+            }
+        })
     }
 
-    override func refreshAsynchronous(source: FirestoreSource) {
-        super.refreshAsynchronous(source: source)
+    func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[Playlist], Error>) -> Void) {
 
         guard let selectedPlaylistType = PlaylistType(rawValue: playlistSegmentControl.selectedSegmentIndex) else {
             return
@@ -148,21 +157,8 @@ class PlaylistViewController: SearchViewController {
 
         switch selectedPlaylistType {
         case .private:
-
-            showLoading()
-            playlistViewModel.getPrivatePlaylist(searchText: searchText, sortType: selectedSortType, completion: { [self] result in
-                hideLoading()
-
-                switch result {
-                case .success(let playlists):
-                    reloadData(with: playlists)
-                case .failure(let error):
-                    showAlert(title: "Error", message: error.localizedDescription)
-                }
-            })
+            playlistViewModel.getPrivatePlaylist(searchText: searchText, sortType: selectedSortType, completion: completion)
         case .public:
-
-            showLoading()
 
             let userEmail: String?
             if !lecturesToAdd.isEmpty {
@@ -171,16 +167,7 @@ class PlaylistViewController: SearchViewController {
                 userEmail = nil
             }
 
-            playlistViewModel.getPublicPlaylist(searchText: searchText, sortType: selectedSortType, userEmail: userEmail, completion: { [self] result in
-                hideLoading()
-
-                switch result {
-                case .success(let playlists):
-                    reloadData(with: playlists)
-                case .failure(let error):
-                    showAlert(title: "Error", message: error.localizedDescription)
-                }
-            })
+            playlistViewModel.getPublicPlaylist(searchText: searchText, sortType: selectedSortType, userEmail: userEmail, completion: completion)
         }
     }
 }
@@ -228,7 +215,7 @@ extension PlaylistViewController {
 
         updateSortButtonUI()
 
-        refreshAsynchronous(source: .cache)
+        refresh(source: .cache, existing: self.models)
     }
 
     private func updateSortButtonUI() {
@@ -242,7 +229,7 @@ extension PlaylistViewController {
 
 extension PlaylistViewController: IQListViewDelegateDataSource {
 
-    private func refreshUI(animated: Bool? = nil) {
+    private func refreshUI(animated: Bool? = nil, showNoItems: Bool) {
 
         serialListKitQueue.async { [self] in
             let animated: Bool = animated ?? (models.count <= 1000)
@@ -253,7 +240,18 @@ extension PlaylistViewController: IQListViewDelegateDataSource {
 
                 list.append(Cell.self, models: models, section: section)
 
-            }, animatingDifferences: animated, completion: nil)
+            }, animatingDifferences: animated, completion: { [self] in
+                if showNoItems, let selectedPlaylistType = PlaylistType(rawValue: playlistSegmentControl.selectedSegmentIndex) {
+                    switch selectedPlaylistType {
+                    case .private:
+                        list.noItemTitle = "No Private Playlist"
+                        list.noItemMessage = "No private playlist to display here"
+                    case .public:
+                        list.noItemTitle = "No Public Playlist"
+                        list.noItemMessage = "No public playlist to display here"
+                    }
+                }
+            })
         }
     }
 
@@ -311,7 +309,7 @@ extension PlaylistViewController: CreatePlaylistViewControllerDelegate {
     func controller(_ controller: CreatePlaylistViewController, didAdd playlist: Playlist) {
 
         guard let selectedPlaylistType = PlaylistType(rawValue: playlistSegmentControl.selectedSegmentIndex) else {
-            refreshAsynchronous(source: .default)
+            refresh(source: .default)
             return
         }
 
@@ -322,14 +320,15 @@ extension PlaylistViewController: CreatePlaylistViewControllerDelegate {
             } else {
                 models.insert(playlist, at: 0)
             }
-            reloadData(with: models)
+            refresh(source: .default, existing: models)
+        } else {
+            refresh(source: .default)
         }
-        refreshAsynchronous(source: .default)
     }
 
     func controller(_ controller: CreatePlaylistViewController, didUpdate playlist: Playlist) {
         guard let selectedPlaylistType = PlaylistType(rawValue: playlistSegmentControl.selectedSegmentIndex) else {
-            refreshAsynchronous(source: .default)
+            refresh(source: .default)
             return
         }
 
@@ -340,9 +339,10 @@ extension PlaylistViewController: CreatePlaylistViewControllerDelegate {
             } else {
                 models.insert(playlist, at: 0)
             }
-            reloadData(with: models)
+            refresh(source: .default, existing: models)
+        } else {
+            refresh(source: .default)
         }
-        refreshAsynchronous(source: .default)
     }
 }
 
@@ -366,7 +366,7 @@ extension PlaylistViewController: PlaylistCellDelegate {
                         if let index = self.models.firstIndex(where: { $0.listID == playlist.listID }) {
                             var models = self.models
                             models.remove(at: index)
-                            self.reloadData(with: models)
+                            self.refresh(source: .default, existing: models)
                         }
 
                     case .failure(let error):
@@ -397,9 +397,4 @@ extension PlaylistViewController {
         loadingIndicator.stopAnimating()
         playlistSegmentControl.isEnabled = true
    }
-
-    func reloadData(with playlists: [Playlist]) {
-        self.models = playlists
-        refreshUI()
-    }
 }

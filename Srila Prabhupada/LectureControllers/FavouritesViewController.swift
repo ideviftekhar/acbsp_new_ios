@@ -19,10 +19,7 @@ class FavouritesViewController: LectureViewController {
         }
     }
 
-    override func refreshAsynchronous(source: FirestoreSource) {
-        super.refreshAsynchronous(source: source)
-
-        showLoading()
+    override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[Lecture], Error>) -> Void) {
 
         DefaultLectureViewModel.defaultModel.getUsersLectureInfo(source: source, completion: { [self] result in
 
@@ -33,20 +30,9 @@ class FavouritesViewController: LectureViewController {
                 let uniqueIds: Set<Int> = Set(lectureIds)
                 lectureIds = Array(uniqueIds)
 
-                DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIds, source: source, completion: { [self] result in
-                    hideLoading()
-
-                    switch result {
-                    case .success(let lectures):
-                        reloadData(with: lectures)
-                    case .failure(let error):
-                        showAlert(title: "Error", message: error.localizedDescription)
-                    }
-                })
-
+                DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIds, source: source, progress: nil, completion: completion)
             case .failure(let error):
-                hideLoading()
-                showAlert(title: "Error", message: error.localizedDescription)
+                completion(.failure(error))
             }
         })
     }

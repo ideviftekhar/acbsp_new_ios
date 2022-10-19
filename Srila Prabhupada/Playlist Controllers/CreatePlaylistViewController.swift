@@ -61,6 +61,8 @@ class CreatePlaylistViewController: UIViewController {
             self.playlistType = playlist.listType
             navigationItem.title = "Update Playlist"
             doneButton.title = "Update"
+            self.privatePlaylistButton.isEnabled = false
+            self.publicPlaylistButton.isEnabled = false
         }
     }
 

@@ -19,7 +19,7 @@ extension DefaultLectureViewModel {
         }
 
         if source == .cache {
-            DispatchQueue.global().async {
+            serialLectureInfoWorkerQueue.async {
                 DispatchQueue.main.async {
                     completion(.success(self.userLectureInfo))
                 }
@@ -27,17 +27,19 @@ extension DefaultLectureViewModel {
         } else {
             let query: Query = FirestoreManager.shared.firestore.collection(FirestoreCollection.usersLectureInfo(userId: currentUser.uid).path)
 
-            FirestoreManager.shared.getDocuments(query: query, source: .default, completion: { (result: Swift.Result<[LectureInfo], Error>) in
+            FirestoreManager.shared.getDocuments(query: query, source: .default, completion: { [self] (result: Swift.Result<[LectureInfo], Error>) in
                 switch result {
                 case .success(let success):
                     self.userLectureInfo = success
                     completion(.success(success))
 
                     if source != .cache {
-                        DispatchQueue.global().async {
-                            self.allLectures = Self.refreshLectureWithLectureInfo(lectures: self.allLectures, lectureInfo: success)
-                            DispatchQueue.main.async {
-                                NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
+                        serialLectureWorkerQueue.async {
+                            if !self.allLectures.isEmpty {
+                                self.allLectures = Self.refreshLectureWithLectureInfo(lectures: self.allLectures, lectureInfo: success)
+                                DispatchQueue.main.async {
+                                    NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
+                                }
                             }
                         }
                     }
@@ -70,7 +72,7 @@ extension DefaultLectureViewModel {
             return
         }
 
-        DispatchQueue.global().async {
+        serialLectureInfoWorkerQueue.async {
             let currentTimestamp = Int(Date().timeIntervalSince1970*1000)
 
             let collectionReference: CollectionReference = FirestoreManager.shared.firestore.collection(FirestoreCollection.usersLectureInfo(userId: currentUser.uid).path)
@@ -93,7 +95,6 @@ extension DefaultLectureViewModel {
                 let documentReference: DocumentReference
 
                 if let lectureInfo = self.userLectureInfo.first(where: { $0.id == lecture.id }) {
-
                     documentReference = collectionReference.document(lectureInfo.documentId)
                 } else {
                     documentReference = collectionReference.document()

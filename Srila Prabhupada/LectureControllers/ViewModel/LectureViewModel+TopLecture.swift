@@ -83,7 +83,7 @@ extension DefaultLectureViewModel {
         })
     }
 
-    func updateTopLecture(day: Int, month: Int, year: Int, lectureID: Int, completion: @escaping (Swift.Result<TopLecture, Error>) -> Void) {
+    func updateTopLecture(date: Date, lectureID: Int, completion: @escaping (Swift.Result<TopLecture, Error>) -> Void) {
 
         guard let currentUser = Auth.auth().currentUser else {
             let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
@@ -93,7 +93,7 @@ extension DefaultLectureViewModel {
 
         let collectionReference: CollectionReference = FirestoreManager.shared.firestore.collection(FirestoreCollection.topLectures.path)
 
-        let documentID = "\(day)-\(month)-\(year)"
+        let documentID = DateFormatter.d_M_yyyy.string(from: date)
         let documentReference = collectionReference.document(documentID)
         
         FirestoreManager.shared.getRawDocument(documentReference: documentReference, source: .server, completion: { result in
@@ -116,10 +116,12 @@ extension DefaultLectureViewModel {
                 })
             case .failure(let error):
 
+                let components = date.components(.day, .month, .year)
+
                 let currentTimestamp = Int(Date().timeIntervalSince1970*1000)
                 let data: [String: Any] = [
                     "audioPlayedTime": 0,
-                    "createdDay": ["day":day, "month": month, "year": year],
+                    "createdDay": ["day": components.day ?? 1, "month": components.month ?? 1, "year": components.year ?? 1970],
                     "creationTimestamp": currentTimestamp,
                     "documentId": documentID,
                     "documentPath": documentReference.path,

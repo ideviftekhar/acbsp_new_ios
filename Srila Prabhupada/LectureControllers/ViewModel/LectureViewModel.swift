@@ -13,14 +13,18 @@ protocol LectureViewModel: AnyObject {
 
     static var defaultModel: LectureViewModel { get }
 
-    func getLectures(searchText: String?, sortType: LectureSortType?, filter: [Filter: [String]], lectureIDs: [Int]?, source: FirestoreSource, completion: @escaping (Swift.Result<[Lecture], Error>) -> Void)
+    func clearCache()
 
+    func getLectures(searchText: String?,
+                     sortType: LectureSortType?,
+                     filter: [Filter: [String]],
+                     lectureIDs: [Int]?,
+                     source: FirestoreSource,
+                     progress: ((_ progress: CGFloat) -> Void)?,
+                     completion: @escaping (Swift.Result<[Lecture], Error>) -> Void)
+
+    // Lecture Info
     func getUsersLectureInfo(source: FirestoreSource, completion: @escaping (Swift.Result<[LectureInfo], Error>) -> Void)
-    func getUsersListenInfo(source: FirestoreSource, completion: @escaping (Swift.Result<[ListenInfo], Error>) -> Void)
-    func getWeekLecturesIds(weekDays: [String], completion: @escaping (Swift.Result<[Int], Error>) -> Void)
-    func getMonthLecturesIds(month: Int, year: Int, completion: @escaping (Swift.Result<[Int], Error>) -> Void)
-    func getPopularLectureIds(completion: @escaping (Swift.Result<[Int], Error>) -> Void)
-
     func offlineUpdateLectureProgress(lecture: Lecture, lastPlayedPoint: Int)
     func updateLectureInfo(lectures: [Lecture],
                            isCompleted: Bool?,
@@ -28,6 +32,16 @@ protocol LectureViewModel: AnyObject {
                            isFavourite: Bool?,
                            lastPlayedPoint: Int?,
                            completion: @escaping (Swift.Result<Bool, Error>) -> Void)
+
+    // Listen Info
+    func getUsersListenInfo(source: FirestoreSource, completion: @escaping (Swift.Result<[ListenInfo], Error>) -> Void)
+    func updateListenInfo(date: Date, lecture: Lecture, completion: @escaping (Swift.Result<ListenInfo, Error>) -> Void)
+
+    // Top Lecture
+    func getWeekLecturesIds(weekDays: [String], completion: @escaping (Swift.Result<[Int], Error>) -> Void)
+    func getMonthLecturesIds(month: Int, year: Int, completion: @escaping (Swift.Result<[Int], Error>) -> Void)
+    func getPopularLectureIds(completion: @escaping (Swift.Result<[Int], Error>) -> Void)
+    func updateTopLecture(date: Date, lectureID: Int, completion: @escaping (Swift.Result<TopLecture, Error>) -> Void)
 }
 
 class DefaultLectureViewModel: NSObject, LectureViewModel {
@@ -37,6 +51,14 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
     }
 
     static var defaultModel: LectureViewModel = DefaultLectureViewModel()
+
+    lazy var serialLectureWorkerQueue = DispatchQueue(label: "serialLectureWorkerQueue\(Self.self)", qos: .userInteractive)
+    lazy var serialLectureInfoWorkerQueue = DispatchQueue(label: "serialLectureInfoWorkerQueue\(Self.self)", qos: .userInteractive)
+
+    func clearCache() {
+        allLectures.removeAll()
+        userLectureInfo.removeAll()
+    }
 
     var allLectures: [Lecture] = []
 
@@ -50,14 +72,14 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(downloadsRemovedNotification(_:)), name: Persistant.Notification.downloadsRemoved, object: nil)
     }
 
-    func getLectures(searchText: String?, sortType: LectureSortType?, filter: [Filter: [String]], lectureIDs: [Int]?, source: FirestoreSource, completion: @escaping (Swift.Result<[Lecture], Error>) -> Void) {
+    func getLectures(searchText: String?, sortType: LectureSortType?, filter: [Filter: [String]], lectureIDs: [Int]?, source: FirestoreSource, progress: ((_ progress: CGFloat) -> Void)?, completion: @escaping (Swift.Result<[Lecture], Error>) -> Void) {
 
         if let lectureIDs = lectureIDs, lectureIDs.isEmpty {
             completion(.success([]))
         } else {
 
             if source == .cache {
-                DispatchQueue.global().async {
+                serialLectureWorkerQueue.async {
                     var success: [Lecture] = Self.filter(lectures: self.allLectures, searchText: searchText, sortType: sortType, filter: filter, lectureIDs: lectureIDs)
                     success = Self.refreshLectureWithLectureInfo(lectures: success, lectureInfo: self.userLectureInfo)
 
@@ -68,25 +90,38 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
             } else {
                 let query: Query = FirestoreManager.shared.firestore.collection(FirestoreCollection.lectures.path)
 
-                FirestoreManager.shared.getDocuments(query: query, source: source, completion: { (result: Swift.Result<[Lecture], Error>) in
+                FirestoreManager.shared.getDocuments(query: query, source: source, completion: { [self] (result: Swift.Result<[Lecture], Error>) in
                     switch result {
                     case .success(var success):
-                        DispatchQueue.global().async {
+                        serialLectureWorkerQueue.async {
 
                             var results = [Lecture]()
 
                             let startDate = Date()
+
+                            let total: CGFloat = CGFloat(success.count)
+                            var iteration: CGFloat = 0
                             success.forEach({ lecture in
                                 let existingElements = results.filter { $0.id == lecture.id }
                                 if existingElements.count == 0 {
                                     results.append(lecture)
+                                }
+
+                                iteration += 1
+                                if let progress = progress {
+                                    DispatchQueue.main.async {
+                                        progress(iteration/total)
+                                    }
                                 }
                             })
                             let endDate = Date()
                             print("Took \(endDate.timeIntervalSince1970-startDate.timeIntervalSince1970) seconds to remove duplicate elements")
                             success = results   // Unique
 
-                            success = Self.refreshLectureWithLectureInfo(lectures: success, lectureInfo: self.userLectureInfo)
+                            if !self.userLectureInfo.isEmpty {
+                                success = Self.refreshLectureWithLectureInfo(lectures: success, lectureInfo: self.userLectureInfo)
+                            }
+                            
                             self.allLectures = success
 
                             let success = Self.filter(lectures: success, searchText: searchText, sortType: sortType, filter: filter, lectureIDs: lectureIDs)

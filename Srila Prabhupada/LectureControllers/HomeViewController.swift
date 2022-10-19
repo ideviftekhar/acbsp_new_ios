@@ -21,19 +21,15 @@ class HomeViewController: LectureViewController {
 
     override func viewWillAppear(_ animated: Bool) {
 
-        if isFirstTime {
-            DefaultLectureViewModel.defaultModel.getUsersLectureInfo(source: .default, completion: { _ in })
-        }
-
         super.viewWillAppear(animated)
     }
 
-    override func refreshAsynchronous(source: FirestoreSource) {
-        super.refreshAsynchronous(source: source)
+    override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[Lecture], Error>) -> Void) {
 
-        showLoading()
-        DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: nil, source: source, completion: { [self] result in
-            hideLoading()
+        DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: nil, source: source, progress: { [self] progress in
+            let intProgress = Int(progress*100)
+            self.list.noItemMessage = "Loading...\n\(intProgress)%"
+        }, completion: { [self] result in
 
             switch result {
             case .success(let lectures):
@@ -42,9 +38,9 @@ class HomeViewController: LectureViewController {
                     Filter.updateFilterSubtypes(lectures: lectures)
                 }
 
-                reloadData(with: lectures)
+                completion(.success(lectures))
             case .failure(let error):
-                showAlert(title: "Error", message: error.localizedDescription)
+                completion(.failure(error))
             }
         })
     }

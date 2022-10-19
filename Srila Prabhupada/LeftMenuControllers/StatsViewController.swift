@@ -44,7 +44,6 @@ class StatsViewController: UIViewController, ChartViewDelegate {
     var items = [audioItem]()
 
     let datapicker = UIDatePicker()
-    let dateformet = DateFormatter()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,15 +66,13 @@ class StatsViewController: UIViewController, ChartViewDelegate {
 
     @IBAction func choosStartDate(sender: UIDatePicker) {
 
-        dateformet.dateFormat = "dd-MM-yyyy"
-        startDateLabel.text = dateformet.string(from: sender.date)
+        startDateLabel.text = DateFormatter.dd_MM_yyyy.string(from: sender.date)
 
     }
 
     @IBAction func choosEndDate(sender: UIDatePicker) {
 
-        dateformet.dateFormat = "dd-MM-yyyy"
-        endDateLabel.text = dateformet.string(from: sender.date)
+        endDateLabel.text = DateFormatter.dd_MM_yyyy.string(from: sender.date)
     }
 
     @IBAction func allButtonTapped(sender: UIButton) {

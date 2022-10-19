@@ -28,10 +28,17 @@ extension Persistant {
 
         let dbPendingDownloadLectures: [DBLecture] = dbLectures.filter { $0.downloadStateEnum == .notDownloaded || $0.downloadStateEnum == .error }
 
+        guard !dbPendingDownloadLectures.isEmpty else {
+            return
+        }
         downloadStage1(dbLectures: dbPendingDownloadLectures)
     }
 
     func save(lectures: [Lecture]) {
+
+        guard !lectures.isEmpty else {
+            return
+        }
 
         var downloadableLectures: [DBLecture] = []
 
@@ -52,10 +59,18 @@ extension Persistant {
             }
         }
 
+        guard !downloadableLectures.isEmpty else {
+            return
+        }
+
         downloadStage1(dbLectures: downloadableLectures)
     }
 
     func delete(lectures: [Lecture]) {
+
+        guard !lectures.isEmpty else {
+            return
+        }
 
         var deletedLectures: [DBLecture] = []
 
@@ -73,6 +88,10 @@ extension Persistant {
                 dbLecture.downloadState = DBLecture.DownloadState.notDownloaded.rawValue
                 deleteObject(object: dbLecture)
             }
+        }
+
+        guard !deletedLectures.isEmpty else {
+            return
         }
 
         NotificationCenter.default.post(name: Self.Notification.downloadsRemoved, object: deletedLectures)
@@ -102,6 +121,10 @@ extension Persistant {
 
     private func downloadStage1(dbLectures: [DBLecture]) {
 
+        guard !dbLectures.isEmpty else {
+            return
+        }
+
         var addedLectures: [DBLecture] = []
         var downloadableLectures: [DBLecture] = []
 
@@ -122,11 +145,20 @@ extension Persistant {
 
         self.saveMainContext(nil)
 
-        NotificationCenter.default.post(name: Self.Notification.downloadsAdded, object: addedLectures)
-        downloadStage2(dbLectures: downloadableLectures)
+        if !addedLectures.isEmpty {
+            NotificationCenter.default.post(name: Self.Notification.downloadsAdded, object: addedLectures)
+        }
+
+        if !downloadableLectures.isEmpty {
+            downloadStage2(dbLectures: downloadableLectures)
+        }
     }
 
     private func downloadStage2(dbLectures: [DBLecture]) {
+
+        guard !dbLectures.isEmpty else {
+            return
+        }
 
         for dbLecture in dbLectures {
             DownloadManager.shared.downloadFile(for: dbLecture) { result in

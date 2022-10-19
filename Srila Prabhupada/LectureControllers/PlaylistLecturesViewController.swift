@@ -34,19 +34,9 @@ class PlaylistLecturesViewController: LectureViewController {
         }
     }
 
-    override func refreshAsynchronous(source: FirestoreSource) {
-        super.refreshAsynchronous(source: source)
+    override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[Lecture], Error>) -> Void) {
 
-        showLoading()
-        DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: playlist.lectureIds, source: source, completion: { [self] result in
-            hideLoading()
-            switch result {
-            case .success(let lectures):
-                reloadData(with: lectures)
-            case .failure(let error):
-                showAlert(title: "Error", message: error.localizedDescription)
-            }
-        })
+        DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: playlist.lectureIds, source: source, progress: nil, completion: completion)
     }
 
     @objc func addLecturesButtonAction(_ sender: UIBarButtonItem) {
@@ -73,7 +63,7 @@ extension PlaylistLecturesViewController: LectureViewControllerDelegate {
             switch result {
             case .success(let lectureIds):
                 self.playlist.lectureIds = lectureIds
-                self.refreshAsynchronous(source: .default)
+                self.refresh(source: .default)
                 controller.dismiss(animated: true)
             case .failure(let error):
                 controller.showAlert(title: "Error", message: error.localizedDescription)

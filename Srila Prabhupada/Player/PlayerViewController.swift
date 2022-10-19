@@ -26,7 +26,6 @@ class PlayerViewController: LectureViewController {
         case paused
     }
 
-
     class PlayStateObserver {
         let observer: NSObject
         var stateHandler: ((_ state: PlayState) -> Void)
@@ -208,6 +207,9 @@ class PlayerViewController: LectureViewController {
                 }
                 Self.nowPlaying = (currentLecture, .paused)
                 seekTo(seconds: currentLecture.lastPlayedPoint)
+
+                DefaultLectureViewModel.defaultModel.updateTopLecture(date: Date(), lectureID: currentLecture.id, completion: { _ in })
+                DefaultLectureViewModel.defaultModel.updateListenInfo(date: Date(), lecture: currentLecture, completion: { _ in })
             } else {
                 try? AVAudioSession.sharedInstance().setCategory(.ambient)
                 try? AVAudioSession.sharedInstance().setActive(true)
@@ -261,7 +263,7 @@ class PlayerViewController: LectureViewController {
     private var currentLectureQueue: [Model] = [] {
         didSet {
             loadViewIfNeeded()
-            refreshAsynchronous(source: .cache)
+            refresh(source: .cache, existing: currentLectureQueue)
         }
     }
 
@@ -305,19 +307,18 @@ class PlayerViewController: LectureViewController {
         super.viewWillAppear(animated)
     }
 
-    override func refreshAsynchronous(source: FirestoreSource) {
-        super.refreshAsynchronous(source: source)
+    override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[Lecture], Error>) -> Void) {
 
         var lectureIds = self.currentLectureQueue.map { $0.id }
         let uniqueIds: Set<Int> = Set(lectureIds)
         lectureIds = Array(uniqueIds)
 
-        DefaultLectureViewModel.defaultModel.getLectures(searchText: nil, sortType: nil, filter: [:], lectureIDs: lectureIds, source: source, completion: { result in
+        DefaultLectureViewModel.defaultModel.getLectures(searchText: nil, sortType: nil, filter: [:], lectureIDs: lectureIds, source: source, progress: nil, completion: { result in
             switch result {
             case .success(let success):
-                self.reloadData(with: success)
+                completion(.success(success))
             default:
-                self.reloadData(with: self.currentLectureQueue)
+                completion(.success(self.currentLectureQueue))
             }
         })
     }
@@ -413,7 +414,7 @@ extension PlayerViewController {
             return currentLecture?.lastPlayedPoint ?? 0
         }
 
-        let currentTime = Int(currentItem.currentTime().seconds)
+        let currentTime = Int(currentItem.currentTime().seconds.rounded(.up))
 
         return currentTime
     }
@@ -471,7 +472,7 @@ extension PlayerViewController {
         player?.seek(to: targetTime, completionHandler: { _ in
             self.isSeeking = false
             SPNowPlayingInfoCenter.shared.update(lecture: self.currentLecture, player: self.player, selectedRate: self.selectedRate)
-
+            self.updateLectureProgress()
         })
     }
 }
@@ -499,8 +500,7 @@ extension PlayerViewController {
                 }
             }
 
-            
-            let seconds: Int = Int(timeSlider.value)
+            let seconds: Int = Int(timeSlider.value.rounded(.up))
             if seconds % 60 == 0, let currentLecture = currentLecture {
                 DefaultLectureViewModel.defaultModel.offlineUpdateLectureProgress(lecture: currentLecture, lastPlayedPoint: seconds)
             }

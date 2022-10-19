@@ -103,6 +103,7 @@ extension SideMenuViewController: IQListViewDelegateDataSource {
                             }
 
                             if let keyWindow = keyWindow {
+                                DefaultLectureViewModel.defaultModel.clearCache()
                                 // A mask of options indicating how you want to perform the animations.
                                 UIView.transition(with: keyWindow, duration: 0.5, options: [.transitionFlipFromLeft]) {
                                     let initialController = UIStoryboard.main.instantiateInitialViewController()

@@ -83,7 +83,7 @@ class LectureViewController: SearchViewController {
         do {
             list.registerCell(type: Cell.self, registerType: .nib)
             lectureTebleView.tableFooterView = UIView()
-            refreshUI(animated: false)
+            refreshUI(animated: false, showNoItems: false)
         }
         do {
             loadingIndicator.color = UIColor.gray
@@ -102,8 +102,37 @@ class LectureViewController: SearchViewController {
         return .lightContent
     }
 
-    override func refreshAsynchronous(source: FirestoreSource) {
-        super.refreshAsynchronous(source: source)
+    override func refresh(source: FirestoreSource) {
+        refresh(source: source, existing: nil)
+    }
+
+    func refresh(source: FirestoreSource, existing: [Lecture]?) {
+
+        if let existing = existing {
+            self.models = existing
+            refreshUI(showNoItems: false)
+        }
+
+        if self.models.isEmpty {
+            showLoading()
+            self.list.noItemTitle = nil
+            self.list.noItemMessage = "Loading..."
+        }
+
+        refreshAsynchronous(source: source, completion: { [self] result in
+            hideLoading()
+            switch result {
+            case .success(let success):
+                self.models = success
+                refreshUI(showNoItems: true)
+            case .failure(let error):
+                showAlert(title: "Error", message: error.localizedDescription)
+            }
+        })
+    }
+
+    func refreshAsynchronous(source: FirestoreSource, completion: @escaping (_ result: Swift.Result<[Lecture], Error>) -> Void) {
+        completion(.success(self.models))
     }
 
     // This delegate Declared here because some subclasses are overriding it.
@@ -157,7 +186,7 @@ extension LectureViewController {
 
         updateSortButtonUI()
 
-        refreshAsynchronous(source: .cache)
+        refresh(source: .cache)
     }
 
     private func updateSortButtonUI() {
@@ -181,7 +210,7 @@ extension LectureViewController {
         } else {
             isSelectionEnabled = false
             selectedModels = []
-            refreshUI(animated: false)
+            refreshUI(animated: false, showNoItems: true)
             navigationItem.leftBarButtonItem = hamburgerBarButton
         }
     }
@@ -191,24 +220,24 @@ extension LectureViewController {
         let select: SPAction = SPAction(title: "Select", image: nil, handler: { [self] (_) in
             isSelectionEnabled = true
             selectedModels = []
-            refreshUI(animated: false)
+            refreshUI(animated: false, showNoItems: true)
             navigationItem.leftBarButtonItem = cancelSelectionButton
         })
 
         let cancel: SPAction = SPAction(title: "Cancel", image: nil, handler: { [self] (_) in
             isSelectionEnabled = false
             selectedModels = []
-            refreshUI(animated: false)
+            refreshUI(animated: false, showNoItems: true)
             navigationItem.leftBarButtonItem = hamburgerBarButton
         })
 
         let selectAll: SPAction = SPAction(title: "Select All", image: nil, handler: { [self] (_) in
             selectedModels = models
-            refreshUI(animated: false)
+            refreshUI(animated: false, showNoItems: true)
         })
         let deselectAll: SPAction = SPAction(title: "Deselect All", image: nil, handler: { [self] (_) in
             selectedModels = []
-            refreshUI(animated: false)
+            refreshUI(animated: false, showNoItems: true)
         })
 
         for option in LectureOption.allCases {
@@ -332,42 +361,27 @@ extension LectureViewController {
 
 extension LectureViewController: IQListViewDelegateDataSource {
 
-    private func refreshUI(animated: Bool? = nil) {
+    private func refreshUI(animated: Bool? = nil, showNoItems: Bool) {
 
         serialListKitQueue.async { [self] in
 
-//            let sortedElements = models.sorted { $0.id < $1.id }
-//            var duplicatedElements = Set<Model>()
-//
-//            var previousElement: Model?
-//            for element in sortedElements {
-//               if previousElement == element {
-//                  duplicatedElements.insert(element)
-//               }
-//               previousElement = element
-//            }
-//
-//            let duplicates = Array(duplicatedElements)
-//
-//            if !duplicates.isEmpty {
-//                print(duplicates)
-//            }
-
             let animated: Bool = animated ?? (models.count <= 1000)
             list.performUpdates({
-                
+
                 let section = IQSection(identifier: "Cell", headerSize: CGSize.zero, footerSize: CGSize.zero)
                 list.append(section)
-                
+
                 let newModels: [Cell.Model] = models.map { modelLecture in
                     Cell.Model(lecture: modelLecture, isSelectionEnabled: isSelectionEnabled, isSelected: selectedModels.contains(where: { modelLecture.id == $0.id }))
                 }
-                
+
                 list.append(Cell.self, models: newModels, section: section)
-                
+
             }, animatingDifferences: animated, completion: {
-                self.list.noItemTitle = self.noItemTitle
-                self.list.noItemMessage = self.noItemMessage
+                if showNoItems {
+                    self.list.noItemTitle = self.noItemTitle
+                    self.list.noItemMessage = self.noItemMessage
+                }
             })
         }
     }
@@ -382,7 +396,7 @@ extension LectureViewController: IQListViewDelegateDataSource {
                 } else {
                     selectedModels.append(model.lecture)
                 }
-                refreshUI(animated: false)
+                refreshUI(animated: false, showNoItems: true)
             } else {
                 if let tabController = self.tabBarController as? TabBarController {
                     tabController.showPlayer(lecture: model.lecture, playlistLectures: self.models)
@@ -431,16 +445,9 @@ extension LectureViewController {
 
     @objc func showLoading() {
         loadingIndicator.startAnimating()
-        self.list.noItemTitle = nil
-        self.list.noItemMessage = nil
     }
 
     @objc func hideLoading() {
         loadingIndicator.stopAnimating()
-    }
-
-    func reloadData(with lectures: [Model]) {
-        self.models = lectures
-        refreshUI()
     }
 }

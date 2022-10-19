@@ -19,30 +19,17 @@ class PopularLectureViewController: LectureViewController {
         }
     }
 
-    override func refreshAsynchronous(source: FirestoreSource) {
-        super.refreshAsynchronous(source: source)
-
-        showLoading()
+    override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[Lecture], Error>) -> Void) {
 
         DefaultLectureViewModel.defaultModel.getPopularLectureIds(completion: { [self] result in
 
             switch result {
             case .success(let lectureIDs):
 
-                DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, completion: { [self] result in
-                    hideLoading()
-
-                    switch result {
-                    case .success(let lectures):
-                        reloadData(with: lectures)
-                    case .failure(let error):
-                        showAlert(title: "Error", message: error.localizedDescription)
-                    }
-                })
+                DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: completion)
 
             case .failure(let error):
-                hideLoading()
-                showAlert(title: "Error", message: error.localizedDescription)
+                completion(.failure(error))
             }
         })
     }

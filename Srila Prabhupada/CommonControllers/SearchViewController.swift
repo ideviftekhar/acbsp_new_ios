@@ -74,12 +74,13 @@ class SearchViewController: UIViewController {
 
             // If it is requesting from dashboad screen, then we are interested in getting all records and we'll be reaching to firebase for the first time to get latest records.
             if self is HomeViewController {
-                refreshAsynchronous(source: .default)
+                DefaultLectureViewModel.defaultModel.getUsersLectureInfo(source: .default, completion: { _ in })
+                refresh(source: .default)
             } else {
-                refreshAsynchronous(source: .cache)
+                refresh(source: .cache)
             }
         } else {
-            refreshAsynchronous(source: .cache)
+            refresh(source: .cache)
         }
     }
 
@@ -89,10 +90,10 @@ class SearchViewController: UIViewController {
     }
 
     @objc private func lectureUpdateNotification(_ notification: Notification) {
-        refreshAsynchronous(source: .cache)
+        refresh(source: .cache)
     }
 
-    @objc func refreshAsynchronous(source: FirestoreSource) {
+    @objc func refresh(source: FirestoreSource) {
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -137,7 +138,7 @@ extension SearchViewController: FilterViewControllerDelegate {
         let userDefaultKey: String = "\(Self.self).\(Filter.self)"
         Filter.set(filters: filters, userDefaultKey: userDefaultKey)
 
-        refreshAsynchronous(source: .cache)
+        refresh(source: .cache)
     }
 }
 
@@ -161,7 +162,7 @@ extension SearchViewController: UISearchControllerDelegate, UISearchResultsUpdat
     }
 
     @objc private func userDidStoppedTyping() {
-        refreshAsynchronous(source: .cache)
+        refresh(source: .cache)
     }
 }
 

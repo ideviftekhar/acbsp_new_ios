@@ -31,7 +31,7 @@ extension DefaultLectureViewModel {
         })
     }
 
-    func updateListenInfo(day: Int, month: Int, year: Int, lecture: Lecture, completion: @escaping (Swift.Result<ListenInfo, Error>) -> Void) {
+    func updateListenInfo(date: Date, lecture: Lecture, completion: @escaping (Swift.Result<ListenInfo, Error>) -> Void) {
 
         guard let currentUser = Auth.auth().currentUser else {
             let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
@@ -41,7 +41,7 @@ extension DefaultLectureViewModel {
 
         let collectionReference: CollectionReference = FirestoreManager.shared.firestore.collection(FirestoreCollection.usersListenInfo(userId: currentUser.uid).path)
 
-        let documentID = "\(day)-\(month)-\(year)"
+        let documentID = DateFormatter.d_M_yyyy.string(from: date)
         let documentReference = collectionReference.document(documentID)
 
         let countBG: Int = !lecture.search.simple.filter { $0.hasPrefix("BG")}.isEmpty ? 1 : 0
@@ -84,11 +84,14 @@ extension DefaultLectureViewModel {
                                                     "VSN": countVSN,
                                                     "others": countOther]
 
+                let components = date.components(.day, .month, .year)
+
                 let currentTimestamp = Int(Date().timeIntervalSince1970*1000)
+
                 let data: [String: Any] = [
                     "creationTimestamp": currentTimestamp,
                     "date": FieldValue.serverTimestamp(),
-                    "dateOfRecord": ["day": day, "month": month, "year": year],
+                    "dateOfRecord": ["day": components.day ?? 1, "month": components.month ?? 1, "year": components.year ?? 1970],
                     "documentId": documentID,
                     "documentPath": documentReference.path,
                     "lastModifiedTimestamp": currentTimestamp,
