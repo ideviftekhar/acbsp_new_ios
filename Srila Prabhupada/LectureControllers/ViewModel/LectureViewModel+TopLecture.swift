@@ -95,19 +95,34 @@ extension DefaultLectureViewModel {
 
         let documentID = DateFormatter.d_M_yyyy.string(from: date)
         let documentReference = collectionReference.document(documentID)
-        
+
         FirestoreManager.shared.getRawDocument(documentReference: documentReference, source: .server, completion: { result in
             switch result {
             case .success(let success):
 
                 let currentTimestamp = Int(Date().timeIntervalSince1970*1000)
-                let data: [String: Any] = [
-                    "lastModifiedTimestamp": currentTimestamp,
-                    "playedBy": FieldValue.arrayUnion([currentUser.uid]),
-                    "playedIds": FieldValue.arrayUnion([lectureID]),
-                ]
 
-                success.reference.updateData(data, completion: { error in
+                var data: [String: Any] = [:]
+                data["lastModifiedTimestamp"] = currentTimestamp
+
+                if success.data() == nil {
+
+                    let components = date.components(.day, .month, .year)
+
+                    data["audioPlayedTime"] = 0
+                    data["videoPlayedTime"] = 0
+                    data["createdDay"] = ["day": components.day ?? 1, "month": components.month ?? 1, "year": components.year ?? 1970]
+                    data["creationTimestamp"] = currentTimestamp
+                    data["documentId"] = documentID
+                    data["documentPath"] = documentReference.path
+                    data["playedBy"] = [currentUser.uid]
+                    data["playedIds"] = [lectureID]
+                } else {
+                    data["playedBy"] = FieldValue.arrayUnion([currentUser.uid])
+                    data["playedIds"] = FieldValue.arrayUnion([lectureID])
+                }
+
+                success.reference.setData(data, merge: true, completion: { error in
                     if let error = error {
                         completion(.failure(error))
                     } else {
@@ -115,30 +130,6 @@ extension DefaultLectureViewModel {
                     }
                 })
             case .failure(let error):
-
-                let components = date.components(.day, .month, .year)
-
-                let currentTimestamp = Int(Date().timeIntervalSince1970*1000)
-                let data: [String: Any] = [
-                    "audioPlayedTime": 0,
-                    "createdDay": ["day": components.day ?? 1, "month": components.month ?? 1, "year": components.year ?? 1970],
-                    "creationTimestamp": currentTimestamp,
-                    "documentId": documentID,
-                    "documentPath": documentReference.path,
-                    "lastModifiedTimestamp": currentTimestamp,
-                    "playedBy": [currentUser.uid],
-                    "playedIds": [lectureID],
-                    "videoPlayedTime": 0
-                ]
-
-                documentReference.setData(data, merge: true, completion: { error in
-                    if let error = error {
-                        completion(.failure(error))
-                    } else {
-                        FirestoreManager.shared.getDocument(documentReference: documentReference, source: .default, completion: completion)
-                    }
-                })
-
                 completion(.failure(error))
             }
         })

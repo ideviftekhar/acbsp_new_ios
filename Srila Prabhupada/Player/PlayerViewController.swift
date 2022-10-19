@@ -206,10 +206,12 @@ class PlayerViewController: LectureViewController {
                     minimize(animated: true)
                 }
                 Self.nowPlaying = (currentLecture, .paused)
-                seekTo(seconds: currentLecture.lastPlayedPoint)
+
+                if currentLecture.playProgress < 1.0 {
+                    seekTo(seconds: currentLecture.lastPlayedPoint)
+                }
 
                 DefaultLectureViewModel.defaultModel.updateTopLecture(date: Date(), lectureID: currentLecture.id, completion: { _ in })
-                DefaultLectureViewModel.defaultModel.updateListenInfo(date: Date(), lecture: currentLecture, completion: { _ in })
             } else {
                 try? AVAudioSession.sharedInstance().setCategory(.ambient)
                 try? AVAudioSession.sharedInstance().setActive(true)
@@ -469,10 +471,11 @@ extension PlayerViewController {
         let targetTime: CMTime = CMTimeMake(value: seconds, timescale: 1)
 
         isSeeking = true
-        player?.seek(to: targetTime, completionHandler: { _ in
+        player?.seek(to: targetTime, completionHandler: { [self] _ in
             self.isSeeking = false
             SPNowPlayingInfoCenter.shared.update(lecture: self.currentLecture, player: self.player, selectedRate: self.selectedRate)
             self.updateLectureProgress()
+            updatePlayProgressUI(to: Double(seconds))
         })
     }
 }
@@ -492,27 +495,32 @@ extension PlayerViewController {
         guard let player = player else { return }
 
         player.addPeriodicTimeObserver(forInterval: CMTimeMakeWithSeconds(1, preferredTimescale: 1), queue: DispatchQueue.main, using: { [self] (time) -> Void in
-            if !timeSlider.isTracking && !isSeeking {
-                if time.isNumeric {
-                    let time: Double = time.seconds
-                    timeSlider.value = Float(time)
-                    miniPlayerView.playedSeconds = timeSlider.value
-                }
-            }
 
-            let seconds: Int = Int(timeSlider.value.rounded(.up))
-            if seconds % 60 == 0, let currentLecture = currentLecture {
-                DefaultLectureViewModel.defaultModel.offlineUpdateLectureProgress(lecture: currentLecture, lastPlayedPoint: seconds)
-            }
-            currentTimeLabel.text = seconds.toHHMMSS
-            if !isPaused, let currentLecture = currentLecture {
-                Self.nowPlaying = (currentLecture, .playing(progress: self.currentProgress))
+            if time.isNumeric {
+                let time: Double = time.seconds
+                updatePlayProgressUI(to: time)
             }
         })
 
         timeSlider.value = Float(currentTime)
         miniPlayerView.playedSeconds = timeSlider.value
         currentTimeLabel.text = Int(timeSlider.value).toHHMMSS
+    }
+
+    private func updatePlayProgressUI(to seconds: Double) {
+        if !timeSlider.isTracking && !isSeeking {
+            timeSlider.value = Float(seconds)
+            miniPlayerView.playedSeconds = timeSlider.value
+        }
+
+        let seconds: Int = Int(timeSlider.value.rounded(.up))
+        if seconds % 60 == 0, let currentLecture = currentLecture {
+            DefaultLectureViewModel.defaultModel.offlineUpdateLectureProgress(lecture: currentLecture, lastPlayedPoint: seconds)
+        }
+        currentTimeLabel.text = seconds.toHHMMSS
+        if !isPaused, let currentLecture = currentLecture {
+            Self.nowPlaying = (currentLecture, .playing(progress: self.currentProgress))
+        }
     }
 }
 
@@ -536,6 +544,7 @@ extension PlayerViewController {
     func gotoNext(play: Bool) {
         if loopLectureButton.isSelected == true {
             seekTo(seconds: 0)
+            self.play()
         } else {
             if let currentLecture = currentLecture,
                let index = currentLectureQueue.firstIndex(where: { $0.id == currentLecture.id && $0.creationTimestamp == currentLecture.creationTimestamp }), (index+1) < currentLectureQueue.count {
@@ -551,6 +560,7 @@ extension PlayerViewController {
     func gotoPrevious(play: Bool) {
         if loopLectureButton.isSelected == true {
             seekTo(seconds: 0)
+            self.play()
         } else {
             if let currentLecture = currentLecture,
                let index = currentLectureQueue.firstIndex(where: { $0.id == currentLecture.id && $0.creationTimestamp == currentLecture.creationTimestamp }), index > 0 {
@@ -631,9 +641,26 @@ extension PlayerViewController {
             let time = Time(totalSeconds: totalDuration)
             totalTimeLabel.text = time.displayString
             miniPlayerView.lectureDuration = time
+
+            if let newValue = change.newValue {
+                switch newValue {
+                case .unknown, .readyToPlay:
+                    break
+                case .failed:
+                    pause()
+                    if let error = player?.error {
+                        showAlert(title: "Unable to play", message: error.localizedDescription)
+                    }
+                @unknown default:
+                    break
+                }
+            }
         })
 
         itemDidPlayToEndObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: item, queue: nil, using: { [self] _ in
+            if let currentLecture = currentLecture {
+                DefaultLectureViewModel.defaultModel.updateListenInfo(date: Date(), lecture: currentLecture, completion: { _ in })
+            }
             gotoNext(play: true)
         })
     }

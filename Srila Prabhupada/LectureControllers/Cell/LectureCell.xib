@@ -43,7 +43,7 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="toB-kP-27M">
-                        <rect key="frame" x="60" y="5" width="218" height="57"/>
+                        <rect key="frame" x="60" y="5" width="210" height="57"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7cs-uh-SL9">
                                 <rect key="frame" x="0.0" y="0.0" width="22" height="20"/>
@@ -100,7 +100,7 @@
                         </subviews>
                     </stackView>
                     <view contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="f6l-Bp-fUH" customClass="MBCircularProgressBarView">
-                        <rect key="frame" x="283" y="16.5" width="34" height="34"/>
+                        <rect key="frame" x="275" y="16.5" width="34" height="34"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="34" id="e6q-TU-Yc1"/>
@@ -172,7 +172,7 @@
                         </constraints>
                     </imageView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Mfu-JH-XN3">
-                        <rect key="frame" x="283" y="17" width="34" height="33"/>
+                        <rect key="frame" x="275" y="17" width="34" height="33"/>
                         <color key="tintColor" systemColor="systemBlueColor"/>
                     </imageView>
                     <view contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="ZTZ-0b-Ptx" customClass="MBCircularProgressBarView">
@@ -258,7 +258,7 @@
                     <constraint firstItem="toB-kP-27M" firstAttribute="leading" secondItem="1Pj-Yk-u2T" secondAttribute="trailing" constant="10" id="A3j-iB-hV2"/>
                     <constraint firstItem="f6l-Bp-fUH" firstAttribute="trailing" secondItem="Mfu-JH-XN3" secondAttribute="trailing" id="AP3-fe-Mkw"/>
                     <constraint firstItem="f6l-Bp-fUH" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Ibi-ZE-P5r"/>
-                    <constraint firstItem="Q0B-mL-dK8" firstAttribute="leading" secondItem="f6l-Bp-fUH" secondAttribute="trailing" id="STR-57-w8h"/>
+                    <constraint firstItem="Q0B-mL-dK8" firstAttribute="leading" secondItem="f6l-Bp-fUH" secondAttribute="trailing" constant="8" id="STR-57-w8h"/>
                     <constraint firstItem="CnE-6x-y4s" firstAttribute="trailing" secondItem="1Pj-Yk-u2T" secondAttribute="trailing" id="TYu-Sa-Wyn"/>
                     <constraint firstItem="CnE-6x-y4s" firstAttribute="bottom" secondItem="1Pj-Yk-u2T" secondAttribute="bottom" id="Y4M-yD-ugQ"/>
                     <constraint firstItem="vfZ-ce-T4q" firstAttribute="centerY" secondItem="Q0B-mL-dK8" secondAttribute="centerY" id="Ycn-q9-J9x"/>

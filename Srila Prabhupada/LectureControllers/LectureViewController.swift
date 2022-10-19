@@ -98,6 +98,54 @@ class LectureViewController: SearchViewController {
         configureSelectionButton()
     }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidShowNotification, object: nil)
+    }
+    @objc internal func keyboardWillShow(_ notification: Notification?) {
+
+        let keyboardFrame: CGRect
+        //  Getting UIKeyboardSize.
+        if let kbFrame = notification?.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+            keyboardFrame = kbFrame
+        } else {
+            keyboardFrame = .zero
+        }
+
+        var kbSize = keyboardFrame.size
+
+        do {
+            let intersectRect = keyboardFrame.intersection(self.lectureTebleView.frame)
+
+            if intersectRect.isNull {
+                kbSize = CGSize(width: keyboardFrame.size.width, height: 0)
+            } else {
+                kbSize = intersectRect.size
+            }
+        }
+
+        var oldInset = self.lectureTebleView.contentInset
+        oldInset.bottom = kbSize.height - self.view.layoutMargins.bottom
+        self.lectureTebleView.contentInset = oldInset
+        self.lectureTebleView.verticalScrollIndicatorInsets = oldInset
+    }
+
+    @objc internal func keyboardWillHide(_ notification: Notification?) {
+        var oldInset = self.lectureTebleView.contentInset
+        oldInset.bottom = 0
+        self.lectureTebleView.contentInset = oldInset
+        self.lectureTebleView.verticalScrollIndicatorInsets = oldInset
+    }
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -204,31 +252,36 @@ extension LectureViewController {
         delegate?.lectureController(self, didSelected: selectedModels)
     }
 
+    private func startSelection() {
+        isSelectionEnabled = true
+        selectedModels.removeAll()
+        refreshUI(animated: false, showNoItems: true)
+        navigationItem.leftBarButtonItem = cancelSelectionButton
+    }
+
+    private func cancelSelection() {
+        isSelectionEnabled = false
+        selectedModels.removeAll()
+        refreshUI(animated: false, showNoItems: true)
+        navigationItem.leftBarButtonItem = hamburgerBarButton
+    }
+
     @objc private func cancelButtonAction(_ sender: UIBarButtonItem) {
         if delegate != nil {
             delegate?.lectureControllerDidCancel(self)
         } else {
-            isSelectionEnabled = false
-            selectedModels = []
-            refreshUI(animated: false, showNoItems: true)
-            navigationItem.leftBarButtonItem = hamburgerBarButton
+            cancelSelection()
         }
     }
 
     private func configureSelectionButton() {
 
         let select: SPAction = SPAction(title: "Select", image: nil, handler: { [self] (_) in
-            isSelectionEnabled = true
-            selectedModels = []
-            refreshUI(animated: false, showNoItems: true)
-            navigationItem.leftBarButtonItem = cancelSelectionButton
+            startSelection()
         })
 
         let cancel: SPAction = SPAction(title: "Cancel", image: nil, handler: { [self] (_) in
-            isSelectionEnabled = false
-            selectedModels = []
-            refreshUI(animated: false, showNoItems: true)
-            navigationItem.leftBarButtonItem = hamburgerBarButton
+            cancelSelection()
         })
 
         let selectAll: SPAction = SPAction(title: "Select All", image: nil, handler: { [self] (_) in
@@ -236,7 +289,7 @@ extension LectureViewController {
             refreshUI(animated: false, showNoItems: true)
         })
         let deselectAll: SPAction = SPAction(title: "Deselect All", image: nil, handler: { [self] (_) in
-            selectedModels = []
+            selectedModels.removeAll()
             refreshUI(animated: false, showNoItems: true)
         })
 
@@ -282,6 +335,8 @@ extension LectureViewController {
                 case .share, .downloading:
                     break
                }
+
+                cancelSelection()
             })
             allActions[option] = action
         }

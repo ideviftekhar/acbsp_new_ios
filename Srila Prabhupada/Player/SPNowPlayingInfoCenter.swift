@@ -99,7 +99,7 @@ final class SPNowPlayingInfoCenter {
             nowPlayingInfo[MPNowPlayingInfoPropertyElapsedPlaybackTime] = NSNumber(value: 0)
         }
 
-        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = NSNumber(value: 1.0)
+        nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackRate] = NSNumber(value: player.rate)
         nowPlayingInfo[MPNowPlayingInfoPropertyDefaultPlaybackRate] = NSNumber(value: selectedRate.rate)
 
         nowPlayingInfo[MPNowPlayingInfoPropertyPlaybackQueueIndex] = NSNumber(value: 0)
