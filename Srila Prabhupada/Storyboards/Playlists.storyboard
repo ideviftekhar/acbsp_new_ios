@@ -84,8 +84,8 @@
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="YRT-Cq-oUI">
                                 <rect key="frame" x="0.0" y="140" width="414" height="32"/>
                                 <segments>
-                                    <segment title="Private"/>
                                     <segment title="Public"/>
+                                    <segment title="Private"/>
                                 </segments>
                                 <connections>
                                     <action selector="segmentChanged:" destination="gmj-55-TrK" eventType="valueChanged" id="2RE-J8-qNT"/>
@@ -286,7 +286,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="191.5" height="31"/>
                                                 <color key="tintColor" red="0.0" green="0.56284224989999998" blue="0.31881666180000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" image="circle.inset.filled" catalog="system" title="Private"/>
+                                                <buttonConfiguration key="configuration" style="plain" image="largecircle.fill.circle" catalog="system" title="Private"/>
                                                 <connections>
                                                     <action selector="privateButtonTapped:" destination="Epx-Gk-cDm" eventType="touchUpInside" id="1Uz-Ej-QGD"/>
                                                 </connections>
@@ -436,7 +436,7 @@
     <color key="tintColor" name="0099CA"/>
     <resources>
         <image name="circle" catalog="system" width="128" height="121"/>
-        <image name="circle.inset.filled" catalog="system" width="128" height="121"/>
+        <image name="largecircle.fill.circle" catalog="system" width="128" height="121"/>
         <image name="line.3.horizontal" width="19.666666030883789" height="10"/>
         <image name="music.note.list" catalog="system" width="128" height="115"/>
         <namedColor name="0099CA">

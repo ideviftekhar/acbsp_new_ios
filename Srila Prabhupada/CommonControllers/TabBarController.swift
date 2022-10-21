@@ -69,6 +69,17 @@ class TabBarController: UITabBarController {
         }
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+
+        if var viewControllers = self.viewControllers, viewControllers.contains(playerViewController) {
+            viewControllers.removeAll { $0 is PlayerViewController }
+            self.viewControllers = viewControllers
+        }
+
+        playerViewController.reposition()
+    }
+
     override var childForStatusBarStyle: UIViewController? {
         if playerViewController.visibleState == .expanded {
             return playerViewController

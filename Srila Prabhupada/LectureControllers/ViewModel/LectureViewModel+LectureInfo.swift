@@ -19,7 +19,7 @@ extension DefaultLectureViewModel {
         }
 
         if source == .cache {
-            serialLectureInfoWorkerQueue.async {
+            serialLectureWorkerQueue.async {
                 DispatchQueue.main.async {
                     completion(.success(self.userLectureInfo))
                 }
@@ -52,7 +52,7 @@ extension DefaultLectureViewModel {
 
     func offlineUpdateLectureProgress(lecture: Lecture, lastPlayedPoint: Int) {
         // This is to temporarily update the information
-        do {
+        serialLectureWorkerQueue.async { [self] in
             let lectureIndexes = self.allLectures.allIndex(where: { $0.id == lecture.id })
             for index in lectureIndexes {
                 self.allLectures[index].lastPlayedPoint = lastPlayedPoint
@@ -72,7 +72,7 @@ extension DefaultLectureViewModel {
             return
         }
 
-        serialLectureInfoWorkerQueue.async {
+        serialLectureWorkerQueue.async {
             let currentTimestamp = Int(Date().timeIntervalSince1970*1000)
 
             let collectionReference: CollectionReference = FirestoreManager.shared.firestore.collection(FirestoreCollection.usersLectureInfo(userId: currentUser.uid).path)

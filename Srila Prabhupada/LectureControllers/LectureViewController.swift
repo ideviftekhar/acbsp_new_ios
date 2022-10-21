@@ -453,7 +453,15 @@ extension LectureViewController: IQListViewDelegateDataSource {
                 }
                 refreshUI(animated: false, showNoItems: true)
             } else {
-                if let tabController = self.tabBarController as? TabBarController {
+
+                guard model.lecture.resources.audios.first?.audioURL != nil else {
+                    showAlert(title: "No Lecture found", message: "We did not found any lectures to play for '\(model.lecture.titleDisplay)'")
+                    return
+                }
+
+                if let playerController = self as? PlayerViewController, let tabController = playerController.parentTabBarController {
+                    tabController.showPlayer(lecture: model.lecture, playlistLectures: self.models)
+                } else if let tabController = self.tabBarController as? TabBarController {
                     tabController.showPlayer(lecture: model.lecture, playlistLectures: self.models)
                 }
             }

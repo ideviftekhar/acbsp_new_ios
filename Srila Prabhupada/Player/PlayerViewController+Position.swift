@@ -10,16 +10,34 @@ import UIKit
 
 extension PlayerViewController {
 
+    var parentTabBarController: TabBarController? {
+        var nextResponder: UIResponder? = self
+
+        repeat {
+            nextResponder = nextResponder?.next
+
+            if let viewController = nextResponder as? TabBarController {
+                return viewController
+            }
+
+        } while nextResponder != nil
+
+        return nil
+    }
+
     func addToTabBarController(_ tabBarController: UITabBarController) {
         loadViewIfNeeded()
 
         do {
-            tabBarController.addChild(self)
+            // Close state
+            do {
+                tabBarController.view.insertSubview(playerContainerView, belowSubview: tabBarController.tabBar)
+                let rect = CGRect(x: 0, y: tabBarController.view.bounds.maxY, width: tabBarController.view.bounds.width, height: 60)
+                playerContainerView.frame = rect
+            }
+
             self.view.frame = tabBarController.view.bounds
-            self.view.autoresizingMask = []
-            tabBarController.view.addSubview(playerContainerView)
             self.playerContainerView.addSubview(self.view)
-            self.didMove(toParent: tabBarController)
         }
         close(animated: false)
     }
@@ -38,7 +56,7 @@ extension PlayerViewController {
 
     func expand(animated: Bool) {
 
-        guard let tabBarController = self.parent as? UITabBarController else {
+        guard let tabBarController = self.parentTabBarController else {
             return
         }
 
@@ -51,6 +69,7 @@ extension PlayerViewController {
 
         let animationBlock = { [self] in
             playerContainerView.frame = tabBarController.view.bounds
+            self.view.frame = tabBarController.view.bounds
         }
 
         visibleState = .expanded
@@ -66,7 +85,7 @@ extension PlayerViewController {
 
     func minimize(animated: Bool) {
 
-        guard let tabBarController = self.parent as? UITabBarController else {
+        guard let tabBarController = self.parentTabBarController else {
             return
         }
 
@@ -79,6 +98,7 @@ extension PlayerViewController {
             let y = tabBarController.tabBar.frame.minY - 60
             let rect = CGRect(x: 0, y: y, width: tabBarController.view.frame.width, height: 60)
             playerContainerView.frame = rect
+            self.view.frame = tabBarController.view.bounds
         }
 
         let options: UIView.AnimationOptions
@@ -100,7 +120,7 @@ extension PlayerViewController {
 
     func close(animated: Bool) {
 
-        guard let tabBarController = self.parent as? UITabBarController else {
+        guard let tabBarController = self.parentTabBarController else {
             return
         }
 
@@ -110,6 +130,7 @@ extension PlayerViewController {
             let y = tabBarController.tabBar.frame.minY
             let rect = CGRect(x: 0, y: y, width: tabBarController.view.frame.width, height: 60)
             playerContainerView.frame = rect
+            self.view.frame = tabBarController.view.bounds
             miniPlayerView.alpha = 1.0
             fullPlayerContainerView.alpha = 0.0
         }

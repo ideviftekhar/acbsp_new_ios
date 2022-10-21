@@ -64,6 +64,7 @@ class PlayerViewController: LectureViewController {
 
     let playerContainerView: UIView = UIView()
 
+    var timeControlStatusObserver: NSKeyValueObservation?
     var itemStatusObserver: NSKeyValueObservation?
     var itemRateObserver: NSKeyValueObservation?
     var itemDidPlayToEndObserver: AnyObject?
@@ -284,7 +285,8 @@ class PlayerViewController: LectureViewController {
             miniPlayerView.delegate = self
         }
 
-        timeSlider.setThumbImage(UIImage(compatibleSystemName: "circle.fill"), for: .normal)
+//        timeSlider.setThumbImage(UIImage(compatibleSystemName: "circle.fill"), for: .normal)
+        timeSlider.setThumbImage(UIImage(), for: .normal)
         do {
             self.playerContainerView.clipsToBounds = true
         }
@@ -601,6 +603,7 @@ extension PlayerViewController {
     }
 
     private func removePlayerItemNotificationObserver(item: AVPlayerItem) {
+        self.timeControlStatusObserver?.invalidate()
         self.itemStatusObserver?.invalidate()
         self.itemRateObserver?.invalidate()
         if let itemDidPlayToEndObserver = itemDidPlayToEndObserver {
@@ -633,6 +636,27 @@ extension PlayerViewController {
                 }
             }
         })
+
+//        self.itemStatusObserver = player?.observe(\.timeControlStatus, options: [.new, .old], changeHandler: { [self] (_, change) in
+
+//            let totalDuration: Int = self.totalDuration
+//            timeSlider.maximumValue = Float(totalDuration)
+//            let time = Time(totalSeconds: totalDuration)
+//            totalTimeLabel.text = time.displayString
+//            miniPlayerView.lectureDuration = time
+
+//            if let newValue = change.newValue {
+//                switch newValue {
+//                case .paused:
+//                    <#code#>
+//                case .waitingToPlayAtSpecifiedRate:
+//                    <#code#>
+//                case .playing:
+//                    <#code#>
+//                @unknown default:
+//                    <#code#>
+//                }
+//        })
 
         self.itemStatusObserver = item.observe(\.status, options: [.new, .old], changeHandler: { [self] (playerItem, change) in
 

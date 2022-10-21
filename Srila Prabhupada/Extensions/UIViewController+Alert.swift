@@ -14,16 +14,18 @@ extension UIViewController {
     func showAlert(title: String?,
                    message: String?,
                    preferredStyle: UIAlertController.Style = .alert,
+                   sourceView: UIView? = nil,
                    cancel: ButtonConfig = (title: "OK", handler: nil),
                    destructive: ButtonConfig? = nil,
                    buttons: ButtonConfig...) {
 
-        showAlert(title: title, message: message, preferredStyle: preferredStyle, cancel: cancel, destructive: destructive, buttons: buttons)
+        showAlert(title: title, message: message, preferredStyle: preferredStyle, sourceView: sourceView, cancel: cancel, destructive: destructive, buttons: buttons)
     }
 
     func showAlert(title: String?,
                    message: String?,
                    preferredStyle: UIAlertController.Style = .alert,
+                   sourceView: UIView? = nil,
                    cancel: ButtonConfig = (title: "OK", handler: nil),
                    destructive: ButtonConfig? = nil,
                    buttons: [ButtonConfig]) {
@@ -44,6 +46,7 @@ extension UIViewController {
                 button.handler?()
             }))
         }
+        alert.popoverPresentationController?.sourceView = sourceView
 
         // show the alert
         if let navController = self.navigationController {

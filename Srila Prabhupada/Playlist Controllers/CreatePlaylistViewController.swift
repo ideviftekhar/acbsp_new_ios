@@ -48,8 +48,6 @@ class CreatePlaylistViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        privatePlaylistButton.setImage(UIImage(compatibleSystemName: "circle.inset.filled"), for: .normal)
-        publicPlaylistButton.setImage(UIImage(compatibleSystemName: "circle"), for: .normal)
         doneButton.style = .done
         doneButton.tintColor = .white
         cancelButton.tintColor = .white
@@ -63,6 +61,8 @@ class CreatePlaylistViewController: UIViewController {
             doneButton.title = "Update"
             self.privatePlaylistButton.isEnabled = false
             self.publicPlaylistButton.isEnabled = false
+        } else {
+            self.playlistType = .private
         }
     }
 

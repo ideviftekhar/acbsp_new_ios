@@ -39,6 +39,7 @@ extension AboutViewController: TappableLabelDelegate {
             let config = SFSafariViewController.Configuration()
             config.entersReaderIfAvailable = true
             let aboutWebPage = SFSafariViewController(url: aboutWebSite, configuration: config)
+            aboutWebPage.popoverPresentationController?.sourceView = label
 
             present(aboutWebPage, animated: true)
         }

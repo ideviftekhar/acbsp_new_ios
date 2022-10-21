@@ -53,11 +53,12 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
     static var defaultModel: LectureViewModel = DefaultLectureViewModel()
 
     lazy var serialLectureWorkerQueue = DispatchQueue(label: "serialLectureWorkerQueue\(Self.self)", qos: .userInteractive)
-    lazy var serialLectureInfoWorkerQueue = DispatchQueue(label: "serialLectureInfoWorkerQueue\(Self.self)", qos: .userInteractive)
 
     func clearCache() {
-        allLectures.removeAll()
-        userLectureInfo.removeAll()
+        serialLectureWorkerQueue.async { [self] in
+            allLectures.removeAll()
+            userLectureInfo.removeAll()
+        }
     }
 
     var allLectures: [Lecture] = []
@@ -121,7 +122,7 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
                             if !self.userLectureInfo.isEmpty {
                                 success = Self.refreshLectureWithLectureInfo(lectures: success, lectureInfo: self.userLectureInfo)
                             }
-                            
+
                             self.allLectures = success
 
                             let success = Self.filter(lectures: success, searchText: searchText, sortType: sortType, filter: filter, lectureIDs: lectureIDs)
@@ -180,12 +181,16 @@ extension DefaultLectureViewModel {
 
     private func favouriteUpdated(lecture: Lecture, isFavourite: Bool) {
 
-        let lectureIndexes = self.allLectures.allIndex (where: { $0.id == lecture.id })
-        for index in lectureIndexes {
-            self.allLectures[index].isFavourites = isFavourite
-        }
-        if !lectureIndexes.isEmpty {
-            NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
+        serialLectureWorkerQueue.async { [self] in
+            let lectureIndexes = self.allLectures.allIndex(where: { $0.id == lecture.id })
+            for index in lectureIndexes {
+                self.allLectures[index].isFavourites = isFavourite
+            }
+            if !lectureIndexes.isEmpty {
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
+                }
+            }
         }
     }
 }

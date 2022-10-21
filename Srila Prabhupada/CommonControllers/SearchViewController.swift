@@ -181,7 +181,7 @@ extension SearchViewController: SideMenuControllerDelegate {
         present(sideMenuNavigationController, animated: true, completion: nil)
     }
 
-    func sideMenuController(_ controller: SideMenuViewController, didSelected menu: SideMenuItem) {
+    func sideMenuController(_ controller: SideMenuViewController, didSelected menu: SideMenuItem, cell: UITableViewCell) {
         switch menu {
         case .mediaLibrary:
             self.tabBarController?.selectedIndex = 0
@@ -199,14 +199,17 @@ extension SearchViewController: SideMenuControllerDelegate {
             let aboutController = UIStoryboard.sideMenu.instantiate(UINavigationController.self, identifier: "AboutNavigationController")
             controller.present(aboutController, animated: true, completion: nil)
         case .share:
+
             let appLink: [Any] = [URL(string: Constants.appStoreURLString)!, URL(string: Constants.playStoreURLString)!]
             let shareController = UIActivityViewController(activityItems: appLink, applicationActivities: nil)
+            shareController.popoverPresentationController?.sourceView = cell
             controller.present(shareController, animated: true)
         case .donate:
             if let donateWebsite = URL(string: Constants.donateURLString) {
                 let config = SFSafariViewController.Configuration()
                 config.entersReaderIfAvailable = true
                 let safariController = SFSafariViewController(url: donateWebsite, configuration: config)
+                safariController.popoverPresentationController?.sourceView = cell
                 controller.present(safariController, animated: true, completion: nil)
             }
         case .copyright:
@@ -223,6 +226,7 @@ extension SearchViewController: SideMenuControllerDelegate {
             let parameters = [ SKStoreProductParameterITunesItemIdentifier: Constants.appStoreIdentifier]
             storeViewController.loadProduct(withParameters: parameters, completionBlock: { [weak self] (loaded, error) -> Void in
                 if loaded {
+                    storeViewController.popoverPresentationController?.sourceView = cell
                     // Parent class of self is UIViewContorller
                     self?.present(storeViewController, animated: true, completion: nil)
                 } else if let error = error {

@@ -56,7 +56,7 @@
         <scene sceneID="YlJ-bY-KH5">
             <objects>
                 <navigationController storyboardIdentifier="DownloadNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="8WA-Pu-qTW" customClass="NavigationController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Downloads" image="icloud.and.arrow.down.fill" catalog="system" id="WbF-8n-0pA"/>
+                    <tabBarItem key="tabBarItem" title="Downloads" image="square.and.arrow.down.fill" catalog="system" id="WbF-8n-0pA"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" largeTitles="YES" id="X7U-s5-0Do">
                         <rect key="frame" x="0.0" y="44" width="414" height="96"/>
@@ -118,8 +118,8 @@
     </scenes>
     <color key="tintColor" name="0099CA"/>
     <resources>
-        <image name="icloud.and.arrow.down.fill" catalog="system" width="128" height="112"/>
         <image name="line.3.horizontal" width="19.666666030883789" height="10"/>
+        <image name="square.and.arrow.down.fill" catalog="system" width="121" height="128"/>
         <namedColor name="0099CA">
             <color red="0.0" green="0.59999999999999998" blue="0.792156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

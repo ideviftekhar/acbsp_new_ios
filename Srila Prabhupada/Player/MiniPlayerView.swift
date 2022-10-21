@@ -25,7 +25,7 @@ class MiniPlayerView: UIView {
     @IBOutlet private var dateLabel: UILabel!
     @IBOutlet private var expandButton: UIButton!
     @IBOutlet private var playButton: UIButton!
-    @IBOutlet private var progressView: UIProgressView!
+    @IBOutlet private var timeSlider: UISlider!
     @IBOutlet private var firstDotLabel: UILabel?
     @IBOutlet private var secondDotLabel: UILabel?
 
@@ -46,6 +46,7 @@ class MiniPlayerView: UIView {
 
         seekGesture.delegate = self
         expandButton.addGestureRecognizer(seekGesture)
+        timeSlider.setThumbImage(UIImage(), for: .normal)
     }
 
     var currentLecture: Lecture? {
@@ -77,7 +78,7 @@ class MiniPlayerView: UIView {
                     thumbnailImageView.image = UIImage(named: "logo_40")
                 }
 
-                progressView.progress = 0
+                timeSlider.value = 0
             } else {
                 lectureDuration = Time(totalSeconds: 0)
                 titleLabel.text = "--"
@@ -90,7 +91,7 @@ class MiniPlayerView: UIView {
                 firstDotLabel?.isHidden = false
                 secondDotLabel?.isHidden = false
                 thumbnailImageView.image = UIImage(named: "logo_40")
-                progressView.progress = 0
+                timeSlider.value = 0
             }
         }
     }
@@ -98,8 +99,8 @@ class MiniPlayerView: UIView {
     var lectureDuration: Time = Time(totalSeconds: 0) {
         didSet {
             durationLabel.text = lectureDuration.displayString
-            progressView.isHidden = lectureDuration.totalSeconds == 0
-            progressView.progress = 0
+            timeSlider.isHidden = lectureDuration.totalSeconds == 0
+            timeSlider.maximumValue = Float(lectureDuration.totalSeconds)
         }
     }
 
@@ -107,12 +108,12 @@ class MiniPlayerView: UIView {
         didSet {
             let totalSeconds: Int = lectureDuration.totalSeconds
             if totalSeconds > 0 {
-                let progress = playedSeconds / Float(totalSeconds)
+
                 if seekGesture.state != .changed {
 
                     currentTimeLabel.text = Int(playedSeconds).toHHMMSS
 
-                    progressView.progress = progress
+                    timeSlider.value = playedSeconds
                 }
             }
         }
@@ -174,7 +175,7 @@ extension MiniPlayerView: UIGestureRecognizerDelegate {
         case .changed:
             switch direction {
             case .left, .right:
-                progressView.progress =  proposedSeek / totalSeconds
+                timeSlider.value = proposedSeek
                 currentTimeLabel.text = Int(proposedSeek).toHHMMSS
             case .up, .down:
                 break

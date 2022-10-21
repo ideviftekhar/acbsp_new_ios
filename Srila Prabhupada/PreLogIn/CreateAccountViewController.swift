@@ -39,7 +39,9 @@ class CreateAccountViewController: UIViewController {
                 switch result {
                 case .success:
                     let tabBarController = UIStoryboard.main.instantiate(TabBarController.self)
-                    self.present(tabBarController, animated: true, completion: nil)
+                    self.present(tabBarController, animated: true, completion: {
+                        self.navigationController?.popToRootViewController(animated: false)
+                    })
                 case .failure(let error):
                     self.showAlert(title: "Error", message: error.localizedDescription)
                 }

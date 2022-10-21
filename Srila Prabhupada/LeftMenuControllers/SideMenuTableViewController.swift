@@ -13,7 +13,7 @@ import AlamofireImage
 // Protocol
 protocol SideMenuControllerDelegate: AnyObject {
 
-    func sideMenuController(_ controller: SideMenuViewController, didSelected menu: SideMenuItem)
+    func sideMenuController(_ controller: SideMenuViewController, didSelected menu: SideMenuItem, cell: UITableViewCell)
 }
 
 class SideMenuViewController: UIViewController {
@@ -83,6 +83,8 @@ extension SideMenuViewController: IQListViewDelegateDataSource {
 
         if let model = item.model as? Cell.Model {
 
+            guard let cell = sideMenuTableView.cellForRow(at: indexPath) else { return }
+
             switch model {
             case .signOut:
 
@@ -121,9 +123,10 @@ extension SideMenuViewController: IQListViewDelegateDataSource {
                 }))
 
                 alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+                alertController.popoverPresentationController?.sourceView = cell
                 self.present(alertController, animated: true, completion: nil)
             default:
-                delegate?.sideMenuController(self, didSelected: model)
+                delegate?.sideMenuController(self, didSelected: model, cell: cell)
             }
         }
     }

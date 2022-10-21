@@ -8,15 +8,15 @@
 import Foundation
 
 enum PlaylistType: String, Codable, CaseIterable {
-    case `private`  = "Private"
     case `public`   = "Public"
+    case `private`  = "Private"
 
     init?(rawValue: Int) {
         switch rawValue {
         case 0:
-            self = .private
-        case 1:
             self = .public
+        case 1:
+            self = .private
         default:
             self = .private
         }
