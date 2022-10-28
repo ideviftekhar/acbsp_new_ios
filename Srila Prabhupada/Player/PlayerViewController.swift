@@ -36,7 +36,7 @@ class PlayerViewController: LectureViewController {
         }
     }
 
-    @IBOutlet private var thumbnailImageView: UIImageView!
+    @IBOutlet var thumbnailImageView: UIImageView!
     @IBOutlet private var titleLabel: UILabel!
     @IBOutlet private var verseLabel: UILabel!
     @IBOutlet private var languageLabel: UILabel!
@@ -46,6 +46,7 @@ class PlayerViewController: LectureViewController {
     @IBOutlet private var firstDotLabel: UILabel?
     @IBOutlet private var secondDotLabel: UILabel?
 
+    @IBOutlet private var bufferingActivityIndicator: UIActivityIndicatorView!
     @IBOutlet private var currentTimeLabel: UILabel!
     @IBOutlet private var totalTimeLabel: UILabel!
     @IBOutlet private var timeSlider: UISlider!
@@ -68,6 +69,11 @@ class PlayerViewController: LectureViewController {
     var itemStatusObserver: NSKeyValueObservation?
     var itemRateObserver: NSKeyValueObservation?
     var itemDidPlayToEndObserver: AnyObject?
+
+    @IBOutlet var tableViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var playingInfoStackView: UIStackView!
+    @IBOutlet var playingInfoImageViewWidthConstraint: NSLayoutConstraint!
+    @IBOutlet var playingInfoTitleStackView: UIStackView!
 
     static var lecturePlayStateObservers = [Int: [PlayStateObserver]]()
     static var nowPlaying: (lecture: Lecture, state: PlayState)? {
@@ -98,6 +104,7 @@ class PlayerViewController: LectureViewController {
         }
         didSet {
 
+            player?.automaticallyWaitsToMinimizeStalling = false
             player?.allowsExternalPlayback = true
             addPeriodicTimeObserver()
             if let item = player?.currentItem {
@@ -444,12 +451,20 @@ extension PlayerViewController {
         return CGFloat(currentTime) / CGFloat(totalDuration)
     }
 
-    private func updateLectureProgress() {
+    func updateLectureProgress() {
         guard let currentLecture = currentLecture else {
             return
         }
 
-        DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [currentLecture], isCompleted: nil, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: currentTime, completion: { _ in })
+        let currentTime = currentTime
+        DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [currentLecture], isCompleted: nil, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: currentTime, completion: { result in
+            switch result {
+            case .success(let success):
+                print("Update lecture \"\(currentLecture.titleDisplay)\" current time: \(currentTime) / \(currentLecture.length)")
+            case .failure(let error):
+                print("Update lecture failed: \(error.localizedDescription)")
+            }
+        })
     }
 
     func seek(seconds: Int) {
@@ -637,26 +652,23 @@ extension PlayerViewController {
             }
         })
 
-//        self.itemStatusObserver = player?.observe(\.timeControlStatus, options: [.new, .old], changeHandler: { [self] (_, change) in
+        self.timeControlStatusObserver = player?.observe(\.timeControlStatus, options: [.new, .old], changeHandler: { [self] (player, change) in
 
-//            let totalDuration: Int = self.totalDuration
-//            timeSlider.maximumValue = Float(totalDuration)
-//            let time = Time(totalSeconds: totalDuration)
-//            totalTimeLabel.text = time.displayString
-//            miniPlayerView.lectureDuration = time
+            let totalDuration: Int = self.totalDuration
+            timeSlider.maximumValue = Float(totalDuration)
+            let time = Time(totalSeconds: totalDuration)
+            totalTimeLabel.text = time.displayString
+            miniPlayerView.lectureDuration = time
 
-//            if let newValue = change.newValue {
-//                switch newValue {
-//                case .paused:
-//                    <#code#>
-//                case .waitingToPlayAtSpecifiedRate:
-//                    <#code#>
-//                case .playing:
-//                    <#code#>
-//                @unknown default:
-//                    <#code#>
-//                }
-//        })
+            switch player.timeControlStatus {
+            case .paused, .playing:
+                bufferingActivityIndicator.stopAnimating()
+            case .waitingToPlayAtSpecifiedRate:
+                bufferingActivityIndicator.startAnimating()
+            @unknown default:
+                bufferingActivityIndicator.stopAnimating()
+            }
+        })
 
         self.itemStatusObserver = item.observe(\.status, options: [.new, .old], changeHandler: { [self] (playerItem, change) in
 

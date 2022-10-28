@@ -103,7 +103,7 @@ class CreatePlaylistViewController: UIViewController {
             })
         } else {
             showLoading()
-                playlistViewModel.createPlaylist(title: title, category: category, description: description, listType: playlistType, lectures: [], completion: { [self] result in
+            playlistViewModel.createPlaylist(title: title, category: category, description: description, listType: playlistType, lectures: [], completion: { [self] result in
                 hideLoading()
 
                 switch result {

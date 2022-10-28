@@ -102,6 +102,7 @@
 		C0DA677B28FD7D2E003BF8E4 /* LectureViewModel+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DA677A28FD7D2E003BF8E4 /* LectureViewModel+Helpers.swift */; };
 		C0DA677D28FD8190003BF8E4 /* SPMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DA677C28FD8190003BF8E4 /* SPMenu.swift */; };
 		C0DA677F28FD9CCD003BF8E4 /* TopLectureType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DA677E28FD9CCD003BF8E4 /* TopLectureType.swift */; };
+		C0DBB078290ABB6600C62BC1 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DBB077290ABB6600C62BC1 /* LoadingViewController.swift */; };
 		C0DD1B3828FE979000995994 /* PlayerViewController+Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DD1B3728FE979000995994 /* PlayerViewController+Position.swift */; };
 		C0E4748628F5A0FA001B69EE /* CreatePlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E4748528F5A0FA001B69EE /* CreatePlaylistViewController.swift */; };
 		C0E9CC3928DC723B0089A9E8 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E9CC3828DC723B0089A9E8 /* Date+Extension.swift */; };
@@ -226,6 +227,7 @@
 		C0DA677A28FD7D2E003BF8E4 /* LectureViewModel+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LectureViewModel+Helpers.swift"; sourceTree = "<group>"; };
 		C0DA677C28FD8190003BF8E4 /* SPMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPMenu.swift; sourceTree = "<group>"; };
 		C0DA677E28FD9CCD003BF8E4 /* TopLectureType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopLectureType.swift; sourceTree = "<group>"; };
+		C0DBB077290ABB6600C62BC1 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoadingViewController.swift; path = ../../../../../../Desktop/LoadingViewController.swift; sourceTree = "<group>"; };
 		C0DD1B3728FE979000995994 /* PlayerViewController+Position.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerViewController+Position.swift"; sourceTree = "<group>"; };
 		C0E4748528F5A0FA001B69EE /* CreatePlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePlaylistViewController.swift; sourceTree = "<group>"; };
 		C0E9CC3828DC723B0089A9E8 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
@@ -451,6 +453,7 @@
 		C00E4DFD28CA39FE00F1A123 /* CommonControllers */ = {
 			isa = PBXGroup;
 			children = (
+				C0DBB077290ABB6600C62BC1 /* LoadingViewController.swift */,
 				C00E4DFE28CA39FE00F1A123 /* TabBarController.swift */,
 				C0CAF25C28D45B8C00DA9878 /* NavigationController.swift */,
 				C00E4E1B28CA462000F1A123 /* SearchViewController.swift */,
@@ -884,6 +887,7 @@
 				C088178A28DDBC9100D3106C /* FirestoreManager+SignIn.swift in Sources */,
 				C00AB21128D1FD5600A62A2F /* LectureSortType.swift in Sources */,
 				C00E4E1728CA433A00F1A123 /* AboutViewController.swift in Sources */,
+				C0DBB078290ABB6600C62BC1 /* LoadingViewController.swift in Sources */,
 				C007D37828E8096D00CFBED0 /* Day.swift in Sources */,
 				C00E4E1828CA433A00F1A123 /* CopyrightViewController.swift in Sources */,
 				C07A8F3A28F7FD44001A6162 /* ESTMusicIndicatorContentView.swift in Sources */,

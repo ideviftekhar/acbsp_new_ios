@@ -98,6 +98,6 @@ class SPMenu {
 
         let controller: UIViewController? = parentController ?? button?.parentViewController
 
-        controller?.showAlert(title: nil, message: nil, preferredStyle: .actionSheet, cancel: ("Cancel", nil), destructive: destructive, buttons: buttons)
+        controller?.showAlert(title: nil, message: nil, preferredStyle: .actionSheet, sourceView: sender, cancel: ("Cancel", nil), destructive: destructive, buttons: buttons)
     }
 }

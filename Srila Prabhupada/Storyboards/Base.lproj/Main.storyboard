@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="gmZ-qk-tiz">
-    <device id="retina4_0" orientation="portrait" appearance="light"/>
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
@@ -15,11 +15,11 @@
             <objects>
                 <viewController storyboardIdentifier="LogInViewController" id="EiO-QZ-r6K" customClass="LogInViewController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="abm-8M-Mj8">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" image="logo_120" translatesAutoresizingMaskIntoConstraints="NO" id="FWv-Et-cDn">
-                                <rect key="frame" x="147" y="131" width="26.5" height="26.5"/>
+                                <rect key="frame" x="127.5" y="136" width="120" height="120"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="FWv-Et-cDn" secondAttribute="height" multiplier="1:1" id="WRZ-K8-kej"/>
                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="120" id="kat-4d-4xz"/>
@@ -31,13 +31,13 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="hq4-nu-Wsr">
-                                <rect key="frame" x="150" y="167.5" width="20" height="20"/>
+                                <rect key="frame" x="177.5" y="266" width="20" height="20"/>
                             </activityIndicatorView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="2Wb-P7-3vz">
-                                <rect key="frame" x="20" y="197.5" width="280" height="180"/>
+                                <rect key="frame" x="20" y="296" width="335" height="180"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QUi-fO-3KS" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
-                                        <rect key="frame" x="0.0" y="0.0" width="280" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="335" height="50"/>
                                         <color key="tintColor" name="0099CA"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="xzt-nl-uOU"/>
@@ -66,7 +66,7 @@
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="N37-wZ-rCp" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
-                                        <rect key="frame" x="0.0" y="70" width="280" height="50"/>
+                                        <rect key="frame" x="0.0" y="70" width="335" height="50"/>
                                         <color key="tintColor" name="0099CA"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="YTh-Jq-wNL"/>
@@ -95,7 +95,7 @@
                                         </connections>
                                     </textField>
                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tfl-LO-8ZS" customClass="RoundButton" customModule="Srila_Prabhupada" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="140" width="280" height="40"/>
+                                        <rect key="frame" x="0.0" y="140" width="335" height="40"/>
                                         <color key="backgroundColor" red="0.0" green="0.59999999999999998" blue="0.792156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="CKq-xm-L8q"/>
@@ -124,7 +124,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Exv-f9-Z6b">
-                                <rect key="frame" x="24.5" y="397.5" width="271" height="150.5"/>
+                                <rect key="frame" x="52" y="496" width="271" height="150.5"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8BL-g0-L82">
                                         <rect key="frame" x="74" y="0.0" width="123" height="30"/>
@@ -217,7 +217,7 @@
                 <navigationController storyboardIdentifier="LoginNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="gmZ-qk-tiz" customClass="NavigationController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" largeTitles="YES" id="gWd-yd-kJZ">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="91"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="barTintColor" name="ThemeColor"/>
@@ -281,7 +281,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qJ0-S9-Oje" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4052" y="67"/>
+            <point key="canvasLocation" x="5004" y="67"/>
         </scene>
         <!--PlaylistNavigationController-->
         <scene sceneID="iDn-hl-ZpG">
@@ -291,7 +291,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Un1-5w-VBN" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4042" y="-74"/>
+            <point key="canvasLocation" x="4993" y="-75"/>
         </scene>
         <!--DownloadNavigationController-->
         <scene sceneID="ZJS-zD-ZOn">
@@ -301,7 +301,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jin-sz-d4v" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4033" y="217"/>
+            <point key="canvasLocation" x="4984" y="217"/>
         </scene>
         <!--HomeNavigationController-->
         <scene sceneID="s5b-bm-TuD">
@@ -312,7 +312,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6b8-Tq-Xr4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4036" y="-225"/>
+            <point key="canvasLocation" x="4988" y="-225"/>
         </scene>
         <!--FavouritesNavigationController-->
         <scene sceneID="sRe-bR-SuE">
@@ -322,7 +322,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EiZ-Be-9VZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4007" y="358"/>
+            <point key="canvasLocation" x="4958" y="357"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="i6F-7c-Z6R">
@@ -455,18 +455,18 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="I4h-Xr-26t" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3218" y="67"/>
+            <point key="canvasLocation" x="4170" y="67"/>
         </scene>
         <!--Create Account-->
         <scene sceneID="PLK-qR-uJ1">
             <objects>
                 <viewController storyboardIdentifier="CreateAccountViewController" id="o9L-cD-zJr" customClass="CreateAccountViewController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1wZ-7X-zBQ">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_120" translatesAutoresizingMaskIntoConstraints="NO" id="Aob-i2-iy4">
-                                <rect key="frame" x="100" y="131" width="120" height="120"/>
+                                <rect key="frame" x="127.5" y="136" width="120" height="120"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="4"/>
@@ -474,13 +474,13 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="RcY-mV-Z7W">
-                                <rect key="frame" x="150" y="261" width="20" height="20"/>
+                                <rect key="frame" x="177.5" y="266" width="20" height="20"/>
                             </activityIndicatorView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="eWi-ea-V7K">
-                                <rect key="frame" x="20" y="291" width="280" height="280"/>
+                                <rect key="frame" x="20" y="296" width="335" height="280"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZbE-4O-vPQ" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
-                                        <rect key="frame" x="0.0" y="0.0" width="280" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="335" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="xfS-6A-cku"/>
                                         </constraints>
@@ -508,7 +508,7 @@
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Tqv-Zd-7iE" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
-                                        <rect key="frame" x="0.0" y="80" width="280" height="50"/>
+                                        <rect key="frame" x="0.0" y="80" width="335" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="3XI-h4-3Xe"/>
                                         </constraints>
@@ -536,7 +536,7 @@
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Re-enter Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="q8M-JX-uDy" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
-                                        <rect key="frame" x="0.0" y="160" width="280" height="50"/>
+                                        <rect key="frame" x="0.0" y="160" width="335" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="d47-KT-3Yu"/>
                                         </constraints>
@@ -564,7 +564,7 @@
                                         </connections>
                                     </textField>
                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LKp-h4-zD4" customClass="RoundButton" customModule="Srila_Prabhupada" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="240" width="280" height="40"/>
+                                        <rect key="frame" x="0.0" y="240" width="335" height="40"/>
                                         <color key="backgroundColor" name="0099CA"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="kYa-1L-Fxr"/>
@@ -623,11 +623,11 @@
             <objects>
                 <viewController storyboardIdentifier="ForgotPasswordViewController" id="hfw-3Y-WSq" customClass="ForgotPasswordViewController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="AVK-vf-SRA">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_120" translatesAutoresizingMaskIntoConstraints="NO" id="VlT-Yx-MpV">
-                                <rect key="frame" x="100" y="131" width="120" height="120"/>
+                                <rect key="frame" x="127.5" y="136" width="120" height="120"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                         <real key="value" value="4"/>
@@ -635,13 +635,13 @@
                                 </userDefinedRuntimeAttributes>
                             </imageView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="m2y-u3-D9q">
-                                <rect key="frame" x="150" y="261" width="20" height="20"/>
+                                <rect key="frame" x="177.5" y="266" width="20" height="20"/>
                             </activityIndicatorView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="qFl-wH-egI">
-                                <rect key="frame" x="20" y="291" width="280" height="120"/>
+                                <rect key="frame" x="20" y="296" width="335" height="120"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JiP-v2-2TM" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
-                                        <rect key="frame" x="0.0" y="0.0" width="280" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="335" height="50"/>
                                         <color key="tintColor" name="0099CA"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="ufS-ZA-E4e"/>
@@ -670,7 +670,7 @@
                                         </connections>
                                     </textField>
                                     <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QTK-Sh-MdL" customClass="RoundButton" customModule="Srila_Prabhupada" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="80" width="280" height="40"/>
+                                        <rect key="frame" x="0.0" y="80" width="335" height="40"/>
                                         <color key="backgroundColor" name="0099CA"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="pY4-dZ-XXl"/>
@@ -722,6 +722,74 @@
             </objects>
             <point key="canvasLocation" x="2258" y="-645"/>
         </scene>
+        <!--Loading View Controller-->
+        <scene sceneID="dYC-1a-BpX">
+            <objects>
+                <viewController storyboardIdentifier="LoadingViewController" id="yX6-ps-2of" customClass="LoadingViewController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="kug-s8-z5B">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="ahu-fG-vcc">
+                                <rect key="frame" x="74" y="195" width="227.5" height="277"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_1024_corner" translatesAutoresizingMaskIntoConstraints="NO" id="RR7-e4-b4U">
+                                        <rect key="frame" x="13.5" y="0.0" width="200" height="200"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="200" id="pNs-8s-3uX"/>
+                                            <constraint firstAttribute="width" constant="200" id="w3F-nJ-bHr"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Srila Prabhupada" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WVi-wL-j1E">
+                                        <rect key="frame" x="0.0" y="240" width="227.5" height="37"/>
+                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="qsJ-QD-NQw">
+                                <rect key="frame" x="30" y="593" width="315" height="44"/>
+                                <subviews>
+                                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="NfX-A2-ZKK">
+                                        <rect key="frame" x="0.0" y="0.0" width="315" height="20"/>
+                                        <color key="color" name="FFFFFF"/>
+                                    </activityIndicatorView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ehO-wT-hBo">
+                                        <rect key="frame" x="0.0" y="30" width="315" height="0.0"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                        <color key="textColor" name="FFFFFF"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Koh-Iz-WSH">
+                                        <rect key="frame" x="0.0" y="40" width="315" height="4"/>
+                                        <color key="tintColor" name="D64214"/>
+                                        <color key="progressTintColor" name="D64214"/>
+                                        <color key="trackTintColor" name="FF5722"/>
+                                    </progressView>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="eNs-uh-wMj"/>
+                        <color key="backgroundColor" name="ThemeColor"/>
+                        <constraints>
+                            <constraint firstItem="eNs-uh-wMj" firstAttribute="trailing" secondItem="qsJ-QD-NQw" secondAttribute="trailing" constant="30" id="4pm-58-tR4"/>
+                            <constraint firstItem="qsJ-QD-NQw" firstAttribute="leading" secondItem="eNs-uh-wMj" secondAttribute="leading" constant="30" id="KbA-78-OhP"/>
+                            <constraint firstItem="eNs-uh-wMj" firstAttribute="bottom" secondItem="qsJ-QD-NQw" secondAttribute="bottom" constant="30" id="Qam-fD-RQC"/>
+                            <constraint firstItem="ahu-fG-vcc" firstAttribute="centerY" secondItem="kug-s8-z5B" secondAttribute="centerY" id="WZy-Dx-ccY"/>
+                            <constraint firstItem="ahu-fG-vcc" firstAttribute="centerX" secondItem="kug-s8-z5B" secondAttribute="centerX" id="yud-Iz-08w"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="loadingIndicator" destination="NfX-A2-ZKK" id="F99-SF-Ra5"/>
+                        <outlet property="loadingLabel" destination="ehO-wT-hBo" id="y51-lg-4J6"/>
+                        <outlet property="progressView" destination="Koh-Iz-WSH" id="252-4G-OQ9"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3GK-fB-0jA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3219" y="67"/>
+        </scene>
     </scenes>
     <designables>
         <designable name="JiP-v2-2TM">
@@ -754,6 +822,7 @@
     </designables>
     <color key="tintColor" name="0099CA"/>
     <resources>
+        <image name="logo_1024_corner" width="1024" height="1024"/>
         <image name="logo_120" width="120" height="120"/>
         <image name="selection" width="50" height="49"/>
         <namedColor name="0087B3">
@@ -765,8 +834,17 @@
         <namedColor name="B8B8B8">
             <color red="0.72156862745098038" green="0.72156862745098038" blue="0.72156862745098038" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <namedColor name="D64214">
+            <color red="0.83921568627450982" green="0.25882352941176473" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="FF5722">
+            <color red="1" green="0.3411764705882353" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="FFFFFF">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="ThemeColor">
-            <color red="1" green="0.39215686274509803" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.97647058823529409" green="0.42745098039215684" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

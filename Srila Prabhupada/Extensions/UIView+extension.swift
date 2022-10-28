@@ -37,6 +37,15 @@ import UIKit
         }
     }
 
+    var shadowPath: CGPath? {
+        set {
+            layer.shadowPath = newValue
+        }
+        get {
+            return layer.shadowPath
+        }
+    }
+
     @IBInspectable var shadowColor: UIColor? {
         set {
             layer.shadowColor = newValue?.cgColor

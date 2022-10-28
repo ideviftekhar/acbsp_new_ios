@@ -143,4 +143,63 @@ extension PlayerViewController {
             animationBlock()
         }
     }
+
+    @IBAction private func playlistButtonTapped(_ sender: UIButton) {
+        if sender.isSelected {
+            hidePlaylist(animated: true)
+        } else {
+            showPlaylist(animated: true)
+        }
+        sender.isSelected = !sender.isSelected
+    }
+
+    func showPlaylist(animated: Bool) {
+        let animationBlock = { [self] in
+            tableViewHeightConstraint.isActive = false
+            playingInfoStackView.axis = .horizontal
+            playingInfoImageViewWidthConstraint.constant = 50
+            playingInfoTitleStackView.alignment = .leading
+            self.view.setNeedsLayout()
+            self.view.layoutIfNeeded()
+
+            thumbnailImageView.cornerRadius = 4
+            thumbnailImageView.shadowColor = nil
+            thumbnailImageView.shadowOffset = .zero
+            thumbnailImageView.shadowRadius = 0
+            thumbnailImageView.shadowOpacity = 0
+            thumbnailImageView.clipsToBounds = true
+            thumbnailImageView.layer.shadowPath = nil
+        }
+        if animated {
+            UIView.animate(withDuration: 0.6, delay: 0.0, usingSpringWithDamping: 0.85, initialSpringVelocity: 0.1, options: .curveEaseInOut, animations: animationBlock)
+        } else {
+            animationBlock()
+        }
+    }
+
+    func hidePlaylist(animated: Bool) {
+        let animationBlock = { [self] in
+            tableViewHeightConstraint.isActive = true
+            playingInfoStackView.axis = .vertical
+            playingInfoImageViewWidthConstraint.constant = 250
+            playingInfoTitleStackView.alignment = .center
+
+            self.view.setNeedsLayout()
+            self.view.layoutIfNeeded()
+
+            thumbnailImageView.cornerRadius = 20
+            thumbnailImageView.shadowColor = UIColor.black
+            thumbnailImageView.shadowOffset = .zero
+            thumbnailImageView.shadowRadius = 100
+            thumbnailImageView.shadowOpacity = 0.5
+            thumbnailImageView.clipsToBounds = false
+            thumbnailImageView.layer.shadowPath = UIBezierPath(roundedRect: thumbnailImageView.bounds, cornerRadius: 20).cgPath
+
+        }
+        if animated {
+            UIView.animate(withDuration: 0.6, delay: 0.0, usingSpringWithDamping: 0.85, initialSpringVelocity: 0.1, options: .curveEaseInOut, animations: animationBlock)
+        } else {
+            animationBlock()
+        }
+    }
 }

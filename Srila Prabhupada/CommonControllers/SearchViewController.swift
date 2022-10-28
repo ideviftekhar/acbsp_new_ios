@@ -62,26 +62,12 @@ class SearchViewController: UIViewController {
         updateFilterButtonUI()
     }
 
-    var isFirstTime: Bool = true
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
         NotificationCenter.default.addObserver(self, selector: #selector(lectureUpdateNotification(_:)), name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
 
-        if isFirstTime {
-            isFirstTime = false
-
-            // If it is requesting from dashboad screen, then we are interested in getting all records and we'll be reaching to firebase for the first time to get latest records.
-            if self is HomeViewController {
-                DefaultLectureViewModel.defaultModel.getUsersLectureInfo(source: .default, completion: { _ in })
-                refresh(source: .default)
-            } else {
-                refresh(source: .cache)
-            }
-        } else {
-            refresh(source: .cache)
-        }
+        refresh(source: .cache)
     }
 
     override func viewWillDisappear(_ animated: Bool) {

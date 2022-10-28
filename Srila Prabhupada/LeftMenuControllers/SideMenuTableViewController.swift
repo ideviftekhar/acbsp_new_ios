@@ -88,43 +88,24 @@ extension SideMenuViewController: IQListViewDelegateDataSource {
             switch model {
             case .signOut:
 
-                let alertController = UIAlertController(title: "Logout", message: "Are you sure you would like to Logout?", preferredStyle: .actionSheet)
-                alertController.addAction(UIAlertAction(title: "Logout", style: .destructive, handler: { _ in
+                self.showAlert(title: "Logout", message: "Are you sure you would like to Logout?", preferredStyle: .actionSheet, sourceView: cell, cancel: ("Cancel", nil), destructive: ("Logout", {
 
                     FirestoreManager.shared.signOut(completion: { result in
                         switch result {
                         case .success:
-                            let keyWindow: UIWindow?
-                            if #available(iOS 13, *) {
-                                keyWindow = UIApplication.shared.connectedScenes
-                                    .compactMap { $0 as? UIWindowScene }
-                                    .flatMap { $0.windows }
-                                    .first(where: { $0.isKeyWindow })
-                            } else {
-                                keyWindow = UIApplication.shared.keyWindow
-                            }
 
-                            if let keyWindow = keyWindow {
+                            if let keyWindow = self.view.window {
                                 DefaultLectureViewModel.defaultModel.clearCache()
-                                // A mask of options indicating how you want to perform the animations.
-                                UIView.transition(with: keyWindow, duration: 0.5, options: [.transitionFlipFromLeft]) {
-                                    let initialController = UIStoryboard.main.instantiateInitialViewController()
-                                    keyWindow.rootViewController = initialController
-                                } completion: { _ in
-                                }
+                                UIView.transition(with: keyWindow, duration: 0.5, options: .transitionFlipFromLeft, animations: {
+                                    let loginNavigationController = UIStoryboard.main.instantiate(UINavigationController.self, identifier: "LoginNavigationController")
+                                    keyWindow.rootViewController = loginNavigationController
+                                })
                             }
                         case .failure(let error):
-                            let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-                            alertController.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-                            self.present(alertController, animated: true, completion: nil)
+                            self.showAlert(title: "Error!", message: error.localizedDescription)
                         }
-
                     })
                 }))
-
-                alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-                alertController.popoverPresentationController?.sourceView = cell
-                self.present(alertController, animated: true, completion: nil)
             default:
                 delegate?.sideMenuController(self, didSelected: model, cell: cell)
             }

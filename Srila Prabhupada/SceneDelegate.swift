@@ -19,14 +19,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = scene as? UIWindowScene else { return }
 
-        //hack.iftekhar@gmail.com // uid: 6JquqE4j4yPBrtrAhvRyIvCMxN02
+        // hack.iftekhar@gmail.com // uid: 6JquqE4j4yPBrtrAhvRyIvCMxN02
         if let user = Auth.auth().currentUser {
             DispatchQueue.global().async {
                 user.getIDToken { _, error in
                     if let error = error {
 
                         DispatchQueue.main.async { [self] in
-                            let loginNavigationController = UIStoryboard.main.instantiateViewController(withIdentifier: "LoginNavigationController") as! UINavigationController
+                            let loginNavigationController = UIStoryboard.main.instantiate(UINavigationController.self, identifier: "LoginNavigationController")
 
                             window = UIWindow(windowScene: windowScene)
                             window?.rootViewController = loginNavigationController
@@ -36,15 +36,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 }
             }
 
-            let tabBarController = UIStoryboard.main.instantiate(TabBarController.self)
+            let loadingController = UIStoryboard.main.instantiate(LoadingViewController.self)
 
             window = UIWindow(windowScene: windowScene)
-            window?.rootViewController = tabBarController
+            window?.rootViewController = loadingController
             window?.makeKeyAndVisible()
         }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
+        if let scene = scene as? UIWindowScene {
+            for window in scene.windows {
+                if let tabBarController = window.rootViewController as? TabBarController {
+                    tabBarController.playerViewController.updateLectureProgress()
+                }
+            }
+        }
+
         // Called as the scene is being released by the system.
         // This occurs shortly after the scene enters the background, or when its session is discarded.
         // Release any resources associated with this scene that can be re-created the next time the scene connects.

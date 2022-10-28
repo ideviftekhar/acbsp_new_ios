@@ -51,8 +51,14 @@ class LogInViewController: UIViewController {
 
                 switch result {
                 case .success:
-                    let tabBarController = UIStoryboard.main.instantiate(TabBarController.self)
-                    self.present(tabBarController, animated: true, completion: nil)
+
+                    if let keyWindow = self.view.window {
+                        UIView.transition(with: keyWindow, duration: 0.5, options: .transitionFlipFromRight, animations: {
+                            let loadingController = UIStoryboard.main.instantiate(LoadingViewController.self)
+                            keyWindow.rootViewController = loadingController
+                        })
+                    }
+
                 case .failure(let error):
                     self.showAlert(title: "Error", message: error.localizedDescription)
                 }
@@ -74,8 +80,14 @@ class LogInViewController: UIViewController {
 
             switch result {
             case .success:
-                let tabBarController = UIStoryboard.main.instantiate(TabBarController.self)
-                self.present(tabBarController, animated: true, completion: nil)
+
+                if let keyWindow = self.view.window {
+                    UIView.transition(with: keyWindow, duration: 0.5, options: .transitionFlipFromRight, animations: {
+                        let loadingController = UIStoryboard.main.instantiate(LoadingViewController.self)
+                        keyWindow.rootViewController = loadingController
+                    })
+                }
+
             case .failure(let error):
                 self.showAlert(title: "Error", message: error.localizedDescription)
             }
@@ -92,8 +104,14 @@ class LogInViewController: UIViewController {
 
             switch result {
             case .success:
-                let tabBarController = UIStoryboard.main.instantiate(TabBarController.self)
-                self.present(tabBarController, animated: true, completion: nil)
+
+                if let keyWindow = self.view.window {
+                    UIView.transition(with: keyWindow, duration: 0.5, options: .transitionFlipFromRight, animations: {
+                        let loadingController = UIStoryboard.main.instantiate(LoadingViewController.self)
+                        keyWindow.rootViewController = loadingController
+                    })
+                }
+
             case .failure(let error):
                 self.showAlert(title: "Error", message: error.localizedDescription)
             }
