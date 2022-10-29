@@ -14,7 +14,7 @@ extension UIViewController {
     func showAlert(title: String?,
                    message: String?,
                    preferredStyle: UIAlertController.Style = .alert,
-                   sourceView: UIView? = nil,
+                   sourceView: Any? = nil,
                    cancel: ButtonConfig = (title: "OK", handler: nil),
                    destructive: ButtonConfig? = nil,
                    buttons: ButtonConfig...) {
@@ -25,7 +25,7 @@ extension UIViewController {
     func showAlert(title: String?,
                    message: String?,
                    preferredStyle: UIAlertController.Style = .alert,
-                   sourceView: UIView? = nil,
+                   sourceView: Any? = nil,
                    cancel: ButtonConfig = (title: "OK", handler: nil),
                    destructive: ButtonConfig? = nil,
                    buttons: [ButtonConfig]) {
@@ -46,15 +46,21 @@ extension UIViewController {
                 button.handler?()
             }))
         }
-        alert.popoverPresentationController?.sourceView = sourceView
 
-        // show the alert
-        if let navController = self.navigationController {
-            navController.present(alert, animated: true)
-        } else if let tabBarController = self.tabBarController {
-            tabBarController.present(alert, animated: true)
+        let presentOnController: UIViewController = self.tabBarController ?? self.navigationController ?? self
+
+        if let sourceView = sourceView as? UIView {
+            alert.popoverPresentationController?.sourceView = sourceView
+        } else if let sourceItem = sourceView as? UIBarButtonItem {
+            if #available(iOS 16.0, *) {
+                alert.popoverPresentationController?.sourceItem = sourceItem
+            } else {
+                alert.popoverPresentationController?.barButtonItem = sourceItem
+            }
         } else {
-            self.present(alert, animated: true)
+            alert.popoverPresentationController?.sourceRect = presentOnController.view.bounds
         }
+
+        presentOnController.present(alert, animated: true)
     }
 }

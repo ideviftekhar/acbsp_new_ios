@@ -209,7 +209,7 @@ extension LectureViewController {
 
             let state: UIAction.State = (lastType == sortType ? .on : .off)
 
-            let action: SPAction = SPAction(title: sortType.rawValue, image: nil, identifier: .init(sortType.rawValue), state: state, handler: { [self] action in
+            let action: SPAction = SPAction(title: sortType.rawValue, image: sortType.image, identifier: .init(sortType.rawValue), state: state, handler: { [self] action in
                 sortActionSelected(action: action)
             })
 
@@ -238,10 +238,10 @@ extension LectureViewController {
     }
 
     private func updateSortButtonUI() {
-        if selectedSortType == .default {
-            sortButton.image = UIImage(compatibleSystemName: "arrow.up.arrow.down.circle")
+        if let icon = selectedSortType.imageSelected {
+            sortButton.image = icon
         } else {
-            sortButton.image = UIImage(compatibleSystemName: "arrow.up.arrow.down.circle.fill")
+            sortButton.image = UIImage(compatibleSystemName: "arrow.up.arrow.down.circle")
         }
     }
 }
@@ -284,17 +284,17 @@ extension LectureViewController {
             cancelSelection()
         })
 
-        let selectAll: SPAction = SPAction(title: "Select All", image: nil, handler: { [self] (_) in
+        let selectAll: SPAction = SPAction(title: "Select All", image: UIImage(compatibleSystemName: "checkmark.circle.fill"), handler: { [self] (_) in
             selectedModels = models
             refreshUI(animated: false, showNoItems: true)
         })
-        let deselectAll: SPAction = SPAction(title: "Deselect All", image: nil, handler: { [self] (_) in
+        let deselectAll: SPAction = SPAction(title: "Deselect All", image: UIImage(compatibleSystemName: "checkmark.circle"), handler: { [self] (_) in
             selectedModels.removeAll()
             refreshUI(animated: false, showNoItems: true)
         })
 
         for option in LectureOption.allCases {
-            let action: SPAction = SPAction(title: option.rawValue, image: nil, identifier: .init(option.rawValue), handler: { [self] _ in
+            let action: SPAction = SPAction(title: option.rawValue, image: option.image, identifier: .init(option.rawValue), handler: { [self] _ in
 
                 guard !selectedModels.isEmpty else {
                     return
@@ -338,6 +338,11 @@ extension LectureViewController {
 
                 cancelSelection()
             })
+
+            if option == .deleteFromDownloads {
+                action.action.attributes = .destructive
+            }
+
             allActions[option] = action
         }
 

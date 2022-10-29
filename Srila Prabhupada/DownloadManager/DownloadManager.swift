@@ -8,11 +8,6 @@
 import Foundation
 import Alamofire
 
-enum State {
-    case playing
-    case paused
-    case stopped
-}
 
 private class ProgressObserver {
     let observer: NSObject

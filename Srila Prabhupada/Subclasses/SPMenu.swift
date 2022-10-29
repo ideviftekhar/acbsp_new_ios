@@ -75,7 +75,7 @@ class SPMenu {
     }
 
     // Backward compatibility for iOS 13
-    @objc private func menuActioniOS13(_ sender: UIButton) {
+    @objc private func menuActioniOS13(_ sender: Any) {
 
         var buttons: [UIViewController.ButtonConfig] = []
 

@@ -190,7 +190,7 @@ extension PlaylistViewController {
 
             let state: UIAction.State = (lastType == sortType ? .on : .off)
 
-            let action: SPAction = SPAction(title: sortType.rawValue, image: nil, identifier: .init(sortType.rawValue), state: state, handler: { [self] action in
+            let action: SPAction = SPAction(title: sortType.rawValue, image: sortType.image, identifier: .init(sortType.rawValue), state: state, handler: { [self] action in
                 sortActionSelected(action: action)
             })
 
@@ -219,10 +219,11 @@ extension PlaylistViewController {
     }
 
     private func updateSortButtonUI() {
-        if selectedSortType == .default {
-            sortButton.image = UIImage(compatibleSystemName: "arrow.up.arrow.down.circle")
+
+        if let icon = selectedSortType.imageSelected {
+            sortButton.image = icon
         } else {
-            sortButton.image = UIImage(compatibleSystemName: "arrow.up.arrow.down.circle.fill")
+            sortButton.image = UIImage(compatibleSystemName: "arrow.up.arrow.down.circle")
         }
     }
 }

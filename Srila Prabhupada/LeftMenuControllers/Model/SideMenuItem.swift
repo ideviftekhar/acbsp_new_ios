@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum SideMenuItem: String, CaseIterable {
     case mediaLibrary = "Media library"
@@ -18,4 +19,29 @@ enum SideMenuItem: String, CaseIterable {
     case copyright = "Copyright"
     case rateUs = "Rate Us on App Store"
     case signOut = "Logout"
+
+    var image: UIImage? {
+        switch self {
+        case .mediaLibrary:
+            return UIImage(named: "photo.circle")
+        case .history:
+            return UIImage(compatibleSystemName: "clock")
+        case .stats:
+            return UIImage(compatibleSystemName: "chart.pie")
+        case .popularLectures:
+            return UIImage(compatibleSystemName: "heart.circle")
+        case .about:
+            return UIImage(compatibleSystemName: "exclamationmark.circle")
+        case .share:
+            return UIImage(named: "square.and.arrow.up.circle")
+        case .donate:
+            return UIImage(named: "gift.circle")
+        case .copyright:
+            return UIImage(compatibleSystemName: "c.circle")
+        case .rateUs:
+            return UIImage(compatibleSystemName: "star.circle")
+        case .signOut:
+            return UIImage(compatibleSystemName: "return")
+        }
+    }
 }

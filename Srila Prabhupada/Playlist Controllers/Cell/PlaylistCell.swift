@@ -90,7 +90,7 @@ extension PlaylistCell {
 
         for option in PlaylistOption.allCases {
 
-            let action: SPAction = SPAction(title: option.rawValue, image: nil, identifier: .init(option.rawValue), handler: { [self] _ in
+            let action: SPAction = SPAction(title: option.rawValue, image: option.image, identifier: .init(option.rawValue), handler: { [self] _ in
 
                 guard let model = model else {
                     return

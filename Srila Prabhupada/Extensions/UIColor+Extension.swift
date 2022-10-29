@@ -9,6 +9,9 @@ import UIKit
 
 extension UIColor {
 
+    static let zero_0099CC: UIColor = UIColor(named: "0099CC")!
+    static let F96D00: UIColor = UIColor(named: "F96D00")!
+
     private static let predefinedHashColorGroup: [UIColor] = [UIColor.systemRed,
                                                               UIColor.systemGreen,
                                                               UIColor.systemBlue,

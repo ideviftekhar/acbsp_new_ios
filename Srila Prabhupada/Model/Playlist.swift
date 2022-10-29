@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum PlaylistType: String, Codable, CaseIterable {
     case `public`   = "Public"
@@ -19,6 +20,15 @@ enum PlaylistType: String, Codable, CaseIterable {
             self = .private
         default:
             self = .private
+        }
+    }
+
+    var image: UIImage? {
+        switch self {
+        case .public:
+            return UIImage(compatibleSystemName: "person.3")
+        case .private:
+            return UIImage(compatibleSystemName: "lock.shield")
         }
     }
 }

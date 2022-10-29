@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum LectureSortType: String, CaseIterable {
     case `default` = "Default"
@@ -15,6 +16,44 @@ enum LectureSortType: String, CaseIterable {
     case dateLatestFirst = "Recording Date: Latest First"
     case aToZ = "Alphabetically: A -> Z"
     case zToA = "Alphabetically: Z -> A"
+
+    var image: UIImage? {
+        switch self {
+        case .`default`:
+            return UIImage(compatibleSystemName: "arrow.up.arrow.down")
+        case .durationLowToHigh:
+            return UIImage(compatibleSystemName: "clock")
+        case .durationHighToLow:
+            return LectureSortType.durationLowToHigh.image
+        case .dateOldestFirst:
+            return UIImage(compatibleSystemName: "calendar.badge.clock")
+        case .dateLatestFirst:
+            return UIImage(compatibleSystemName: "calendar.badge.clock")
+        case .aToZ:
+            return UIImage(compatibleSystemName: "a.square")
+        case .zToA:
+            return UIImage(compatibleSystemName: "z.square")
+        }
+    }
+
+    var imageSelected: UIImage? {
+        switch self {
+        case .`default`:
+            return UIImage(compatibleSystemName: "arrow.up.arrow.down.circle")
+        case .durationLowToHigh:
+            return UIImage(compatibleSystemName: "clock.fill")
+        case .durationHighToLow:
+           return LectureSortType.durationLowToHigh.imageSelected
+        case .dateOldestFirst:
+            return UIImage(compatibleSystemName: "calendar.circle.fill")
+        case .dateLatestFirst:
+            return UIImage(compatibleSystemName: "calendar.circle.fill")
+        case .aToZ:
+            return UIImage(compatibleSystemName: "a.circle.fill")
+        case .zToA:
+            return UIImage(compatibleSystemName: "z.circle.fill")
+        }
+    }
 
     func sort(_ lectures: [Lecture]) -> [Lecture] {
         switch self {

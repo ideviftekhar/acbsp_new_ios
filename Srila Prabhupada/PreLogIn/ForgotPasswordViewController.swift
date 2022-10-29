@@ -38,7 +38,7 @@ class ForgotPasswordViewController: UIViewController {
                 switch result {
                 case .success(let message):
                     self.showAlert(title: "Success", message: message, cancel: (title: "OK", {
-                        self.navigationController?.popViewController(animated: true)
+                        self.dismiss(animated: true)
                     }))
                 case .failure(let error):
                     self.showAlert(title: "Error", message: error.localizedDescription)
@@ -52,6 +52,7 @@ class ForgotPasswordViewController: UIViewController {
     private func showLoading() {
         loadingIndicatorView.startAnimating()
 
+        isModalInPresentation = true
         emailTextField.isEnabled = false
 
         submitButton.isEnabled = false
@@ -61,6 +62,7 @@ class ForgotPasswordViewController: UIViewController {
     private func hideLoading() {
         loadingIndicatorView.stopAnimating()
 
+        isModalInPresentation = false
         emailTextField.isEnabled = true
 
         submitButton.isEnabled = true

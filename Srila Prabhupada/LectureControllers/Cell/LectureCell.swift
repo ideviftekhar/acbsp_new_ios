@@ -219,7 +219,7 @@ extension LectureCell {
     private func configureMenuButton() {
 
         for option in LectureOption.allCases {
-            let action: SPAction = SPAction(title: option.rawValue, image: nil, identifier: .init(option.rawValue), handler: { [self] _ in
+            let action: SPAction = SPAction(title: option.rawValue, image: option.image, identifier: .init(option.rawValue), handler: { [self] _ in
 
                 guard let model = model else {
                     return
@@ -230,6 +230,8 @@ extension LectureCell {
 
             if option == .downloading {
                 action.action.attributes = .disabled
+            } else if option == .deleteFromDownloads {
+                action.action.attributes = .destructive
             }
 
             allActions[option] = action
