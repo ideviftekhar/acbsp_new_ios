@@ -20,7 +20,7 @@ target 'Srila Prabhupada' do
 
   pod 'SkyFloatingLabelTextField'
   pod 'IQKeyboardManagerSwift'
-  pod 'IQListKit'
+  pod 'IQListKit', :git => 'https://github.com/hackiftekhar/IQListKit.git', :tag => '3.0.0'
 
   pod 'BEMCheckBox'
 

@@ -1066,7 +1066,7 @@
             <size key="intrinsicContentSize" width="123" height="18.5"/>
         </designable>
     </designables>
-    <color key="tintColor" name="0099CA"/>
+    <color key="tintColor" name="F96D00"/>
     <resources>
         <image name="logo_1024_corner" width="1024" height="1024"/>
         <image name="logo_120" width="120" height="120"/>

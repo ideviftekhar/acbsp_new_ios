@@ -9,6 +9,8 @@ import Foundation
 
 struct ListenInfo: Hashable, Codable {
     let audioListen: Int
+    let creationTimestamp: Int
     let dateOfRecord: Day
     let playedIds: [Int]
+    let listenDetails: ListenDetails
 }

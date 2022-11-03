@@ -29,6 +29,34 @@ struct Time: Hashable, Codable {
         }
     }
 
+    var displayTopUnit: String {
+        if hour > 0 {
+            return String(format: "%ih", hour)
+        } else if minute > 0 {
+            return String(format: "%im", minute)
+        } else if second > 0 {
+            return String(format: "%is", second)
+        } else {
+            return String(format: "0h")
+        }
+    }
+
+    var displayHourMinute: String {
+        return String(format: "%01ih %01im", hour, minute)
+    }
+
+    var displayStringH: String {
+        if hour > 0 {
+            return String(format: "%ih %im %is", hour, minute, second)
+        } else if minute > 0 {
+            return String(format: "%im %is", minute, second)
+        } else if second > 0 {
+            return String(format: "%is", second)
+        } else {
+            return String(format: "0h")
+        }
+    }
+
     init(totalSeconds: Int) {
 
         hour = totalSeconds / 3600

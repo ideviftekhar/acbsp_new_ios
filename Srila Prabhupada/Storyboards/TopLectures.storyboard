@@ -130,15 +130,15 @@
             <point key="canvasLocation" x="3879.7101449275365" y="-259.15178571428572"/>
         </scene>
     </scenes>
-    <color key="tintColor" name="0099CA"/>
+    <color key="tintColor" name="F96D00"/>
     <resources>
         <image name="chart.bar.xaxis" width="20.333333969116211" height="18.333333969116211"/>
         <image name="line.3.horizontal" width="19.666666030883789" height="10"/>
-        <namedColor name="0099CA">
-            <color red="0.0" green="0.59999999999999998" blue="0.792156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="F96D00">
+            <color red="0.97647058823529409" green="0.42745098039215684" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="ThemeColor">
-            <color red="1" green="0.39215686274509803" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.97647058823529409" green="0.42745098039215684" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

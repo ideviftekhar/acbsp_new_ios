@@ -16,14 +16,6 @@ class PlaylistViewController: SearchViewController {
     @IBOutlet private var playlistSegmentControl: UISegmentedControl!
     @IBOutlet private var playlistTableView: UITableView!
 
-    private let loadingIndicator: UIActivityIndicatorView = {
-        if #available(iOS 13.0, *) {
-            return UIActivityIndicatorView(style: .medium)
-        } else {
-            return UIActivityIndicatorView(style: .gray)
-        }
-    }()
-
     private lazy var addPlaylistButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addPlaylistButtonAction(_:)))
 
     private let sortButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(compatibleSystemName: "arrow.up.arrow.down"), style: .plain, target: nil, action: nil)
@@ -75,18 +67,10 @@ class PlaylistViewController: SearchViewController {
         }
 
         do {
+            self.list.loadingMessage = "Loading..."
             list.registerCell(type: Cell.self, registerType: .nib)
             playlistTableView.tableFooterView = UIView()
             refreshUI(animated: false, showNoItems: false)
-        }
-
-        do {
-            loadingIndicator.color = UIColor.gray
-            self.view.addSubview(loadingIndicator)
-            loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
-            loadingIndicator.hidesWhenStopped = true
-            loadingIndicator.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-            loadingIndicator.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
         }
 
         configureSortButton()
@@ -126,15 +110,20 @@ class PlaylistViewController: SearchViewController {
     }
 
     func refresh(source: FirestoreSource, existing: [Playlist]?) {
+        self.list.noItemImage = nil
+        self.list.noItemTitle = nil
+        self.list.noItemMessage = nil
+
         if let existing = existing {
             self.models = existing
             refreshUI(showNoItems: false)
         }
 
-        if self.models.isEmpty {
-            showLoading()
-            self.list.noItemTitle = nil
-            self.list.noItemMessage = "Loading..."
+        serialListKitQueue.async {
+            DispatchQueue.main.async { [self] in
+                showLoading()
+                list.setIsLoading(true, animated: true)
+            }
         }
 
         refreshAsynchronous(source: source, completion: { [self] result in
@@ -144,6 +133,7 @@ class PlaylistViewController: SearchViewController {
                 self.models = success
                 refreshUI(showNoItems: true)
             case .failure(let error):
+                self.list.setIsLoading(false, animated: true)
                 showAlert(title: "Error", message: error.localizedDescription)
             }
         })
@@ -243,14 +233,34 @@ extension PlaylistViewController: IQListViewDelegateDataSource {
 
             }, animatingDifferences: animated, completion: { [self] in
                 if showNoItems, let selectedPlaylistType = PlaylistType(rawValue: playlistSegmentControl.selectedSegmentIndex) {
+                    let noItemImage = UIImage(named: "music.note.list_60")
+                    self.list.noItemImage = noItemImage
+
+                    var finalMessage: String
+
                     switch selectedPlaylistType {
                     case .private:
                         list.noItemTitle = "No Private Playlist"
-                        list.noItemMessage = "No private playlist to display here"
+                        finalMessage = "No private playlist to display here"
                     case .public:
                         list.noItemTitle = "No Public Playlist"
-                        list.noItemMessage = "No public playlist to display here"
+                        finalMessage = "No public playlist to display here"
                     }
+
+                    if let searchText = searchText {
+                        finalMessage += "\nSearched for '\(searchText)'"
+                    }
+
+                    let allValues: [String] = selectedFilters.flatMap { $0.value }
+                    if !allValues.isEmpty {
+                        if allValues.count == 1 {
+                            finalMessage += "\n\(allValues.count) filter applied"
+                        } else {
+                            finalMessage += "\n\(allValues.count) filters applied"
+                        }
+                    }
+
+                    self.list.noItemMessage = finalMessage
                 }
             })
         }
@@ -390,12 +400,10 @@ extension PlaylistViewController: PlaylistCellDelegate {
 extension PlaylistViewController {
 
     func showLoading() {
-        loadingIndicator.startAnimating()
         playlistSegmentControl.isEnabled = false
     }
 
     func hideLoading() {
-        loadingIndicator.stopAnimating()
         playlistSegmentControl.isEnabled = true
    }
 }

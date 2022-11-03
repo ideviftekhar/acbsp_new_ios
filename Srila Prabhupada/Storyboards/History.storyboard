@@ -45,10 +45,10 @@
             <point key="canvasLocation" x="-91.304347826086968" y="-53.571428571428569"/>
         </scene>
     </scenes>
-    <color key="tintColor" name="0099CA"/>
+    <color key="tintColor" name="F96D00"/>
     <resources>
-        <namedColor name="0099CA">
-            <color red="0.0" green="0.59999999999999998" blue="0.792156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="F96D00">
+            <color red="0.97647058823529409" green="0.42745098039215684" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

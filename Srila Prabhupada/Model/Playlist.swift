@@ -28,7 +28,16 @@ enum PlaylistType: String, Codable, CaseIterable {
         case .public:
             return UIImage(compatibleSystemName: "person.3")
         case .private:
-            return UIImage(compatibleSystemName: "lock.shield")
+            return UIImage(compatibleSystemName: "lock")
+        }
+    }
+
+    var selectedImage: UIImage? {
+        switch self {
+        case .public:
+            return UIImage(compatibleSystemName: "person.3.fill")
+        case .private:
+            return UIImage(compatibleSystemName: "lock.fill")
         }
     }
 }

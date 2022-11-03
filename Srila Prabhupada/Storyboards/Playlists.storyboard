@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -17,7 +17,7 @@
                     <tabBarItem key="tabBarItem" title="Playlists" image="music.note.list" catalog="system" id="OHl-3v-G7E"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" largeTitles="YES" id="PUT-kO-Asm">
-                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="barTintColor" name="ThemeColor"/>
@@ -82,7 +82,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="YRT-Cq-oUI">
-                                <rect key="frame" x="0.0" y="140" width="414" height="32"/>
+                                <rect key="frame" x="0.0" y="144" width="414" height="32"/>
                                 <segments>
                                     <segment title="Public"/>
                                     <segment title="Private"/>
@@ -92,18 +92,18 @@
                                 </connections>
                             </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="bS6-wd-u2X">
-                                <rect key="frame" x="0.0" y="171" width="414" height="725"/>
+                                <rect key="frame" x="0.0" y="175" width="414" height="721"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="PlaylistCell" textLabel="4oC-pL-z5w" style="IBUITableViewCellStyleDefault" id="bBS-gS-dqc">
-                                        <rect key="frame" x="0.0" y="44.5" width="414" height="43.5"/>
+                                        <rect key="frame" x="0.0" y="50" width="414" height="43.5"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bBS-gS-dqc" id="4iP-5O-E4a">
-                                            <rect key="frame" x="0.0" y="0.0" width="385.5" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="383.5" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="4oC-pL-z5w">
-                                                    <rect key="frame" x="20" y="0.0" width="357.5" height="43.5"/>
+                                                    <rect key="frame" x="20" y="0.0" width="355.5" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
                                                     <nil key="textColor"/>
@@ -193,7 +193,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="dRO-cn-uM2">
-                                <rect key="frame" x="10" y="150" width="394" height="336.5"/>
+                                <rect key="frame" x="10" y="154" width="394" height="340"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Playlist Title" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ifZ-dF-o1X" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
                                         <rect key="frame" x="0.0" y="0.0" width="394" height="50"/>
@@ -280,22 +280,22 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="YBE-4w-zmq">
-                                        <rect key="frame" x="0.0" y="305.5" width="394" height="31"/>
+                                        <rect key="frame" x="0.0" y="305.5" width="394" height="34.5"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lJT-7P-kmK">
-                                                <rect key="frame" x="0.0" y="0.0" width="191.5" height="31"/>
-                                                <color key="tintColor" red="0.0" green="0.56284224989999998" blue="0.31881666180000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="193.5" height="34.5"/>
+                                                <color key="tintColor" name="0099CC"/>
                                                 <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" image="largecircle.fill.circle" catalog="system" title="Private"/>
+                                                <buttonConfiguration key="configuration" style="plain" image="largecircle.fill.circle" catalog="system" title="  Private"/>
                                                 <connections>
                                                     <action selector="privateButtonTapped:" destination="Epx-Gk-cDm" eventType="touchUpInside" id="1Uz-Ej-QGD"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Ad-aA-VZl">
-                                                <rect key="frame" x="201.5" y="0.0" width="192.5" height="31"/>
-                                                <color key="tintColor" red="0.0" green="0.56284224989999998" blue="0.31881666180000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <rect key="frame" x="203.5" y="0.0" width="190.5" height="34.5"/>
+                                                <color key="tintColor" name="0099CC"/>
                                                 <state key="normal" title="Button"/>
-                                                <buttonConfiguration key="configuration" style="plain" image="circle" catalog="system" title="Public"/>
+                                                <buttonConfiguration key="configuration" style="plain" image="circle" catalog="system" title="  Public"/>
                                                 <connections>
                                                     <action selector="publicButtonTapped:" destination="Epx-Gk-cDm" eventType="touchUpInside" id="f09-lv-niQ"/>
                                                 </connections>
@@ -368,7 +368,7 @@
                     <tabBarItem key="tabBarItem" title="Playlists" image="music.note.list" catalog="system" id="KNM-Hk-dkA"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" largeTitles="YES" id="oqp-Lg-Ejm">
-                        <rect key="frame" x="0.0" y="44" width="414" height="96"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="barTintColor" name="ThemeColor"/>
@@ -433,20 +433,26 @@
             <size key="intrinsicContentSize" width="59.5" height="18.5"/>
         </designable>
     </designables>
-    <color key="tintColor" name="0099CA"/>
+    <color key="tintColor" name="F96D00"/>
     <resources>
-        <image name="circle" catalog="system" width="128" height="121"/>
-        <image name="largecircle.fill.circle" catalog="system" width="128" height="121"/>
+        <image name="circle" catalog="system" width="128" height="123"/>
+        <image name="largecircle.fill.circle" catalog="system" width="128" height="123"/>
         <image name="line.3.horizontal" width="19.666666030883789" height="10"/>
         <image name="music.note.list" catalog="system" width="128" height="115"/>
         <namedColor name="0099CA">
             <color red="0.0" green="0.59999999999999998" blue="0.792156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <namedColor name="0099CC">
+            <color red="0.0" green="0.59999999999999998" blue="0.792156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="B8B8B8">
             <color red="0.72156862745098038" green="0.72156862745098038" blue="0.72156862745098038" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <namedColor name="F96D00">
+            <color red="0.97647058823529409" green="0.42745098039215684" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="ThemeColor">
-            <color red="1" green="0.39215686274509803" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.97647058823529409" green="0.42745098039215684" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

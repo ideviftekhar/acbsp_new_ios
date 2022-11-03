@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6B6AC1687C5A415A51C2BC3D /* Pods_Srila_Prabhupada.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BAA6DE73F4A961910A41580 /* Pods_Srila_Prabhupada.framework */; };
 		C002119A28F6A03200BE94EC /* SPNowPlayingInfoCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C002119928F6A03200BE94EC /* SPNowPlayingInfoCenter.swift */; };
 		C002119C28F6AD5300BE94EC /* SPNowPlayableCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C002119B28F6AD5300BE94EC /* SPNowPlayableCommand.swift */; };
 		C0065D4828D881A400B18AA6 /* SideMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0065D4728D881A400B18AA6 /* SideMenuItem.swift */; };
@@ -76,6 +77,8 @@
 		C018A99428F421A000C0E002 /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C018A99328F421A000C0E002 /* Int+Extension.swift */; };
 		C03E3F2628DCC20A00B987DD /* FirestoreCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03E3F2528DCC20A00B987DD /* FirestoreCollection.swift */; };
 		C03E3F2828DCC6C500B987DD /* ListenInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03E3F2728DCC6C500B987DD /* ListenInfo.swift */; };
+		C052D8C129125DF40003307B /* StatsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C052D8C029125DF40003307B /* StatsType.swift */; };
+		C052D8C329125E7C0003307B /* ListenDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = C052D8C229125E7C0003307B /* ListenDetails.swift */; };
 		C07A8F3A28F7FD44001A6162 /* ESTMusicIndicatorContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07A8F3828F7FD44001A6162 /* ESTMusicIndicatorContentView.swift */; };
 		C07A8F3B28F7FD44001A6162 /* ESTMusicIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07A8F3928F7FD44001A6162 /* ESTMusicIndicatorView.swift */; };
 		C07A8F3D28F8033A001A6162 /* PlayerViewController+Observers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C07A8F3C28F8033A001A6162 /* PlayerViewController+Observers.swift */; };
@@ -121,13 +124,11 @@
 		C0FA305D28CF461900E78843 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FA305C28CF461900E78843 /* String+Extension.swift */; };
 		C0FA305F28CF4AF000E78843 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FA305E28CF4AF000E78843 /* LoginViewModel.swift */; };
 		C0FA306228CF51EB00E78843 /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FA306128CF51EB00E78843 /* SignupViewModel.swift */; };
-		EC54544C3F772D72F0E81C35 /* Pods_Srila_Prabhupada.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3320FB8F92398ED70E906DB5 /* Pods_Srila_Prabhupada.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		277C5557A9865640DB48AF50 /* Pods-Srila Prabhupada.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Srila Prabhupada.release.xcconfig"; path = "Target Support Files/Pods-Srila Prabhupada/Pods-Srila Prabhupada.release.xcconfig"; sourceTree = "<group>"; };
-		3320FB8F92398ED70E906DB5 /* Pods_Srila_Prabhupada.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Srila_Prabhupada.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A81878F32167781392E62B86 /* Pods-Srila Prabhupada.release-client.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Srila Prabhupada.release-client.xcconfig"; path = "Target Support Files/Pods-Srila Prabhupada/Pods-Srila Prabhupada.release-client.xcconfig"; sourceTree = "<group>"; };
+		2BAA6DE73F4A961910A41580 /* Pods_Srila_Prabhupada.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Srila_Prabhupada.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5BADAC7A3FC5C61493F24A9E /* Pods-Srila Prabhupada.debug-internal.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Srila Prabhupada.debug-internal.xcconfig"; path = "Target Support Files/Pods-Srila Prabhupada/Pods-Srila Prabhupada.debug-internal.xcconfig"; sourceTree = "<group>"; };
 		C002119928F6A03200BE94EC /* SPNowPlayingInfoCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPNowPlayingInfoCenter.swift; sourceTree = "<group>"; };
 		C002119B28F6AD5300BE94EC /* SPNowPlayableCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPNowPlayableCommand.swift; sourceTree = "<group>"; };
 		C003CD9E28D8491600A11039 /* Srila Prabhupada.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Srila Prabhupada.entitlements"; sourceTree = "<group>"; };
@@ -201,6 +202,8 @@
 		C018A99328F421A000C0E002 /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		C03E3F2528DCC20A00B987DD /* FirestoreCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreCollection.swift; sourceTree = "<group>"; };
 		C03E3F2728DCC6C500B987DD /* ListenInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenInfo.swift; sourceTree = "<group>"; };
+		C052D8C029125DF40003307B /* StatsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsType.swift; sourceTree = "<group>"; };
+		C052D8C229125E7C0003307B /* ListenDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenDetails.swift; sourceTree = "<group>"; };
 		C07A8F3828F7FD44001A6162 /* ESTMusicIndicatorContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ESTMusicIndicatorContentView.swift; sourceTree = "<group>"; };
 		C07A8F3928F7FD44001A6162 /* ESTMusicIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ESTMusicIndicatorView.swift; sourceTree = "<group>"; };
 		C07A8F3C28F8033A001A6162 /* PlayerViewController+Observers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerViewController+Observers.swift"; sourceTree = "<group>"; };
@@ -246,9 +249,8 @@
 		C0FA305C28CF461900E78843 /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		C0FA305E28CF4AF000E78843 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Login\U0010ViewModel.swift"; sourceTree = "<group>"; };
 		C0FA306128CF51EB00E78843 /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
-		D7378F13A7623FB5847701E2 /* Pods-Srila Prabhupada.debug-client.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Srila Prabhupada.debug-client.xcconfig"; path = "Target Support Files/Pods-Srila Prabhupada/Pods-Srila Prabhupada.debug-client.xcconfig"; sourceTree = "<group>"; };
-		ECD65E5E27758ADC85903139 /* Pods-Srila Prabhupada.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Srila Prabhupada.debug.xcconfig"; path = "Target Support Files/Pods-Srila Prabhupada/Pods-Srila Prabhupada.debug.xcconfig"; sourceTree = "<group>"; };
-		EEEFDC184A32F554530F4330 /* Pods-Srila Prabhupada.debug-internal.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Srila Prabhupada.debug-internal.xcconfig"; path = "Target Support Files/Pods-Srila Prabhupada/Pods-Srila Prabhupada.debug-internal.xcconfig"; sourceTree = "<group>"; };
+		CD3BAF309E025ED5557F20FA /* Pods-Srila Prabhupada.release-client.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Srila Prabhupada.release-client.xcconfig"; path = "Target Support Files/Pods-Srila Prabhupada/Pods-Srila Prabhupada.release-client.xcconfig"; sourceTree = "<group>"; };
+		FF220ECFE24DDAD69D4DCE20 /* Pods-Srila Prabhupada.debug-client.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Srila Prabhupada.debug-client.xcconfig"; path = "Target Support Files/Pods-Srila Prabhupada/Pods-Srila Prabhupada.debug-client.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,29 +258,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EC54544C3F772D72F0E81C35 /* Pods_Srila_Prabhupada.framework in Frameworks */,
+				6B6AC1687C5A415A51C2BC3D /* Pods_Srila_Prabhupada.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3F33EC5C7A820F55C7071AE3 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				3320FB8F92398ED70E906DB5 /* Pods_Srila_Prabhupada.framework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		718E9976842A38ECCABB0218 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				ECD65E5E27758ADC85903139 /* Pods-Srila Prabhupada.debug.xcconfig */,
-				277C5557A9865640DB48AF50 /* Pods-Srila Prabhupada.release.xcconfig */,
-				EEEFDC184A32F554530F4330 /* Pods-Srila Prabhupada.debug-internal.xcconfig */,
-				D7378F13A7623FB5847701E2 /* Pods-Srila Prabhupada.debug-client.xcconfig */,
-				A81878F32167781392E62B86 /* Pods-Srila Prabhupada.release-client.xcconfig */,
+				5BADAC7A3FC5C61493F24A9E /* Pods-Srila Prabhupada.debug-internal.xcconfig */,
+				FF220ECFE24DDAD69D4DCE20 /* Pods-Srila Prabhupada.debug-client.xcconfig */,
+				CD3BAF309E025ED5557F20FA /* Pods-Srila Prabhupada.release-client.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -367,7 +359,7 @@
 				C00E4DC928CA36F100F1A123 /* Srila Prabhupada */,
 				C00E4DC828CA36F100F1A123 /* Products */,
 				718E9976842A38ECCABB0218 /* Pods */,
-				3F33EC5C7A820F55C7071AE3 /* Frameworks */,
+				FBB16658E55EAF0D893961B3 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -440,12 +432,12 @@
 		C00E4DFA28CA39F400F1A123 /* LeftMenuControllers */ = {
 			isa = PBXGroup;
 			children = (
+				C052D8C729125F9B0003307B /* Stats */,
 				C0CE0D1528E870C800C2C825 /* Cell */,
 				C0065D4928D881AC00B18AA6 /* Model */,
 				C00E4DFB28CA39F400F1A123 /* SideMenuTableViewController.swift */,
 				C00E4E1428CA433A00F1A123 /* AboutViewController.swift */,
 				C00E4E1528CA433A00F1A123 /* CopyrightViewController.swift */,
-				C00E4E1328CA433A00F1A123 /* StatsViewController.swift */,
 			);
 			path = LeftMenuControllers;
 			sourceTree = "<group>";
@@ -488,6 +480,22 @@
 			path = "Firebase Firestore";
 			sourceTree = "<group>";
 		};
+		C052D8C629125F890003307B /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		C052D8C729125F9B0003307B /* Stats */ = {
+			isa = PBXGroup;
+			children = (
+				C052D8C629125F890003307B /* ViewModel */,
+				C00E4E1328CA433A00F1A123 /* StatsViewController.swift */,
+			);
+			path = Stats;
+			sourceTree = "<group>";
+		};
 		C07A8F3128F7FCF2001A6162 /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
@@ -521,6 +529,8 @@
 				C007D38128E80ADC00CFBED0 /* Audio.swift */,
 				C007D38328E80AEE00CFBED0 /* Search.swift */,
 				C00F8A4228EF192A00FA9A7B /* PlayRate.swift */,
+				C052D8C029125DF40003307B /* StatsType.swift */,
+				C052D8C229125E7C0003307B /* ListenDetails.swift */,
 			);
 			path = "Supporting Model";
 			sourceTree = "<group>";
@@ -641,6 +651,14 @@
 			path = ViewModel;
 			sourceTree = "<group>";
 		};
+		FBB16658E55EAF0D893961B3 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2BAA6DE73F4A961910A41580 /* Pods_Srila_Prabhupada.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -648,14 +666,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = C00E4DDB28CA36F200F1A123 /* Build configuration list for PBXNativeTarget "Srila Prabhupada" */;
 			buildPhases = (
-				523CEDFA34EE218CA04DC39C /* [CP] Check Pods Manifest.lock */,
+				CB53A0CAF77275D1DCD009E7 /* [CP] Check Pods Manifest.lock */,
 				C00E4DC328CA36F100F1A123 /* Sources */,
 				C00E4DC428CA36F100F1A123 /* Frameworks */,
 				C00E4DC528CA36F100F1A123 /* Resources */,
-				AD18E0F8ED7A0605A0F37E78 /* [CP] Embed Pods Frameworks */,
 				C0FA049D28DB2A9A003177DA /* SwiftLint */,
 				C0D76E2A28CF7DC400F69320 /* Copy Google Plist */,
 				C0065D4628D87E2200B18AA6 /* Crashlytics */,
+				748218721ACBDF97EED3875C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -731,29 +749,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		523CEDFA34EE218CA04DC39C /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Srila Prabhupada-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		AD18E0F8ED7A0605A0F37E78 /* [CP] Embed Pods Frameworks */ = {
+		748218721ACBDF97EED3875C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -824,6 +820,28 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
 		};
+		CB53A0CAF77275D1DCD009E7 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Srila Prabhupada-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -888,8 +906,10 @@
 				C00AB21128D1FD5600A62A2F /* LectureSortType.swift in Sources */,
 				C00E4E1728CA433A00F1A123 /* AboutViewController.swift in Sources */,
 				C0DBB078290ABB6600C62BC1 /* LoadingViewController.swift in Sources */,
+				C052D8C129125DF40003307B /* StatsType.swift in Sources */,
 				C007D37828E8096D00CFBED0 /* Day.swift in Sources */,
 				C00E4E1828CA433A00F1A123 /* CopyrightViewController.swift in Sources */,
+				C052D8C329125E7C0003307B /* ListenDetails.swift in Sources */,
 				C07A8F3A28F7FD44001A6162 /* ESTMusicIndicatorContentView.swift in Sources */,
 				C0B7991128DC524500681649 /* PlaylistViewModel.swift in Sources */,
 				C00AB20F28D1F6CB00A62A2F /* UIStoryboard+Extension.swift in Sources */,
@@ -1008,6 +1028,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = "Debug-Internal";
 		};
@@ -1063,27 +1084,29 @@
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = "Release-Client";
 		};
 		C00E4DDC28CA36F200F1A123 /* Debug-Internal */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EEEFDC184A32F554530F4330 /* Pods-Srila Prabhupada.debug-internal.xcconfig */;
+			baseConfigurationReference = 5BADAC7A3FC5C61493F24A9E /* Pods-Srila Prabhupada.debug-internal.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Srila Prabhupada.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -1105,21 +1128,22 @@
 		};
 		C00E4DDD28CA36F200F1A123 /* Release-Client */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A81878F32167781392E62B86 /* Pods-Srila Prabhupada.release-client.xcconfig */;
+			baseConfigurationReference = CD3BAF309E025ED5557F20FA /* Pods-Srila Prabhupada.release-client.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Srila Prabhupada.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -1198,26 +1222,28 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = "Debug-Client";
 		};
 		C0118A7628D34A0E00F6002D /* Debug-Client */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D7378F13A7623FB5847701E2 /* Pods-Srila Prabhupada.debug-client.xcconfig */;
+			baseConfigurationReference = FF220ECFE24DDAD69D4DCE20 /* Pods-Srila Prabhupada.debug-client.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Srila Prabhupada.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 11;
+				CURRENT_PROJECT_VERSION = 12;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

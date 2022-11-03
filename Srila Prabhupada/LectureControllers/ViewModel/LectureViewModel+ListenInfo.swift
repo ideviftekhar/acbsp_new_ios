@@ -13,6 +13,7 @@ import FirebaseFirestoreSwift
 extension DefaultLectureViewModel {
 
     func getUsersListenInfo(source: FirestoreSource, completion: @escaping (Swift.Result<[ListenInfo], Error>) -> Void) {
+
         guard let currentUser = Auth.auth().currentUser else {
             let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
             completion(.failure(error))
@@ -20,6 +21,7 @@ extension DefaultLectureViewModel {
         }
 
         let query: Query = FirestoreManager.shared.firestore.collection(FirestoreCollection.usersListenInfo(userId: currentUser.uid).path)
+        query.order(by: "creationTimestamp", descending: true)
 
         FirestoreManager.shared.getDocuments(query: query, source: source, completion: { (result: Swift.Result<[ListenInfo], Error>) in
             switch result {

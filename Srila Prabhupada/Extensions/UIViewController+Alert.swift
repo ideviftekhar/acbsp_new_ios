@@ -52,11 +52,11 @@ extension UIViewController {
         if let sourceView = sourceView as? UIView {
             alert.popoverPresentationController?.sourceView = sourceView
         } else if let sourceItem = sourceView as? UIBarButtonItem {
-            if #available(iOS 16.0, *) {
-                alert.popoverPresentationController?.sourceItem = sourceItem
-            } else {
+//            if #available(iOS 16.0, *) {
+//                alert.popoverPresentationController?.sourceItem = sourceItem
+//            } else {
                 alert.popoverPresentationController?.barButtonItem = sourceItem
-            }
+//            }
         } else {
             alert.popoverPresentationController?.sourceRect = presentOnController.view.bounds
         }

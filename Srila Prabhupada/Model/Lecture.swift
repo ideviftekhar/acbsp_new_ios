@@ -48,6 +48,10 @@ struct Lecture: Hashable, Codable {
     var isFavourites: Bool
     var lastPlayedPoint: Int = 0
 
+    var isCompleted: Bool {
+        lastPlayedPoint == length
+    }
+
     var playProgress: CGFloat {
         let progress: CGFloat
 

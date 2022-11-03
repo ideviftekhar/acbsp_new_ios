@@ -103,6 +103,7 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
                             let total: CGFloat = CGFloat(success.count)
                             var iteration: CGFloat = 0
                             success.forEach({ lecture in
+
                                 let existingElements = results.filter { $0.id == lecture.id }
                                 if existingElements.count == 0 {
                                     results.append(lecture)

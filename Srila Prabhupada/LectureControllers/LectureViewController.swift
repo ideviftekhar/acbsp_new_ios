@@ -18,13 +18,6 @@ protocol LectureViewControllerDelegate: AnyObject {
 class LectureViewController: SearchViewController {
 
     @IBOutlet private var lectureTebleView: UITableView!
-    private let loadingIndicator: UIActivityIndicatorView = {
-        if #available(iOS 13.0, *) {
-            return UIActivityIndicatorView(style: .medium)
-        } else {
-            return UIActivityIndicatorView(style: .gray)
-        }
-    }()
 
     weak var delegate: LectureViewControllerDelegate?
 
@@ -81,17 +74,10 @@ class LectureViewController: SearchViewController {
         self.navigationItem.rightBarButtonItems = rightButtons
 
         do {
+            self.list.loadingMessage = "Loading..."
             list.registerCell(type: Cell.self, registerType: .nib)
             lectureTebleView.tableFooterView = UIView()
             refreshUI(animated: false, showNoItems: false)
-        }
-        do {
-            loadingIndicator.color = UIColor.gray
-            self.view.addSubview(loadingIndicator)
-            loadingIndicator.translatesAutoresizingMaskIntoConstraints = false
-            loadingIndicator.hidesWhenStopped = true
-            loadingIndicator.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
-            loadingIndicator.centerYAnchor.constraint(equalTo: self.view.centerYAnchor).isActive = true
         }
 
         configureSortButton()
@@ -156,17 +142,21 @@ class LectureViewController: SearchViewController {
 
     func refresh(source: FirestoreSource, existing: [Lecture]?) {
 
+        self.list.noItemImage = nil
+        self.list.noItemTitle = nil
+        self.list.noItemMessage = nil
+
         if let existing = existing {
             self.models = existing
             refreshUI(showNoItems: false)
         }
 
-        if self.models.isEmpty {
-            showLoading()
-            self.list.noItemTitle = nil
-            self.list.noItemMessage = "Loading..."
+        serialListKitQueue.async {
+            DispatchQueue.main.async { [self] in
+                showLoading()
+                list.setIsLoading(true, animated: true)
+            }
         }
-
         refreshAsynchronous(source: source, completion: { [self] result in
             hideLoading()
             switch result {
@@ -174,6 +164,7 @@ class LectureViewController: SearchViewController {
                 self.models = success
                 refreshUI(showNoItems: true)
             case .failure(let error):
+                self.list.setIsLoading(false, animated: true)
                 showAlert(title: "Error", message: error.localizedDescription)
             }
         })
@@ -437,10 +428,29 @@ extension LectureViewController: IQListViewDelegateDataSource {
 
                 list.append(Cell.self, models: newModels, section: section)
 
-            }, animatingDifferences: animated, completion: {
+            }, animatingDifferences: animated, completion: { [self] in
                 if showNoItems {
+                    let noItemImage = UIImage(named: "music.mic_60")
+                    self.list.noItemImage = noItemImage
+
                     self.list.noItemTitle = self.noItemTitle
-                    self.list.noItemMessage = self.noItemMessage
+
+                    var finalMessage = self.noItemMessage ?? ""
+
+                    if let searchText = searchText {
+                        finalMessage += "\nSearched for '\(searchText)'"
+                    }
+
+                    let allValues: [String] = selectedFilters.flatMap { $0.value }
+                    if !allValues.isEmpty {
+                        if allValues.count == 1 {
+                            finalMessage += "\n\(allValues.count) filter applied"
+                        } else {
+                            finalMessage += "\n\(allValues.count) filters applied"
+                        }
+                    }
+
+                    self.list.noItemMessage = finalMessage
                 }
             })
         }
@@ -512,10 +522,8 @@ extension LectureViewController: LectureCellDelegate {
 extension LectureViewController {
 
     @objc func showLoading() {
-        loadingIndicator.startAnimating()
     }
 
     @objc func hideLoading() {
-        loadingIndicator.stopAnimating()
     }
 }
