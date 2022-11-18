@@ -8,7 +8,6 @@
 import Foundation
 import Alamofire
 
-
 private class ProgressObserver {
     let observer: NSObject
     var progressHandler: ((_ progress: CGFloat) -> Void)
@@ -78,7 +77,7 @@ extension DownloadManager {
 
     func localFileURL(for lecture: Lecture) -> URL? {
 
-        guard lecture.downloadingState == .downloaded,
+        guard lecture.downloadState == .downloaded,
               let audios = lecture.resources.audios.first,
               let audioURL = audios.audioURL else {
             return nil
@@ -148,9 +147,7 @@ extension DownloadManager {
 
                     completion(.success(expectedLocalFileURL))
                 } catch let error {
-                    DispatchQueue.main.async {
-                        completion(.failure(error))
-                    }
+                    completion(.failure(error))
                 }
 
             case .failure(let error):

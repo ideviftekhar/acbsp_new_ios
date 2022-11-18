@@ -642,6 +642,8 @@ PODS:
     - GoogleUtilities/Environment (~> 7.8)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (~> 2.1)
+  - FirebaseDynamicLinks (10.2.0):
+    - FirebaseCore (~> 10.0)
   - FirebaseFirestore (10.1.0):
     - abseil/algorithm (~> 1.20211102.0)
     - abseil/base (~> 1.20211102.0)
@@ -791,6 +793,7 @@ DEPENDENCIES:
   - FirebaseAuth
   - FirebaseCore
   - FirebaseCrashlytics
+  - FirebaseDynamicLinks
   - FirebaseFirestore
   - FirebaseFirestoreSwift
   - FirebaseMessaging
@@ -821,6 +824,7 @@ SPEC REPOS:
     - FirebaseCoreExtension
     - FirebaseCoreInternal
     - FirebaseCrashlytics
+    - FirebaseDynamicLinks
     - FirebaseFirestore
     - FirebaseFirestoreSwift
     - FirebaseInstallations
@@ -873,6 +877,7 @@ SPEC CHECKSUMS:
   FirebaseCoreExtension: 69b966c399abc4ca6dc75006ab87160f81512725
   FirebaseCoreInternal: 96d75228e10fd369564da51bd898414eb0f54df5
   FirebaseCrashlytics: 93906d7085eb3e4dd90d08fe42a15d4f0406b6ab
+  FirebaseDynamicLinks: f832045bdb98db10ecaca9ab7e258f1602395d7c
   FirebaseFirestore: d482e5e0f95dba8ef5d499a7efa87ba2f56ef0c0
   FirebaseFirestoreSwift: ba0e8ae1dca6cd395c646671a7fe2dcc077db225
   FirebaseInstallations: 99d24bac0243cf8b0e96cf5426340d211f0bcc80
@@ -901,6 +906,6 @@ SPEC CHECKSUMS:
   SwiftLint: 32ee33ded0636d0905ef6911b2b67bbaeeedafa5
   SwiftTryCatch: fb6d2b34abe48efd69578dac919293a44f95b481
 
-PODFILE CHECKSUM: 7dbeda127ba3def255cf49330e1fb245fe1e279b
+PODFILE CHECKSUM: 858961236d62b1a8e30e4bda27620ff0f3a57d25
 
 COCOAPODS: 1.11.3

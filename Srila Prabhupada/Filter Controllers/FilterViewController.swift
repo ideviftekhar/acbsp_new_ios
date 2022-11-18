@@ -106,7 +106,7 @@ extension FilterViewController: IQListViewDelegateDataSource {
 
             }, animatingDifferences: animated, completion: {
 
-                if let activeFilterIndex = filters.firstIndex(of: activeFilter) {
+                if let activeFilterIndex = self.filters.firstIndex(of: self.activeFilter) {
                     self.filterTypeTableView.selectRow(at: IndexPath(row: activeFilterIndex, section: 0), animated: false, scrollPosition: .none)
                 }
             })

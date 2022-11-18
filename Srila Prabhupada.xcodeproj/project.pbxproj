@@ -75,6 +75,7 @@
 		C0118A7928D34AA800F6002D /* GoogleService-Info-development-client.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0118A7728D34AA700F6002D /* GoogleService-Info-development-client.plist */; };
 		C0118A7C28D34AB400F6002D /* GoogleService-Info-production-client.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0118A7B28D34AB400F6002D /* GoogleService-Info-production-client.plist */; };
 		C018A99428F421A000C0E002 /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C018A99328F421A000C0E002 /* Int+Extension.swift */; };
+		C01B88A02913F5FE00EF0EA0 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01B889F2913F5FE00EF0EA0 /* LoadingViewController.swift */; };
 		C03E3F2628DCC20A00B987DD /* FirestoreCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03E3F2528DCC20A00B987DD /* FirestoreCollection.swift */; };
 		C03E3F2828DCC6C500B987DD /* ListenInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03E3F2728DCC6C500B987DD /* ListenInfo.swift */; };
 		C052D8C129125DF40003307B /* StatsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C052D8C029125DF40003307B /* StatsType.swift */; };
@@ -85,6 +86,7 @@
 		C088178828DDB8FA00D3106C /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C088178728DDB8FA00D3106C /* FirestoreManager.swift */; };
 		C088178A28DDBC9100D3106C /* FirestoreManager+SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = C088178928DDBC9100D3106C /* FirestoreManager+SignIn.swift */; };
 		C088178C28DDE69600D3106C /* PlaylistSortType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C088178B28DDE69600D3106C /* PlaylistSortType.swift */; };
+		C0B3263B2927E1F700ACDE76 /* MainThreadSafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B3263A2927E1F700ACDE76 /* MainThreadSafe.swift */; };
 		C0B7990228DC3FF700681649 /* TopLectures.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B7990028DC3FF700681649 /* TopLectures.swift */; };
 		C0B7990328DC3FF700681649 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B7990128DC3FF700681649 /* Playlist.swift */; };
 		C0B7990728DC41AE00681649 /* PlaylistCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B7990528DC41AE00681649 /* PlaylistCell.swift */; };
@@ -105,7 +107,6 @@
 		C0DA677B28FD7D2E003BF8E4 /* LectureViewModel+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DA677A28FD7D2E003BF8E4 /* LectureViewModel+Helpers.swift */; };
 		C0DA677D28FD8190003BF8E4 /* SPMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DA677C28FD8190003BF8E4 /* SPMenu.swift */; };
 		C0DA677F28FD9CCD003BF8E4 /* TopLectureType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DA677E28FD9CCD003BF8E4 /* TopLectureType.swift */; };
-		C0DBB078290ABB6600C62BC1 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DBB077290ABB6600C62BC1 /* LoadingViewController.swift */; };
 		C0DD1B3828FE979000995994 /* PlayerViewController+Position.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0DD1B3728FE979000995994 /* PlayerViewController+Position.swift */; };
 		C0E4748628F5A0FA001B69EE /* CreatePlaylistViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E4748528F5A0FA001B69EE /* CreatePlaylistViewController.swift */; };
 		C0E9CC3928DC723B0089A9E8 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0E9CC3828DC723B0089A9E8 /* Date+Extension.swift */; };
@@ -200,6 +201,7 @@
 		C0118A7728D34AA700F6002D /* GoogleService-Info-development-client.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-development-client.plist"; sourceTree = "<group>"; };
 		C0118A7B28D34AB400F6002D /* GoogleService-Info-production-client.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-production-client.plist"; sourceTree = "<group>"; };
 		C018A99328F421A000C0E002 /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
+		C01B889F2913F5FE00EF0EA0 /* LoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		C03E3F2528DCC20A00B987DD /* FirestoreCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreCollection.swift; sourceTree = "<group>"; };
 		C03E3F2728DCC6C500B987DD /* ListenInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenInfo.swift; sourceTree = "<group>"; };
 		C052D8C029125DF40003307B /* StatsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsType.swift; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 		C088178728DDB8FA00D3106C /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		C088178928DDBC9100D3106C /* FirestoreManager+SignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirestoreManager+SignIn.swift"; sourceTree = "<group>"; };
 		C088178B28DDE69600D3106C /* PlaylistSortType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistSortType.swift; sourceTree = "<group>"; };
+		C0B3263A2927E1F700ACDE76 /* MainThreadSafe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainThreadSafe.swift; sourceTree = "<group>"; };
 		C0B7990028DC3FF700681649 /* TopLectures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopLectures.swift; sourceTree = "<group>"; };
 		C0B7990128DC3FF700681649 /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
 		C0B7990528DC41AE00681649 /* PlaylistCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistCell.swift; sourceTree = "<group>"; };
@@ -230,7 +233,6 @@
 		C0DA677A28FD7D2E003BF8E4 /* LectureViewModel+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LectureViewModel+Helpers.swift"; sourceTree = "<group>"; };
 		C0DA677C28FD8190003BF8E4 /* SPMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPMenu.swift; sourceTree = "<group>"; };
 		C0DA677E28FD9CCD003BF8E4 /* TopLectureType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopLectureType.swift; sourceTree = "<group>"; };
-		C0DBB077290ABB6600C62BC1 /* LoadingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoadingViewController.swift; path = ../../../../../../Desktop/LoadingViewController.swift; sourceTree = "<group>"; };
 		C0DD1B3728FE979000995994 /* PlayerViewController+Position.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerViewController+Position.swift"; sourceTree = "<group>"; };
 		C0E4748528F5A0FA001B69EE /* CreatePlaylistViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePlaylistViewController.swift; sourceTree = "<group>"; };
 		C0E9CC3828DC723B0089A9E8 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
@@ -445,7 +447,7 @@
 		C00E4DFD28CA39FE00F1A123 /* CommonControllers */ = {
 			isa = PBXGroup;
 			children = (
-				C0DBB077290ABB6600C62BC1 /* LoadingViewController.swift */,
+				C01B889F2913F5FE00EF0EA0 /* LoadingViewController.swift */,
 				C00E4DFE28CA39FE00F1A123 /* TabBarController.swift */,
 				C0CAF25C28D45B8C00DA9878 /* NavigationController.swift */,
 				C00E4E1B28CA462000F1A123 /* SearchViewController.swift */,
@@ -476,6 +478,7 @@
 				C03E3F2528DCC20A00B987DD /* FirestoreCollection.swift */,
 				C088178728DDB8FA00D3106C /* FirestoreManager.swift */,
 				C088178928DDBC9100D3106C /* FirestoreManager+SignIn.swift */,
+				C0B3263A2927E1F700ACDE76 /* MainThreadSafe.swift */,
 			);
 			path = "Firebase Firestore";
 			sourceTree = "<group>";
@@ -892,6 +895,7 @@
 				C0EE5BD028F8589700528AA7 /* Array+Extension.swift in Sources */,
 				C00AB22028D2137C00A62A2F /* Time.swift in Sources */,
 				C00E4E0C28CA39FE00F1A123 /* HomeViewController.swift in Sources */,
+				C0B3263B2927E1F700ACDE76 /* MainThreadSafe.swift in Sources */,
 				C0E9CC3928DC723B0089A9E8 /* Date+Extension.swift in Sources */,
 				C007D37E28E80ABB00CFBED0 /* Location.swift in Sources */,
 				C00E4E0928CA39FE00F1A123 /* DownloadViewController.swift in Sources */,
@@ -905,7 +909,6 @@
 				C088178A28DDBC9100D3106C /* FirestoreManager+SignIn.swift in Sources */,
 				C00AB21128D1FD5600A62A2F /* LectureSortType.swift in Sources */,
 				C00E4E1728CA433A00F1A123 /* AboutViewController.swift in Sources */,
-				C0DBB078290ABB6600C62BC1 /* LoadingViewController.swift in Sources */,
 				C052D8C129125DF40003307B /* StatsType.swift in Sources */,
 				C007D37828E8096D00CFBED0 /* Day.swift in Sources */,
 				C00E4E1828CA433A00F1A123 /* CopyrightViewController.swift in Sources */,
@@ -937,6 +940,7 @@
 				C0B7990A28DC427B00681649 /* PlaylistOption.swift in Sources */,
 				C00E4E1C28CA462000F1A123 /* SearchViewController.swift in Sources */,
 				C007D37C28E80AAB00CFBED0 /* LegacyData.swift in Sources */,
+				C01B88A02913F5FE00EF0EA0 /* LoadingViewController.swift in Sources */,
 				C0065D4B28D883F300B18AA6 /* Constants.swift in Sources */,
 				C00E4DE128CA393600F1A123 /* LogInViewController.swift in Sources */,
 				C0BC771028D5AE1000C2629F /* TappableLabel.swift in Sources */,
@@ -1098,7 +1102,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Srila Prabhupada.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/Info.plist";
@@ -1135,7 +1139,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Srila Prabhupada.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/Info.plist";
@@ -1235,7 +1239,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Srila Prabhupada.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/Info.plist";

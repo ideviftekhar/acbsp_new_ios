@@ -8,13 +8,14 @@ target 'Srila Prabhupada' do
 
 	pod 'SideMenu'
 
-  pod 'FirebaseFirestoreSwift'
-  pod 'FirebaseCore'
   pod 'FirebaseAuth'
-  pod 'FirebaseFirestore'
+  pod 'FirebaseCore'
   pod 'FirebaseCrashlytics'
+  pod 'FirebaseDynamicLinks'
+  pod 'FirebaseFirestore'
+  pod 'FirebaseFirestoreSwift'
   pod 'FirebaseMessaging'
-  
+
   pod 'GoogleSignIn'
   pod 'GoogleSignInSwiftSupport'
 

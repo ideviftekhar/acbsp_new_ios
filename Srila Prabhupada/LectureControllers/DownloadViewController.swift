@@ -21,19 +21,12 @@ class DownloadViewController: LectureViewController {
 
     override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[Lecture], Error>) -> Void) {
 
-        var lectures = [Model]()
-        for dbLecture in Persistant.shared.dbLectures {
-            lectures.append(Lecture(from: dbLecture))
+        var lectureIDs: [Int] = []
+
+        for dbLecture in Persistant.shared.getAllDBLectures() {
+            lectureIDs.append(dbLecture.id)
         }
 
-        let searchText = self.searchText
-        let selectedSortType = self.selectedSortType
-        let selectedFilters = self.selectedFilters
-        DispatchQueue.global().async {
-            let lectures = DefaultLectureViewModel.filter(lectures: lectures, searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: nil)
-            DispatchQueue.main.async {
-                completion(.success(lectures))
-            }
-        }
+        DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: completion)
     }
 }

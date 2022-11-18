@@ -16,7 +16,9 @@ extension DefaultLectureViewModel {
 
         guard let currentUser = Auth.auth().currentUser else {
             let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
-            completion(.failure(error))
+            mainThreadSafe {
+                completion(.failure(error))
+            }
             return
         }
 
@@ -33,11 +35,13 @@ extension DefaultLectureViewModel {
         })
     }
 
-    func updateListenInfo(date: Date, lecture: Lecture, completion: @escaping (Swift.Result<ListenInfo, Error>) -> Void) {
+    func updateListenInfo(date: Date, addListenSeconds seconds: Int, lecture: Lecture, completion: @escaping (Swift.Result<ListenInfo, Error>) -> Void) {
 
         guard let currentUser = Auth.auth().currentUser else {
             let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
-            completion(.failure(error))
+            mainThreadSafe {
+                completion(.failure(error))
+            }
             return
         }
 
@@ -46,24 +50,16 @@ extension DefaultLectureViewModel {
         let documentID = DateFormatter.d_M_yyyy.string(from: date)
         let documentReference = collectionReference.document(documentID)
 
-        let countBG: Int = !lecture.search.simple.filter { $0.hasPrefix("BG")}.isEmpty ? lecture.length : 0
-        let countCC: Int = !lecture.search.simple.filter { $0.hasPrefix("CC")}.isEmpty ? lecture.length : 0
-        let countSB: Int = !lecture.search.simple.filter { $0.hasPrefix("SB")}.isEmpty ? lecture.length : 0
-        let countSeminars: Int = !lecture.search.simple.filter { $0.hasPrefix("Seminars")}.isEmpty ? lecture.length : 0
-        let countVSN: Int = !lecture.search.simple.filter { $0.hasPrefix("VSN")}.isEmpty ? lecture.length : 0
-        let countOther: Int = (countBG == 0 && countCC == 0 && countSB == 0 && countSeminars == 0 && countVSN == 0) ? lecture.length : 0
+        let countBG: Int = !lecture.search.simple.filter { $0.hasPrefix("BG")}.isEmpty ? seconds : 0
+        let countCC: Int = !lecture.search.simple.filter { $0.hasPrefix("CC")}.isEmpty ? seconds : 0
+        let countSB: Int = !lecture.search.simple.filter { $0.hasPrefix("SB")}.isEmpty ? seconds : 0
+        let countSeminars: Int = !lecture.search.simple.filter { $0.hasPrefix("Seminars")}.isEmpty ? seconds : 0
+        let countVSN: Int = !lecture.search.simple.filter { $0.hasPrefix("VSN")}.isEmpty ? seconds : 0
+        let countOther: Int = (countBG == 0 && countCC == 0 && countSB == 0 && countSeminars == 0 && countVSN == 0) ? seconds : 0
 
         FirestoreManager.shared.getRawDocument(documentReference: documentReference, source: .server, completion: { result in
             switch result {
             case .success(let success):
-
-                let playedIds: [Int] = success["playedIds"] as? [Int] ?? []
-
-                guard !playedIds.contains(lecture.id) else {
-                    let error = NSError(domain: "Firestore Database", code: 0, userInfo: [NSLocalizedDescriptionKey: "This lecture already registered as listened"])
-                    completion(.failure(error))
-                    return
-                }
 
                 let currentTimestamp = Int(Date().timeIntervalSince1970*1000)
 
@@ -88,10 +84,10 @@ extension DefaultLectureViewModel {
                     data["documentPath"] = documentReference.path
                     data["listenDetails"] = listenDetails
                     data["playedIds"] = [lecture.id]
-                    data["audioListen"] = 1
+                    data["audioListen"] = seconds
                     data["videoListen"] = 0
                 } else {
-                    data["audioListen"] = FieldValue.increment(Int64(1))
+                    data["audioListen"] = FieldValue.increment(Int64(seconds))
                     data["playedBy"] = FieldValue.arrayUnion([currentUser.uid])
                     data["playedIds"] = FieldValue.arrayUnion([lecture.id])
 
@@ -105,10 +101,12 @@ extension DefaultLectureViewModel {
                 }
 
                 success.reference.setData(data, merge: true, completion: { error in
-                    if let error = error {
-                        completion(.failure(error))
-                    } else {
-                        FirestoreManager.shared.getDocument(documentReference: documentReference, source: .default, completion: completion)
+                    mainThreadSafe {
+                        if let error = error {
+                            completion(.failure(error))
+                        } else {
+                            FirestoreManager.shared.getDocument(documentReference: documentReference, source: .default, completion: completion)
+                        }
                     }
                 })
             case .failure(let error):

@@ -19,8 +19,8 @@ struct Lecture: Hashable, Codable {
         return lhs.id == rhs.id &&
         lhs.creationTimestamp == rhs.creationTimestamp &&
         lhs.resources == rhs.resources &&
-        lhs.downloadingState == rhs.downloadingState &&
-        lhs.isFavourites == rhs.isFavourites &&
+        lhs.downloadState == rhs.downloadState &&
+        lhs.isFavourite == rhs.isFavourite &&
         lhs.lastPlayedPoint == rhs.lastPlayedPoint
     }
 
@@ -44,8 +44,8 @@ struct Lecture: Hashable, Codable {
 
     let searchableTexts: [String]
 
-    var downloadingState: DBLecture.DownloadState = .notDownloaded
-    var isFavourites: Bool
+    var downloadState: DBLecture.DownloadState = .notDownloaded
+    var isFavourite: Bool
     var lastPlayedPoint: Int = 0
 
     var isCompleted: Bool {
@@ -100,87 +100,16 @@ struct Lecture: Hashable, Codable {
         searchableTexts.removeAll { $0.isEmpty }
 
         self.searchableTexts = searchableTexts
-        isFavourites = false
+        isFavourite = false
         lastPlayedPoint = 0
-        downloadingState = Persistant.shared.lectureDownloadState(lecture: self)
-    }
-
-    init(from dbLecture: DBLecture) {
-
-        self.id = dbLecture.id
-        self.category = dbLecture.category
-        self.creationTimestamp = dbLecture.creationTimestamp
-        self.dateOfRecording = Day(day: dbLecture.dateOfRecording_day, month: dbLecture.dateOfRecording_month, year: dbLecture.dateOfRecording_year)
-        self.description = dbLecture.aDescription
-        self.language = Language(main: dbLecture.language_main, translations: dbLecture.language_translations)
-        self.lastModifiedTimestamp =  dbLecture.lastModifiedTimestamp
-        self.legacyData = LegacyData(lectureCode: dbLecture.legacyData_lectureCode, slug: dbLecture.legacyData_slug, verse: dbLecture.legacyData_verse, wpId: dbLecture.legacyData_wpId)
-        self.length = dbLecture.length
-        self.lengthType = dbLecture.lengthType
-        self.location = Location(city: dbLecture.location_city, state: dbLecture.location_state, country: dbLecture.location_country)
-        self.place = dbLecture.place
-
-        var audios: [Audio] = []
-        for url in dbLecture.resources_audios_url {
-            audios.append(Audio(creationTimestamp: "", downloads: 0, lastModifiedTimestamp: "", views: 0, url: url))
-        }
-
-        self.resources =  Resources(audios: audios)
-        self.search = Search(advanced: dbLecture.search_advanced, simple: dbLecture.search_simple)
-        self.tags = dbLecture.tags
-        self.thumbnail = dbLecture.thumbnail
-        self.title = dbLecture.title
-
-        var searchableTexts: [String] = []
-        searchableTexts.append(title.joined(separator: " "))
-        searchableTexts.append(contentsOf: category)
-        searchableTexts.append(contentsOf: description)
-        searchableTexts.append(language.main)
-        searchableTexts.append(contentsOf: language.translations)
-        searchableTexts.append(legacyData.verse)
-        searchableTexts.append(location.city)
-        searchableTexts.append(location.state)
-        searchableTexts.append(location.country)
-        searchableTexts.append(contentsOf: search.simple)
-        searchableTexts.append(contentsOf: search.advanced)
-        searchableTexts.append(contentsOf: tags)
-        searchableTexts.removeAll { $0.isEmpty }
-        self.searchableTexts = searchableTexts
-
-        isFavourites = false
-        lastPlayedPoint = 0
-        downloadingState = Persistant.shared.lectureDownloadState(lecture: self)
+        downloadState = .notDownloaded
     }
 
     static func createNewDBLecture(lecture: Lecture) -> DBLecture {
 
         let dbLecture = DBLecture.insertInContext(context: nil)
-        dbLecture.aDescription = lecture.description
-        dbLecture.category = lecture.category
-        dbLecture.creationTimestamp = lecture.creationTimestamp
-        dbLecture.dateOfRecording_day = lecture.dateOfRecording.day
-        dbLecture.dateOfRecording_month = lecture.dateOfRecording.month
-        dbLecture.dateOfRecording_year = lecture.dateOfRecording.year
         dbLecture.id = lecture.id
-        dbLecture.language_main = lecture.language.main
-        dbLecture.language_translations = lecture.language.translations
-        dbLecture.lastModifiedTimestamp = lecture.lastModifiedTimestamp
-        dbLecture.legacyData_lectureCode = lecture.legacyData.lectureCode
-        dbLecture.legacyData_slug = lecture.legacyData.slug
-        dbLecture.legacyData_verse = lecture.legacyData.verse
-        dbLecture.legacyData_wpId = lecture.legacyData.wpId
-        dbLecture.length = lecture.length
-        dbLecture.lengthType = lecture.lengthType
-        dbLecture.location_city = lecture.location.city
-        dbLecture.location_state = lecture.location.state
-        dbLecture.location_country = lecture.location.country
-        dbLecture.place = lecture.place
         dbLecture.resources_audios_url = lecture.resources.audios.map({ $0.url ?? "" })
-        dbLecture.search_advanced = lecture.search.advanced
-        dbLecture.search_simple = lecture.search.simple
-        dbLecture.tags = lecture.tags
-        dbLecture.thumbnail = lecture.thumbnail
-        dbLecture.title = lecture.title
         dbLecture.downloadState = DBLecture.DownloadState.notDownloaded.rawValue
 
         if let audios = lecture.resources.audios.first, let audioURL = audios.audioURL {

@@ -51,6 +51,7 @@ class PlayerViewController: LectureViewController {
     @IBOutlet private var totalTimeLabel: UILabel!
     @IBOutlet private var timeSlider: UISlider!
 
+    @IBOutlet internal var playlistButton: UIButton!
     @IBOutlet private var playPauseButton: UIButton!
     @IBOutlet private var speedMenuButton: UIButton!
 
@@ -156,6 +157,10 @@ class PlayerViewController: LectureViewController {
 
             miniPlayerView.currentLecture = currentLecture
 
+            let userDefaultKey: String = "\(Self.self).\(Lecture.self)"
+            UserDefaults.standard.set(currentLecture?.id, forKey: userDefaultKey)
+            UserDefaults.standard.synchronize()
+
             self.pause()
             if let currentLecture = currentLecture {
                 UIApplication.shared.beginReceivingRemoteControlEvents()
@@ -187,7 +192,7 @@ class PlayerViewController: LectureViewController {
                     thumbnailImageView.image = UIImage(named: "logo_40")
                 }
 
-                if currentLecture.downloadingState == .downloaded,
+                if currentLecture.downloadState == .downloaded,
                    let audioURL = currentLecture.localFileURL {
                     let item = AVPlayerItem(url: audioURL)
                     player = AVPlayer(playerItem: item)
@@ -255,6 +260,12 @@ class PlayerViewController: LectureViewController {
     var playlistLectures: [Model] = [] {
         didSet {
             loadViewIfNeeded()
+
+            let userDefaultKey: String = "\(Self.self).playlistLectures"
+            let lectureIDs = self.playlistLectures.map { $0.id }
+            UserDefaults.standard.set(lectureIDs, forKey: userDefaultKey)
+            UserDefaults.standard.synchronize()
+
             if loopLectureButton.isSelected == true {
 
                 if let currentLecture = currentLecture {
@@ -320,11 +331,9 @@ class PlayerViewController: LectureViewController {
 
     override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[Lecture], Error>) -> Void) {
 
-        var lectureIds = self.currentLectureQueue.map { $0.id }
-        let uniqueIds: Set<Int> = Set(lectureIds)
-        lectureIds = Array(uniqueIds)
+        let lectureIDs = self.currentLectureQueue.map { $0.id }
 
-        DefaultLectureViewModel.defaultModel.getLectures(searchText: nil, sortType: nil, filter: [:], lectureIDs: lectureIds, source: source, progress: nil, completion: { result in
+        DefaultLectureViewModel.defaultModel.getLectures(searchText: nil, sortType: nil, filter: [:], lectureIDs: lectureIDs, source: source, progress: nil, completion: { result in
             switch result {
             case .success(let success):
                 completion(.success(success))
@@ -349,6 +358,21 @@ class PlayerViewController: LectureViewController {
         }
     }
 
+//    var wasShowingPlaylist: Bool = false
+
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            if traitCollection.verticalSizeClass == .compact {
+//                wasShowingPlaylist = playlistButton.isSelected
+                hidePlaylist(animated: true)
+            } else {
+                hidePlaylist(animated: true)
+//                if wasShowingPlaylist {
+//                    showPlaylist(animated: true)
+//                }
+            }
+        }
+    }
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
         return .fade
     }
@@ -516,6 +540,13 @@ extension PlayerViewController {
             if time.isNumeric {
                 let time: Double = time.seconds
                 updatePlayProgressUI(to: time)
+
+                let timeInt = Int(time)
+                if timeInt.isMultiple(of: 10) {    // Updating every 10 seconds
+                    guard let currentLecture = currentLecture else { return }
+                    updateLectureProgress()
+                    DefaultLectureViewModel.defaultModel.updateListenInfo(date: Date(), addListenSeconds: 10, lecture: currentLecture, completion: { _ in })
+                }
             }
         })
 
@@ -694,9 +725,7 @@ extension PlayerViewController {
         })
 
         itemDidPlayToEndObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: item, queue: nil, using: { [self] _ in
-            if let currentLecture = currentLecture {
-                DefaultLectureViewModel.defaultModel.updateListenInfo(date: Date(), lecture: currentLecture, completion: { _ in })
-            }
+            updateLectureProgress()
             gotoNext(play: true)
         })
     }

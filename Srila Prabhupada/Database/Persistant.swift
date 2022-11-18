@@ -23,15 +23,11 @@ class Persistant: NSObject {
 
     private let reachability: Reachability?
 
-    var dbLectures: [DBLecture] = []
-
     override init () {
 
         reachability = try? Reachability()
 
         super.init()
-
-        dbLectures = getDbLectures()
 
         addReachabilityObserver()
     }
@@ -171,8 +167,8 @@ class Persistant: NSObject {
                     }
                 })
             } else {
-                DispatchQueue.main.async {
-                    if let finalCompletionHandler = completionHandler {
+                if let finalCompletionHandler = completionHandler {
+                    DispatchQueue.main.async {
                         finalCompletionHandler()
                     }
                 }

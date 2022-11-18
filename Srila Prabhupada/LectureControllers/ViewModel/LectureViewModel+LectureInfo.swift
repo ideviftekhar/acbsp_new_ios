@@ -14,7 +14,9 @@ extension DefaultLectureViewModel {
     func getUsersLectureInfo(source: FirestoreSource, completion: @escaping (Swift.Result<[LectureInfo], Error>) -> Void) {
         guard let currentUser = Auth.auth().currentUser else {
             let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
-            completion(.failure(error))
+            mainThreadSafe {
+                completion(.failure(error))
+            }
             return
         }
 
@@ -31,16 +33,13 @@ extension DefaultLectureViewModel {
                 switch result {
                 case .success(let success):
                     self.userLectureInfo = success
-                    completion(.success(success))
 
-                    if source != .cache {
-                        serialLectureWorkerQueue.async {
-                            if !self.allLectures.isEmpty {
-                                self.allLectures = Self.refreshLectureWithLectureInfo(lectures: self.allLectures, lectureInfo: success)
-                                DispatchQueue.main.async {
-                                    NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
-                                }
-                            }
+                    serialLectureWorkerQueue.async {
+                        if !self.allLectures.isEmpty {
+                            self.allLectures = Self.refreshLectureWithLectureInfo(lectures: self.allLectures, lectureInfos: success, downloadedLectures: Persistant.shared.getAllDBLectures())
+                        }
+                        DispatchQueue.main.async {
+                            completion(.success(success))
                         }
                     }
                 case .failure(let error):
@@ -53,9 +52,27 @@ extension DefaultLectureViewModel {
     func offlineUpdateLectureProgress(lecture: Lecture, lastPlayedPoint: Int) {
         // This is to temporarily update the information
         serialLectureWorkerQueue.async { [self] in
+            var updatedLectures: [Lecture] = []
             let lectureIndexes = self.allLectures.allIndex(where: { $0.id == lecture.id })
             for index in lectureIndexes {
                 self.allLectures[index].lastPlayedPoint = lastPlayedPoint
+                updatedLectures.append(self.allLectures[index])
+            }
+
+            let lectureInfoIndexes = self.userLectureInfo.allIndex(where: { $0.id == lecture.id })
+
+            if !lectureInfoIndexes.isEmpty {
+                for index in lectureInfoIndexes {
+                    self.userLectureInfo[index].lastPlayedPoint = lastPlayedPoint
+                }
+//            } else {  // Due to the documentID issue, we are skipping this.
+//                let currentTimestamp = Int(Date().timeIntervalSince1970*1000)
+//                let newLectureInfo = LectureInfo(id: lecture.id, creationTimestamp: currentTimestamp, isFavourite: false, lastPlayedPoint: lastPlayedPoint, documentId: /*documentReference.documentID*/)
+//                self.userLectureInfo.append(newLectureInfo)
+            }
+
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: updatedLectures)
             }
         }
     }
@@ -68,7 +85,9 @@ extension DefaultLectureViewModel {
                            completion: @escaping (Swift.Result<Bool, Error>) -> Void) {
         guard let currentUser = Auth.auth().currentUser else {
             let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
-            completion(.failure(error))
+            mainThreadSafe {
+                completion(.failure(error))
+            }
             return
         }
 
@@ -76,6 +95,8 @@ extension DefaultLectureViewModel {
             let currentTimestamp = Int(Date().timeIntervalSince1970*1000)
 
             let collectionReference: CollectionReference = FirestoreManager.shared.firestore.collection(FirestoreCollection.usersLectureInfo(userId: currentUser.uid).path)
+
+            var updatedLectures: [Lecture] = []
 
             for lecture in lectures {
                 var data: [String: Any] = [:]
@@ -122,28 +143,46 @@ extension DefaultLectureViewModel {
                 }
 
                 documentReference.setData(data, merge: true)
-
                 // This is to temporarily update the information
                 do {
                     let lectureIndexes = self.allLectures.allIndex(where: { $0.id == lecture.id })
                     for index in lectureIndexes {
+                        var isUpdated: Bool = false
                         if let isFavourite = isFavourite {
-                            self.allLectures[index].isFavourites = isFavourite
+                            self.allLectures[index].isFavourite = isFavourite
+                            isUpdated = true
                         }
                         if let lastPlayedPoint = lastPlayedPoint {
                             self.allLectures[index].lastPlayedPoint = lastPlayedPoint
+                            isUpdated = true
                         }
+
+                        if isUpdated {
+                            updatedLectures.append(self.allLectures[index])
+                        }
+                    }
+
+                    let lectureInfoIndexes = self.userLectureInfo.allIndex(where: { $0.id == lecture.id })
+                    if !lectureInfoIndexes.isEmpty {
+                        for index in lectureInfoIndexes {
+
+                            if let isFavourite = isFavourite {
+                                self.userLectureInfo[index].isFavourite = isFavourite
+                            }
+                            if let lastPlayedPoint = lastPlayedPoint {
+                                self.allLectures[index].lastPlayedPoint = lastPlayedPoint
+                            }
+                        }
+                    } else {
+                        let newLectureInfo = LectureInfo(id: lecture.id, creationTimestamp: currentTimestamp, isFavourite: isFavourite ?? false, lastPlayedPoint: lastPlayedPoint ?? 0, documentId: documentReference.documentID)
+                        self.userLectureInfo.append(newLectureInfo)
                     }
                 }
             }
 
-            // This is to permanently update the lecture info list
-            self.getUsersLectureInfo(source: .default) { _ in }
-
             DispatchQueue.main.async {
                 completion(.success(true))
-
-                NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
+                NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: updatedLectures)
             }
         }
     }

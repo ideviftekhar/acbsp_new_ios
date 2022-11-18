@@ -419,6 +419,12 @@ extension StatsViewController {
 
     private func updateCustomTime() {
 
+        if  startDatePicker.date > endDatePicker.date {
+            let tempDate = startDatePicker.date
+            startDatePicker.date = endDatePicker.date
+            endDatePicker.date = tempDate
+        }
+
         let startTimestamp = Int(startDatePicker.date.startOfDay.timeIntervalSince1970 * 1000)
         let endTimestamp = Int(endDatePicker.date.endOfDay.timeIntervalSince1970 * 1000)
 

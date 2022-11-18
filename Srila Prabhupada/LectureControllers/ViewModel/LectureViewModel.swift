@@ -35,7 +35,7 @@ protocol LectureViewModel: AnyObject {
 
     // Listen Info
     func getUsersListenInfo(source: FirestoreSource, completion: @escaping (Swift.Result<[ListenInfo], Error>) -> Void)
-    func updateListenInfo(date: Date, lecture: Lecture, completion: @escaping (Swift.Result<ListenInfo, Error>) -> Void)
+    func updateListenInfo(date: Date, addListenSeconds seconds: Int, lecture: Lecture, completion: @escaping (Swift.Result<ListenInfo, Error>) -> Void)
 
     // Top Lecture
     func getWeekLecturesIds(weekDays: [String], completion: @escaping (Swift.Result<[Int], Error>) -> Void)
@@ -76,13 +76,15 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
     func getLectures(searchText: String?, sortType: LectureSortType?, filter: [Filter: [String]], lectureIDs: [Int]?, source: FirestoreSource, progress: ((_ progress: CGFloat) -> Void)?, completion: @escaping (Swift.Result<[Lecture], Error>) -> Void) {
 
         if let lectureIDs = lectureIDs, lectureIDs.isEmpty {
-            completion(.success([]))
+            mainThreadSafe {
+                completion(.success([]))
+            }
         } else {
 
             if source == .cache {
                 serialLectureWorkerQueue.async {
                     var success: [Lecture] = Self.filter(lectures: self.allLectures, searchText: searchText, sortType: sortType, filter: filter, lectureIDs: lectureIDs)
-                    success = Self.refreshLectureWithLectureInfo(lectures: success, lectureInfo: self.userLectureInfo)
+                    success = Self.refreshLectureWithLectureInfo(lectures: success, lectureInfos: self.userLectureInfo, downloadedLectures: Persistant.shared.getAllDBLectures())
 
                     DispatchQueue.main.async {
                         completion(.success(success))
@@ -121,7 +123,7 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
                             success = results   // Unique
 
                             if !self.userLectureInfo.isEmpty {
-                                success = Self.refreshLectureWithLectureInfo(lectures: success, lectureInfo: self.userLectureInfo)
+                                success = Self.refreshLectureWithLectureInfo(lectures: success, lectureInfos: self.userLectureInfo, downloadedLectures: Persistant.shared.getAllDBLectures())
                             }
 
                             self.allLectures = success
@@ -145,52 +147,53 @@ extension DefaultLectureViewModel {
     @objc func downloadsAddedNotification(_ notification: Foundation.Notification) {
         guard let dbLectures = notification.object as? [DBLecture] else { return }
 
+        var updatedLectures: [Lecture] = []
         for dbLecture in dbLectures {
             let lectureIndexes = self.allLectures.allIndex(where: { $0.id == dbLecture.id })
             for index in lectureIndexes {
-                allLectures[index].downloadingState = dbLecture.downloadStateEnum
+                allLectures[index].downloadState = dbLecture.downloadStateEnum
+                updatedLectures.append(allLectures[index])
             }
         }
 
-        NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
+        if !updatedLectures.isEmpty {
+            mainThreadSafe {
+                NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: updatedLectures)
+            }
+        }
     }
 
     @objc func downloadUpdatedNotification(_ notification: Foundation.Notification) {
         guard let dbLecture = notification.object as? DBLecture else { return }
 
+        var updatedLectures: [Lecture] = []
         let lectureIndexes = self.allLectures.allIndex(where: { $0.id == dbLecture.id })
         for index in lectureIndexes {
-            allLectures[index].downloadingState = dbLecture.downloadStateEnum
+            allLectures[index].downloadState = dbLecture.downloadStateEnum
+            updatedLectures.append(allLectures[index])
         }
-        if !lectureIndexes.isEmpty {
-            NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
+        if !updatedLectures.isEmpty {
+            mainThreadSafe {
+                NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: updatedLectures)
+            }
         }
     }
 
     @objc func downloadsRemovedNotification(_ notification: Foundation.Notification) {
         guard let dbLectures = notification.object as? [DBLecture] else { return }
 
+        var updatedLectures: [Lecture] = []
         for dbLecture in dbLectures {
             let lectureIndexes = self.allLectures.allIndex(where: { $0.id == dbLecture.id })
             for index in lectureIndexes {
-                allLectures[index].downloadingState = dbLecture.downloadStateEnum
+                allLectures[index].downloadState = dbLecture.downloadStateEnum
+                updatedLectures.append(allLectures[index])
             }
         }
 
-        NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
-    }
-
-    private func favouriteUpdated(lecture: Lecture, isFavourite: Bool) {
-
-        serialLectureWorkerQueue.async { [self] in
-            let lectureIndexes = self.allLectures.allIndex(where: { $0.id == lecture.id })
-            for index in lectureIndexes {
-                self.allLectures[index].isFavourites = isFavourite
-            }
-            if !lectureIndexes.isEmpty {
-                DispatchQueue.main.async {
-                    NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
-                }
+        if !updatedLectures.isEmpty {
+            mainThreadSafe {
+                NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: updatedLectures)
             }
         }
     }

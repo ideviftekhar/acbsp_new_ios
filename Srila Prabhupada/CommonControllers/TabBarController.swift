@@ -33,7 +33,34 @@ class TabBarController: UITabBarController {
         }
 
         playerViewController.addToTabBarController(self)
-        playerViewController.currentLecture = nil
+
+        // Loading last played lectures
+        do {
+            let lectureIDDefaultKey: String = "\(PlayerViewController.self).\(Lecture.self)"
+            let lectureID = UserDefaults.standard.integer(forKey: lectureIDDefaultKey)
+
+            if lectureID != 0 {
+                let playlistLecturesKey: String = "\(PlayerViewController.self).playlistLectures"
+                var playlistLectureIDs: [Int] = (UserDefaults.standard.array(forKey: playlistLecturesKey) as? [Int]) ?? []
+                if !playlistLectureIDs.contains(where: { $0 == lectureID }) {
+                    playlistLectureIDs.insert(lectureID, at: 0)
+                }
+
+                DefaultLectureViewModel.defaultModel.getLectures(searchText: nil, sortType: nil, filter: [:], lectureIDs: playlistLectureIDs, source: .cache, progress: nil) { result in
+                    switch result {
+                    case .success(let success):
+                        if self.playerViewController.currentLecture == nil,
+                           let lectureToPlay = success.first(where: { $0.id == lectureID }) {
+                            self.showPlayer(lecture: lectureToPlay, playlistLectures: success, shouldPlay: false)
+                        }
+                    case .failure:
+                        break
+                    }
+                }
+            } else {
+                playerViewController.currentLecture = nil
+            }
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -80,50 +107,60 @@ class TabBarController: UITabBarController {
         playerViewController.reposition()
     }
 
-    override var childForStatusBarStyle: UIViewController? {
-        if playerViewController.visibleState == .expanded {
-            return playerViewController
-        }
-        return nil
-    }
-
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
         return .fade
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        switch playerViewController.visibleState {
+        case .close:
+            return .lightContent
+        case .minimize:
+            return .lightContent
+        case .expanded:
+            return .darkContent
+        }
     }
 }
 
 extension TabBarController {
 
-    func showPlayer(lecture: Lecture, playlistLectures: [Lecture]) {
+    func showPlayer(lecture: Lecture, playlistLectures: [Lecture], shouldPlay: Bool? = nil) {
 
         playerViewController.playlistLectures = playlistLectures
 
         if let playerLecture = playerViewController.currentLecture,
            playerLecture.id == lecture.id, playerLecture.creationTimestamp == lecture.creationTimestamp {
 
-            if playerViewController.isPaused {
-                playerViewController.play()
+            if let shouldPlay = shouldPlay {
+                if shouldPlay {
+                    playerViewController.play()
+                } else {
+                    playerViewController.pause()
+                }
             } else {
-                playerViewController.pause()
+                if playerViewController.isPaused {
+                    playerViewController.play()
+                } else {
+                    playerViewController.pause()
+                }
             }
         } else {
 
-            let shouldPlay: Bool
+            let shouldReallyPlay: Bool
 
-            if playerViewController.currentLecture == nil {
-                shouldPlay = true
+            if let shouldPlay = shouldPlay {
+                shouldReallyPlay = shouldPlay
+            } else if playerViewController.currentLecture == nil {
+                shouldReallyPlay = true
             } else if !playerViewController.isPaused {
-                shouldPlay = true
+                shouldReallyPlay = true
             } else {
-                shouldPlay = false
+                shouldReallyPlay = false
             }
 
             playerViewController.currentLecture = lecture
-            if shouldPlay {
+            if shouldReallyPlay {
                 playerViewController.play()
             }
         }

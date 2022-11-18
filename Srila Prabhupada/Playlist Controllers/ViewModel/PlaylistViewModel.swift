@@ -27,7 +27,9 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
 
         guard let currentUser = Auth.auth().currentUser, let email = currentUser.email else {
             let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
-            completion(.failure(error))
+            mainThreadSafe {
+                completion(.failure(error))
+            }
             return
         }
 
@@ -58,10 +60,12 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
             data["listID"] = newDocument.documentID
 
             newDocument.setData(data, completion: { error in
-                if let error = error {
-                    completion(.failure(error))
-                } else {
-                    FirestoreManager.shared.getDocument(documentReference: newDocument, source: .default, completion: completion)
+                mainThreadSafe {
+                    if let error = error {
+                        completion(.failure(error))
+                    } else {
+                        FirestoreManager.shared.getDocument(documentReference: newDocument, source: .default, completion: completion)
+                    }
                 }
             })
 
@@ -76,10 +80,12 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
             data["listID"] = newDocument.documentID
 
             newDocument.setData(data, completion: { error in
-                if let error = error {
-                    completion(.failure(error))
-                } else {
-                    FirestoreManager.shared.getDocument(documentReference: newDocument, source: .default, completion: completion)
+                mainThreadSafe {
+                    if let error = error {
+                        completion(.failure(error))
+                    } else {
+                        FirestoreManager.shared.getDocument(documentReference: newDocument, source: .default, completion: completion)
+                    }
                 }
             })
         }
@@ -89,7 +95,9 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
 
         guard let currentUser = Auth.auth().currentUser, let email = currentUser.email else {
             let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
-            completion(.failure(error))
+            mainThreadSafe {
+                completion(.failure(error))
+            }
             return
         }
 
@@ -108,10 +116,12 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
             let existingDocument = collectionReference.document(playlist.listID)
 
             existingDocument.setData(data, merge: true, completion: { error in
-                if let error = error {
-                    completion(.failure(error))
-                } else {
-                    FirestoreManager.shared.getDocument(documentReference: existingDocument, source: .default, completion: completion)
+                mainThreadSafe {
+                    if let error = error {
+                        completion(.failure(error))
+                    } else {
+                        FirestoreManager.shared.getDocument(documentReference: existingDocument, source: .default, completion: completion)
+                    }
                 }
             })
 
@@ -121,10 +131,12 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
             let existingDocument = collectionReference.document(playlist.listID)
 
             existingDocument.setData(data, completion: { error in
-                if let error = error {
-                    completion(.failure(error))
-                } else {
-                    FirestoreManager.shared.getDocument(documentReference: existingDocument, source: .default, completion: completion)
+                mainThreadSafe {
+                    if let error = error {
+                        completion(.failure(error))
+                    } else {
+                        FirestoreManager.shared.getDocument(documentReference: existingDocument, source: .default, completion: completion)
+                    }
                 }
             })
         }
@@ -134,7 +146,9 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
 
         guard let currentUser = Auth.auth().currentUser, let email = currentUser.email else {
             let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
-            completion(.failure(error))
+            mainThreadSafe {
+                completion(.failure(error))
+            }
             return
         }
 
@@ -190,7 +204,9 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
         case .private:
             guard let currentUser = Auth.auth().currentUser, let email = currentUser.email else {
                 let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
-                completion(.failure(error))
+                mainThreadSafe {
+                    completion(.failure(error))
+                }
                 return
             }
 
@@ -218,10 +234,12 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
                     data["lastUpdate"] = currentTimestamp
 
                     document.reference.setData(data, merge: true, completion: { error in
-                        if let error = error {
-                            completion(.failure(error))
-                        } else {
-                            completion(.success(lectureIds))
+                        mainThreadSafe {
+                            if let error = error {
+                                completion(.failure(error))
+                            } else {
+                                completion(.success(lectureIds))
+                            }
                         }
                     })
                 case .failure(let error):
@@ -253,10 +271,12 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
                     data["lastUpdate"] = currentTimestamp
 
                     documentReference.setData(data, merge: true) { error in
-                        if let error = error {
-                            completion(.failure(error))
-                        } else {
-                            completion(.success(lectureIds))
+                        mainThreadSafe {
+                            if let error = error {
+                                completion(.failure(error))
+                            } else {
+                                completion(.success(lectureIds))
+                            }
                         }
                     }
                 case .failure(let error):
@@ -271,17 +291,21 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
         case .private:
             guard let currentUser = Auth.auth().currentUser, let email = currentUser.email else {
                 let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
-                completion(.failure(error))
+                mainThreadSafe {
+                    completion(.failure(error))
+                }
                 return
             }
 
             let collectionReference: FirebaseFirestore.CollectionReference = FirestoreManager.shared.firestore.collection(FirestoreCollection.privatePlaylists.path).document(currentUser.uid).collection(email)
             let documentReference = collectionReference.document(playlist.listID)
             documentReference.delete(completion: { error in
-                if let error = error {
-                    completion(.failure(error))
-                } else {
-                    completion(.success(true))
+                mainThreadSafe {
+                    if let error = error {
+                        completion(.failure(error))
+                    } else {
+                        completion(.success(true))
+                    }
                 }
             })
         case .public:
@@ -289,11 +313,12 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
             let documentReference: DocumentReference = FirestoreManager.shared.firestore.collection(publicPlaylistsPath).document(playlist.listID)
 
             documentReference.delete(completion: { error in
-
-                if let error = error {
-                    completion(.failure(error))
-                } else {
-                    completion(.success(true))
+                mainThreadSafe {
+                    if let error = error {
+                        completion(.failure(error))
+                    } else {
+                        completion(.success(true))
+                    }
                 }
             })
         }

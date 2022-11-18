@@ -14,6 +14,14 @@ struct LectureInfo: Hashable, Codable {
     var lastPlayedPoint: Int
     var documentId: String
 
+    init(id: Int, creationTimestamp: Int, isFavourite: Bool, lastPlayedPoint: Int, documentId: String) {
+        self.id = id
+        self.creationTimestamp = creationTimestamp
+        self.isFavourite = isFavourite
+        self.lastPlayedPoint = lastPlayedPoint
+        self.documentId = documentId
+    }
+
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(Int.self, forKey: .id)

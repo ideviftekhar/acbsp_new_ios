@@ -73,7 +73,7 @@ extension PlayerViewController {
         }
 
         visibleState = .expanded
-        setNeedsStatusBarAppearanceUpdate()
+        tabBarController.setNeedsStatusBarAppearanceUpdate()
         if animated {
             UIView.animate(withDuration: 0.3, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [], animations: middleAnimationBlock)
             UIView.animate(withDuration: 0.6, delay: 0.0, usingSpringWithDamping: 0.9, initialSpringVelocity: 0.3, options: .curveEaseInOut, animations: animationBlock)
@@ -109,7 +109,7 @@ extension PlayerViewController {
         }
 
         visibleState = .minimize
-        setNeedsStatusBarAppearanceUpdate()
+        tabBarController.setNeedsStatusBarAppearanceUpdate()
         if animated {
             UIView.animate(withDuration: 0.3, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [], animations: middleAnimationBlock)
             UIView.animate(withDuration: 0.6, delay: 0.0, usingSpringWithDamping: 0.85, initialSpringVelocity: 0.1, options: options, animations: animationBlock)
@@ -136,7 +136,7 @@ extension PlayerViewController {
         }
 
         visibleState = .close
-        setNeedsStatusBarAppearanceUpdate()
+        tabBarController.setNeedsStatusBarAppearanceUpdate()
         if animated {
             UIView.animate(withDuration: 0.6, delay: 0.0, usingSpringWithDamping: 0.85, initialSpringVelocity: 0.1, options: .curveEaseInOut, animations: animationBlock)
         } else {
@@ -145,16 +145,16 @@ extension PlayerViewController {
     }
 
     @IBAction private func playlistButtonTapped(_ sender: UIButton) {
-        if sender.isSelected {
+        if playlistButton.isSelected {
             hidePlaylist(animated: true)
         } else {
             showPlaylist(animated: true)
         }
-        sender.isSelected = !sender.isSelected
     }
 
     func showPlaylist(animated: Bool) {
         let animationBlock = { [self] in
+            playlistButton.isSelected = true
             tableViewHeightConstraint.isActive = false
             playingInfoStackView.axis = .horizontal
             playingInfoImageViewWidthConstraint.constant = 50
@@ -179,9 +179,14 @@ extension PlayerViewController {
 
     func hidePlaylist(animated: Bool) {
         let animationBlock = { [self] in
+            playlistButton.isSelected = false
             tableViewHeightConstraint.isActive = true
             playingInfoStackView.axis = .vertical
-            playingInfoImageViewWidthConstraint.constant = 250
+            if self.traitCollection.verticalSizeClass == .compact {
+                playingInfoImageViewWidthConstraint.constant = 150
+            } else {
+                playingInfoImageViewWidthConstraint.constant = 250
+            }
             playingInfoTitleStackView.alignment = .center
 
             self.view.setNeedsLayout()

@@ -37,7 +37,7 @@ struct Time: Hashable, Codable {
         } else if second > 0 {
             return String(format: "%is", second)
         } else {
-            return String(format: "0h")
+            return String(format: "0m")
         }
     }
 
@@ -53,7 +53,7 @@ struct Time: Hashable, Codable {
         } else if second > 0 {
             return String(format: "%is", second)
         } else {
-            return String(format: "0h")
+            return String(format: "0m")
         }
     }
 

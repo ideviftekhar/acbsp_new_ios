@@ -87,7 +87,9 @@ extension DefaultLectureViewModel {
 
         guard let currentUser = Auth.auth().currentUser else {
             let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
-            completion(.failure(error))
+            mainThreadSafe {
+                completion(.failure(error))
+            }
             return
         }
 
@@ -123,10 +125,13 @@ extension DefaultLectureViewModel {
                 }
 
                 success.reference.setData(data, merge: true, completion: { error in
-                    if let error = error {
-                        completion(.failure(error))
-                    } else {
-                        FirestoreManager.shared.getDocument(documentReference: documentReference, source: .default, completion: completion)
+
+                    mainThreadSafe {
+                        if let error = error {
+                            completion(.failure(error))
+                        } else {
+                            FirestoreManager.shared.getDocument(documentReference: documentReference, source: .default, completion: completion)
+                        }
                     }
                 })
             case .failure(let error):

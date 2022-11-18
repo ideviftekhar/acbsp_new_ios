@@ -11,7 +11,7 @@ extension Persistant {
 
     func verifyDownloads(_ completionHandler: @escaping (() -> Void)) {
 
-        for dbLecture in dbLectures {
+        for dbLecture in getAllDBLectures() {
             let fileExist = DownloadManager.shared.localFileExists(for: dbLecture)
 
             if fileExist && dbLecture.downloadStateEnum != .downloaded {
@@ -26,6 +26,7 @@ extension Persistant {
 
     func reschedulePendingDownloads() {
 
+        let dbLectures = getAllDBLectures()
         let dbPendingDownloadLectures: [DBLecture] = dbLectures.filter { $0.downloadStateEnum == .notDownloaded || $0.downloadStateEnum == .error }
 
         guard !dbPendingDownloadLectures.isEmpty else {
@@ -42,6 +43,8 @@ extension Persistant {
 
         var downloadableLectures: [DBLecture] = []
 
+        let dbLectures = getAllDBLectures()
+
         for lecture in lectures {
             if let dbLecture = dbLectures.first(where: { $0.id == lecture.id }) {
 
@@ -54,7 +57,6 @@ extension Persistant {
 
             } else {
                 let dbLecture = Lecture.createNewDBLecture(lecture: lecture)
-                self.dbLectures.insert(dbLecture, at: 0)
                 downloadableLectures.append(dbLecture)
             }
         }
@@ -72,48 +74,39 @@ extension Persistant {
             return
         }
 
-        var deletedLectures: [DBLecture] = []
+        var deletableLectures: [DBLecture] = []
+        let dbLectures = getAllDBLectures()
 
         for lecture in lectures {
-            if let index = dbLectures.firstIndex(where: { $0.id == lecture.id }) {
-                let dbLecture = dbLectures[index]
+            if let dbLecture = dbLectures.first(where: { $0.id == lecture.id }) {
 
                 if let localFileURL = DownloadManager.shared.localFileURL(for: dbLecture) {
                     DownloadManager.shared.deleteLocalFile(localFileURL: localFileURL)
                 }
 
-                dbLectures.remove(at: index)
-                deletedLectures.append(dbLecture)
+                deletableLectures.append(dbLecture)
 
                 dbLecture.downloadState = DBLecture.DownloadState.notDownloaded.rawValue
                 deleteObject(object: dbLecture)
             }
         }
 
-        guard !deletedLectures.isEmpty else {
+        guard !deletableLectures.isEmpty else {
             return
         }
 
-        NotificationCenter.default.post(name: Self.Notification.downloadsRemoved, object: deletedLectures)
+        NotificationCenter.default.post(name: Self.Notification.downloadsRemoved, object: deletableLectures)
 
         saveMainContext(nil)
     }
 
-    func getDbLectures() -> [DBLecture] {
+    func getAllDBLectures() -> [DBLecture] {
 
         let finalContext = mainContext
 
         let objects: [DBLecture] = self.fetch(in: finalContext)
 
         return objects
-    }
-
-    func lectureDownloadState(lecture: Lecture) -> DBLecture.DownloadState {
-        if let object = dbLectures.first(where: { $0.id == lecture.id }) {
-            return object.downloadStateEnum
-        } else {
-            return .notDownloaded
-        }
     }
 }
 

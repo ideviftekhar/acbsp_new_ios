@@ -118,7 +118,7 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 }
             })
 
-            switch lecture.downloadingState {
+            switch lecture.downloadState {
             case .notDownloaded:
                 downloadedIconImageView?.isHidden = true
                 downloadProgressView?.isHidden = true
@@ -153,18 +153,19 @@ class LectureCell: UITableViewCell, IQModelableCell {
                     downloadedIconImageView?.tintColor = UIColor.systemBlue
                     downloadedIconImageView?.image = UIImage(compatibleSystemName: "arrow.down.circle.fill")
                     downloadProgressView?.isHidden = false
+                    downloadProgressView?.value = downloadProgress * 100
                 } else if downloadProgress == 0 {
                     downloadedIconImageView?.isHidden = true
                     downloadProgressView?.isHidden = true
                 }
             })
 
-            favouritesIconImageView?.isHidden = !lecture.isFavourites
+            favouritesIconImageView?.isHidden = !lecture.isFavourite
 
             do {
                 var actions: [SPAction] = []
 
-                switch lecture.downloadingState {
+                switch lecture.downloadState {
                 case .notDownloaded, .error:
                     if let download = allActions[.download] {
                         actions.append(download)
@@ -180,7 +181,7 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 }
 
                 // Is Favourites
-                if lecture.isFavourites, let removeFromFavourites = allActions[.removeFromFavourites] {
+                if lecture.isFavourite, let removeFromFavourites = allActions[.removeFromFavourites] {
                     actions.append(removeFromFavourites)
                 } else if let markAsFavourite = allActions[.markAsFavourite] {
                     actions.append(markAsFavourite)

@@ -26,11 +26,12 @@ class FavouritesViewController: LectureViewController {
             switch result {
             case .success(var success):
                 success = success.filter({ $0.isFavourite })
-                var lectureIds: [Int] = success.map({ $0.id })
-                let uniqueIds: Set<Int> = Set(lectureIds)
-                lectureIds = Array(uniqueIds)
+                var lectureIDs: [Int] = success.map({ $0.id })
 
-                DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIds, source: source, progress: nil, completion: completion)
+                let uniqueIds: NSOrderedSet = NSOrderedSet(array: lectureIDs)
+                lectureIDs = (uniqueIds.array as? [Int]) ?? lectureIDs
+
+                DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: completion)
             case .failure(let error):
                 completion(.failure(error))
             }

@@ -9,6 +9,7 @@ import UIKit
 import AVKit
 import FirebaseFirestore
 import IQListKit
+import FirebaseDynamicLinks
 
 protocol LectureViewControllerDelegate: AnyObject {
     func lectureController(_ controller: LectureViewController, didSelected lectures: [Lecture])
@@ -89,6 +90,7 @@ class LectureViewController: SearchViewController {
 
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(lectureUpdateNotification(_:)), name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
@@ -96,7 +98,59 @@ class LectureViewController: SearchViewController {
 
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
     }
+
+    @objc private func lectureUpdateNotification(_ notification: Notification) {
+
+        if let lectures: [Lecture] = notification.object as? [Lecture] {
+
+            serialListKitQueue.async { [self] in
+                var newModels = self.models
+                for lecture in lectures {
+
+                    if self is DownloadViewController { // If download controller, then we also need to remove or add it in UI
+                        if lecture.downloadState == .notDownloaded {
+                            newModels.removeAll(where: { $0.id == lecture.id })
+                        } else {
+                            let lectureIndexes = newModels.allIndex(where: { $0.id == lecture.id })
+                            if !lectureIndexes.isEmpty {
+                                for index in lectureIndexes {
+                                    newModels[index] = lecture
+                                }
+                            } else {
+                                newModels.insert(lecture, at: 0)
+                            }
+                        }
+                    } else if self is FavouritesViewController {    // If favorites controller, then we also need to remove or add it in UI
+                        if lecture.isFavourite {
+                            let lectureIndexes = newModels.allIndex(where: { $0.id == lecture.id })
+                            if !lectureIndexes.isEmpty {
+                                for index in lectureIndexes {
+                                    newModels[index] = lecture
+                                }
+                            } else {
+                                newModels.insert(lecture, at: 0)
+                            }
+                        } else {
+                            newModels.removeAll(where: { $0.id == lecture.id })
+                        }
+                    } else {
+                        let lectureIndexes = newModels.allIndex(where: { $0.id == lecture.id })
+                        for index in lectureIndexes {
+                            newModels[index] = lecture
+                        }
+                    }
+                }
+
+                DispatchQueue.main.async {
+                    self.models = newModels
+                    self.refreshUI(showNoItems: true)
+                }
+            }
+        }
+    }
+
     @objc internal func keyboardWillShow(_ notification: Notification?) {
 
         let keyboardFrame: CGRect
@@ -293,22 +347,22 @@ extension LectureViewController {
 
                 switch option {
                 case .download:
-                    let eligibleDownloadModels: [Model] = selectedModels.filter { $0.downloadingState == .notDownloaded || $0.downloadingState == .error }
+                    let eligibleDownloadModels: [Model] = selectedModels.filter { $0.downloadState == .notDownloaded || $0.downloadState == .error }
                     Persistant.shared.save(lectures: eligibleDownloadModels)
 
                     DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleDownloadModels, isCompleted: nil, isDownloaded: true, isFavourite: nil, lastPlayedPoint: nil, completion: {_ in })
 
                 case .deleteFromDownloads:
-                    let eligibleDeleteFromDownloadsModels: [Model] = selectedModels.filter { $0.downloadingState == .downloaded }
+                    let eligibleDeleteFromDownloadsModels: [Model] = selectedModels.filter { $0.downloadState == .downloaded }
                     Persistant.shared.delete(lectures: eligibleDeleteFromDownloadsModels)
 
                     DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleDeleteFromDownloadsModels, isCompleted: nil, isDownloaded: false, isFavourite: nil, lastPlayedPoint: nil, completion: {_ in })
                 case .markAsFavourite:
-                    let eligibleMarkAsFavouriteModels: [Model] = selectedModels.filter { !$0.isFavourites }
+                    let eligibleMarkAsFavouriteModels: [Model] = selectedModels.filter { !$0.isFavourite }
 
                     DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleMarkAsFavouriteModels, isCompleted: nil, isDownloaded: nil, isFavourite: true, lastPlayedPoint: nil, completion: {_ in })
                 case .removeFromFavourites:
-                    let eligibleRemoveFromFavouritesModels: [Model] = selectedModels.filter { $0.isFavourites }
+                    let eligibleRemoveFromFavouritesModels: [Model] = selectedModels.filter { $0.isFavourite }
                     DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleRemoveFromFavouritesModels, isCompleted: nil, isDownloaded: nil, isFavourite: false, lastPlayedPoint: nil, completion: {_ in })
                 case .addToPlaylist:
                     let navigationController = UIStoryboard.playlists.instantiate(UINavigationController.self, identifier: "PlaylistNavigationController")
@@ -364,25 +418,25 @@ extension LectureViewController {
 
         if !selectedModels.isEmpty {
 
-            let eligibleDownloadModels: [Model] = selectedModels.filter { $0.downloadingState == .notDownloaded || $0.downloadingState == .error }
+            let eligibleDownloadModels: [Model] = selectedModels.filter { $0.downloadState == .notDownloaded || $0.downloadState == .error }
             if !eligibleDownloadModels.isEmpty, let download = allActions[.download] {
                 download.action.title = LectureOption.download.rawValue + " (\(eligibleDownloadModels.count))"
                 menuItems.append(download)
             }
 
-            let eligibleDeleteFromDownloadsModels: [Model] = selectedModels.filter { $0.downloadingState == .downloaded }
+            let eligibleDeleteFromDownloadsModels: [Model] = selectedModels.filter { $0.downloadState == .downloaded }
             if !eligibleDeleteFromDownloadsModels.isEmpty, let deleteFromDownloads = allActions[.deleteFromDownloads] {
                 deleteFromDownloads.action.title = LectureOption.deleteFromDownloads.rawValue + " (\(eligibleDeleteFromDownloadsModels.count))"
                 menuItems.append(deleteFromDownloads)
             }
 
-            let eligibleMarkAsFavouriteModels: [Model] = selectedModels.filter { !$0.isFavourites }
+            let eligibleMarkAsFavouriteModels: [Model] = selectedModels.filter { !$0.isFavourite }
             if !eligibleMarkAsFavouriteModels.isEmpty, let markAsFavourite = allActions[.markAsFavourite] {
                 markAsFavourite.action.title = LectureOption.markAsFavourite.rawValue + " (\(eligibleMarkAsFavouriteModels.count))"
                 menuItems.append(markAsFavourite)
             }
 
-            let eligibleRemoveFromFavouritesModels: [Model] = selectedModels.filter { $0.isFavourites }
+            let eligibleRemoveFromFavouritesModels: [Model] = selectedModels.filter { $0.isFavourite }
             if !eligibleRemoveFromFavouritesModels.isEmpty, let removeFromFavourites = allActions[.removeFromFavourites] {
                 removeFromFavourites.action.title = LectureOption.removeFromFavourites.rawValue + " (\(eligibleRemoveFromFavouritesModels.count))"
                 menuItems.append(removeFromFavourites)
@@ -512,7 +566,72 @@ extension LectureViewController: LectureCellDelegate {
         case .resetProgress:
             DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: false, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: 0, completion: {_ in })
         case .share:
-            break
+
+            let deepLinkBaseURL = "https://bvks.com?lectureId=\(lecture.id)"
+            let domainURIPrefix = "https://prabhupada.page.link"
+
+            var descriptions: [String] = []
+            do {
+                let durationString = "• Duration: " + lecture.lengthTime.displayString
+                descriptions.append(durationString)
+
+                if !lecture.legacyData.verse.isEmpty {
+                    let verseString = "• " + lecture.legacyData.verse
+                    descriptions.append(verseString)
+                }
+
+                let recordingDateString = "• Date of Recording: " + lecture.dateOfRecording.display_dd_MM_yyyy
+                descriptions.append(recordingDateString)
+
+                if !lecture.location.displayString.isEmpty {
+                    let locationString = "• Location: " + lecture.location.displayString
+                    descriptions.append(locationString)
+                }
+            }
+
+            guard let link = URL(string: deepLinkBaseURL),
+                  let linkBuilder = DynamicLinkComponents(link: link, domainURIPrefix: domainURIPrefix) else {
+                return
+            }
+
+            do {
+                let iOSParameters = DynamicLinkIOSParameters(bundleID: "com.bvksdigital.acbsp")
+                iOSParameters.appStoreID = "1645287937"
+                linkBuilder.iOSParameters = iOSParameters
+            }
+
+            do {
+                let androidParameters = DynamicLinkAndroidParameters(packageName: "com.iskcon.prabhupada")
+                 linkBuilder.androidParameters = androidParameters
+            }
+
+            do {
+                let socialMediaParameters = DynamicLinkSocialMetaTagParameters()
+                socialMediaParameters.title = lecture.titleDisplay
+                socialMediaParameters.descriptionText = descriptions.joined(separator: "\n")
+                if let thumbnailURL = lecture.thumbnailURL {
+                    socialMediaParameters.imageURL = thumbnailURL
+                }
+                linkBuilder.socialMetaTagParameters = socialMediaParameters
+            }
+
+            linkBuilder.shorten() { url, _, _ in
+                var appLinks: [Any] = []
+                if let url = url {
+                    appLinks.append(url)
+                } else if let url = linkBuilder.url {
+                    appLinks.append(url)
+                }
+
+                guard !appLinks.isEmpty else {
+                    return
+                }
+
+                let shareController = UIActivityViewController(activityItems: appLinks, applicationActivities: nil)
+                shareController.popoverPresentationController?.sourceView = cell
+                self.present(shareController, animated: true)
+            }
+
         case .downloading:
             break
         }

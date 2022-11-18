@@ -45,12 +45,16 @@ extension DefaultLectureViewModel {
         return lectures
     }
 
-    static func refreshLectureWithLectureInfo(lectures: [Lecture], lectureInfo: [LectureInfo]) -> [Lecture] {
+    static func refreshLectureWithLectureInfo(lectures: [Lecture], lectureInfos: [LectureInfo], downloadedLectures: [DBLecture]) -> [Lecture] {
         let lectures = lectures.map { lecture -> Lecture in
             var lecture = lecture
-            if let lectureInfo = lectureInfo.first(where: { $0.id == lecture.id }) {
-                lecture.isFavourites = lectureInfo.isFavourite
+            if let lectureInfo = lectureInfos.first(where: { $0.id == lecture.id }) {
+                lecture.isFavourite = lectureInfo.isFavourite
                 lecture.lastPlayedPoint = lectureInfo.lastPlayedPoint
+            }
+
+            if let downloadedLecture = downloadedLectures.first(where: { $0.id == lecture.id }) {
+                lecture.downloadState = downloadedLecture.downloadStateEnum
             }
 
             return lecture

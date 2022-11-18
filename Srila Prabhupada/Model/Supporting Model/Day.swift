@@ -66,10 +66,21 @@ struct Day: Hashable, Codable, Comparable {
         dateComponents = DateComponents(calendar: Calendar.current, year: year, month: month, day: day)
     }
 
+    var date: Date? {
+        return dateComponents.date
+    }
+
     var display_dd_MMM_yyyy: String {
-        guard let date = dateComponents.date else {
+        guard let date = date else {
             return "\(day)-\(month)-\(year)"
         }
         return DateFormatter.dd_MMM_yyyy.string(from: date)
+    }
+
+    var display_dd_MM_yyyy: String {
+        guard let date = date else {
+            return "\(day)-\(month)-\(year)"
+        }
+        return DateFormatter.dd_MM_yyyy.string(from: date)
     }
 }
