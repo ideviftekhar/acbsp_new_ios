@@ -35,7 +35,7 @@ class LoadingViewController: UIViewController {
             progressView.setProgress(Float(progress), animated: true)
 
         }, completion: { [self] result in
-            
+
             progressView.alpha = 0.0
 
             switch result {

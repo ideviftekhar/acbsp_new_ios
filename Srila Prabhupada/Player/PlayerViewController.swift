@@ -224,6 +224,7 @@ class PlayerViewController: LectureViewController {
                     seekTo(seconds: currentLecture.lastPlayedPoint)
                 }
 
+                DefaultLectureViewModel.defaultModel.addToRecentlyPlayed(lecture: currentLecture, completion: { _ in })
                 DefaultLectureViewModel.defaultModel.updateTopLecture(date: Date(), lectureID: currentLecture.id, completion: { _ in })
             } else {
                 try? AVAudioSession.sharedInstance().setCategory(.ambient)

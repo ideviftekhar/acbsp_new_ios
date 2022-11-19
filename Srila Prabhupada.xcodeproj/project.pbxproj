@@ -10,6 +10,7 @@
 		6B6AC1687C5A415A51C2BC3D /* Pods_Srila_Prabhupada.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BAA6DE73F4A961910A41580 /* Pods_Srila_Prabhupada.framework */; };
 		C002119A28F6A03200BE94EC /* SPNowPlayingInfoCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = C002119928F6A03200BE94EC /* SPNowPlayingInfoCenter.swift */; };
 		C002119C28F6AD5300BE94EC /* SPNowPlayableCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = C002119B28F6AD5300BE94EC /* SPNowPlayableCommand.swift */; };
+		C00340012928B2B9008F8C81 /* LectureViewModel+RecentlyPlayed.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00340002928B2B9008F8C81 /* LectureViewModel+RecentlyPlayed.swift */; };
 		C0065D4828D881A400B18AA6 /* SideMenuItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0065D4728D881A400B18AA6 /* SideMenuItem.swift */; };
 		C0065D4B28D883F300B18AA6 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0065D4A28D883F300B18AA6 /* Constants.swift */; };
 		C0065D4D28D884AF00B18AA6 /* LectureOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0065D4C28D884AF00B18AA6 /* LectureOption.swift */; };
@@ -132,6 +133,7 @@
 		5BADAC7A3FC5C61493F24A9E /* Pods-Srila Prabhupada.debug-internal.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Srila Prabhupada.debug-internal.xcconfig"; path = "Target Support Files/Pods-Srila Prabhupada/Pods-Srila Prabhupada.debug-internal.xcconfig"; sourceTree = "<group>"; };
 		C002119928F6A03200BE94EC /* SPNowPlayingInfoCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SPNowPlayingInfoCenter.swift; sourceTree = "<group>"; };
 		C002119B28F6AD5300BE94EC /* SPNowPlayableCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SPNowPlayableCommand.swift; sourceTree = "<group>"; };
+		C00340002928B2B9008F8C81 /* LectureViewModel+RecentlyPlayed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LectureViewModel+RecentlyPlayed.swift"; sourceTree = "<group>"; };
 		C003CD9E28D8491600A11039 /* Srila Prabhupada.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Srila Prabhupada.entitlements"; sourceTree = "<group>"; };
 		C0065D4728D881A400B18AA6 /* SideMenuItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SideMenuItem.swift; sourceTree = "<group>"; };
 		C0065D4A28D883F300B18AA6 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -546,6 +548,7 @@
 				C0EE5BC728F8401E00528AA7 /* LectureViewModel+TopLecture.swift */,
 				C0EE5BC928F8403700528AA7 /* LectureViewModel+LectureInfo.swift */,
 				C0EE5BCB28F8404000528AA7 /* LectureViewModel+ListenInfo.swift */,
+				C00340002928B2B9008F8C81 /* LectureViewModel+RecentlyPlayed.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -887,6 +890,7 @@
 				C00DC57328E1DA66001EDE95 /* NSManagedObject+Extensions.swift in Sources */,
 				C00AB20A28D1F52D00A62A2F /* FilterDetailTableViewCell.swift in Sources */,
 				C03E3F2828DCC6C500B987DD /* ListenInfo.swift in Sources */,
+				C00340012928B2B9008F8C81 /* LectureViewModel+RecentlyPlayed.swift in Sources */,
 				C0FA305F28CF4AF000E78843 /* LoginViewModel.swift in Sources */,
 				C0DA677D28FD8190003BF8E4 /* SPMenu.swift in Sources */,
 				C007586628E5BF2F0010EBE6 /* DownloadManager.swift in Sources */,

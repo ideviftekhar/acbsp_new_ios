@@ -85,7 +85,8 @@ extension DefaultLectureViewModel {
 
     func updateTopLecture(date: Date, lectureID: Int, completion: @escaping (Swift.Result<TopLecture, Error>) -> Void) {
 
-        guard let currentUser = Auth.auth().currentUser else {
+        guard FirestoreManager.shared.currentUser != nil,
+                let uid = FirestoreManager.shared.currentUserUID else {
             let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
             mainThreadSafe {
                 completion(.failure(error))
@@ -117,10 +118,10 @@ extension DefaultLectureViewModel {
                     data["creationTimestamp"] = currentTimestamp
                     data["documentId"] = documentID
                     data["documentPath"] = documentReference.path
-                    data["playedBy"] = [currentUser.uid]
+                    data["playedBy"] = [uid]
                     data["playedIds"] = [lectureID]
                 } else {
-                    data["playedBy"] = FieldValue.arrayUnion([currentUser.uid])
+                    data["playedBy"] = FieldValue.arrayUnion([uid])
                     data["playedIds"] = FieldValue.arrayUnion([lectureID])
                 }
 

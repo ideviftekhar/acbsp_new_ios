@@ -14,7 +14,8 @@ extension DefaultLectureViewModel {
 
     func getUsersListenInfo(source: FirestoreSource, completion: @escaping (Swift.Result<[ListenInfo], Error>) -> Void) {
 
-        guard let currentUser = Auth.auth().currentUser else {
+        guard FirestoreManager.shared.currentUser != nil,
+                let uid = FirestoreManager.shared.currentUserUID else {
             let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
             mainThreadSafe {
                 completion(.failure(error))
@@ -22,7 +23,7 @@ extension DefaultLectureViewModel {
             return
         }
 
-        let query: Query = FirestoreManager.shared.firestore.collection(FirestoreCollection.usersListenInfo(userId: currentUser.uid).path)
+        let query: Query = FirestoreManager.shared.firestore.collection(FirestoreCollection.usersListenInfo(userId: uid).path)
         query.order(by: "creationTimestamp", descending: true)
 
         FirestoreManager.shared.getDocuments(query: query, source: source, completion: { (result: Swift.Result<[ListenInfo], Error>) in
@@ -37,7 +38,8 @@ extension DefaultLectureViewModel {
 
     func updateListenInfo(date: Date, addListenSeconds seconds: Int, lecture: Lecture, completion: @escaping (Swift.Result<ListenInfo, Error>) -> Void) {
 
-        guard let currentUser = Auth.auth().currentUser else {
+        guard FirestoreManager.shared.currentUser != nil,
+                let uid = FirestoreManager.shared.currentUserUID else {
             let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
             mainThreadSafe {
                 completion(.failure(error))
@@ -45,7 +47,7 @@ extension DefaultLectureViewModel {
             return
         }
 
-        let collectionReference: CollectionReference = FirestoreManager.shared.firestore.collection(FirestoreCollection.usersListenInfo(userId: currentUser.uid).path)
+        let collectionReference: CollectionReference = FirestoreManager.shared.firestore.collection(FirestoreCollection.usersListenInfo(userId: uid).path)
 
         let documentID = DateFormatter.d_M_yyyy.string(from: date)
         let documentReference = collectionReference.document(documentID)
@@ -88,7 +90,7 @@ extension DefaultLectureViewModel {
                     data["videoListen"] = 0
                 } else {
                     data["audioListen"] = FieldValue.increment(Int64(seconds))
-                    data["playedBy"] = FieldValue.arrayUnion([currentUser.uid])
+                    data["playedBy"] = FieldValue.arrayUnion([uid])
                     data["playedIds"] = FieldValue.arrayUnion([lecture.id])
 
                     let listenDetails: [String: Any] = ["BG": FieldValue.increment(Int64(countBG)),

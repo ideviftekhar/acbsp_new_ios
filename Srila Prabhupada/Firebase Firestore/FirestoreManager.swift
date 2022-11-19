@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseAuth
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
@@ -21,6 +22,54 @@ class FirestoreManager: NSObject {
 
         return firestore
     }()
+
+    var currentUser: User? {
+        Auth.auth().currentUser
+    }
+
+    #if DEBUG
+    private var simulatedUID: String? = nil
+    private var simulatedEmail: String? = nil
+    private var simulatedDisplayName: String? = nil
+    private var simulatedPhotoURL: URL? = nil
+    #else
+    private var simulatedUID: String? = nil
+    private var simulatedEmail: String? = nil
+    private var simulatedDisplayName: String? = nil
+    private var simulatedPhotoURL: URL? = nil
+    #endif
+
+    var currentUserUID: String? {
+        if let simulatedUID = simulatedUID {
+            return simulatedUID
+        } else {
+            return currentUser?.uid
+        }
+    }
+
+    var currentUserEmail: String? {
+        if let simulatedEmail = simulatedEmail {
+            return simulatedEmail
+        } else {
+            return currentUser?.email
+        }
+    }
+
+    var currentUserDisplayName: String? {
+        if let simulatedDisplayName = simulatedDisplayName {
+            return simulatedDisplayName
+        } else {
+            return currentUser?.displayName
+        }
+    }
+
+    var currentUserPhotoURL: URL? {
+        if let simulatedPhotoURL = simulatedPhotoURL {
+            return simulatedPhotoURL
+        } else {
+            return currentUser?.photoURL
+        }
+    }
 
     override private init() {
         super.init()

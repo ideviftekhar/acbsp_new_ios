@@ -152,7 +152,7 @@ class PlaylistViewController: SearchViewController {
 
             let userEmail: String?
             if !lecturesToAdd.isEmpty {
-                userEmail = Auth.auth().currentUser?.email ?? ""
+                userEmail = FirestoreManager.shared.currentUserEmail ?? nil
             } else {
                 userEmail = nil
             }

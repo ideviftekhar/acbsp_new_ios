@@ -12,7 +12,9 @@ import FirebaseAuth
 extension DefaultLectureViewModel {
 
     func getUsersLectureInfo(source: FirestoreSource, completion: @escaping (Swift.Result<[LectureInfo], Error>) -> Void) {
-        guard let currentUser = Auth.auth().currentUser else {
+
+        guard FirestoreManager.shared.currentUser != nil,
+                let uid = FirestoreManager.shared.currentUserUID else {
             let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
             mainThreadSafe {
                 completion(.failure(error))
@@ -27,7 +29,7 @@ extension DefaultLectureViewModel {
                 }
             }
         } else {
-            let query: Query = FirestoreManager.shared.firestore.collection(FirestoreCollection.usersLectureInfo(userId: currentUser.uid).path)
+            let query: Query = FirestoreManager.shared.firestore.collection(FirestoreCollection.usersLectureInfo(userId: uid).path)
 
             FirestoreManager.shared.getDocuments(query: query, source: .default, completion: { [self] (result: Swift.Result<[LectureInfo], Error>) in
                 switch result {
@@ -83,7 +85,8 @@ extension DefaultLectureViewModel {
                            isFavourite: Bool?,
                            lastPlayedPoint: Int?,
                            completion: @escaping (Swift.Result<Bool, Error>) -> Void) {
-        guard let currentUser = Auth.auth().currentUser else {
+        guard FirestoreManager.shared.currentUser != nil,
+                let uid = FirestoreManager.shared.currentUserUID else {
             let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
             mainThreadSafe {
                 completion(.failure(error))
@@ -94,7 +97,7 @@ extension DefaultLectureViewModel {
         serialLectureWorkerQueue.async {
             let currentTimestamp = Int(Date().timeIntervalSince1970*1000)
 
-            let collectionReference: CollectionReference = FirestoreManager.shared.firestore.collection(FirestoreCollection.usersLectureInfo(userId: currentUser.uid).path)
+            let collectionReference: CollectionReference = FirestoreManager.shared.firestore.collection(FirestoreCollection.usersLectureInfo(userId: uid).path)
 
             var updatedLectures: [Lecture] = []
 
@@ -105,12 +108,14 @@ extension DefaultLectureViewModel {
                 if let isCompleted = isCompleted {  data["isCompleted"] = isCompleted   }
                 if let isDownloaded = isDownloaded {  data["isDownloaded"] = isDownloaded   }
                 if let isFavourite = isFavourite {  data["isFavourite"] = isFavourite   }
-                if let lastPlayedPoint = lastPlayedPoint {
-                    if lastPlayedPoint == -1 {
-                        data["lastPlayedPoint"] = lecture.length
-                    } else {
-                        data["lastPlayedPoint"] = lastPlayedPoint
+
+                var lastPlayedPoint = lastPlayedPoint
+
+                if let value = lastPlayedPoint {
+                    if value == -1 {
+                        lastPlayedPoint = lecture.length
                     }
+                    data["lastPlayedPoint"] = lastPlayedPoint
                 }
 
                 let documentReference: DocumentReference

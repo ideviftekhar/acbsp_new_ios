@@ -205,13 +205,14 @@ extension SearchViewController: SideMenuControllerDelegate {
             let parameters = [ SKStoreProductParameterITunesItemIdentifier: Constants.appStoreIdentifier]
             storeViewController.loadProduct(withParameters: parameters, completionBlock: { [weak self] (loaded, error) -> Void in
                 if loaded {
-                    storeViewController.popoverPresentationController?.sourceView = cell
-                    // Parent class of self is UIViewContorller
-                    self?.present(storeViewController, animated: true, completion: nil)
                 } else if let error = error {
+                    storeViewController.dismiss(animated: true)
                     self?.showAlert(title: "Error", message: error.localizedDescription)
                 }
             })
+            storeViewController.popoverPresentationController?.sourceView = cell
+            // Parent class of self is UIViewContorller
+            self.present(storeViewController, animated: true, completion: nil)
         }
     }
 }

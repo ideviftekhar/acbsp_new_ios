@@ -42,6 +42,10 @@ protocol LectureViewModel: AnyObject {
     func getMonthLecturesIds(month: Int, year: Int, completion: @escaping (Swift.Result<[Int], Error>) -> Void)
     func getPopularLectureIds(completion: @escaping (Swift.Result<[Int], Error>) -> Void)
     func updateTopLecture(date: Date, lectureID: Int, completion: @escaping (Swift.Result<TopLecture, Error>) -> Void)
+
+    func getRecentlyPlayedLectureIDs(source: FirestoreSource, completion: @escaping (Swift.Result<[Int], Error>) -> Void)
+    func addToRecentlyPlayed(lecture: Lecture, completion: @escaping (Swift.Result<[Int], Error>) -> Void)
+    func removeFromRecentlyPlayed(lecture: Lecture, completion: @escaping (Swift.Result<[Int], Error>) -> Void)
 }
 
 class DefaultLectureViewModel: NSObject, LectureViewModel {

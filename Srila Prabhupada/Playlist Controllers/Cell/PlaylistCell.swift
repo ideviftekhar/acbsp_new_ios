@@ -64,9 +64,9 @@ class PlaylistCell: UITableViewCell, IQModelableCell {
             do {
                 var actions: [SPAction] = []
 
-                if let user = Auth.auth().currentUser,
-                   let email = user.email,
-                   model.authorEmail.elementsEqual(email) {
+                if FirestoreManager.shared.currentUser != nil,
+                      let email = FirestoreManager.shared.currentUserEmail,
+                      model.authorEmail.elementsEqual(email) {
 
                     if let deletePlaylist = allActions[.delete] {
                         actions.append(deletePlaylist)

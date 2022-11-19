@@ -25,7 +25,9 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
 
     func createPlaylist(title: String, category: String, description: String, listType: PlaylistType, lectures: [Lecture], completion: @escaping (Swift.Result<Playlist, Error>) -> Void) {
 
-        guard let currentUser = Auth.auth().currentUser, let email = currentUser.email else {
+        guard FirestoreManager.shared.currentUser != nil,
+              let uid = FirestoreManager.shared.currentUserUID,
+              let email = FirestoreManager.shared.currentUserEmail else {
             let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
             mainThreadSafe {
                 completion(.failure(error))
@@ -52,7 +54,7 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
 
         switch listType {
         case .private:
-            let collectionReference: FirebaseFirestore.CollectionReference = FirestoreManager.shared.firestore.collection(FirestoreCollection.privatePlaylists.path).document(currentUser.uid).collection(email)
+            let collectionReference: FirebaseFirestore.CollectionReference = FirestoreManager.shared.firestore.collection(FirestoreCollection.privatePlaylists.path).document(uid).collection(email)
 
             let newDocument = collectionReference.document()
 
@@ -93,7 +95,9 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
 
     func update(playlist: Playlist, title: String, category: String, description: String, completion: @escaping (Swift.Result<Playlist, Error>) -> Void) {
 
-        guard let currentUser = Auth.auth().currentUser, let email = currentUser.email else {
+        guard FirestoreManager.shared.currentUser != nil,
+              let uid = FirestoreManager.shared.currentUserUID,
+              let email = FirestoreManager.shared.currentUserEmail else {
             let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
             mainThreadSafe {
                 completion(.failure(error))
@@ -112,7 +116,7 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
         switch playlist.listType {
         case .private:
             let privatePlaylistsPath = FirestoreCollection.privatePlaylists.path
-            let collectionReference: FirebaseFirestore.CollectionReference = FirestoreManager.shared.firestore.collection(privatePlaylistsPath).document(currentUser.uid).collection(email)
+            let collectionReference: FirebaseFirestore.CollectionReference = FirestoreManager.shared.firestore.collection(privatePlaylistsPath).document(uid).collection(email)
             let existingDocument = collectionReference.document(playlist.listID)
 
             existingDocument.setData(data, merge: true, completion: { error in
@@ -144,7 +148,9 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
 
     func getPrivatePlaylist(searchText: String?, sortType: PlaylistSortType, completion: @escaping (Swift.Result<[Playlist], Error>) -> Void) {
 
-        guard let currentUser = Auth.auth().currentUser, let email = currentUser.email else {
+        guard FirestoreManager.shared.currentUser != nil,
+              let uid = FirestoreManager.shared.currentUserUID,
+              let email = FirestoreManager.shared.currentUserEmail else {
             let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
             mainThreadSafe {
                 completion(.failure(error))
@@ -152,7 +158,7 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
             return
         }
 
-        let collectionReference: FirebaseFirestore.CollectionReference = FirestoreManager.shared.firestore.collection(FirestoreCollection.privatePlaylists.path).document(currentUser.uid).collection(email)
+        let collectionReference: FirebaseFirestore.CollectionReference = FirestoreManager.shared.firestore.collection(FirestoreCollection.privatePlaylists.path).document(uid).collection(email)
 
         FirestoreManager.shared.getDocuments(query: collectionReference, source: .default, completion: { (result: Swift.Result<[Playlist], Error>) in
             switch result {
@@ -202,7 +208,9 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
     func add(lectures: [Lecture], to playlist: Playlist, completion: @escaping (Swift.Result<[Int], Error>) -> Void) {
         switch playlist.listType {
         case .private:
-            guard let currentUser = Auth.auth().currentUser, let email = currentUser.email else {
+            guard FirestoreManager.shared.currentUser != nil,
+                  let uid = FirestoreManager.shared.currentUserUID,
+                  let email = FirestoreManager.shared.currentUserEmail else {
                 let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
                 mainThreadSafe {
                     completion(.failure(error))
@@ -210,7 +218,7 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
                 return
             }
 
-            let collectionReference: FirebaseFirestore.CollectionReference = FirestoreManager.shared.firestore.collection(FirestoreCollection.privatePlaylists.path).document(currentUser.uid).collection(email)
+            let collectionReference: FirebaseFirestore.CollectionReference = FirestoreManager.shared.firestore.collection(FirestoreCollection.privatePlaylists.path).document(uid).collection(email)
 
             let documentReference = collectionReference.document(playlist.listID)
 
@@ -289,7 +297,9 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
     func delete(playlist: Playlist, completion: @escaping (Swift.Result<Bool, Error>) -> Void) {
         switch playlist.listType {
         case .private:
-            guard let currentUser = Auth.auth().currentUser, let email = currentUser.email else {
+            guard FirestoreManager.shared.currentUser != nil,
+                  let uid = FirestoreManager.shared.currentUserUID,
+                  let email = FirestoreManager.shared.currentUserEmail else {
                 let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
                 mainThreadSafe {
                     completion(.failure(error))
@@ -297,7 +307,7 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
                 return
             }
 
-            let collectionReference: FirebaseFirestore.CollectionReference = FirestoreManager.shared.firestore.collection(FirestoreCollection.privatePlaylists.path).document(currentUser.uid).collection(email)
+            let collectionReference: FirebaseFirestore.CollectionReference = FirestoreManager.shared.firestore.collection(FirestoreCollection.privatePlaylists.path).document(uid).collection(email)
             let documentReference = collectionReference.document(playlist.listID)
             documentReference.delete(completion: { error in
                 mainThreadSafe {
