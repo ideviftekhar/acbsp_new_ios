@@ -150,6 +150,22 @@ extension DefaultLectureViewModel {
                 documentReference.setData(data, merge: true)
                 // This is to temporarily update the information
                 do {
+                    let lectureInfoIndexes = self.userLectureInfo.allIndex(where: { $0.id == lecture.id })
+                    if !lectureInfoIndexes.isEmpty {
+                        for index in lectureInfoIndexes {
+
+                            if let isFavourite = isFavourite {
+                                self.userLectureInfo[index].isFavourite = isFavourite
+                            }
+                            if let lastPlayedPoint = lastPlayedPoint {
+                                self.userLectureInfo[index].lastPlayedPoint = lastPlayedPoint
+                            }
+                        }
+                    } else {
+                        let newLectureInfo = LectureInfo(id: lecture.id, creationTimestamp: currentTimestamp, isFavourite: isFavourite ?? false, lastPlayedPoint: lastPlayedPoint ?? 0, documentId: documentReference.documentID)
+                        self.userLectureInfo.append(newLectureInfo)
+                    }
+
                     let lectureIndexes = self.allLectures.allIndex(where: { $0.id == lecture.id })
                     for index in lectureIndexes {
                         var isUpdated: Bool = false
@@ -165,22 +181,6 @@ extension DefaultLectureViewModel {
                         if isUpdated {
                             updatedLectures.append(self.allLectures[index])
                         }
-                    }
-
-                    let lectureInfoIndexes = self.userLectureInfo.allIndex(where: { $0.id == lecture.id })
-                    if !lectureInfoIndexes.isEmpty {
-                        for index in lectureInfoIndexes {
-
-                            if let isFavourite = isFavourite {
-                                self.userLectureInfo[index].isFavourite = isFavourite
-                            }
-                            if let lastPlayedPoint = lastPlayedPoint {
-                                self.allLectures[index].lastPlayedPoint = lastPlayedPoint
-                            }
-                        }
-                    } else {
-                        let newLectureInfo = LectureInfo(id: lecture.id, creationTimestamp: currentTimestamp, isFavourite: isFavourite ?? false, lastPlayedPoint: lastPlayedPoint ?? 0, documentId: documentReference.documentID)
-                        self.userLectureInfo.append(newLectureInfo)
                     }
                 }
             }

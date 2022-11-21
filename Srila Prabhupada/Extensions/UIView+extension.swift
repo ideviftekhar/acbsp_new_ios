@@ -11,45 +11,42 @@ import UIKit
 @IBDesignable extension UIView {
 
     @IBInspectable var shadowRadius: CGFloat {
-        set {
-            layer.shadowRadius = newValue
-        }
         get {
             return layer.shadowRadius
+        }
+        set {
+            layer.shadowRadius = newValue
         }
     }
 
     @IBInspectable var shadowOffset: CGSize {
-        set {
-            layer.shadowOffset = newValue
-        }
         get {
             return layer.shadowOffset
+        }
+        set {
+            layer.shadowOffset = newValue
         }
     }
 
     @IBInspectable var shadowOpacity: Float {
-        set {
-            layer.shadowOpacity = newValue
-        }
         get {
             return layer.shadowOpacity
+        }
+        set {
+            layer.shadowOpacity = newValue
         }
     }
 
     var shadowPath: CGPath? {
-        set {
-            layer.shadowPath = newValue
-        }
         get {
             return layer.shadowPath
+        }
+        set {
+            layer.shadowPath = newValue
         }
     }
 
     @IBInspectable var shadowColor: UIColor? {
-        set {
-            layer.shadowColor = newValue?.cgColor
-        }
         get {
             if let color = layer.shadowColor {
                 return UIColor(cgColor: color)
@@ -57,13 +54,12 @@ import UIKit
                 return nil
             }
         }
+        set {
+            layer.shadowColor = newValue?.cgColor
+        }
     }
 
     @IBInspectable var borderColor: UIColor? {
-        set {
-            layer.borderColor = newValue?.cgColor
-        }
-
         get {
             if let color = layer.borderColor {
                 return UIColor(cgColor: color)
@@ -71,33 +67,35 @@ import UIKit
                 return nil
             }
         }
+        set {
+            layer.borderColor = newValue?.cgColor
+        }
     }
 
     @IBInspectable var borderWidth: CGFloat {
-        set {
-            layer.borderWidth = newValue
-        }
-
         get {
             return layer.borderWidth
+        }
+        set {
+            layer.borderWidth = newValue
         }
     }
 
     @IBInspectable var cornerRadius: CGFloat {
-        set {
-            layer.cornerRadius = newValue
-        }
         get {
             return layer.cornerRadius
+        }
+        set {
+            layer.cornerRadius = newValue
         }
     }
 
     @IBInspectable var masksToBounds: Bool {
-        set {
-            layer.masksToBounds = newValue
-        }
         get {
             return layer.masksToBounds
+        }
+        set {
+            layer.masksToBounds = newValue
         }
     }
 

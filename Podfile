@@ -1,5 +1,5 @@
 
-platform :ios, '14.0'
+platform :ios, '13.0'
 
 target 'Srila Prabhupada' do
 	

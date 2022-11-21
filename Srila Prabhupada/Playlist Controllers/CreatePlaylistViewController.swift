@@ -132,7 +132,9 @@ extension CreatePlaylistViewController {
     private func showLoading() {
         loadingIndicatorView.startAnimating()
 
-        isModalInPresentation = true
+        if #available(iOS 13.0, *) {
+            isModalInPresentation = true
+        }
 
         var rightButtons = self.navigationItem.rightBarButtonItems ?? []
         rightButtons.removeAll { $0 == doneButton }
@@ -151,7 +153,9 @@ extension CreatePlaylistViewController {
     private func hideLoading() {
         loadingIndicatorView.stopAnimating()
 
-        isModalInPresentation = false
+        if #available(iOS 13.0, *) {
+            isModalInPresentation = false
+        }
 
         var rightButtons = self.navigationItem.rightBarButtonItems ?? []
         rightButtons.insert(doneButton, at: 0)

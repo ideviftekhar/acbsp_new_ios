@@ -202,7 +202,7 @@ extension SearchViewController: SideMenuControllerDelegate {
             let storeViewController = SKStoreProductViewController()
             storeViewController.delegate = self
 
-            let parameters = [ SKStoreProductParameterITunesItemIdentifier: Constants.appStoreIdentifier]
+            let parameters = [SKStoreProductParameterITunesItemIdentifier: NSNumber(value: Constants.appStoreIdentifier)]
             storeViewController.loadProduct(withParameters: parameters, completionBlock: { [weak self] (loaded, error) -> Void in
                 if loaded {
                 } else if let error = error {
