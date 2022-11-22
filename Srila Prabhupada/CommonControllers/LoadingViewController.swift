@@ -10,6 +10,7 @@ import FirebaseFirestore
 
 class LoadingViewController: UIViewController {
 
+    @IBOutlet private var imageView: UIImageView!
     @IBOutlet private var loadingLabel: UILabel!
     @IBOutlet private var progressView: UIProgressView!
 
@@ -47,6 +48,8 @@ class LoadingViewController: UIViewController {
                 loadingLabel.text = nil
                 showAlert(title: "Error!", message: error.localizedDescription, cancel: ("Retry", { [self] in
                     loadLectures()
+                }), destructive: ("Logout", { [self] in
+                    self.askToLogout()
                 }))
             }
         })
@@ -78,8 +81,30 @@ class LoadingViewController: UIViewController {
 
                 showAlert(title: "Error!", message: error.localizedDescription, cancel: ("Retry", {
                     self.loadLectureInfo()
+                }), destructive: ("Logout", { [self] in
+                    self.askToLogout()
                 }))
             }
         })
+    }
+
+    private func askToLogout() {
+        self.showAlert(title: "Logout", message: "Are you sure you would like to Logout?", preferredStyle: .actionSheet, sourceView: imageView, cancel: ("Cancel", nil), destructive: ("Logout", {
+
+            FirestoreManager.shared.signOut(completion: { result in
+                switch result {
+                case .success:
+
+                    if let keyWindow = self.view.window {
+                        UIView.transition(with: keyWindow, duration: 0.5, options: .transitionFlipFromLeft, animations: {
+                            let loginNavigationController = UIStoryboard.main.instantiate(UINavigationController.self, identifier: "LoginNavigationController")
+                            keyWindow.rootViewController = loginNavigationController
+                        })
+                    }
+                case .failure(let error):
+                    self.showAlert(title: "Error!", message: error.localizedDescription)
+                }
+            })
+        }))
     }
 }

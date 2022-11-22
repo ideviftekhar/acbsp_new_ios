@@ -858,6 +858,7 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="imageView" destination="RR7-e4-b4U" id="CKs-5e-MBY"/>
                         <outlet property="loadingLabel" destination="ehO-wT-hBo" id="y51-lg-4J6"/>
                         <outlet property="progressView" destination="Koh-Iz-WSH" id="252-4G-OQ9"/>
                     </connections>

@@ -41,6 +41,7 @@ extension FirestoreManager {
     func signOut(completion: @escaping (Result<Bool, Error>) -> Void) {
         do {
             try FirebaseAuth.Auth.auth().signOut()
+            DefaultLectureViewModel.defaultModel.clearCache()
             completion(.success(true))
         } catch let error {
             completion(.failure(error))

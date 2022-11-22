@@ -10,6 +10,7 @@ import Foundation
 struct TopLecture: Hashable, Codable {
 
     let documentId: String
+    let playedBy: [String]
     let playedIds: [Int]
     let createdDay: Day
 }

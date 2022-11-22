@@ -109,7 +109,6 @@ extension SideMenuViewController: IQListViewDelegateDataSource {
                         case .success:
 
                             if let keyWindow = self.view.window {
-                                DefaultLectureViewModel.defaultModel.clearCache()
                                 UIView.transition(with: keyWindow, duration: 0.5, options: .transitionFlipFromLeft, animations: {
                                     let loginNavigationController = UIStoryboard.main.instantiate(UINavigationController.self, identifier: "LoginNavigationController")
                                     keyWindow.rootViewController = loginNavigationController
