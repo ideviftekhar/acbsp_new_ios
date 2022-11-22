@@ -62,7 +62,9 @@ class CreateAccountViewController: UIViewController {
     private func showLoading() {
         loadingIndicatorView.startAnimating()
 
-        isModalInPresentation = true
+        if #available(iOS 13.0, *) {
+            isModalInPresentation = true
+        }
         emailTextField.isEnabled = false
         passwordTextField.isEnabled = false
         rePasswordTextField.isEnabled = false
@@ -74,7 +76,9 @@ class CreateAccountViewController: UIViewController {
     private func hideLoading() {
         loadingIndicatorView.stopAnimating()
 
-        isModalInPresentation = false
+        if #available(iOS 13.0, *) {
+            isModalInPresentation = false
+        }
         emailTextField.isEnabled = true
         passwordTextField.isEnabled = true
         rePasswordTextField.isEnabled = true

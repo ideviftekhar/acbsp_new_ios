@@ -78,6 +78,7 @@ class FirebaseGoogleLoginViewModel: NSObject, LoginViewModel {
     }
 }
 
+@available(iOS 13.0, *)
 class FirebaseAppleLoginViewModel: NSObject, LoginViewModel {
 
     var username: String?
@@ -94,14 +95,10 @@ class FirebaseAppleLoginViewModel: NSObject, LoginViewModel {
 
         static var keyWindow: UIWindow? {
             let keyWindow: UIWindow?
-            if #available(iOS 13, *) {
-                keyWindow = UIApplication.shared.connectedScenes
-                    .compactMap { $0 as? UIWindowScene }
-                    .flatMap { $0.windows }
-                    .first(where: { $0.isKeyWindow })
-            } else {
-                keyWindow = UIApplication.shared.keyWindow
-            }
+            keyWindow = UIApplication.shared.connectedScenes
+                .compactMap { $0 as? UIWindowScene }
+                .flatMap { $0.windows }
+                .first(where: { $0.isKeyWindow })
 
             return keyWindow
         }
@@ -183,6 +180,7 @@ class FirebaseAppleLoginViewModel: NSObject, LoginViewModel {
     }
 }
 
+@available(iOS 13.0, *)
 extension FirebaseAppleLoginViewModel: ASAuthorizationControllerDelegate {
 
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {

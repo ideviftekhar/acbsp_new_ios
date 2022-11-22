@@ -11,6 +11,20 @@ import UIKit
 class NavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        if #available(iOS 13.0, *) {
+            let navigationBarAppearance = UINavigationBarAppearance()
+            navigationBarAppearance.backgroundColor = UIColor.themeColor
+            navigationBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+            navigationBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+
+            navigationBar.standardAppearance = navigationBarAppearance
+            navigationBar.compactAppearance = navigationBarAppearance
+            navigationBar.scrollEdgeAppearance = navigationBarAppearance
+            if #available(iOS 15.0, *) {
+                navigationBar.compactScrollEdgeAppearance = navigationBarAppearance
+            }
+        }
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {

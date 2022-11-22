@@ -32,12 +32,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func currentKeyWindow() -> UIWindow? {
-        let keyWindow: UIWindow? = UIApplication.shared.connectedScenes
-            .compactMap { $0 as? UIWindowScene }
-            .flatMap { $0.windows }
-            .first(where: { $0.isKeyWindow })
+        if #available(iOS 13.0, *) {
+            let keyWindow: UIWindow? = UIApplication.shared.connectedScenes
+                .compactMap { $0 as? UIWindowScene }
+                .flatMap { $0.windows }
+                .first(where: { $0.isKeyWindow })
+            return keyWindow
+        } else {
+            return UIApplication.shared.keyWindow
+        }
 
-        return keyWindow
     }
 
    // MARK: UISceneSession Lifecycle

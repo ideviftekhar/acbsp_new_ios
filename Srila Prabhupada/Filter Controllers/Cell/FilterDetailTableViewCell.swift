@@ -25,7 +25,7 @@ class FilterDetailTableViewCell: UITableViewCell, IQModelableCell {
         self.checkView.tintColor = .white
 
         self.checkView.layer.borderWidth = 2.0
-        self.checkView.layer.borderColor = UIColor(named: "ThemeColor")?.cgColor
+        self.checkView.layer.borderColor = UIColor.themeColor.cgColor
         self.checkView.layer.cornerRadius = 3.0
 
     }

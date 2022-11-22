@@ -22,17 +22,34 @@ class LogInViewController: UIViewController {
     @IBOutlet private var loadingIndicatorView: UIActivityIndicatorView!
 
     @IBOutlet private var googleAppleSignInStackView: UIStackView!
-    private let signWithAppleButton: ASAuthorizationAppleIDButton = ASAuthorizationAppleIDButton()
 
+    private var _signWithAppleButton: Any?
+    @available(iOS 13.0, *)
+    fileprivate var signWithAppleButton: ASAuthorizationAppleIDButton {
+        if _signWithAppleButton == nil {
+            _signWithAppleButton = ASAuthorizationAppleIDButton()
+        }
+        return _signWithAppleButton as! ASAuthorizationAppleIDButton
+    }
     private let emailLoginViewModel: LoginViewModel = FirebaseEmailLoginViewModel()
     private let googleLoginViewModel: LoginViewModel = FirebaseGoogleLoginViewModel()
-    private let appleLoginViewModel: LoginViewModel = FirebaseAppleLoginViewModel()
+
+    private var _appleLoginViewModel: Any?
+    @available(iOS 13.0, *)
+    fileprivate var appleLoginViewModel: LoginViewModel {
+        if _appleLoginViewModel == nil {
+            _appleLoginViewModel = FirebaseAppleLoginViewModel()
+        }
+        return _appleLoginViewModel as! LoginViewModel
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        googleAppleSignInStackView.addArrangedSubview(signWithAppleButton)
-        signWithAppleButton.addTarget(self, action: #selector(signWithAppleTapped(_:)), for: .touchUpInside)
+        if #available(iOS 13.0, *) {
+            googleAppleSignInStackView.addArrangedSubview(signWithAppleButton)
+            signWithAppleButton.addTarget(self, action: #selector(signWithAppleTapped(_:)), for: .touchUpInside)
+        }
 
         emailTextField.addTarget(self, action: #selector(textFieldDidChanged(_:)), for: .editingChanged)
         passwordTextField.addTarget(self, action: #selector(textFieldDidChanged(_:)), for: .editingChanged)
@@ -94,6 +111,7 @@ class LogInViewController: UIViewController {
         })
     }
 
+    @available(iOS 13.0, *)
     @objc func signWithAppleTapped(_ sender: UIButton) {
 
         showLoading()
@@ -134,7 +152,9 @@ class LogInViewController: UIViewController {
         forgotPasswordButton.isEnabled = false
         createAccountButton.isEnabled = false
         signWithGoogleButton.isEnabled = false
-        signWithAppleButton.isEnabled = false
+        if #available(iOS 13.0, *) {
+            signWithAppleButton.isEnabled = false
+        }
     }
 
     private func hideLoading() {
@@ -147,7 +167,9 @@ class LogInViewController: UIViewController {
         forgotPasswordButton.isEnabled = true
         createAccountButton.isEnabled = true
         signWithGoogleButton.isEnabled = true
-        signWithAppleButton.isEnabled = true
+        if #available(iOS 13.0, *) {
+            signWithAppleButton.isEnabled = true
+        }
     }
 }
 

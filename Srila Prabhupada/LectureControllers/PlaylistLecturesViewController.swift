@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseAuth
 import FirebaseFirestore
-import ProgressHUD
+import SVProgressHUD
 
 class PlaylistLecturesViewController: LectureViewController {
 
@@ -56,9 +56,9 @@ extension PlaylistLecturesViewController: LectureViewControllerDelegate {
 
     func lectureController(_ controller: LectureViewController, didSelected lectures: [Lecture]) {
 
-        ProgressHUD.show("Adding \(lectures.count) lectures to '\(playlist.title)' playlist...", interaction: false)
+        SVProgressHUD.show(withStatus: "Adding \(lectures.count) lectures to '\(playlist.title)' playlist...")
         self.playlistViewModel.add(lectures: lectures, to: playlist, completion: { result in
-            ProgressHUD.dismiss()
+            SVProgressHUD.dismiss()
 
             switch result {
             case .success(let lectureIds):

@@ -15,6 +15,52 @@ class TabBarController: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        do {
+
+            let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
+            let hasNotch: Bool = (keyWindow?.safeAreaInsets.bottom ?? 0) > 0
+
+            if hasNotch {
+                tabBar.selectionIndicatorImage = UIImage(named: "selection")
+            } else {
+                tabBar.selectionIndicatorImage =  UIImage()
+            }
+
+            if #available(iOS 13.0, *) {
+                let tabBarAppearance = UITabBarAppearance()
+                tabBarAppearance.backgroundColor = UIColor.themeColor
+                tabBarAppearance.selectionIndicatorTintColor = UIColor.white
+                if hasNotch {
+                    tabBarAppearance.selectionIndicatorImage = UIImage(named: "selection")
+                } else {
+                    tabBarAppearance.selectionIndicatorImage = UIImage()
+                }
+
+                do {
+                    tabBarAppearance.inlineLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.systemGray4]
+                    tabBarAppearance.compactInlineLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.systemGray4]
+                    tabBarAppearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.systemGray4]
+                    tabBarAppearance.inlineLayoutAppearance.normal.iconColor = UIColor.systemGray4
+                    tabBarAppearance.compactInlineLayoutAppearance.normal.iconColor = UIColor.systemGray4
+                    tabBarAppearance.stackedLayoutAppearance.normal.iconColor = UIColor.systemGray4
+                }
+
+                do {
+                    tabBarAppearance.inlineLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor.white]
+                    tabBarAppearance.compactInlineLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor.white]
+                    tabBarAppearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor.white]
+                    tabBarAppearance.inlineLayoutAppearance.selected.iconColor = UIColor.white
+                    tabBarAppearance.compactInlineLayoutAppearance.selected.iconColor = UIColor.white
+                    tabBarAppearance.stackedLayoutAppearance.selected.iconColor = UIColor.white
+                }
+
+                tabBar.standardAppearance = tabBarAppearance
+                if #available(iOS 15.0, *) {
+                    tabBar.scrollEdgeAppearance = tabBarAppearance
+                }
+            }
+        }
+
         UNUserNotificationCenter.current().delegate = self
         let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
         UNUserNotificationCenter.current().requestAuthorization(options: authOptions, completionHandler: { success, _ in
@@ -25,12 +71,6 @@ class TabBarController: UITabBarController {
                 }
             }
         })
-
-        let keyWindow = UIApplication.shared.windows.filter {$0.isKeyWindow}.first
-        let hasNotch: Bool = (keyWindow?.safeAreaInsets.bottom ?? 0) > 0
-        if !hasNotch {
-            tabBar.selectionIndicatorImage = nil
-        }
 
         playerViewController.addToTabBarController(self)
 

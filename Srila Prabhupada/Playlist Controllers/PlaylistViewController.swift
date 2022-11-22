@@ -8,7 +8,7 @@
 import UIKit
 import IQListKit
 import FirebaseFirestore
-import ProgressHUD
+import SVProgressHUD
 import FirebaseAuth
 
 class PlaylistViewController: SearchViewController {
@@ -295,9 +295,9 @@ extension PlaylistViewController: IQListViewDelegateDataSource {
                 self.showAlert(title: "Add to '\(model.title)'?", message: message, cancel: (title: "Cancel", {
                 }), buttons: (title: "Add", {
 
-                    ProgressHUD.show("Adding...", interaction: false)
+                    SVProgressHUD.show(withStatus: "Adding...")
                     self.playlistViewModel.add(lectures: self.lecturesToAdd, to: model, completion: { result in
-                        ProgressHUD.dismiss()
+                        SVProgressHUD.dismiss()
 
                         switch result {
                         case .success:
@@ -367,9 +367,9 @@ extension PlaylistViewController: PlaylistCellDelegate {
                            cancel: (title: "Cancel", {}),
                            destructive: (title: "Delete", {
 
-                ProgressHUD.show("Deleting...", interaction: false)
+                SVProgressHUD.show(withStatus: "Deleting...")
                 self.playlistViewModel.delete(playlist: playlist) { result in
-                    ProgressHUD.dismiss()
+                    SVProgressHUD.dismiss()
 
                     switch result {
                     case .success:

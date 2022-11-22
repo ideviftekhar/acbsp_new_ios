@@ -36,6 +36,20 @@ class SideMenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        if #available(iOS 13.0, *) {
+            let navigationBarAppearance = UINavigationBarAppearance()
+            navigationBarAppearance.backgroundColor = UIColor.themeColor
+            navigationBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
+            navigationBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+
+            navigationController?.navigationBar.standardAppearance = navigationBarAppearance
+            navigationController?.navigationBar.compactAppearance = navigationBarAppearance
+            navigationController?.navigationBar.scrollEdgeAppearance = navigationBarAppearance
+            if #available(iOS 15.0, *) {
+                navigationController?.navigationBar.compactScrollEdgeAppearance = navigationBarAppearance
+            }
+        }
+
         do {
             if FirestoreManager.shared.currentUser != nil {
                 userNameLabel.text = FirestoreManager.shared.currentUserDisplayName

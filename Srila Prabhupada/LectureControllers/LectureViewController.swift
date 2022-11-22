@@ -25,7 +25,7 @@ class LectureViewController: SearchViewController {
     private let sortButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(compatibleSystemName: "arrow.up.arrow.down.circle"), style: .plain, target: nil, action: nil)
     private var sortMenu: SPMenu!
 
-    private let moreButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"), style: .plain, target: nil, action: nil)
+    private let moreButton = UIBarButtonItem(image: UIImage(compatibleSystemName: "ellipsis.circle"), style: .plain, target: nil, action: nil)
     private var moreMenu: SPMenu!
     private var defaultSelectionActions: [SPAction] = []
     private var defaultNormalActions: [SPAction] = []
