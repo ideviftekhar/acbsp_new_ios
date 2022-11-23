@@ -10,6 +10,7 @@ import IQListKit
 import FirebaseFirestore
 import SVProgressHUD
 import FirebaseAuth
+import Loaf
 
 class PlaylistViewController: SearchViewController {
 
@@ -231,7 +232,7 @@ extension PlaylistViewController: IQListViewDelegateDataSource {
 
                 list.append(Cell.self, models: models, section: section)
 
-            }, animatingDifferences: animated, completion: { [self] in
+            }, animatingDifferences: animated, endLoadingOnUpdate: showNoItems, completion: { [self] in
                 if showNoItems, let selectedPlaylistType = PlaylistType(rawValue: playlistSegmentControl.selectedSegmentIndex) {
                     let noItemImage = UIImage(named: "music.note.list_60")
                     self.list.noItemImage = noItemImage
@@ -335,6 +336,7 @@ extension PlaylistViewController: CreatePlaylistViewControllerDelegate {
         } else {
             refresh(source: .default)
         }
+        Loaf("'\(playlist)' playlist created!", state: .success, sender: self).show(.short)
     }
 
     func controller(_ controller: CreatePlaylistViewController, didUpdate playlist: Playlist) {
@@ -354,6 +356,8 @@ extension PlaylistViewController: CreatePlaylistViewControllerDelegate {
         } else {
             refresh(source: .default)
         }
+
+        Loaf("'\(playlist)' playlist updated!", state: .success, sender: self).show(.short)
     }
 }
 
@@ -399,11 +403,13 @@ extension PlaylistViewController: PlaylistCellDelegate {
 
 extension PlaylistViewController {
 
-    func showLoading() {
+    override func showLoading() {
+        super.showLoading()
         playlistSegmentControl.isEnabled = false
     }
 
-    func hideLoading() {
+    override func hideLoading() {
+        super.hideLoading()
         playlistSegmentControl.isEnabled = true
    }
 }

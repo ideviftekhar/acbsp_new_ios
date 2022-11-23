@@ -15,7 +15,7 @@ class FirestoreManager: NSObject {
     static let shared = FirestoreManager()
 
     let firestore: Firestore = {
-        let firestore = Firestore.firestore()
+        let firestore: Firestore = Firestore.firestore()
         let settings = FirestoreSettings()
         settings.isPersistenceEnabled = true
         firestore.settings = settings

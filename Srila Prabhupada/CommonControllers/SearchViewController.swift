@@ -17,6 +17,8 @@ class SearchViewController: UIViewController {
     private let searchController = UISearchController(searchResultsController: nil)
     private var lastSearchText: String = ""
 
+    private let activtiyIndicatorView = UIActivityIndicatorView(style: .medium)
+
     private(set) lazy var filterButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "line.3.horizontal.decrease.circle"), style: .plain, target: self, action: #selector(filterAction(_:)))
 
     var selectedFilters: [Filter: [String]] = [:]
@@ -50,6 +52,10 @@ class SearchViewController: UIViewController {
                 searchController.searchBar.searchTextField.rightView?.tintColor = UIColor.systemGray4
                 searchController.searchBar.searchTextField.defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
                 searchController.searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: "Search...", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray4])
+                
+                activtiyIndicatorView.color = UIColor.white
+                searchController.searchBar.searchTextField.rightView = activtiyIndicatorView
+                searchController.searchBar.searchTextField.rightViewMode = .always
             }
             searchController.delegate = self
             searchController.searchResultsUpdater = self
@@ -220,5 +226,16 @@ extension SearchViewController: SideMenuControllerDelegate {
 extension SearchViewController: SKStoreProductViewControllerDelegate {
     func productViewControllerDidFinish(_ viewController: SKStoreProductViewController) {
         viewController.dismiss(animated: true, completion: nil)
+    }
+}
+
+extension SearchViewController {
+
+    @objc func showLoading() {
+        activtiyIndicatorView.startAnimating()
+    }
+
+    @objc func hideLoading() {
+        activtiyIndicatorView.stopAnimating()
     }
 }

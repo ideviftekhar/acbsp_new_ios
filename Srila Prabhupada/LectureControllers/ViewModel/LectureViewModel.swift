@@ -87,8 +87,7 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
 
             if source == .cache {
                 serialLectureWorkerQueue.async {
-                    var success: [Lecture] = Self.filter(lectures: self.allLectures, searchText: searchText, sortType: sortType, filter: filter, lectureIDs: lectureIDs)
-                    success = Self.refreshLectureWithLectureInfo(lectures: success, lectureInfos: self.userLectureInfo, downloadedLectures: Persistant.shared.getAllDBLectures())
+                    let success: [Lecture] = Self.filter(lectures: self.allLectures, searchText: searchText, sortType: sortType, filter: filter, lectureIDs: lectureIDs)
 
                     DispatchQueue.main.async {
                         completion(.success(success))
@@ -106,24 +105,30 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
 
                             let startDate = Date()
 
+                            let incomingIDs: Set<Int> = Set(success.map({ $0.id }))
+
+                            var leftoverIDs = incomingIDs
+
                             let total: CGFloat = CGFloat(success.count)
                             var iteration: CGFloat = 0
-                            success.forEach({ lecture in
-
-                                let existingElements = results.filter { $0.id == lecture.id }
-                                if existingElements.count == 0 {
-                                    results.append(lecture)
-                                }
-
+                            results = success.reduce([]) { result, lecture in
                                 iteration += 1
                                 if let progress = progress {
                                     DispatchQueue.main.async {
                                         progress(iteration/total)
                                     }
                                 }
-                            })
+                                let lectureID = lecture.id
+                                guard leftoverIDs.contains(where: { $0 == lectureID }) else {
+                                    return result
+                                }
+
+                                leftoverIDs.remove(lectureID)
+                                return result + [lecture]
+                            }
+
                             let endDate = Date()
-                            print("Took \(endDate.timeIntervalSince1970-startDate.timeIntervalSince1970) seconds to remove duplicate elements")
+                            print("Took \(endDate.timeIntervalSince1970-startDate.timeIntervalSince1970) seconds to remove \(success.count - results.count) duplicate lectures")
                             success = results   // Unique
 
                             if !self.userLectureInfo.isEmpty {

@@ -27,7 +27,19 @@ class NavigationController: UINavigationController {
         }
     }
 
+    override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
+        if let tabBarController = tabBarController {
+            return tabBarController.preferredStatusBarUpdateAnimation
+        } else {
+            return .fade
+        }
+    }
+
     override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
+        if let tabBarController = tabBarController {
+            return tabBarController.preferredStatusBarStyle
+        } else {
+            return .lightContent
+        }
     }
 }

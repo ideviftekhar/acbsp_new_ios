@@ -31,6 +31,7 @@ target 'Srila Prabhupada' do
   pod "MBCircularProgressBar"
 #  pod 'LoadingPlaceholderView'
 
+  pod 'Loaf'
   pod 'SVProgressHUD'
 #  pod 'ProgressHUD' iOS 13
 

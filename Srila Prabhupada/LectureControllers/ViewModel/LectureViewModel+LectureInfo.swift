@@ -99,7 +99,11 @@ extension DefaultLectureViewModel {
 
             let collectionReference: CollectionReference = FirestoreManager.shared.firestore.collection(FirestoreCollection.usersLectureInfo(userId: uid).path)
 
-            var updatedLectures: [Lecture] = []
+            var temporaryUpdatedLectures: [Lecture] = []
+
+            var permanentUpdatedLectures: [Lecture] = []
+            var failedLectures: [Lecture] = []
+            var lastError: Error?
 
             for lecture in lectures {
                 var data: [String: Any] = [:]
@@ -147,7 +151,60 @@ extension DefaultLectureViewModel {
                     data["lastPlayedPoint"] = lastPlayedPoint ?? 0
                 }
 
-                documentReference.setData(data, merge: true)
+                documentReference.setData(data, merge: true, completion: { error in
+                    if let error = error {
+                        lastError = error
+                        failedLectures.append(lecture)
+
+                        self.serialLectureWorkerQueue.async {
+                            // Reverting userLectureInfo
+                            let lectureInfoIndexes = self.userLectureInfo.allIndex(where: { $0.id == lecture.id })
+                            if !lectureInfoIndexes.isEmpty {
+                                for index in lectureInfoIndexes {
+                                    self.userLectureInfo[index].isFavourite = lecture.isFavourite
+                                    self.userLectureInfo[index].lastPlayedPoint = lecture.lastPlayedPoint
+                                }
+                            }
+                        }
+                    } else {
+                        permanentUpdatedLectures.append(lecture)
+                    }
+
+                    // Completed
+                    if lectures.count >= (failedLectures.count + permanentUpdatedLectures.count) {
+                        if let lastError = lastError as? NSError {
+                            mainThreadSafe {
+
+                                if lectures.count == 1 {
+                                    completion(.failure(lastError))
+                                } else {
+                                    var descriptions: [String] = []
+                                    if permanentUpdatedLectures.count > 0 {
+                                        descriptions.append("Updated \(permanentUpdatedLectures.count) lecture(s)")
+                                    }
+
+                                    if permanentUpdatedLectures.count > 0 {
+                                        descriptions.append("Unable to update \(permanentUpdatedLectures.count) lecture(s)")
+                                    }
+
+                                    descriptions.append(lastError.localizedDescription)
+
+                                    var userInfo = lastError.userInfo
+                                    userInfo[NSLocalizedDescriptionKey] = descriptions.joined(separator: "\n")
+                                    let error = NSError(domain: lastError.domain, code: lastError.code, userInfo: userInfo)
+                                    completion(.failure(lastError))
+                                }
+
+                                NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: failedLectures)
+                            }
+                        } else {
+                            mainThreadSafe {
+                                completion(.success(true))
+                            }
+                        }
+                    }
+                })
+
                 // This is to temporarily update the information
                 do {
                     let lectureInfoIndexes = self.userLectureInfo.allIndex(where: { $0.id == lecture.id })
@@ -179,15 +236,14 @@ extension DefaultLectureViewModel {
                         }
 
                         if isUpdated {
-                            updatedLectures.append(self.allLectures[index])
+                            temporaryUpdatedLectures.append(self.allLectures[index])
                         }
                     }
                 }
             }
 
             DispatchQueue.main.async {
-                completion(.success(true))
-                NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: updatedLectures)
+                NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: temporaryUpdatedLectures)
             }
         }
     }

@@ -9,6 +9,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseFirestore
 import SVProgressHUD
+import Loaf
 
 class PlaylistLecturesViewController: LectureViewController {
 
@@ -64,7 +65,12 @@ extension PlaylistLecturesViewController: LectureViewControllerDelegate {
             case .success(let lectureIds):
                 self.playlist.lectureIds = lectureIds
                 self.refresh(source: .default)
-                controller.dismiss(animated: true)
+                let presenting = self.presentingViewController
+                controller.dismiss(animated: true, completion: {
+                    if let presenting = presenting {
+                        Loaf("Added \(lectures.count) lectures to '\(self.playlist.title)' playlist", state: .success, sender: presenting).show(.short)
+                    }
+                })
             case .failure(let error):
                 controller.showAlert(title: "Error", message: error.localizedDescription)
             }

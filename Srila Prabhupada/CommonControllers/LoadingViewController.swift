@@ -57,7 +57,7 @@ class LoadingViewController: UIViewController {
 
     private func loadLectureInfo() {
 
-        self.loadingLabel.text = "Loading lecture information..."
+        self.loadingLabel.text = "Please wait..."
         progressView.alpha = 0
 
         DefaultLectureViewModel.defaultModel.getUsersLectureInfo(source: .default, completion: { [self] result in

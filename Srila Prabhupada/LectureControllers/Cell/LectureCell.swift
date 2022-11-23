@@ -166,7 +166,7 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 var actions: [SPAction] = []
 
                 switch lecture.downloadState {
-                case .notDownloaded, .error:
+                case .notDownloaded:
                     if let download = allActions[.download] {
                         actions.append(download)
                     }
@@ -175,6 +175,13 @@ class LectureCell: UITableViewCell, IQModelableCell {
                         actions.append(downloading)
                     }
                 case .downloaded:
+                    if let deleteFromDownloads = allActions[.deleteFromDownloads] {
+                        actions.append(deleteFromDownloads)
+                    }
+                case .error:
+                    if let download = allActions[.download] {
+                        actions.append(download)
+                    }
                     if let deleteFromDownloads = allActions[.deleteFromDownloads] {
                         actions.append(deleteFromDownloads)
                     }

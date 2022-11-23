@@ -89,6 +89,7 @@
                     </stackView>
                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fQG-Rf-zkX">
                         <rect key="frame" x="287" y="0.0" width="49.666666666666686" height="67"/>
+                        <color key="tintColor" name="0099CC"/>
                         <state key="normal" title=""/>
                         <buttonConfiguration key="configuration" style="plain" image="ellipsis.circle" catalog="system"/>
                     </button>
@@ -123,6 +124,9 @@
     <resources>
         <image name="ellipsis.circle" catalog="system" width="128" height="123"/>
         <image name="logo_40" width="40" height="40"/>
+        <namedColor name="0099CC">
+            <color red="0.0" green="0.59999999999999998" blue="0.792156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="TextDarkGray">
             <color red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

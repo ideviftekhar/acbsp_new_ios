@@ -18,6 +18,7 @@ protocol PlaylistViewModel: AnyObject {
     func getPublicPlaylist(searchText: String?, sortType: PlaylistSortType, userEmail: String?, completion: @escaping (Swift.Result<[Playlist], Error>) -> Void)
 
     func add(lectures: [Lecture], to playlist: Playlist, completion: @escaping (Swift.Result<[Int], Error>) -> Void)
+    func remove(lectures: [Lecture], to playlist: Playlist, completion: @escaping (Swift.Result<[Int], Error>) -> Void)
     func delete(playlist: Playlist, completion: @escaping (Swift.Result<Bool, Error>) -> Void)
 }
 
@@ -272,6 +273,91 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
                     let currentTimestamp = Int(Date().timeIntervalSince1970*1000)
 
                     lectureIds.append(contentsOf: newLectureIds)
+                    lectureIds = Array(Set(lectureIds))
+                    var data: [String: Any] = [:]
+                    data["lectureIds"] = lectureIds
+                    data["lectureCount"] = lectureIds.count
+                    data["lastUpdate"] = currentTimestamp
+
+                    documentReference.setData(data, merge: true) { error in
+                        mainThreadSafe {
+                            if let error = error {
+                                completion(.failure(error))
+                            } else {
+                                completion(.success(lectureIds))
+                            }
+                        }
+                    }
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            })
+        }
+    }
+
+    func remove(lectures: [Lecture], to playlist: Playlist, completion: @escaping (Swift.Result<[Int], Error>) -> Void) {
+        switch playlist.listType {
+        case .private:
+            guard FirestoreManager.shared.currentUser != nil,
+                  let uid = FirestoreManager.shared.currentUserUID,
+                  let email = FirestoreManager.shared.currentUserEmail else {
+                let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
+                mainThreadSafe {
+                    completion(.failure(error))
+                }
+                return
+            }
+
+            let collectionReference: FirebaseFirestore.CollectionReference = FirestoreManager.shared.firestore.collection(FirestoreCollection.privatePlaylists.path).document(uid).collection(email)
+
+            let documentReference = collectionReference.document(playlist.listID)
+
+            FirestoreManager.shared.getRawDocument(documentReference: documentReference, source: .server, completion: { result in
+                switch result {
+
+                case .success(let document):
+
+                    var lectureIds: [Int] = (document["lectureIds"] as? [Int]) ?? []
+                    var oldLectureIds: [Int] = lectures.map { $0.id }
+
+                    let currentTimestamp = Int(Date().timeIntervalSince1970*1000)
+
+                    lectureIds.removeAll { oldLectureIds.contains($0) }
+                    lectureIds = Array(Set(lectureIds))
+                    var data: [String: Any] = [:]
+                    data["lectureIds"] = lectureIds
+                    data["lectureCount"] = lectureIds.count
+                    data["lastUpdate"] = currentTimestamp
+
+                    document.reference.setData(data, merge: true, completion: { error in
+                        mainThreadSafe {
+                            if let error = error {
+                                completion(.failure(error))
+                            } else {
+                                completion(.success(lectureIds))
+                            }
+                        }
+                    })
+                case .failure(let error):
+                    completion(.failure(error))
+                }
+            })
+
+        case .public:
+            let publicPlaylistsPath = FirestoreCollection.publicPlaylists.path
+
+            let documentReference: DocumentReference = FirestoreManager.shared.firestore.collection(publicPlaylistsPath).document(playlist.listID)
+
+            FirestoreManager.shared.getDocument(documentReference: documentReference, source: .server, completion: { (result: Swift.Result<Playlist, Error>) in
+                switch result {
+                case .success(let document):
+
+                    var lectureIds = document.lectureIds
+                    var oldLectureIds: [Int] = lectures.map { $0.id }
+
+                    let currentTimestamp = Int(Date().timeIntervalSince1970*1000)
+
+                    lectureIds.removeAll { oldLectureIds.contains($0) }
                     lectureIds = Array(Set(lectureIds))
                     var data: [String: Any] = [:]
                     data["lectureIds"] = lectureIds

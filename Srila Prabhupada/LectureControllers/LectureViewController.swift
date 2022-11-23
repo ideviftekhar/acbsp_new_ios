@@ -10,6 +10,7 @@ import AVKit
 import FirebaseFirestore
 import IQListKit
 import FirebaseDynamicLinks
+import Loaf
 
 protocol LectureViewControllerDelegate: AnyObject {
     func lectureController(_ controller: LectureViewController, didSelected lectures: [Lecture])
@@ -211,6 +212,7 @@ class LectureViewController: SearchViewController {
                 list.setIsLoading(true, animated: true)
             }
         }
+
         refreshAsynchronous(source: source, completion: { [self] result in
             hideLoading()
             switch result {
@@ -350,20 +352,45 @@ extension LectureViewController {
                     let eligibleDownloadModels: [Model] = selectedModels.filter { $0.downloadState == .notDownloaded || $0.downloadState == .error }
                     Persistant.shared.save(lectures: eligibleDownloadModels)
 
-                    DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleDownloadModels, isCompleted: nil, isDownloaded: true, isFavourite: nil, lastPlayedPoint: nil, completion: {_ in })
+                    DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleDownloadModels, isCompleted: nil, isDownloaded: true, isFavourite: nil, lastPlayedPoint: nil, completion: { _ in
+                    })
 
                 case .deleteFromDownloads:
-                    let eligibleDeleteFromDownloadsModels: [Model] = selectedModels.filter { $0.downloadState == .downloaded }
+                    let eligibleDeleteFromDownloadsModels: [Model] = selectedModels.filter { $0.downloadState == .downloaded || $0.downloadState == .error }
                     Persistant.shared.delete(lectures: eligibleDeleteFromDownloadsModels)
 
                     DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleDeleteFromDownloadsModels, isCompleted: nil, isDownloaded: false, isFavourite: nil, lastPlayedPoint: nil, completion: {_ in })
                 case .markAsFavourite:
                     let eligibleMarkAsFavouriteModels: [Model] = selectedModels.filter { !$0.isFavourite }
 
-                    DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleMarkAsFavouriteModels, isCompleted: nil, isDownloaded: nil, isFavourite: true, lastPlayedPoint: nil, completion: {_ in })
+                    DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleMarkAsFavouriteModels, isCompleted: nil, isDownloaded: nil, isFavourite: true, lastPlayedPoint: nil, completion: { result in
+                        switch result {
+                        case .success:
+                            if eligibleMarkAsFavouriteModels.count == 1 {
+                                Loaf("Favorited", state: .success, sender: self).show(.short)
+                            } else {
+                                Loaf("Favorited \(eligibleMarkAsFavouriteModels) lecture(s)", state: .success, sender: self).show(.short)
+                            }
+                        case .failure(let error):
+                            Loaf(error.localizedDescription, state: .error, sender: self).show(.short)
+                        }
+
+                    })
                 case .removeFromFavourites:
                     let eligibleRemoveFromFavouritesModels: [Model] = selectedModels.filter { $0.isFavourite }
-                    DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleRemoveFromFavouritesModels, isCompleted: nil, isDownloaded: nil, isFavourite: false, lastPlayedPoint: nil, completion: {_ in })
+                    DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleRemoveFromFavouritesModels, isCompleted: nil, isDownloaded: nil, isFavourite: false, lastPlayedPoint: nil, completion: { result in
+                        switch result {
+                        case .success:
+                            if eligibleRemoveFromFavouritesModels.count == 1 {
+                                Loaf("Unfavorited", state: .success, sender: self).show(.short)
+                            } else {
+                                Loaf("Unfavorited \(eligibleRemoveFromFavouritesModels) lecture(s)", state: .success, sender: self).show(.short)
+                            }
+                        case .failure(let error):
+                            Loaf(error.localizedDescription, state: .error, sender: self).show(.short)
+                        }
+
+                    })
                 case .addToPlaylist:
                     let navigationController = UIStoryboard.playlists.instantiate(UINavigationController.self, identifier: "PlaylistNavigationController")
                     guard let playlistController = navigationController.viewControllers.first as? PlaylistViewController else {
@@ -373,10 +400,35 @@ extension LectureViewController {
                     self.present(navigationController, animated: true, completion: nil)
                 case .markAsHeard:
                     let eligibleMarkAsHeardModels: [Model] = selectedModels.filter { $0.playProgress < 1.0 }
-                    DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleMarkAsHeardModels, isCompleted: true, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: -1, completion: {_ in })
+                    DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleMarkAsHeardModels, isCompleted: true, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: -1, completion: { result in
+                        switch result {
+                        case .success:
+                            if eligibleMarkAsHeardModels.count == 1 {
+                                Loaf("Marked as heard", state: .success, sender: self).show(.short)
+                            } else {
+                                Loaf("Marked heard \(eligibleMarkAsHeardModels) lecture(s)", state: .success, sender: self).show(.short)
+                            }
+                        case .failure(let error):
+                            Loaf(error.localizedDescription, state: .error, sender: self).show(.short)
+                        }
+
+                    })
                 case .resetProgress:
                     let eligibleResetProgressModels: [Model] = selectedModels.filter { $0.playProgress >= 1.0 }
-                    DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleResetProgressModels, isCompleted: false, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: 0, completion: {_ in })
+                    DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleResetProgressModels, isCompleted: false, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: 0, completion: { result in
+                        switch result {
+                        case .success:
+                            if eligibleResetProgressModels.count == 1 {
+                                Loaf("Progress reset", state: .success, sender: self).show(.short)
+                            } else {
+                                Loaf("Progress reset of \(eligibleResetProgressModels) lecture(s)", state: .success, sender: self).show(.short)
+                            }
+
+                        case .failure(let error):
+                            Loaf(error.localizedDescription, state: .error, sender: self).show(.short)
+                        }
+
+                    })
                 case .share, .downloading:
                     break
                }
@@ -424,7 +476,7 @@ extension LectureViewController {
                 menuItems.append(download)
             }
 
-            let eligibleDeleteFromDownloadsModels: [Model] = selectedModels.filter { $0.downloadState == .downloaded }
+            let eligibleDeleteFromDownloadsModels: [Model] = selectedModels.filter { $0.downloadState == .downloaded || $0.downloadState == .error }
             if !eligibleDeleteFromDownloadsModels.isEmpty, let deleteFromDownloads = allActions[.deleteFromDownloads] {
                 deleteFromDownloads.action.title = LectureOption.deleteFromDownloads.rawValue + " (\(eligibleDeleteFromDownloadsModels.count))"
                 menuItems.append(deleteFromDownloads)
@@ -482,7 +534,7 @@ extension LectureViewController: IQListViewDelegateDataSource {
 
                 list.append(Cell.self, models: newModels, section: section)
 
-            }, animatingDifferences: animated, completion: { [self] in
+            }, animatingDifferences: animated, endLoadingOnUpdate: showNoItems, completion: { [self] in
                 if showNoItems {
                     let noItemImage = UIImage(named: "music.mic_60")
                     self.list.noItemImage = noItemImage
@@ -549,9 +601,25 @@ extension LectureViewController: LectureCellDelegate {
             Persistant.shared.delete(lectures: [lecture])
             DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: nil, isDownloaded: false, isFavourite: nil, lastPlayedPoint: nil, completion: {_ in })
         case .markAsFavourite:
-            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: nil, isDownloaded: nil, isFavourite: true, lastPlayedPoint: nil, completion: {_ in })
+            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: nil, isDownloaded: nil, isFavourite: true, lastPlayedPoint: nil, completion: { result in
+                switch result {
+                case .success:
+                    Loaf("Favorited", state: .success, sender: self).show(.short)
+                case .failure(let error):
+                    Loaf(error.localizedDescription, state: .error, sender: self).show(.short)
+                }
+
+            })
         case .removeFromFavourites:
-            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: nil, isDownloaded: nil, isFavourite: false, lastPlayedPoint: nil, completion: {_ in })
+            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: nil, isDownloaded: nil, isFavourite: false, lastPlayedPoint: nil, completion: { result in
+                switch result {
+                case .success:
+                    Loaf("Unfavorited", state: .success, sender: self).show(.short)
+                case .failure(let error):
+                    Loaf(error.localizedDescription, state: .error, sender: self).show(.short)
+                }
+
+            })
         case .addToPlaylist:
 
             let navigationController = UIStoryboard.playlists.instantiate(UINavigationController.self, identifier: "PlaylistNavigationController")
@@ -562,9 +630,26 @@ extension LectureViewController: LectureCellDelegate {
             self.present(navigationController, animated: true, completion: nil)
 
         case .markAsHeard:
-            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: true, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: -1, completion: {_ in })
+            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: true, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: -1, completion: { result in
+                switch result {
+                case .success:
+                    Loaf("Marked as heard", state: .success, sender: self).show(.short)
+                case .failure(let error):
+                    Loaf(error.localizedDescription, state: .error, sender: self).show(.short)
+                }
+
+            })
         case .resetProgress:
-            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: false, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: 0, completion: {_ in })
+            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: false, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: 0, completion: { result in
+                switch result {
+                case .success:
+                    Loaf("Progress reset", state: .success, sender: self).show(.short)
+
+                case .failure(let error):
+                    Loaf(error.localizedDescription, state: .error, sender: self).show(.short)
+                }
+
+            })
         case .share:
 
             let deepLinkBaseURL = "https://bvks.com?lectureId=\(lecture.id)"
@@ -640,9 +725,11 @@ extension LectureViewController: LectureCellDelegate {
 
 extension LectureViewController {
 
-    @objc func showLoading() {
+    @objc override func showLoading() {
+        super.showLoading()
     }
 
-    @objc func hideLoading() {
+    @objc override func hideLoading() {
+        super.hideLoading()
     }
 }
