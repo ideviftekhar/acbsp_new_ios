@@ -87,6 +87,7 @@
 		C088178828DDB8FA00D3106C /* FirestoreManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C088178728DDB8FA00D3106C /* FirestoreManager.swift */; };
 		C088178A28DDBC9100D3106C /* FirestoreManager+SignIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = C088178928DDBC9100D3106C /* FirestoreManager+SignIn.swift */; };
 		C088178C28DDE69600D3106C /* PlaylistSortType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C088178B28DDE69600D3106C /* PlaylistSortType.swift */; };
+		C094A6572934A1A100710647 /* StatusAlert+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C094A6562934A1A100710647 /* StatusAlert+Extension.swift */; };
 		C0B3263B2927E1F700ACDE76 /* MainThreadSafe.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B3263A2927E1F700ACDE76 /* MainThreadSafe.swift */; };
 		C0B7990228DC3FF700681649 /* TopLectures.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B7990028DC3FF700681649 /* TopLectures.swift */; };
 		C0B7990328DC3FF700681649 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B7990128DC3FF700681649 /* Playlist.swift */; };
@@ -214,6 +215,7 @@
 		C088178728DDB8FA00D3106C /* FirestoreManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreManager.swift; sourceTree = "<group>"; };
 		C088178928DDBC9100D3106C /* FirestoreManager+SignIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FirestoreManager+SignIn.swift"; sourceTree = "<group>"; };
 		C088178B28DDE69600D3106C /* PlaylistSortType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistSortType.swift; sourceTree = "<group>"; };
+		C094A6562934A1A100710647 /* StatusAlert+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "StatusAlert+Extension.swift"; sourceTree = "<group>"; };
 		C0B3263A2927E1F700ACDE76 /* MainThreadSafe.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainThreadSafe.swift; sourceTree = "<group>"; };
 		C0B7990028DC3FF700681649 /* TopLectures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TopLectures.swift; sourceTree = "<group>"; };
 		C0B7990128DC3FF700681649 /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
@@ -643,6 +645,7 @@
 				C0CBCF7C28FD3CED00ED8132 /* UIImageView+Letters.swift */,
 				C018A99328F421A000C0E002 /* Int+Extension.swift */,
 				C0DA677828FD7883003BF8E4 /* UIColor+Extension.swift */,
+				C094A6562934A1A100710647 /* StatusAlert+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -855,6 +858,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C094A6572934A1A100710647 /* StatusAlert+Extension.swift in Sources */,
 				C00AB21B28D2080800A62A2F /* LectureCell.swift in Sources */,
 				C007D38628E80EC200CFBED0 /* Persistent+DBLecture.swift in Sources */,
 				C0EA13E428CF53FA00BE9110 /* ForgotPasswordViewModel.swift in Sources */,
@@ -1106,7 +1110,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Srila Prabhupada.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/Info.plist";
@@ -1143,7 +1147,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Srila Prabhupada.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/Info.plist";
@@ -1243,7 +1247,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Srila Prabhupada.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/Info.plist";

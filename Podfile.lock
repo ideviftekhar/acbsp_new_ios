@@ -770,7 +770,6 @@ PODS:
   - Libuv-gRPC/Implementation (0.0.10):
     - Libuv-gRPC/Interface (= 0.0.10)
   - Libuv-gRPC/Interface (0.0.10)
-  - Loaf (0.7.0)
   - MBCircularProgressBar (0.3.5)
   - nanopb (2.30909.0):
     - nanopb/decode (= 2.30909.0)
@@ -780,8 +779,9 @@ PODS:
   - PromisesObjC (2.1.1)
   - ReachabilitySwift (5.0.0)
   - SideMenu (6.5.0)
+  - SKActivityIndicatorView (1.0.0)
   - SkyFloatingLabelTextField (4.0.0)
-  - SVProgressHUD (2.2.5)
+  - StatusAlert (1.1.1)
   - SwiftAlgorithms (1.0.0)
   - SwiftLint (0.49.1)
   - SwiftTryCatch (0.0.1)
@@ -802,12 +802,12 @@ DEPENDENCIES:
   - GoogleSignInSwiftSupport
   - IQKeyboardManagerSwift
   - IQListKit (from `https://github.com/hackiftekhar/IQListKit.git`, tag `3.0.0`)
-  - Loaf
   - MBCircularProgressBar
   - ReachabilitySwift
   - SideMenu
+  - SKActivityIndicatorView
   - SkyFloatingLabelTextField
-  - SVProgressHUD
+  - StatusAlert
   - SwiftLint
 
 SPEC REPOS:
@@ -843,14 +843,14 @@ SPEC REPOS:
     - IQKeyboardManagerSwift
     - leveldb-library
     - Libuv-gRPC
-    - Loaf
     - MBCircularProgressBar
     - nanopb
     - PromisesObjC
     - ReachabilitySwift
     - SideMenu
+    - SKActivityIndicatorView
     - SkyFloatingLabelTextField
-    - SVProgressHUD
+    - StatusAlert
     - SwiftAlgorithms
     - SwiftLint
     - SwiftTryCatch
@@ -898,18 +898,18 @@ SPEC CHECKSUMS:
   IQListKit: 91f14441e5cd7e74fefbedf6c62ff668e65a44da
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   Libuv-gRPC: 55e51798e14ef436ad9bc45d12d43b77b49df378
-  Loaf: d69937cd00649f3fa260beb8b7aef0a1feb861ef
   MBCircularProgressBar: 0b795b722a5eb5b0923822f90474e2576a1a7855
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   SideMenu: f583187d21c5b1dd04c72002be544b555a2627a2
+  SKActivityIndicatorView: 81c123380127ad497f9b57cd4d11347e40ab3427
   SkyFloatingLabelTextField: 79ddc40e4ad59707fedbb48d605417aee48bb78a
-  SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
+  StatusAlert: a18ec3c33d36a06d4479c1f2b15ffac67aaf7ab1
   SwiftAlgorithms: 38dda4731d19027fdeee1125f973111bf3386b53
   SwiftLint: 32ee33ded0636d0905ef6911b2b67bbaeeedafa5
   SwiftTryCatch: fb6d2b34abe48efd69578dac919293a44f95b481
 
-PODFILE CHECKSUM: 5318bff27b79a7ae5d4f54bd326e0a75155219fa
+PODFILE CHECKSUM: e889f7cee9a6a6f02b113dad19263c96b2b51a9d
 
 COCOAPODS: 1.11.3

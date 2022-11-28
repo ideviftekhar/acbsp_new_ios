@@ -61,6 +61,7 @@ class LectureCell: UITableViewCell, IQModelableCell {
         let lecture: Lecture
         let isSelectionEnabled: Bool
         let isSelected: Bool
+        let enableRemoveFromPlaylist: Bool
     }
 
     var model: Model? {
@@ -199,6 +200,10 @@ class LectureCell: UITableViewCell, IQModelableCell {
                     actions.append(addToPlaylist)
                 }
 
+                if model.enableRemoveFromPlaylist, let removeFromPlaylist = allActions[.removeFromPlaylist] {
+                    actions.append(removeFromPlaylist)
+                }
+
                 // Is Heard
                 if playProgress >= 1.0, let resetProgress = allActions[.resetProgress] {
                     actions.append(resetProgress)
@@ -211,12 +216,15 @@ class LectureCell: UITableViewCell, IQModelableCell {
                     actions.append(share)
                 }
 
-                let isSelected = model.isSelectionEnabled && model.isSelected
-
                 self.optionMenu.children = actions
                 self.menuButton?.isHidden = actions.isEmpty || model.isSelectionEnabled
-                self.selectedImageView?.isHidden = !isSelected
-                self.backgroundColor = isSelected ? UIColor.systemGray3 : nil
+                self.selectedImageView?.isHidden = !model.isSelectionEnabled
+                if model.isSelectionEnabled {
+                    self.selectedImageView?.image = model.isSelected ? UIImage(compatibleSystemName: "checkmark.circle") : UIImage(compatibleSystemName: "circle")
+                    self.backgroundColor = model.isSelected ? UIColor.zero_0099CC.withAlphaComponent(0.2) : nil
+                } else {
+                    self.backgroundColor = nil
+                }
             }
         }
     }
@@ -236,9 +244,12 @@ extension LectureCell {
                 delegate?.lectureCell(self, didSelected: option, with: model.lecture)
             })
 
-            if option == .downloading {
+            switch option {
+            case .download, .markAsFavourite, .addToPlaylist, .markAsHeard, .resetProgress, .share:
+                break
+            case .downloading:
                 action.action.attributes = .disabled
-            } else if option == .deleteFromDownloads {
+            case .deleteFromDownloads, .removeFromPlaylist, .removeFromFavourites:
                 action.action.attributes = .destructive
             }
 

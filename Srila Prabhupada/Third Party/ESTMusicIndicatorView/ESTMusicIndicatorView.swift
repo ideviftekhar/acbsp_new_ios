@@ -108,7 +108,7 @@ open class ESTMusicIndicatorView: UIView {
     }
     
     private var hasInstalledConstraints: Bool = false
-    private var contentView:ESTMusicIndicatorContentView!
+    private var contentView: ESTMusicIndicatorContentView!
     
     override public init(frame: CGRect) {
         super.init(frame: frame)
@@ -146,7 +146,7 @@ open class ESTMusicIndicatorView: UIView {
 
     // MARK: Auto Layout
     
-    override open var intrinsicContentSize : CGSize {
+    override open var intrinsicContentSize: CGSize {
         return contentView.intrinsicContentSize
     }
     

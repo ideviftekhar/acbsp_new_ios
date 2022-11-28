@@ -10,7 +10,8 @@ import AVKit
 import FirebaseFirestore
 import IQListKit
 import FirebaseDynamicLinks
-import Loaf
+import StatusAlert
+import SKActivityIndicatorView
 
 protocol LectureViewControllerDelegate: AnyObject {
     func lectureController(_ controller: LectureViewController, didSelected lectures: [Lecture])
@@ -366,13 +367,18 @@ extension LectureViewController {
                     DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleMarkAsFavouriteModels, isCompleted: nil, isDownloaded: nil, isFavourite: true, lastPlayedPoint: nil, completion: { result in
                         switch result {
                         case .success:
-                            if eligibleMarkAsFavouriteModels.count == 1 {
-                                Loaf("Favorited", state: .success, sender: self).show(.short)
+
+                            let message: String?
+                            if eligibleMarkAsFavouriteModels.count > 1 {
+                                message = "Favorited \(eligibleMarkAsFavouriteModels.count) lecture(s)"
                             } else {
-                                Loaf("Favorited \(eligibleMarkAsFavouriteModels) lecture(s)", state: .success, sender: self).show(.short)
+                                message = nil
                             }
+
+                            StatusAlert.show(image: option.image, title: "Favorited", message: message, in: self.view)
+
                         case .failure(let error):
-                            Loaf(error.localizedDescription, state: .error, sender: self).show(.short)
+                            self.showAlert(title: "Error!", message: error.localizedDescription)
                         }
 
                     })
@@ -381,13 +387,18 @@ extension LectureViewController {
                     DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleRemoveFromFavouritesModels, isCompleted: nil, isDownloaded: nil, isFavourite: false, lastPlayedPoint: nil, completion: { result in
                         switch result {
                         case .success:
-                            if eligibleRemoveFromFavouritesModels.count == 1 {
-                                Loaf("Unfavorited", state: .success, sender: self).show(.short)
+
+                            let message: String?
+                            if eligibleRemoveFromFavouritesModels.count > 1 {
+                                message = "Unfavorited \(eligibleRemoveFromFavouritesModels.count) lecture(s)"
                             } else {
-                                Loaf("Unfavorited \(eligibleRemoveFromFavouritesModels) lecture(s)", state: .success, sender: self).show(.short)
+                                message = nil
                             }
+
+                            StatusAlert.show(image: option.image, title: "Unfavorited", message: message, in: self.view)
+
                         case .failure(let error):
-                            Loaf(error.localizedDescription, state: .error, sender: self).show(.short)
+                            self.showAlert(title: "Error!", message: error.localizedDescription)
                         }
 
                     })
@@ -398,18 +409,54 @@ extension LectureViewController {
                     }
                     playlistController.lecturesToAdd = selectedModels
                     self.present(navigationController, animated: true, completion: nil)
+                case .removeFromPlaylist:
+
+                    guard let playlistLectureController = self as? PlaylistLecturesViewController else {
+                        return
+                    }
+
+                    SKActivityIndicator.show("Removing from playlist...")
+                    let eligibleRemoveFromPlaylistsModels: [Model] = selectedModels
+                    DefaultPlaylistViewModel.defaultModel.remove(lectures: eligibleRemoveFromPlaylistsModels, from: playlistLectureController.playlist, completion: { result in
+                        SKActivityIndicator.dismiss()
+                        switch result {
+                        case .success(let success):
+
+                            playlistLectureController.playlist.lectureIds = success
+                            self.refresh(source: .default)
+
+                           let message: String?
+                            if eligibleRemoveFromPlaylistsModels.count > 1 {
+                                message = "Removed \(eligibleRemoveFromPlaylistsModels.count) lecture(s) from playlist"
+                            } else {
+                                message = nil
+                            }
+
+                            StatusAlert.show(image: option.image, title: "Removed from Playlist", message: message, in: self.view)
+
+                        case .failure(let error):
+                            self.showAlert(title: "Error!", message: error.localizedDescription)
+                        }
+
+                    })
+
                 case .markAsHeard:
                     let eligibleMarkAsHeardModels: [Model] = selectedModels.filter { $0.playProgress < 1.0 }
                     DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleMarkAsHeardModels, isCompleted: true, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: -1, completion: { result in
                         switch result {
                         case .success:
-                            if eligibleMarkAsHeardModels.count == 1 {
-                                Loaf("Marked as heard", state: .success, sender: self).show(.short)
-                            } else {
-                                Loaf("Marked heard \(eligibleMarkAsHeardModels) lecture(s)", state: .success, sender: self).show(.short)
-                            }
+
+                           let message: String?
+                             if eligibleMarkAsHeardModels.count > 1 {
+                                 message = "Marked heard \(eligibleMarkAsHeardModels.count) lecture(s)"
+                             } else {
+                                 message = nil
+                             }
+
+                            StatusAlert.show(image: option.image, title: "Marked as heard", message: message, in: self.view)
+
                         case .failure(let error):
-                            Loaf(error.localizedDescription, state: .error, sender: self).show(.short)
+                            self.showAlert(title: "Error!", message: error.localizedDescription)
                         }
 
                     })
@@ -418,14 +465,17 @@ extension LectureViewController {
                     DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleResetProgressModels, isCompleted: false, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: 0, completion: { result in
                         switch result {
                         case .success:
-                            if eligibleResetProgressModels.count == 1 {
-                                Loaf("Progress reset", state: .success, sender: self).show(.short)
-                            } else {
-                                Loaf("Progress reset of \(eligibleResetProgressModels) lecture(s)", state: .success, sender: self).show(.short)
-                            }
 
+                            let message: String?
+                              if eligibleResetProgressModels.count > 1 {
+                                  message = "Progress reset of \(eligibleResetProgressModels.count) lecture(s)"
+                              } else {
+                                  message = nil
+                              }
+
+                            StatusAlert.show(image: option.image, title: "Progress Reset", message: message, in: self.view)
                         case .failure(let error):
-                            Loaf(error.localizedDescription, state: .error, sender: self).show(.short)
+                            self.showAlert(title: "Error!", message: error.localizedDescription)
                         }
 
                     })
@@ -436,7 +486,12 @@ extension LectureViewController {
                 cancelSelection()
             })
 
-            if option == .deleteFromDownloads {
+            switch option {
+            case .download, .markAsFavourite, .addToPlaylist, .markAsHeard, .resetProgress, .share:
+                break
+            case .downloading:
+                action.action.attributes = .disabled
+            case .deleteFromDownloads, .removeFromPlaylist, .removeFromFavourites:
                 action.action.attributes = .destructive
             }
 
@@ -499,6 +554,16 @@ extension LectureViewController {
                 menuItems.append(addToPlaylist)
             }
 
+            if let playlistLectureViewController = self as? PlaylistLecturesViewController,
+               FirestoreManager.shared.currentUser != nil,
+               let email = FirestoreManager.shared.currentUserEmail,
+               playlistLectureViewController.playlist.authorEmail.elementsEqual(email) {
+                if let removeFromPlaylist = allActions[.removeFromPlaylist] {
+                    removeFromPlaylist.action.title = LectureOption.removeFromPlaylist.rawValue + " (\(selectedModels.count))"
+                    menuItems.append(removeFromPlaylist)
+                }
+            }
+
             let eligibleMarkAsHeardModels: [Model] = selectedModels.filter { $0.playProgress < 1.0 }
             if !eligibleMarkAsHeardModels.isEmpty, let markAsHeard = allActions[.markAsHeard] {
                 markAsHeard.action.title = LectureOption.markAsHeard.rawValue + " (\(eligibleMarkAsHeardModels.count))"
@@ -528,8 +593,20 @@ extension LectureViewController: IQListViewDelegateDataSource {
                 let section = IQSection(identifier: "Cell", headerSize: CGSize.zero, footerSize: CGSize.zero)
                 list.append(section)
 
+                let enableRemoveFromPlaylist: Bool
+
+                if let playlistLectureViewController = self as? PlaylistLecturesViewController,
+                   FirestoreManager.shared.currentUser != nil,
+                   let email = FirestoreManager.shared.currentUserEmail,
+                   playlistLectureViewController.playlist.authorEmail.elementsEqual(email) {
+                    enableRemoveFromPlaylist = true
+                } else {
+                    enableRemoveFromPlaylist = false
+                }
+
                 let newModels: [Cell.Model] = models.map { modelLecture in
-                    Cell.Model(lecture: modelLecture, isSelectionEnabled: isSelectionEnabled, isSelected: selectedModels.contains(where: { modelLecture.id == $0.id }))
+                    let isSelected: Bool = selectedModels.contains(where: { modelLecture.id == $0.id })
+                    return Cell.Model(lecture: modelLecture, isSelectionEnabled: isSelectionEnabled, isSelected: isSelected, enableRemoveFromPlaylist: enableRemoveFromPlaylist)
                 }
 
                 list.append(Cell.self, models: newModels, section: section)
@@ -604,9 +681,10 @@ extension LectureViewController: LectureCellDelegate {
             DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: nil, isDownloaded: nil, isFavourite: true, lastPlayedPoint: nil, completion: { result in
                 switch result {
                 case .success:
-                    Loaf("Favorited", state: .success, sender: self).show(.short)
+
+                    StatusAlert.show(image: option.image, title: "Favorited", message: nil, in: self.view)
                 case .failure(let error):
-                    Loaf(error.localizedDescription, state: .error, sender: self).show(.short)
+                    self.showAlert(title: "Error!", message: error.localizedDescription)
                 }
 
             })
@@ -614,11 +692,11 @@ extension LectureViewController: LectureCellDelegate {
             DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: nil, isDownloaded: nil, isFavourite: false, lastPlayedPoint: nil, completion: { result in
                 switch result {
                 case .success:
-                    Loaf("Unfavorited", state: .success, sender: self).show(.short)
-                case .failure(let error):
-                    Loaf(error.localizedDescription, state: .error, sender: self).show(.short)
-                }
 
+                    StatusAlert.show(image: option.image, title: "Unfavorited", message: nil, in: self.view)
+                case .failure(let error):
+                    self.showAlert(title: "Error!", message: error.localizedDescription)
+                }
             })
         case .addToPlaylist:
 
@@ -629,13 +707,35 @@ extension LectureViewController: LectureCellDelegate {
             playlistController.lecturesToAdd = [lecture]
             self.present(navigationController, animated: true, completion: nil)
 
+        case .removeFromPlaylist:
+
+            guard let playlistLectureController = self as? PlaylistLecturesViewController else {
+                return
+            }
+
+            SKActivityIndicator.show("Removing from playlist...")
+            DefaultPlaylistViewModel.defaultModel.remove(lectures: [lecture], from: playlistLectureController.playlist, completion: { result in
+                SKActivityIndicator.dismiss()
+                switch result {
+                case .success(let success):
+
+                    playlistLectureController.playlist.lectureIds = success
+                    self.refresh(source: .default)
+
+                    StatusAlert.show(image: option.image, title: "Removed from Playlist", message: nil, in: self.view)
+
+                case .failure(let error):
+                    self.showAlert(title: "Error!", message: error.localizedDescription)
+                }
+            })
+
         case .markAsHeard:
             DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: true, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: -1, completion: { result in
                 switch result {
                 case .success:
-                    Loaf("Marked as heard", state: .success, sender: self).show(.short)
+                    StatusAlert.show(image: option.image, title: "Marked as heard", message: nil, in: self.view)
                 case .failure(let error):
-                    Loaf(error.localizedDescription, state: .error, sender: self).show(.short)
+                    self.showAlert(title: "Error!", message: error.localizedDescription)
                 }
 
             })
@@ -643,10 +743,10 @@ extension LectureViewController: LectureCellDelegate {
             DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: false, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: 0, completion: { result in
                 switch result {
                 case .success:
-                    Loaf("Progress reset", state: .success, sender: self).show(.short)
+                    StatusAlert.show(image: option.image, title: "Progress Reset", message: nil, in: self.view)
 
                 case .failure(let error):
-                    Loaf(error.localizedDescription, state: .error, sender: self).show(.short)
+                    self.showAlert(title: "Error!", message: error.localizedDescription)
                 }
 
             })

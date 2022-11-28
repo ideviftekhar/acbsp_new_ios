@@ -304,7 +304,6 @@ class PlayerViewController: LectureViewController {
             miniPlayerView.delegate = self
         }
 
-//        timeSlider.setThumbImage(UIImage(compatibleSystemName: "circle.fill"), for: .normal)
         timeSlider.setThumbImage(UIImage(), for: .normal)
         do {
             self.playerContainerView.clipsToBounds = true
@@ -627,7 +626,7 @@ extension PlayerViewController {
 extension PlayerViewController {
 
     private func registerAudioSessionObservers() {
-        NotificationCenter.default.addObserver(forName: AVAudioSession.interruptionNotification, object: nil, queue: nil,using: { [self] notification in
+        NotificationCenter.default.addObserver(forName: AVAudioSession.interruptionNotification, object: nil, queue: nil, using: { [self] notification in
 
             if let interruptionTypeInt = notification.userInfo?[AVAudioSessionInterruptionTypeKey] as? UInt,
                let interruptionType = AVAudioSession.InterruptionType(rawValue: interruptionTypeInt) {
@@ -684,7 +683,7 @@ extension PlayerViewController {
             }
         })
 
-        self.timeControlStatusObserver = player?.observe(\.timeControlStatus, options: [.new, .old], changeHandler: { [self] (player, change) in
+        self.timeControlStatusObserver = player?.observe(\.timeControlStatus, options: [.new, .old], changeHandler: { [self] (player, _) in
 
             let totalDuration: Int = self.totalDuration
             timeSlider.maximumValue = Float(totalDuration)
@@ -702,7 +701,7 @@ extension PlayerViewController {
             }
         })
 
-        self.itemStatusObserver = item.observe(\.status, options: [.new, .old], changeHandler: { [self] (playerItem, change) in
+        self.itemStatusObserver = item.observe(\.status, options: [.new, .old], changeHandler: { [self] (_, change) in
 
             let totalDuration: Int = self.totalDuration
             timeSlider.maximumValue = Float(totalDuration)

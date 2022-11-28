@@ -28,15 +28,15 @@ class FirestoreManager: NSObject {
     }
 
     #if DEBUG
-    private var simulatedUID: String? = nil
-    private var simulatedEmail: String? = nil
-    private var simulatedDisplayName: String? = nil
-    private var simulatedPhotoURL: URL? = nil
+    private var simulatedUID: String?
+    private var simulatedEmail: String?
+    private var simulatedDisplayName: String?
+    private var simulatedPhotoURL: URL?
     #else
-    private var simulatedUID: String? = nil
-    private var simulatedEmail: String? = nil
-    private var simulatedDisplayName: String? = nil
-    private var simulatedPhotoURL: URL? = nil
+    private var simulatedUID: String?
+    private var simulatedEmail: String?
+    private var simulatedDisplayName: String?
+    private var simulatedPhotoURL: URL?
     #endif
 
     var currentUserUID: String? {

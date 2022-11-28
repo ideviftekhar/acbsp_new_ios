@@ -22,6 +22,8 @@ enum LectureOption: String, CaseIterable {
 
     case addToPlaylist          =   "Add to playlist"
 
+    case removeFromPlaylist     =   "Remove from playlist"
+
     case markAsHeard            =   "Mark as heard"
 
     case resetProgress          =   "Reset Progress"
@@ -35,13 +37,15 @@ enum LectureOption: String, CaseIterable {
         case .downloading:
             return UIImage(compatibleSystemName: "square.and.arrow.down.fill")
         case .deleteFromDownloads:
-            return UIImage(compatibleSystemName: "trash")
+            return UIImage(compatibleSystemName: "icloud.slash")
         case .markAsFavourite:
             return UIImage(compatibleSystemName: "star.fill")
         case .removeFromFavourites:
-            return UIImage(compatibleSystemName: "star")
+            return UIImage(compatibleSystemName: "star.slash.fill")
         case .addToPlaylist:
             return UIImage(compatibleSystemName: "music.note.list")
+        case .removeFromPlaylist:
+            return UIImage(compatibleSystemName: "text.badge.minus")
         case .markAsHeard:
             return UIImage(compatibleSystemName: "checkmark")
         case .resetProgress:

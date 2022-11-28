@@ -171,7 +171,7 @@ class ESTMusicIndicatorContentView: UIView {
             layer.removeAnimation(forKey: kDecayAnimationKey)
         }
     }
-    
+
     private func startOscillatingBarLayer(_ layer: CALayer, basePeriod: CFTimeInterval) {
         // arc4random_uniform() will return a uniformly distributed random number **less** upper_bound.
         let values = 0...UInt32(kBarMaxPeakHeight - kBarMinPeakHeight + 1)
@@ -193,7 +193,7 @@ class ESTMusicIndicatorContentView: UIView {
 
         layer.add(animation, forKey: kOscillationAnimationKey)
     }
-    
+
     private func startDecayingBarLayer(_ layer: CALayer) {
         let animation: CABasicAnimation = CABasicAnimation(keyPath: "bounds")
 

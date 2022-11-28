@@ -40,8 +40,6 @@ class CreatePlaylistViewController: UIViewController {
         }
     }
 
-    let playlistViewModel: PlaylistViewModel = DefaultPlaylistViewModel()
-
     weak var delegate: CreatePlaylistViewControllerDelegate?
 
     var playlist: Playlist?
@@ -89,7 +87,7 @@ class CreatePlaylistViewController: UIViewController {
 
         if let playlist = playlist {
             showLoading()
-            playlistViewModel.update(playlist: playlist, title: title, category: category, description: description, completion: { [self] result in
+            DefaultPlaylistViewModel.defaultModel.update(playlist: playlist, title: title, category: category, description: description, completion: { [self] result in
                 hideLoading()
 
                 switch result {
@@ -103,7 +101,7 @@ class CreatePlaylistViewController: UIViewController {
             })
         } else {
             showLoading()
-            playlistViewModel.createPlaylist(title: title, category: category, description: description, listType: playlistType, lectures: [], completion: { [self] result in
+            DefaultPlaylistViewModel.defaultModel.createPlaylist(title: title, category: category, description: description, listType: playlistType, lectures: [], completion: { [self] result in
                 hideLoading()
 
                 switch result {

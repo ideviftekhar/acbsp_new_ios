@@ -10,6 +10,7 @@ import FirebaseCore
 import GoogleSignIn
 import IQKeyboardManagerSwift
 import FirebaseMessaging
+import SKActivityIndicatorView
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
 
         IQKeyboardManager.shared.enable = true
-
+        SKActivityIndicator.spinnerStyle(.spinningFadeCircle)
         if let filePath = Bundle.main.path(forResource: Environment.current.googleServiceFileName, ofType: "plist"),
            let fileopts = FirebaseOptions(contentsOfFile: filePath) {
             FirebaseApp.configure(options: fileopts)

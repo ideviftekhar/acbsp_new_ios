@@ -8,9 +8,9 @@
 import UIKit
 import IQListKit
 import FirebaseFirestore
-import SVProgressHUD
+import SKActivityIndicatorView
 import FirebaseAuth
-import Loaf
+import StatusAlert
 
 class PlaylistViewController: SearchViewController {
 
@@ -29,8 +29,6 @@ class PlaylistViewController: SearchViewController {
         }
         return selectedSortType
     }
-
-    let playlistViewModel: PlaylistViewModel = DefaultPlaylistViewModel()
 
     typealias Model = Playlist
     typealias Cell = PlaylistCell
@@ -148,7 +146,7 @@ class PlaylistViewController: SearchViewController {
 
         switch selectedPlaylistType {
         case .private:
-            playlistViewModel.getPrivatePlaylist(searchText: searchText, sortType: selectedSortType, completion: completion)
+            DefaultPlaylistViewModel.defaultModel.getPrivatePlaylist(searchText: searchText, sortType: selectedSortType, completion: completion)
         case .public:
 
             let userEmail: String?
@@ -158,7 +156,7 @@ class PlaylistViewController: SearchViewController {
                 userEmail = nil
             }
 
-            playlistViewModel.getPublicPlaylist(searchText: searchText, sortType: selectedSortType, userEmail: userEmail, completion: completion)
+            DefaultPlaylistViewModel.defaultModel.getPublicPlaylist(searchText: searchText, sortType: selectedSortType, userEmail: userEmail, completion: completion)
         }
     }
 }
@@ -296,9 +294,9 @@ extension PlaylistViewController: IQListViewDelegateDataSource {
                 self.showAlert(title: "Add to '\(model.title)'?", message: message, cancel: (title: "Cancel", {
                 }), buttons: (title: "Add", {
 
-                    SVProgressHUD.show(withStatus: "Adding...")
-                    self.playlistViewModel.add(lectures: self.lecturesToAdd, to: model, completion: { result in
-                        SVProgressHUD.dismiss()
+                    SKActivityIndicator.show("Adding...")
+                    DefaultPlaylistViewModel.defaultModel.add(lectures: self.lecturesToAdd, to: model, completion: { result in
+                        SKActivityIndicator.dismiss()
 
                         switch result {
                         case .success:
@@ -336,7 +334,11 @@ extension PlaylistViewController: CreatePlaylistViewControllerDelegate {
         } else {
             refresh(source: .default)
         }
-        Loaf("'\(playlist)' playlist created!", state: .success, sender: self).show(.short)
+
+        let message: String = "'\(playlist)' playlist created!"
+
+        let playlistIcon = UIImage(compatibleSystemName: "music.note.list")
+        StatusAlert.show(image: playlistIcon, title: "Playlist Created", message: message, in: self.view)
     }
 
     func controller(_ controller: CreatePlaylistViewController, didUpdate playlist: Playlist) {
@@ -357,7 +359,10 @@ extension PlaylistViewController: CreatePlaylistViewControllerDelegate {
             refresh(source: .default)
         }
 
-        Loaf("'\(playlist)' playlist updated!", state: .success, sender: self).show(.short)
+        let message: String = "'\(playlist)' playlist updated!"
+
+        let playlistIcon = UIImage(compatibleSystemName: "music.note.list")
+        StatusAlert.show(image: playlistIcon, title: "Playlist Updated", message: message, in: self.view)
     }
 }
 
@@ -371,9 +376,9 @@ extension PlaylistViewController: PlaylistCellDelegate {
                            cancel: (title: "Cancel", {}),
                            destructive: (title: "Delete", {
 
-                SVProgressHUD.show(withStatus: "Deleting...")
-                self.playlistViewModel.delete(playlist: playlist) { result in
-                    SVProgressHUD.dismiss()
+                SKActivityIndicator.show("Deleting...")
+                DefaultPlaylistViewModel.defaultModel.delete(playlist: playlist) { result in
+                    SKActivityIndicator.dismiss()
 
                     switch result {
                     case .success:

@@ -12,11 +12,16 @@ class NavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let titleTextAttributes: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.white]
+
+        navigationBar.titleTextAttributes = titleTextAttributes
+        navigationBar.largeTitleTextAttributes = titleTextAttributes
+
         if #available(iOS 13.0, *) {
             let navigationBarAppearance = UINavigationBarAppearance()
             navigationBarAppearance.backgroundColor = UIColor.themeColor
-            navigationBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
-            navigationBarAppearance.largeTitleTextAttributes = [.foregroundColor: UIColor.white]
+            navigationBarAppearance.titleTextAttributes = titleTextAttributes
+            navigationBarAppearance.largeTitleTextAttributes = titleTextAttributes
 
             navigationBar.standardAppearance = navigationBarAppearance
             navigationBar.compactAppearance = navigationBarAppearance

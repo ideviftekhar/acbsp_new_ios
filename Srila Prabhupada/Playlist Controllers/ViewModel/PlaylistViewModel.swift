@@ -11,6 +11,8 @@ import FirebaseAuth
 
 protocol PlaylistViewModel: AnyObject {
 
+    static var defaultModel: PlaylistViewModel { get }
+
     func createPlaylist(title: String, category: String, description: String, listType: PlaylistType, lectures: [Lecture], completion: @escaping (Swift.Result<Playlist, Error>) -> Void)
     func update(playlist: Playlist, title: String, category: String, description: String, completion: @escaping (Swift.Result<Playlist, Error>) -> Void)
 
@@ -18,11 +20,13 @@ protocol PlaylistViewModel: AnyObject {
     func getPublicPlaylist(searchText: String?, sortType: PlaylistSortType, userEmail: String?, completion: @escaping (Swift.Result<[Playlist], Error>) -> Void)
 
     func add(lectures: [Lecture], to playlist: Playlist, completion: @escaping (Swift.Result<[Int], Error>) -> Void)
-    func remove(lectures: [Lecture], to playlist: Playlist, completion: @escaping (Swift.Result<[Int], Error>) -> Void)
+    func remove(lectures: [Lecture], from playlist: Playlist, completion: @escaping (Swift.Result<[Int], Error>) -> Void)
     func delete(playlist: Playlist, completion: @escaping (Swift.Result<Bool, Error>) -> Void)
 }
 
 class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
+
+    static var defaultModel: PlaylistViewModel = DefaultPlaylistViewModel()
 
     func createPlaylist(title: String, category: String, description: String, listType: PlaylistType, lectures: [Lecture], completion: @escaping (Swift.Result<Playlist, Error>) -> Void) {
 
@@ -295,7 +299,7 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
         }
     }
 
-    func remove(lectures: [Lecture], to playlist: Playlist, completion: @escaping (Swift.Result<[Int], Error>) -> Void) {
+    func remove(lectures: [Lecture], from playlist: Playlist, completion: @escaping (Swift.Result<[Int], Error>) -> Void) {
         switch playlist.listType {
         case .private:
             guard FirestoreManager.shared.currentUser != nil,
@@ -318,7 +322,7 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
                 case .success(let document):
 
                     var lectureIds: [Int] = (document["lectureIds"] as? [Int]) ?? []
-                    var oldLectureIds: [Int] = lectures.map { $0.id }
+                    let oldLectureIds: [Int] = lectures.map { $0.id }
 
                     let currentTimestamp = Int(Date().timeIntervalSince1970*1000)
 
@@ -353,7 +357,7 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
                 case .success(let document):
 
                     var lectureIds = document.lectureIds
-                    var oldLectureIds: [Int] = lectures.map { $0.id }
+                    let oldLectureIds: [Int] = lectures.map { $0.id }
 
                     let currentTimestamp = Int(Date().timeIntervalSince1970*1000)
 

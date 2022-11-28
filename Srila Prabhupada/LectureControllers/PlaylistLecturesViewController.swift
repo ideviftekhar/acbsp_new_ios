@@ -8,13 +8,12 @@
 import UIKit
 import FirebaseAuth
 import FirebaseFirestore
-import SVProgressHUD
-import Loaf
+import SKActivityIndicatorView
+import StatusAlert
 
 class PlaylistLecturesViewController: LectureViewController {
 
     var playlist: Playlist!
-    let playlistViewModel: PlaylistViewModel = DefaultPlaylistViewModel()
 
     private lazy var addLecturesButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addLecturesButtonAction(_:)))
 
@@ -57,9 +56,9 @@ extension PlaylistLecturesViewController: LectureViewControllerDelegate {
 
     func lectureController(_ controller: LectureViewController, didSelected lectures: [Lecture]) {
 
-        SVProgressHUD.show(withStatus: "Adding \(lectures.count) lectures to '\(playlist.title)' playlist...")
-        self.playlistViewModel.add(lectures: lectures, to: playlist, completion: { result in
-            SVProgressHUD.dismiss()
+        SKActivityIndicator.show("Adding \(lectures.count) lectures to '\(playlist.title)' playlist...")
+        DefaultPlaylistViewModel.defaultModel.add(lectures: lectures, to: playlist, completion: { result in
+            SKActivityIndicator.dismiss()
 
             switch result {
             case .success(let lectureIds):
@@ -68,7 +67,9 @@ extension PlaylistLecturesViewController: LectureViewControllerDelegate {
                 let presenting = self.presentingViewController
                 controller.dismiss(animated: true, completion: {
                     if let presenting = presenting {
-                        Loaf("Added \(lectures.count) lectures to '\(self.playlist.title)' playlist", state: .success, sender: presenting).show(.short)
+                        let message: String = "Added \(lectures.count) lectures to '\(self.playlist.title)' playlist"
+                        let playlistIcon = UIImage(compatibleSystemName: "music.note.list")
+                        StatusAlert.show(image: playlistIcon, title: "Added", message: message, in: presenting.view)
                     }
                 })
             case .failure(let error):
