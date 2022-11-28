@@ -20,8 +20,7 @@ class PlaylistLecturesViewController: LectureViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.navigationItem.title = "\(playlist.listType.rawValue) Playlist"
-        self.navigationItem.prompt = playlist.title
+        self.navigationItem.title = playlist.title
         do {
             noItemTitle = "No Lectures"
             noItemMessage = "No lectures in '\(playlist.title)' playlist"
@@ -56,25 +55,43 @@ extension PlaylistLecturesViewController: LectureViewControllerDelegate {
 
     func lectureController(_ controller: LectureViewController, didSelected lectures: [Lecture]) {
 
-        SKActivityIndicator.show("Adding \(lectures.count) lectures to '\(playlist.title)' playlist...")
-        DefaultPlaylistViewModel.defaultModel.add(lectures: lectures, to: playlist, completion: { result in
-            SKActivityIndicator.dismiss()
+        let message: String
+        if lectures.count == 1, let lecture = lectures.first {
+            message = "Would you like to add '\(lecture.titleDisplay)' to '\(playlist.title)' Playlist?"
+        } else {
+            message = "Would you like to add \(lectures.count) lecture(s) to '\(playlist.title)' Playlist?"
+        }
 
-            switch result {
-            case .success(let lectureIds):
-                self.playlist.lectureIds = lectureIds
-                self.refresh(source: .default)
-                let presenting = self.presentingViewController
-                controller.dismiss(animated: true, completion: {
-                    if let presenting = presenting {
-                        let message: String = "Added \(lectures.count) lectures to '\(self.playlist.title)' playlist"
+        self.showAlert(title: "Add to '\(playlist.title)'?",
+                       message: message,
+                       sourceView: addLecturesButton,
+                       cancel: ("Cancel", nil),
+                       buttons: ("Add", {
+
+            SKActivityIndicator.show("Adding to '\(self.playlist.title)' ...")
+            DefaultPlaylistViewModel.defaultModel.add(lectures: lectures, to: self.playlist, completion: { result in
+                SKActivityIndicator.dismiss()
+
+                switch result {
+                case .success(let lectureIds):
+                    self.playlist.lectureIds = lectureIds
+                    self.refresh(source: .cache)
+                    controller.dismiss(animated: true, completion: {
+
+                        let message: String?
+                        if lectures.count > 1 {
+                            message = "Added \(lectures.count) lecture(s)"
+                        } else {
+                            message = nil
+                        }
+
                         let playlistIcon = UIImage(compatibleSystemName: "music.note.list")
-                        StatusAlert.show(image: playlistIcon, title: "Added", message: message, in: presenting.view)
-                    }
-                })
-            case .failure(let error):
-                controller.showAlert(title: "Error", message: error.localizedDescription)
-            }
-        })
+                        StatusAlert.show(image: playlistIcon, title: "Added to '\(self.playlist.title)'", message: message, in: self.view)
+                    })
+                case .failure(let error):
+                    controller.showAlert(title: "Error", message: error.localizedDescription)
+                }
+            })
+        }))
     }
 }

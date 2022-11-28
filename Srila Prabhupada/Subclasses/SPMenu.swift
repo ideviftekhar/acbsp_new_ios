@@ -89,7 +89,7 @@ class SPMenu {
                 action.handler(action.action)
             })
 
-            if action.action.attributes == .destructive {
+            if action.action.attributes == .destructive, destructive == nil {
                 destructive = button
             } else if action.action.attributes != .disabled, action.action.attributes != .hidden {
                 buttons.append(button)

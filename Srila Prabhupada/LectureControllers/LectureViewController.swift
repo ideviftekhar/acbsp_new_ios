@@ -322,193 +322,6 @@ extension LectureViewController {
         }
     }
 
-    private func configureSelectionButton() {
-
-        let select: SPAction = SPAction(title: "Select", image: nil, handler: { [self] (_) in
-            startSelection()
-        })
-
-        let cancel: SPAction = SPAction(title: "Cancel", image: nil, handler: { [self] (_) in
-            cancelSelection()
-        })
-
-        let selectAll: SPAction = SPAction(title: "Select All", image: UIImage(compatibleSystemName: "checkmark.circle.fill"), handler: { [self] (_) in
-            selectedModels = models
-            refreshUI(animated: false, showNoItems: true)
-        })
-        let deselectAll: SPAction = SPAction(title: "Deselect All", image: UIImage(compatibleSystemName: "checkmark.circle"), handler: { [self] (_) in
-            selectedModels.removeAll()
-            refreshUI(animated: false, showNoItems: true)
-        })
-
-        for option in LectureOption.allCases {
-            let action: SPAction = SPAction(title: option.rawValue, image: option.image, identifier: .init(option.rawValue), handler: { [self] _ in
-
-                guard !selectedModels.isEmpty else {
-                    return
-                }
-
-                switch option {
-                case .download:
-                    let eligibleDownloadModels: [Model] = selectedModels.filter { $0.downloadState == .notDownloaded || $0.downloadState == .error }
-                    Persistant.shared.save(lectures: eligibleDownloadModels)
-
-                    DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleDownloadModels, isCompleted: nil, isDownloaded: true, isFavourite: nil, lastPlayedPoint: nil, completion: { _ in
-                    })
-
-                case .deleteFromDownloads:
-                    let eligibleDeleteFromDownloadsModels: [Model] = selectedModels.filter { $0.downloadState == .downloaded || $0.downloadState == .error }
-                    Persistant.shared.delete(lectures: eligibleDeleteFromDownloadsModels)
-
-                    DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleDeleteFromDownloadsModels, isCompleted: nil, isDownloaded: false, isFavourite: nil, lastPlayedPoint: nil, completion: {_ in })
-                case .markAsFavourite:
-                    let eligibleMarkAsFavouriteModels: [Model] = selectedModels.filter { !$0.isFavourite }
-
-                    DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleMarkAsFavouriteModels, isCompleted: nil, isDownloaded: nil, isFavourite: true, lastPlayedPoint: nil, completion: { result in
-                        switch result {
-                        case .success:
-
-                            let message: String?
-                            if eligibleMarkAsFavouriteModels.count > 1 {
-                                message = "Favorited \(eligibleMarkAsFavouriteModels.count) lecture(s)"
-                            } else {
-                                message = nil
-                            }
-
-                            StatusAlert.show(image: option.image, title: "Favorited", message: message, in: self.view)
-
-                        case .failure(let error):
-                            self.showAlert(title: "Error!", message: error.localizedDescription)
-                        }
-
-                    })
-                case .removeFromFavourites:
-                    let eligibleRemoveFromFavouritesModels: [Model] = selectedModels.filter { $0.isFavourite }
-                    DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleRemoveFromFavouritesModels, isCompleted: nil, isDownloaded: nil, isFavourite: false, lastPlayedPoint: nil, completion: { result in
-                        switch result {
-                        case .success:
-
-                            let message: String?
-                            if eligibleRemoveFromFavouritesModels.count > 1 {
-                                message = "Unfavorited \(eligibleRemoveFromFavouritesModels.count) lecture(s)"
-                            } else {
-                                message = nil
-                            }
-
-                            StatusAlert.show(image: option.image, title: "Unfavorited", message: message, in: self.view)
-
-                        case .failure(let error):
-                            self.showAlert(title: "Error!", message: error.localizedDescription)
-                        }
-
-                    })
-                case .addToPlaylist:
-                    let navigationController = UIStoryboard.playlists.instantiate(UINavigationController.self, identifier: "PlaylistNavigationController")
-                    guard let playlistController = navigationController.viewControllers.first as? PlaylistViewController else {
-                        return
-                    }
-                    playlistController.lecturesToAdd = selectedModels
-                    self.present(navigationController, animated: true, completion: nil)
-                case .removeFromPlaylist:
-
-                    guard let playlistLectureController = self as? PlaylistLecturesViewController else {
-                        return
-                    }
-
-                    SKActivityIndicator.show("Removing from playlist...")
-                    let eligibleRemoveFromPlaylistsModels: [Model] = selectedModels
-                    DefaultPlaylistViewModel.defaultModel.remove(lectures: eligibleRemoveFromPlaylistsModels, from: playlistLectureController.playlist, completion: { result in
-                        SKActivityIndicator.dismiss()
-                        switch result {
-                        case .success(let success):
-
-                            playlistLectureController.playlist.lectureIds = success
-                            self.refresh(source: .default)
-
-                           let message: String?
-                            if eligibleRemoveFromPlaylistsModels.count > 1 {
-                                message = "Removed \(eligibleRemoveFromPlaylistsModels.count) lecture(s) from playlist"
-                            } else {
-                                message = nil
-                            }
-
-                            StatusAlert.show(image: option.image, title: "Removed from Playlist", message: message, in: self.view)
-
-                        case .failure(let error):
-                            self.showAlert(title: "Error!", message: error.localizedDescription)
-                        }
-
-                    })
-
-                case .markAsHeard:
-                    let eligibleMarkAsHeardModels: [Model] = selectedModels.filter { $0.playProgress < 1.0 }
-                    DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleMarkAsHeardModels, isCompleted: true, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: -1, completion: { result in
-                        switch result {
-                        case .success:
-
-                           let message: String?
-                             if eligibleMarkAsHeardModels.count > 1 {
-                                 message = "Marked heard \(eligibleMarkAsHeardModels.count) lecture(s)"
-                             } else {
-                                 message = nil
-                             }
-
-                            StatusAlert.show(image: option.image, title: "Marked as heard", message: message, in: self.view)
-
-                        case .failure(let error):
-                            self.showAlert(title: "Error!", message: error.localizedDescription)
-                        }
-
-                    })
-                case .resetProgress:
-                    let eligibleResetProgressModels: [Model] = selectedModels.filter { $0.playProgress >= 1.0 }
-                    DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleResetProgressModels, isCompleted: false, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: 0, completion: { result in
-                        switch result {
-                        case .success:
-
-                            let message: String?
-                              if eligibleResetProgressModels.count > 1 {
-                                  message = "Progress reset of \(eligibleResetProgressModels.count) lecture(s)"
-                              } else {
-                                  message = nil
-                              }
-
-                            StatusAlert.show(image: option.image, title: "Progress Reset", message: message, in: self.view)
-                        case .failure(let error):
-                            self.showAlert(title: "Error!", message: error.localizedDescription)
-                        }
-
-                    })
-                case .share, .downloading:
-                    break
-               }
-
-                cancelSelection()
-            })
-
-            switch option {
-            case .download, .markAsFavourite, .addToPlaylist, .markAsHeard, .resetProgress, .share:
-                break
-            case .downloading:
-                action.action.attributes = .disabled
-            case .deleteFromDownloads, .removeFromPlaylist, .removeFromFavourites:
-                action.action.attributes = .destructive
-            }
-
-            allActions[option] = action
-        }
-
-        if delegate != nil {
-            defaultNormalActions = []
-            defaultSelectionActions = [selectAll, deselectAll]
-            moreMenu = SPMenu(title: "", image: nil, identifier: UIMenu.Identifier.init("More Menu"), options: [], children: defaultSelectionActions, barButton: moreButton, parent: self)
-        } else {
-            defaultNormalActions = [select]
-            defaultSelectionActions = [cancel, selectAll, deselectAll]
-            moreMenu = SPMenu(title: "", image: nil, identifier: UIMenu.Identifier.init("More Menu"), options: [], children: defaultNormalActions, barButton: moreButton, parent: self)
-        }
-    }
-
     private func refreshMoreOption() {
 
         guard delegate == nil else {
@@ -578,6 +391,363 @@ extension LectureViewController {
         }
 
         self.moreMenu.children = menuItems
+    }
+
+    private func configureSelectionButton() {
+
+        let select: SPAction = SPAction(title: "Select", image: nil, handler: { [self] (_) in
+            startSelection()
+        })
+
+        let cancel: SPAction = SPAction(title: "Cancel", image: nil, handler: { [self] (_) in
+            cancelSelection()
+        })
+
+        let selectAll: SPAction = SPAction(title: "Select All", image: UIImage(compatibleSystemName: "checkmark.circle.fill"), handler: { [self] (_) in
+            selectedModels = models
+            refreshUI(animated: false, showNoItems: true)
+        })
+        let deselectAll: SPAction = SPAction(title: "Deselect All", image: UIImage(compatibleSystemName: "checkmark.circle"), handler: { [self] (_) in
+            selectedModels.removeAll()
+            refreshUI(animated: false, showNoItems: true)
+        })
+
+        for option in LectureOption.allCases {
+            let action: SPAction = SPAction(title: option.rawValue, image: option.image, identifier: .init(option.rawValue), handler: { [self] _ in
+
+                guard !selectedModels.isEmpty else {
+                    return
+                }
+
+                switch option {
+                case .download:
+                    let eligibleDownloadModels: [Model] = selectedModels.filter { $0.downloadState == .notDownloaded || $0.downloadState == .error }
+                    Persistant.shared.save(lectures: eligibleDownloadModels)
+
+                    DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleDownloadModels, isCompleted: nil, isDownloaded: true, isFavourite: nil, lastPlayedPoint: nil, completion: { _ in
+                    })
+
+                case .deleteFromDownloads:
+                    let eligibleDeleteFromDownloadsModels: [Model] = selectedModels.filter { $0.downloadState == .downloaded || $0.downloadState == .error }
+                    askToDeleteFromDownloads(lectures: eligibleDeleteFromDownloadsModels, sourceView: moreButton)
+                    
+                case .markAsFavourite:
+                    let eligibleMarkAsFavouriteModels: [Model] = selectedModels.filter { !$0.isFavourite }
+                    markAsFavourites(lectures: eligibleMarkAsFavouriteModels, sourceView: moreButton)
+
+                case .removeFromFavourites:
+                    let eligibleRemoveFromFavouritesModels: [Model] = selectedModels.filter { $0.isFavourite }
+                    askToRemoveFromFavorites(lectures: eligibleRemoveFromFavouritesModels, sourceView: moreButton)
+
+                case .addToPlaylist:
+                    let navigationController = UIStoryboard.playlists.instantiate(UINavigationController.self, identifier: "PlaylistNavigationController")
+                    guard let playlistController = navigationController.viewControllers.first as? PlaylistViewController else {
+                        return
+                    }
+                    playlistController.lecturesToAdd = selectedModels
+                    self.present(navigationController, animated: true, completion: nil)
+                case .removeFromPlaylist:
+
+                    askToRemoveFromPlaylist(lectures: selectedModels, sourceView: moreButton)
+
+                case .markAsHeard:
+                    let eligibleMarkAsHeardModels: [Model] = selectedModels.filter { $0.playProgress < 1.0 }
+                    markAsHeard(lectures: eligibleMarkAsHeardModels, sourceView: moreButton)
+                case .resetProgress:
+                    let eligibleResetProgressModels: [Model] = selectedModels.filter { $0.playProgress >= 1.0 }
+                    resetProgress(lectures: eligibleResetProgressModels, sourceView: moreButton)
+                case .share, .downloading:
+                    break
+               }
+
+                cancelSelection()
+            })
+
+            switch option {
+            case .download, .markAsFavourite, .addToPlaylist, .markAsHeard, .resetProgress, .share:
+                break
+            case .downloading:
+                action.action.attributes = .disabled
+            case .deleteFromDownloads, .removeFromPlaylist, .removeFromFavourites:
+                action.action.attributes = .destructive
+            }
+
+            allActions[option] = action
+        }
+
+        if delegate != nil {
+            defaultNormalActions = []
+            defaultSelectionActions = [selectAll, deselectAll]
+            moreMenu = SPMenu(title: "", image: nil, identifier: UIMenu.Identifier.init("More Menu"), options: [], children: defaultSelectionActions, barButton: moreButton, parent: self)
+        } else {
+            defaultNormalActions = [select]
+            defaultSelectionActions = [cancel, selectAll, deselectAll]
+            moreMenu = SPMenu(title: "", image: nil, identifier: UIMenu.Identifier.init("More Menu"), options: [], children: defaultNormalActions, barButton: moreButton, parent: self)
+        }
+    }
+}
+
+extension LectureViewController: LectureCellDelegate {
+    func lectureCell(_ cell: LectureCell, didSelected option: LectureOption, with lecture: Lecture) {
+
+        switch option {
+        case .download:
+            Persistant.shared.save(lectures: [lecture])
+            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: nil, isDownloaded: true, isFavourite: nil, lastPlayedPoint: nil, completion: {_ in })
+        case .deleteFromDownloads:
+            askToDeleteFromDownloads(lectures: [lecture], sourceView: cell)
+        case .markAsFavourite:
+            markAsFavourites(lectures: [lecture], sourceView: cell)
+        case .removeFromFavourites:
+            askToRemoveFromFavorites(lectures: [lecture], sourceView: cell)
+        case .addToPlaylist:
+
+            let navigationController = UIStoryboard.playlists.instantiate(UINavigationController.self, identifier: "PlaylistNavigationController")
+            guard let playlistController = navigationController.viewControllers.first as? PlaylistViewController else {
+                return
+            }
+            playlistController.lecturesToAdd = [lecture]
+            self.present(navigationController, animated: true, completion: nil)
+
+        case .removeFromPlaylist:
+            askToRemoveFromPlaylist(lectures: [lecture], sourceView: cell)
+        case .markAsHeard:
+            markAsHeard(lectures: [lecture], sourceView: cell)
+        case .resetProgress:
+            resetProgress(lectures: [lecture], sourceView: cell)
+        case .share:
+
+            let deepLinkBaseURL = "https://bvks.com?lectureId=\(lecture.id)"
+            let domainURIPrefix = "https://prabhupada.page.link"
+
+            guard let link = URL(string: deepLinkBaseURL),
+                  let linkBuilder = DynamicLinkComponents(link: link, domainURIPrefix: domainURIPrefix) else {
+                return
+            }
+
+            do {
+                let iOSParameters = DynamicLinkIOSParameters(bundleID: "com.bvksdigital.acbsp")
+                iOSParameters.appStoreID = "1645287937"
+                linkBuilder.iOSParameters = iOSParameters
+            }
+
+            do {
+                let androidParameters = DynamicLinkAndroidParameters(packageName: "com.iskcon.prabhupada")
+                 linkBuilder.androidParameters = androidParameters
+            }
+
+            var descriptions: [String] = []
+            do {
+                let durationString = "• Duration: " + lecture.lengthTime.displayString
+                descriptions.append(durationString)
+
+                if !lecture.legacyData.verse.isEmpty {
+                    let verseString = "• " + lecture.legacyData.verse
+                    descriptions.append(verseString)
+                }
+
+                let recordingDateString = "• Date of Recording: " + lecture.dateOfRecording.display_dd_MM_yyyy
+                descriptions.append(recordingDateString)
+
+                if !lecture.location.displayString.isEmpty {
+                    let locationString = "• Location: " + lecture.location.displayString
+                    descriptions.append(locationString)
+                }
+            }
+
+            do {
+                let socialMediaParameters = DynamicLinkSocialMetaTagParameters()
+                socialMediaParameters.title = lecture.titleDisplay
+                socialMediaParameters.descriptionText = descriptions.joined(separator: "\n")
+                if let thumbnailURL = lecture.thumbnailURL {
+                    socialMediaParameters.imageURL = thumbnailURL
+                }
+                linkBuilder.socialMetaTagParameters = socialMediaParameters
+            }
+
+            linkBuilder.shorten() { url, _, _ in
+                var appLinks: [Any] = []
+                if let url = url {
+                    appLinks.append(url)
+                } else if let url = linkBuilder.url {
+                    appLinks.append(url)
+                }
+
+                guard !appLinks.isEmpty else {
+                    return
+                }
+
+                let shareController = UIActivityViewController(activityItems: appLinks, applicationActivities: nil)
+                shareController.popoverPresentationController?.sourceView = cell
+                self.present(shareController, animated: true)
+            }
+
+        case .downloading:
+            break
+        }
+    }
+}
+
+extension LectureViewController {
+
+    private func askToDeleteFromDownloads(lectures: [Lecture], sourceView: Any?) {
+
+        let message: String
+        if lectures.count == 1, let lecture = lectures.first {
+            message = "Are you sure you would like to delete '\(lecture.titleDisplay)' from Downloads?"
+        } else {
+            message = "Are you sure you would like to delete \(lectures.count) lecture(s) from Downloads?"
+        }
+
+        self.showAlert(title: "Delete From Downloads",
+                       message: message,
+                       sourceView: sourceView,
+                       cancel: ("Cancel", nil),
+                       destructive: ("Delete", {
+            Persistant.shared.delete(lectures: lectures)
+            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: lectures, isCompleted: nil, isDownloaded: false, isFavourite: nil, lastPlayedPoint: nil, completion: {_ in })
+        }))
+    }
+
+    private func markAsFavourites(lectures: [Lecture], sourceView: Any?) {
+        DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: lectures, isCompleted: nil, isDownloaded: nil, isFavourite: true, lastPlayedPoint: nil, completion: { result in
+            switch result {
+            case .success:
+
+                let message: String?
+                if lectures.count > 1 {
+                    message = "Favorited \(lectures.count) lecture(s)"
+                } else {
+                    message = nil
+                }
+
+                StatusAlert.show(image: LectureOption.markAsFavourite.image, title: "Favorited", message: message, in: self.view)
+
+            case .failure(let error):
+                self.showAlert(title: "Error!", message: error.localizedDescription)
+            }
+
+        })
+    }
+
+    private func askToRemoveFromFavorites(lectures: [Lecture], sourceView: Any?) {
+
+        let message: String
+        if lectures.count == 1, let lecture = lectures.first {
+            message = "Are you sure you would like to remove '\(lecture.titleDisplay)' from Favorites?"
+        } else {
+            message = "Are you sure you would like to remove \(lectures.count) lecture(s) from Favorites?"
+        }
+
+        self.showAlert(title: "Remove From Favourites",
+                       message: message,
+                       sourceView: moreButton,
+                       cancel: ("Cancel", nil),
+                       destructive: ("Remove", {
+            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: lectures, isCompleted: nil, isDownloaded: nil, isFavourite: false, lastPlayedPoint: nil, completion: { result in
+                switch result {
+                case .success:
+
+                    let message: String?
+                    if lectures.count > 1 {
+                        message = "Unfavorited \(lectures.count) lecture(s)"
+                    } else {
+                        message = nil
+                    }
+
+                    StatusAlert.show(image: LectureOption.removeFromFavourites.image, title: "Unfavorited", message: message, in: self.view)
+
+                case .failure(let error):
+                    self.showAlert(title: "Error!", message: error.localizedDescription)
+                }
+            })
+        }))
+    }
+
+    private func askToRemoveFromPlaylist(lectures: [Lecture], sourceView: Any?) {
+
+        guard let playlistLectureController = self as? PlaylistLecturesViewController else {
+            return
+        }
+
+        let message: String
+        if lectures.count == 1, let lecture = lectures.first {
+            message = "Are you sure you would like to remove '\(lecture.titleDisplay)' from Playlist?"
+        } else {
+            message = "Are you sure you would like to remove \(lectures.count) lecture(s) from Playlist?"
+        }
+
+        self.showAlert(title: "Remove From Playlist",
+                       message: message,
+                       sourceView: moreButton,
+                       cancel: ("Cancel", nil),
+                       destructive: ("Remove", {
+
+            SKActivityIndicator.show("Removing from playlist...")
+            DefaultPlaylistViewModel.defaultModel.remove(lectures: lectures, from: playlistLectureController.playlist, completion: { result in
+                SKActivityIndicator.dismiss()
+                switch result {
+                case .success(let success):
+
+                    playlistLectureController.playlist.lectureIds = success
+
+                    let existing: [Lecture] = self.models.filter { success.contains($0.id) }
+                    self.refresh(source: .cache, existing: existing)
+
+                    let message: String?
+                    if lectures.count > 1 {
+                        message = "Removed \(lectures.count) lecture(s) from playlist"
+                    } else {
+                        message = nil
+                    }
+
+                    StatusAlert.show(image: LectureOption.removeFromPlaylist.image, title: "Removed from Playlist", message: message, in: self.view)
+
+                case .failure(let error):
+                    self.showAlert(title: "Error!", message: error.localizedDescription)
+                }
+            })
+        }))
+    }
+
+    private func markAsHeard(lectures: [Lecture], sourceView: Any?) {
+        DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: lectures, isCompleted: true, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: -1, completion: { result in
+            switch result {
+            case .success:
+
+               let message: String?
+                 if lectures.count > 1 {
+                     message = "Marked heard \(lectures.count) lecture(s)"
+                 } else {
+                     message = nil
+                 }
+
+                StatusAlert.show(image: LectureOption.markAsHeard.image, title: "Marked as heard", message: message, in: self.view)
+
+            case .failure(let error):
+                self.showAlert(title: "Error!", message: error.localizedDescription)
+            }
+
+        })
+    }
+
+    private func resetProgress(lectures: [Lecture], sourceView: Any?) {
+        DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: lectures, isCompleted: false, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: 0, completion: { result in
+            switch result {
+            case .success:
+
+                let message: String?
+                  if lectures.count > 1 {
+                      message = "Progress reset of \(lectures.count) lecture(s)"
+                  } else {
+                      message = nil
+                  }
+
+                StatusAlert.show(image: LectureOption.resetProgress.image, title: "Progress Reset", message: message, in: self.view)
+            case .failure(let error):
+                self.showAlert(title: "Error!", message: error.localizedDescription)
+            }
+        })
     }
 }
 
@@ -663,162 +833,6 @@ extension LectureViewController: IQListViewDelegateDataSource {
                     tabController.showPlayer(lecture: model.lecture, playlistLectures: self.models)
                 }
             }
-        }
-    }
-}
-
-extension LectureViewController: LectureCellDelegate {
-    func lectureCell(_ cell: LectureCell, didSelected option: LectureOption, with lecture: Lecture) {
-
-        switch option {
-        case .download:
-            Persistant.shared.save(lectures: [lecture])
-            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: nil, isDownloaded: true, isFavourite: nil, lastPlayedPoint: nil, completion: {_ in })
-        case .deleteFromDownloads:
-            Persistant.shared.delete(lectures: [lecture])
-            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: nil, isDownloaded: false, isFavourite: nil, lastPlayedPoint: nil, completion: {_ in })
-        case .markAsFavourite:
-            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: nil, isDownloaded: nil, isFavourite: true, lastPlayedPoint: nil, completion: { result in
-                switch result {
-                case .success:
-
-                    StatusAlert.show(image: option.image, title: "Favorited", message: nil, in: self.view)
-                case .failure(let error):
-                    self.showAlert(title: "Error!", message: error.localizedDescription)
-                }
-
-            })
-        case .removeFromFavourites:
-            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: nil, isDownloaded: nil, isFavourite: false, lastPlayedPoint: nil, completion: { result in
-                switch result {
-                case .success:
-
-                    StatusAlert.show(image: option.image, title: "Unfavorited", message: nil, in: self.view)
-                case .failure(let error):
-                    self.showAlert(title: "Error!", message: error.localizedDescription)
-                }
-            })
-        case .addToPlaylist:
-
-            let navigationController = UIStoryboard.playlists.instantiate(UINavigationController.self, identifier: "PlaylistNavigationController")
-            guard let playlistController = navigationController.viewControllers.first as? PlaylistViewController else {
-                return
-            }
-            playlistController.lecturesToAdd = [lecture]
-            self.present(navigationController, animated: true, completion: nil)
-
-        case .removeFromPlaylist:
-
-            guard let playlistLectureController = self as? PlaylistLecturesViewController else {
-                return
-            }
-
-            SKActivityIndicator.show("Removing from playlist...")
-            DefaultPlaylistViewModel.defaultModel.remove(lectures: [lecture], from: playlistLectureController.playlist, completion: { result in
-                SKActivityIndicator.dismiss()
-                switch result {
-                case .success(let success):
-
-                    playlistLectureController.playlist.lectureIds = success
-                    self.refresh(source: .default)
-
-                    StatusAlert.show(image: option.image, title: "Removed from Playlist", message: nil, in: self.view)
-
-                case .failure(let error):
-                    self.showAlert(title: "Error!", message: error.localizedDescription)
-                }
-            })
-
-        case .markAsHeard:
-            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: true, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: -1, completion: { result in
-                switch result {
-                case .success:
-                    StatusAlert.show(image: option.image, title: "Marked as heard", message: nil, in: self.view)
-                case .failure(let error):
-                    self.showAlert(title: "Error!", message: error.localizedDescription)
-                }
-
-            })
-        case .resetProgress:
-            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: false, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: 0, completion: { result in
-                switch result {
-                case .success:
-                    StatusAlert.show(image: option.image, title: "Progress Reset", message: nil, in: self.view)
-
-                case .failure(let error):
-                    self.showAlert(title: "Error!", message: error.localizedDescription)
-                }
-
-            })
-        case .share:
-
-            let deepLinkBaseURL = "https://bvks.com?lectureId=\(lecture.id)"
-            let domainURIPrefix = "https://prabhupada.page.link"
-
-            var descriptions: [String] = []
-            do {
-                let durationString = "• Duration: " + lecture.lengthTime.displayString
-                descriptions.append(durationString)
-
-                if !lecture.legacyData.verse.isEmpty {
-                    let verseString = "• " + lecture.legacyData.verse
-                    descriptions.append(verseString)
-                }
-
-                let recordingDateString = "• Date of Recording: " + lecture.dateOfRecording.display_dd_MM_yyyy
-                descriptions.append(recordingDateString)
-
-                if !lecture.location.displayString.isEmpty {
-                    let locationString = "• Location: " + lecture.location.displayString
-                    descriptions.append(locationString)
-                }
-            }
-
-            guard let link = URL(string: deepLinkBaseURL),
-                  let linkBuilder = DynamicLinkComponents(link: link, domainURIPrefix: domainURIPrefix) else {
-                return
-            }
-
-            do {
-                let iOSParameters = DynamicLinkIOSParameters(bundleID: "com.bvksdigital.acbsp")
-                iOSParameters.appStoreID = "1645287937"
-                linkBuilder.iOSParameters = iOSParameters
-            }
-
-            do {
-                let androidParameters = DynamicLinkAndroidParameters(packageName: "com.iskcon.prabhupada")
-                 linkBuilder.androidParameters = androidParameters
-            }
-
-            do {
-                let socialMediaParameters = DynamicLinkSocialMetaTagParameters()
-                socialMediaParameters.title = lecture.titleDisplay
-                socialMediaParameters.descriptionText = descriptions.joined(separator: "\n")
-                if let thumbnailURL = lecture.thumbnailURL {
-                    socialMediaParameters.imageURL = thumbnailURL
-                }
-                linkBuilder.socialMetaTagParameters = socialMediaParameters
-            }
-
-            linkBuilder.shorten() { url, _, _ in
-                var appLinks: [Any] = []
-                if let url = url {
-                    appLinks.append(url)
-                } else if let url = linkBuilder.url {
-                    appLinks.append(url)
-                }
-
-                guard !appLinks.isEmpty else {
-                    return
-                }
-
-                let shareController = UIActivityViewController(activityItems: appLinks, applicationActivities: nil)
-                shareController.popoverPresentationController?.sourceView = cell
-                self.present(shareController, animated: true)
-            }
-
-        case .downloading:
-            break
         }
     }
 }

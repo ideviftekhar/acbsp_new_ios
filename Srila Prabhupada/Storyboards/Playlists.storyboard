@@ -139,7 +139,7 @@
                             <constraint firstItem="21l-0e-ZhV" firstAttribute="top" secondItem="uFq-Tc-XYI" secondAttribute="top" id="j1w-bR-Y9O"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Playlist Lectures" prompt="Playlist Title" id="lBq-Qx-Oki"/>
+                    <navigationItem key="navigationItem" title="Playlist Lectures" id="lBq-Qx-Oki"/>
                     <connections>
                         <outlet property="lectureTebleView" destination="21l-0e-ZhV" id="RYR-ls-V43"/>
                     </connections>

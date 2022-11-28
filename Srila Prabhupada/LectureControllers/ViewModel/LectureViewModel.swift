@@ -128,7 +128,7 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
                             }
 
                             let endDate = Date()
-                            print("Took \(endDate.timeIntervalSince1970-startDate.timeIntervalSince1970) seconds to remove \(success.count - results.count) duplicate lectures")
+                            print("Took \(endDate.timeIntervalSince1970-startDate.timeIntervalSince1970) seconds to remove \(success.count - results.count) duplicate lecture(s)")
                             success = results   // Unique
 
                             if !self.userLectureInfo.isEmpty {

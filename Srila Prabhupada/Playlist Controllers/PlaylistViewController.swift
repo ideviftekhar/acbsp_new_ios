@@ -286,21 +286,36 @@ extension PlaylistViewController: IQListViewDelegateDataSource {
                 let message: String
 
                 if lecturesToAdd.count == 1, let lecture = lecturesToAdd.first {
-                    message = "Would you like to add '\(lecture.titleDisplay)' to '\(model.title)' playlist?"
+                    message = "Would you like to add '\(lecture.titleDisplay)' to '\(model.title)' Playlist?"
                 } else {
-                    message = "Would you like to add \(lecturesToAdd.count) lectures to '\(model.title)' playlist?"
+                    message = "Would you like to add \(lecturesToAdd.count) lecture(s) to '\(model.title)' Playlist?"
                 }
 
                 self.showAlert(title: "Add to '\(model.title)'?", message: message, cancel: (title: "Cancel", {
                 }), buttons: (title: "Add", {
 
-                    SKActivityIndicator.show("Adding...")
+                    SKActivityIndicator.show("Adding to '\(model.title)' ...")
+
                     DefaultPlaylistViewModel.defaultModel.add(lectures: self.lecturesToAdd, to: model, completion: { result in
                         SKActivityIndicator.dismiss()
 
                         switch result {
                         case .success:
-                            self.dismiss(animated: true)
+                            let presenting = self.presentingViewController
+                            self.dismiss(animated: true, completion: {
+                                if let presenting = presenting {
+
+                                    let message: String?
+                                    if self.lecturesToAdd.count > 1 {
+                                        message = "Added \(self.lecturesToAdd.count) lecture(s)"
+                                    } else {
+                                        message = nil
+                                    }
+
+                                    let playlistIcon = UIImage(compatibleSystemName: "music.note.list")
+                                    StatusAlert.show(image: playlistIcon, title: "Added to '\(model.title)'", message: message, in: presenting.view)
+                                }
+                            })
                         case .failure(let error):
                             self.showAlert(title: "Error", message: error.localizedDescription)
                         }
