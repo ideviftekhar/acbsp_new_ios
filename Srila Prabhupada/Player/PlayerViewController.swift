@@ -11,6 +11,10 @@ import AlamofireImage
 import IQListKit
 import FirebaseFirestore
 
+protocol PlayerViewControllerDelegate: AnyObject {
+    func playerController(_ controller: PlayerViewController, didChangeVisibleState state: PlayerViewController.ViewState)
+}
+
 class PlayerViewController: LectureViewController {
 
     enum ViewState {
@@ -35,6 +39,8 @@ class PlayerViewController: LectureViewController {
             self.stateHandler = playStateHandler
         }
     }
+
+    weak var playerDelegate: PlayerViewControllerDelegate?
 
     @IBOutlet var thumbnailImageView: UIImageView!
     @IBOutlet private var titleLabel: UILabel!

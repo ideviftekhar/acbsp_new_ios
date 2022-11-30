@@ -51,6 +51,9 @@ final class DownloadManager {
                 observers.append(newObserver)
                 lectureDownloadTasks[lectureID] = observers
             }
+        } else {
+            let newObserver = ProgressObserver(observer: observer, progressHandler: progressHandler)
+            lectureDownloadTasks[lectureID] = [newObserver]
         }
 
         if let fractionCompleted: CGFloat = lastProgressInfo[lectureID] {

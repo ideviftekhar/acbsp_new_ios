@@ -350,7 +350,7 @@ extension PlaylistViewController: CreatePlaylistViewControllerDelegate {
             refresh(source: .default)
         }
 
-        let message: String = "'\(playlist)' playlist created!"
+        let message: String = "'\(playlist.title)' playlist created!"
 
         let playlistIcon = UIImage(compatibleSystemName: "music.note.list")
         StatusAlert.show(image: playlistIcon, title: "Playlist Created", message: message, in: self.view)
@@ -374,7 +374,7 @@ extension PlaylistViewController: CreatePlaylistViewControllerDelegate {
             refresh(source: .default)
         }
 
-        let message: String = "'\(playlist)' playlist updated!"
+        let message: String = "'\(playlist.title)' playlist updated!"
 
         let playlistIcon = UIImage(compatibleSystemName: "music.note.list")
         StatusAlert.show(image: playlistIcon, title: "Playlist Updated", message: message, in: self.view)

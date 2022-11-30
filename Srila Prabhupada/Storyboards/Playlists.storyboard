@@ -13,7 +13,7 @@
         <!--Playlists-->
         <scene sceneID="2A7-EA-AXG">
             <objects>
-                <navigationController storyboardIdentifier="PlaylistNavigationController" automaticallyAdjustsScrollViewInsets="NO" toolbarHidden="NO" id="2ix-al-xMc" customClass="NavigationController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="PlaylistNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="2ix-al-xMc" customClass="NavigationController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Playlists" image="music.note.list" catalog="system" id="OHl-3v-G7E"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" largeTitles="YES" id="PUT-kO-Asm">

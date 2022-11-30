@@ -72,6 +72,7 @@ class TabBarController: UITabBarController {
             }
         })
 
+        playerViewController.playerDelegate = self
         playerViewController.addToTabBarController(self)
 
         // Loading last played lectures
@@ -163,7 +164,7 @@ class TabBarController: UITabBarController {
     }
 }
 
-extension TabBarController {
+extension TabBarController: PlayerViewControllerDelegate {
 
     func showPlayer(lecture: Lecture, playlistLectures: [Lecture], shouldPlay: Bool? = nil) {
 
@@ -202,6 +203,23 @@ extension TabBarController {
             playerViewController.currentLecture = lecture
             if shouldReallyPlay {
                 playerViewController.play()
+            }
+        }
+    }
+
+    func playerController(_ controller: PlayerViewController, didChangeVisibleState state: PlayerViewController.ViewState) {
+        switch state {
+        case .close:
+            for controller in viewControllers ?? [] {
+                controller.additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: 0, right: 0)
+            }
+        case .minimize:
+            for controller in viewControllers ?? [] {
+                controller.additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: 60, right: 0)
+            }
+        case .expanded:
+            for controller in viewControllers ?? [] {
+                controller.additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: 60, right: 0)
             }
         }
     }

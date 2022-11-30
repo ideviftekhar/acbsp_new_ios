@@ -73,6 +73,7 @@ extension PlayerViewController {
         }
 
         visibleState = .expanded
+        playerDelegate?.playerController(self, didChangeVisibleState: visibleState)
         tabBarController.setNeedsStatusBarAppearanceUpdate()
         if animated {
             UIView.animate(withDuration: 0.3, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [], animations: middleAnimationBlock)
@@ -109,6 +110,7 @@ extension PlayerViewController {
         }
 
         visibleState = .minimize
+        playerDelegate?.playerController(self, didChangeVisibleState: visibleState)
         tabBarController.setNeedsStatusBarAppearanceUpdate()
         if animated {
             UIView.animate(withDuration: 0.3, delay: 0.0, usingSpringWithDamping: 1, initialSpringVelocity: 1, options: [], animations: middleAnimationBlock)
@@ -136,6 +138,7 @@ extension PlayerViewController {
         }
 
         visibleState = .close
+        playerDelegate?.playerController(self, didChangeVisibleState: visibleState)
         tabBarController.setNeedsStatusBarAppearanceUpdate()
         if animated {
             UIView.animate(withDuration: 0.6, delay: 0.0, usingSpringWithDamping: 0.85, initialSpringVelocity: 0.1, options: .curveEaseInOut, animations: animationBlock)
