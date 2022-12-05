@@ -148,12 +148,15 @@ extension DownloadManager {
                     self.deleteLocalFile(localFileURL: expectedLocalFileURL)
                     try FileManager.default.moveItem(at: url, to: expectedLocalFileURL)
 
+                    Haptic.success()
                     completion(.success(expectedLocalFileURL))
                 } catch let error {
+                    Haptic.error()
                     completion(.failure(error))
                 }
 
             case .failure(let error):
+                Haptic.error()
                 completion(.failure(error))
             }
         }

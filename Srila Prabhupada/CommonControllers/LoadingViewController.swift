@@ -46,6 +46,7 @@ class LoadingViewController: UIViewController {
             case .failure(let error):
                 progressView.progress = 0
                 loadingLabel.text = nil
+                Haptic.error()
                 showAlert(title: "Error!", message: error.localizedDescription, cancel: ("Retry", { [self] in
                     loadLectures()
                 }), destructive: ("Logout", { [self] in
@@ -79,6 +80,7 @@ class LoadingViewController: UIViewController {
 
             case .failure(let error):
 
+                Haptic.error()
                 showAlert(title: "Error!", message: error.localizedDescription, cancel: ("Retry", {
                     self.loadLectureInfo()
                 }), destructive: ("Logout", { [self] in
@@ -102,6 +104,7 @@ class LoadingViewController: UIViewController {
                         })
                     }
                 case .failure(let error):
+                    Haptic.error()
                     self.showAlert(title: "Error!", message: error.localizedDescription)
                 }
             })

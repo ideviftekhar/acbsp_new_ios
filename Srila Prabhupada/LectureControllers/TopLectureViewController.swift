@@ -51,10 +51,11 @@ class TopLectureViewController: LectureViewController {
             UserDefaults.standard.synchronize()
         }
 
+        Haptic.selection()
         refresh(source: .cache, existing: [])
     }
 
-    override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[Lecture], Error>) -> Void) {
+    override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[LectureViewController.Model], Error>) -> Void) {
 
         guard let selectedLectureType = TopLectureType(rawValue: topLecturesSegmentControl.selectedSegmentIndex) else {
             return

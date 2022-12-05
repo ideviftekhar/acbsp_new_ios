@@ -19,7 +19,7 @@ class PopularLectureViewController: LectureViewController {
         }
     }
 
-    override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[Lecture], Error>) -> Void) {
+    override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[LectureViewController.Model], Error>) -> Void) {
 
         DefaultLectureViewModel.defaultModel.getPopularLectureIds(completion: { [self] result in
 

@@ -19,7 +19,7 @@ class DownloadViewController: LectureViewController {
         }
     }
 
-    override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[Lecture], Error>) -> Void) {
+    override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[Model], Error>) -> Void) {
 
         var lectureIDs: [Int] = []
 

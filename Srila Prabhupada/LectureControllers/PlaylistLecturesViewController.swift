@@ -33,7 +33,7 @@ class PlaylistLecturesViewController: LectureViewController {
         }
     }
 
-    override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[Lecture], Error>) -> Void) {
+    override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[LectureViewController.Model], Error>) -> Void) {
 
         DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: playlist.lectureIds, source: source, progress: nil, completion: completion)
     }
@@ -62,7 +62,7 @@ extension PlaylistLecturesViewController: LectureViewControllerDelegate {
             message = "Would you like to add \(lectures.count) lecture(s) to '\(playlist.title)' Playlist?"
         }
 
-        self.showAlert(title: "Add to '\(playlist.title)'?",
+        controller.showAlert(title: "Add to '\(playlist.title)'?",
                        message: message,
                        sourceView: addLecturesButton,
                        cancel: ("Cancel", nil),
@@ -74,6 +74,7 @@ extension PlaylistLecturesViewController: LectureViewControllerDelegate {
 
                 switch result {
                 case .success(let lectureIds):
+                    Haptic.success()
                     self.playlist.lectureIds = lectureIds
                     self.refresh(source: .cache)
                     controller.dismiss(animated: true, completion: {
@@ -89,6 +90,7 @@ extension PlaylistLecturesViewController: LectureViewControllerDelegate {
                         StatusAlert.show(image: playlistIcon, title: "Added to '\(self.playlist.title)'", message: message, in: self.view)
                     })
                 case .failure(let error):
+                    Haptic.error()
                     controller.showAlert(title: "Error", message: error.localizedDescription)
                 }
             })

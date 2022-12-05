@@ -30,6 +30,7 @@ extension DefaultLectureViewModel {
         if let searchText = searchText, !searchText.isEmpty {
 
             lectures = lectures.filter { (lecture: Lecture) in
+                var lecture = lecture
                 let matched: Bool = lecture.searchableTexts.first(where: { $0.localizedCaseInsensitiveContains(searchText) }) != nil
                 return matched
             }
@@ -46,8 +47,9 @@ extension DefaultLectureViewModel {
     }
 
     static func refreshLectureWithLectureInfo(lectures: [Lecture], lectureInfos: [LectureInfo], downloadedLectures: [DBLecture]) -> [Lecture] {
-        let lectures = lectures.map { lecture -> Lecture in
-            var lecture = lecture
+
+        var updatedLectures: [Lecture] = []
+        for var lecture in lectures {
             if let lectureInfo = lectureInfos.first(where: { $0.id == lecture.id }) {
                 lecture.isFavourite = lectureInfo.isFavourite
                 lecture.lastPlayedPoint = lectureInfo.lastPlayedPoint
@@ -57,8 +59,9 @@ extension DefaultLectureViewModel {
                 lecture.downloadState = downloadedLecture.downloadStateEnum
             }
 
-            return lecture
+            updatedLectures.append(lecture)
         }
-        return lectures
+
+        return updatedLectures
     }
 }

@@ -72,16 +72,19 @@ class CreatePlaylistViewController: UIViewController {
 
         guard let title = playlistTitleTextField.text, !title.isEmpty else {
             showAlert(title: "Invalid Title", message: "Please enter playlist title")
+            Haptic.warning()
             return
         }
 
         guard let category = categoryTextField.text, !category.isEmpty else {
             showAlert(title: "Invalid Category", message: "Please enter playlist category")
+            Haptic.warning()
             return
         }
 
         guard let description = descriptionTextView.text, !description.isEmpty else {
             showAlert(title: "Invalid Description", message: "Please enter playlist description")
+            Haptic.warning()
             return
         }
 
@@ -93,9 +96,11 @@ class CreatePlaylistViewController: UIViewController {
                 switch result {
 
                 case .success(let playlist):
+                    Haptic.success()
                     self.dismiss(animated: true)
                     self.delegate?.controller(self, didUpdate: playlist)
                 case .failure(let error):
+                    Haptic.error()
                     showAlert(title: "Error", message: error.localizedDescription)
                 }
             })
@@ -107,9 +112,11 @@ class CreatePlaylistViewController: UIViewController {
                 switch result {
 
                 case .success(let playlist):
+                    Haptic.success()
                     self.dismiss(animated: true)
                     self.delegate?.controller(self, didAdd: playlist)
                 case .failure(let error):
+                    Haptic.error()
                     showAlert(title: "Error", message: error.localizedDescription)
                 }
             })
@@ -118,10 +125,12 @@ class CreatePlaylistViewController: UIViewController {
 
     @IBAction func privateButtonTapped(_ sender: UIButton) {
         playlistType = .private
-
+        Haptic.selection()
     }
+
     @IBAction func publicButtonTapped(_ sender: UIButton) {
         playlistType = .public
+        Haptic.selection()
     }
 }
 

@@ -27,14 +27,15 @@ struct Day: Hashable, Codable, Comparable {
     let day: Int
     let month: Int
     let year: Int
-
-    private let dateComponents: DateComponents
+    let date: Date?
 
     init(day: Int, month: Int, year: Int) {
         self.day = day
         self.month = month
         self.year = year
-        dateComponents = DateComponents(calendar: Calendar.current, year: year, month: month, day: day)
+
+        let dateComponents: DateComponents = DateComponents(calendar: Calendar.current, year: year, month: month, day: day)
+        self.date = dateComponents.date
     }
 
     init(from decoder: Decoder) throws {
@@ -63,11 +64,9 @@ struct Day: Hashable, Codable, Comparable {
         } else {
             year = 0
         }
-        dateComponents = DateComponents(calendar: Calendar.current, year: year, month: month, day: day)
-    }
 
-    var date: Date? {
-        return dateComponents.date
+        let dateComponents: DateComponents = DateComponents(calendar: Calendar.current, year: year, month: month, day: day)
+        self.date = dateComponents.date
     }
 
     var display_dd_MMM_yyyy: String {

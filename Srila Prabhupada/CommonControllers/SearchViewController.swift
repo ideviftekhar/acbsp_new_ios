@@ -13,11 +13,12 @@ import StoreKit
 
 class SearchViewController: UIViewController {
 
-    @IBOutlet var hamburgerBarButton: UIBarButtonItem!
+    @IBOutlet var hamburgerBarButton: UIBarButtonItem?
     private let searchController = UISearchController(searchResultsController: nil)
     private var lastSearchText: String = ""
 
-    private let activtiyIndicatorView = UIActivityIndicatorView(style: .medium)
+    internal let activityIndicatorView = UIActivityIndicatorView(style: .medium)
+    internal lazy var activityBarButton = UIBarButtonItem(customView: activityIndicatorView)
 
     private(set) lazy var filterButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(named: "line.3.horizontal.decrease.circle"), style: .plain, target: self, action: #selector(filterAction(_:)))
 
@@ -34,9 +35,15 @@ class SearchViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.navigationItem.leftItemsSupplementBackButton = true
         var rightButtons = self.navigationItem.rightBarButtonItems ?? []
         rightButtons.append(filterButton)
         self.navigationItem.rightBarButtonItems = rightButtons
+
+        activityIndicatorView.color = UIColor.white
+        var leftButtons = self.navigationItem.leftBarButtonItems ?? []
+        leftButtons.append(activityBarButton)
+        self.navigationItem.leftBarButtonItems = leftButtons
 
         do {
             let userDefaultKey: String = "\(Self.self).\(UISearchController.self)"
@@ -52,10 +59,6 @@ class SearchViewController: UIViewController {
                 searchController.searchBar.searchTextField.rightView?.tintColor = UIColor.systemGray4
                 searchController.searchBar.searchTextField.defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
                 searchController.searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: "Search...", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray4])
-                
-                activtiyIndicatorView.color = UIColor.white
-                searchController.searchBar.searchTextField.rightView = activtiyIndicatorView
-                searchController.searchBar.searchTextField.rightViewMode = .always
             }
             searchController.delegate = self
             searchController.searchResultsUpdater = self
@@ -232,10 +235,10 @@ extension SearchViewController: SKStoreProductViewControllerDelegate {
 extension SearchViewController {
 
     @objc func showLoading() {
-        activtiyIndicatorView.startAnimating()
+        activityIndicatorView.startAnimating()
     }
 
     @objc func hideLoading() {
-        activtiyIndicatorView.stopAnimating()
+        activityIndicatorView.stopAnimating()
     }
 }

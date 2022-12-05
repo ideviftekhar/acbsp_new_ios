@@ -19,7 +19,7 @@ class HistoryViewController: LectureViewController {
         }
     }
 
-    override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[Lecture], Error>) -> Void) {
+    override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[LectureViewController.Model], Error>) -> Void) {
 
         DefaultLectureViewModel.defaultModel.getUsersListenInfo(source: source, completion: { [self] result in
 

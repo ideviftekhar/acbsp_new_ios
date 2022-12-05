@@ -37,14 +37,17 @@ class ForgotPasswordViewController: UIViewController {
 
                 switch result {
                 case .success(let message):
+                    Haptic.success()
                     self.showAlert(title: "Success", message: message, cancel: (title: "OK", {
                         self.dismiss(animated: true)
                     }))
                 case .failure(let error):
+                    Haptic.error()
                     self.showAlert(title: "Error", message: error.localizedDescription)
                 }
             })
         case .invalidUsername(let message):
+            Haptic.warning()
             self.showAlert(title: "Invalid Email", message: message)
         }
     }

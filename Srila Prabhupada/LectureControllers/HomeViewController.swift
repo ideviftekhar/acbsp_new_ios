@@ -24,7 +24,7 @@ class HomeViewController: LectureViewController {
         super.viewWillAppear(animated)
     }
 
-    override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[Lecture], Error>) -> Void) {
+    override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[Model], Error>) -> Void) {
 
         DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: nil, source: source, progress: { [self] progress in
             let intProgress = Int(progress*100)

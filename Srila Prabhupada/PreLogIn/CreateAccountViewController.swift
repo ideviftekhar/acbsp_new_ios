@@ -39,6 +39,8 @@ class CreateAccountViewController: UIViewController {
                 switch result {
                 case .success:
 
+                    Haptic.success()
+
                     if let keyWindow = self.view.window {
                         UIView.transition(with: keyWindow, duration: 0.5, options: .transitionFlipFromRight, animations: {
                             let loadingController = UIStoryboard.main.instantiate(LoadingViewController.self)
@@ -47,14 +49,18 @@ class CreateAccountViewController: UIViewController {
                     }
 
                 case .failure(let error):
+                    Haptic.error()
                     self.showAlert(title: "Error", message: error.localizedDescription)
                 }
             })
         case .invalidUsername(let message):
+            Haptic.warning()
             self.showAlert(title: "Invalid Email", message: message)
         case .invalidPassword(let message):
+            Haptic.warning()
             self.showAlert(title: "Invalid Password", message: message)
         case .invalidConfirmPassword(message: let message):
+            Haptic.warning()
             self.showAlert(title: "Invalid Confirm Password", message: message)
         }
     }

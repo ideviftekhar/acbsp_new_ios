@@ -482,6 +482,7 @@ extension StatsViewController {
                 allLectures = success
                 updateTotalListened()
             case .failure(let error):
+                Haptic.error()
                 showAlert(title: "Error", message: error.localizedDescription)
             }
         })
@@ -494,6 +495,7 @@ extension StatsViewController {
                 allListenInfo = success
                 updateUI()
             case .failure(let error):
+                Haptic.error()
                 showAlert(title: "Error", message: error.localizedDescription)
             }
         })

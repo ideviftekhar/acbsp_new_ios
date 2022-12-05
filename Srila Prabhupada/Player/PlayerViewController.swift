@@ -335,7 +335,7 @@ class PlayerViewController: LectureViewController {
         super.viewWillAppear(animated)
     }
 
-    override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[Lecture], Error>) -> Void) {
+    override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[LectureViewController.Model], Error>) -> Void) {
 
         let lectureIDs = self.currentLectureQueue.map { $0.id }
 

@@ -82,10 +82,10 @@ extension SideMenuViewController: IQListViewDelegateDataSource {
 
         serialListKitQueue.async { [self] in
             let animated: Bool = animated ?? (models.count <= 1000)
-            list.performUpdates({
+            list.reloadData({ _ in
 
                 let section = IQSection(identifier: "Cell", headerSize: CGSize.zero, footerSize: CGSize.zero)
-                list.append(section)
+                list.append([section])
 
                 list.append(Cell.self, models: models, section: section)
 
@@ -98,6 +98,8 @@ extension SideMenuViewController: IQListViewDelegateDataSource {
         if let model = item.model as? Cell.Model {
 
             guard let cell = sideMenuTableView.cellForRow(at: indexPath) else { return }
+
+            Haptic.selection()
 
             switch model {
             case .signOut:
@@ -115,6 +117,7 @@ extension SideMenuViewController: IQListViewDelegateDataSource {
                                 })
                             }
                         case .failure(let error):
+                            Haptic.error()
                             self.showAlert(title: "Error!", message: error.localizedDescription)
                         }
                     })

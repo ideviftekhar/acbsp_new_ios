@@ -16,6 +16,7 @@ extension StatusAlert {
         statusAlert.title = title
         statusAlert.message = message
         statusAlert.canBePickedOrDismissed = false
+        statusAlert.alertShowingDuration = 1.0
         statusAlert.show(in: view)
     }
 }

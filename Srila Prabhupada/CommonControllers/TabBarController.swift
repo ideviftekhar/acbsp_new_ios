@@ -208,6 +208,7 @@ extension TabBarController: PlayerViewControllerDelegate {
     }
 
     func playerController(_ controller: PlayerViewController, didChangeVisibleState state: PlayerViewController.ViewState) {
+        
         switch state {
         case .close:
             for controller in viewControllers ?? [] {

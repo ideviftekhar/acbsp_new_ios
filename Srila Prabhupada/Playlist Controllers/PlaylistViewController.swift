@@ -101,6 +101,7 @@ class PlaylistViewController: SearchViewController {
             UserDefaults.standard.synchronize()
         }
 
+        Haptic.selection()
         refresh(source: .cache, existing: [])
     }
 
@@ -132,6 +133,7 @@ class PlaylistViewController: SearchViewController {
                 self.models = success
                 refreshUI(showNoItems: true)
             case .failure(let error):
+                Haptic.error()
                 self.list.setIsLoading(false, animated: true)
                 showAlert(title: "Error", message: error.localizedDescription)
             }
@@ -204,6 +206,8 @@ extension PlaylistViewController {
 
         updateSortButtonUI()
 
+        Haptic.selection()
+
         refresh(source: .cache, existing: self.models)
     }
 
@@ -223,14 +227,14 @@ extension PlaylistViewController: IQListViewDelegateDataSource {
 
         serialListKitQueue.async { [self] in
             let animated: Bool = animated ?? (models.count <= 1000)
-            list.performUpdates({
+            list.reloadData({ _ in
 
                 let section = IQSection(identifier: "Cell", headerSize: CGSize.zero, footerSize: CGSize.zero)
-                list.append(section)
+                list.append([section])
 
                 list.append(Cell.self, models: models, section: section)
 
-            }, animatingDifferences: animated, endLoadingOnUpdate: showNoItems, completion: { [self] in
+            }, animatingDifferences: animated, endLoadingOnCompletion: showNoItems, completion: { [self] in
                 if showNoItems, let selectedPlaylistType = PlaylistType(rawValue: playlistSegmentControl.selectedSegmentIndex) {
                     let noItemImage = UIImage(named: "music.note.list_60")
                     self.list.noItemImage = noItemImage
@@ -283,6 +287,8 @@ extension PlaylistViewController: IQListViewDelegateDataSource {
 
             if !lecturesToAdd.isEmpty {
 
+                Haptic.selection()
+
                 let message: String
 
                 if lecturesToAdd.count == 1, let lecture = lecturesToAdd.first {
@@ -301,6 +307,7 @@ extension PlaylistViewController: IQListViewDelegateDataSource {
 
                         switch result {
                         case .success:
+                            Haptic.success()
                             let presenting = self.presentingViewController
                             self.dismiss(animated: true, completion: {
                                 if let presenting = presenting {
@@ -317,6 +324,7 @@ extension PlaylistViewController: IQListViewDelegateDataSource {
                                 }
                             })
                         case .failure(let error):
+                            Haptic.error()
                             self.showAlert(title: "Error", message: error.localizedDescription)
                         }
                     })
@@ -398,6 +406,7 @@ extension PlaylistViewController: PlaylistCellDelegate {
                     switch result {
                     case .success:
 
+                        Haptic.success()
                         if let index = self.models.firstIndex(where: { $0.listID == playlist.listID }) {
                             var models = self.models
                             models.remove(at: index)
@@ -405,6 +414,7 @@ extension PlaylistViewController: PlaylistCellDelegate {
                         }
 
                     case .failure(let error):
+                        Haptic.error()
                         self.showAlert(title: "Error", message: error.localizedDescription)
                     }
                 }

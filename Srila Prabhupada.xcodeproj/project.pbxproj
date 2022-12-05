@@ -75,6 +75,7 @@
 		C00F8A4328EF192A00FA9A7B /* PlayRate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00F8A4228EF192A00FA9A7B /* PlayRate.swift */; };
 		C0118A7928D34AA800F6002D /* GoogleService-Info-development-client.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0118A7728D34AA700F6002D /* GoogleService-Info-development-client.plist */; };
 		C0118A7C28D34AB400F6002D /* GoogleService-Info-production-client.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0118A7B28D34AB400F6002D /* GoogleService-Info-production-client.plist */; };
+		C017E68C293E24C1005DA700 /* Haptic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C017E68B293E24C1005DA700 /* Haptic.swift */; };
 		C018A99428F421A000C0E002 /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C018A99328F421A000C0E002 /* Int+Extension.swift */; };
 		C01B88A02913F5FE00EF0EA0 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01B889F2913F5FE00EF0EA0 /* LoadingViewController.swift */; };
 		C03E3F2628DCC20A00B987DD /* FirestoreCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03E3F2528DCC20A00B987DD /* FirestoreCollection.swift */; };
@@ -203,6 +204,7 @@
 		C0118A7428D349F400F6002D /* development-client.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "development-client.xcconfig"; sourceTree = "<group>"; };
 		C0118A7728D34AA700F6002D /* GoogleService-Info-development-client.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-development-client.plist"; sourceTree = "<group>"; };
 		C0118A7B28D34AB400F6002D /* GoogleService-Info-production-client.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-production-client.plist"; sourceTree = "<group>"; };
+		C017E68B293E24C1005DA700 /* Haptic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptic.swift; sourceTree = "<group>"; };
 		C018A99328F421A000C0E002 /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		C01B889F2913F5FE00EF0EA0 /* LoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		C03E3F2528DCC20A00B987DD /* FirestoreCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreCollection.swift; sourceTree = "<group>"; };
@@ -507,6 +509,7 @@
 			isa = PBXGroup;
 			children = (
 				C07A8F3728F7FD44001A6162 /* ESTMusicIndicatorView */,
+				C017E68B293E24C1005DA700 /* Haptic.swift */,
 			);
 			path = "Third Party";
 			sourceTree = "<group>";
@@ -906,6 +909,7 @@
 				C0B3263B2927E1F700ACDE76 /* MainThreadSafe.swift in Sources */,
 				C0E9CC3928DC723B0089A9E8 /* Date+Extension.swift in Sources */,
 				C007D37E28E80ABB00CFBED0 /* Location.swift in Sources */,
+				C017E68C293E24C1005DA700 /* Haptic.swift in Sources */,
 				C00E4E0928CA39FE00F1A123 /* DownloadViewController.swift in Sources */,
 				C018A99428F421A000C0E002 /* Int+Extension.swift in Sources */,
 				C00AB20428D1E6DD00A62A2F /* FilterViewController.swift in Sources */,
@@ -1133,6 +1137,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = sp_development;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1170,6 +1175,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = sp_distribution;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -1270,6 +1276,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = sp_development;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = minimal;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

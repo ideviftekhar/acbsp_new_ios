@@ -57,6 +57,7 @@ class FilterViewController: UIViewController {
 
     @IBAction private func clearBarButtonPressed(_: UIBarButtonItem) {
         self.selectedFilters = [:]
+        Haptic.selection()
         self.refreshUI(animated: false)
     }
 
@@ -85,10 +86,10 @@ extension FilterViewController: IQListViewDelegateDataSource {
 
         serialListKitQueue.async { [self] in
             let animated: Bool = animated ?? true
-            typeList.performUpdates({
+            typeList.reloadData({ _ in
 
                 let section = IQSection(identifier: "Cell", headerSize: CGSize.zero, footerSize: CGSize.zero)
-                typeList.append(section)
+                typeList.append([section])
 
                 let models: [TypeCell.Model] = filters.map { filter -> TypeCell.Model in
 
@@ -111,10 +112,10 @@ extension FilterViewController: IQListViewDelegateDataSource {
                 }
             })
 
-            detailsList.performUpdates({
+            detailsList.reloadData({ _ in
 
                 let section = IQSection(identifier: "Cell", headerSize: CGSize.zero, footerSize: CGSize.zero)
-                detailsList.append(section)
+                detailsList.append([section])
 
                 let models: [DetailsCell.Model] = activeFilter.subtypes.map { subtype -> DetailsCell.Model in
 
@@ -139,10 +140,14 @@ extension FilterViewController: IQListViewDelegateDataSource {
 
         if let model = item.model as? TypeCell.Model {
 
+            Haptic.selection()
+
             activeFilter = model.filter
 
             self.refreshUI(animated: true)
         } else if let model = item.model as? DetailsCell.Model {
+
+            Haptic.selection()
 
             if let selectedSubtypes = selectedFilters[activeFilter], selectedSubtypes.contains(model.details) {
 

@@ -58,9 +58,20 @@ class LectureCell: UITableViewCell, IQModelableCell {
     }
 
     struct Model: Hashable {
-        let lecture: Lecture
-        let isSelectionEnabled: Bool
-        let isSelected: Bool
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(lecture.id)
+        }
+
+        static func == (lhs: Self, rhs: Self) -> Bool {
+            return lhs.lecture.id == rhs.lecture.id &&
+            lhs.isSelectionEnabled == rhs.isSelectionEnabled &&
+            lhs.isSelected == rhs.isSelected &&
+            lhs.enableRemoveFromPlaylist == rhs.enableRemoveFromPlaylist
+        }
+
+        var lecture: Lecture
+        var isSelectionEnabled: Bool
+        var isSelected: Bool
         let enableRemoveFromPlaylist: Bool
     }
 

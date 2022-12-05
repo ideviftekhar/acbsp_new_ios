@@ -42,7 +42,23 @@ struct Lecture: Hashable, Codable {
     let thumbnail: String
     let title: [String]
 
-    let searchableTexts: [String]
+    private(set) lazy var searchableTexts: [String] = {
+        var searchableTexts: [String] = []
+        searchableTexts.append(title.joined(separator: " "))
+        searchableTexts.append(contentsOf: category)
+        searchableTexts.append(contentsOf: description)
+        searchableTexts.append(language.main)
+        searchableTexts.append(contentsOf: language.translations)
+        searchableTexts.append(legacyData.verse)
+        searchableTexts.append(location.city)
+        searchableTexts.append(location.state)
+        searchableTexts.append(location.country)
+        searchableTexts.append(contentsOf: search.simple)
+        searchableTexts.append(contentsOf: search.advanced)
+        searchableTexts.append(contentsOf: tags)
+        searchableTexts.removeAll { $0.isEmpty }
+        return searchableTexts
+    }()
 
     var downloadState: DBLecture.DownloadState = .notDownloaded
     var isFavourite: Bool
@@ -84,22 +100,6 @@ struct Lecture: Hashable, Codable {
         self.thumbnail = try container.decode(String.self, forKey: .thumbnail)
         self.title = try container.decode([String].self, forKey: .title)
 
-        var searchableTexts: [String] = []
-        searchableTexts.append(title.joined(separator: " "))
-        searchableTexts.append(contentsOf: category)
-        searchableTexts.append(contentsOf: description)
-        searchableTexts.append(language.main)
-        searchableTexts.append(contentsOf: language.translations)
-        searchableTexts.append(legacyData.verse)
-        searchableTexts.append(location.city)
-        searchableTexts.append(location.state)
-        searchableTexts.append(location.country)
-        searchableTexts.append(contentsOf: search.simple)
-        searchableTexts.append(contentsOf: search.advanced)
-        searchableTexts.append(contentsOf: tags)
-        searchableTexts.removeAll { $0.isEmpty }
-
-        self.searchableTexts = searchableTexts
         isFavourite = false
         lastPlayedPoint = 0
         downloadState = .notDownloaded

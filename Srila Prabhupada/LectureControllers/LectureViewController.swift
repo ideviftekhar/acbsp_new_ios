@@ -36,6 +36,7 @@ class LectureViewController: SearchViewController {
     private lazy var doneSelectionButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneSelectionAction(_:)))
     private lazy var cancelSelectionButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonAction(_:)))
 
+    var removeFromPlaylistEnabled: Bool = false
     var isSelectionEnabled: Bool = false
     var selectedModels: [Model] = [] {
         didSet {
@@ -77,6 +78,17 @@ class LectureViewController: SearchViewController {
         self.navigationItem.rightBarButtonItems = rightButtons
 
         do {
+            if let playlistLectureViewController = self as? PlaylistLecturesViewController,
+               FirestoreManager.shared.currentUser != nil,
+               let email = FirestoreManager.shared.currentUserEmail,
+               playlistLectureViewController.playlist.authorEmail.elementsEqual(email) {
+                removeFromPlaylistEnabled = true
+            } else {
+                removeFromPlaylistEnabled = false
+            }
+        }
+
+        do {
             self.list.loadingMessage = "Loading..."
             list.registerCell(type: Cell.self, registerType: .nib)
             lectureTebleView.tableFooterView = UIView()
@@ -105,7 +117,7 @@ class LectureViewController: SearchViewController {
 
     @objc private func lectureUpdateNotification(_ notification: Notification) {
 
-        if let lectures: [Lecture] = notification.object as? [Lecture] {
+        if let lectures: [Model] = notification.object as? [Model] {
 
             serialListKitQueue.async { [self] in
                 var newModels = self.models
@@ -196,7 +208,7 @@ class LectureViewController: SearchViewController {
         refresh(source: source, existing: nil)
     }
 
-    func refresh(source: FirestoreSource, existing: [Lecture]?) {
+    func refresh(source: FirestoreSource, existing: [Model]?) {
 
         self.list.noItemImage = nil
         self.list.noItemTitle = nil
@@ -221,13 +233,14 @@ class LectureViewController: SearchViewController {
                 self.models = success
                 refreshUI(showNoItems: true)
             case .failure(let error):
+                Haptic.error()
                 self.list.setIsLoading(false, animated: true)
                 showAlert(title: "Error", message: error.localizedDescription)
             }
         })
     }
 
-    func refreshAsynchronous(source: FirestoreSource, completion: @escaping (_ result: Swift.Result<[Lecture], Error>) -> Void) {
+    func refreshAsynchronous(source: FirestoreSource, completion: @escaping (_ result: Swift.Result<[Model], Error>) -> Void) {
         completion(.success(self.models))
     }
 
@@ -282,6 +295,8 @@ extension LectureViewController {
 
         updateSortButtonUI()
 
+        Haptic.selection()
+
         refresh(source: .cache)
     }
 
@@ -303,15 +318,22 @@ extension LectureViewController {
     private func startSelection() {
         isSelectionEnabled = true
         selectedModels.removeAll()
-        refreshUI(animated: false, showNoItems: true)
+        reloadSelectedAll(isSelected: false)
         navigationItem.leftBarButtonItem = cancelSelectionButton
     }
 
     private func cancelSelection() {
         isSelectionEnabled = false
         selectedModels.removeAll()
-        refreshUI(animated: false, showNoItems: true)
-        navigationItem.leftBarButtonItem = hamburgerBarButton
+        reloadSelectedAll(isSelected: false)
+        var leftItems: [UIBarButtonItem] = []
+
+        if let hamburgerBarButton = hamburgerBarButton {
+            leftItems.append(hamburgerBarButton)
+        }
+
+        leftItems.append(activityBarButton)
+        navigationItem.leftBarButtonItems = leftItems
     }
 
     @objc private func cancelButtonAction(_ sender: UIBarButtonItem) {
@@ -367,10 +389,7 @@ extension LectureViewController {
                 menuItems.append(addToPlaylist)
             }
 
-            if let playlistLectureViewController = self as? PlaylistLecturesViewController,
-               FirestoreManager.shared.currentUser != nil,
-               let email = FirestoreManager.shared.currentUserEmail,
-               playlistLectureViewController.playlist.authorEmail.elementsEqual(email) {
+            if removeFromPlaylistEnabled {
                 if let removeFromPlaylist = allActions[.removeFromPlaylist] {
                     removeFromPlaylist.action.title = LectureOption.removeFromPlaylist.rawValue + " (\(selectedModels.count))"
                     menuItems.append(removeFromPlaylist)
@@ -405,11 +424,13 @@ extension LectureViewController {
 
         let selectAll: SPAction = SPAction(title: "Select All", image: UIImage(compatibleSystemName: "checkmark.circle.fill"), handler: { [self] (_) in
             selectedModels = models
-            refreshUI(animated: false, showNoItems: true)
+            reloadSelectedAll(isSelected: true)
+            Haptic.selection()
         })
         let deselectAll: SPAction = SPAction(title: "Deselect All", image: UIImage(compatibleSystemName: "checkmark.circle"), handler: { [self] (_) in
             selectedModels.removeAll()
-            refreshUI(animated: false, showNoItems: true)
+            reloadSelectedAll(isSelected: false)
+            Haptic.selection()
         })
 
         for option in LectureOption.allCases {
@@ -421,6 +442,7 @@ extension LectureViewController {
 
                 switch option {
                 case .download:
+                    Haptic.softImpact()
                     let eligibleDownloadModels: [Model] = selectedModels.filter { $0.downloadState == .notDownloaded || $0.downloadState == .error }
                     Persistant.shared.save(lectures: eligibleDownloadModels)
 
@@ -428,18 +450,22 @@ extension LectureViewController {
                     })
 
                 case .deleteFromDownloads:
+                    Haptic.warning()
                     let eligibleDeleteFromDownloadsModels: [Model] = selectedModels.filter { $0.downloadState == .downloaded || $0.downloadState == .error }
                     askToDeleteFromDownloads(lectures: eligibleDeleteFromDownloadsModels, sourceView: moreButton)
-                    
+
                 case .markAsFavourite:
+                    Haptic.softImpact()
                     let eligibleMarkAsFavouriteModels: [Model] = selectedModels.filter { !$0.isFavourite }
                     markAsFavourites(lectures: eligibleMarkAsFavouriteModels, sourceView: moreButton)
 
                 case .removeFromFavourites:
+                    Haptic.warning()
                     let eligibleRemoveFromFavouritesModels: [Model] = selectedModels.filter { $0.isFavourite }
                     askToRemoveFromFavorites(lectures: eligibleRemoveFromFavouritesModels, sourceView: moreButton)
 
                 case .addToPlaylist:
+                    Haptic.softImpact()
                     let navigationController = UIStoryboard.playlists.instantiate(UINavigationController.self, identifier: "PlaylistNavigationController")
                     guard let playlistController = navigationController.viewControllers.first as? PlaylistViewController else {
                         return
@@ -447,13 +473,14 @@ extension LectureViewController {
                     playlistController.lecturesToAdd = selectedModels
                     self.present(navigationController, animated: true, completion: nil)
                 case .removeFromPlaylist:
-
+                    Haptic.warning()
                     askToRemoveFromPlaylist(lectures: selectedModels, sourceView: moreButton)
-
                 case .markAsHeard:
+                    Haptic.softImpact()
                     let eligibleMarkAsHeardModels: [Model] = selectedModels.filter { $0.playProgress < 1.0 }
                     markAsHeard(lectures: eligibleMarkAsHeardModels, sourceView: moreButton)
                 case .resetProgress:
+                    Haptic.softImpact()
                     let eligibleResetProgressModels: [Model] = selectedModels.filter { $0.playProgress >= 1.0 }
                     resetProgress(lectures: eligibleResetProgressModels, sourceView: moreButton)
                 case .share, .downloading:
@@ -492,15 +519,20 @@ extension LectureViewController: LectureCellDelegate {
 
         switch option {
         case .download:
+            Haptic.softImpact()
             Persistant.shared.save(lectures: [lecture])
             DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: nil, isDownloaded: true, isFavourite: nil, lastPlayedPoint: nil, completion: {_ in })
         case .deleteFromDownloads:
+            Haptic.warning()
             askToDeleteFromDownloads(lectures: [lecture], sourceView: cell)
         case .markAsFavourite:
+            Haptic.softImpact()
             markAsFavourites(lectures: [lecture], sourceView: cell)
         case .removeFromFavourites:
+            Haptic.warning()
             askToRemoveFromFavorites(lectures: [lecture], sourceView: cell)
         case .addToPlaylist:
+            Haptic.softImpact()
 
             let navigationController = UIStoryboard.playlists.instantiate(UINavigationController.self, identifier: "PlaylistNavigationController")
             guard let playlistController = navigationController.viewControllers.first as? PlaylistViewController else {
@@ -510,10 +542,13 @@ extension LectureViewController: LectureCellDelegate {
             self.present(navigationController, animated: true, completion: nil)
 
         case .removeFromPlaylist:
+            Haptic.warning()
             askToRemoveFromPlaylist(lectures: [lecture], sourceView: cell)
         case .markAsHeard:
+            Haptic.softImpact()
             markAsHeard(lectures: [lecture], sourceView: cell)
         case .resetProgress:
+            Haptic.softImpact()
             resetProgress(lectures: [lecture], sourceView: cell)
         case .share:
 
@@ -590,7 +625,7 @@ extension LectureViewController: LectureCellDelegate {
 
 extension LectureViewController {
 
-    private func askToDeleteFromDownloads(lectures: [Lecture], sourceView: Any?) {
+    private func askToDeleteFromDownloads(lectures: [Model], sourceView: Any?) {
 
         let message: String
         if lectures.count == 1, let lecture = lectures.first {
@@ -609,7 +644,7 @@ extension LectureViewController {
         }))
     }
 
-    private func markAsFavourites(lectures: [Lecture], sourceView: Any?) {
+    private func markAsFavourites(lectures: [Model], sourceView: Any?) {
         DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: lectures, isCompleted: nil, isDownloaded: nil, isFavourite: true, lastPlayedPoint: nil, completion: { result in
             switch result {
             case .success:
@@ -624,13 +659,14 @@ extension LectureViewController {
                 StatusAlert.show(image: LectureOption.markAsFavourite.image, title: "Favorited", message: message, in: self.view)
 
             case .failure(let error):
+                Haptic.error()
                 self.showAlert(title: "Error!", message: error.localizedDescription)
             }
 
         })
     }
 
-    private func askToRemoveFromFavorites(lectures: [Lecture], sourceView: Any?) {
+    private func askToRemoveFromFavorites(lectures: [Model], sourceView: Any?) {
 
         let message: String
         if lectures.count == 1, let lecture = lectures.first {
@@ -658,13 +694,14 @@ extension LectureViewController {
                     StatusAlert.show(image: LectureOption.removeFromFavourites.image, title: "Unfavorited", message: message, in: self.view)
 
                 case .failure(let error):
+                    Haptic.error()
                     self.showAlert(title: "Error!", message: error.localizedDescription)
                 }
             })
         }))
     }
 
-    private func askToRemoveFromPlaylist(lectures: [Lecture], sourceView: Any?) {
+    private func askToRemoveFromPlaylist(lectures: [Model], sourceView: Any?) {
 
         guard let playlistLectureController = self as? PlaylistLecturesViewController else {
             return
@@ -691,7 +728,7 @@ extension LectureViewController {
 
                     playlistLectureController.playlist.lectureIds = success
 
-                    let existing: [Lecture] = self.models.filter { success.contains($0.id) }
+                    let existing: [Model] = self.models.filter { success.contains($0.id) }
                     self.refresh(source: .cache, existing: existing)
 
                     let message: String?
@@ -704,13 +741,14 @@ extension LectureViewController {
                     StatusAlert.show(image: LectureOption.removeFromPlaylist.image, title: "Removed from Playlist", message: message, in: self.view)
 
                 case .failure(let error):
+                    Haptic.error()
                     self.showAlert(title: "Error!", message: error.localizedDescription)
                 }
             })
         }))
     }
 
-    private func markAsHeard(lectures: [Lecture], sourceView: Any?) {
+    private func markAsHeard(lectures: [Model], sourceView: Any?) {
         DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: lectures, isCompleted: true, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: -1, completion: { result in
             switch result {
             case .success:
@@ -725,13 +763,14 @@ extension LectureViewController {
                 StatusAlert.show(image: LectureOption.markAsHeard.image, title: "Marked as heard", message: message, in: self.view)
 
             case .failure(let error):
+                Haptic.error()
                 self.showAlert(title: "Error!", message: error.localizedDescription)
             }
 
         })
     }
 
-    private func resetProgress(lectures: [Lecture], sourceView: Any?) {
+    private func resetProgress(lectures: [Model], sourceView: Any?) {
         DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: lectures, isCompleted: false, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: 0, completion: { result in
             switch result {
             case .success:
@@ -745,6 +784,7 @@ extension LectureViewController {
 
                 StatusAlert.show(image: LectureOption.resetProgress.image, title: "Progress Reset", message: message, in: self.view)
             case .failure(let error):
+                Haptic.error()
                 self.showAlert(title: "Error!", message: error.localizedDescription)
             }
         })
@@ -758,30 +798,23 @@ extension LectureViewController: IQListViewDelegateDataSource {
         serialListKitQueue.async { [self] in
 
             let animated: Bool = animated ?? (models.count <= 1000)
-            list.performUpdates({
+            list.reloadData({ _ in
+
+                DispatchQueue.main.async { [self] in
+                    activityIndicatorView.startAnimating()
+                }
 
                 let section = IQSection(identifier: "Cell", headerSize: CGSize.zero, footerSize: CGSize.zero)
-                list.append(section)
-
-                let enableRemoveFromPlaylist: Bool
-
-                if let playlistLectureViewController = self as? PlaylistLecturesViewController,
-                   FirestoreManager.shared.currentUser != nil,
-                   let email = FirestoreManager.shared.currentUserEmail,
-                   playlistLectureViewController.playlist.authorEmail.elementsEqual(email) {
-                    enableRemoveFromPlaylist = true
-                } else {
-                    enableRemoveFromPlaylist = false
-                }
+                list.append([section])
 
                 let newModels: [Cell.Model] = models.map { modelLecture in
                     let isSelected: Bool = selectedModels.contains(where: { modelLecture.id == $0.id })
-                    return Cell.Model(lecture: modelLecture, isSelectionEnabled: isSelectionEnabled, isSelected: isSelected, enableRemoveFromPlaylist: enableRemoveFromPlaylist)
+                    return Cell.Model(lecture: modelLecture, isSelectionEnabled: isSelectionEnabled, isSelected: isSelected, enableRemoveFromPlaylist: removeFromPlaylistEnabled)
                 }
 
                 list.append(Cell.self, models: newModels, section: section)
 
-            }, animatingDifferences: animated, endLoadingOnUpdate: showNoItems, completion: { [self] in
+            }, animatingDifferences: animated, endLoadingOnCompletion: showNoItems, completion: { [self] in
                 if showNoItems {
                     let noItemImage = UIImage(named: "music.mic_60")
                     self.list.noItemImage = noItemImage
@@ -805,7 +838,51 @@ extension LectureViewController: IQListViewDelegateDataSource {
 
                     self.list.noItemMessage = finalMessage
                 }
+
+                activityIndicatorView.stopAnimating()
             })
+        }
+    }
+
+    private func reloadSelectedAll(isSelected: Bool) {
+        serialListKitQueue.async { [self] in
+            var snapshot = self.list.snapshot()
+            var updatedItems: [IQItem] = []
+            for item in snapshot.itemIdentifiers {
+
+                if var cellModel: Cell.Model = item.model as? Cell.Model {
+                    cellModel.isSelected = isSelected
+                    cellModel.isSelectionEnabled = isSelectionEnabled
+                    item.update(Cell.self, model: cellModel)
+                }
+                updatedItems.append(item)
+            }
+
+            snapshot.reloadItems(updatedItems)
+            self.list.apply(snapshot, animatingDifferences: false)
+        }
+    }
+
+    private func updateLecture(lecture: Lecture, isSelected: Bool? = nil) {
+        serialListKitQueue.async { [self] in
+
+            var snapshot = self.list.snapshot()
+            if let item: IQItem = snapshot.itemIdentifiers.first(where: { item in
+                if let cellModel: Cell.Model = item.model as? Cell.Model {
+                    return cellModel.lecture.id == lecture.id
+                }
+                return false
+            }) {
+                if var cellModel: Cell.Model = item.model as? Cell.Model {
+                    cellModel.lecture = lecture
+                    if let isSelected = isSelected {
+                        cellModel.isSelected = isSelected
+                    }
+                    item.update(Cell.self, model: cellModel)
+                    snapshot.reloadItems([item])
+                    self.list.apply(snapshot, animatingDifferences: false)
+                }
+            }
         }
     }
 
@@ -813,13 +890,19 @@ extension LectureViewController: IQListViewDelegateDataSource {
 
         if let model = item.model as? Cell.Model {
 
+            Haptic.selection()
+
             if isSelectionEnabled {
+                var isSelected: Bool = false
                 if let index = selectedModels.firstIndex(where: { $0.id == model.lecture.id }) {
                     selectedModels.remove(at: index)
+                    isSelected = false
                 } else {
                     selectedModels.append(model.lecture)
+                    isSelected = true
                 }
-                refreshUI(animated: false, showNoItems: true)
+
+                updateLecture(lecture: model.lecture, isSelected: isSelected)
             } else {
 
                 guard model.lecture.resources.audios.first?.audioURL != nil else {
