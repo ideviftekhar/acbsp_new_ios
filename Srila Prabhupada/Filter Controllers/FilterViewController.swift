@@ -86,7 +86,7 @@ extension FilterViewController: IQListViewDelegateDataSource {
 
         serialListKitQueue.async { [self] in
             let animated: Bool = animated ?? true
-            typeList.reloadData({ _ in
+            typeList.reloadData({
 
                 let section = IQSection(identifier: "Cell", headerSize: CGSize.zero, footerSize: CGSize.zero)
                 typeList.append([section])
@@ -112,7 +112,7 @@ extension FilterViewController: IQListViewDelegateDataSource {
                 }
             })
 
-            detailsList.reloadData({ _ in
+            detailsList.reloadData({
 
                 let section = IQSection(identifier: "Cell", headerSize: CGSize.zero, footerSize: CGSize.zero)
                 detailsList.append([section])

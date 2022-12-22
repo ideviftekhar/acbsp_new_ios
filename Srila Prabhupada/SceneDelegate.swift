@@ -70,6 +70,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     }
 
     func sceneWillEnterForeground(_ scene: UIScene) {
+        print(#function)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+            Persistant.shared.verifyDownloads {
+                if let reachability = Persistant.shared.reachability, reachability.connection != .unavailable {
+                    Persistant.shared.reschedulePendingDownloads()
+                }
+            }
+        })
+
         // Called as the scene transitions from the background to the foreground.
         // Use this method to undo the changes made on entering the background.
     }

@@ -136,7 +136,7 @@ class LectureViewController: SearchViewController {
                                 newModels.insert(lecture, at: 0)
                             }
                         }
-                    } else if self is FavouritesViewController {    // If favorites controller, then we also need to remove or add it in UI
+                    } else if self is FavouritesViewController {    // If favourites controller, then we also need to remove or add it in UI
                         if lecture.isFavourite {
                             let lectureIndexes = newModels.allIndex(where: { $0.id == lecture.id })
                             if !lectureIndexes.isEmpty {
@@ -462,7 +462,7 @@ extension LectureViewController {
                 case .removeFromFavourites:
                     Haptic.warning()
                     let eligibleRemoveFromFavouritesModels: [Model] = selectedModels.filter { $0.isFavourite }
-                    askToRemoveFromFavorites(lectures: eligibleRemoveFromFavouritesModels, sourceView: moreButton)
+                    askToRemoveFromFavourites(lectures: eligibleRemoveFromFavouritesModels, sourceView: moreButton)
 
                 case .addToPlaylist:
                     Haptic.softImpact()
@@ -530,7 +530,7 @@ extension LectureViewController: LectureCellDelegate {
             markAsFavourites(lectures: [lecture], sourceView: cell)
         case .removeFromFavourites:
             Haptic.warning()
-            askToRemoveFromFavorites(lectures: [lecture], sourceView: cell)
+            askToRemoveFromFavourites(lectures: [lecture], sourceView: cell)
         case .addToPlaylist:
             Haptic.softImpact()
 
@@ -651,12 +651,12 @@ extension LectureViewController {
 
                 let message: String?
                 if lectures.count > 1 {
-                    message = "Favorited \(lectures.count) lecture(s)"
+                    message = "\(lectures.count) lecture(s) added to favourites"
                 } else {
                     message = nil
                 }
 
-                StatusAlert.show(image: LectureOption.markAsFavourite.image, title: "Favorited", message: message, in: self.view)
+                StatusAlert.show(image: LectureOption.markAsFavourite.image, title: "Added to favourites", message: message, in: self.view)
 
             case .failure(let error):
                 Haptic.error()
@@ -666,13 +666,13 @@ extension LectureViewController {
         })
     }
 
-    private func askToRemoveFromFavorites(lectures: [Model], sourceView: Any?) {
+    private func askToRemoveFromFavourites(lectures: [Model], sourceView: Any?) {
 
         let message: String
         if lectures.count == 1, let lecture = lectures.first {
-            message = "Are you sure you would like to remove '\(lecture.titleDisplay)' from Favorites?"
+            message = "Are you sure you would like to remove '\(lecture.titleDisplay)' from Favourites?"
         } else {
-            message = "Are you sure you would like to remove \(lectures.count) lecture(s) from Favorites?"
+            message = "Are you sure you would like to remove \(lectures.count) lecture(s) from Favourites?"
         }
 
         self.showAlert(title: "Remove From Favourites",
@@ -686,12 +686,12 @@ extension LectureViewController {
 
                     let message: String?
                     if lectures.count > 1 {
-                        message = "Unfavorited \(lectures.count) lecture(s)"
+                        message = "\(lectures.count) lecture(s) removed from favourites"
                     } else {
                         message = nil
                     }
 
-                    StatusAlert.show(image: LectureOption.removeFromFavourites.image, title: "Unfavorited", message: message, in: self.view)
+                    StatusAlert.show(image: LectureOption.removeFromFavourites.image, title: "Removed from favourites", message: message, in: self.view)
 
                 case .failure(let error):
                     Haptic.error()
@@ -798,7 +798,7 @@ extension LectureViewController: IQListViewDelegateDataSource {
         serialListKitQueue.async { [self] in
 
             let animated: Bool = animated ?? (models.count <= 1000)
-            list.reloadData({ _ in
+            list.reloadData({
 
                 DispatchQueue.main.async { [self] in
                     activityIndicatorView.startAnimating()
@@ -846,43 +846,48 @@ extension LectureViewController: IQListViewDelegateDataSource {
 
     private func reloadSelectedAll(isSelected: Bool) {
         serialListKitQueue.async { [self] in
-            var snapshot = self.list.snapshot()
-            var updatedItems: [IQItem] = []
-            for item in snapshot.itemIdentifiers {
 
-                if var cellModel: Cell.Model = item.model as? Cell.Model {
-                    cellModel.isSelected = isSelected
-                    cellModel.isSelectionEnabled = isSelectionEnabled
-                    item.update(Cell.self, model: cellModel)
+            list.reloadData({
+
+                let updatedModels: [Cell.Model] = list.itemIdentifiers.compactMap { item in
+                    if var cellModel: Cell.Model = item.model as? Cell.Model {
+                        cellModel.isSelected = isSelected
+                        cellModel.isSelectionEnabled = isSelectionEnabled
+                        return cellModel
+                    }
+                    return nil
                 }
-                updatedItems.append(item)
-            }
 
-            snapshot.reloadItems(updatedItems)
-            self.list.apply(snapshot, animatingDifferences: false)
+                list.deleteAllItems()
+
+                let section = IQSection(identifier: "Cell", headerSize: CGSize.zero, footerSize: CGSize.zero)
+                list.append([section])
+                list.append(Cell.self, models: updatedModels)
+
+            }, updateExistingSnapshot: true, animatingDifferences: false)
         }
     }
 
     private func updateLecture(lecture: Lecture, isSelected: Bool? = nil) {
         serialListKitQueue.async { [self] in
+            list.reloadData({
 
-            var snapshot = self.list.snapshot()
-            if let item: IQItem = snapshot.itemIdentifiers.first(where: { item in
-                if let cellModel: Cell.Model = item.model as? Cell.Model {
-                    return cellModel.lecture.id == lecture.id
-                }
-                return false
-            }) {
-                if var cellModel: Cell.Model = item.model as? Cell.Model {
-                    cellModel.lecture = lecture
-                    if let isSelected = isSelected {
-                        cellModel.isSelected = isSelected
+                if let item = list.itemIdentifier(where: { item in
+                    if let cellModel: Cell.Model = item.model as? Cell.Model {
+                        return cellModel.lecture.id == lecture.id
                     }
-                    item.update(Cell.self, model: cellModel)
-                    snapshot.reloadItems([item])
-                    self.list.apply(snapshot, animatingDifferences: false)
+                    return false
+                }) {
+                    if var cellModel: Cell.Model = item.model as? Cell.Model {
+                        cellModel.lecture = lecture
+                        if let isSelected = isSelected {
+                            cellModel.isSelected = isSelected
+                        }
+
+                        list.reload(Cell.self, models: [cellModel]) { $0.lecture.id == $1.lecture.id }
+                    }
                 }
-            }
+            }, updateExistingSnapshot: true, animatingDifferences: false)
         }
     }
 

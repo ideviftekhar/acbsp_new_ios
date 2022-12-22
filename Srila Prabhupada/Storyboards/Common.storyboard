@@ -373,7 +373,7 @@
                                                         </stackView>
                                                     </subviews>
                                                 </stackView>
-                                                <slider opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="BVw-Uf-8gS">
+                                                <slider opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="BVw-Uf-8gS" customClass="TimeSlider">
                                                     <rect key="frame" x="-2" y="-15" width="324" height="31"/>
                                                     <color key="tintColor" name="TextDarkGray"/>
                                                 </slider>
@@ -449,7 +449,7 @@
                                                             </constraints>
                                                         </view>
                                                         <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="pg5-ZN-B6e">
-                                                            <rect key="frame" x="0.0" y="15" width="320" height="396.5"/>
+                                                            <rect key="frame" x="0.0" y="15" width="320" height="370.5"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZlV-i0-XjY">
                                                                     <rect key="frame" x="160" y="0.0" width="0.0" height="0.0"/>
@@ -541,7 +541,7 @@
                                                                     </subviews>
                                                                 </stackView>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AJ7-xJ-DIU">
-                                                                    <rect key="frame" x="160" y="370.5" width="0.0" height="26"/>
+                                                                    <rect key="frame" x="160" y="370.5" width="0.0" height="0.0"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" id="phe-Zq-nun"/>
                                                                     </constraints>
@@ -549,7 +549,7 @@
                                                             </subviews>
                                                         </stackView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="8Zn-u8-LwV">
-                                                            <rect key="frame" x="0.0" y="416.5" width="320" height="34.5"/>
+                                                            <rect key="frame" x="0.0" y="390.5" width="320" height="34.5"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gvi-ua-Cpq">
                                                                     <rect key="frame" x="0.0" y="17.5" width="0.0" height="0.0"/>
@@ -623,10 +623,10 @@
                                                             </subviews>
                                                         </stackView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="6HM-pK-w8t">
-                                                            <rect key="frame" x="0.0" y="456" width="320" height="14"/>
+                                                            <rect key="frame" x="0.0" y="430" width="320" height="40"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" text="--:--" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="IQI-q6-Ul5">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="55" height="14"/>
+                                                                    <rect key="frame" x="0.0" y="13" width="55" height="14"/>
                                                                     <color key="tintColor" name="TextDarkGray"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="55" id="5qg-5N-iEQ"/>
@@ -635,15 +635,18 @@
                                                                     <color key="textColor" name="TextDarkGray"/>
                                                                     <nil key="highlightedColor"/>
                                                                 </label>
-                                                                <slider opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="EgQ-VK-VpE">
-                                                                    <rect key="frame" x="58" y="0.0" width="204" height="15"/>
+                                                                <slider opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="EgQ-VK-VpE" customClass="TimeSlider">
+                                                                    <rect key="frame" x="58" y="0.0" width="204" height="41"/>
                                                                     <color key="tintColor" name="TextDarkGray"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="height" constant="40" id="t3a-K3-t4Y"/>
+                                                                    </constraints>
                                                                     <connections>
                                                                         <action selector="timeSlider:" destination="WLM-gm-tMu" eventType="touchUpInside" id="MDJ-y2-mYA"/>
                                                                     </connections>
                                                                 </slider>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="--:--" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="B9L-GY-BgF">
-                                                                    <rect key="frame" x="265" y="0.0" width="55" height="14"/>
+                                                                    <rect key="frame" x="265" y="13" width="55" height="14"/>
                                                                     <color key="tintColor" name="TextDarkGray"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" constant="55" id="D03-wK-SD4"/>

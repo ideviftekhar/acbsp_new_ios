@@ -21,7 +21,7 @@ class Persistant: NSObject {
 
     static let shared = Persistant()
 
-    private let reachability: Reachability?
+    let reachability: Reachability?
 
     override init () {
 

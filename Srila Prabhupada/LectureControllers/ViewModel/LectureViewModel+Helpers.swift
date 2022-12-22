@@ -52,7 +52,11 @@ extension DefaultLectureViewModel {
         for var lecture in lectures {
             if let lectureInfo = lectureInfos.first(where: { $0.id == lecture.id }) {
                 lecture.isFavourite = lectureInfo.isFavourite
-                lecture.lastPlayedPoint = lectureInfo.lastPlayedPoint
+                if lectureInfo.lastPlayedPoint == -1 {
+                    lecture.lastPlayedPoint = lecture.length
+                } else {
+                    lecture.lastPlayedPoint = lectureInfo.lastPlayedPoint
+                }
             }
 
             if let downloadedLecture = downloadedLectures.first(where: { $0.id == lecture.id }) {

@@ -82,7 +82,7 @@ extension SideMenuViewController: IQListViewDelegateDataSource {
 
         serialListKitQueue.async { [self] in
             let animated: Bool = animated ?? (models.count <= 1000)
-            list.reloadData({ _ in
+            list.reloadData({
 
                 let section = IQSection(identifier: "Cell", headerSize: CGSize.zero, footerSize: CGSize.zero)
                 list.append([section])

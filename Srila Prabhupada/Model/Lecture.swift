@@ -65,7 +65,7 @@ struct Lecture: Hashable, Codable {
     var lastPlayedPoint: Int = 0
 
     var isCompleted: Bool {
-        lastPlayedPoint == length
+        lastPlayedPoint == length || lastPlayedPoint == -1
     }
 
     var playProgress: CGFloat {

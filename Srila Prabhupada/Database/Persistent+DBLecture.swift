@@ -19,9 +19,9 @@ extension Persistant {
             } else if !fileExist && dbLecture.downloadStateEnum != .error {
                 dbLecture.downloadState = DBLecture.DownloadState.error.rawValue
             }
-
-            saveMainContext(completionHandler)
         }
+
+        saveMainContext(completionHandler)
     }
 
     func reschedulePendingDownloads() {

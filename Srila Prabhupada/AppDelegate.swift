@@ -26,9 +26,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             FirebaseApp.configure(options: fileopts)
         }
 
-        Persistant.shared.verifyDownloads {
-            Persistant.shared.reschedulePendingDownloads()
-        }
         return true
     }
 

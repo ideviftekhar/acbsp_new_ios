@@ -57,7 +57,13 @@ extension DefaultLectureViewModel {
             var updatedLectures: [Lecture] = []
             let lectureIndexes = self.allLectures.allIndex(where: { $0.id == lecture.id })
             for index in lectureIndexes {
-                self.allLectures[index].lastPlayedPoint = lastPlayedPoint
+
+                if lastPlayedPoint == -1 {
+                    self.allLectures[index].lastPlayedPoint = lecture.length
+                } else {
+                    self.allLectures[index].lastPlayedPoint = lastPlayedPoint
+                }
+
                 updatedLectures.append(self.allLectures[index])
             }
 
@@ -65,7 +71,12 @@ extension DefaultLectureViewModel {
 
             if !lectureInfoIndexes.isEmpty {
                 for index in lectureInfoIndexes {
-                    self.userLectureInfo[index].lastPlayedPoint = lastPlayedPoint
+
+                    if lastPlayedPoint == -1 {
+                        self.userLectureInfo[index].lastPlayedPoint = lecture.length
+                    } else {
+                        self.userLectureInfo[index].lastPlayedPoint = lastPlayedPoint
+                    }
                 }
 //            } else {  // Due to the documentID issue, we are skipping this.
 //                let currentTimestamp = Int(Date().timeIntervalSince1970*1000)

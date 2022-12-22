@@ -197,7 +197,7 @@ extension TabBarController: PlayerViewControllerDelegate {
             } else if !playerViewController.isPaused {
                 shouldReallyPlay = true
             } else {
-                shouldReallyPlay = false
+                shouldReallyPlay = true
             }
 
             playerViewController.currentLecture = lecture
@@ -208,7 +208,7 @@ extension TabBarController: PlayerViewControllerDelegate {
     }
 
     func playerController(_ controller: PlayerViewController, didChangeVisibleState state: PlayerViewController.ViewState) {
-        
+
         switch state {
         case .close:
             for controller in viewControllers ?? [] {

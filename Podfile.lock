@@ -794,7 +794,7 @@ DEPENDENCIES:
   - GoogleSignIn
   - GoogleSignInSwiftSupport
   - IQKeyboardManagerSwift
-  - IQListKit (from `/Users/iftekhar/Projects/Projects/Internal/Github/IQListKit`)
+  - IQListKit
   - MBCircularProgressBar
   - ReachabilitySwift
   - SideMenu
@@ -832,6 +832,7 @@ SPEC REPOS:
     - GTMAppAuth
     - GTMSessionFetcher
     - IQKeyboardManagerSwift
+    - IQListKit
     - leveldb-library
     - Libuv-gRPC
     - MBCircularProgressBar
@@ -845,10 +846,6 @@ SPEC REPOS:
     - SwiftAlgorithms
     - SwiftLint
     - SwiftTryCatch
-
-EXTERNAL SOURCES:
-  IQListKit:
-    :path: "/Users/iftekhar/Projects/Projects/Internal/Github/IQListKit"
 
 SPEC CHECKSUMS:
   abseil: ebe5b5529fb05d93a8bdb7951607be08b7fa71bc
@@ -893,6 +890,6 @@ SPEC CHECKSUMS:
   SwiftLint: 32ee33ded0636d0905ef6911b2b67bbaeeedafa5
   SwiftTryCatch: fb6d2b34abe48efd69578dac919293a44f95b481
 
-PODFILE CHECKSUM: dd5a25f58eade4e63422cb143254cb21f0d9fb5d
+PODFILE CHECKSUM: 249d21bda6d37ba635f2061713c9a378e1f4ad64
 
 COCOAPODS: 1.11.3
