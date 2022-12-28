@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="dark"/>
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
@@ -75,7 +75,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="2Px-ai-gLn">
-                                <rect key="frame" x="0.0" y="40.5" width="72" height="16.5"/>
+                                <rect key="frame" x="0.0" y="40.5" width="138.5" height="16.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="j2s-UD-Jnl">
                                         <rect key="frame" x="0.0" y="0.0" width="36.5" height="16.5"/>
@@ -93,6 +93,18 @@
                                         <rect key="frame" x="52.5" y="0.0" width="19.5" height="16.5"/>
                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
                                         <color key="textColor" name="TextDarkGray"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" text="●" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o4r-m7-03j">
+                                        <rect key="frame" x="76" y="0.0" width="8" height="16.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" text="0KB of 2MB" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="P7h-rT-rAy">
+                                        <rect key="frame" x="88" y="0.0" width="50.5" height="16.5"/>
+                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
+                                        <color key="textColor" name="ProgressColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -247,6 +259,42 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </imageView>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eDN-pj-FYV">
+                        <rect key="frame" x="42" y="45.5" width="16" height="16"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="music.note.list_60" translatesAutoresizingMaskIntoConstraints="NO" id="ES4-ix-r3w">
+                                <rect key="frame" x="4" y="4" width="8" height="8"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="8" id="IW3-qW-yLj"/>
+                                    <constraint firstAttribute="height" constant="8" id="jyy-Zv-VD1"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                        <real key="value" value="0.0"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemOrangeColor"/>
+                        <constraints>
+                            <constraint firstItem="ES4-ix-r3w" firstAttribute="centerY" secondItem="eDN-pj-FYV" secondAttribute="centerY" id="04J-aj-gJJ"/>
+                            <constraint firstAttribute="height" constant="16" id="6oz-8b-VJD"/>
+                            <constraint firstAttribute="width" constant="16" id="Nu3-5K-Tmg"/>
+                            <constraint firstItem="ES4-ix-r3w" firstAttribute="centerX" secondItem="eDN-pj-FYV" secondAttribute="centerX" id="bca-FO-lm4"/>
+                        </constraints>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
+                                <real key="value" value="8"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="color" keyPath="borderColor">
+                                <color key="value" name="FFFFFF"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
+                                <real key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </view>
                 </subviews>
                 <constraints>
                     <constraint firstItem="vfZ-ce-T4q" firstAttribute="centerX" secondItem="Q0B-mL-dK8" secondAttribute="centerX" id="0cM-nb-efh"/>
@@ -256,6 +304,7 @@
                     <constraint firstItem="f6l-Bp-fUH" firstAttribute="leading" secondItem="Mfu-JH-XN3" secondAttribute="leading" id="4NH-zl-wAT"/>
                     <constraint firstAttribute="bottom" secondItem="Q0B-mL-dK8" secondAttribute="bottom" id="7NZ-Rw-l1C"/>
                     <constraint firstAttribute="bottom" secondItem="toB-kP-27M" secondAttribute="bottom" constant="5" id="96i-gw-Ptn"/>
+                    <constraint firstItem="eDN-pj-FYV" firstAttribute="centerY" secondItem="1Pj-Yk-u2T" secondAttribute="bottom" id="9E8-Mc-vMz"/>
                     <constraint firstItem="toB-kP-27M" firstAttribute="leading" secondItem="1Pj-Yk-u2T" secondAttribute="trailing" constant="10" id="A3j-iB-hV2"/>
                     <constraint firstItem="f6l-Bp-fUH" firstAttribute="trailing" secondItem="Mfu-JH-XN3" secondAttribute="trailing" id="AP3-fe-Mkw"/>
                     <constraint firstItem="f6l-Bp-fUH" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Ibi-ZE-P5r"/>
@@ -272,6 +321,7 @@
                     <constraint firstItem="CnE-6x-y4s" firstAttribute="top" secondItem="1Pj-Yk-u2T" secondAttribute="top" id="mjG-me-soE"/>
                     <constraint firstItem="AdV-AQ-xel" firstAttribute="centerX" secondItem="ZTZ-0b-Ptx" secondAttribute="centerX" id="mua-PG-0Zk"/>
                     <constraint firstAttribute="trailing" secondItem="Q0B-mL-dK8" secondAttribute="trailing" constant="8" id="oxx-FM-xiV"/>
+                    <constraint firstItem="eDN-pj-FYV" firstAttribute="centerX" secondItem="1Pj-Yk-u2T" secondAttribute="trailing" id="uC5-2B-rW6"/>
                     <constraint firstItem="1Pj-Yk-u2T" firstAttribute="leading" secondItem="ZTZ-0b-Ptx" secondAttribute="centerX" id="vEY-H7-bw3"/>
                     <constraint firstItem="f6l-Bp-fUH" firstAttribute="top" secondItem="Mfu-JH-XN3" secondAttribute="top" id="xqT-8o-lMg"/>
                     <constraint firstItem="eiF-YO-8YM" firstAttribute="centerY" secondItem="1Pj-Yk-u2T" secondAttribute="bottom" id="yB9-me-6Hv"/>
@@ -283,6 +333,7 @@
                 <outlet property="audioVisualizerView" destination="CnE-6x-y4s" id="90x-tb-5eW"/>
                 <outlet property="completedIconImageView" destination="Mfu-JH-XN3" id="dP6-IE-XwB"/>
                 <outlet property="dateLabel" destination="Z5O-MH-zt7" id="f9x-rJ-oOv"/>
+                <outlet property="downloadInfoLabel" destination="P7h-rT-rAy" id="dTz-OD-KRh"/>
                 <outlet property="downloadProgressView" destination="ZTZ-0b-Ptx" id="zp5-4D-fZ9"/>
                 <outlet property="downloadedIconImageView" destination="AdV-AQ-xel" id="zaf-uL-f7m"/>
                 <outlet property="durationLabel" destination="N9l-9l-L9l" id="98h-lU-srK"/>
@@ -291,13 +342,15 @@
                 <outlet property="listenProgressView" destination="f6l-Bp-fUH" id="DDZ-eX-bNG"/>
                 <outlet property="locationLabel" destination="j2s-UD-Jnl" id="A9J-F7-CYm"/>
                 <outlet property="menuButton" destination="Q0B-mL-dK8" id="wRP-cu-9aA"/>
+                <outlet property="playlistIconView" destination="eDN-pj-FYV" id="8Gf-CC-mxg"/>
                 <outlet property="secondDotLabel" destination="m6b-nj-VnU" id="kyJ-pt-F0a"/>
                 <outlet property="selectedImageView" destination="vfZ-ce-T4q" id="2xL-wJ-r5f"/>
+                <outlet property="thirdDotLabel" destination="o4r-m7-03j" id="E1Y-ht-6sJ"/>
                 <outlet property="thumbnailImageView" destination="1Pj-Yk-u2T" id="UHT-hM-G1o"/>
                 <outlet property="titleLabel" destination="7cs-uh-SL9" id="bjy-Rl-STU"/>
                 <outlet property="verseLabel" destination="nQB-Ua-gsO" id="hJf-Jn-kJG"/>
             </connections>
-            <point key="canvasLocation" x="131.8840579710145" y="114.50892857142857"/>
+            <point key="canvasLocation" x="131.15942028985509" y="114.17410714285714"/>
         </tableViewCell>
     </objects>
     <resources>
@@ -306,9 +359,16 @@
         <image name="checkmark.circle.fill" catalog="system" width="128" height="123"/>
         <image name="ellipsis.circle" catalog="system" width="128" height="123"/>
         <image name="logo_40" width="40" height="40"/>
+        <image name="music.note.list_60" width="59.666667938232422" height="60.333332061767578"/>
         <image name="star.circle.fill" catalog="system" width="128" height="123"/>
         <namedColor name="0099CC">
             <color red="0.0" green="0.59999999999999998" blue="0.792156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="FFFFFF">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="ProgressColor">
+            <color red="0.054901960784313725" green="0.47843137254901963" blue="0.99607843137254903" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="TextDarkGray">
             <color red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -45,6 +45,9 @@ class LectureViewController: SearchViewController {
         }
     }
 
+    var selectedPlaylist: Playlist?
+    var highlightedLectures: [Lecture] = []
+
     var selectedSortType: LectureSortType {
         guard let selectedSortAction = sortMenu.selectedAction,
               let selectedSortType = LectureSortType(rawValue: selectedSortAction.action.identifier.rawValue) else {
@@ -360,13 +363,19 @@ extension LectureViewController {
 
         if !selectedModels.isEmpty {
 
-            let eligibleDownloadModels: [Model] = selectedModels.filter { $0.downloadState == .notDownloaded || $0.downloadState == .error }
+            let eligibleDownloadModels: [Model] = selectedModels.filter { $0.downloadState == .notDownloaded || $0.downloadState == .error || $0.downloadState == .pause}
             if !eligibleDownloadModels.isEmpty, let download = allActions[.download] {
                 download.action.title = LectureOption.download.rawValue + " (\(eligibleDownloadModels.count))"
                 menuItems.append(download)
             }
 
-            let eligibleDeleteFromDownloadsModels: [Model] = selectedModels.filter { $0.downloadState == .downloaded || $0.downloadState == .error }
+            let eligiblePauseDownloadModels: [Model] = selectedModels.filter { $0.downloadState == .downloading }
+            if !eligiblePauseDownloadModels.isEmpty, let pauseDownload = allActions[.pauseDownload] {
+                pauseDownload.action.title = LectureOption.pauseDownload.rawValue + " (\(eligiblePauseDownloadModels.count))"
+                menuItems.append(pauseDownload)
+            }
+
+            let eligibleDeleteFromDownloadsModels: [Model] = selectedModels.filter { $0.downloadState != .notDownloaded }
             if !eligibleDeleteFromDownloadsModels.isEmpty, let deleteFromDownloads = allActions[.deleteFromDownloads] {
                 deleteFromDownloads.action.title = LectureOption.deleteFromDownloads.rawValue + " (\(eligibleDeleteFromDownloadsModels.count))"
                 menuItems.append(deleteFromDownloads)
@@ -443,15 +452,18 @@ extension LectureViewController {
                 switch option {
                 case .download:
                     Haptic.softImpact()
-                    let eligibleDownloadModels: [Model] = selectedModels.filter { $0.downloadState == .notDownloaded || $0.downloadState == .error }
-                    Persistant.shared.save(lectures: eligibleDownloadModels)
+                    let eligibleDownloadModels: [Model] = selectedModels.filter { $0.downloadState == .notDownloaded || $0.downloadState == .error || $0.downloadState == .pause }
+                    Persistant.shared.save(lectures: eligibleDownloadModels, completion: { _ in })
 
                     DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleDownloadModels, isCompleted: nil, isDownloaded: true, isFavourite: nil, lastPlayedPoint: nil, completion: { _ in
                     })
-
+                case .pauseDownload:
+                    Haptic.warning()
+                    let eligiblePauseDownloadModels: [Model] = selectedModels.filter { $0.downloadState == .downloading }
+                    Persistant.shared.pauseDownloads(lectures: eligiblePauseDownloadModels)
                 case .deleteFromDownloads:
                     Haptic.warning()
-                    let eligibleDeleteFromDownloadsModels: [Model] = selectedModels.filter { $0.downloadState == .downloaded || $0.downloadState == .error }
+                    let eligibleDeleteFromDownloadsModels: [Model] = selectedModels.filter { $0.downloadState != .notDownloaded }
                     askToDeleteFromDownloads(lectures: eligibleDeleteFromDownloadsModels, sourceView: moreButton)
 
                 case .markAsFavourite:
@@ -483,7 +495,7 @@ extension LectureViewController {
                     Haptic.softImpact()
                     let eligibleResetProgressModels: [Model] = selectedModels.filter { $0.playProgress >= 1.0 }
                     resetProgress(lectures: eligibleResetProgressModels, sourceView: moreButton)
-                case .share, .downloading:
+                case .share:
                     break
                }
 
@@ -491,10 +503,8 @@ extension LectureViewController {
             })
 
             switch option {
-            case .download, .markAsFavourite, .addToPlaylist, .markAsHeard, .resetProgress, .share:
+            case .download, .pauseDownload, .markAsFavourite, .addToPlaylist, .markAsHeard, .resetProgress, .share:
                 break
-            case .downloading:
-                action.action.attributes = .disabled
             case .deleteFromDownloads, .removeFromPlaylist, .removeFromFavourites:
                 action.action.attributes = .destructive
             }
@@ -520,8 +530,10 @@ extension LectureViewController: LectureCellDelegate {
         switch option {
         case .download:
             Haptic.softImpact()
-            Persistant.shared.save(lectures: [lecture])
+            Persistant.shared.save(lectures: [lecture], completion: { _ in })
             DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: nil, isDownloaded: true, isFavourite: nil, lastPlayedPoint: nil, completion: {_ in })
+        case .pauseDownload:
+            Persistant.shared.pauseDownloads(lectures: [lecture])
         case .deleteFromDownloads:
             Haptic.warning()
             askToDeleteFromDownloads(lectures: [lecture], sourceView: cell)
@@ -600,7 +612,7 @@ extension LectureViewController: LectureCellDelegate {
                 linkBuilder.socialMetaTagParameters = socialMediaParameters
             }
 
-            linkBuilder.shorten() { url, _, _ in
+            linkBuilder.shorten(completion: { url, _, _ in
                 var appLinks: [Any] = []
                 if let url = url {
                     appLinks.append(url)
@@ -615,10 +627,7 @@ extension LectureViewController: LectureCellDelegate {
                 let shareController = UIActivityViewController(activityItems: appLinks, applicationActivities: nil)
                 shareController.popoverPresentationController?.sourceView = cell
                 self.present(shareController, animated: true)
-            }
-
-        case .downloading:
-            break
+            })
         }
     }
 }
@@ -749,6 +758,45 @@ extension LectureViewController {
     }
 
     private func markAsHeard(lectures: [Model], sourceView: Any?) {
+
+        if let tabBarController = self.tabBarController as? TabBarController,
+           let currentPlayingLecture = tabBarController.playerViewController.currentLecture,
+           lectures.contains(where: { currentPlayingLecture.id == $0.id }) {
+
+            let playlistLectures: [Model] = tabBarController.playerViewController.playlistLectures
+            if var index = playlistLectures.firstIndex(where: { currentPlayingLecture.id == $0.id }) {
+
+                while (index+1) < playlistLectures.count {
+
+                    // This is the lecture we want to move
+                    if !lectures.contains(models[index+1]) {
+                        break
+                    } else {
+                        index += 1
+                    }
+                }
+
+                if (index+1) < playlistLectures.count {
+                    // We found a lecture which should be played next
+
+                    let shouldPlay: Bool = !tabBarController.playerViewController.isPaused
+                    tabBarController.playerViewController.currentLecture = playlistLectures[index+1]
+
+                    if shouldPlay {
+                        tabBarController.playerViewController.play()
+                    }
+
+                } else {
+                    // We reached at the end of the playlist but haven't found any lecture to play
+                    tabBarController.playerViewController.currentLecture = nil
+                    tabBarController.playerViewController.playlistLectures = []
+                }
+            } else {
+                tabBarController.playerViewController.currentLecture = nil
+                tabBarController.playerViewController.playlistLectures = []
+            }
+        }
+
         DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: lectures, isCompleted: true, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: -1, completion: { result in
             switch result {
             case .success:
@@ -809,7 +857,15 @@ extension LectureViewController: IQListViewDelegateDataSource {
 
                 let newModels: [Cell.Model] = models.map { modelLecture in
                     let isSelected: Bool = selectedModels.contains(where: { modelLecture.id == $0.id })
-                    return Cell.Model(lecture: modelLecture, isSelectionEnabled: isSelectionEnabled, isSelected: isSelected, enableRemoveFromPlaylist: removeFromPlaylistEnabled)
+
+                    var showPlaylistIcon: Bool = false
+                    if let selectedPlaylist = selectedPlaylist {
+                        showPlaylistIcon = selectedPlaylist.lectureIds.contains(where: { modelLecture.id == $0 })
+                    }
+
+                    let isHighlited: Bool = highlightedLectures.contains(where: { modelLecture.id == $0.id })
+
+                    return Cell.Model(lecture: modelLecture, isSelectionEnabled: isSelectionEnabled, isSelected: isSelected, enableRemoveFromPlaylist: removeFromPlaylistEnabled, showPlaylistIcon: showPlaylistIcon, isHighlited: isHighlited)
                 }
 
                 list.append(Cell.self, models: newModels, section: section)

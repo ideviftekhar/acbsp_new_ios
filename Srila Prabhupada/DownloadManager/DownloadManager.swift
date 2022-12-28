@@ -6,13 +6,12 @@
 //
 
 import Foundation
-import Alamofire
 
 private class ProgressObserver {
     let observer: NSObject
-    var progressHandler: ((_ progress: CGFloat) -> Void)
+    var progressHandler: ((_ progress: Progress) -> Void)
 
-    init(observer: NSObject, progressHandler: @escaping ((_ progress: CGFloat) -> Void)) {
+    init(observer: NSObject, progressHandler: @escaping ((_ progress: Progress) -> Void)) {
         self.observer = observer
         self.progressHandler = progressHandler
     }
@@ -22,26 +21,14 @@ final class DownloadManager {
 
     static let shared = DownloadManager()
 
-    private var lectureDownloadTasks = [Int: [ProgressObserver]]()
-    private var lastProgressInfo = [Int: CGFloat]()
-    private let documentDirectoryURL: URL = (try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)) ?? URL(fileURLWithPath: NSHomeDirectory())
-
-    @discardableResult func deleteLocalFile(localFileURL: URL) -> Bool {
-
-        if FileManager.default.fileExists(atPath: localFileURL.path) {
-            do {
-                try FileManager.default.removeItem(at: localFileURL)
-                return true
-            } catch let error {
-                print(error)
-                return false
-            }
-        }
-
-        return false
+    private init() {
     }
 
-    func registerProgress(observer: NSObject, lectureID: Int, progressHandler: @escaping (_ progress: CGFloat) -> Void) {
+    private var lectureDownloadTasks = [Int: [ProgressObserver]]()
+    private var lastProgressInfo = [Int: Progress]()
+    private let documentDirectoryURL: URL = (try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)) ?? URL(fileURLWithPath: NSHomeDirectory())
+
+    func registerProgress(observer: NSObject, lectureID: Int, progressHandler: @escaping (_ progress: Progress) -> Void) {
 
         if var observers = lectureDownloadTasks[lectureID] {
             if let existing = observers.first(where: { $0.observer == observer }) {
@@ -56,7 +43,7 @@ final class DownloadManager {
             lectureDownloadTasks[lectureID] = [newObserver]
         }
 
-        if let fractionCompleted: CGFloat = lastProgressInfo[lectureID] {
+        if let fractionCompleted: Progress = lastProgressInfo[lectureID] {
             progressHandler(fractionCompleted)
         }
     }
@@ -73,6 +60,47 @@ final class DownloadManager {
                 }
             }
         }
+    }
+}
+
+extension DownloadManager {
+
+    func downloadFile(for dbLecture: DBLecture, completion: @escaping ((Result<URL, Error>) -> Void)) {
+
+        BackgroundSession.shared.download(dbLecture: dbLecture, progress: { progress in
+
+            self.lastProgressInfo[dbLecture.id] = progress
+
+            if let observers = self.lectureDownloadTasks[dbLecture.id] {
+                for observer in observers {
+                    observer.progressHandler(progress)
+                }
+            }
+        }, completion: { result in
+
+            self.lectureDownloadTasks.removeValue(forKey: dbLecture.id)
+            self.lastProgressInfo.removeValue(forKey: dbLecture.id)
+
+            switch result {
+            case .success(let url):
+                Haptic.success()
+                completion(.success(url))
+
+            case .failure(let error):
+                Haptic.error()
+                completion(.failure(error))
+            }
+        })
+
+        self.lectureDownloadTasks[dbLecture.id] = []
+    }
+
+    func cancelDownloads(for lectureIds: [Int]) {
+        BackgroundSession.shared.cancelDownloads(for: lectureIds)
+    }
+
+    func pauseDownloads(for lectureIds: [Int], completion: @escaping ((_ resumingData: [Int: Data]) -> Void)) {
+        BackgroundSession.shared.pauseDownloads(for: lectureIds, completion: completion)
     }
 }
 
@@ -104,7 +132,7 @@ extension DownloadManager {
 
     func localFileURL(for dbLecture: DBLecture) -> URL? {
 
-        let localAudioURL = documentDirectoryURL.appendingPathComponent(dbLecture.fileName)
+        let localAudioURL = expectedLocalFileURL(for: dbLecture)
 
         if FileManager.default.fileExists(atPath: localAudioURL.path) {
             return localAudioURL
@@ -113,54 +141,29 @@ extension DownloadManager {
         return nil
     }
 
-    private func expectedLocalFileURL(for dbLecture: DBLecture) -> URL {
+    func expectedLocalFileURL(for dbLecture: DBLecture) -> URL {
 
         let localAudioURL = documentDirectoryURL.appendingPathComponent(dbLecture.fileName)
         return localAudioURL
     }
 
-    func downloadFile(for dbLecture: DBLecture, completion: @escaping ((Result<URL, Error>) -> Void)) {
+    @discardableResult func deleteLocalFile(for dbLecture: DBLecture) -> Bool {
 
-        guard let audioURLString = dbLecture.resources_audios_url.first, let audioURL = URL(string: audioURLString) else {
-            return
+        guard let localFileURL = localFileURL(for: dbLecture) else {
+            return false
         }
 
-        AF.download(audioURL).downloadProgress { progress in
-
-            let fractionCompleted: CGFloat = CGFloat(progress.fractionCompleted)
-            self.lastProgressInfo[dbLecture.id] = fractionCompleted
-
-            if let observers = self.lectureDownloadTasks[dbLecture.id] {
-                for observer in observers {
-                    observer.progressHandler(fractionCompleted)
-                }
-            }
-        }.responseURL { response in
-
-            self.lectureDownloadTasks.removeValue(forKey: dbLecture.id)
-            self.lastProgressInfo.removeValue(forKey: dbLecture.id)
-
-            switch response.result {
-            case .success(let url):
-
-                let expectedLocalFileURL = self.expectedLocalFileURL(for: dbLecture)
-                do {
-                    self.deleteLocalFile(localFileURL: expectedLocalFileURL)
-                    try FileManager.default.moveItem(at: url, to: expectedLocalFileURL)
-
-                    Haptic.success()
-                    completion(.success(expectedLocalFileURL))
-                } catch let error {
-                    Haptic.error()
-                    completion(.failure(error))
-                }
-
-            case .failure(let error):
-                Haptic.error()
-                completion(.failure(error))
+        if FileManager.default.fileExists(atPath: localFileURL.path) {
+            do {
+                try FileManager.default.removeItem(at: localFileURL)
+                return true
+            } catch let error {
+                print(error)
+                return false
             }
         }
 
-        self.lectureDownloadTasks[dbLecture.id] = []
+        return false
     }
+
 }

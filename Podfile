@@ -25,7 +25,6 @@ target 'Srila Prabhupada' do
 
   pod 'BEMCheckBox'
 
-  pod 'Alamofire'
   pod 'AlamofireImage'
 
   pod "MBCircularProgressBar"

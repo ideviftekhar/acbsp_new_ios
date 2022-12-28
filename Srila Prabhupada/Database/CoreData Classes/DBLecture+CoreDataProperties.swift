@@ -16,6 +16,7 @@ extension DBLecture {
         case downloading    = 0
         case downloaded     = 1
         case error          = 2
+        case pause          = 3
     }
 
     @nonobjc public class func fetchRequest() -> NSFetchRequest<DBLecture> {
@@ -23,13 +24,14 @@ extension DBLecture {
     }
 
     @NSManaged public var id: Int
-
+    @NSManaged public var title: String
     @NSManaged public var resources_audios_url: [String]
 
     // Local variables
     @NSManaged public var downloadState: Int
     @NSManaged public var downloadError: String?
     @NSManaged public var fileName: String
+    @NSManaged public var resumeData: Data?
 
     var downloadStateEnum: DownloadState {
         guard let state = DownloadState(rawValue: downloadState) else { return .notDownloaded }

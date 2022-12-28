@@ -199,7 +199,7 @@ class PlayerViewController: LectureViewController {
                 }
 
                 if currentLecture.downloadState == .downloaded,
-                   let audioURL = currentLecture.localFileURL {
+                   let audioURL = DownloadManager.shared.localFileURL(for: currentLecture) {
                     let item = AVPlayerItem(url: audioURL)
                     player = AVPlayer(playerItem: item)
                 } else if let firstAudio = currentLecture.resources.audios.first,

@@ -61,6 +61,7 @@ struct Lecture: Hashable, Codable {
     }()
 
     var downloadState: DBLecture.DownloadState = .notDownloaded
+    var downloadError: String?
     var isFavourite: Bool
     var lastPlayedPoint: Int = 0
 
@@ -109,6 +110,7 @@ struct Lecture: Hashable, Codable {
 
         let dbLecture = DBLecture.insertInContext(context: nil)
         dbLecture.id = lecture.id
+        dbLecture.title = lecture.titleDisplay
         dbLecture.resources_audios_url = lecture.resources.audios.map({ $0.url ?? "" })
         dbLecture.downloadState = DBLecture.DownloadState.notDownloaded.rawValue
 
@@ -134,10 +136,5 @@ struct Lecture: Hashable, Codable {
             return nil
         }
         return URL(string: thumbnail)
-    }
-
-    var localFileURL: URL? {
-
-        return DownloadManager.shared.localFileURL(for: self)
     }
 }

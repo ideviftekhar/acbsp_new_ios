@@ -26,6 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             FirebaseApp.configure(options: fileopts)
         }
 
+        application.setMinimumBackgroundFetchInterval(1800)
         return true
     }
 
@@ -59,6 +60,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
 
+    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+
+        Persistant.shared.verifyDownloads {
+            Persistant.shared.reschedulePendingDownloads(completion: { status in
+                switch status {
+                case .success:
+                    completionHandler(.newData)
+                case .failed:
+                    completionHandler(.failed)
+                case .noPendingDownloads:
+                    completionHandler(.noData)
+                }
+            })
+        }
+    }
+
     @available(iOS 9.0, *)
     func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
       return GIDSignIn.sharedInstance.handle(url)
@@ -67,5 +84,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
 
         Messaging.messaging().apnsToken = deviceToken
+    }
+
+    func application(_ application: UIApplication,
+                     handleEventsForBackgroundURLSession identifier: String,
+                     completionHandler: @escaping () -> Void) {
+        BackgroundSession.shared.handleEventsForBackgroundURLSession(identifier: identifier, completionHandler: completionHandler)
     }
 }

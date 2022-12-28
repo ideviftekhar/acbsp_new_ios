@@ -55,10 +55,12 @@ class CreatePlaylistViewController: UIViewController {
             categoryTextField.text = playlist.lecturesCategory
             descriptionTextView.text = playlist.description
             self.playlistType = playlist.listType
-            navigationItem.title = "Update Playlist"
+
+            navigationItem.title = "Update \(self.playlistType.rawValue) Playlist"
+
             doneButton.title = "Update"
-            self.privatePlaylistButton.isEnabled = false
-            self.publicPlaylistButton.isEnabled = false
+            self.privatePlaylistButton.isHidden = true
+            self.publicPlaylistButton.isHidden = true
         } else {
             self.playlistType = .private
         }

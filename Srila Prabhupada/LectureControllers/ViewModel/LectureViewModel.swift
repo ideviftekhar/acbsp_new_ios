@@ -73,7 +73,7 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
         super.init()
 
         NotificationCenter.default.addObserver(self, selector: #selector(downloadsAddedNotification(_:)), name: Persistant.Notification.downloadsAdded, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(downloadUpdatedNotification(_:)), name: Persistant.Notification.downloadUpdated, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(downloadsUpdatedNotification(_:)), name: Persistant.Notification.downloadsUpdated, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(downloadsRemovedNotification(_:)), name: Persistant.Notification.downloadsRemoved, object: nil)
     }
 
@@ -154,55 +154,68 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
 extension DefaultLectureViewModel {
 
     @objc func downloadsAddedNotification(_ notification: Foundation.Notification) {
-        guard let dbLectures = notification.object as? [DBLecture] else { return }
+        serialLectureWorkerQueue.async {
+            guard let dbLectures = notification.object as? [DBLecture] else { return }
 
-        var updatedLectures: [Lecture] = []
-        for dbLecture in dbLectures {
-            let lectureIndexes = self.allLectures.allIndex(where: { $0.id == dbLecture.id })
-            for index in lectureIndexes {
-                allLectures[index].downloadState = dbLecture.downloadStateEnum
-                updatedLectures.append(allLectures[index])
+            var updatedLectures: [Lecture] = []
+            for dbLecture in dbLectures {
+                let lectureIndexes = self.allLectures.allIndex(where: { $0.id == dbLecture.id })
+                for index in lectureIndexes {
+                    self.allLectures[index].downloadState = dbLecture.downloadStateEnum
+                    self.allLectures[index].downloadError = dbLecture.downloadError
+                    updatedLectures.append(self.allLectures[index])
+                }
             }
-        }
 
-        if !updatedLectures.isEmpty {
-            mainThreadSafe {
-                NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: updatedLectures)
+            if !updatedLectures.isEmpty {
+                mainThreadSafe {
+                    NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: updatedLectures)
+                }
             }
         }
     }
 
-    @objc func downloadUpdatedNotification(_ notification: Foundation.Notification) {
-        guard let dbLecture = notification.object as? DBLecture else { return }
+    @objc func downloadsUpdatedNotification(_ notification: Foundation.Notification) {
 
-        var updatedLectures: [Lecture] = []
-        let lectureIndexes = self.allLectures.allIndex(where: { $0.id == dbLecture.id })
-        for index in lectureIndexes {
-            allLectures[index].downloadState = dbLecture.downloadStateEnum
-            updatedLectures.append(allLectures[index])
-        }
-        if !updatedLectures.isEmpty {
-            mainThreadSafe {
-                NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: updatedLectures)
+        serialLectureWorkerQueue.async {
+            guard let dbLectures = notification.object as? [DBLecture] else { return }
+
+            var updatedLectures: [Lecture] = []
+            for dbLecture in dbLectures {
+                let lectureIndexes = self.allLectures.allIndex(where: { $0.id == dbLecture.id })
+                for index in lectureIndexes {
+                    self.allLectures[index].downloadError = dbLecture.downloadError
+                    self.allLectures[index].downloadState = dbLecture.downloadStateEnum
+                    updatedLectures.append(self.allLectures[index])
+                }
+            }
+            if !updatedLectures.isEmpty {
+                mainThreadSafe {
+                    NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: updatedLectures)
+                }
             }
         }
     }
 
     @objc func downloadsRemovedNotification(_ notification: Foundation.Notification) {
-        guard let dbLectures = notification.object as? [DBLecture] else { return }
 
-        var updatedLectures: [Lecture] = []
-        for dbLecture in dbLectures {
-            let lectureIndexes = self.allLectures.allIndex(where: { $0.id == dbLecture.id })
-            for index in lectureIndexes {
-                allLectures[index].downloadState = dbLecture.downloadStateEnum
-                updatedLectures.append(allLectures[index])
+        serialLectureWorkerQueue.async {
+            guard let dbLectures = notification.object as? [DBLecture] else { return }
+
+            var updatedLectures: [Lecture] = []
+            for dbLecture in dbLectures {
+                let lectureIndexes = self.allLectures.allIndex(where: { $0.id == dbLecture.id })
+                for index in lectureIndexes {
+                    self.allLectures[index].downloadState = dbLecture.downloadStateEnum
+                    self.allLectures[index].downloadError = dbLecture.downloadError
+                    updatedLectures.append(self.allLectures[index])
+                }
             }
-        }
 
-        if !updatedLectures.isEmpty {
-            mainThreadSafe {
-                NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: updatedLectures)
+            if !updatedLectures.isEmpty {
+                mainThreadSafe {
+                    NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: updatedLectures)
+                }
             }
         }
     }

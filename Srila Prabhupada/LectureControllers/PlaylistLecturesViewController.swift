@@ -42,6 +42,7 @@ class PlaylistLecturesViewController: LectureViewController {
         let navController = UIStoryboard.home.instantiate(UINavigationController.self, identifier: "HomeNavigationController")
         if let homeController = navController.viewControllers.first as? HomeViewController {
             homeController.isSelectionEnabled = true
+            homeController.selectedPlaylist = playlist
             homeController.delegate = self
         }
         present(navController, animated: true, completion: nil)
@@ -75,6 +76,7 @@ extension PlaylistLecturesViewController: LectureViewControllerDelegate {
                 switch result {
                 case .success(let lectureIds):
                     Haptic.success()
+                    self.highlightedLectures = lectures
                     self.playlist.lectureIds = lectureIds
                     self.refresh(source: .cache)
                     controller.dismiss(animated: true, completion: {

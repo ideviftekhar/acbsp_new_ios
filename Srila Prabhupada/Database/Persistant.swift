@@ -13,7 +13,7 @@ class Persistant: NSObject {
 
     struct Notification {
         static let downloadsAdded = Foundation.Notification.Name(rawValue: "downloadsAddedNotification")
-        static let downloadUpdated = Foundation.Notification.Name(rawValue: "downloadUpdatedNotification")
+        static let downloadsUpdated = Foundation.Notification.Name(rawValue: "downloadsUpdatedNotification")
         static let downloadsRemoved = Foundation.Notification.Name(rawValue: "downloadsRemovedNotification")
     }
 
@@ -23,7 +23,9 @@ class Persistant: NSObject {
 
     let reachability: Reachability?
 
-    override init () {
+    private var hasReceivedReachabilityInfo: Bool = false
+
+    private override init () {
 
         reachability = try? Reachability()
 
@@ -43,10 +45,18 @@ class Persistant: NSObject {
                 print("Reachable via Cellular")
             }
 
-            self.reschedulePendingDownloads()
+            // If received reachability info after 1st time. Means 2nd 3rd and so on.
+            // Not triggering for the first time since it's done from the AppDelegate/SceneDelegate
+            if self.hasReceivedReachabilityInfo {
+                self.reschedulePendingDownloads(completion: { _ in })
+            }
+
+            self.hasReceivedReachabilityInfo = true
         }
         reachability.whenUnreachable = { _ in
             print("Not reachable")
+
+            self.hasReceivedReachabilityInfo = true
         }
 
         do {
@@ -176,10 +186,13 @@ class Persistant: NSObject {
         }
     }
 
-    func fetch<T: NSManagedObject>(in context: NSManagedObjectContext) -> [T] {
+    func fetch<T: NSManagedObject>(in context: NSManagedObjectContext, predicate: NSPredicate? = nil) -> [T] {
 
         let fetchRequest = NSFetchRequest<T>(entityName: T.entityName)
 
+        if let predicate = predicate {
+            fetchRequest.predicate = predicate
+        }
         do {
             let objects: [T] = try context.fetch(fetchRequest)
             return objects

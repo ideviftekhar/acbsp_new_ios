@@ -61,6 +61,7 @@ extension DefaultLectureViewModel {
 
             if let downloadedLecture = downloadedLectures.first(where: { $0.id == lecture.id }) {
                 lecture.downloadState = downloadedLecture.downloadStateEnum
+                lecture.downloadError = downloadedLecture.downloadError
             }
 
             updatedLectures.append(lecture)

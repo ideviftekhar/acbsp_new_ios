@@ -20,9 +20,11 @@ class LectureCell: UITableViewCell, IQModelableCell {
     @IBOutlet private var downloadedIconImageView: UIImageView?
     @IBOutlet private var favouritesIconImageView: UIImageView?
     @IBOutlet private var completedIconImageView: UIImageView?
+    @IBOutlet private var playlistIconView: UIView?
 
     @IBOutlet private var firstDotLabel: UILabel?
     @IBOutlet private var secondDotLabel: UILabel?
+    @IBOutlet private var thirdDotLabel: UILabel?
 
     @IBOutlet private var thumbnailImageView: UIImageView?
     @IBOutlet private var titleLabel: UILabel?
@@ -30,6 +32,7 @@ class LectureCell: UITableViewCell, IQModelableCell {
     @IBOutlet private var durationLabel: UILabel?
     @IBOutlet private var locationLabel: UILabel?
     @IBOutlet private var dateLabel: UILabel?
+    @IBOutlet private var downloadInfoLabel: UILabel?
     @IBOutlet private var menuButton: UIButton?
     @IBOutlet private var selectedImageView: UIImageView?
     @IBOutlet private var downloadProgressView: MBCircularProgressBarView?
@@ -63,16 +66,20 @@ class LectureCell: UITableViewCell, IQModelableCell {
         }
 
         static func == (lhs: Self, rhs: Self) -> Bool {
-            return lhs.lecture.id == rhs.lecture.id &&
+            return lhs.lecture == rhs.lecture &&
             lhs.isSelectionEnabled == rhs.isSelectionEnabled &&
             lhs.isSelected == rhs.isSelected &&
-            lhs.enableRemoveFromPlaylist == rhs.enableRemoveFromPlaylist
+            lhs.enableRemoveFromPlaylist == rhs.enableRemoveFromPlaylist &&
+            lhs.showPlaylistIcon == rhs.showPlaylistIcon &&
+            lhs.isHighlited == rhs.isHighlited
         }
 
         var lecture: Lecture
         var isSelectionEnabled: Bool
         var isSelected: Bool
         let enableRemoveFromPlaylist: Bool
+        var showPlaylistIcon: Bool
+        var isHighlited: Bool
     }
 
     var model: Model? {
@@ -101,6 +108,8 @@ class LectureCell: UITableViewCell, IQModelableCell {
 
             firstDotLabel?.isHidden = verseLabel?.text?.isEmpty ?? true
             secondDotLabel?.isHidden = locationLabel?.text?.isEmpty ?? true
+            thirdDotLabel?.isHidden = true
+            downloadInfoLabel?.text = nil
 
             let playProgress: CGFloat = model.lecture.playProgress
 
@@ -130,6 +139,9 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 }
             })
 
+            thirdDotLabel?.isHidden = true
+            downloadInfoLabel?.text = nil
+
             switch lecture.downloadState {
             case .notDownloaded:
                 downloadedIconImageView?.isHidden = true
@@ -151,28 +163,50 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 downloadedIconImageView?.image = UIImage(compatibleSystemName: "exclamationmark.circle.fill")
                 downloadProgressView?.isHidden = false
                 downloadProgressView?.value = 0
+                if let downloadError = lecture.downloadError {
+                    thirdDotLabel?.isHidden = false
+                    downloadInfoLabel?.text = downloadError
+                }
+            case .pause:
+                downloadedIconImageView?.isHidden = false
+                downloadedIconImageView?.tintColor = UIColor.F96D00
+                downloadedIconImageView?.image = UIImage(compatibleSystemName: "pause.circle.fill")
+                downloadProgressView?.isHidden = false
+                downloadProgressView?.value = 0
             }
 
-            DownloadManager.shared.registerProgress(observer: self, lectureID: lecture.id, progressHandler: { [self] downloadProgress in
-                if downloadProgress >= 1.0 {
+            DownloadManager.shared.registerProgress(observer: self, lectureID: lecture.id, progressHandler: { [self] progress in
+                let fractionCompleted: CGFloat = CGFloat(progress.fractionCompleted)
+
+                if fractionCompleted >= 1.0 {
                     downloadedIconImageView?.isHidden = false
                     downloadedIconImageView?.tintColor = UIColor.systemGreen
                     downloadedIconImageView?.image = UIImage(compatibleSystemName: "arrow.down.circle.fill")
                     downloadProgressView?.isHidden = false
                     downloadProgressView?.value = 0
-                } else if downloadProgress > 0 {
+                    thirdDotLabel?.isHidden = true
+                    downloadInfoLabel?.text = nil
+                } else if fractionCompleted > 0 {
                     downloadedIconImageView?.isHidden = false
                     downloadedIconImageView?.tintColor = UIColor.systemBlue
                     downloadedIconImageView?.image = UIImage(compatibleSystemName: "arrow.down.circle.fill")
                     downloadProgressView?.isHidden = false
-                    downloadProgressView?.value = downloadProgress * 100
-                } else if downloadProgress == 0 {
+                    downloadProgressView?.value = fractionCompleted * 100
+                    thirdDotLabel?.isHidden = false
+
+                    let completedUnitCountString: String = BackgroundSession.shared.byteFormatter.string(fromByteCount: progress.completedUnitCount)
+                    let totalUnitCountString: String = BackgroundSession.shared.byteFormatter.string(fromByteCount: progress.totalUnitCount)
+                    downloadInfoLabel?.text = "\(completedUnitCountString) of \(totalUnitCountString)"
+                } else if fractionCompleted == 0 {
                     downloadedIconImageView?.isHidden = true
                     downloadProgressView?.isHidden = true
+                    thirdDotLabel?.isHidden = true
+                    downloadInfoLabel?.text = nil
                 }
             })
 
             favouritesIconImageView?.isHidden = !lecture.isFavourite
+            playlistIconView?.isHidden = !model.showPlaylistIcon
 
             do {
                 var actions: [SPAction] = []
@@ -183,14 +217,17 @@ class LectureCell: UITableViewCell, IQModelableCell {
                         actions.append(download)
                     }
                 case .downloading:
-                    if let downloading = allActions[.downloading] {
-                        actions.append(downloading)
+                    if let pauseDownload = allActions[.pauseDownload] {
+                        actions.append(pauseDownload)
+                    }
+                    if let deleteFromDownloads = allActions[.deleteFromDownloads] {
+                        actions.append(deleteFromDownloads)
                     }
                 case .downloaded:
                     if let deleteFromDownloads = allActions[.deleteFromDownloads] {
                         actions.append(deleteFromDownloads)
                     }
-                case .error:
+                case .error, .pause:
                     if let download = allActions[.download] {
                         actions.append(download)
                     }
@@ -233,6 +270,8 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 if model.isSelectionEnabled {
                     self.selectedImageView?.image = model.isSelected ? UIImage(compatibleSystemName: "checkmark.circle") : UIImage(compatibleSystemName: "circle")
                     self.backgroundColor = model.isSelected ? UIColor.zero_0099CC.withAlphaComponent(0.2) : nil
+                } else if model.isHighlited {
+                    self.backgroundColor = .systemOrange.withAlphaComponent(0.2)
                 } else {
                     self.backgroundColor = nil
                 }
@@ -256,10 +295,8 @@ extension LectureCell {
             })
 
             switch option {
-            case .download, .markAsFavourite, .addToPlaylist, .markAsHeard, .resetProgress, .share:
+            case .download, .pauseDownload, .markAsFavourite, .addToPlaylist, .markAsHeard, .resetProgress, .share:
                 break
-            case .downloading:
-                action.action.attributes = .disabled
             case .deleteFromDownloads, .removeFromPlaylist, .removeFromFavourites:
                 action.action.attributes = .destructive
             }
