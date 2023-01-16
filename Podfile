@@ -33,8 +33,6 @@ target 'Srila Prabhupada' do
   pod 'StatusAlert'
   pod 'SKActivityIndicatorView'
 
-  pod 'ReachabilitySwift'
-
   pod'Charts'
   pod'SwiftLint'
 end

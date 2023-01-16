@@ -24,13 +24,14 @@ protocol LectureViewModel: AnyObject {
                      completion: @escaping (Swift.Result<[Lecture], Error>) -> Void)
 
     // Lecture Info
-    func getUsersLectureInfo(source: FirestoreSource, completion: @escaping (Swift.Result<[LectureInfo], Error>) -> Void)
+    func getUsersLectureInfo(source: FirestoreSource, progress: ((_ progress: CGFloat) -> Void)?, completion: @escaping (Swift.Result<[LectureInfo], Error>) -> Void)
     func offlineUpdateLectureProgress(lecture: Lecture, lastPlayedPoint: Int)
     func updateLectureInfo(lectures: [Lecture],
                            isCompleted: Bool?,
                            isDownloaded: Bool?,
                            isFavourite: Bool?,
                            lastPlayedPoint: Int?,
+                           postUpdate: Bool,
                            completion: @escaping (Swift.Result<Bool, Error>) -> Void)
 
     // Listen Info
@@ -57,6 +58,7 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
     static var defaultModel: LectureViewModel = DefaultLectureViewModel()
 
     lazy var serialLectureWorkerQueue = DispatchQueue(label: "serialLectureWorkerQueue\(Self.self)", qos: .userInteractive)
+    lazy var parallelLectureWorkerQueue = DispatchQueue(label: "parallelLectureWorkerQueue\(Self.self)", qos: .userInteractive, attributes: .concurrent)
 
     func clearCache() {
         serialLectureWorkerQueue.async { [self] in
@@ -86,7 +88,7 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
         } else {
 
             if source == .cache {
-                serialLectureWorkerQueue.async {
+                parallelLectureWorkerQueue.async {
                     let success: [Lecture] = Self.filter(lectures: self.allLectures, searchText: searchText, sortType: sortType, filter: filter, lectureIDs: lectureIDs)
 
                     DispatchQueue.main.async {
@@ -132,7 +134,7 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
                             success = results   // Unique
 
                             if !self.userLectureInfo.isEmpty {
-                                success = Self.refreshLectureWithLectureInfo(lectures: success, lectureInfos: self.userLectureInfo, downloadedLectures: Persistant.shared.getAllDBLectures())
+                                success = Self.refreshLectureWithLectureInfo(lectures: success, lectureInfos: self.userLectureInfo, downloadedLectures: Persistant.shared.getAllDBLectures(), progress: progress)
                             }
 
                             self.allLectures = success
@@ -200,14 +202,14 @@ extension DefaultLectureViewModel {
     @objc func downloadsRemovedNotification(_ notification: Foundation.Notification) {
 
         serialLectureWorkerQueue.async {
-            guard let dbLectures = notification.object as? [DBLecture] else { return }
+            guard let lectureIDs = notification.object as? [Int] else { return }
 
             var updatedLectures: [Lecture] = []
-            for dbLecture in dbLectures {
-                let lectureIndexes = self.allLectures.allIndex(where: { $0.id == dbLecture.id })
+            for lectureID in lectureIDs {
+                let lectureIndexes = self.allLectures.allIndex(where: { $0.id ==  lectureID })
                 for index in lectureIndexes {
-                    self.allLectures[index].downloadState = dbLecture.downloadStateEnum
-                    self.allLectures[index].downloadError = dbLecture.downloadError
+                    self.allLectures[index].downloadState = .notDownloaded
+                    self.allLectures[index].downloadError = nil
                     updatedLectures.append(self.allLectures[index])
                 }
             }

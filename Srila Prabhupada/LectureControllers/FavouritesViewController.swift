@@ -21,7 +21,7 @@ class FavouritesViewController: LectureViewController {
 
     override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[LectureViewController.Model], Error>) -> Void) {
 
-        DefaultLectureViewModel.defaultModel.getUsersLectureInfo(source: source, completion: { [self] result in
+        DefaultLectureViewModel.defaultModel.getUsersLectureInfo(source: source, progress: nil, completion: { [self] result in
 
             switch result {
             case .success(var success):

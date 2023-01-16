@@ -26,10 +26,7 @@ class HomeViewController: LectureViewController {
 
     override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[Model], Error>) -> Void) {
 
-        DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: nil, source: source, progress: { [self] progress in
-            let intProgress = Int(progress*100)
-            self.list.noItemMessage = "Loading...\n\(intProgress)%"
-        }, completion: { [self] result in
+        DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: nil, source: source, progress: nil, completion: { [self] result in
 
             switch result {
             case .success(let lectures):

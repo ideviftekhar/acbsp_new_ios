@@ -11,7 +11,7 @@ import FirebaseAuth
 
 extension DefaultLectureViewModel {
 
-    func getUsersLectureInfo(source: FirestoreSource, completion: @escaping (Swift.Result<[LectureInfo], Error>) -> Void) {
+    func getUsersLectureInfo(source: FirestoreSource, progress: ((_ progress: CGFloat) -> Void)?, completion: @escaping (Swift.Result<[LectureInfo], Error>) -> Void) {
 
         guard FirestoreManager.shared.currentUser != nil,
                 let uid = FirestoreManager.shared.currentUserUID else {
@@ -23,7 +23,7 @@ extension DefaultLectureViewModel {
         }
 
         if source == .cache {
-            serialLectureWorkerQueue.async {
+            parallelLectureWorkerQueue.async {
                 DispatchQueue.main.async {
                     completion(.success(self.userLectureInfo))
                 }
@@ -38,7 +38,7 @@ extension DefaultLectureViewModel {
 
                     serialLectureWorkerQueue.async {
                         if !self.allLectures.isEmpty {
-                            self.allLectures = Self.refreshLectureWithLectureInfo(lectures: self.allLectures, lectureInfos: success, downloadedLectures: Persistant.shared.getAllDBLectures())
+                            self.allLectures = Self.refreshLectureWithLectureInfo(lectures: self.allLectures, lectureInfos: success, downloadedLectures: Persistant.shared.getAllDBLectures(), progress: progress)
                         }
                         DispatchQueue.main.async {
                             completion(.success(success))
@@ -95,6 +95,7 @@ extension DefaultLectureViewModel {
                            isDownloaded: Bool?,
                            isFavourite: Bool?,
                            lastPlayedPoint: Int?,
+                           postUpdate: Bool,
                            completion: @escaping (Swift.Result<Bool, Error>) -> Void) {
         guard FirestoreManager.shared.currentUser != nil,
                 let uid = FirestoreManager.shared.currentUserUID else {
@@ -185,7 +186,6 @@ extension DefaultLectureViewModel {
                     if lectures.count >= (failedLectures.count + permanentUpdatedLectures.count) {
                         if let lastError = lastError as? NSError {
                             mainThreadSafe {
-
                                 if lectures.count == 1 {
                                     completion(.failure(lastError))
                                 } else {
@@ -206,7 +206,9 @@ extension DefaultLectureViewModel {
                                     completion(.failure(lastError))
                                 }
 
-                                NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: failedLectures)
+                                if postUpdate {
+                                    NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: failedLectures)
+                                }
                             }
                         } else {
                             mainThreadSafe {
@@ -253,8 +255,10 @@ extension DefaultLectureViewModel {
                 }
             }
 
-            DispatchQueue.main.async {
-                NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: temporaryUpdatedLectures)
+            if postUpdate {
+                DispatchQueue.main.async {
+                    NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: temporaryUpdatedLectures)
+                }
             }
         }
     }

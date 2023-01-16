@@ -296,8 +296,8 @@
 		C007586728E5D9100010EBE6 /* DownloadManager */ = {
 			isa = PBXGroup;
 			children = (
+				C07A04C129752EEE00E7A5C4 /* BackgroundSession */,
 				C007586528E5BF2F0010EBE6 /* DownloadManager.swift */,
-				C047E6202959F94100C6D50E /* BackgroundSession.swift */,
 			);
 			path = DownloadManager;
 			sourceTree = "<group>";
@@ -506,6 +506,14 @@
 				C00E4E1328CA433A00F1A123 /* StatsViewController.swift */,
 			);
 			path = Stats;
+			sourceTree = "<group>";
+		};
+		C07A04C129752EEE00E7A5C4 /* BackgroundSession */ = {
+			isa = PBXGroup;
+			children = (
+				C047E6202959F94100C6D50E /* BackgroundSession.swift */,
+			);
+			path = BackgroundSession;
 			sourceTree = "<group>";
 		};
 		C07A8F3128F7FCF2001A6162 /* Third Party */ = {
@@ -815,7 +823,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "CURRENT_PATH_TO_GOOGLE_PLIST=\"${PROJECT_DIR}/Srila Prabhupada/Configurations/${GOOGLE_SERVICE_FILE_NAME}.plist\";\nEXPECTED_PATH_TO_GOOGLE_PLIST=\"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/GoogleService-Info.plist\";\n\ncp -r \"$CURRENT_PATH_TO_GOOGLE_PLIST\" \"$EXPECTED_PATH_TO_GOOGLE_PLIST\";\n";
+			shellScript = "#Mac Catalyst and iOS both have different google plist path, so using UNLOCALIZED_RESOURCES_FOLDER_PATH variable to get accurate dynamic path\nCURRENT_PATH_TO_GOOGLE_PLIST=\"${PROJECT_DIR}/Srila Prabhupada/Configurations/${GOOGLE_SERVICE_FILE_NAME}.plist\";\nEXPECTED_PATH_TO_GOOGLE_PLIST=\"${BUILT_PRODUCTS_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/GoogleService-Info.plist\";\n\necho \"Current GoogleService-Info Path: $CURRENT_PATH_TO_GOOGLE_PLIST\"\necho \"New GoogleService-Info Path: $EXPECTED_PATH_TO_GOOGLE_PLIST\"\n\ncp -r \"$CURRENT_PATH_TO_GOOGLE_PLIST\" \"$EXPECTED_PATH_TO_GOOGLE_PLIST\";\n";
 		};
 		C0FA049D28DB2A9A003177DA /* SwiftLint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1118,7 +1126,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Srila Prabhupada.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 19;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/Info.plist";
@@ -1141,7 +1149,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = sp_development;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_STRICT_CONCURRENCY = minimal;
@@ -1159,7 +1167,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Srila Prabhupada.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 19;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/Info.plist";
@@ -1182,7 +1190,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = sp_distribution;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_STRICT_CONCURRENCY = minimal;
@@ -1263,7 +1271,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Srila Prabhupada.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 19;
+				CURRENT_PROJECT_VERSION = 20;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/Info.plist";
@@ -1286,7 +1294,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = sp_development;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_STRICT_CONCURRENCY = minimal;

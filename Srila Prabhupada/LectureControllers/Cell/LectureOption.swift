@@ -12,6 +12,8 @@ enum LectureOption: String, CaseIterable {
 
     case download               =   "Download"
 
+    case resumeDownload         =   "Resume Download"
+
     case pauseDownload          =   "Pause Download"
 
     case deleteFromDownloads    =   "Delete from Downloads"
@@ -32,7 +34,7 @@ enum LectureOption: String, CaseIterable {
 
     var image: UIImage? {
         switch self {
-        case .download:
+        case .download, .resumeDownload:
             return UIImage(compatibleSystemName: "square.and.arrow.down")
         case .pauseDownload:
             return UIImage(compatibleSystemName: "pause.fill")

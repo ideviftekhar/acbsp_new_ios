@@ -58,26 +58,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func sceneWillResignActive(_ scene: UIScene) {
     }
 
-    var hasVerifiedFirstTime: Bool = false
-
     func sceneWillEnterForeground(_ scene: UIScene) {
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
-
-            if !self.hasVerifiedFirstTime {
-                self.hasVerifiedFirstTime = true
-
-                Persistant.shared.verifyDownloads {
-                    if let reachability = Persistant.shared.reachability, reachability.connection != .unavailable {
-                        Persistant.shared.reschedulePendingDownloads(completion: { _ in })
-                    }
-                }
-            } else {
-                if let reachability = Persistant.shared.reachability, reachability.connection != .unavailable {
-                    Persistant.shared.reschedulePendingDownloads(completion: { _ in })
-                }
-            }
-        })
     }
 
     func sceneDidEnterBackground(_ scene: UIScene) {

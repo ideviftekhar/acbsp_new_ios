@@ -7,7 +7,6 @@
 
 import Foundation
 import CoreData
-import Reachability
 
 class Persistant: NSObject {
 
@@ -21,49 +20,8 @@ class Persistant: NSObject {
 
     static let shared = Persistant()
 
-    let reachability: Reachability?
-
-    private var hasReceivedReachabilityInfo: Bool = false
-
     private override init () {
-
-        reachability = try? Reachability()
-
         super.init()
-
-        addReachabilityObserver()
-    }
-
-    private func addReachabilityObserver() {
-        guard let reachability = reachability else {
-            return
-        }
-        reachability.whenReachable = { reachability in
-            if reachability.connection == .wifi {
-                print("Reachable via WiFi")
-            } else {
-                print("Reachable via Cellular")
-            }
-
-            // If received reachability info after 1st time. Means 2nd 3rd and so on.
-            // Not triggering for the first time since it's done from the AppDelegate/SceneDelegate
-            if self.hasReceivedReachabilityInfo {
-                self.reschedulePendingDownloads(completion: { _ in })
-            }
-
-            self.hasReceivedReachabilityInfo = true
-        }
-        reachability.whenUnreachable = { _ in
-            print("Not reachable")
-
-            self.hasReceivedReachabilityInfo = true
-        }
-
-        do {
-            try reachability.startNotifier()
-        } catch {
-            print("Unable to start notifier")
-        }
     }
 
     // MARK: - Core Data stack

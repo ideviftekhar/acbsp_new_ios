@@ -26,7 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             FirebaseApp.configure(options: fileopts)
         }
 
-        application.setMinimumBackgroundFetchInterval(1800)
+        // This is just to instantiate background session
+        BackgroundSession.shared.performFetchWithCompletionHandler {}
+
         return true
     }
 
@@ -62,17 +64,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
 
-        Persistant.shared.verifyDownloads {
-            Persistant.shared.reschedulePendingDownloads(completion: { status in
-                switch status {
-                case .success:
-                    completionHandler(.newData)
-                case .failed:
-                    completionHandler(.failed)
-                case .noPendingDownloads:
-                    completionHandler(.noData)
-                }
-            })
+        BackgroundSession.shared.performFetchWithCompletionHandler {
+            completionHandler(.noData)
         }
     }
 

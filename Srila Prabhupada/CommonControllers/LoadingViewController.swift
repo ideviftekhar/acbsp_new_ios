@@ -33,19 +33,18 @@ class LoadingViewController: UIViewController {
 
             let intProgress = Int(progress*100)
             loadingLabel.text = "Loading lectures... \(intProgress)%"
-            progressView.setProgress(Float(progress), animated: true)
+            progressView.setProgress(Float(progress), animated: false)
 
         }, completion: { [self] result in
 
             progressView.alpha = 0.0
+            loadingLabel.text = nil
 
             switch result {
             case .success(let lectures):
                 Filter.updateFilterSubtypes(lectures: lectures)
                 loadLectureInfo()
             case .failure(let error):
-                progressView.progress = 0
-                loadingLabel.text = nil
                 Haptic.error()
                 showAlert(title: "Error!", message: error.localizedDescription, cancel: ("Retry", { [self] in
                     loadLectures()
@@ -58,11 +57,19 @@ class LoadingViewController: UIViewController {
 
     private func loadLectureInfo() {
 
-        self.loadingLabel.text = "Please wait..."
-        progressView.alpha = 0
+        progressView.alpha = 0.0
+        self.loadingLabel.text = "Loading profile..."
 
-        DefaultLectureViewModel.defaultModel.getUsersLectureInfo(source: .default, completion: { [self] result in
-            self.loadingLabel.text = nil
+        DefaultLectureViewModel.defaultModel.getUsersLectureInfo(source: .default, progress: { [self] progress in
+            progressView.alpha = 1.0
+
+            let intProgress = Int(progress*100)
+            loadingLabel.text = "Loading profile... \(intProgress)%"
+            progressView.setProgress(Float(progress), animated: false)
+
+        }, completion: { [self] result in
+            progressView.alpha = 0.0
+            loadingLabel.text = nil
 
             switch result {
             case .success:

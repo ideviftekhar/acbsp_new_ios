@@ -22,10 +22,12 @@ final class DownloadManager {
     static let shared = DownloadManager()
 
     private init() {
+        BackgroundSession.shared.delegate = self
     }
 
     private var lectureDownloadTasks = [Int: [ProgressObserver]]()
     private var lastProgressInfo = [Int: Progress]()
+    private var lectureCompletionObserver = [Int: ((Result<URL, Error>) -> Void)]()
     private let documentDirectoryURL: URL = (try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)) ?? URL(fileURLWithPath: NSHomeDirectory())
 
     func registerProgress(observer: NSObject, lectureID: Int, progressHandler: @escaping (_ progress: Progress) -> Void) {
@@ -67,32 +69,8 @@ extension DownloadManager {
 
     func downloadFile(for dbLecture: DBLecture, completion: @escaping ((Result<URL, Error>) -> Void)) {
 
-        BackgroundSession.shared.download(dbLecture: dbLecture, progress: { progress in
-
-            self.lastProgressInfo[dbLecture.id] = progress
-
-            if let observers = self.lectureDownloadTasks[dbLecture.id] {
-                for observer in observers {
-                    observer.progressHandler(progress)
-                }
-            }
-        }, completion: { result in
-
-            self.lectureDownloadTasks.removeValue(forKey: dbLecture.id)
-            self.lastProgressInfo.removeValue(forKey: dbLecture.id)
-
-            switch result {
-            case .success(let url):
-                Haptic.success()
-                completion(.success(url))
-
-            case .failure(let error):
-                Haptic.error()
-                completion(.failure(error))
-            }
-        })
-
-        self.lectureDownloadTasks[dbLecture.id] = []
+        BackgroundSession.shared.download(dbLecture: dbLecture)
+        lectureCompletionObserver[dbLecture.id] = completion
     }
 
     func cancelDownloads(for lectureIds: [Int]) {
@@ -101,6 +79,42 @@ extension DownloadManager {
 
     func pauseDownloads(for lectureIds: [Int], completion: @escaping ((_ resumingData: [Int: Data]) -> Void)) {
         BackgroundSession.shared.pauseDownloads(for: lectureIds, completion: completion)
+    }
+}
+
+extension DownloadManager: BackgroundSessionDelegate {
+    func backgroundSession(_ session: BackgroundSession, lecture: DBLecture, didUpdateProgress progress: Progress) {
+        self.lastProgressInfo[lecture.id] = progress
+
+        if let observers = self.lectureDownloadTasks[lecture.id] {
+            for observer in observers {
+                observer.progressHandler(progress)
+            }
+        }
+    }
+
+    func backgroundSession(_ session: BackgroundSession, lecture: DBLecture, didFinish url: URL) {
+        Haptic.success()
+
+        if let completion = lectureCompletionObserver[lecture.id] {
+            completion(.success(url))
+        }
+
+        self.lectureDownloadTasks.removeValue(forKey: lecture.id)
+        self.lectureCompletionObserver.removeValue(forKey: lecture.id)
+        self.lastProgressInfo.removeValue(forKey: lecture.id)
+    }
+
+    func backgroundSession(_ session: BackgroundSession, lecture: DBLecture, didFailed error: Error) {
+        Haptic.error()
+
+        if let completion = lectureCompletionObserver[lecture.id] {
+            completion(.failure(error))
+        }
+
+        self.lectureDownloadTasks.removeValue(forKey: lecture.id)
+        self.lectureCompletionObserver.removeValue(forKey: lecture.id)
+        self.lastProgressInfo.removeValue(forKey: lecture.id)
     }
 }
 

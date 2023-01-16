@@ -46,7 +46,10 @@ extension DefaultLectureViewModel {
         return lectures
     }
 
-    static func refreshLectureWithLectureInfo(lectures: [Lecture], lectureInfos: [LectureInfo], downloadedLectures: [DBLecture]) -> [Lecture] {
+    static func refreshLectureWithLectureInfo(lectures: [Lecture], lectureInfos: [LectureInfo], downloadedLectures: [DBLecture], progress: ((_ progress: CGFloat) -> Void)?) -> [Lecture] {
+
+        let total: CGFloat = CGFloat(lectures.count)
+        var iteration: CGFloat = 0
 
         var updatedLectures: [Lecture] = []
         for var lecture in lectures {
@@ -65,6 +68,13 @@ extension DefaultLectureViewModel {
             }
 
             updatedLectures.append(lecture)
+
+            iteration += 1
+            if let progress = progress {
+                DispatchQueue.main.async {
+                    progress(iteration/total)
+                }
+            }
         }
 
         return updatedLectures

@@ -450,12 +450,12 @@ extension LectureViewController {
                 }
 
                 switch option {
-                case .download:
+                case .download, .resumeDownload:
                     Haptic.softImpact()
                     let eligibleDownloadModels: [Model] = selectedModels.filter { $0.downloadState == .notDownloaded || $0.downloadState == .error || $0.downloadState == .pause }
                     Persistant.shared.save(lectures: eligibleDownloadModels, completion: { _ in })
 
-                    DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleDownloadModels, isCompleted: nil, isDownloaded: true, isFavourite: nil, lastPlayedPoint: nil, completion: { _ in
+                    DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleDownloadModels, isCompleted: nil, isDownloaded: true, isFavourite: nil, lastPlayedPoint: nil, postUpdate: false, completion: { _ in
                     })
                 case .pauseDownload:
                     Haptic.warning()
@@ -503,7 +503,7 @@ extension LectureViewController {
             })
 
             switch option {
-            case .download, .pauseDownload, .markAsFavourite, .addToPlaylist, .markAsHeard, .resetProgress, .share:
+            case .download, .resumeDownload, .pauseDownload, .markAsFavourite, .addToPlaylist, .markAsHeard, .resetProgress, .share:
                 break
             case .deleteFromDownloads, .removeFromPlaylist, .removeFromFavourites:
                 action.action.attributes = .destructive
@@ -528,10 +528,10 @@ extension LectureViewController: LectureCellDelegate {
     func lectureCell(_ cell: LectureCell, didSelected option: LectureOption, with lecture: Lecture) {
 
         switch option {
-        case .download:
+        case .download, .resumeDownload:
             Haptic.softImpact()
             Persistant.shared.save(lectures: [lecture], completion: { _ in })
-            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: nil, isDownloaded: true, isFavourite: nil, lastPlayedPoint: nil, completion: {_ in })
+            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: nil, isDownloaded: true, isFavourite: nil, lastPlayedPoint: nil, postUpdate: false, completion: {_ in })
         case .pauseDownload:
             Persistant.shared.pauseDownloads(lectures: [lecture])
         case .deleteFromDownloads:
@@ -649,12 +649,12 @@ extension LectureViewController {
                        cancel: ("Cancel", nil),
                        destructive: ("Delete", {
             Persistant.shared.delete(lectures: lectures)
-            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: lectures, isCompleted: nil, isDownloaded: false, isFavourite: nil, lastPlayedPoint: nil, completion: {_ in })
+            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: lectures, isCompleted: nil, isDownloaded: false, isFavourite: nil, lastPlayedPoint: nil, postUpdate: false, completion: {_ in })
         }))
     }
 
     private func markAsFavourites(lectures: [Model], sourceView: Any?) {
-        DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: lectures, isCompleted: nil, isDownloaded: nil, isFavourite: true, lastPlayedPoint: nil, completion: { result in
+        DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: lectures, isCompleted: nil, isDownloaded: nil, isFavourite: true, lastPlayedPoint: nil, postUpdate: true, completion: { result in
             switch result {
             case .success:
 
@@ -689,7 +689,7 @@ extension LectureViewController {
                        sourceView: moreButton,
                        cancel: ("Cancel", nil),
                        destructive: ("Remove", {
-            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: lectures, isCompleted: nil, isDownloaded: nil, isFavourite: false, lastPlayedPoint: nil, completion: { result in
+            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: lectures, isCompleted: nil, isDownloaded: nil, isFavourite: false, lastPlayedPoint: nil, postUpdate: true, completion: { result in
                 switch result {
                 case .success:
 
@@ -797,7 +797,7 @@ extension LectureViewController {
             }
         }
 
-        DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: lectures, isCompleted: true, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: -1, completion: { result in
+        DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: lectures, isCompleted: true, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: -1, postUpdate: true, completion: { result in
             switch result {
             case .success:
 
@@ -819,7 +819,7 @@ extension LectureViewController {
     }
 
     private func resetProgress(lectures: [Model], sourceView: Any?) {
-        DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: lectures, isCompleted: false, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: 0, completion: { result in
+        DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: lectures, isCompleted: false, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: 0, postUpdate: true, completion: { result in
             switch result {
             case .success:
 

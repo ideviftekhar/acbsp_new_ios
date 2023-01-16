@@ -227,7 +227,14 @@ class LectureCell: UITableViewCell, IQModelableCell {
                     if let deleteFromDownloads = allActions[.deleteFromDownloads] {
                         actions.append(deleteFromDownloads)
                     }
-                case .error, .pause:
+                case .pause:
+                    if let download = allActions[.resumeDownload] {
+                        actions.append(download)
+                    }
+                    if let deleteFromDownloads = allActions[.deleteFromDownloads] {
+                        actions.append(deleteFromDownloads)
+                    }
+                case .error:
                     if let download = allActions[.download] {
                         actions.append(download)
                     }
@@ -295,7 +302,7 @@ extension LectureCell {
             })
 
             switch option {
-            case .download, .pauseDownload, .markAsFavourite, .addToPlaylist, .markAsHeard, .resetProgress, .share:
+            case .download, .resumeDownload, .pauseDownload, .markAsFavourite, .addToPlaylist, .markAsHeard, .resetProgress, .share:
                 break
             case .deleteFromDownloads, .removeFromPlaylist, .removeFromFavourites:
                 action.action.attributes = .destructive
@@ -317,10 +324,10 @@ extension LectureCell {
 extension LectureCell {
 
     static func estimatedSize(for model: AnyHashable?, listView: IQListView) -> CGSize {
-        size(for: model, listView: listView)
+        return CGSize(width: listView.frame.width, height: 63.5)
     }
 
     static func size(for model: AnyHashable?, listView: IQListView) -> CGSize {
-        return CGSize(width: listView.frame.width, height: 60)
+        return CGSize(width: listView.frame.width, height: UITableView.automaticDimension)
     }
 }
