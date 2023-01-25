@@ -46,7 +46,13 @@ class MiniPlayerView: UIView {
 
         seekGesture.delegate = self
         expandButton.addGestureRecognizer(seekGesture)
-        timeSlider.setThumbImage(UIImage(), for: .normal)
+        if #available(macCatalyst 14.0, *) {
+            if UIDevice.current.userInterfaceIdiom != .mac {
+                timeSlider.setThumbImage(UIImage(), for: .normal)
+            }
+        } else {
+            timeSlider.setThumbImage(UIImage(), for: .normal)
+        }
     }
 
     var currentLecture: Lecture? {

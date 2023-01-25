@@ -252,7 +252,7 @@ extension BackgroundSession: URLSessionTaskDelegate {
 
             if let error = error {
                 if #available(iOS 14.0, *) {
-                    os_log(.info, "BackgroundSession \(dbLecture.id): didCompleteWithError: \(error)")
+                    os_log(.info, "BackgroundSession \(dbLecture.id): didCompleteWithError: \(error.localizedDescription)")
                 }
 
                 if let resumeData = (error as NSError).userInfo[NSURLSessionDownloadTaskResumeData] as? Data {
@@ -333,7 +333,7 @@ extension BackgroundSession: URLSessionDownloadDelegate {
                 }
 
                 if #available(iOS 14.0, *) {
-                    os_log(.debug, "BackgroundSession \(dbLecture.id): didFinishDownloadingTo: failed to save. \(error)")
+                    os_log(.debug, "BackgroundSession \(dbLecture.id): didFinishDownloadingTo: failed to save. \(error.localizedDescription)")
                 }
             }
 

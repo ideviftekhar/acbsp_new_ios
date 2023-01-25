@@ -214,13 +214,6 @@ class PlayerViewController: LectureViewController {
                     }
                 }
 
-                if let index = currentLectureQueue.firstIndex(where: { $0.id == currentLecture.id && $0.creationTimestamp == currentLecture.creationTimestamp }) {
-                    previousLectureButton.isEnabled = (index != 0)
-                    nextLectureButton.isEnabled = (index+1 < currentLectureQueue.count)
-                } else {
-                    previousLectureButton.isEnabled = false
-                    nextLectureButton.isEnabled = false
-                }
                 if visibleState == .close {
                     minimize(animated: true)
                 }
@@ -236,8 +229,6 @@ class PlayerViewController: LectureViewController {
                 try? AVAudioSession.sharedInstance().setCategory(.ambient)
                 try? AVAudioSession.sharedInstance().setActive(true)
                 player = nil
-                previousLectureButton.isEnabled = false
-                nextLectureButton.isEnabled = false
 
                 titleLabel.text = "--"
                 verseLabel.text = "--"
@@ -260,6 +251,7 @@ class PlayerViewController: LectureViewController {
                 UIApplication.shared.endReceivingRemoteControlEvents()
             }
 
+            updatePreviousNextButtonUI()
             SPNowPlayingInfoCenter.shared.update(lecture: currentLecture, player: player, selectedRate: self.selectedRate)
         }
     }
@@ -292,6 +284,7 @@ class PlayerViewController: LectureViewController {
         didSet {
             loadViewIfNeeded()
             refresh(source: .cache, existing: currentLectureQueue)
+            updatePreviousNextButtonUI()
         }
     }
 
@@ -310,7 +303,13 @@ class PlayerViewController: LectureViewController {
             miniPlayerView.delegate = self
         }
 
-        timeSlider.setThumbImage(UIImage(), for: .normal)
+        if #available(macCatalyst 14.0, *) {
+            if UIDevice.current.userInterfaceIdiom != .mac {
+                timeSlider.setThumbImage(UIImage(), for: .normal)
+            }
+        } else {
+            timeSlider.setThumbImage(UIImage(), for: .normal)
+        }
         do {
             self.playerContainerView.clipsToBounds = true
         }
@@ -761,6 +760,22 @@ extension PlayerViewController {
 
         let allLectures = self.playlistLectures
         self.playlistLectures = allLectures // This is to reload current playlist
+    }
+
+    private func updatePreviousNextButtonUI() {
+
+        if let currentLecture = currentLecture {
+            if let index = currentLectureQueue.firstIndex(where: { $0.id == currentLecture.id && $0.creationTimestamp == currentLecture.creationTimestamp }) {
+                previousLectureButton.isEnabled = (index != 0)
+                nextLectureButton.isEnabled = (index+1 < currentLectureQueue.count)
+            } else {
+                previousLectureButton.isEnabled = false
+                nextLectureButton.isEnabled = false
+            }
+        } else {
+            previousLectureButton.isEnabled = false
+            nextLectureButton.isEnabled = false
+        }
     }
 
     @IBAction func loopLectureButtonPressed(_ sender: UIButton) {
