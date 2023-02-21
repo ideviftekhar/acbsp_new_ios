@@ -36,6 +36,8 @@ class CreatePlaylistViewController: UIViewController {
             case .public:
                 publicPlaylistButton.setImage(UIImage(compatibleSystemName: "circle.inset.filled"), for: .normal)
                 privatePlaylistButton.setImage(UIImage(compatibleSystemName: "circle"), for: .normal)
+            case .unknown:
+                break
             }
         }
     }
@@ -103,7 +105,7 @@ class CreatePlaylistViewController: UIViewController {
                     self.delegate?.controller(self, didUpdate: playlist)
                 case .failure(let error):
                     Haptic.error()
-                    showAlert(title: "Error", message: error.localizedDescription)
+                    self.showAlert(error: error)
                 }
             })
         } else {
@@ -119,7 +121,7 @@ class CreatePlaylistViewController: UIViewController {
                     self.delegate?.controller(self, didAdd: playlist)
                 case .failure(let error):
                     Haptic.error()
-                    showAlert(title: "Error", message: error.localizedDescription)
+                    self.showAlert(error: error)
                 }
             })
         }

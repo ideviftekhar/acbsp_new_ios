@@ -80,7 +80,7 @@ class LogInViewController: UIViewController {
 
                 case .failure(let error):
                     Haptic.error()
-                    self.showAlert(title: "Error", message: error.localizedDescription)
+                    self.showAlert(error: error)
                 }
             })
         case .invalidUsername(let message):
@@ -114,7 +114,7 @@ class LogInViewController: UIViewController {
 
             case .failure(let error):
                 Haptic.error()
-                self.showAlert(title: "Error", message: error.localizedDescription)
+                self.showAlert(error: error)
             }
         })
     }
@@ -142,7 +142,7 @@ class LogInViewController: UIViewController {
 
             case .failure(let error):
                 Haptic.error()
-                self.showAlert(title: "Error", message: error.localizedDescription)
+                self.showAlert(error: error)
             }
         })
     }

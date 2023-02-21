@@ -95,6 +95,8 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
                     }
                 }
             })
+        case .unknown:
+            break
         }
     }
 
@@ -139,7 +141,7 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
             let collectionReference: FirebaseFirestore.CollectionReference = FirestoreManager.shared.firestore.collection(publicPlaylistsPath)
             let existingDocument = collectionReference.document(playlist.listID)
 
-            existingDocument.setData(data, completion: { error in
+            existingDocument.setData(data, merge: true, completion: { error in
                 mainThreadSafe {
                     if let error = error {
                         completion(.failure(error))
@@ -148,7 +150,9 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
                     }
                 }
             })
-        }
+        case .unknown:
+            break
+       }
     }
 
     func getPrivatePlaylist(searchText: String?, sortType: PlaylistSortType, completion: @escaping (Swift.Result<[Playlist], Error>) -> Void) {
@@ -172,7 +176,7 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
                 if let searchText = searchText, !searchText.isEmpty {
                     let selectedSubtypes: [String] = searchText.split(separator: " ").map { String($0) }
                     success = success.filter { playlist in
-                        selectedSubtypes.first(where: { playlist.title.localizedCaseInsensitiveContains($0) }) != nil
+                        selectedSubtypes.first(where: { playlist.title.localizedStandardContains($0) }) != nil
                     }
                 }
 
@@ -198,7 +202,7 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
                 if let searchText = searchText, !searchText.isEmpty {
                     let selectedSubtypes: [String] = searchText.split(separator: " ").map { String($0) }
                     success = success.filter { playlist in
-                        selectedSubtypes.first(where: { playlist.title.localizedCaseInsensitiveContains($0) }) != nil
+                        selectedSubtypes.first(where: { playlist.title.localizedStandardContains($0) }) != nil
                     }
                 }
 
@@ -283,7 +287,7 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
                     data["lectureCount"] = lectureIds.count
                     data["lastUpdate"] = currentTimestamp
 
-                    documentReference.setData(data, merge: true) { error in
+                    documentReference.setData(data, merge: true, completion: { error in
                         mainThreadSafe {
                             if let error = error {
                                 completion(.failure(error))
@@ -291,11 +295,13 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
                                 completion(.success(lectureIds))
                             }
                         }
-                    }
+                    })
                 case .failure(let error):
                     completion(.failure(error))
                 }
             })
+        case .unknown:
+            break
         }
     }
 
@@ -368,7 +374,7 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
                     data["lectureCount"] = lectureIds.count
                     data["lastUpdate"] = currentTimestamp
 
-                    documentReference.setData(data, merge: true) { error in
+                    documentReference.setData(data, merge: true, completion: { error in
                         mainThreadSafe {
                             if let error = error {
                                 completion(.failure(error))
@@ -376,11 +382,13 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
                                 completion(.success(lectureIds))
                             }
                         }
-                    }
+                    })
                 case .failure(let error):
                     completion(.failure(error))
                 }
             })
+        case .unknown:
+            break
         }
     }
 
@@ -421,6 +429,8 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
                     }
                 }
             })
+        case .unknown:
+            break
         }
     }
 }

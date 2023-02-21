@@ -31,7 +31,7 @@ extension DefaultLectureViewModel {
 
             lectures = lectures.filter { (lecture: Lecture) in
                 var lecture = lecture
-                let matched: Bool = lecture.searchableTexts.first(where: { $0.localizedCaseInsensitiveContains(searchText) }) != nil
+                let matched: Bool = lecture.searchableTexts.first(where: { $0.localizedStandardContains(searchText) }) != nil
                 return matched
             }
         }

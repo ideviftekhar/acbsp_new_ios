@@ -238,7 +238,7 @@ class LectureViewController: SearchViewController {
             case .failure(let error):
                 Haptic.error()
                 self.list.setIsLoading(false, animated: true)
-                showAlert(title: "Error", message: error.localizedDescription)
+                self.showAlert(error: error)
             }
         })
     }
@@ -431,12 +431,12 @@ extension LectureViewController {
             cancelSelection()
         })
 
-        let selectAll: SPAction = SPAction(title: "Select All", image: UIImage(compatibleSystemName: "checkmark.circle.fill"), handler: { [self] (_) in
+        let selectAll: SPAction = SPAction(title: "Select All", image: UIImage(compatibleSystemName: "checkmark.circle"), handler: { [self] (_) in
             selectedModels = models
             reloadSelectedAll(isSelected: true)
             Haptic.selection()
         })
-        let deselectAll: SPAction = SPAction(title: "Deselect All", image: UIImage(compatibleSystemName: "checkmark.circle"), handler: { [self] (_) in
+        let deselectAll: SPAction = SPAction(title: "Deselect All", image: UIImage(compatibleSystemName: "circle"), handler: { [self] (_) in
             selectedModels.removeAll()
             reloadSelectedAll(isSelected: false)
             Haptic.selection()

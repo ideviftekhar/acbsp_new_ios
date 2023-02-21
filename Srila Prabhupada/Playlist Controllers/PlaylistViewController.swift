@@ -53,7 +53,9 @@ class PlaylistViewController: SearchViewController {
             playlistSegmentControl.removeAllSegments()
 
             for (index, listType) in PlaylistType.allCases.enumerated() {
-                playlistSegmentControl.insertSegment(withTitle: listType.rawValue, at: index, animated: false)
+                if listType != .unknown {
+                    playlistSegmentControl.insertSegment(withTitle: listType.rawValue, at: index, animated: false)
+                }
             }
 
             let userDefaultKey: String = "\(Self.self).\(UISegmentedControl.self)"
@@ -135,7 +137,7 @@ class PlaylistViewController: SearchViewController {
             case .failure(let error):
                 Haptic.error()
                 self.list.setIsLoading(false, animated: true)
-                showAlert(title: "Error", message: error.localizedDescription)
+                self.showAlert(error: error)
             }
         })
     }
@@ -159,6 +161,8 @@ class PlaylistViewController: SearchViewController {
             }
 
             DefaultPlaylistViewModel.defaultModel.getPublicPlaylist(searchText: searchText, sortType: selectedSortType, userEmail: userEmail, completion: completion)
+        case .unknown:
+            break
         }
     }
 }
@@ -248,6 +252,9 @@ extension PlaylistViewController: IQListViewDelegateDataSource {
                     case .public:
                         list.noItemTitle = "No Public Playlist"
                         finalMessage = "No public playlist to display here"
+                    case .unknown:
+                        list.noItemTitle = ""
+                        finalMessage = ""
                     }
 
                     if let searchText = searchText {
@@ -325,7 +332,7 @@ extension PlaylistViewController: IQListViewDelegateDataSource {
                             })
                         case .failure(let error):
                             Haptic.error()
-                            self.showAlert(title: "Error", message: error.localizedDescription)
+                            self.showAlert(error: error)
                         }
                     })
                 }))
@@ -362,6 +369,13 @@ extension PlaylistViewController: CreatePlaylistViewControllerDelegate {
 
         let playlistIcon = UIImage(compatibleSystemName: "music.note.list")
         StatusAlert.show(image: playlistIcon, title: "Playlist Created", message: message, in: self.view)
+
+        if lecturesToAdd.isEmpty {
+            let controller = UIStoryboard.playlists.instantiate(PlaylistLecturesViewController.self)
+            controller.playlist = playlist
+            self.navigationController?.pushViewController(controller, animated: true)
+        }
+
     }
 
     func controller(_ controller: CreatePlaylistViewController, didUpdate playlist: Playlist) {
@@ -415,7 +429,7 @@ extension PlaylistViewController: PlaylistCellDelegate {
 
                     case .failure(let error):
                         Haptic.error()
-                        self.showAlert(title: "Error", message: error.localizedDescription)
+                        self.showAlert(error: error)
                     }
                 }
             }))

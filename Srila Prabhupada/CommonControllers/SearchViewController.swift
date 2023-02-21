@@ -63,7 +63,7 @@ class SearchViewController: UIViewController {
             searchController.delegate = self
             searchController.searchResultsUpdater = self
             navigationItem.searchController = searchController
-            navigationItem.hidesSearchBarWhenScrolling = true
+            navigationItem.hidesSearchBarWhenScrolling = false
         }
 
         let userDefaultKey: String = "\(Self.self).\(Filter.self)"
@@ -216,7 +216,7 @@ extension SearchViewController: SideMenuControllerDelegate {
                 if loaded {
                 } else if let error = error {
                     storeViewController.dismiss(animated: true)
-                    self?.showAlert(title: "Error", message: error.localizedDescription)
+                    self?.showAlert(error: error)
                 }
             })
             storeViewController.popoverPresentationController?.sourceView = cell

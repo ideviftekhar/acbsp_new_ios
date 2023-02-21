@@ -518,7 +518,7 @@
                                                             <constraint firstAttribute="height" constant="50" id="d47-KT-3Yu"/>
                                                         </constraints>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
+                                                        <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                                         <userDefinedRuntimeAttributes>
                                                             <userDefinedRuntimeAttribute type="color" keyPath="titleColor">
                                                                 <color key="value" name="B8B8B8"/>
@@ -926,34 +926,34 @@
     </scenes>
     <designables>
         <designable name="JiP-v2-2TM">
-            <size key="intrinsicContentSize" width="34.5" height="18.5"/>
+            <size key="intrinsicContentSize" width="335" height="39.220703125"/>
         </designable>
         <designable name="LKp-h4-zD4">
-            <size key="intrinsicContentSize" width="125" height="34"/>
+            <size key="intrinsicContentSize" width="125" height="22"/>
         </designable>
         <designable name="N37-wZ-rCp">
-            <size key="intrinsicContentSize" width="62.5" height="17"/>
+            <size key="intrinsicContentSize" width="335" height="39.220703125"/>
         </designable>
         <designable name="QTK-Sh-MdL">
-            <size key="intrinsicContentSize" width="57" height="34"/>
+            <size key="intrinsicContentSize" width="57" height="22"/>
         </designable>
         <designable name="QUi-fO-3KS">
-            <size key="intrinsicContentSize" width="34.5" height="18.5"/>
+            <size key="intrinsicContentSize" width="335" height="39.220703125"/>
         </designable>
         <designable name="Tfl-LO-8ZS">
-            <size key="intrinsicContentSize" width="55" height="34"/>
+            <size key="intrinsicContentSize" width="55" height="22"/>
         </designable>
         <designable name="Tqv-Zd-7iE">
-            <size key="intrinsicContentSize" width="62.5" height="17"/>
+            <size key="intrinsicContentSize" width="335" height="39.220703125"/>
         </designable>
         <designable name="ZbE-4O-vPQ">
-            <size key="intrinsicContentSize" width="34.5" height="18.5"/>
+            <size key="intrinsicContentSize" width="335" height="39.220703125"/>
         </designable>
         <designable name="oeT-s8-gCe">
             <size key="intrinsicContentSize" width="100" height="40"/>
         </designable>
         <designable name="q8M-JX-uDy">
-            <size key="intrinsicContentSize" width="123" height="18.5"/>
+            <size key="intrinsicContentSize" width="335" height="39.220703125"/>
         </designable>
     </designables>
     <color key="tintColor" name="F96D00"/>

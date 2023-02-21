@@ -11,6 +11,7 @@ import UIKit
 enum PlaylistType: String, Codable, CaseIterable {
     case `public`   = "Public"
     case `private`  = "Private"
+    case unknown    = "Unknown"
 
     init?(rawValue: Int) {
         switch rawValue {
@@ -19,7 +20,7 @@ enum PlaylistType: String, Codable, CaseIterable {
         case 1:
             self = .private
         default:
-            self = .private
+            self = .unknown
         }
     }
 
@@ -29,6 +30,8 @@ enum PlaylistType: String, Codable, CaseIterable {
             return UIImage(compatibleSystemName: "person.3")
         case .private:
             return UIImage(compatibleSystemName: "lock")
+        case .unknown:
+            return nil
         }
     }
 
@@ -38,6 +41,8 @@ enum PlaylistType: String, Codable, CaseIterable {
             return UIImage(compatibleSystemName: "person.3.fill")
         case .private:
             return UIImage(compatibleSystemName: "lock.fill")
+        case .unknown:
+            return nil
         }
     }
 }
@@ -63,15 +68,15 @@ struct Playlist: Hashable, Codable {
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.authorEmail = try container.decode(String.self, forKey: .authorEmail)
-        self.description = try? container.decode(String.self, forKey: .description)
-        let creationTime = try container.decode(Int.self, forKey: .creationTime)
+        self.authorEmail = try container.decodeIfPresent(String.self, forKey: .authorEmail) ?? ""
+        self.description = try? container.decodeIfPresent(String.self, forKey: .description)
+        let creationTime = try container.decodeIfPresent(Int.self, forKey: .creationTime) ?? 0
         self.creationTime = Date(timeIntervalSince1970: TimeInterval(creationTime/1000))
-        self.lectureIds = try container.decode([Int].self, forKey: .lectureIds)
-        self.lecturesCategory = try container.decode(String.self, forKey: .lecturesCategory)
-        self.title = try container.decode(String.self, forKey: .title)
-        self.thumbnail = try container.decode(String.self, forKey: .thumbnail)
-        self.listID = try container.decode(String.self, forKey: .listID)
-        self.listType = try container.decode(PlaylistType.self, forKey: .listType)
+        self.lectureIds = try container.decodeIfPresent([Int].self, forKey: .lectureIds) ?? []
+        self.lecturesCategory = try container.decodeIfPresent(String.self, forKey: .lecturesCategory) ?? ""
+        self.title = try container.decodeIfPresent(String.self, forKey: .title) ?? ""
+        self.thumbnail = try container.decodeIfPresent(String.self, forKey: .thumbnail) ?? ""
+        self.listID = try container.decodeIfPresent(String.self, forKey: .listID) ?? ""
+        self.listType = try container.decodeIfPresent(PlaylistType.self, forKey: .listType) ?? PlaylistType.unknown
     }
 }

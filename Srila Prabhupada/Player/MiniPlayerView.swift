@@ -7,6 +7,7 @@
 
 import UIKit
 import AlamofireImage
+import MarqueeLabel
 
 protocol MiniPlayerViewDelegate: AnyObject {
     func miniPlayerViewDidExpand(_ playerView: MiniPlayerView)
@@ -18,7 +19,7 @@ protocol MiniPlayerViewDelegate: AnyObject {
 class MiniPlayerView: UIView {
 
     @IBOutlet private var thumbnailImageView: UIImageView!
-    @IBOutlet private var titleLabel: UILabel!
+    @IBOutlet private var titleLabel: MarqueeLabel!
     @IBOutlet private var verseLabel: UILabel!
     @IBOutlet private var durationLabel: UILabel!
     @IBOutlet private var locationLabel: UILabel!
@@ -43,10 +44,13 @@ class MiniPlayerView: UIView {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-
+        titleLabel.type = .continuous
+        titleLabel.speed = .duration(10)
+        titleLabel.fadeLength = 10.0
+        titleLabel.trailingBuffer = 30.0
         seekGesture.delegate = self
         expandButton.addGestureRecognizer(seekGesture)
-        if #available(macCatalyst 14.0, *) {
+        if #available(macCatalyst 14.0, *), #available(iOS 14.0, *) {
             if UIDevice.current.userInterfaceIdiom != .mac {
                 timeSlider.setThumbImage(UIImage(), for: .normal)
             }

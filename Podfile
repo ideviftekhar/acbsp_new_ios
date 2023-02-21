@@ -1,4 +1,3 @@
-
 platform :ios, '13.0'
 
 target 'Srila Prabhupada' do
@@ -32,6 +31,8 @@ target 'Srila Prabhupada' do
 
   pod 'StatusAlert'
   pod 'SKActivityIndicatorView'
+
+  pod 'MarqueeLabel'
 
   pod'Charts'
   pod'SwiftLint'

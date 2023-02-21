@@ -303,7 +303,7 @@ class PlayerViewController: LectureViewController {
             miniPlayerView.delegate = self
         }
 
-        if #available(macCatalyst 14.0, *) {
+        if #available(macCatalyst 14.0, *), #available(iOS 14.0, *) {
             if UIDevice.current.userInterfaceIdiom != .mac {
                 timeSlider.setThumbImage(UIImage(), for: .normal)
             }

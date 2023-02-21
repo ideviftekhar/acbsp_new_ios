@@ -33,6 +33,14 @@ class PlaylistLecturesViewController: LectureViewController {
         }
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        if !isSelectionEnabled && Auth.auth().currentUser?.email == playlist.authorEmail, playlist.lectureIds.isEmpty {
+            addLecturesButtonAction(addLecturesButton)
+        }
+    }
+
     override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[LectureViewController.Model], Error>) -> Void) {
 
         DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: playlist.lectureIds, source: source, progress: nil, completion: completion)
@@ -93,7 +101,7 @@ extension PlaylistLecturesViewController: LectureViewControllerDelegate {
                     })
                 case .failure(let error):
                     Haptic.error()
-                    controller.showAlert(title: "Error", message: error.localizedDescription)
+                    controller.showAlert(error: error)
                 }
             })
         }))

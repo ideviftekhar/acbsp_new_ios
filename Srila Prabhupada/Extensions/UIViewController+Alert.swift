@@ -22,6 +22,24 @@ extension UIViewController {
         showAlert(title: title, message: message, preferredStyle: preferredStyle, sourceView: sourceView, cancel: cancel, destructive: destructive, buttons: buttons)
     }
 
+    func showAlert(error: Error) {
+
+        let error = error as NSError
+        var messages: [String] = []
+
+        messages.append(error.localizedDescription)
+
+        if let localizedFailureReason = error.localizedFailureReason {
+            messages.append(localizedFailureReason)
+        }
+
+        if let localizedRecoverySuggestion = error.localizedRecoverySuggestion {
+            messages.append(localizedRecoverySuggestion)
+        }
+
+        showAlert(title: "Error", message: messages.joined(separator: "\n"))
+    }
+
     func showAlert(title: String?,
                    message: String?,
                    preferredStyle: UIAlertController.Style = .alert,

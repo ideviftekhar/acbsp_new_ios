@@ -294,7 +294,7 @@
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="Psf-JA-obH">
                                                                     <rect key="frame" x="45" y="0.0" width="77" height="53.5"/>
                                                                     <subviews>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jpi-aP-CHX">
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jpi-aP-CHX" customClass="MarqueeLabel" customModule="MarqueeLabel">
                                                                             <rect key="frame" x="0.0" y="0.0" width="22" height="20.5"/>
                                                                             <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
                                                                             <color key="textColor" name="TextDarkGray"/>
@@ -852,8 +852,14 @@
         </scene>
     </scenes>
     <designables>
+        <designable name="Jpi-aP-CHX">
+            <size key="intrinsicContentSize" width="22" height="20.5"/>
+        </designable>
         <designable name="dL3-B5-RVy">
-            <size key="intrinsicContentSize" width="47" height="34"/>
+            <size key="intrinsicContentSize" width="47" height="22"/>
+        </designable>
+        <designable name="kdI-3p-94k">
+            <size key="intrinsicContentSize" width="20" height="20"/>
         </designable>
     </designables>
     <color key="tintColor" name="0099CA"/>
