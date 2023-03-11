@@ -41,6 +41,13 @@ class LectureViewController: SearchViewController {
     var selectedModels: [Model] = [] {
         didSet {
             doneSelectionButton.isEnabled = !selectedModels.isEmpty
+
+            if isSelectionEnabled {
+                navigationItem.prompt = "\(selectedModels.count) Selected"
+            } else {
+                navigationItem.prompt = nil
+            }
+
             refreshMoreOption()
         }
     }
@@ -74,8 +81,10 @@ class LectureViewController: SearchViewController {
         rightButtons.insert(moreButton, at: 0)
         rightButtons.append(sortButton)
         if isSelectionEnabled {
+            selectedModels = []
             rightButtons.insert(doneSelectionButton, at: 0)
             self.navigationItem.leftBarButtonItem = cancelSelectionButton
+            searchController.searchBar.text = nil
         }
 
         self.navigationItem.rightBarButtonItems = rightButtons
@@ -118,7 +127,7 @@ class LectureViewController: SearchViewController {
         NotificationCenter.default.removeObserver(self, name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
     }
 
-    @objc private func lectureUpdateNotification(_ notification: Notification) {
+    @objc func lectureUpdateNotification(_ notification: Notification) {
 
         if let lectures: [Model] = notification.object as? [Model] {
 
@@ -634,7 +643,7 @@ extension LectureViewController: LectureCellDelegate {
 
 extension LectureViewController {
 
-    private func askToDeleteFromDownloads(lectures: [Model], sourceView: Any?) {
+    func askToDeleteFromDownloads(lectures: [Model], sourceView: Any?) {
 
         let message: String
         if lectures.count == 1, let lecture = lectures.first {
@@ -653,7 +662,7 @@ extension LectureViewController {
         }))
     }
 
-    private func markAsFavourites(lectures: [Model], sourceView: Any?) {
+    func markAsFavourites(lectures: [Model], sourceView: Any?) {
         DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: lectures, isCompleted: nil, isDownloaded: nil, isFavourite: true, lastPlayedPoint: nil, postUpdate: true, completion: { result in
             switch result {
             case .success:
@@ -675,7 +684,7 @@ extension LectureViewController {
         })
     }
 
-    private func askToRemoveFromFavourites(lectures: [Model], sourceView: Any?) {
+    func askToRemoveFromFavourites(lectures: [Model], sourceView: Any?) {
 
         let message: String
         if lectures.count == 1, let lecture = lectures.first {

@@ -14,7 +14,7 @@ import StoreKit
 class SearchViewController: UIViewController {
 
     @IBOutlet var hamburgerBarButton: UIBarButtonItem?
-    private let searchController = UISearchController(searchResultsController: nil)
+    let searchController = UISearchController(searchResultsController: nil)
     private var lastSearchText: String = ""
 
     internal let activityIndicatorView = UIActivityIndicatorView(style: .medium)
@@ -49,10 +49,19 @@ class SearchViewController: UIViewController {
             let userDefaultKey: String = "\(Self.self).\(UISearchController.self)"
             let searchText = UserDefaults.standard.string(forKey: userDefaultKey)
             lastSearchText = searchText ?? ""
+
+            searchController.delegate = self
+            searchController.searchResultsUpdater = self
             searchController.obscuresBackgroundDuringPresentation = false
-            searchController.searchBar.text = searchText
-            searchController.searchBar.placeholder = "Search..."
-            searchController.searchBar.barStyle = .black
+            searchController.hidesNavigationBarDuringPresentation = false
+            searchController.automaticallyShowsCancelButton = false
+
+            do {
+                searchController.searchBar.text = searchText
+                searchController.searchBar.placeholder = "Search..."
+                searchController.searchBar.barStyle = .black
+                searchController.searchBar.enablesReturnKeyAutomatically = false
+            }
 
             if #available(iOS 13.0, *) {
                 searchController.searchBar.searchTextField.leftView?.tintColor = UIColor.systemGray4
@@ -60,8 +69,7 @@ class SearchViewController: UIViewController {
                 searchController.searchBar.searchTextField.defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
                 searchController.searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: "Search...", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray4])
             }
-            searchController.delegate = self
-            searchController.searchResultsUpdater = self
+
             navigationItem.searchController = searchController
             navigationItem.hidesSearchBarWhenScrolling = false
         }

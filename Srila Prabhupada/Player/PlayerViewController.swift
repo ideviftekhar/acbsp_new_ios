@@ -57,6 +57,7 @@ class PlayerViewController: LectureViewController {
     @IBOutlet private var totalTimeLabel: UILabel!
     @IBOutlet private var timeSlider: UISlider!
 
+    @IBOutlet internal var menuButton: UIButton!
     @IBOutlet internal var playlistButton: UIButton!
     @IBOutlet private var playPauseButton: UIButton!
     @IBOutlet private var speedMenuButton: UIButton!
@@ -81,6 +82,9 @@ class PlayerViewController: LectureViewController {
     @IBOutlet var playingInfoStackView: UIStackView!
     @IBOutlet var playingInfoImageViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet var playingInfoTitleStackView: UIStackView!
+
+    var optionMenu: SPMenu!
+    var allActions: [LectureOption: SPAction] = [:]
 
     static var lecturePlayStateObservers = [Int: [PlayStateObserver]]()
     static var nowPlaying: (lecture: Lecture, state: PlayState)? {
@@ -152,51 +156,33 @@ class PlayerViewController: LectureViewController {
         }
     }
 
+    var _privateCurrentLecture: Model?
     var currentLecture: Model? {
-
-        willSet {
-            updateLectureProgress()
+        get {
+            _privateCurrentLecture
         }
 
-        didSet {
+        set {
+            updateLectureProgress()
+
+            _privateCurrentLecture = newValue
+
             loadViewIfNeeded()
 
-            miniPlayerView.currentLecture = currentLecture
+            miniPlayerView.currentLecture = newValue
 
             let userDefaultKey: String = "\(Self.self).\(Lecture.self)"
-            UserDefaults.standard.set(currentLecture?.id, forKey: userDefaultKey)
+            UserDefaults.standard.set(newValue?.id, forKey: userDefaultKey)
             UserDefaults.standard.synchronize()
+            updateMenuOption()
 
             self.pause()
-            if let currentLecture = currentLecture {
+            updateMetadata()
+            if let currentLecture = newValue {
                 UIApplication.shared.beginReceivingRemoteControlEvents()
 
                 try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
                 try? AVAudioSession.sharedInstance().setActive(true)
-                titleLabel.text = currentLecture.titleDisplay
-                verseLabel.text = currentLecture.legacyData.verse
-                languageLabel.text = currentLecture.language.main
-                let categoryString = currentLecture.category.joined(separator: ", ")
-                categoryLabel.text = categoryString
-                locationLabel.text = currentLecture.location.displayString
-                dateLabel.text = currentLecture.dateOfRecording.display_dd_MMM_yyyy
-                timeSlider.maximumValue = Float(currentLecture.lengthTime.totalSeconds)
-                totalTimeLabel.text = currentLecture.lengthTime.displayString
-
-                if !currentLecture.location.displayString.isEmpty {
-                    locationLabel?.text = currentLecture.location.displayString
-                } else {
-                    locationLabel?.text = currentLecture.place.joined(separator: ", ")
-                }
-
-                firstDotLabel?.isHidden = currentLecture.legacyData.verse.isEmpty || categoryString.isEmpty
-                secondDotLabel?.isHidden = locationLabel?.text?.isEmpty ?? true
-
-                if let url = currentLecture.thumbnailURL {
-                    thumbnailImageView.af.setImage(withURL: url, placeholderImage: UIImage(named: "logo_40"))
-                } else {
-                    thumbnailImageView.image = UIImage(named: "logo_40")
-                }
 
                 if currentLecture.downloadState == .downloaded,
                    let audioURL = DownloadManager.shared.localFileURL(for: currentLecture) {
@@ -230,15 +216,6 @@ class PlayerViewController: LectureViewController {
                 try? AVAudioSession.sharedInstance().setActive(true)
                 player = nil
 
-                titleLabel.text = "--"
-                verseLabel.text = "--"
-                languageLabel.text = "--"
-                categoryLabel.text = "--"
-                locationLabel.text = "--"
-                dateLabel.text = "--"
-                firstDotLabel?.isHidden = false
-                secondDotLabel?.isHidden = false
-                timeSlider.maximumValue = 0
                 close(animated: true)
                 Self.nowPlaying = nil
 
@@ -252,7 +229,7 @@ class PlayerViewController: LectureViewController {
             }
 
             updatePreviousNextButtonUI()
-            SPNowPlayingInfoCenter.shared.update(lecture: currentLecture, player: player, selectedRate: self.selectedRate)
+            SPNowPlayingInfoCenter.shared.update(lecture: newValue, player: player, selectedRate: self.selectedRate)
         }
     }
 
@@ -293,7 +270,8 @@ class PlayerViewController: LectureViewController {
         super.viewDidLoad()
 
         configurePlayRateMenu()
-
+        configureMenuButton()
+        
         do {
             loopLectureButton.isSelected = false
             shuffleLectureButton.isSelected = false
@@ -322,6 +300,63 @@ class PlayerViewController: LectureViewController {
 
         registerNowPlayingCommands()
         registerAudioSessionObservers()
+    }
+
+    func updateMetadata() {
+        updateMenuOption()
+        if let currentLecture = currentLecture {
+            titleLabel.text = currentLecture.titleDisplay
+            verseLabel.text = currentLecture.legacyData.verse
+            languageLabel.text = currentLecture.language.main
+            let categoryString = currentLecture.category.joined(separator: ", ")
+            categoryLabel.text = categoryString
+            locationLabel.text = currentLecture.location.displayString
+            dateLabel.text = currentLecture.dateOfRecording.display_dd_MMM_yyyy
+            timeSlider.maximumValue = Float(currentLecture.lengthTime.totalSeconds)
+            totalTimeLabel.text = currentLecture.lengthTime.displayString
+
+            if !currentLecture.location.displayString.isEmpty {
+                locationLabel?.text = currentLecture.location.displayString
+            } else {
+                locationLabel?.text = currentLecture.place.joined(separator: ", ")
+            }
+
+            firstDotLabel?.isHidden = currentLecture.legacyData.verse.isEmpty || categoryString.isEmpty
+            secondDotLabel?.isHidden = locationLabel?.text?.isEmpty ?? true
+
+            if let url = currentLecture.thumbnailURL {
+                thumbnailImageView.af.setImage(withURL: url, placeholderImage: UIImage(named: "logo_40"))
+            } else {
+                thumbnailImageView.image = UIImage(named: "logo_40")
+            }
+        } else {
+            titleLabel.text = "--"
+            verseLabel.text = "--"
+            languageLabel.text = "--"
+            categoryLabel.text = "--"
+            locationLabel.text = "--"
+            dateLabel.text = "--"
+            timeSlider.maximumValue = 0
+            totalTimeLabel.text = "--"
+            locationLabel.text = "--"
+            firstDotLabel?.isHidden = false
+            secondDotLabel?.isHidden = false
+            thumbnailImageView.image = UIImage(named: "logo_40")
+        }
+    }
+
+    @objc override func lectureUpdateNotification(_ notification: Notification) {
+        super.lectureUpdateNotification(notification)
+
+        if let currentLecture = currentLecture,
+           let lectures: [Model] = notification.object as? [Model] {
+
+            if let updatedLecture = lectures.first(where: { $0.id == currentLecture.id }) {
+                self.loadViewIfNeeded()
+                _privateCurrentLecture = updatedLecture
+                updateMetadata()
+            }
+        }
     }
 
     @objc private func swipeRecognized(_ sender: UISwipeGestureRecognizer) {
