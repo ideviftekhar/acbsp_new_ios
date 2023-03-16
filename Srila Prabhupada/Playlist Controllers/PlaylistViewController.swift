@@ -71,6 +71,7 @@ class PlaylistViewController: SearchViewController {
             self.list.loadingMessage = "Loading..."
             list.registerCell(type: Cell.self, registerType: .nib)
             playlistTableView.tableFooterView = UIView()
+            playlistTableView.separatorStyle = .singleLine
             refreshUI(animated: false, showNoItems: false)
         }
 

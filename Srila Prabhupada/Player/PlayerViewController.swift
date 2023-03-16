@@ -68,6 +68,9 @@ class PlayerViewController: LectureViewController {
     @IBOutlet private var loopLectureButton: UIButton!
     @IBOutlet private var shuffleLectureButton: UIButton!
 
+    @IBOutlet private var forwardTenSecondsButton: UIButton!
+    @IBOutlet private var backwardTenSecondsButton: UIButton!
+
     @IBOutlet var miniPlayerView: MiniPlayerView!
     @IBOutlet var fullPlayerContainerView: UIView!
 
@@ -85,6 +88,9 @@ class PlayerViewController: LectureViewController {
 
     var optionMenu: SPMenu!
     var allActions: [LectureOption: SPAction] = [:]
+    
+    var playFillImage = UIImage(compatibleSystemName: "play.fill")
+    var pauseFillImage = UIImage(compatibleSystemName: "pause.fill")
 
     static var lecturePlayStateObservers = [Int: [PlayStateObserver]]()
     static var nowPlaying: (lecture: Lecture, state: PlayState)? {
@@ -281,13 +287,14 @@ class PlayerViewController: LectureViewController {
             miniPlayerView.delegate = self
         }
 
-        if #available(macCatalyst 14.0, *), #available(iOS 14.0, *) {
+        if #available(iOS 14.0, *) {
             if UIDevice.current.userInterfaceIdiom != .mac {
                 timeSlider.setThumbImage(UIImage(), for: .normal)
             }
         } else {
             timeSlider.setThumbImage(UIImage(), for: .normal)
         }
+
         do {
             self.playerContainerView.clipsToBounds = true
         }
@@ -297,7 +304,7 @@ class PlayerViewController: LectureViewController {
             swipeGesture.direction = .down
             self.view.addGestureRecognizer(swipeGesture)
         }
-
+        setupPlayerIcons()
         registerNowPlayingCommands()
         registerAudioSessionObservers()
     }
@@ -342,6 +349,30 @@ class PlayerViewController: LectureViewController {
             firstDotLabel?.isHidden = false
             secondDotLabel?.isHidden = false
             thumbnailImageView.image = UIImage(named: "logo_40")
+        }
+    }
+    private func setupPlayerIcons() {
+
+        if #available(macCatalyst 14.0, *), UIDevice.current.userInterfaceIdiom == .mac {
+            playFillImage = UIImage(named: "playFill")
+            pauseFillImage = UIImage(named: "pauseFill")
+
+            menuButton.setImage(UIImage(named: "ellipsisCircle"), for: .normal)
+            playlistButton.setImage(UIImage(named: "musicNoteList"), for: .normal)
+
+            if miniPlayerView.isPlaying {
+                playPauseButton.setImage(pauseFillImage, for: .normal)
+            } else if miniPlayerView.isPlaying == false {
+                playPauseButton.setImage(playFillImage, for: .normal)
+            }
+
+            previousLectureButton.setImage(UIImage(named: "backwardEndFill"), for: .normal)
+            nextLectureButton.setImage(UIImage(named: "forwardEndFill"), for: .normal)
+
+            loopLectureButton.setImage(UIImage(named: "repeat"), for: .normal)
+            shuffleLectureButton.setImage(UIImage(named: "shuffle"), for: .normal)
+            forwardTenSecondsButton.setImage(UIImage(named: "goForward10"), for: .normal)
+            backwardTenSecondsButton.setImage(UIImage(named: "goBackward10"), for: .normal)
         }
     }
 
@@ -702,7 +733,7 @@ extension PlayerViewController {
         self.itemRateObserver = player?.observe(\.rate, options: [.new, .old], changeHandler: { [self] (_, change) in
 
             if let newValue = change.newValue, newValue != 0.0 {
-                playPauseButton.setImage(UIImage(compatibleSystemName: "pause.fill"), for: .normal)
+                playPauseButton.setImage(pauseFillImage, for: .normal)
                 miniPlayerView.isPlaying = true
                 SPNowPlayingInfoCenter.shared.update(lecture: currentLecture, player: player, selectedRate: selectedRate)
                 if let currentLecture = currentLecture {
@@ -711,7 +742,7 @@ extension PlayerViewController {
                     Self.nowPlaying = nil
                 }
             } else {
-                playPauseButton.setImage(UIImage(compatibleSystemName: "play.fill"), for: .normal)
+                playPauseButton.setImage(playFillImage, for: .normal)
                 miniPlayerView.isPlaying = false
                 SPNowPlayingInfoCenter.shared.update(lecture: currentLecture, player: player, selectedRate: selectedRate)
                 updateLectureProgress()

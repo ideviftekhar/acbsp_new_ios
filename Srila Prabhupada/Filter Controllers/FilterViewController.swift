@@ -41,6 +41,8 @@ class FilterViewController: UIViewController {
             refreshUI(animated: false)
             filterTypeTableView.tableFooterView = UIView()
             filterDetailTableView.tableFooterView = UIView()
+            filterTypeTableView.separatorStyle = .singleLine
+            filterDetailTableView.separatorStyle = .singleLine
         }
 
         do {

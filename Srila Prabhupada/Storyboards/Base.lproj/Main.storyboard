@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="gmZ-qk-tiz">
-    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <device id="mac" appearance="light" renderMode="macOS"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
@@ -15,14 +15,14 @@
             <objects>
                 <viewController storyboardIdentifier="LogInViewController" id="EiO-QZ-r6K" customClass="LogInViewController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="abm-8M-Mj8">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="800" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1qE-En-idb">
-                                <rect key="frame" x="0.0" y="58.5" width="375" height="550.5"/>
+                                <rect key="frame" x="190" y="24" width="420" height="552"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" image="logo_120" translatesAutoresizingMaskIntoConstraints="NO" id="FWv-Et-cDn">
-                                        <rect key="frame" x="127.5" y="20" width="120" height="120"/>
+                                        <rect key="frame" x="150" y="20" width="120" height="120"/>
                                         <constraints>
                                             <constraint firstAttribute="height" relation="lessThanOrEqual" constant="120" id="3Um-AA-1mI">
                                                 <variation key="heightClass=compact" constant="0.0"/>
@@ -41,13 +41,13 @@
                                         </variation>
                                     </imageView>
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="hq4-nu-Wsr">
-                                        <rect key="frame" x="177.5" y="150" width="20" height="20"/>
+                                        <rect key="frame" x="202" y="150" width="16" height="16"/>
                                     </activityIndicatorView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="2Wb-P7-3vz">
-                                        <rect key="frame" x="20" y="180" width="335" height="180"/>
+                                        <rect key="frame" x="20" y="176" width="380" height="180"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QUi-fO-3KS" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
-                                                <rect key="frame" x="0.0" y="0.0" width="335" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="380" height="50"/>
                                                 <color key="tintColor" name="0099CA"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="xzt-nl-uOU"/>
@@ -71,12 +71,15 @@
                                                         <real key="value" value="1"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <variation key="userInterfaceIdiom=mac">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                </variation>
                                                 <connections>
                                                     <outlet property="delegate" destination="EiO-QZ-r6K" id="Wzx-iv-49W"/>
                                                 </connections>
                                             </textField>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="N37-wZ-rCp" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
-                                                <rect key="frame" x="0.0" y="70" width="335" height="50"/>
+                                                <rect key="frame" x="0.0" y="70" width="380" height="50"/>
                                                 <color key="tintColor" name="0099CA"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="YTh-Jq-wNL"/>
@@ -100,12 +103,15 @@
                                                         <real key="value" value="1"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <variation key="userInterfaceIdiom=mac">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                </variation>
                                                 <connections>
                                                     <outlet property="delegate" destination="EiO-QZ-r6K" id="HYS-z1-QOJ"/>
                                                 </connections>
                                             </textField>
-                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tfl-LO-8ZS" customClass="RoundButton" customModule="Srila_Prabhupada" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="140" width="335" height="40"/>
+                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tfl-LO-8ZS" customClass="RoundButton" customModule="Srila_Prabhupada" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="140" width="380" height="40"/>
                                                 <color key="backgroundColor" name="F96D00"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="CKq-xm-L8q"/>
@@ -134,33 +140,40 @@
                                         </subviews>
                                     </stackView>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="X29-Ii-qJP">
-                                        <rect key="frame" x="20" y="380" width="335" height="150.5"/>
+                                        <rect key="frame" x="20" y="376" width="380" height="156"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="jUO-xs-yfB">
-                                                <rect key="frame" x="32" y="0.0" width="271" height="70"/>
+                                                <rect key="frame" x="28" y="0.0" width="324.5" height="72"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8BL-g0-L82">
-                                                        <rect key="frame" x="74" y="0.0" width="123" height="30"/>
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8BL-g0-L82">
+                                                        <rect key="frame" x="89" y="0.0" width="147" height="31"/>
                                                         <color key="tintColor" name="0099CA"/>
                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                        <state key="normal" title="Forgot Password?"/>
+                                                        <state key="normal" title="Forgot Password?">
+                                                            <color key="titleColor" name="0099CC"/>
+                                                        </state>
                                                         <connections>
                                                             <segue destination="vyQ-t4-W0T" kind="show" id="UhV-ay-btc"/>
                                                         </connections>
                                                     </button>
                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="3bJ-pn-Tx2">
-                                                        <rect key="frame" x="0.0" y="40" width="271" height="30"/>
+                                                        <rect key="frame" x="0.0" y="41" width="324.5" height="31"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Don't have an account yet? " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KXj-tB-MTP">
-                                                                <rect key="frame" x="0.0" y="0.0" width="190" height="30"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="228.5" height="31"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
+                                                                <variation key="userInterfaceIdiom=mac">
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                                </variation>
                                                             </label>
-                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1lz-cX-eE7">
-                                                                <rect key="frame" x="195" y="0.0" width="76" height="30"/>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1lz-cX-eE7">
+                                                                <rect key="frame" x="234" y="0.0" width="91" height="31"/>
                                                                 <color key="tintColor" name="0099CA"/>
-                                                                <state key="normal" title="Create one"/>
+                                                                <state key="normal" title="Create one">
+                                                                    <color key="titleColor" name="0099CC"/>
+                                                                </state>
                                                                 <connections>
                                                                     <segue destination="AaL-uj-y2l" kind="show" id="YHE-Ps-YDC"/>
                                                                 </connections>
@@ -170,13 +183,16 @@
                                                 </subviews>
                                             </stackView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-Or-" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zQJ-hQ-6Ls">
-                                                <rect key="frame" x="151" y="80" width="33.5" height="20.5"/>
+                                                <rect key="frame" x="171" y="82" width="38.5" height="24"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
+                                                <variation key="userInterfaceIdiom=mac">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                </variation>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="nIg-03-nxb">
-                                                <rect key="frame" x="117.5" y="110.5" width="100" height="40"/>
+                                                <rect key="frame" x="140" y="116" width="100" height="40"/>
                                                 <subviews>
                                                     <view contentMode="scaleToFill" placeholderIntrinsicWidth="100" placeholderIntrinsicHeight="40" translatesAutoresizingMaskIntoConstraints="NO" id="oeT-s8-gCe" customClass="GIDSignInButton">
                                                         <rect key="frame" x="0.0" y="0.0" width="100" height="40"/>
@@ -315,7 +331,7 @@
                 <navigationController storyboardIdentifier="LoginNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="gmZ-qk-tiz" customClass="NavigationController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="gWd-yd-kJZ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="800" height="38"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="barTintColor" name="ThemeColor"/>
@@ -420,14 +436,14 @@
             <objects>
                 <viewController storyboardIdentifier="CreateAccountViewController" id="o9L-cD-zJr" customClass="CreateAccountViewController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1wZ-7X-zBQ">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="800" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="51o-Zp-Ru4">
-                                <rect key="frame" x="0.0" y="93.5" width="375" height="480"/>
+                                <rect key="frame" x="190" y="62" width="420" height="476"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_120" translatesAutoresizingMaskIntoConstraints="NO" id="Aob-i2-iy4">
-                                        <rect key="frame" x="127.5" y="20" width="120" height="120"/>
+                                        <rect key="frame" x="150" y="20" width="120" height="120"/>
                                         <constraints>
                                             <constraint firstAttribute="height" id="b7r-av-hwT"/>
                                         </constraints>
@@ -448,13 +464,13 @@
                                         </variation>
                                     </imageView>
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="RcY-mV-Z7W">
-                                        <rect key="frame" x="177.5" y="150" width="20" height="20"/>
+                                        <rect key="frame" x="202" y="150" width="16" height="16"/>
                                     </activityIndicatorView>
                                     <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="eWi-ea-V7K">
-                                        <rect key="frame" x="20" y="180" width="335" height="280"/>
+                                        <rect key="frame" x="20" y="176" width="380" height="280"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ZbE-4O-vPQ" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
-                                                <rect key="frame" x="0.0" y="0.0" width="335" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="380" height="50"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="xfS-6A-cku"/>
                                                 </constraints>
@@ -477,15 +493,18 @@
                                                         <real key="value" value="1"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <variation key="userInterfaceIdiom=mac">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                </variation>
                                                 <connections>
                                                     <outlet property="delegate" destination="o9L-cD-zJr" id="eHp-4t-Bun"/>
                                                 </connections>
                                             </textField>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="Jak-Tc-cBL">
-                                                <rect key="frame" x="0.0" y="80" width="335" height="130"/>
+                                                <rect key="frame" x="0.0" y="80" width="380" height="130"/>
                                                 <subviews>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Tqv-Zd-7iE" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
-                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="50"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="380" height="50"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="50" id="3XI-h4-3Xe"/>
                                                         </constraints>
@@ -508,12 +527,15 @@
                                                                 <real key="value" value="1"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
+                                                        <variation key="userInterfaceIdiom=mac">
+                                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                        </variation>
                                                         <connections>
                                                             <outlet property="delegate" destination="o9L-cD-zJr" id="76N-eO-L7i"/>
                                                         </connections>
                                                     </textField>
                                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Re-enter Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="q8M-JX-uDy" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
-                                                        <rect key="frame" x="0.0" y="80" width="335" height="50"/>
+                                                        <rect key="frame" x="0.0" y="80" width="380" height="50"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="50" id="d47-KT-3Yu"/>
                                                         </constraints>
@@ -536,6 +558,9 @@
                                                                 <real key="value" value="1"/>
                                                             </userDefinedRuntimeAttribute>
                                                         </userDefinedRuntimeAttributes>
+                                                        <variation key="userInterfaceIdiom=mac">
+                                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                        </variation>
                                                         <connections>
                                                             <outlet property="delegate" destination="o9L-cD-zJr" id="jK2-B7-acO"/>
                                                         </connections>
@@ -543,8 +568,8 @@
                                                 </subviews>
                                                 <variation key="heightClass=compact" axis="horizontal"/>
                                             </stackView>
-                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LKp-h4-zD4" customClass="RoundButton" customModule="Srila_Prabhupada" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="240" width="335" height="40"/>
+                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LKp-h4-zD4" customClass="RoundButton" customModule="Srila_Prabhupada" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="240" width="380" height="40"/>
                                                 <color key="backgroundColor" name="F96D00"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="kYa-1L-Fxr"/>
@@ -602,6 +627,9 @@
                                         <include reference="7c1-MJ-IP0"/>
                                     </mask>
                                 </variation>
+                                <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=regular">
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </variation>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="5kP-KU-f3H"/>
@@ -619,7 +647,25 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="Create Account" id="mJo-8h-tu8"/>
+                    <navigationItem key="navigationItem" title="Create Account" id="mJo-8h-tu8">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="gWW-w8-pYM">
+                            <button key="customView" hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="F4A-Fr-TLZ">
+                                <rect key="frame" x="717" y="5" width="63" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" name="AccentColor"/>
+                                <color key="tintColor" name="D64214"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" name="FAFAFA"/>
+                                </state>
+                                <variation key="userInterfaceIdiom=mac" hidden="NO"/>
+                                <connections>
+                                    <action selector="cancelButtonPressed:" destination="o9L-cD-zJr" eventType="touchUpInside" id="ANR-eA-kqg"/>
+                                </connections>
+                            </button>
+                            <color key="tintColor" name="AccentColor"/>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="createButton" destination="LKp-h4-zD4" id="cop-vB-SxA"/>
                         <outlet property="emailTextField" destination="ZbE-4O-vPQ" id="N8C-NB-x9K"/>
@@ -637,14 +683,14 @@
             <objects>
                 <viewController storyboardIdentifier="ForgotPasswordViewController" id="hfw-3Y-WSq" customClass="ForgotPasswordViewController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="AVK-vf-SRA">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="800" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8SK-oR-0jV">
-                                <rect key="frame" x="0.0" y="173.5" width="375" height="320"/>
+                                <rect key="frame" x="190" y="142" width="420" height="316"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_120" translatesAutoresizingMaskIntoConstraints="NO" id="VlT-Yx-MpV">
-                                        <rect key="frame" x="127.5" y="20" width="120" height="120"/>
+                                        <rect key="frame" x="150" y="20" width="120" height="120"/>
                                         <constraints>
                                             <constraint firstAttribute="height" id="5X5-Oz-FX0"/>
                                         </constraints>
@@ -665,13 +711,13 @@
                                         </variation>
                                     </imageView>
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="m2y-u3-D9q">
-                                        <rect key="frame" x="177.5" y="150" width="20" height="20"/>
+                                        <rect key="frame" x="202" y="150" width="16" height="16"/>
                                     </activityIndicatorView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="qFl-wH-egI">
-                                        <rect key="frame" x="20" y="180" width="335" height="120"/>
+                                        <rect key="frame" x="20" y="176" width="380" height="120"/>
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JiP-v2-2TM" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
-                                                <rect key="frame" x="0.0" y="0.0" width="335" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="380" height="50"/>
                                                 <color key="tintColor" name="0099CA"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="ufS-ZA-E4e"/>
@@ -695,12 +741,15 @@
                                                         <real key="value" value="1"/>
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
+                                                <variation key="userInterfaceIdiom=mac">
+                                                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                </variation>
                                                 <connections>
                                                     <outlet property="delegate" destination="hfw-3Y-WSq" id="uTk-Qe-WlS"/>
                                                 </connections>
                                             </textField>
-                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QTK-Sh-MdL" customClass="RoundButton" customModule="Srila_Prabhupada" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="80" width="335" height="40"/>
+                                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QTK-Sh-MdL" customClass="RoundButton" customModule="Srila_Prabhupada" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="80" width="380" height="40"/>
                                                 <color key="backgroundColor" name="F96D00"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="40" id="pY4-dZ-XXl"/>
@@ -753,6 +802,9 @@
                                         <include reference="u8z-pU-vTm"/>
                                     </mask>
                                 </variation>
+                                <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=regular">
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </variation>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="wcF-kA-bRc"/>
@@ -770,7 +822,27 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="Forgot Password" id="5XZ-Lt-ogd"/>
+                    <toolbarItems/>
+                    <navigationItem key="navigationItem" title="Forgot Password" id="5XZ-Lt-ogd">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="Xaw-Pw-Xr1">
+                            <button key="customView" hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Tdt-vG-0g2">
+                                <rect key="frame" x="717" y="5" width="63" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" name="AccentColor"/>
+                                <color key="tintColor" name="D64214"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" name="FAFAFA"/>
+                                </state>
+                                <variation key="userInterfaceIdiom=mac" hidden="NO"/>
+                                <connections>
+                                    <action selector="cancelButtonPressed:" destination="hfw-3Y-WSq" eventType="touchUpInside" id="RgO-36-qH6"/>
+                                </connections>
+                            </button>
+                            <color key="tintColor" name="AccentColor"/>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="emailTextField" destination="JiP-v2-2TM" id="V0q-4W-FUZ"/>
                         <outlet property="loadingIndicatorView" destination="m2y-u3-D9q" id="2bT-tV-el1"/>
@@ -786,40 +858,47 @@
             <objects>
                 <viewController storyboardIdentifier="LoadingViewController" id="yX6-ps-2of" customClass="LoadingViewController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="kug-s8-z5B">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <rect key="frame" x="0.0" y="0.0" width="800" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="ahu-fG-vcc">
-                                <rect key="frame" x="63.5" y="193" width="248.5" height="281"/>
+                                <rect key="frame" x="257" y="159" width="286" height="283"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_1024_corner" translatesAutoresizingMaskIntoConstraints="NO" id="RR7-e4-b4U">
-                                        <rect key="frame" x="24" y="0.0" width="200" height="200"/>
+                                        <rect key="frame" x="43" y="0.0" width="200" height="200"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="RR7-e4-b4U" secondAttribute="height" multiplier="1:1" id="nGY-yk-Rzd"/>
                                             <constraint firstAttribute="width" constant="200" id="w3F-nJ-bHr">
                                                 <variation key="heightClass=compact" constant="100"/>
+                                                <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact" constant="250"/>
                                             </constraint>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Srila Prabhupada" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WVi-wL-j1E">
-                                        <rect key="frame" x="0.0" y="240" width="248.5" height="41"/>
+                                        <rect key="frame" x="0.0" y="240" width="286" height="43"/>
                                         <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
+                                        <variation key="userInterfaceIdiom=mac">
+                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="36"/>
+                                        </variation>
                                     </label>
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="qsJ-QD-NQw">
-                                <rect key="frame" x="30" y="514" width="315" height="42.5"/>
+                                <rect key="frame" x="250" y="482" width="300" height="67"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ehO-wT-hBo">
-                                        <rect key="frame" x="0.0" y="0.0" width="315" height="18.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="300" height="27"/>
                                         <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="15"/>
                                         <color key="textColor" name="D64214"/>
                                         <nil key="highlightedColor"/>
+                                        <variation key="userInterfaceIdiom=mac">
+                                            <fontDescription key="fontDescription" name="Verdana" family="Verdana" pointSize="22"/>
+                                        </variation>
                                     </label>
                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Koh-Iz-WSH">
-                                        <rect key="frame" x="0.0" y="38.5" width="315" height="4"/>
+                                        <rect key="frame" x="0.0" y="47" width="300" height="20"/>
                                         <color key="tintColor" name="D64214"/>
                                         <color key="progressTintColor" name="D64214"/>
                                         <color key="trackTintColor" name="FF5722"/>
@@ -875,7 +954,7 @@
                     <navigationItem key="navigationItem" id="AOc-gM-Shu"/>
                     <value key="contentSizeForViewInPopover" type="size" width="420" height="600"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="3k8-0X-IT7">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="800" height="38"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="barTintColor" name="ThemeColor"/>
@@ -903,7 +982,7 @@
                     <navigationItem key="navigationItem" id="9g1-yV-Lya"/>
                     <value key="contentSizeForViewInPopover" type="size" width="420" height="600"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="KlV-oQ-p97">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <rect key="frame" x="0.0" y="0.0" width="800" height="38"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="barTintColor" name="ThemeColor"/>
@@ -926,34 +1005,34 @@
     </scenes>
     <designables>
         <designable name="JiP-v2-2TM">
-            <size key="intrinsicContentSize" width="335" height="39.220703125"/>
+            <size key="intrinsicContentSize" width="47" height="24"/>
         </designable>
         <designable name="LKp-h4-zD4">
-            <size key="intrinsicContentSize" width="125" height="22"/>
+            <size key="intrinsicContentSize" width="128" height="31"/>
         </designable>
         <designable name="N37-wZ-rCp">
-            <size key="intrinsicContentSize" width="335" height="39.220703125"/>
+            <size key="intrinsicContentSize" width="85" height="24"/>
         </designable>
         <designable name="QTK-Sh-MdL">
-            <size key="intrinsicContentSize" width="57" height="22"/>
+            <size key="intrinsicContentSize" width="59" height="31"/>
         </designable>
         <designable name="QUi-fO-3KS">
-            <size key="intrinsicContentSize" width="335" height="39.220703125"/>
+            <size key="intrinsicContentSize" width="47" height="24"/>
         </designable>
         <designable name="Tfl-LO-8ZS">
-            <size key="intrinsicContentSize" width="55" height="22"/>
+            <size key="intrinsicContentSize" width="56" height="31"/>
         </designable>
         <designable name="Tqv-Zd-7iE">
-            <size key="intrinsicContentSize" width="335" height="39.220703125"/>
+            <size key="intrinsicContentSize" width="79.5" height="21"/>
         </designable>
         <designable name="ZbE-4O-vPQ">
-            <size key="intrinsicContentSize" width="335" height="39.220703125"/>
+            <size key="intrinsicContentSize" width="44.5" height="21"/>
         </designable>
         <designable name="oeT-s8-gCe">
             <size key="intrinsicContentSize" width="100" height="40"/>
         </designable>
         <designable name="q8M-JX-uDy">
-            <size key="intrinsicContentSize" width="335" height="39.220703125"/>
+            <size key="intrinsicContentSize" width="156.5" height="21"/>
         </designable>
     </designables>
     <color key="tintColor" name="F96D00"/>
@@ -964,6 +1043,12 @@
         <namedColor name="0099CA">
             <color red="0.0" green="0.59999999999999998" blue="0.792156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
+        <namedColor name="0099CC">
+            <color red="0.0" green="0.59999999999999998" blue="0.792156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="AccentColor">
+            <color red="0.97647058823529409" green="0.42745098039215684" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="B8B8B8">
             <color red="0.72156862745098038" green="0.72156862745098038" blue="0.72156862745098038" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
@@ -972,6 +1057,9 @@
         </namedColor>
         <namedColor name="F96D00">
             <color red="0.97647058823529409" green="0.42745098039215684" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="FAFAFA">
+            <color red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="FF5722">
             <color red="1" green="0.3411764705882353" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

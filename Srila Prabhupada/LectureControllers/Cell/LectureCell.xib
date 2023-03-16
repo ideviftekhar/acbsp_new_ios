@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -23,8 +23,12 @@
                         <rect key="frame" x="10" y="12" width="40" height="40"/>
                         <color key="backgroundColor" systemColor="systemGray6Color"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="40" id="8Ne-Dc-zSw"/>
-                            <constraint firstAttribute="width" constant="40" id="ug5-io-sGC"/>
+                            <constraint firstAttribute="height" constant="40" id="8Ne-Dc-zSw">
+                                <variation key="userInterfaceIdiom=mac" constant="50"/>
+                            </constraint>
+                            <constraint firstAttribute="width" constant="40" id="ug5-io-sGC">
+                                <variation key="userInterfaceIdiom=mac" constant="50"/>
+                            </constraint>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -43,69 +47,96 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="toB-kP-27M">
-                        <rect key="frame" x="60" y="5" width="210" height="53.5"/>
+                        <rect key="frame" x="60" y="5" width="210" height="54"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7cs-uh-SL9">
-                                <rect key="frame" x="0.0" y="0.0" width="22" height="20.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="22" height="21"/>
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
                                 <color key="textColor" name="TextDarkGray"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="userInterfaceIdiom=mac">
+                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="20"/>
+                                </variation>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="8bV-y3-7Mx">
-                                <rect key="frame" x="0.0" y="20.5" width="77" height="16.5"/>
+                                <rect key="frame" x="0.0" y="21" width="77" height="16.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Verse" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="nQB-Ua-gsO">
                                         <rect key="frame" x="0.0" y="0.0" width="24" height="16.5"/>
                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="12"/>
                                         <color key="textColor" name="TextDarkGray"/>
                                         <nil key="highlightedColor"/>
+                                        <variation key="userInterfaceIdiom=mac">
+                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="14"/>
+                                        </variation>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" text="●" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qTp-hj-off">
                                         <rect key="frame" x="28" y="0.0" width="8" height="16.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="8"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
+                                        <variation key="userInterfaceIdiom=mac">
+                                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                        </variation>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Duration" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N9l-9l-L9l">
                                         <rect key="frame" x="40" y="0.0" width="37" height="16.5"/>
                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
                                         <color key="textColor" name="TextDarkGray"/>
                                         <nil key="highlightedColor"/>
+                                        <variation key="userInterfaceIdiom=mac">
+                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="14"/>
+                                        </variation>
                                     </label>
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="2Px-ai-gLn">
-                                <rect key="frame" x="0.0" y="37" width="138.5" height="16.5"/>
+                                <rect key="frame" x="0.0" y="37.5" width="138.5" height="16.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="j2s-UD-Jnl">
                                         <rect key="frame" x="0.0" y="0.0" width="36.5" height="16.5"/>
                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="12"/>
                                         <color key="textColor" name="TextDarkGray"/>
                                         <nil key="highlightedColor"/>
+                                        <variation key="userInterfaceIdiom=mac">
+                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="14"/>
+                                        </variation>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" text="●" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m6b-nj-VnU">
                                         <rect key="frame" x="40.5" y="0.0" width="8" height="16.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="8"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
+                                        <variation key="userInterfaceIdiom=mac">
+                                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                        </variation>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z5O-MH-zt7">
                                         <rect key="frame" x="52.5" y="0.0" width="19.5" height="16.5"/>
                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
                                         <color key="textColor" name="TextDarkGray"/>
                                         <nil key="highlightedColor"/>
+                                        <variation key="userInterfaceIdiom=mac">
+                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="14"/>
+                                        </variation>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" text="●" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o4r-m7-03j">
                                         <rect key="frame" x="76" y="0.0" width="8" height="16.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="8"/>
                                         <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
+                                        <variation key="userInterfaceIdiom=mac">
+                                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                        </variation>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" text="0KB of 2MB" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="P7h-rT-rAy">
                                         <rect key="frame" x="88" y="0.0" width="50.5" height="16.5"/>
                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
                                         <color key="textColor" name="ProgressColor"/>
                                         <nil key="highlightedColor"/>
+                                        <variation key="userInterfaceIdiom=mac">
+                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="14"/>
+                                        </variation>
                                     </label>
                                 </subviews>
                             </stackView>
@@ -115,8 +146,12 @@
                         <rect key="frame" x="275" y="15" width="34" height="34"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="34" id="e6q-TU-Yc1"/>
-                            <constraint firstAttribute="width" constant="34" id="rtt-Uu-pTq"/>
+                            <constraint firstAttribute="height" constant="34" id="e6q-TU-Yc1">
+                                <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact" constant="40"/>
+                            </constraint>
+                            <constraint firstAttribute="width" constant="34" id="rtt-Uu-pTq">
+                                <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact" constant="40"/>
+                            </constraint>
                         </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="boolean" keyPath="showValueString" value="YES"/>
@@ -171,7 +206,7 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q0B-mL-dK8">
-                        <rect key="frame" x="317" y="0.0" width="50" height="63.5"/>
+                        <rect key="frame" x="317" y="0.0" width="50" height="64"/>
                         <color key="tintColor" name="0099CC"/>
                         <state key="normal" title=""/>
                         <buttonConfiguration key="configuration" style="plain" image="ellipsis.circle" catalog="system"/>
@@ -180,8 +215,12 @@
                         <rect key="frame" x="329.5" y="20" width="25" height="24"/>
                         <color key="tintColor" name="0099CC"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="25" id="9gU-FC-Ww5"/>
-                            <constraint firstAttribute="width" constant="25" id="end-3i-Xuh"/>
+                            <constraint firstAttribute="height" constant="25" id="9gU-FC-Ww5">
+                                <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact" constant="28"/>
+                            </constraint>
+                            <constraint firstAttribute="width" constant="25" id="end-3i-Xuh">
+                                <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact" constant="28"/>
+                            </constraint>
                         </constraints>
                     </imageView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Mfu-JH-XN3">
@@ -302,6 +341,8 @@
                     <constraint firstItem="f6l-Bp-fUH" firstAttribute="bottom" secondItem="Mfu-JH-XN3" secondAttribute="bottom" id="3R8-V1-gue"/>
                     <constraint firstItem="1Pj-Yk-u2T" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="4BB-Tf-aAh"/>
                     <constraint firstItem="f6l-Bp-fUH" firstAttribute="leading" secondItem="Mfu-JH-XN3" secondAttribute="leading" id="4NH-zl-wAT"/>
+                    <constraint firstAttribute="bottom" secondItem="1Pj-Yk-u2T" secondAttribute="bottom" constant="12" id="4Ui-Vd-Vdv"/>
+                    <constraint firstItem="1Pj-Yk-u2T" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="60y-Ls-omb"/>
                     <constraint firstAttribute="bottom" secondItem="Q0B-mL-dK8" secondAttribute="bottom" id="7NZ-Rw-l1C"/>
                     <constraint firstAttribute="bottom" secondItem="toB-kP-27M" secondAttribute="bottom" constant="5" id="96i-gw-Ptn"/>
                     <constraint firstItem="eDN-pj-FYV" firstAttribute="centerY" secondItem="1Pj-Yk-u2T" secondAttribute="bottom" id="9E8-Mc-vMz"/>
@@ -353,6 +394,11 @@
             <point key="canvasLocation" x="131.15942028985509" y="114.17410714285714"/>
         </tableViewCell>
     </objects>
+    <designables>
+        <designable name="CnE-6x-y4s">
+            <size key="intrinsicContentSize" width="16.5" height="12"/>
+        </designable>
+    </designables>
     <resources>
         <image name="arrow.down.circle.fill" catalog="system" width="128" height="123"/>
         <image name="checkmark.circle" catalog="system" width="128" height="123"/>
@@ -374,7 +420,7 @@
             <color red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -383,7 +429,7 @@
             <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.15686274509803921" green="0.80392156862745101" blue="0.25490196078431371" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemOrangeColor">
             <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

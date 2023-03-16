@@ -60,6 +60,9 @@ class SearchViewController: UIViewController {
                 searchController.searchBar.text = searchText
                 searchController.searchBar.placeholder = "Search..."
                 searchController.searchBar.barStyle = .black
+                if #available(macCatalyst 14.0, *), UIDevice.current.userInterfaceIdiom == .mac {
+                    searchController.searchBar.barStyle = .default
+                }
                 searchController.searchBar.enablesReturnKeyAutomatically = false
             }
 

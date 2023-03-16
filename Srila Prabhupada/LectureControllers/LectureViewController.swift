@@ -104,6 +104,7 @@ class LectureViewController: SearchViewController {
             self.list.loadingMessage = "Loading..."
             list.registerCell(type: Cell.self, registerType: .nib)
             lectureTebleView.tableFooterView = UIView()
+            lectureTebleView.separatorStyle = .singleLine
             refreshUI(animated: false, showNoItems: false)
         }
 

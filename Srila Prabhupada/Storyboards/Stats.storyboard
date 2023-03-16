@@ -35,6 +35,9 @@
                                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
+                                                                <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                                                </variation>
                                                             </label>
                                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="CbK-hV-MJn">
                                                                 <rect key="frame" x="0.0" y="34" width="335" height="18"/>
@@ -47,12 +50,18 @@
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <nil key="highlightedColor"/>
+                                                                                <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
+                                                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                                </variation>
                                                                             </label>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JCQ-52-tH6">
                                                                                 <rect key="frame" x="64" y="0.0" width="9.5" height="18"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                                 <nil key="textColor"/>
                                                                                 <nil key="highlightedColor"/>
+                                                                                <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
+                                                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                                </variation>
                                                                             </label>
                                                                         </subviews>
                                                                     </stackView>
@@ -64,12 +73,18 @@
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                                 <nil key="textColor"/>
                                                                                 <nil key="highlightedColor"/>
+                                                                                <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
+                                                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                                </variation>
                                                                             </label>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" text="Total" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0zC-VH-hDk" userLabel="Total audio file">
                                                                                 <rect key="frame" x="19.5" y="0.0" width="33.5" height="18"/>
                                                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                 <nil key="highlightedColor"/>
+                                                                                <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
+                                                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                                </variation>
                                                                             </label>
                                                                         </subviews>
                                                                     </stackView>
@@ -89,6 +104,9 @@
                                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
+                                                                        <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                        </variation>
                                                                     </label>
                                                                 </subviews>
                                                             </stackView>
@@ -109,6 +127,9 @@
                                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
+                                                                <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                                                </variation>
                                                             </label>
                                                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8ly-Pb-FYg" customClass="BarChartView" customModule="Charts">
                                                                 <rect key="frame" x="0.0" y="34" width="335" height="250"/>
@@ -134,12 +155,18 @@
                                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
+                                                                <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                                                </variation>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zrb-He-qDZ">
                                                                 <rect key="frame" x="0.0" y="34" width="335" height="18"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
+                                                                <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                </variation>
                                                             </label>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="gXw-FA-Ros">
                                                                 <rect key="frame" x="0.0" y="62" width="335" height="15"/>
@@ -155,6 +182,9 @@
                                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
+                                                                        <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                        </variation>
                                                                     </label>
                                                                 </subviews>
                                                             </stackView>
@@ -174,6 +204,9 @@
                                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                         <color key="textColor" systemColor="systemRedColor"/>
                                                                         <nil key="highlightedColor"/>
+                                                                        <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                        </variation>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NVW-7L-nhd">
                                                                         <rect key="frame" x="74" y="0.0" width="1" height="20"/>
@@ -190,6 +223,9 @@
                                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                         <color key="textColor" systemColor="systemGreenColor"/>
                                                                         <nil key="highlightedColor"/>
+                                                                        <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                        </variation>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ygh-KL-GgH">
                                                                         <rect key="frame" x="149.5" y="0.0" width="1" height="20"/>
@@ -206,6 +242,9 @@
                                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                         <color key="textColor" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
+                                                                        <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                        </variation>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nye-lO-Izp">
                                                                         <rect key="frame" x="225" y="0.0" width="1" height="20"/>
@@ -222,6 +261,9 @@
                                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                         <color key="textColor" red="0.58072251080000004" green="0.066734083" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
+                                                                        <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                        </variation>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="htX-lB-oC8">
                                                                         <rect key="frame" x="334" y="0.0" width="1" height="20"/>
@@ -249,12 +291,18 @@
                                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
+                                                                <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                </variation>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rcB-Fr-mUG">
                                                                 <rect key="frame" x="0.0" y="34" width="335" height="18"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
+                                                                <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                </variation>
                                                             </label>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="26q-Bm-Xh7">
                                                                 <rect key="frame" x="0.0" y="62" width="335" height="15"/>
@@ -270,6 +318,9 @@
                                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
+                                                                        <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                        </variation>
                                                                     </label>
                                                                 </subviews>
                                                             </stackView>
@@ -289,6 +340,9 @@
                                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                         <color key="textColor" systemColor="systemRedColor"/>
                                                                         <nil key="highlightedColor"/>
+                                                                        <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                        </variation>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GPA-XW-BzY">
                                                                         <rect key="frame" x="74" y="0.0" width="1" height="20"/>
@@ -306,6 +360,9 @@
                                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                         <color key="textColor" systemColor="systemGreenColor"/>
                                                                         <nil key="highlightedColor"/>
+                                                                        <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                        </variation>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wfQ-qT-9Uu">
                                                                         <rect key="frame" x="149.5" y="0.0" width="1" height="20"/>
@@ -322,6 +379,9 @@
                                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                         <color key="textColor" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
+                                                                        <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                        </variation>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nZ5-R2-YFe">
                                                                         <rect key="frame" x="225" y="0.0" width="1" height="20"/>
@@ -338,6 +398,9 @@
                                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                         <color key="textColor" red="0.58072251080000004" green="0.066734083" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
+                                                                        <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                        </variation>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="idA-Qf-pP5">
                                                                         <rect key="frame" x="334" y="0.0" width="1" height="20"/>
@@ -362,10 +425,12 @@
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Rd-KS-P14">
                                                                 <rect key="frame" x="0.0" y="0.0" width="335" height="38"/>
+                                                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="22"/>
                                                                 <color key="tintColor" name="0099CC"/>
-                                                                <state key="normal" title=""/>
+                                                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                <state key="normal" title="All time"/>
                                                                 <buttonConfiguration key="configuration" style="plain" title="All time">
-                                                                    <fontDescription key="titleFontDescription" type="system" pointSize="20"/>
+                                                                    <fontDescription key="titleFontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="22"/>
                                                                 </buttonConfiguration>
                                                             </button>
                                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="bm2-jW-jHg">
@@ -389,6 +454,9 @@
                                                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                         <nil key="highlightedColor"/>
+                                                                                        <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
+                                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                                        </variation>
                                                                                     </label>
                                                                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="iNx-od-jZb">
                                                                                         <rect key="frame" x="0.0" y="18" width="117" height="50"/>
@@ -426,10 +494,14 @@
                                                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                                         <nil key="highlightedColor"/>
+                                                                                        <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
+                                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                                        </variation>
                                                                                     </label>
                                                                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="3QO-QR-VRH">
                                                                                         <rect key="frame" x="0.0" y="18" width="117" height="50"/>
                                                                                         <connections>
+                                                                                            <action selector="choosEndDateWithSender:" destination="gUz-W7-hgS" eventType="valueChanged" id="UVS-rd-geo"/>
                                                                                             <action selector="choosStartDateWithSender:" destination="gUz-W7-hgS" eventType="valueChanged" id="cKB-GV-23T"/>
                                                                                         </connections>
                                                                                     </datePicker>
@@ -447,6 +519,9 @@
                                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
+                                                                <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                </variation>
                                                             </label>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="OjN-2j-wQi">
                                                                 <rect key="frame" x="0.0" y="154" width="335" height="15"/>
@@ -462,6 +537,9 @@
                                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                         <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                         <nil key="highlightedColor"/>
+                                                                        <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                        </variation>
                                                                     </label>
                                                                 </subviews>
                                                             </stackView>
@@ -481,6 +559,9 @@
                                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                         <color key="textColor" systemColor="systemRedColor"/>
                                                                         <nil key="highlightedColor"/>
+                                                                        <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                        </variation>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gEA-LU-vDy">
                                                                         <rect key="frame" x="74" y="0.0" width="1" height="20"/>
@@ -498,6 +579,9 @@
                                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                         <color key="textColor" systemColor="systemGreenColor"/>
                                                                         <nil key="highlightedColor"/>
+                                                                        <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                        </variation>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pgs-pQ-VGK">
                                                                         <rect key="frame" x="149.5" y="0.0" width="1" height="20"/>
@@ -514,6 +598,9 @@
                                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                         <color key="textColor" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
+                                                                        <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                        </variation>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="27q-fy-Cy4">
                                                                         <rect key="frame" x="225" y="0.0" width="1" height="20"/>
@@ -530,6 +617,9 @@
                                                                         <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                         <color key="textColor" red="0.58072251080000004" green="0.066734083" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                                         <nil key="highlightedColor"/>
+                                                                        <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
+                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                        </variation>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GfF-sf-afA">
                                                                         <rect key="frame" x="334" y="0.0" width="1" height="20"/>

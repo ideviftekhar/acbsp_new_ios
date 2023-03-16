@@ -19,6 +19,7 @@ class NavigationController: UINavigationController {
 
         if #available(iOS 13.0, *) {
             let navigationBarAppearance = UINavigationBarAppearance()
+            navigationBarAppearance.configureWithTransparentBackground()
             navigationBarAppearance.backgroundColor = UIColor.themeColor
             navigationBarAppearance.titleTextAttributes = titleTextAttributes
             navigationBarAppearance.largeTitleTextAttributes = titleTextAttributes
@@ -30,6 +31,9 @@ class NavigationController: UINavigationController {
                 navigationBar.compactScrollEdgeAppearance = navigationBarAppearance
             }
         }
+        
+        navigationBar.setBackgroundImage(UIImage(), for: .default)
+        navigationBar.shadowImage = UIImage()
     }
 
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {

@@ -12,4 +12,7 @@ class CopyrightViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
     }
+    @IBAction private func cancelButtonTapped(_ sender: UIButton) {
+        self.dismiss(animated: true)
+    }
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QfZ-UK-gEc">
-    <device id="retina6_72" orientation="portrait" appearance="light"/>
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
@@ -15,21 +15,25 @@
             <objects>
                 <viewController storyboardIdentifier="SideMenuViewController" id="Bg7-AS-CAc" customClass="SideMenuViewController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="r23-ZY-Rnq">
-                        <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="68D-r6-tQv">
-                                <rect key="frame" x="0.0" y="0.0" width="430" height="119"/>
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="108"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="9yq-SQ-vRn">
-                                        <rect key="frame" x="10" y="69" width="410" height="40"/>
+                                        <rect key="frame" x="10" y="58" width="394" height="40"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Odt-0N-hgQ">
                                                 <rect key="frame" x="0.0" y="0.0" width="40" height="40"/>
                                                 <color key="backgroundColor" systemColor="systemGray6Color"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="width" constant="40" id="63P-2e-izO"/>
-                                                    <constraint firstAttribute="height" constant="40" id="ECn-P1-ykw"/>
+                                                    <constraint firstAttribute="width" constant="40" id="63P-2e-izO">
+                                                        <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact" constant="60"/>
+                                                    </constraint>
+                                                    <constraint firstAttribute="height" constant="40" id="ECn-P1-ykw">
+                                                        <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact" constant="60"/>
+                                                    </constraint>
                                                 </constraints>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -38,19 +42,25 @@
                                                 </userDefinedRuntimeAttributes>
                                             </imageView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="QI4-Tv-gEG">
-                                                <rect key="frame" x="50" y="3" width="360" height="34.333333333333336"/>
+                                                <rect key="frame" x="50" y="3" width="344" height="34.5"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="pbo-RL-FLZ">
-                                                        <rect key="frame" x="0.0" y="0.0" width="360" height="18"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="344" height="18"/>
                                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
+                                                        <variation key="userInterfaceIdiom=mac">
+                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                        </variation>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="IWD-71-nF1">
-                                                        <rect key="frame" x="0.0" y="20" width="360" height="14.333333333333336"/>
+                                                        <rect key="frame" x="0.0" y="20" width="344" height="14.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
+                                                        <variation key="userInterfaceIdiom=mac">
+                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                        </variation>
                                                     </label>
                                                 </subviews>
                                             </stackView>
@@ -67,17 +77,17 @@
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="af6-UT-yxw">
-                                <rect key="frame" x="0.0" y="119" width="430" height="813"/>
+                                <rect key="frame" x="0.0" y="108" width="414" height="788"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SideMenuCell" textLabel="Nwx-HR-hLx" style="IBUITableViewCellStyleDefault" id="GZ6-3T-gw6">
-                                        <rect key="frame" x="0.0" y="50" width="430" height="43.666667938232422"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SideMenuCell" textLabel="Nwx-HR-hLx" rowHeight="79" style="IBUITableViewCellStyleDefault" id="GZ6-3T-gw6">
+                                        <rect key="frame" x="0.0" y="50" width="414" height="79"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="GZ6-3T-gw6" id="24l-C1-oE4">
-                                            <rect key="frame" x="0.0" y="0.0" width="430" height="43.666667938232422"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="79"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Nwx-HR-hLx">
-                                                    <rect key="frame" x="20" y="0.0" width="390" height="43.666667938232422"/>
+                                                    <rect key="frame" x="20" y="0.0" width="374" height="79"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
                                                     <nil key="textColor"/>
@@ -112,7 +122,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WDj-wz-V8S" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="346" y="118"/>
+            <point key="canvasLocation" x="344.6511627906977" y="117.81115879828327"/>
         </scene>
         <!--Side Menu Navigation Controller-->
         <scene sceneID="Mmk-NP-jrD">
@@ -145,11 +155,11 @@
             <objects>
                 <viewController storyboardIdentifier="CopyrightViewController" id="ogI-jQ-tB8" customClass="CopyrightViewController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0c7-47-gfh">
-                        <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u9F-q3-6jd">
-                                <rect key="frame" x="20" y="205.00000000000003" width="390" height="286.66666666666674"/>
+                                <rect key="frame" x="20" y="194" width="374" height="286.5"/>
                                 <string key="text">His Divine Grace A.C. Bhaktivedanta Swami Prabhupāda, Founder-Ācārya of the International Society for Krishna Consciousness.
 Content used with permission of The Bhaktivedanta Book Trust International, Inc. All rights reserved. © Copyright 2022.
 This material may not be reproduced in whole or in part by any means, without written permission from the publisher, the Bhaktivedanta Archives, 1453 Tom Shelton Rd., Sandy Ridge, NC 27046.</string>
@@ -166,7 +176,25 @@ This material may not be reproduced in whole or in part by any means, without wr
                             <constraint firstItem="u9F-q3-6jd" firstAttribute="leading" secondItem="SuQ-Xj-wpm" secondAttribute="leading" constant="20" id="Qw3-qj-zxT"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Copyright" id="THa-Xh-mBW"/>
+                    <navigationItem key="navigationItem" title="Copyright" id="THa-Xh-mBW">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="bpr-n1-eTF">
+                            <button key="customView" hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="9Dx-es-eFA">
+                                <rect key="frame" x="331" y="5" width="63" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" name="AccentColor"/>
+                                <color key="tintColor" name="D64214"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Done">
+                                    <color key="titleColor" name="FAFAFA"/>
+                                </state>
+                                <variation key="userInterfaceIdiom=mac" hidden="NO"/>
+                                <connections>
+                                    <action selector="cancelButtonTapped:" destination="ogI-jQ-tB8" eventType="touchUpInside" id="ACb-eb-X6h"/>
+                                </connections>
+                            </button>
+                            <color key="tintColor" name="AccentColor"/>
+                        </barButtonItem>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nz9-qZ-44f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -177,17 +205,17 @@ This material may not be reproduced in whole or in part by any means, without wr
             <objects>
                 <viewController storyboardIdentifier="AboutViewController" id="O0F-tR-YVh" customClass="AboutViewController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="oxp-qF-sR1">
-                        <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="stO-VG-Fwj">
-                                <rect key="frame" x="0.0" y="155" width="430" height="777"/>
+                                <rect key="frame" x="0.0" y="144" width="414" height="752"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="efI-fg-47e">
-                                        <rect key="frame" x="0.0" y="0.0" width="430" height="3890"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="4052"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_167" translatesAutoresizingMaskIntoConstraints="NO" id="TMc-Te-Z51">
-                                                <rect key="frame" x="131.66666666666666" y="20" width="166.99999999999997" height="167"/>
+                                                <rect key="frame" x="123.5" y="20" width="167" height="167"/>
                                                 <color key="tintColor" systemColor="tintColor"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -196,22 +224,22 @@ This material may not be reproduced in whole or in part by any means, without wr
                                                 </userDefinedRuntimeAttributes>
                                             </imageView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="mjb-YA-Fhz">
-                                                <rect key="frame" x="20" y="217" width="390" height="3673"/>
+                                                <rect key="frame" x="20" y="217" width="374" height="3835"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Founder-acarya of international Society for Krishna Consciousness His Divine Grace A.C.Bhaktivedanta Swami Prabhupada" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JVA-g7-QBz" customClass="TappableLabel" customModule="Srila_Prabhupada" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="390" height="61"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="374" height="61"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" systemColor="systemOrangeColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Śrīla Prabhupāda" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hQu-2x-irJ">
-                                                        <rect key="frame" x="0.0" y="91" width="390" height="42"/>
+                                                        <rect key="frame" x="0.0" y="91" width="374" height="42"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="35"/>
                                                         <color key="textColor" red="0.033415639150000002" green="0.1517951813" blue="0.56035763459999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M9y-B0-ncA">
-                                                        <rect key="frame" x="0.0" y="163" width="390" height="3510"/>
+                                                        <rect key="frame" x="0.0" y="163" width="374" height="3672"/>
                                                         <string key="text">The honorific title Prabhupāda is properly used for designating those very great spiritual masters who have made an outstanding contribution of literature or preaching to the world. Examples are Śrīla Rūpa Gosvami Prabhupāda, Śrīla Jīva Gosvami Prabhupāda, and Śrīla Bhaktisiddhānta Sarasvati Goswami Prabhupāda.
      When members of ISKCON speak of “Srila Prabhupada," they refer to His Divine Grace A.C. Bhaktivedanta Swami Prabhupada. A.C. Bhaktivedanta Swami is correctly addressed as Srila Prabhupada because he occupies a unique position in the religious history of the world.
      In Śrīmad-Bhāgavatam (1.5.11), Vyāsadeva states that the Bhagavatam "is meant to bring about a revolution in the impious life of a misdirected civilization." This statement clearly refers to the preaching mission heralded by Śrīla A.C. Bhaktivedanta Swami Prabhupāda, whose purports on śrīmad-Bhāgavatam, composed five thousand years after Śrīla Vyāsadeva's compilation of the Bhāgavatam, have become the most important contribution for the revolutionary respiritualization of the entire human society, which was lost in the darkness of materialism.
@@ -265,7 +293,25 @@ This material may not be reproduced in whole or in part by any means, without wr
                             <constraint firstItem="stO-VG-Fwj" firstAttribute="top" secondItem="YFN-uV-Iab" secondAttribute="top" id="wsT-db-Ijp"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="About" id="22H-Vg-59R"/>
+                    <navigationItem key="navigationItem" title="About" id="22H-Vg-59R">
+                        <barButtonItem key="rightBarButtonItem" style="plain" id="V1t-bM-0Dg">
+                            <button key="customView" hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="ekO-Wa-rdR">
+                                <rect key="frame" x="331" y="5" width="63" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" name="AccentColor"/>
+                                <color key="tintColor" name="D64214"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Done">
+                                    <color key="titleColor" name="FAFAFA"/>
+                                </state>
+                                <variation key="userInterfaceIdiom=mac" hidden="NO"/>
+                                <connections>
+                                    <action selector="cancelButtonTapped:" destination="O0F-tR-YVh" eventType="touchUpInside" id="Qry-Hk-g8F"/>
+                                </connections>
+                            </button>
+                            <color key="tintColor" name="AccentColor"/>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="aboutAttributedLabel" destination="JVA-g7-QBz" id="W5z-kz-5TI"/>
                         <outlet property="aboutImage" destination="TMc-Te-Z51" id="6t4-G2-KG4"/>
@@ -284,7 +330,7 @@ This material may not be reproduced in whole or in part by any means, without wr
                     <toolbarItems/>
                     <value key="contentSizeForViewInPopover" type="size" width="420" height="600"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" largeTitles="YES" id="LLn-fd-33z">
-                        <rect key="frame" x="0.0" y="59" width="430" height="96"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="barTintColor" name="ThemeColor"/>
@@ -310,7 +356,7 @@ This material may not be reproduced in whole or in part by any means, without wr
                 <navigationController storyboardIdentifier="AboutNavigationController" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="pageSheet" id="9At-2x-DJn" customClass="NavigationController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" largeTitles="YES" id="m3a-6g-EHw">
-                        <rect key="frame" x="0.0" y="59" width="430" height="96"/>
+                        <rect key="frame" x="0.0" y="48" width="414" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="barTintColor" name="ThemeColor"/>
@@ -333,14 +379,23 @@ This material may not be reproduced in whole or in part by any means, without wr
     </scenes>
     <designables>
         <designable name="JVA-g7-QBz">
-            <size key="intrinsicContentSize" width="931.33333333333337" height="20.333333333333332"/>
+            <size key="intrinsicContentSize" width="931.5" height="20.5"/>
         </designable>
     </designables>
     <color key="tintColor" name="F96D00"/>
     <resources>
         <image name="logo_167" width="167" height="167"/>
+        <namedColor name="AccentColor">
+            <color red="0.97647058823529409" green="0.42745098039215684" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="D64214">
+            <color red="0.83921568627450982" green="0.25882352941176473" blue="0.078431372549019607" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="F96D00">
             <color red="0.97647058823529409" green="0.42745098039215684" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="FAFAFA">
+            <color red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="ThemeColor">
             <color red="0.97647058823529409" green="0.42745098039215684" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

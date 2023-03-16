@@ -30,6 +30,9 @@ class AboutViewController: UIViewController {
         let linkString: String = "His Divine Grace A.C.Bhaktivedanta Swami Prabhupada"
         aboutAttributedLabel.addLink(linkString)
     }
+    @IBAction private func cancelButtonTapped(_ sender: UIButton) {
+        self.dismiss(animated: true)
+    }
 }
 
 extension AboutViewController: TappableLabelDelegate {

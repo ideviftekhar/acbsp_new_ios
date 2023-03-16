@@ -65,6 +65,18 @@ class CreateAccountViewController: UIViewController {
         }
     }
 
+    @IBAction private func cancelButtonPressed(_: UIBarButtonItem) {
+        goBack()
+    }
+
+    private func goBack() {
+        if self.navigationController?.viewControllers.first == self {
+            self.dismiss(animated: true, completion: nil)
+        } else {
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
+
     private func showLoading() {
         loadingIndicatorView.startAnimating()
 

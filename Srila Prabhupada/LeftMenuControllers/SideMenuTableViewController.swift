@@ -71,6 +71,7 @@ class SideMenuViewController: UIViewController {
         do {
             list.registerCell(type: Cell.self, registerType: .nib)
             sideMenuTableView.tableFooterView = UIView()
+            sideMenuTableView.separatorStyle = .singleLine
             refreshUI(animated: false)
         }
     }

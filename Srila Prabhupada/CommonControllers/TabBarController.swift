@@ -102,6 +102,15 @@ class TabBarController: UITabBarController {
                 playerViewController.currentLecture = nil
             }
         }
+        if #available(macCatalyst 14.0, *),
+           UIDevice.current.userInterfaceIdiom == .mac,
+           let viewControllers = viewControllers {
+            viewControllers[0].tabBarItem.image = UIImage(named: "houseFill")
+            viewControllers[1].tabBarItem.image = UIImage(named: "musicNoteList")
+            viewControllers[2].tabBarItem.image = UIImage(named: "chartBarXaxis")
+            viewControllers[3].tabBarItem.image = UIImage(named: "squareAndArrowDownFill")
+            viewControllers[4].tabBarItem.image = UIImage(named: "starFill")
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -216,11 +225,11 @@ extension TabBarController: PlayerViewControllerDelegate {
             }
         case .minimize:
             for controller in viewControllers ?? [] {
-                controller.additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: 60, right: 0)
+                controller.additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: MiniPlayerView.miniPlayerHeight, right: 0)
             }
         case .expanded:
             for controller in viewControllers ?? [] {
-                controller.additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: 60, right: 0)
+                controller.additionalSafeAreaInsets = .init(top: 0, left: 0, bottom: MiniPlayerView.miniPlayerHeight, right: 0)
             }
         }
     }

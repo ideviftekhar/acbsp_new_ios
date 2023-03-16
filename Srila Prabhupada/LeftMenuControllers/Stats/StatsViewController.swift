@@ -117,6 +117,11 @@ class StatsViewController: UIViewController, ChartViewDelegate {
     }
 
     func setUpChart() {
+        if #available(macCatalyst 14.0, *), UIDevice.current.userInterfaceIdiom == .mac {
+            thisWeekChartView.noDataFont = UIFont.systemFont(ofSize: 22)
+        } else {
+            thisWeekChartView.noDataFont = UIFont.systemFont(ofSize: 16)
+        }
 
         thisWeekChartView.delegate = self
 

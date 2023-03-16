@@ -32,7 +32,7 @@ extension PlayerViewController {
             // Close state
             do {
                 tabBarController.view.insertSubview(playerContainerView, belowSubview: tabBarController.tabBar)
-                let rect = CGRect(x: 0, y: tabBarController.view.bounds.maxY, width: tabBarController.view.bounds.width, height: 60)
+                let rect = CGRect(x: 0, y: tabBarController.view.bounds.maxY, width: tabBarController.view.bounds.width, height: MiniPlayerView.miniPlayerHeight)
                 playerContainerView.frame = rect
             }
 
@@ -96,8 +96,8 @@ extension PlayerViewController {
         }
 
         let animationBlock = { [self] in
-            let y = tabBarController.tabBar.frame.minY - 60
-            let rect = CGRect(x: 0, y: y, width: tabBarController.view.frame.width, height: 60)
+            let y = tabBarController.tabBar.frame.minY - MiniPlayerView.miniPlayerHeight
+            let rect = CGRect(x: 0, y: y, width: tabBarController.view.frame.width, height: MiniPlayerView.miniPlayerHeight)
             playerContainerView.frame = rect
             self.view.frame = tabBarController.view.bounds
         }
@@ -130,7 +130,7 @@ extension PlayerViewController {
 
         let animationBlock = { [self] in
             let y = tabBarController.tabBar.frame.minY
-            let rect = CGRect(x: 0, y: y, width: tabBarController.view.frame.width, height: 60)
+            let rect = CGRect(x: 0, y: y, width: tabBarController.view.frame.width, height: MiniPlayerView.miniPlayerHeight)
             playerContainerView.frame = rect
             self.view.frame = tabBarController.view.bounds
             miniPlayerView.alpha = 1.0
