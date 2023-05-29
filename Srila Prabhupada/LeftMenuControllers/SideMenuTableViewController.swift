@@ -22,7 +22,8 @@ class SideMenuViewController: UIViewController {
     @IBOutlet private var userImageView: UIImageView!
     @IBOutlet private var userNameLabel: UILabel!
     @IBOutlet private var userEmailLabel: UILabel!
-
+    @IBOutlet private var userProfileStackView: UIStackView!
+    
     typealias Model = SideMenuItem
     typealias Cell = SideMenuCell
 
@@ -74,6 +75,19 @@ class SideMenuViewController: UIViewController {
             sideMenuTableView.separatorStyle = .singleLine
             refreshUI(animated: false)
         }
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(stackViewTapped))
+        userProfileStackView.addGestureRecognizer(tapGesture)
+    }
+    
+    @objc func stackViewTapped() {
+        let userProfileController = UIStoryboard.sideMenu.instantiate(UINavigationController.self, identifier: "UserProfileNavigationController")
+        
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            userProfileController.modalPresentationStyle = .fullScreen
+        }
+
+        self.present(userProfileController, animated: true)
     }
 }
 
@@ -103,26 +117,6 @@ extension SideMenuViewController: IQListViewDelegateDataSource {
             Haptic.selection()
 
             switch model {
-            case .signOut:
-
-                self.showAlert(title: "Logout", message: "Are you sure you would like to Logout?", preferredStyle: .actionSheet, sourceView: cell, cancel: ("Cancel", nil), destructive: ("Logout", {
-
-                    FirestoreManager.shared.signOut(completion: { result in
-                        switch result {
-                        case .success:
-
-                            if let keyWindow = self.view.window {
-                                UIView.transition(with: keyWindow, duration: 0.5, options: .transitionFlipFromLeft, animations: {
-                                    let loginNavigationController = UIStoryboard.main.instantiate(UINavigationController.self, identifier: "LoginNavigationController")
-                                    keyWindow.rootViewController = loginNavigationController
-                                })
-                            }
-                        case .failure(let error):
-                            Haptic.error()
-                            self.showAlert(title: "Error!", message: error.localizedDescription)
-                        }
-                    })
-                }))
             default:
                 delegate?.sideMenuController(self, didSelected: model, cell: cell)
             }

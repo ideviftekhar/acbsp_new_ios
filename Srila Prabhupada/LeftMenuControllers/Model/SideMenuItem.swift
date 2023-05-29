@@ -18,7 +18,6 @@ enum SideMenuItem: String, CaseIterable {
     case donate = "Donate"
     case copyright = "Copyright"
     case rateUs = "Rate Us on App Store"
-    case signOut = "Logout"
 
     var image: UIImage? {
         switch self {
@@ -40,8 +39,6 @@ enum SideMenuItem: String, CaseIterable {
             return UIImage(compatibleSystemName: "c.circle")
         case .rateUs:
             return UIImage(compatibleSystemName: "star.circle")
-        case .signOut:
-            return UIImage(compatibleSystemName: "return")
         }
     }
 }

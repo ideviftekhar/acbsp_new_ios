@@ -37,12 +37,6 @@ class SideMenuCell: UITableViewCell, IQModelableCell {
             } else {
                 titleLabel.text = model.rawValue
             }
-
-            if model == .signOut {
-                iconImageView.tintColor = UIColor.systemRed
-            } else {
-                iconImageView.tintColor = UIColor.F96D00
-            }
         }
     }
 }

@@ -128,6 +128,10 @@
 		C0FA305D28CF461900E78843 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FA305C28CF461900E78843 /* String+Extension.swift */; };
 		C0FA305F28CF4AF000E78843 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FA305E28CF4AF000E78843 /* LoginViewModel.swift */; };
 		C0FA306228CF51EB00E78843 /* SignupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0FA306128CF51EB00E78843 /* SignupViewModel.swift */; };
+		EE23BB3D29E54ECE00E9D72E /* UserProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE23BB3C29E54ECE00E9D72E /* UserProfileViewController.swift */; };
+		EE97BEEE29E7EA4D00B9A80B /* ChangePasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE97BEED29E7EA4D00B9A80B /* ChangePasswordViewController.swift */; };
+		EE97BEF029E7FA5500B9A80B /* ProviderIDType.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE97BEEF29E7FA5500B9A80B /* ProviderIDType.swift */; };
+		EECCDCEA29E56C8F00144C66 /* DeleteAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECCDCE929E56C8F00144C66 /* DeleteAccountViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -258,6 +262,10 @@
 		C0FA305E28CF4AF000E78843 /* LoginViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Login\U0010ViewModel.swift"; sourceTree = "<group>"; };
 		C0FA306128CF51EB00E78843 /* SignupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupViewModel.swift; sourceTree = "<group>"; };
 		CD3BAF309E025ED5557F20FA /* Pods-Srila Prabhupada.release-client.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Srila Prabhupada.release-client.xcconfig"; path = "Target Support Files/Pods-Srila Prabhupada/Pods-Srila Prabhupada.release-client.xcconfig"; sourceTree = "<group>"; };
+		EE23BB3C29E54ECE00E9D72E /* UserProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileViewController.swift; sourceTree = "<group>"; };
+		EE97BEED29E7EA4D00B9A80B /* ChangePasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordViewController.swift; sourceTree = "<group>"; };
+		EE97BEEF29E7FA5500B9A80B /* ProviderIDType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderIDType.swift; sourceTree = "<group>"; };
+		EECCDCE929E56C8F00144C66 /* DeleteAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteAccountViewController.swift; sourceTree = "<group>"; };
 		FF220ECFE24DDAD69D4DCE20 /* Pods-Srila Prabhupada.debug-client.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Srila Prabhupada.debug-client.xcconfig"; path = "Target Support Files/Pods-Srila Prabhupada/Pods-Srila Prabhupada.debug-client.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -287,6 +295,7 @@
 			isa = PBXGroup;
 			children = (
 				C0065D4728D881A400B18AA6 /* SideMenuItem.swift */,
+				EE97BEEF29E7FA5500B9A80B /* ProviderIDType.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -447,6 +456,9 @@
 				C00E4DFB28CA39F400F1A123 /* SideMenuTableViewController.swift */,
 				C00E4E1428CA433A00F1A123 /* AboutViewController.swift */,
 				C00E4E1528CA433A00F1A123 /* CopyrightViewController.swift */,
+				EE23BB3C29E54ECE00E9D72E /* UserProfileViewController.swift */,
+				EECCDCE929E56C8F00144C66 /* DeleteAccountViewController.swift */,
+				EE97BEED29E7EA4D00B9A80B /* ChangePasswordViewController.swift */,
 			);
 			path = LeftMenuControllers;
 			sourceTree = "<group>";
@@ -870,6 +882,7 @@
 				C094A6572934A1A100710647 /* StatusAlert+Extension.swift in Sources */,
 				C00AB21B28D2080800A62A2F /* LectureCell.swift in Sources */,
 				C007D38628E80EC200CFBED0 /* Persistent+DBLecture.swift in Sources */,
+				EE97BEF029E7FA5500B9A80B /* ProviderIDType.swift in Sources */,
 				C0EA13E428CF53FA00BE9110 /* ForgotPasswordViewModel.swift in Sources */,
 				C0EE5BCC28F8404000528AA7 /* LectureViewModel+ListenInfo.swift in Sources */,
 				C07A8F3D28F8033A001A6162 /* PlayerViewController+Observers.swift in Sources */,
@@ -940,6 +953,7 @@
 				C088178828DDB8FA00D3106C /* FirestoreManager.swift in Sources */,
 				C0EA5CBE28EC6C96007D9E4C /* DateFormatter+Extension.swift in Sources */,
 				C002119C28F6AD5300BE94EC /* SPNowPlayableCommand.swift in Sources */,
+				EE23BB3D29E54ECE00E9D72E /* UserProfileViewController.swift in Sources */,
 				C002119A28F6A03200BE94EC /* SPNowPlayingInfoCenter.swift in Sources */,
 				C00E4E0E28CA39FE00F1A123 /* PopularLectureViewController.swift in Sources */,
 				C0B7990328DC3FF700681649 /* Playlist.swift in Sources */,
@@ -963,10 +977,12 @@
 				C01B88A02913F5FE00EF0EA0 /* LoadingViewController.swift in Sources */,
 				C0065D4B28D883F300B18AA6 /* Constants.swift in Sources */,
 				C00E4DE128CA393600F1A123 /* LogInViewController.swift in Sources */,
+				EE97BEEE29E7EA4D00B9A80B /* ChangePasswordViewController.swift in Sources */,
 				C0BC771028D5AE1000C2629F /* TappableLabel.swift in Sources */,
 				C0DA677F28FD9CCD003BF8E4 /* TopLectureType.swift in Sources */,
 				C007D38028E80AD000CFBED0 /* Resources.swift in Sources */,
 				C00DC57028E1DA66001EDE95 /* SrilaDatabase.xcdatamodeld in Sources */,
+				EECCDCEA29E56C8F00144C66 /* DeleteAccountViewController.swift in Sources */,
 				C00E4DFC28CA39F400F1A123 /* SideMenuTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1061,7 +1077,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Distribution";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 27;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = S92372RU6B;
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = S92372RU6B;
@@ -1171,7 +1187,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 25;
+				CURRENT_PROJECT_VERSION = 27;
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = S92372RU6B;
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = S92372RU6B;

@@ -214,8 +214,6 @@ extension SearchViewController: SideMenuControllerDelegate {
         case .copyright:
             let copyrightController = UIStoryboard.sideMenu.instantiate(UINavigationController.self, identifier: "CopyrightNavigationController")
             controller.present(copyrightController, animated: true, completion: nil)
-        case .signOut:
-            break
         case .rateUs:
             controller.dismiss(animated: true, completion: nil)
 
