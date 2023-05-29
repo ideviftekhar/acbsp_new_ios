@@ -117,10 +117,10 @@ class StatsViewController: UIViewController, ChartViewDelegate {
     }
 
     func setUpChart() {
-        if #available(macCatalyst 14.0, *), UIDevice.current.userInterfaceIdiom == .mac {
-            thisWeekChartView.noDataFont = UIFont.systemFont(ofSize: 22)
+        if #available(iOS 14.0, *), #available(macCatalyst 14.0, *), UIDevice.current.userInterfaceIdiom == .mac {
+            thisWeekChartView.noDataFont = UIFont(name: "AvenirNextCondensed-Regular", size: 22)!
         } else {
-            thisWeekChartView.noDataFont = UIFont.systemFont(ofSize: 16)
+            thisWeekChartView.noDataFont = UIFont(name: "AvenirNextCondensed-Regular", size: 16)!
         }
 
         thisWeekChartView.delegate = self
@@ -412,8 +412,8 @@ extension StatsViewController {
         }
 
         let dataSet = BarChartDataSet(entries: barChartEntries)
-        dataSet.setColor(UIColor.systemOrange)
-        dataSet.highlightColor = UIColor.systemFill
+        dataSet.setColor(UIColor.F96D00)
+        dataSet.highlightColor = UIColor.D64214
         dataSet.highlightAlpha = 1
 
         let data = BarChartData(dataSet: dataSet)

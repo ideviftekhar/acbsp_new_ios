@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina4_7" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -22,68 +22,68 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qyc-cz-ozy">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="968.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="992.5"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="PID-iq-glT">
-                                                <rect key="frame" x="20" y="10" width="335" height="938.5"/>
+                                                <rect key="frame" x="20" y="10" width="335" height="962.5"/>
                                                 <subviews>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="2qc-sh-tlv">
-                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="77"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="335" height="83"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Total" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PJD-YA-mI8">
-                                                                <rect key="frame" x="0.0" y="0.0" width="335" height="24"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="335" height="27.5"/>
+                                                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="20"/>
+                                                                <color key="textColor" systemColor="systemGrayColor"/>
                                                                 <nil key="highlightedColor"/>
                                                                 <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="25"/>
                                                                 </variation>
                                                             </label>
                                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="CbK-hV-MJn">
-                                                                <rect key="frame" x="0.0" y="34" width="335" height="18"/>
+                                                                <rect key="frame" x="0.0" y="37.5" width="335" height="20.5"/>
                                                                 <subviews>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="FCD-ry-E0B">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="73.5" height="18"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="57" height="20.5"/>
                                                                         <subviews>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Listened" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JN7-1J-clu">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="59" height="18"/>
-                                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="44.5" height="20.5"/>
+                                                                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
+                                                                                <color key="textColor" systemColor="systemGrayColor"/>
                                                                                 <nil key="highlightedColor"/>
                                                                                 <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
-                                                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="22"/>
                                                                                 </variation>
                                                                             </label>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JCQ-52-tH6">
-                                                                                <rect key="frame" x="64" y="0.0" width="9.5" height="18"/>
-                                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                                <nil key="textColor"/>
+                                                                                <rect key="frame" x="49.5" y="0.0" width="7.5" height="20.5"/>
+                                                                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
+                                                                                <color key="textColor" systemColor="systemGrayColor"/>
                                                                                 <nil key="highlightedColor"/>
                                                                                 <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
-                                                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="22"/>
                                                                                 </variation>
                                                                             </label>
                                                                         </subviews>
                                                                     </stackView>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Mde-We-yQI">
-                                                                        <rect key="frame" x="282" y="0.0" width="53" height="18"/>
+                                                                        <rect key="frame" x="293" y="0.0" width="42" height="20.5"/>
                                                                         <subviews>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="deK-7F-8KD">
-                                                                                <rect key="frame" x="0.0" y="0.0" width="9.5" height="18"/>
-                                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                                <nil key="textColor"/>
+                                                                                <rect key="frame" x="0.0" y="0.0" width="7.5" height="20.5"/>
+                                                                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
+                                                                                <color key="textColor" systemColor="systemGrayColor"/>
                                                                                 <nil key="highlightedColor"/>
                                                                                 <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
-                                                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="22"/>
                                                                                 </variation>
                                                                             </label>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" text="Total" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0zC-VH-hDk" userLabel="Total audio file">
-                                                                                <rect key="frame" x="19.5" y="0.0" width="33.5" height="18"/>
-                                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                <rect key="frame" x="17.5" y="0.0" width="24.5" height="20.5"/>
+                                                                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
+                                                                                <color key="textColor" systemColor="systemGrayColor"/>
                                                                                 <nil key="highlightedColor"/>
                                                                                 <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
-                                                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="22"/>
                                                                                 </variation>
                                                                             </label>
                                                                         </subviews>
@@ -91,7 +91,7 @@
                                                                 </subviews>
                                                             </stackView>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="AOs-kF-xhw">
-                                                                <rect key="frame" x="0.0" y="62" width="335" height="15"/>
+                                                                <rect key="frame" x="0.0" y="68" width="335" height="15"/>
                                                                 <subviews>
                                                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="DIl-Nn-Zdh">
                                                                         <rect key="frame" x="0.0" y="0.0" width="325" height="15"/>
@@ -101,11 +101,11 @@
                                                                     </progressView>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" text="0 %" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aMo-ZB-Jck">
                                                                         <rect key="frame" x="335" y="0.0" width="0.0" height="15"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
+                                                                        <color key="textColor" systemColor="systemGrayColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                         <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
-                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="22"/>
                                                                         </variation>
                                                                     </label>
                                                                 </subviews>
@@ -113,26 +113,26 @@
                                                         </subviews>
                                                     </stackView>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C9H-Go-nL3">
-                                                        <rect key="frame" x="0.0" y="97" width="335" height="0.5"/>
+                                                        <rect key="frame" x="0.0" y="103" width="335" height="0.5"/>
                                                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="0.5" id="a3P-NA-Sdb"/>
                                                         </constraints>
                                                     </view>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="7ce-Sm-Qb4">
-                                                        <rect key="frame" x="0.0" y="117.5" width="335" height="284"/>
+                                                        <rect key="frame" x="0.0" y="123.5" width="335" height="287.5"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This Week" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1YB-ur-WDc">
-                                                                <rect key="frame" x="0.0" y="0.0" width="335" height="24"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="335" height="27.5"/>
+                                                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="20"/>
+                                                                <color key="textColor" systemColor="systemGrayColor"/>
                                                                 <nil key="highlightedColor"/>
                                                                 <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="25"/>
                                                                 </variation>
                                                             </label>
                                                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8ly-Pb-FYg" customClass="BarChartView" customModule="Charts">
-                                                                <rect key="frame" x="0.0" y="34" width="335" height="250"/>
+                                                                <rect key="frame" x="0.0" y="37.5" width="335" height="250"/>
                                                                 <color key="backgroundColor" systemColor="systemOrangeColor"/>
                                                                 <constraints>
                                                                     <constraint firstAttribute="height" constant="250" id="nJJ-4Z-Iod"/>
@@ -141,55 +141,55 @@
                                                         </subviews>
                                                     </stackView>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3LI-u3-Vi0">
-                                                        <rect key="frame" x="0.0" y="421.5" width="335" height="0.5"/>
+                                                        <rect key="frame" x="0.0" y="431" width="335" height="0.5"/>
                                                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="0.5" id="rzl-YN-uGr"/>
                                                         </constraints>
                                                     </view>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="sBE-jY-o6M">
-                                                        <rect key="frame" x="0.0" y="442" width="335" height="107"/>
+                                                        <rect key="frame" x="0.0" y="451.5" width="335" height="113"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Week" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dRO-0W-H8K">
-                                                                <rect key="frame" x="0.0" y="0.0" width="335" height="24"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="335" height="27.5"/>
+                                                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="20"/>
+                                                                <color key="textColor" systemColor="systemGrayColor"/>
                                                                 <nil key="highlightedColor"/>
                                                                 <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="25"/>
                                                                 </variation>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zrb-He-qDZ">
-                                                                <rect key="frame" x="0.0" y="34" width="335" height="18"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <rect key="frame" x="0.0" y="37.5" width="335" height="20.5"/>
+                                                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
+                                                                <color key="textColor" systemColor="systemGrayColor"/>
                                                                 <nil key="highlightedColor"/>
                                                                 <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="22"/>
                                                                 </variation>
                                                             </label>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="gXw-FA-Ros">
-                                                                <rect key="frame" x="0.0" y="62" width="335" height="15"/>
+                                                                <rect key="frame" x="0.0" y="68" width="335" height="15"/>
                                                                 <subviews>
                                                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="A1a-Pc-YZZ">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="298" height="15"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="305.5" height="15"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="15" id="rNK-dM-RUv"/>
                                                                         </constraints>
                                                                     </progressView>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" text="0 %" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="STs-qk-Xrj">
-                                                                        <rect key="frame" x="308" y="0.0" width="27" height="15"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <rect key="frame" x="315.5" y="0.0" width="19.5" height="15"/>
+                                                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
+                                                                        <color key="textColor" systemColor="systemGrayColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                         <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
-                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="22"/>
                                                                         </variation>
                                                                     </label>
                                                                 </subviews>
                                                             </stackView>
                                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="dyb-V9-qo0">
-                                                                <rect key="frame" x="0.0" y="87" width="335" height="20"/>
+                                                                <rect key="frame" x="0.0" y="93" width="335" height="20"/>
                                                                 <subviews>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QW0-Ow-zV8">
                                                                         <rect key="frame" x="0.0" y="0.0" width="1" height="20"/>
@@ -199,17 +199,16 @@
                                                                         </constraints>
                                                                     </view>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SB 0h" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="kgK-dT-pIb">
-                                                                        <rect key="frame" x="17" y="0.0" width="41" height="20"/>
-                                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                        <color key="textColor" systemColor="systemRedColor"/>
+                                                                        <rect key="frame" x="23" y="0.0" width="31" height="20"/>
+                                                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
+                                                                        <color key="textColor" systemColor="systemGrayColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                         <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
-                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="22"/>
                                                                         </variation>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NVW-7L-nhd">
-                                                                        <rect key="frame" x="74" y="0.0" width="1" height="20"/>
+                                                                        <rect key="frame" x="76" y="0.0" width="1" height="20"/>
                                                                         <color key="backgroundColor" name="B8B8B8"/>
                                                                         <color key="tintColor" name="B8B8B8"/>
                                                                         <constraints>
@@ -218,17 +217,16 @@
                                                                         </constraints>
                                                                     </view>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BG 0h" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="EpT-ne-G14">
-                                                                        <rect key="frame" x="91" y="0.0" width="42.5" height="20"/>
-                                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                        <color key="textColor" systemColor="systemGreenColor"/>
+                                                                        <rect key="frame" x="99" y="0.0" width="32.5" height="20"/>
+                                                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
+                                                                        <color key="textColor" systemColor="systemGrayColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                         <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
-                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="22"/>
                                                                         </variation>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ygh-KL-GgH">
-                                                                        <rect key="frame" x="149.5" y="0.0" width="1" height="20"/>
+                                                                        <rect key="frame" x="153.5" y="0.0" width="1" height="20"/>
                                                                         <color key="backgroundColor" name="B8B8B8"/>
                                                                         <color key="tintColor" name="9E9E9E"/>
                                                                         <constraints>
@@ -237,17 +235,16 @@
                                                                         </constraints>
                                                                     </view>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CC 0h" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="jPj-OL-gra">
-                                                                        <rect key="frame" x="166" y="0.0" width="43" height="20"/>
-                                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                        <color key="textColor" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        <rect key="frame" x="176.5" y="0.0" width="31.5" height="20"/>
+                                                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
+                                                                        <color key="textColor" systemColor="systemGrayColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                         <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
-                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="22"/>
                                                                         </variation>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nye-lO-Izp">
-                                                                        <rect key="frame" x="225" y="0.0" width="1" height="20"/>
+                                                                        <rect key="frame" x="230" y="0.0" width="1" height="20"/>
                                                                         <color key="backgroundColor" name="B8B8B8"/>
                                                                         <color key="tintColor" name="9E9E9E"/>
                                                                         <constraints>
@@ -256,13 +253,12 @@
                                                                         </constraints>
                                                                     </view>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bhajans 0h" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="qxU-tk-2go">
-                                                                        <rect key="frame" x="242" y="0.0" width="76" height="20"/>
-                                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                        <color key="textColor" red="0.58072251080000004" green="0.066734083" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        <rect key="frame" x="253" y="0.0" width="59" height="20"/>
+                                                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
+                                                                        <color key="textColor" systemColor="systemGrayColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                         <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
-                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="22"/>
                                                                         </variation>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="htX-lB-oC8">
@@ -277,55 +273,55 @@
                                                         </subviews>
                                                     </stackView>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3hz-EJ-3vX">
-                                                        <rect key="frame" x="0.0" y="569" width="335" height="0.5"/>
+                                                        <rect key="frame" x="0.0" y="584.5" width="335" height="0.5"/>
                                                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="0.5" id="nmU-kd-LWP"/>
                                                         </constraints>
                                                     </view>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="c8I-ve-jcW">
-                                                        <rect key="frame" x="0.0" y="589.5" width="335" height="107"/>
+                                                        <rect key="frame" x="0.0" y="605" width="335" height="113"/>
                                                         <subviews>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Month" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k8l-PI-3tD">
-                                                                <rect key="frame" x="0.0" y="0.0" width="335" height="24"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <rect key="frame" x="0.0" y="0.0" width="335" height="27.5"/>
+                                                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="20"/>
+                                                                <color key="textColor" systemColor="systemGrayColor"/>
                                                                 <nil key="highlightedColor"/>
                                                                 <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="25"/>
                                                                 </variation>
                                                             </label>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rcB-Fr-mUG">
-                                                                <rect key="frame" x="0.0" y="34" width="335" height="18"/>
-                                                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <rect key="frame" x="0.0" y="37.5" width="335" height="20.5"/>
+                                                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
+                                                                <color key="textColor" systemColor="systemGrayColor"/>
                                                                 <nil key="highlightedColor"/>
                                                                 <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
-                                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="22"/>
                                                                 </variation>
                                                             </label>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="26q-Bm-Xh7">
-                                                                <rect key="frame" x="0.0" y="62" width="335" height="15"/>
+                                                                <rect key="frame" x="0.0" y="68" width="335" height="15"/>
                                                                 <subviews>
                                                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="H9A-sh-A3y">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="298" height="15"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="305.5" height="15"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="15" id="hZE-Pj-Hsv"/>
                                                                         </constraints>
                                                                     </progressView>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" text="0 %" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="De1-Dd-zuy">
-                                                                        <rect key="frame" x="308" y="0.0" width="27" height="15"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <rect key="frame" x="315.5" y="0.0" width="19.5" height="15"/>
+                                                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
+                                                                        <color key="textColor" systemColor="systemGrayColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                         <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
-                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="22"/>
                                                                         </variation>
                                                                     </label>
                                                                 </subviews>
                                                             </stackView>
                                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="IvM-J5-tbm">
-                                                                <rect key="frame" x="0.0" y="87" width="335" height="20"/>
+                                                                <rect key="frame" x="0.0" y="93" width="335" height="20"/>
                                                                 <subviews>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Glk-YB-mbt">
                                                                         <rect key="frame" x="0.0" y="0.0" width="1" height="20"/>
@@ -335,17 +331,16 @@
                                                                         </constraints>
                                                                     </view>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SB 0h" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yCE-gP-I4Q">
-                                                                        <rect key="frame" x="17" y="0.0" width="41" height="20"/>
-                                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                        <color key="textColor" systemColor="systemRedColor"/>
+                                                                        <rect key="frame" x="23" y="0.0" width="31" height="20"/>
+                                                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
+                                                                        <color key="textColor" systemColor="systemGrayColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                         <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
-                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="22"/>
                                                                         </variation>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GPA-XW-BzY">
-                                                                        <rect key="frame" x="74" y="0.0" width="1" height="20"/>
+                                                                        <rect key="frame" x="76" y="0.0" width="1" height="20"/>
                                                                         <color key="backgroundColor" name="B8B8B8"/>
                                                                         <color key="tintColor" name="B8B8B8"/>
                                                                         <constraints>
@@ -354,18 +349,17 @@
                                                                         </constraints>
                                                                     </view>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BG 0h" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="54a-oG-ubN">
-                                                                        <rect key="frame" x="91" y="0.0" width="42.5" height="20"/>
-                                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <rect key="frame" x="99" y="0.0" width="32.5" height="20"/>
                                                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                        <color key="textColor" systemColor="systemGreenColor"/>
+                                                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
+                                                                        <color key="textColor" systemColor="systemGrayColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                         <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
-                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="22"/>
                                                                         </variation>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wfQ-qT-9Uu">
-                                                                        <rect key="frame" x="149.5" y="0.0" width="1" height="20"/>
+                                                                        <rect key="frame" x="153.5" y="0.0" width="1" height="20"/>
                                                                         <color key="backgroundColor" name="B8B8B8"/>
                                                                         <color key="tintColor" name="B8B8B8"/>
                                                                         <constraints>
@@ -374,17 +368,16 @@
                                                                         </constraints>
                                                                     </view>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CC 0h" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mna-lv-aA5">
-                                                                        <rect key="frame" x="166" y="0.0" width="43" height="20"/>
-                                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                        <color key="textColor" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        <rect key="frame" x="176.5" y="0.0" width="31.5" height="20"/>
+                                                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
+                                                                        <color key="textColor" systemColor="systemGrayColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                         <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
-                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="22"/>
                                                                         </variation>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nZ5-R2-YFe">
-                                                                        <rect key="frame" x="225" y="0.0" width="1" height="20"/>
+                                                                        <rect key="frame" x="230" y="0.0" width="1" height="20"/>
                                                                         <color key="backgroundColor" name="B8B8B8"/>
                                                                         <color key="tintColor" name="B8B8B8"/>
                                                                         <constraints>
@@ -393,13 +386,12 @@
                                                                         </constraints>
                                                                     </view>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bhajans 0h" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tg4-yq-2to">
-                                                                        <rect key="frame" x="242" y="0.0" width="76" height="20"/>
-                                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                        <color key="textColor" red="0.58072251080000004" green="0.066734083" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        <rect key="frame" x="253" y="0.0" width="59" height="20"/>
+                                                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
+                                                                        <color key="textColor" systemColor="systemGrayColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                         <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
-                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="22"/>
                                                                         </variation>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="idA-Qf-pP5">
@@ -414,14 +406,14 @@
                                                         </subviews>
                                                     </stackView>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hhv-0q-9dj">
-                                                        <rect key="frame" x="0.0" y="716.5" width="335" height="0.5"/>
+                                                        <rect key="frame" x="0.0" y="738" width="335" height="0.5"/>
                                                         <color key="backgroundColor" systemColor="opaqueSeparatorColor"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="0.5" id="CPB-8Y-qg0"/>
                                                         </constraints>
                                                     </view>
                                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="jB7-BO-hVU">
-                                                        <rect key="frame" x="0.0" y="737" width="335" height="201.5"/>
+                                                        <rect key="frame" x="0.0" y="758.5" width="335" height="204"/>
                                                         <subviews>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Rd-KS-P14">
                                                                 <rect key="frame" x="0.0" y="0.0" width="335" height="40.5"/>
@@ -434,32 +426,32 @@
                                                                 </buttonConfiguration>
                                                             </button>
                                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="bm2-jW-jHg">
-                                                                <rect key="frame" x="0.0" y="50.5" width="335" height="68"/>
+                                                                <rect key="frame" x="0.0" y="50.5" width="335" height="70.5"/>
                                                                 <subviews>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="tfj-zZ-PFJ">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="157" height="68"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="157" height="70.5"/>
                                                                         <subviews>
                                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="calendar" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="KT7-h8-rW8">
-                                                                                <rect key="frame" x="0.0" y="20" width="30" height="27.5"/>
+                                                                                <rect key="frame" x="0.0" y="21.5" width="30" height="27.5"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="width" constant="30" id="FfI-FJ-iz1"/>
                                                                                     <constraint firstAttribute="height" constant="30" id="iZI-YY-eAq"/>
                                                                                 </constraints>
                                                                             </imageView>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="fkG-8Y-fIb">
-                                                                                <rect key="frame" x="40" y="0.0" width="117" height="68"/>
+                                                                                <rect key="frame" x="40" y="0.0" width="117" height="70.5"/>
                                                                                 <subviews>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" text="From Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J17-vZ-THQ">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="117" height="18"/>
-                                                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="117" height="20.5"/>
+                                                                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
+                                                                                        <color key="textColor" systemColor="systemGrayColor"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                         <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
-                                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="22"/>
                                                                                         </variation>
                                                                                     </label>
                                                                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="iNx-od-jZb">
-                                                                                        <rect key="frame" x="0.0" y="18" width="117" height="50"/>
+                                                                                        <rect key="frame" x="0.0" y="20.5" width="117" height="50"/>
                                                                                         <connections>
                                                                                             <action selector="choosStartDateWithSender:" destination="gUz-W7-hgS" eventType="valueChanged" id="KNo-VV-trL"/>
                                                                                         </connections>
@@ -469,7 +461,7 @@
                                                                         </subviews>
                                                                     </stackView>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WfT-ci-PFh">
-                                                                        <rect key="frame" x="167" y="9" width="1" height="50"/>
+                                                                        <rect key="frame" x="167" y="10.5" width="1" height="50"/>
                                                                         <color key="backgroundColor" name="F96D00"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="50" id="ctT-gX-tlb"/>
@@ -477,29 +469,29 @@
                                                                         </constraints>
                                                                     </view>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="gGM-uX-nFH">
-                                                                        <rect key="frame" x="178" y="0.0" width="157" height="68"/>
+                                                                        <rect key="frame" x="178" y="0.0" width="157" height="70.5"/>
                                                                         <subviews>
                                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="calendar" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="1JG-IT-xOU">
-                                                                                <rect key="frame" x="0.0" y="20" width="30" height="27.5"/>
+                                                                                <rect key="frame" x="0.0" y="21.5" width="30" height="27.5"/>
                                                                                 <constraints>
                                                                                     <constraint firstAttribute="height" constant="30" id="eMU-7o-JqO"/>
                                                                                     <constraint firstAttribute="width" constant="30" id="uPV-M9-MJI"/>
                                                                                 </constraints>
                                                                             </imageView>
                                                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="DFm-Bm-8WU">
-                                                                                <rect key="frame" x="40" y="0.0" width="117" height="68"/>
+                                                                                <rect key="frame" x="40" y="0.0" width="117" height="70.5"/>
                                                                                 <subviews>
                                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" text="To Date" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uuL-Sd-nqK">
-                                                                                        <rect key="frame" x="0.0" y="0.0" width="117" height="18"/>
-                                                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                        <rect key="frame" x="0.0" y="0.0" width="117" height="20.5"/>
+                                                                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
+                                                                                        <color key="textColor" systemColor="systemGrayColor"/>
                                                                                         <nil key="highlightedColor"/>
                                                                                         <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
-                                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="22"/>
                                                                                         </variation>
                                                                                     </label>
                                                                                     <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="date" style="compact" translatesAutoresizingMaskIntoConstraints="NO" id="3QO-QR-VRH">
-                                                                                        <rect key="frame" x="0.0" y="18" width="117" height="50"/>
+                                                                                        <rect key="frame" x="0.0" y="20.5" width="117" height="50"/>
                                                                                         <connections>
                                                                                             <action selector="choosEndDateWithSender:" destination="gUz-W7-hgS" eventType="valueChanged" id="UVS-rd-geo"/>
                                                                                             <action selector="choosStartDateWithSender:" destination="gUz-W7-hgS" eventType="valueChanged" id="cKB-GV-23T"/>
@@ -515,7 +507,7 @@
                                                                 </constraints>
                                                             </stackView>
                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mS3-Qb-deO">
-                                                                <rect key="frame" x="0.0" y="128.5" width="335" height="18"/>
+                                                                <rect key="frame" x="0.0" y="131" width="335" height="18"/>
                                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                                 <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                                 <nil key="highlightedColor"/>
@@ -524,7 +516,7 @@
                                                                 </variation>
                                                             </label>
                                                             <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="OjN-2j-wQi">
-                                                                <rect key="frame" x="0.0" y="156.5" width="335" height="15"/>
+                                                                <rect key="frame" x="0.0" y="159" width="335" height="15"/>
                                                                 <subviews>
                                                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="dpr-K6-wYA">
                                                                         <rect key="frame" x="0.0" y="0.0" width="325" height="15"/>
@@ -534,17 +526,17 @@
                                                                     </progressView>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" text="0 %" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xvq-gT-hfh">
                                                                         <rect key="frame" x="335" y="0.0" width="0.0" height="15"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                        <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
+                                                                        <color key="textColor" systemColor="systemGrayColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                         <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
-                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="22"/>
                                                                         </variation>
                                                                     </label>
                                                                 </subviews>
                                                             </stackView>
                                                             <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="ftK-at-bvL">
-                                                                <rect key="frame" x="0.0" y="181.5" width="335" height="20"/>
+                                                                <rect key="frame" x="0.0" y="184" width="335" height="20"/>
                                                                 <subviews>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TMo-IF-iVV">
                                                                         <rect key="frame" x="0.0" y="0.0" width="1" height="20"/>
@@ -554,17 +546,16 @@
                                                                         </constraints>
                                                                     </view>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SB 0h" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="15s-Wu-6dg">
-                                                                        <rect key="frame" x="17" y="0.0" width="41" height="20"/>
-                                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                        <color key="textColor" systemColor="systemRedColor"/>
+                                                                        <rect key="frame" x="23" y="0.0" width="31" height="20"/>
+                                                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
+                                                                        <color key="textColor" systemColor="systemGrayColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                         <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
-                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="22"/>
                                                                         </variation>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gEA-LU-vDy">
-                                                                        <rect key="frame" x="74" y="0.0" width="1" height="20"/>
+                                                                        <rect key="frame" x="76" y="0.0" width="1" height="20"/>
                                                                         <color key="backgroundColor" name="B8B8B8"/>
                                                                         <color key="tintColor" name="B8B8B8"/>
                                                                         <constraints>
@@ -573,18 +564,17 @@
                                                                         </constraints>
                                                                     </view>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BG 0h" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B1t-bx-4Gy">
-                                                                        <rect key="frame" x="91" y="0.0" width="42.5" height="20"/>
-                                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                        <rect key="frame" x="99" y="0.0" width="32.5" height="20"/>
                                                                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                        <color key="textColor" systemColor="systemGreenColor"/>
+                                                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
+                                                                        <color key="textColor" systemColor="systemGrayColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                         <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
-                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="22"/>
                                                                         </variation>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Pgs-pQ-VGK">
-                                                                        <rect key="frame" x="149.5" y="0.0" width="1" height="20"/>
+                                                                        <rect key="frame" x="153.5" y="0.0" width="1" height="20"/>
                                                                         <color key="backgroundColor" name="B8B8B8"/>
                                                                         <color key="tintColor" name="B8B8B8"/>
                                                                         <constraints>
@@ -593,17 +583,16 @@
                                                                         </constraints>
                                                                     </view>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CC 0h" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R25-ZX-8DV">
-                                                                        <rect key="frame" x="166" y="0.0" width="43" height="20"/>
-                                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                        <color key="textColor" red="0.32369780539999998" green="0.1063579395" blue="0.574860394" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        <rect key="frame" x="176.5" y="0.0" width="31.5" height="20"/>
+                                                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
+                                                                        <color key="textColor" systemColor="systemGrayColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                         <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
-                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="22"/>
                                                                         </variation>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="27q-fy-Cy4">
-                                                                        <rect key="frame" x="225" y="0.0" width="1" height="20"/>
+                                                                        <rect key="frame" x="230" y="0.0" width="1" height="20"/>
                                                                         <color key="backgroundColor" name="B8B8B8"/>
                                                                         <color key="tintColor" name="B8B8B8"/>
                                                                         <constraints>
@@ -612,13 +601,12 @@
                                                                         </constraints>
                                                                     </view>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bhajans 0h" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N53-Ru-MMb">
-                                                                        <rect key="frame" x="242" y="0.0" width="76" height="20"/>
-                                                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                                        <color key="textColor" red="0.58072251080000004" green="0.066734083" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                        <rect key="frame" x="253" y="0.0" width="59" height="20"/>
+                                                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
+                                                                        <color key="textColor" systemColor="systemGrayColor"/>
                                                                         <nil key="highlightedColor"/>
                                                                         <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact">
-                                                                            <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="22"/>
                                                                         </variation>
                                                                     </label>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GfF-sf-afA">
@@ -721,14 +709,11 @@
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
-        <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <systemColor name="systemGrayColor">
+            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemOrangeColor">
             <color red="1" green="0.58431372549019611" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </systemColor>
-        <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

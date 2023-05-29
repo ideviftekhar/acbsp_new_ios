@@ -54,23 +54,24 @@ class SearchViewController: UIViewController {
             searchController.searchResultsUpdater = self
             searchController.obscuresBackgroundDuringPresentation = false
             searchController.hidesNavigationBarDuringPresentation = false
-            searchController.automaticallyShowsCancelButton = false
 
             do {
                 searchController.searchBar.text = searchText
                 searchController.searchBar.placeholder = "Search..."
                 searchController.searchBar.barStyle = .black
-                if #available(macCatalyst 14.0, *), UIDevice.current.userInterfaceIdiom == .mac {
+                if#available(iOS 14.0, *), #available(macCatalyst 14.0, *), UIDevice.current.userInterfaceIdiom == .mac {
                     searchController.searchBar.barStyle = .default
                 }
                 searchController.searchBar.enablesReturnKeyAutomatically = false
             }
 
             if #available(iOS 13.0, *) {
-                searchController.searchBar.searchTextField.leftView?.tintColor = UIColor.systemGray4
-                searchController.searchBar.searchTextField.rightView?.tintColor = UIColor.systemGray4
+                searchController.automaticallyShowsCancelButton = false
+                searchController.searchBar.searchTextField.font = UIFont(name: "AvenirNextCondensed-Regular", size: 17)
+                searchController.searchBar.searchTextField.leftView?.tintColor = UIColor.D5D5D5
+                searchController.searchBar.searchTextField.rightView?.tintColor = UIColor.D5D5D5
                 searchController.searchBar.searchTextField.defaultTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-                searchController.searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: "Search...", attributes: [NSAttributedString.Key.foregroundColor: UIColor.systemGray4])
+                searchController.searchBar.searchTextField.attributedPlaceholder = NSAttributedString(string: "Search...", attributes: [NSAttributedString.Key.foregroundColor: UIColor.D5D5D5])
             }
 
             navigationItem.searchController = searchController

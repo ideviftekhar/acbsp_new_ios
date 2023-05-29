@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QfZ-UK-gEc">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QfZ-UK-gEc">
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -44,24 +44,24 @@
                                                 </userDefinedRuntimeAttributes>
                                             </imageView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="QI4-Tv-gEG">
-                                                <rect key="frame" x="50" y="3" width="344" height="34.5"/>
+                                                <rect key="frame" x="50" y="0.5" width="344" height="39"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="pbo-RL-FLZ">
-                                                        <rect key="frame" x="0.0" y="0.0" width="344" height="18"/>
-                                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="344" height="20.5"/>
+                                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-DemiBold" family="Avenir Next Condensed" pointSize="15"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                         <variation key="userInterfaceIdiom=mac">
-                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="20"/>
+                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-DemiBold" family="Avenir Next Condensed" pointSize="20"/>
                                                         </variation>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="IWD-71-nF1">
-                                                        <rect key="frame" x="0.0" y="20" width="344" height="14.5"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                                        <rect key="frame" x="0.0" y="22.5" width="344" height="16.5"/>
+                                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                         <variation key="userInterfaceIdiom=mac">
-                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="16"/>
                                                         </variation>
                                                     </label>
                                                 </subviews>
@@ -91,9 +91,12 @@
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Nwx-HR-hLx">
                                                     <rect key="frame" x="20" y="0.0" width="374" height="79"/>
                                                     <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="0.0"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
+                                                    <variation key="heightClass=regular-widthClass=regular">
+                                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="20"/>
+                                                    </variation>
                                                 </label>
                                             </subviews>
                                         </tableViewCellContentView>
@@ -162,13 +165,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="u9F-q3-6jd">
-                                <rect key="frame" x="20" y="194" width="374" height="286.5"/>
+                                <rect key="frame" x="20" y="194" width="374" height="273.5"/>
                                 <string key="text">His Divine Grace A.C. Bhaktivedanta Swami Prabhupāda, Founder-Ācārya of the International Society for Krishna Consciousness.
 Content used with permission of The Bhaktivedanta Book Trust International, Inc. All rights reserved. © Copyright 2022.
 This material may not be reproduced in whole or in part by any means, without written permission from the publisher, the Bhaktivedanta Archives, 1453 Tom Shelton Rd., Sandy Ridge, NC 27046.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="20"/>
                                 <color key="textColor" red="0.95724251339999999" green="0.56006360570000002" blue="0.010658564779999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="heightClass=regular-widthClass=regular">
+                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="30"/>
+                                </variation>
                             </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="SuQ-Xj-wpm"/>
@@ -247,24 +253,24 @@ This material may not be reproduced in whole or in part by any means, without wr
                                         </constraints>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="zuG-Xj-teW">
-                                        <rect key="frame" x="128" y="110" width="118" height="65.5"/>
+                                        <rect key="frame" x="138" y="110" width="98" height="65.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cDy-PA-NKg">
-                                                <rect key="frame" x="0.0" y="0.0" width="118" height="33"/>
-                                                <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="24"/>
-                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="98" height="33"/>
+                                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Bold" family="Avenir Next Condensed" pointSize="24"/>
+                                                <color key="textColor" name="000000"/>
                                                 <nil key="highlightedColor"/>
                                                 <variation key="heightClass=regular-widthClass=regular">
-                                                    <fontDescription key="fontDescription" name="AvenirNext-Bold" family="Avenir Next" pointSize="26"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Bold" family="Avenir Next Condensed" pointSize="30"/>
                                                 </variation>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vsd-pW-fSH">
-                                                <rect key="frame" x="33.5" y="38" width="51" height="27.5"/>
-                                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
-                                                <color key="textColor" name="747474"/>
+                                                <rect key="frame" x="29.5" y="38" width="39.5" height="27.5"/>
+                                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="20"/>
+                                                <color key="textColor" systemColor="systemGrayColor"/>
                                                 <nil key="highlightedColor"/>
                                                 <variation key="heightClass=regular-widthClass=regular">
-                                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="22"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="25"/>
                                                 </variation>
                                             </label>
                                         </subviews>
@@ -287,18 +293,21 @@ This material may not be reproduced in whole or in part by any means, without wr
                                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="64"/>
                                                                 <subviews>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="gbW-Dj-Ztt">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="203" height="64"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="165.5" height="64"/>
                                                                         <subviews>
                                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="AAw-KF-PN3">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="18.5" height="64"/>
-                                                                                <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                <color key="tintColor" name="000000"/>
                                                                                 <imageReference key="image" image="keyFill" symbolScale="large"/>
                                                                             </imageView>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Change Password" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cJ1-jo-AJR">
-                                                                                <rect key="frame" x="38.5" y="0.0" width="164.5" height="64"/>
-                                                                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
-                                                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                                <rect key="frame" x="38.5" y="0.0" width="127" height="64"/>
+                                                                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="20"/>
+                                                                                <color key="textColor" name="000000"/>
                                                                                 <nil key="highlightedColor"/>
+                                                                                <variation key="heightClass=regular-widthClass=regular">
+                                                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="25"/>
+                                                                                </variation>
                                                                             </label>
                                                                         </subviews>
                                                                     </stackView>
@@ -317,13 +326,16 @@ This material may not be reproduced in whole or in part by any means, without wr
                                                             </view>
                                                         </subviews>
                                                     </stackView>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="bottom" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7pw-Zu-swP">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7pw-Zu-swP">
                                                         <rect key="frame" x="0.0" y="0.0" width="374" height="80"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="80" id="dm9-Yu-OrH"/>
                                                         </constraints>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                         <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                        <buttonConfiguration key="configuration" style="plain"/>
+                                                        <variation key="heightClass=regular-widthClass=regular">
+                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="20"/>
+                                                        </variation>
                                                         <connections>
                                                             <action selector="changePasswordButtonTapped:" destination="Mro-CB-AjI" eventType="touchUpInside" id="eeb-IB-sZZ"/>
                                                             <segue destination="4Ag-Xp-zwu" kind="push" id="J3x-Ct-1LS"/>
@@ -363,7 +375,7 @@ This material may not be reproduced in whole or in part by any means, without wr
                                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="64"/>
                                                                 <subviews>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="gce-Uj-DLh">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="185.5" height="64"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="151" height="64"/>
                                                                         <subviews>
                                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nbW-lO-AJR">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="28" height="64"/>
@@ -371,10 +383,13 @@ This material may not be reproduced in whole or in part by any means, without wr
                                                                                 <imageReference key="image" image="trashFill" symbolScale="large"/>
                                                                             </imageView>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Delete Account" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="plD-e5-AWn">
-                                                                                <rect key="frame" x="43" y="0.0" width="142.5" height="64"/>
-                                                                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
+                                                                                <rect key="frame" x="43" y="0.0" width="108" height="64"/>
+                                                                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="20"/>
                                                                                 <color key="textColor" systemColor="systemRedColor"/>
                                                                                 <nil key="highlightedColor"/>
+                                                                                <variation key="heightClass=regular-widthClass=regular">
+                                                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="25"/>
+                                                                                </variation>
                                                                             </label>
                                                                         </subviews>
                                                                     </stackView>
@@ -438,7 +453,7 @@ This material may not be reproduced in whole or in part by any means, without wr
                                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="64"/>
                                                                 <subviews>
                                                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="0rS-iN-pNf">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="111" height="64"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="96" height="64"/>
                                                                         <subviews>
                                                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2js-Ww-k8E">
                                                                                 <rect key="frame" x="0.0" y="0.0" width="30.5" height="64"/>
@@ -446,10 +461,13 @@ This material may not be reproduced in whole or in part by any means, without wr
                                                                                 <imageReference key="image" image="return" symbolScale="large"/>
                                                                             </imageView>
                                                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Logout" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Uti-Bj-3as">
-                                                                                <rect key="frame" x="45.5" y="0.0" width="65.5" height="64"/>
-                                                                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="20"/>
+                                                                                <rect key="frame" x="45.5" y="0.0" width="50.5" height="64"/>
+                                                                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="20"/>
                                                                                 <color key="textColor" systemColor="systemRedColor"/>
                                                                                 <nil key="highlightedColor"/>
+                                                                                <variation key="heightClass=regular-widthClass=regular">
+                                                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="25"/>
+                                                                                </variation>
                                                                             </label>
                                                                         </subviews>
                                                                     </stackView>
@@ -537,11 +555,11 @@ This material may not be reproduced in whole or in part by any means, without wr
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Email" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="77V-Ih-sOh">
                                 <rect key="frame" x="20" y="157.5" width="374" height="36"/>
-                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="26"/>
+                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="26"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="heightClass=regular-widthClass=regular">
-                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="30"/>
+                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="30"/>
                                 </variation>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" role="destructive" translatesAutoresizingMaskIntoConstraints="NO" id="rfo-gP-wbT">
@@ -560,7 +578,7 @@ This material may not be reproduced in whole or in part by any means, without wr
                                     <color key="titleShadowColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <buttonConfiguration key="configuration" style="filled" image="trash" catalog="system" title="Delete Account">
-                                    <fontDescription key="titleFontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
+                                    <fontDescription key="titleFontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
                                 <userDefinedRuntimeAttributes>
@@ -580,7 +598,7 @@ This material may not be reproduced in whole or in part by any means, without wr
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="ncq-H3-xas"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="color" keyPath="titleColor">
@@ -600,19 +618,19 @@ This material may not be reproduced in whole or in part by any means, without wr
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                                 <variation key="userInterfaceIdiom=mac">
-                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="24"/>
                                 </variation>
                                 <variation key="heightClass=regular-widthClass=regular">
-                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="24"/>
                                 </variation>
                             </textField>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your playlist(s) and favourite lecture(s) will be permanently removed." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rSF-8D-iyt">
                                 <rect key="frame" x="20" y="58" width="374" height="49.5"/>
-                                <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="18"/>
+                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="18"/>
                                 <color key="textColor" systemColor="systemRedColor"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="heightClass=regular-widthClass=regular">
-                                    <fontDescription key="fontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="22"/>
+                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="23"/>
                                 </variation>
                             </label>
                         </subviews>
@@ -666,7 +684,7 @@ This material may not be reproduced in whole or in part by any means, without wr
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="hmM-av-IWf"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="titleColor">
@@ -686,10 +704,10 @@ This material may not be reproduced in whole or in part by any means, without wr
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <variation key="userInterfaceIdiom=mac">
-                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="22"/>
                                                 </variation>
                                                 <variation key="heightClass=regular-widthClass=regular">
-                                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="24"/>
                                                 </variation>
                                             </textField>
                                         </subviews>
@@ -702,7 +720,7 @@ This material may not be reproduced in whole or in part by any means, without wr
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="Z6f-3x-OXc"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="titleColor">
@@ -722,10 +740,10 @@ This material may not be reproduced in whole or in part by any means, without wr
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <variation key="userInterfaceIdiom=mac">
-                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="22"/>
                                                 </variation>
                                                 <variation key="heightClass=regular-widthClass=regular">
-                                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="24"/>
                                                 </variation>
                                             </textField>
                                         </subviews>
@@ -738,7 +756,7 @@ This material may not be reproduced in whole or in part by any means, without wr
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="OpY-MQ-paE"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="20"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" secureTextEntry="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no"/>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="color" keyPath="titleColor">
@@ -758,10 +776,10 @@ This material may not be reproduced in whole or in part by any means, without wr
                                                     </userDefinedRuntimeAttribute>
                                                 </userDefinedRuntimeAttributes>
                                                 <variation key="userInterfaceIdiom=mac">
-                                                    <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="22"/>
                                                 </variation>
                                                 <variation key="heightClass=regular-widthClass=regular">
-                                                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="24"/>
                                                 </variation>
                                             </textField>
                                         </subviews>
@@ -795,7 +813,7 @@ This material may not be reproduced in whole or in part by any means, without wr
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                                 <buttonConfiguration key="configuration" style="plain" title="Change Password">
-                                    <fontDescription key="titleFontDescription" name="AvenirNext-Medium" family="Avenir Next" pointSize="15"/>
+                                    <fontDescription key="titleFontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="20"/>
                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </buttonConfiguration>
                                 <userDefinedRuntimeAttributes>
@@ -847,7 +865,7 @@ This material may not be reproduced in whole or in part by any means, without wr
                                 <rect key="frame" x="0.0" y="144" width="414" height="752"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="efI-fg-47e">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="4052"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="3739"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_167" translatesAutoresizingMaskIntoConstraints="NO" id="TMc-Te-Z51">
                                                 <rect key="frame" x="123.5" y="20" width="167" height="167"/>
@@ -859,22 +877,28 @@ This material may not be reproduced in whole or in part by any means, without wr
                                                 </userDefinedRuntimeAttributes>
                                             </imageView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="mjb-YA-Fhz">
-                                                <rect key="frame" x="20" y="217" width="374" height="3835"/>
+                                                <rect key="frame" x="20" y="217" width="374" height="3522"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Founder-acarya of international Society for Krishna Consciousness His Divine Grace A.C.Bhaktivedanta Swami Prabhupada" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JVA-g7-QBz" customClass="TappableLabel" customModule="Srila_Prabhupada" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="374" height="61"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="374" height="70"/>
+                                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="17"/>
                                                         <color key="textColor" systemColor="systemOrangeColor"/>
                                                         <nil key="highlightedColor"/>
+                                                        <variation key="heightClass=regular-widthClass=regular">
+                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="20"/>
+                                                        </variation>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Śrīla Prabhupāda" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hQu-2x-irJ">
-                                                        <rect key="frame" x="0.0" y="91" width="374" height="42"/>
-                                                        <fontDescription key="fontDescription" type="system" pointSize="35"/>
-                                                        <color key="textColor" red="0.033415639150000002" green="0.1517951813" blue="0.56035763459999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <rect key="frame" x="0.0" y="100" width="374" height="48"/>
+                                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="35"/>
+                                                        <color key="textColor" name="0C1572"/>
                                                         <nil key="highlightedColor"/>
+                                                        <variation key="heightClass=regular-widthClass=regular">
+                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="40"/>
+                                                        </variation>
                                                     </label>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M9y-B0-ncA">
-                                                        <rect key="frame" x="0.0" y="163" width="374" height="3672"/>
+                                                        <rect key="frame" x="0.0" y="178" width="374" height="3344"/>
                                                         <string key="text">The honorific title Prabhupāda is properly used for designating those very great spiritual masters who have made an outstanding contribution of literature or preaching to the world. Examples are Śrīla Rūpa Gosvami Prabhupāda, Śrīla Jīva Gosvami Prabhupāda, and Śrīla Bhaktisiddhānta Sarasvati Goswami Prabhupāda.
      When members of ISKCON speak of “Srila Prabhupada," they refer to His Divine Grace A.C. Bhaktivedanta Swami Prabhupada. A.C. Bhaktivedanta Swami is correctly addressed as Srila Prabhupada because he occupies a unique position in the religious history of the world.
      In Śrīmad-Bhāgavatam (1.5.11), Vyāsadeva states that the Bhagavatam "is meant to bring about a revolution in the impious life of a misdirected civilization." This statement clearly refers to the preaching mission heralded by Śrīla A.C. Bhaktivedanta Swami Prabhupāda, whose purports on śrīmad-Bhāgavatam, composed five thousand years after Śrīla Vyāsadeva's compilation of the Bhāgavatam, have become the most important contribution for the revolutionary respiritualization of the entire human society, which was lost in the darkness of materialism.
@@ -892,9 +916,12 @@ This material may not be reproduced in whole or in part by any means, without wr
      All such standards that Śrīla Prabhupāda clearly defined are the standards to be followed in ISKCON. A rightly situated, successful follower of Śrīla Prabhupāda is simply a faithful standard-bearer. He does not try to change or interpret the standards and programs given by Prabhupāda, for he knows that whatever Śrīla Prabhupāda has given us is perfect and complete for the respiritualization of the entire human society - not only for the present, but for the next ten thousand years.
      -From Beginner's Guide to Krsna Consciousness
      How can “The Significance of Śrīla Prabhupāda” be rendered in three pages? Even if we could write millions of books, we could hardly begin to expound his glories. If we were to take the entire universe – with its planets, outer space, continents, oceans, mountains, men, demigods, and demons on one side – and one drop of dust from Śrīla Prabhupāda's lotus feet on the other, there would be no comparison. One drop of dust from Śrīla Prabhupāda's lotus feet is millions of times more valuable than anything the material world has to offer.  </string>
-                                                        <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
+                                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
+                                                        <variation key="heightClass=regular-widthClass=regular">
+                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="22"/>
+                                                        </variation>
                                                     </label>
                                                 </subviews>
                                             </stackView>
@@ -1014,19 +1041,19 @@ This material may not be reproduced in whole or in part by any means, without wr
     </scenes>
     <designables>
         <designable name="EW5-TW-gWQ">
-            <size key="intrinsicContentSize" width="156" height="24"/>
+            <size key="intrinsicContentSize" width="121.5" height="28"/>
         </designable>
         <designable name="JVA-g7-QBz">
-            <size key="intrinsicContentSize" width="931.5" height="20.5"/>
+            <size key="intrinsicContentSize" width="718.5" height="23.5"/>
         </designable>
         <designable name="bSb-gh-EQT">
-            <size key="intrinsicContentSize" width="85" height="24"/>
+            <size key="intrinsicContentSize" width="65.5" height="28"/>
         </designable>
         <designable name="e6H-sq-itF">
-            <size key="intrinsicContentSize" width="129" height="24"/>
+            <size key="intrinsicContentSize" width="100" height="28"/>
         </designable>
         <designable name="nMz-1S-As9">
-            <size key="intrinsicContentSize" width="204" height="24"/>
+            <size key="intrinsicContentSize" width="160.5" height="28"/>
         </designable>
     </designables>
     <resources>
@@ -1042,8 +1069,8 @@ This material may not be reproduced in whole or in part by any means, without wr
         <namedColor name="0099CC">
             <color red="0.0" green="0.59999999999999998" blue="0.792156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="747474">
-            <color red="0.45490196078431372" green="0.45490196078431372" blue="0.45490196078431372" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="0C1572">
+            <color red="0.047058823529411764" green="0.082352941176470587" blue="0.44705882352941179" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="AccentColor">
             <color red="0.97647058823529409" green="0.42745098039215684" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -20,7 +20,7 @@ class MiniPlayerView: UIView {
 
     static let miniPlayerHeight: CGFloat = {
         let height: CGFloat
-        if #available(macCatalyst 14.0, *), UIDevice.current.userInterfaceIdiom == .mac {
+        if #available(iOS 14.0, *), #available(macCatalyst 14.0, *), UIDevice.current.userInterfaceIdiom == .mac {
             height = 90
         } else {
             height = 60
@@ -66,7 +66,7 @@ class MiniPlayerView: UIView {
         seekGesture.delegate = self
         expandButton.addGestureRecognizer(seekGesture)
 
-        if #available(macCatalyst 14.0, *), UIDevice.current.userInterfaceIdiom == .mac {
+        if #available(iOS 14.0, *), #available(macCatalyst 14.0, *), UIDevice.current.userInterfaceIdiom == .mac {
             playFillImage = UIImage(named: "playFill")
             pauseFillImage = UIImage(named: "pauseFill")
             let newImage: UIImage? = isPlaying ? pauseFillImage :  playFillImage

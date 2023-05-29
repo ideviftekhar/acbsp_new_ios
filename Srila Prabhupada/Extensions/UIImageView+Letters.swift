@@ -31,7 +31,7 @@ extension UIView {
         // initials
         if let initials = text?.initials {
 
-            let defaultFont: UIFont =  UIFont.systemFont(ofSize: min(frame.width, frame.height)/2, weight: .bold)
+            let defaultFont: UIFont = UIFont(name: "AvenirNextCondensed-Medium", size: min(frame.width, frame.height)/2)!
 
             let attributes = textAttributes ?? [NSAttributedString.Key.foregroundColor: UIColor.white,
                                                 NSAttributedString.Key.font: defaultFont]

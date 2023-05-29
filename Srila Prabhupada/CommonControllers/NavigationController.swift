@@ -12,17 +12,18 @@ class NavigationController: UINavigationController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let titleTextAttributes: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.white]
+        let titleTextAttributes: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.white, .font: UIFont(name: "AvenirNextCondensed-Medium", size: 20)!]
+        let largeTitleTextAttributes: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.white, .font: UIFont(name: "AvenirNextCondensed-Medium", size: 40)!]
 
         navigationBar.titleTextAttributes = titleTextAttributes
-        navigationBar.largeTitleTextAttributes = titleTextAttributes
+        navigationBar.largeTitleTextAttributes = largeTitleTextAttributes
 
         if #available(iOS 13.0, *) {
             let navigationBarAppearance = UINavigationBarAppearance()
             navigationBarAppearance.configureWithTransparentBackground()
             navigationBarAppearance.backgroundColor = UIColor.themeColor
             navigationBarAppearance.titleTextAttributes = titleTextAttributes
-            navigationBarAppearance.largeTitleTextAttributes = titleTextAttributes
+            navigationBarAppearance.largeTitleTextAttributes = largeTitleTextAttributes
 
             navigationBar.standardAppearance = navigationBarAppearance
             navigationBar.compactAppearance = navigationBarAppearance
@@ -31,7 +32,7 @@ class NavigationController: UINavigationController {
                 navigationBar.compactScrollEdgeAppearance = navigationBarAppearance
             }
         }
-        
+
         navigationBar.setBackgroundImage(UIImage(), for: .default)
         navigationBar.shadowImage = UIImage()
     }

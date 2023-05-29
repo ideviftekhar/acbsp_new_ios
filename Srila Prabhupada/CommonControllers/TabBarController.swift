@@ -36,19 +36,24 @@ class TabBarController: UITabBarController {
                     tabBarAppearance.selectionIndicatorImage = UIImage()
                 }
 
+                let font: UIFont = UIFont(name: "AvenirNextCondensed-Medium", size: 12)!
                 do {
-                    tabBarAppearance.inlineLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.systemGray4]
-                    tabBarAppearance.compactInlineLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.systemGray4]
-                    tabBarAppearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: UIColor.systemGray4]
-                    tabBarAppearance.inlineLayoutAppearance.normal.iconColor = UIColor.systemGray4
-                    tabBarAppearance.compactInlineLayoutAppearance.normal.iconColor = UIColor.systemGray4
-                    tabBarAppearance.stackedLayoutAppearance.normal.iconColor = UIColor.systemGray4
+                    let titleTextAttributes: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.D5D5D5, .font: font]
+
+                    tabBarAppearance.inlineLayoutAppearance.normal.titleTextAttributes = titleTextAttributes
+                    tabBarAppearance.compactInlineLayoutAppearance.normal.titleTextAttributes = titleTextAttributes
+                    tabBarAppearance.stackedLayoutAppearance.normal.titleTextAttributes = titleTextAttributes
+                    tabBarAppearance.inlineLayoutAppearance.normal.iconColor = UIColor.D5D5D5
+                    tabBarAppearance.compactInlineLayoutAppearance.normal.iconColor = UIColor.D5D5D5
+                    tabBarAppearance.stackedLayoutAppearance.normal.iconColor = UIColor.D5D5D5
                 }
 
                 do {
-                    tabBarAppearance.inlineLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor.white]
-                    tabBarAppearance.compactInlineLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor.white]
-                    tabBarAppearance.stackedLayoutAppearance.selected.titleTextAttributes = [.foregroundColor: UIColor.white]
+                    let titleTextAttributes: [NSAttributedString.Key: Any] = [.foregroundColor: UIColor.white, .font: font]
+
+                    tabBarAppearance.inlineLayoutAppearance.selected.titleTextAttributes = titleTextAttributes
+                    tabBarAppearance.compactInlineLayoutAppearance.selected.titleTextAttributes = titleTextAttributes
+                    tabBarAppearance.stackedLayoutAppearance.selected.titleTextAttributes = titleTextAttributes
                     tabBarAppearance.inlineLayoutAppearance.selected.iconColor = UIColor.white
                     tabBarAppearance.compactInlineLayoutAppearance.selected.iconColor = UIColor.white
                     tabBarAppearance.stackedLayoutAppearance.selected.iconColor = UIColor.white
@@ -102,7 +107,7 @@ class TabBarController: UITabBarController {
                 playerViewController.currentLecture = nil
             }
         }
-        if #available(macCatalyst 14.0, *),
+        if #available(iOS 14.0, *), #available(macCatalyst 14.0, *),
            UIDevice.current.userInterfaceIdiom == .mac,
            let viewControllers = viewControllers {
             viewControllers[0].tabBarItem.image = UIImage(named: "houseFill")

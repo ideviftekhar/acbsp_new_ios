@@ -353,7 +353,7 @@ class PlayerViewController: LectureViewController {
     }
     private func setupPlayerIcons() {
 
-        if #available(macCatalyst 14.0, *), UIDevice.current.userInterfaceIdiom == .mac {
+        if #available(iOS 14.0, *), #available(macCatalyst 14.0, *), UIDevice.current.userInterfaceIdiom == .mac {
             playFillImage = UIImage(named: "playFill")
             pauseFillImage = UIImage(named: "pauseFill")
 

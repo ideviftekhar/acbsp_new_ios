@@ -44,4 +44,8 @@ class FilterDetailTableViewCell: UITableViewCell, IQModelableCell {
             detailTypeLabel.text = model.details
         }
     }
+
+    static func size(for model: AnyHashable?, listView: IQListView) -> CGSize {
+        return CGSize(width: listView.frame.width, height: 44)
+    }
 }

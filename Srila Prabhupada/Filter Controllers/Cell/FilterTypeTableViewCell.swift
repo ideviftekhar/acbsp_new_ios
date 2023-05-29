@@ -30,4 +30,8 @@ class FilterTypeTableViewCell: UITableViewCell, IQModelableCell {
             filterCountLabel.isHidden = model.selectionCount == 0
         }
     }
+
+    static func size(for model: AnyHashable?, listView: IQListView) -> CGSize {
+        return CGSize(width: listView.frame.width, height: 44)
+    }
 }
