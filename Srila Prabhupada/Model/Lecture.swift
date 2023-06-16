@@ -20,7 +20,7 @@ struct Lecture: Hashable, Codable {
         lhs.creationTimestamp == rhs.creationTimestamp &&
         lhs.resources == rhs.resources &&
         lhs.downloadState == rhs.downloadState &&
-        lhs.isFavourite == rhs.isFavourite &&
+        lhs.isFavorite == rhs.isFavorite &&
         lhs.lastPlayedPoint == rhs.lastPlayedPoint
     }
 
@@ -62,7 +62,7 @@ struct Lecture: Hashable, Codable {
 
     var downloadState: DBLecture.DownloadState = .notDownloaded
     var downloadError: String?
-    var isFavourite: Bool
+    var isFavorite: Bool
     var lastPlayedPoint: Int = 0
 
     var isCompleted: Bool {
@@ -84,7 +84,7 @@ struct Lecture: Hashable, Codable {
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(Int.self, forKey: .id)
-        self.category = try container.decode([String].self, forKey: .category)
+        self.category = (try? container.decode([String].self, forKey: .category)) ?? []
         self.creationTimestamp = try container.decode(String.self, forKey: .creationTimestamp)
         self.dateOfRecording = try container.decode(Day.self, forKey: .dateOfRecording)
         self.description = try container.decode([String].self, forKey: .description)
@@ -94,14 +94,14 @@ struct Lecture: Hashable, Codable {
         self.length = try container.decodeIfPresent(Int.self, forKey: .length) ?? 0
         self.lengthType = try container.decode([String].self, forKey: .lengthType)
         self.location = try container.decode(Location.self, forKey: .location)
-        self.place = try container.decode([String].self, forKey: .place)
+        self.place = (try? container.decode([String].self, forKey: .place)) ?? []
         self.resources = try container.decode(Resources.self, forKey: .resources)
         self.search = try container.decode(Search.self, forKey: .search)
         self.tags = try container.decode([String].self, forKey: .tags)
-        self.thumbnail = try container.decode(String.self, forKey: .thumbnail)
+        self.thumbnail = (try? container.decode(String.self, forKey: .thumbnail)) ?? ""
         self.title = try container.decode([String].self, forKey: .title)
 
-        isFavourite = false
+        isFavorite = false
         lastPlayedPoint = 0
         downloadState = .notDownloaded
     }

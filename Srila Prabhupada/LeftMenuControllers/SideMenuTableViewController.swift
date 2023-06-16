@@ -56,7 +56,16 @@ class SideMenuViewController: UIViewController {
                 userNameLabel.text = FirestoreManager.shared.currentUserDisplayName
                 userEmailLabel.text = FirestoreManager.shared.currentUserEmail
 
-                let placeholderImage = userImageView.placeholderImage(text: FirestoreManager.shared.currentUserDisplayName)
+                var text = ""
+                
+                if let name = FirestoreManager.shared.currentUserDisplayName {
+                    text = name
+                } else if let email = FirestoreManager.shared.currentUserEmail {
+                    text = email
+                }
+                
+                let placeholderImage = userImageView.placeholderImage(text: text)
+                
                 if let photoURL = FirestoreManager.shared.currentUserPhotoURL {
                     userImageView.af.setImage(withURL: photoURL, placeholderImage: placeholderImage)
                 } else {

@@ -12,7 +12,7 @@ class ForgotPasswordViewController: UIViewController {
     @IBOutlet private var emailTextField: UITextField!
     @IBOutlet private var submitButton: UIButton!
     @IBOutlet private var loadingIndicatorView: UIActivityIndicatorView!
-
+    
     private let forgotPasswordViewModel: ForgotPasswordViewModel = FirebaseForgotPasswordViewModel()
 
     var prefillEmail: String?

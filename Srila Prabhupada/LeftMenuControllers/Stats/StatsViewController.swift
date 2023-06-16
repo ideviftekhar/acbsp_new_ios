@@ -43,7 +43,8 @@ class StatsViewController: UIViewController, ChartViewDelegate {
     @IBOutlet private var customTimeCCLabel: UILabel!
     @IBOutlet private var customTimeBhajansLabel: UILabel!
     @IBOutlet private var customTimeButton: UIButton!
-
+    @IBOutlet private var loadingIndecator: UIActivityIndicatorView!
+    
     private var customTimeMenu: SPMenu!
 
     var selectedStatType: StatsType {
@@ -56,6 +57,7 @@ class StatsViewController: UIViewController, ChartViewDelegate {
 
     @IBOutlet private var startDatePicker: UIDatePicker!
     @IBOutlet private var endDatePicker: UIDatePicker!
+    @IBOutlet private var scrollView: UIScrollView!
 
     private var allLectures: [Lecture] = []
     private var allListenInfo: [ListenInfo] = []
@@ -97,6 +99,10 @@ class StatsViewController: UIViewController, ChartViewDelegate {
 
         configureCustomTimeButton()
         setUpChart()
+
+        let image = UIImage(systemName: "square.and.arrow.up")
+        let barButton = UIBarButtonItem(image: image, style: UIBarButtonItem.Style.plain, target: self, action: #selector(shareAction))
+        self.navigationItem.rightBarButtonItem = barButton
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -105,6 +111,26 @@ class StatsViewController: UIViewController, ChartViewDelegate {
         getAllLectures()
     }
 
+    @objc func shareAction() {
+        
+        let pdf = SimplePDF(
+            pageSize: self.scrollView.contentSize,
+            pageMarginLeft: 2.0,
+            pageMarginTop: 10.0,
+            pageMarginBottom: 0.0,
+            pageMarginRight: 2.0
+        )
+        
+        let actualConstraints = self.view.relatedConstraints()
+        let image = self.getImageOfScrollView()
+        NSLayoutConstraint.activate(actualConstraints)
+        
+        pdf.addImage(image)
+
+        let pdfData = pdf.generatePDFdata()
+        self.openShareActivityControler(data: pdfData)
+    }
+                                              
     @IBAction func choosStartDate(sender: UIDatePicker) {
 
         updateCustomTime()
@@ -504,5 +530,120 @@ extension StatsViewController {
                 self.showAlert(error: error)
             }
         })
+    }
+    
+    private func getImageOfScrollView() -> UIImage{
+        var image = UIImage();
+
+        UIGraphicsBeginImageContextWithOptions(self.scrollView.contentSize, false, UIScreen.main.scale)
+
+        let savedContentOffset = self.scrollView.contentOffset;
+        let savedFrame = self.scrollView.frame;
+        let savedBackgroundColor = self.scrollView.backgroundColor
+
+        self.scrollView.contentOffset = CGPoint.zero;
+        self.scrollView.frame = CGRect(x: 0, y: 0, width: self.scrollView.contentSize.width, height: self.scrollView.contentSize.height)
+        self.scrollView.backgroundColor = UIColor.clear
+
+        let tempView = UIView(frame: CGRect(x: 0, y: 0, width: self.scrollView.contentSize.width, height: self.scrollView.contentSize.height))
+        let tempSuperView = self.scrollView.superview
+        self.scrollView.removeFromSuperview()
+        tempView.addSubview(self.scrollView)
+
+        tempView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        image = UIGraphicsGetImageFromCurrentImageContext()!;
+
+        tempView.subviews[0].removeFromSuperview()
+        tempSuperView?.addSubview(self.scrollView)
+
+        self.scrollView.contentOffset = savedContentOffset;
+        self.scrollView.frame = savedFrame;
+        self.scrollView.backgroundColor = savedBackgroundColor
+
+        UIGraphicsEndImageContext();
+
+        return image
+    }
+    
+    private func openShareActivityControler(data: Data){
+        self.loadingIndecator.startAnimating()
+        
+        self.getDocName(completion: { docName in
+
+            self.loadingIndecator.stopAnimating()
+            let url = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(docName) as NSURL
+                        
+            do {
+                try data.write(to: url as URL)
+                
+                let activitycontroller = UIActivityViewController(activityItems: [url], applicationActivities: nil)
+                if activitycontroller.responds(to: #selector(getter: activitycontroller.completionWithItemsHandler)) {
+                    activitycontroller.completionWithItemsHandler = {(type, isCompleted, items, error) in
+                        if let error = error {
+                            self.showAlert(title: "Error!", message: error.localizedDescription)
+                        } else if isCompleted {
+                            print("completed")
+                        }
+                    }
+                }
+                
+                activitycontroller.excludedActivityTypes = [UIActivity.ActivityType.airDrop]
+                activitycontroller.popoverPresentationController?.sourceView = self.view
+                self.present(activitycontroller, animated: true, completion: nil)
+                
+            } catch let error {
+                self.showAlert(title: "Error!", message: error.localizedDescription)
+            }
+        })
+               
+//        DispatchQueue.main.async{
+//            let activityViewController = UIActivityViewController(activityItems: userContent as [Any], applicationActivities: nil)
+//
+//            activityViewController.popoverPresentationController?.sourceView = self.view
+//            activityViewController.excludedActivityTypes = [ UIActivity.ActivityType.airDrop, UIActivity.ActivityType.postToFacebook ]
+//
+//            switch UIDevice.current.userInterfaceIdiom {
+//            case .phone:
+//                // It's an iPhone
+//                break
+//            case .pad:
+//                // It's an iPad (or macOS Catalyst)
+//              //  alert.popoverPresentationController?.sourceView = VC.view
+//                if let popoverPresentationController = activityViewController.popoverPresentationController {
+//                      popoverPresentationController.sourceView = self.view
+//                      popoverPresentationController.sourceRect = CGRect(x: self.view.bounds.midX, y: self.view.bounds.midY, width: 0, height: 0)
+//                      popoverPresentationController.permittedArrowDirections = []
+//                    }
+//                break
+//
+//            @unknown default:
+//                // Uh, oh! What could it be?
+//                break
+//            }
+//
+//            self.present(activityViewController, animated: true, completion: nil)
+//        }
+    }
+    
+    private func getDocName(completion: @escaping (String) -> Void) {
+        
+        var text = "PdfStats"
+        
+        if let name = FirestoreManager.shared.currentUserDisplayName {
+            text = name + "_"
+        } else if let email = FirestoreManager.shared.currentUserEmail {
+            text = email + "_"
+        }
+        
+        let currentDate = Date()
+        let dateFormatter = DateFormatter()
+
+        dateFormatter.dateFormat = "ddMMyyyy_hhmmss"
+        let convertedDate: String = dateFormatter.string(from: currentDate)
+        
+        text.append(convertedDate)
+        text.append(".pdf")
+        
+        completion(text)
     }
 }

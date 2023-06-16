@@ -52,11 +52,11 @@ extension PlayerViewController {
         }
 
 
-        // Is Favourites
-        if currentLecture.isFavourite, let removeFromFavourites = allActions[.removeFromFavourites] {
-            actions.append(removeFromFavourites)
-        } else if let markAsFavourite = allActions[.markAsFavourite] {
-            actions.append(markAsFavourite)
+        // isFavorite
+        if currentLecture.isFavorite, let removeFromFavorite = allActions[.removeFromFavorite] {
+            actions.append(removeFromFavorite)
+        } else if let markAsFavorite = allActions[.markAsFavorite] {
+            actions.append(markAsFavorite)
         }
 
         // addToPlaylist
@@ -81,9 +81,9 @@ extension PlayerViewController {
             })
 
             switch option {
-            case .download, .resumeDownload, .pauseDownload, .markAsFavourite, .addToPlaylist, .markAsHeard, .resetProgress, .share:
+            case .download, .resumeDownload, .pauseDownload, .markAsFavorite, .addToPlaylist, .markAsHeard, .resetProgress, .share:
                 break
-            case .deleteFromDownloads, .removeFromPlaylist, .removeFromFavourites:
+            case .deleteFromDownloads, .removeFromPlaylist, .removeFromFavorite:
                 action.action.attributes = .destructive
             }
 
@@ -106,20 +106,20 @@ extension PlayerViewController {
         case .download, .resumeDownload:
             Haptic.softImpact()
             Persistant.shared.save(lectures: [lecture], completion: { _ in })
-            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: nil, isDownloaded: true, isFavourite: nil, lastPlayedPoint: nil, postUpdate: false, completion: {_ in })
+            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: nil, isDownloaded: true, isFavorite: nil, lastPlayedPoint: nil, postUpdate: false, completion: {_ in })
 
         case .deleteFromDownloads:
             Haptic.warning()
             let eligibleDeleteFromDownloadsModels: [Model] = selectedModels.filter { $0.downloadState != .notDownloaded }
             askToDeleteFromDownloads(lectures: eligibleDeleteFromDownloadsModels, sourceView: self)
 
-        case .markAsFavourite:
+        case .markAsFavorite:
             Haptic.softImpact()
-            markAsFavourites(lectures: [lecture], sourceView: self)
+            markAsFavorite(lectures: [lecture], sourceView: self)
 
-        case .removeFromFavourites:
+        case .removeFromFavorite:
             Haptic.warning()
-            askToRemoveFromFavourites(lectures: [lecture], sourceView: self)
+            askToRemoveFromFavorite(lectures: [lecture], sourceView: self)
         case .addToPlaylist:
             Haptic.softImpact()
             let navigationController = UIStoryboard.playlists.instantiate(UINavigationController.self, identifier: "PlaylistNavigationController")

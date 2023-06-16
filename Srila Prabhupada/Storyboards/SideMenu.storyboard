@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QfZ-UK-gEc">
-    <device id="retina6_1" orientation="portrait" appearance="dark"/>
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
@@ -15,7 +15,7 @@
         <!--Side Menu View Controller-->
         <scene sceneID="sXy-aD-ftL">
             <objects>
-                <viewController storyboardIdentifier="SideMenuViewController" id="Bg7-AS-CAc" customClass="SideMenuViewController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SideMenuViewController" id="Bg7-AS-CAc" customClass="SideMenuViewController" customModule="BVKS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="r23-ZY-Rnq">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -159,7 +159,7 @@
         <!--Copyright-->
         <scene sceneID="hLL-ey-dP8">
             <objects>
-                <viewController storyboardIdentifier="CopyrightViewController" id="ogI-jQ-tB8" customClass="CopyrightViewController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CopyrightViewController" id="ogI-jQ-tB8" customClass="CopyrightViewController" customModule="BVKS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0c7-47-gfh">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -204,6 +204,9 @@ This material may not be reproduced in whole or in part by any means, without wr
                             <color key="tintColor" name="AccentColor"/>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="copyrightLabel" destination="u9F-q3-6jd" id="kXB-8U-vNZ"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Nz9-qZ-44f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -212,7 +215,7 @@ This material may not be reproduced in whole or in part by any means, without wr
         <!--Navigation Controller-->
         <scene sceneID="nAr-XH-zVe">
             <objects>
-                <navigationController storyboardIdentifier="UserProfileNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="8vT-bl-AfQ" customClass="NavigationController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="UserProfileNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="8vT-bl-AfQ" customClass="NavigationController" customModule="BVKS" customModuleProvider="target" sceneMemberID="viewController">
                     <value key="contentSizeForViewInPopover" type="size" width="0.0" height="0.0"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" largeTitles="YES" id="Xhd-j2-3Xp">
                         <rect key="frame" x="0.0" y="48" width="414" height="96"/>
@@ -237,7 +240,7 @@ This material may not be reproduced in whole or in part by any means, without wr
         <!--Profile-->
         <scene sceneID="pqm-pC-phr">
             <objects>
-                <viewController storyboardIdentifier="UserProfileViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Mro-CB-AjI" customClass="UserProfileViewController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UserProfileViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Mro-CB-AjI" customClass="UserProfileViewController" customModule="BVKS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5Ua-p8-RKk">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -548,7 +551,7 @@ This material may not be reproduced in whole or in part by any means, without wr
         <!--Delete Account-->
         <scene sceneID="Usw-cM-1lz">
             <objects>
-                <viewController storyboardIdentifier="DeleteAccountViewController" id="2Hf-JB-mGF" customClass="DeleteAccountViewController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="DeleteAccountViewController" id="2Hf-JB-mGF" customClass="DeleteAccountViewController" customModule="BVKS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2XV-bF-3wu">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -624,7 +627,7 @@ This material may not be reproduced in whole or in part by any means, without wr
                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="24"/>
                                 </variation>
                             </textField>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your playlist(s) and favourite lecture(s) will be permanently removed." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rSF-8D-iyt">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your playlist(s) and favorite lecture(s) will be permanently removed." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rSF-8D-iyt">
                                 <rect key="frame" x="20" y="58" width="374" height="49.5"/>
                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="18"/>
                                 <color key="textColor" systemColor="systemRedColor"/>
@@ -668,7 +671,7 @@ This material may not be reproduced in whole or in part by any means, without wr
         <!--Change Password-->
         <scene sceneID="Hit-OZ-hBg">
             <objects>
-                <viewController storyboardIdentifier="ChangePasswordViewController" id="4Ag-Xp-zwu" customClass="ChangePasswordViewController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ChangePasswordViewController" id="4Ag-Xp-zwu" customClass="ChangePasswordViewController" customModule="BVKS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="fiJ-pq-AnG">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -856,7 +859,7 @@ This material may not be reproduced in whole or in part by any means, without wr
         <!--About-->
         <scene sceneID="nIn-su-joN">
             <objects>
-                <viewController storyboardIdentifier="AboutViewController" id="O0F-tR-YVh" customClass="AboutViewController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AboutViewController" id="O0F-tR-YVh" customClass="AboutViewController" customModule="BVKS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="oxp-qF-sR1">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -865,11 +868,14 @@ This material may not be reproduced in whole or in part by any means, without wr
                                 <rect key="frame" x="0.0" y="144" width="414" height="752"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="efI-fg-47e">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="3739"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="438.5"/>
                                         <subviews>
-                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_167" translatesAutoresizingMaskIntoConstraints="NO" id="TMc-Te-Z51">
-                                                <rect key="frame" x="123.5" y="20" width="167" height="167"/>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="aboutImage" translatesAutoresizingMaskIntoConstraints="NO" id="TMc-Te-Z51">
+                                                <rect key="frame" x="10" y="10" width="394" height="197"/>
                                                 <color key="tintColor" systemColor="tintColor"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="TMc-Te-Z51" secondAttribute="height" multiplier="2:1" id="CIY-d6-eeY"/>
+                                                </constraints>
                                                 <userDefinedRuntimeAttributes>
                                                     <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                                         <real key="value" value="8"/>
@@ -877,9 +883,9 @@ This material may not be reproduced in whole or in part by any means, without wr
                                                 </userDefinedRuntimeAttributes>
                                             </imageView>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="mjb-YA-Fhz">
-                                                <rect key="frame" x="20" y="217" width="374" height="3522"/>
+                                                <rect key="frame" x="20" y="237" width="374" height="201.5"/>
                                                 <subviews>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Founder-acarya of international Society for Krishna Consciousness His Divine Grace A.C.Bhaktivedanta Swami Prabhupada" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JVA-g7-QBz" customClass="TappableLabel" customModule="Srila_Prabhupada" customModuleProvider="target">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Founder-acarya of international Society for Krishna Consciousness His Divine Grace A.C.Bhaktivedanta Swami Prabhupada" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JVA-g7-QBz" customClass="TappableLabel" customModule="BVKS" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="0.0" width="374" height="70"/>
                                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="17"/>
                                                         <color key="textColor" systemColor="systemOrangeColor"/>
@@ -897,25 +903,8 @@ This material may not be reproduced in whole or in part by any means, without wr
                                                             <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="40"/>
                                                         </variation>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M9y-B0-ncA">
-                                                        <rect key="frame" x="0.0" y="178" width="374" height="3344"/>
-                                                        <string key="text">The honorific title Prabhupāda is properly used for designating those very great spiritual masters who have made an outstanding contribution of literature or preaching to the world. Examples are Śrīla Rūpa Gosvami Prabhupāda, Śrīla Jīva Gosvami Prabhupāda, and Śrīla Bhaktisiddhānta Sarasvati Goswami Prabhupāda.
-     When members of ISKCON speak of “Srila Prabhupada," they refer to His Divine Grace A.C. Bhaktivedanta Swami Prabhupada. A.C. Bhaktivedanta Swami is correctly addressed as Srila Prabhupada because he occupies a unique position in the religious history of the world.
-     In Śrīmad-Bhāgavatam (1.5.11), Vyāsadeva states that the Bhagavatam "is meant to bring about a revolution in the impious life of a misdirected civilization." This statement clearly refers to the preaching mission heralded by Śrīla A.C. Bhaktivedanta Swami Prabhupāda, whose purports on śrīmad-Bhāgavatam, composed five thousand years after Śrīla Vyāsadeva's compilation of the Bhāgavatam, have become the most important contribution for the revolutionary respiritualization of the entire human society, which was lost in the darkness of materialism.
-     Lord Caitanya Mahāprabhu also predicted that His holy name would be broadcast in every town and village of the world. Ācāryas of His sampradāya predicted that the spread of Krsna consciousness would usher in a ten-thousand year Golden Age within the dark age of Kali. And in Caitanya Mangala, Locana dāsa Thākura foretold that a great senapati (military general) would appear to widely and powerfully preach Lord Caitanya's message. That confidential task of spreading Krsna consciousness all over the world was entrusted to His Divine Grace A.C. Bhaktivedanta Swami Prabhupāda.
-     Śrī Caitanya-caritāmộta confirms that unless one is specifically empowered by Krsna, he cannot infuse Krşņa consciousness into the hearts of the masses. Bhaktivinoda Thākura, a great Vaisnava ācārya who appeared in the nineteenth century, predicted that very soon a great personality would appear and spread Krsna consciousness all over the world. That person is clearly His Divine Grace A.C. Bhaktivedanta Swami Prabhupāda.
-     Bhaktivinoda Thākura also said that the greatness of a Vaişnava can be understood by seeing how many nondevotees he converts to Vaisnavism. To bring even a highly qualified person to Krsna consciousness is difficult, but Śrīla Prabhupāda was so empowered by Krsna that he went amongst the most unlikely candidates – the hedonistic youth of the Western countries – and made devotees by the thousands. No one can fully understand the extraordinary task Śrīla Prabhupāda performed. He went alone amongst persons with no standard of Vedic culture, persons brought up in a society which vigorously promotes meat-eating, illicit sex, gambling, and intoxication. They had no idea how to receive a sādhu and were almost completely disqualified as candidates for spiritual life.
-     Śrīla Prabhupāda not only entered amongst such people, but gradually managed to train many of them to the extent that now they are accepted everywhere as first-class Vaisnavas and preachers, qualified to impart Krsna consciousness to others.
-     In India's recent history, there were certainly many Vaisnavas who were devoted, learned, and renounced. However, the fact remains that only Śrīla Prabhupāda was sufficiently qualified to spread Krsna consciousness all over the world. Only he had sufficient faith in the instructions of Lord Caitanya, the order of his spiritual master, and the holy name of Krsna to seriously attempt spreading Krsna consciousness outside of India. Only he had enough compassion and vision to preach the message of Lord Caitanya to those who most needed it. Only one of the topmost confidential devotees of Krsna could perform such an extraordinary task. By his unparalleled achievements, it is clear that Śrīla Prabhupāda occupies a unique position in the history of Vaisnavism.
-     Śrīla Prabhupāda was empowered to spread Krsna consciousness in a practical and straightforward way, just suitable for the modern world. Without changing or compromising the teachings of Krsna consciousness even slightly, he presented its esoteric truths in a clear and intelligible manner, suitable for both the layman and the scholar.
-     Śrīla Prabhupāda personally oversaw the expansion and development of ISKCON. He personally set up the programs which were to form the basis of ISKCON's continued expansion: production and distribution of transcendental books, harināma-sankirtana parties, temples, āśrams, prasāda distribution, transcendental farm communities, gurukulas, preaching to scientists and scholars, and so on.
-     Śrīla Prabhupāda personally gave detailed directions about every aspect of Krsna consciousness: how to worship Deities, how to conduct sādhana, how to preach, how to wear a dhoti, how to cook for Krsna, how to chant mantras, and so forth. Śrīla Prabhupāda is thus the founder-ācārya of ISKCON. Whatever standards and instructions comprise ISKCON have come from him. Therefore Śrīla Prabhupāda will always remain the preeminent śikṣā-guru and ācārya of ISKCON.
-     Both scripture and tradition offer various approaches to Krsna consciousness, but followers of Śrīla Prabhupāda execute Krsna consciousness as he showed them, knowing that Śrīla Prabhupāda, as a faithful follower of his guru and the previous ācāryas, presented Krsna consciousness in the best way for the modern age.
-     Śrīla Prabhupāda's success is itself proof that his endeavors are approved, ordained, and blessed by the Supreme Lord Krsna Himself.
-     Śrīla Prabhupāda gave many instructions, but certain ones are absolutely necessary for initiated disciples to follow if they claim to be genuine and serious followers of Prabhupāda. For instance, Śrīla Prabhupāda demanded that initiated devotees rise by 4.00 a.m., attend mangala-āratī, chant at least sixteen rounds of the mahā-mantra every day, and undeviatingly follow the four regulative principles.
-     All such standards that Śrīla Prabhupāda clearly defined are the standards to be followed in ISKCON. A rightly situated, successful follower of Śrīla Prabhupāda is simply a faithful standard-bearer. He does not try to change or interpret the standards and programs given by Prabhupāda, for he knows that whatever Śrīla Prabhupāda has given us is perfect and complete for the respiritualization of the entire human society - not only for the present, but for the next ten thousand years.
-     -From Beginner's Guide to Krsna Consciousness
-     How can “The Significance of Śrīla Prabhupāda” be rendered in three pages? Even if we could write millions of books, we could hardly begin to expound his glories. If we were to take the entire universe – with its planets, outer space, continents, oceans, mountains, men, demigods, and demons on one side – and one drop of dust from Śrīla Prabhupāda's lotus feet on the other, there would be no comparison. One drop of dust from Śrīla Prabhupāda's lotus feet is millions of times more valuable than anything the material world has to offer.  </string>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Some text" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M9y-B0-ncA">
+                                                        <rect key="frame" x="0.0" y="178" width="374" height="23.5"/>
                                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -932,7 +921,9 @@ This material may not be reproduced in whole or in part by any means, without wr
                                             <constraint firstItem="mjb-YA-Fhz" firstAttribute="leading" secondItem="efI-fg-47e" secondAttribute="leading" constant="20" id="N8b-N6-gEM"/>
                                             <constraint firstAttribute="bottom" secondItem="mjb-YA-Fhz" secondAttribute="bottom" id="P6J-1J-KyK"/>
                                             <constraint firstAttribute="trailing" secondItem="mjb-YA-Fhz" secondAttribute="trailing" constant="20" id="Z7X-IN-Mf2"/>
-                                            <constraint firstItem="TMc-Te-Z51" firstAttribute="top" secondItem="efI-fg-47e" secondAttribute="top" constant="20" id="fk5-yN-dS9"/>
+                                            <constraint firstItem="TMc-Te-Z51" firstAttribute="top" secondItem="efI-fg-47e" secondAttribute="top" constant="10" id="fk5-yN-dS9"/>
+                                            <constraint firstItem="TMc-Te-Z51" firstAttribute="leading" secondItem="efI-fg-47e" secondAttribute="leading" constant="10" id="mop-o3-J7n"/>
+                                            <constraint firstAttribute="trailing" secondItem="TMc-Te-Z51" secondAttribute="trailing" constant="10" id="vcL-eV-jVh"/>
                                             <constraint firstItem="mjb-YA-Fhz" firstAttribute="top" secondItem="TMc-Te-Z51" secondAttribute="bottom" constant="30" id="x6D-x3-7MQ"/>
                                         </constraints>
                                     </view>
@@ -983,12 +974,12 @@ This material may not be reproduced in whole or in part by any means, without wr
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WQz-1N-Wg0" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="378" y="1600"/>
+            <point key="canvasLocation" x="377" y="1600"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="fSd-DF-JKq">
             <objects>
-                <navigationController storyboardIdentifier="CopyrightNavigationController" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="formSheet" id="RRc-k1-jnX" customClass="NavigationController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="CopyrightNavigationController" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="formSheet" id="RRc-k1-jnX" customClass="NavigationController" customModule="BVKS" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <value key="contentSizeForViewInPopover" type="size" width="420" height="600"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" largeTitles="YES" id="LLn-fd-33z">
@@ -1015,7 +1006,7 @@ This material may not be reproduced in whole or in part by any means, without wr
         <!--Navigation Controller-->
         <scene sceneID="ih2-M3-vwt">
             <objects>
-                <navigationController storyboardIdentifier="AboutNavigationController" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="pageSheet" id="9At-2x-DJn" customClass="NavigationController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="AboutNavigationController" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="pageSheet" id="9At-2x-DJn" customClass="NavigationController" customModule="BVKS" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" largeTitles="YES" id="m3a-6g-EHw">
                         <rect key="frame" x="0.0" y="48" width="414" height="96"/>
@@ -1057,9 +1048,9 @@ This material may not be reproduced in whole or in part by any means, without wr
         </designable>
     </designables>
     <resources>
+        <image name="aboutImage" width="1078" height="524"/>
         <image name="chevron.right" catalog="system" width="97" height="128"/>
         <image name="keyFill" width="18.5" height="35.5"/>
-        <image name="logo_167" width="167" height="167"/>
         <image name="return" width="30.5" height="28"/>
         <image name="trash" catalog="system" width="117" height="128"/>
         <image name="trashFill" width="28" height="35"/>

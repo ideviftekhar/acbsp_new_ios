@@ -43,10 +43,19 @@ class UserProfileViewController: UIViewController {
     }
     
     @IBAction func logOutButtonTapped(_ sender: UIButton) {
+        
         self.showAlert(title: "Logout", message: "Are you sure you would like to Logout?", preferredStyle: .actionSheet, sourceView: sender, cancel: ("Cancel", nil), destructive: ("Logout", {
             FirestoreManager.shared.signOut(completion: { result in
                 switch result {
                 case .success:
+                    
+                    if let appTabBarController = self.appTabBarController,
+                       !appTabBarController.playerViewController.isPaused {
+                        appTabBarController.playerViewController.pause()
+                        appTabBarController.playerViewController.currentLecture = nil
+                        appTabBarController.playerViewController.playlistLectures = []
+                    }
+                    
                     if let keyWindow = self.view.window {
                         UIView.transition(with: keyWindow, duration: 0.5, options: .transitionFlipFromLeft, animations: {
                             let loginNavigationController = UIStoryboard.main.instantiate(UINavigationController.self, identifier: "LoginNavigationController")
@@ -60,7 +69,20 @@ class UserProfileViewController: UIViewController {
             })
         }))
     }
+
+    var appTabBarController: TabBarController? {
+        var controller: UIViewController = self
+        
+        while let presenting = controller.presentingViewController {
+            controller = presenting
+            if let controller = controller as? TabBarController {
+                return controller
+            }
+        }
+        return nil
+    }
     
+
     private func setupUI() {
         changePasswordStackView.isHidden = true
         

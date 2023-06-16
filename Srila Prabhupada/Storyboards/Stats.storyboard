@@ -13,7 +13,7 @@
         <!--Stats-->
         <scene sceneID="L2r-fV-FAj">
             <objects>
-                <viewController storyboardIdentifier="StatsViewController" modalPresentationStyle="fullScreen" id="gUz-W7-hgS" customClass="StatsViewController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="StatsViewController" modalPresentationStyle="fullScreen" id="gUz-W7-hgS" customClass="StatsViewController" customModule="BVKS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="qad-yg-8AS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -94,13 +94,13 @@
                                                                 <rect key="frame" x="0.0" y="68" width="335" height="15"/>
                                                                 <subviews>
                                                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="DIl-Nn-Zdh">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="325" height="15"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="305.5" height="15"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="15" id="MYP-OZ-xOf"/>
                                                                         </constraints>
                                                                     </progressView>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" text="0 %" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aMo-ZB-Jck">
-                                                                        <rect key="frame" x="335" y="0.0" width="0.0" height="15"/>
+                                                                        <rect key="frame" x="315.5" y="0.0" width="19.5" height="15"/>
                                                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
                                                                         <color key="textColor" systemColor="systemGrayColor"/>
                                                                         <nil key="highlightedColor"/>
@@ -519,13 +519,13 @@
                                                                 <rect key="frame" x="0.0" y="159" width="335" height="15"/>
                                                                 <subviews>
                                                                     <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="dpr-K6-wYA">
-                                                                        <rect key="frame" x="0.0" y="0.0" width="325" height="15"/>
+                                                                        <rect key="frame" x="0.0" y="0.0" width="305.5" height="15"/>
                                                                         <constraints>
                                                                             <constraint firstAttribute="height" constant="15" id="wNr-D0-CXu"/>
                                                                         </constraints>
                                                                     </progressView>
                                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" text="0 %" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xvq-gT-hfh">
-                                                                        <rect key="frame" x="335" y="0.0" width="0.0" height="15"/>
+                                                                        <rect key="frame" x="315.5" y="0.0" width="19.5" height="15"/>
                                                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
                                                                         <color key="textColor" systemColor="systemGrayColor"/>
                                                                         <nil key="highlightedColor"/>
@@ -622,13 +622,18 @@
                                                     </stackView>
                                                 </subviews>
                                             </stackView>
+                                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="nKB-8S-0Yz">
+                                                <rect key="frame" x="177.5" y="300" width="20" height="20"/>
+                                            </activityIndicatorView>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <constraints>
                                             <constraint firstItem="PID-iq-glT" firstAttribute="top" secondItem="qyc-cz-ozy" secondAttribute="top" constant="10" id="0tQ-K6-yNh"/>
                                             <constraint firstItem="PID-iq-glT" firstAttribute="leading" secondItem="qyc-cz-ozy" secondAttribute="leading" constant="20" id="2XG-O4-a2a"/>
                                             <constraint firstAttribute="trailing" secondItem="PID-iq-glT" secondAttribute="trailing" constant="20" id="D5H-44-wUZ"/>
+                                            <constraint firstItem="nKB-8S-0Yz" firstAttribute="centerX" secondItem="qyc-cz-ozy" secondAttribute="centerX" id="c2Y-vJ-ODW"/>
                                             <constraint firstAttribute="bottom" secondItem="PID-iq-glT" secondAttribute="bottom" constant="20" id="oef-xT-xnJ"/>
+                                            <constraint firstItem="nKB-8S-0Yz" firstAttribute="top" secondItem="qyc-cz-ozy" secondAttribute="top" constant="300" id="zqg-WU-L0f"/>
                                         </constraints>
                                     </view>
                                 </subviews>
@@ -675,6 +680,8 @@
                         <outlet property="lastWeekProgressLabel" destination="STs-qk-Xrj" id="coX-4f-sGW"/>
                         <outlet property="lastWeekProgressView" destination="A1a-Pc-YZZ" id="G2s-Wm-QVf"/>
                         <outlet property="lastWeekSBLabel" destination="kgK-dT-pIb" id="L8a-SW-4Dc"/>
+                        <outlet property="loadingIndecator" destination="nKB-8S-0Yz" id="PLj-IC-R7W"/>
+                        <outlet property="scrollView" destination="uoy-4H-LgC" id="pLC-9r-V9a"/>
                         <outlet property="startDatePicker" destination="iNx-od-jZb" id="vwi-LG-FWD"/>
                         <outlet property="thisWeekChartView" destination="8ly-Pb-FYg" id="s33-9V-RMh"/>
                         <outlet property="totalFileCountLabel" destination="deK-7F-8KD" id="NMS-vr-7Nv"/>

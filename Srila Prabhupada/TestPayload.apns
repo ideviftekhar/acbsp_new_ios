@@ -1,0 +1,23 @@
+{
+
+   "Simulator Target Bundle": "com.bvksdigital.acbsp",
+
+   "aps":{
+
+       "alert": {
+
+           "title": "Push Notification",
+
+           "subtitle": "Xcode 11.4 beta is here",
+
+           "body": "🥰 Woohoo! Push notification in simulator! 😍"
+
+       },
+
+      "badge":1,
+
+      "sound":"default",
+
+   }
+
+}
