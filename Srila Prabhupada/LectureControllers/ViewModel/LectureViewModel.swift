@@ -52,6 +52,14 @@ protocol LectureViewModel: AnyObject {
         source: FirestoreSource,
         completion: @escaping (Result<LastSyncTimestamp, Error>) -> Void)
     
+    func getNotificationInfo(
+        source: FirestoreSource,
+        completion: @escaping (Result<UserSettings, Error>) -> Void)
+    
+    func updateNotification(
+        documentData: [String: Any],
+        completion: @escaping (Result<Bool, Error>) -> Void)
+    
 }
 
 class DefaultLectureViewModel: NSObject, LectureViewModel {
@@ -167,6 +175,38 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
         let documentReference: DocumentReference = FirestoreManager.shared.firestore.collection(metadataPath).document(CommonConstants.metadataTimestampDocumentID)
         
         FirestoreManager.shared.getDocument(documentReference: documentReference, source: .server, completion: completion)
+    }
+    
+    func getNotificationInfo(source: FirestoreSource, completion: @escaping (Result<UserSettings, Error>) -> Void) {
+        guard let id = FirestoreManager.shared.currentUserUID else {
+            let error = NSError(domain: "Firestore Database", code: 0, userInfo: [NSLocalizedDescriptionKey: "UID not available"])
+            completion(.failure(error))
+            return
+        }
+
+        let usersSettingsPath = FirestoreCollection.usersSettings(userId: id).path
+        print(usersSettingsPath)
+        let documentReference: DocumentReference = FirestoreManager.shared.firestore.collection(usersSettingsPath).document("userSettings")
+        
+        FirestoreManager.shared.getDocument(documentReference: documentReference, source: .server, completion: completion)
+    }
+    
+    func updateNotification(documentData: [String: Any], completion: @escaping (Result<Bool, Error>) -> Void) {
+        
+        guard let id = FirestoreManager.shared.currentUserUID else {
+            let error = NSError(domain: "Firestore Database", code: 0, userInfo: [NSLocalizedDescriptionKey: "UID not available"])
+            completion(.failure(error))
+            return
+        }
+
+        let usersSettingsPath = FirestoreCollection.usersSettings(userId: id).path
+        
+        print(usersSettingsPath)
+        
+        let documentReference: DocumentReference = FirestoreManager.shared.firestore.collection(usersSettingsPath).document("userSettings")
+                
+        FirestoreManager.shared.updateDocument(documentData: documentData, documentReference: documentReference, completion: completion)
+        
     }
 }
 

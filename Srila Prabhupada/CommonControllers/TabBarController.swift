@@ -263,7 +263,7 @@ extension TabBarController {
 extension TabBarController {
 
     private func addTimestampObserver() {
-        timestampUpdated { result in
+        timestampUpdated(completion: { result in
             switch result {
                 
             case .success(let newTimestamp):
@@ -273,11 +273,13 @@ extension TabBarController {
 
                 if oldTimestamp != newTimestamp {
                     self.reloadLectures(newTimestamp: newTimestamp, firestoreSource: .server)
+                } else{
+                    print("No new lectures")
                 }
             case .failure(let error):
                 print(error.localizedDescription)
             }
-        }
+        })
     }
     
     private func timestampUpdated(completion: @escaping (Swift.Result<Date, Error>) -> Void) {
@@ -306,13 +308,33 @@ extension TabBarController {
                 UserDefaults.standard.set(newTimestamp, forKey: CommonConstants.keyTimestamp)
                 UserDefaults.standard.synchronize()
 
+                self.reloadAllControllers()
                 Filter.updateFilterSubtypes(lectures: lectures)
             case .failure(let error):
                 Haptic.error()
+
+                let okButton: ButtonConfig = (title: "OK", handler: nil)
+
                 showAlert(title: "Error!", message: error.localizedDescription, cancel: ("Retry", { [self] in
                     self.reloadLectures(newTimestamp: newTimestamp, firestoreSource: firestoreSource)
-                }))
+                }), buttons: [okButton])
             }
         })
+    }
+
+    private func reloadAllControllers() {
+
+        guard let navigationControllers = viewControllers as? [UINavigationController] else {
+            return
+        }
+
+        let viewControllers: [UIViewController] = navigationControllers.flatMap { $0.viewControllers }
+        let lectureControllers: [LectureViewController] = viewControllers.filter { $0 is LectureViewController } as? [LectureViewController] ?? []
+
+        for lectureController in lectureControllers {
+            if lectureController.isViewLoaded {
+                lectureController.refresh(source: .cache)
+            }
+        }
     }
 }

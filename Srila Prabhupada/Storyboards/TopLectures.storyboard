@@ -13,7 +13,7 @@
         <!--Top Lectures-->
         <scene sceneID="WGu-QM-DlK">
             <objects>
-                <navigationController storyboardIdentifier="TopLectureNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="Rto-Sa-HFt" customClass="NavigationController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="TopLectureNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="Rto-Sa-HFt" customClass="NavigationController" customModule="BVKS" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Top Lectures" image="chart.bar.xaxis" id="NCU-3f-JCK"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" largeTitles="YES" id="WbR-bu-YQm">
@@ -40,11 +40,19 @@
         <!--Top Lectures-->
         <scene sceneID="BvV-o4-6Iw">
             <objects>
-                <viewController storyboardIdentifier="TopLectureViewController" id="DeK-Gp-UKt" customClass="TopLectureViewController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TopLectureViewController" id="DeK-Gp-UKt" customClass="TopLectureViewController" customModule="BVKS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Zcu-R6-5hb">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="hcR-fg-S6D">
+                                <rect key="frame" x="0.0" y="175" width="414" height="721"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="DeK-Gp-UKt" id="Sjl-AW-Z0G"/>
+                                    <outlet property="delegate" destination="DeK-Gp-UKt" id="8DV-jM-Y4b"/>
+                                </connections>
+                            </tableView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="E2N-Vu-7JO">
                                 <rect key="frame" x="0.0" y="144" width="414" height="32"/>
                                 <segments>
@@ -55,14 +63,6 @@
                                     <action selector="segmentAction:" destination="DeK-Gp-UKt" eventType="valueChanged" id="E7X-4M-SLG"/>
                                 </connections>
                             </segmentedControl>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="hcR-fg-S6D">
-                                <rect key="frame" x="0.0" y="175" width="414" height="721"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <connections>
-                                    <outlet property="dataSource" destination="DeK-Gp-UKt" id="Sjl-AW-Z0G"/>
-                                    <outlet property="delegate" destination="DeK-Gp-UKt" id="8DV-jM-Y4b"/>
-                                </connections>
-                            </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Tp0-8u-5Kt"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>

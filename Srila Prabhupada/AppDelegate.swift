@@ -158,6 +158,16 @@ extension AppDelegate: UNUserNotificationCenterDelegate {
 extension AppDelegate: MessagingDelegate {
     //Monitor token refresh
     func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        
+        //Save token to UserDefault
+        let uds = UserDefaults.standard
+        if (uds.string(forKey: CommonConstants.keyFcmToken) == nil) {
+            uds.set(fcmToken, forKey: CommonConstants.keyFcmToken)
+        }
+        uds.synchronize()
+        
+        self.subscribeToTopics()
+        
       print("Firebase registration token: \(String(describing: fcmToken))")
 
       let dataDict: [String: String] = ["token": fcmToken ?? ""]
@@ -168,5 +178,57 @@ extension AppDelegate: MessagingDelegate {
       )
       // TODO: If necessary send token to application server.
       // Note: This callback is fired at each app startup and whenever a new token is generated.
+    }
+}
+
+extension AppDelegate {
+    private func subscribeToTopics() {
+        
+        DefaultLectureViewModel.defaultModel.getNotificationInfo(source: .default, completion: { result in
+            switch result {
+
+            case .success(let success):
+                print(success)
+            //To subscribe to a topic, call the subscription method from your application's main thread (FCM is not thread-safe).
+                if let notification = success.notification, notification.english ?? false {
+                    DispatchQueue.main.async {
+                        Messaging.messaging().subscribe(toTopic: Constants.topicEnglish) { _ in
+                          print("Subscribed to English")
+                        }
+                    }
+                } else {
+                    Messaging.messaging().unsubscribe(fromTopic: Constants.topicEnglish, completion: { _ in
+                        print("Unsubscribed to English")
+                    })
+                }
+
+                if let notification = success.notification, notification.hindi ?? false {
+                    DispatchQueue.main.async {
+                        Messaging.messaging().subscribe(toTopic: Constants.topicHindi) { _ in
+                          print("Subscribed to Hindi")
+                        }
+                    }
+                } else {
+                    Messaging.messaging().unsubscribe(fromTopic: Constants.topicHindi, completion: { _ in
+                        print("Unsubscribed to Hindi")
+                    })
+                }
+
+                if let notification = success.notification, notification.bengali ?? false {
+                    DispatchQueue.main.async {
+                        Messaging.messaging().subscribe(toTopic: Constants.topicBengali) { _ in
+                          print("Subscribed to Bengali")
+                        }
+                    }
+                } else {
+                    Messaging.messaging().unsubscribe(fromTopic: Constants.topicBengali, completion: { _ in
+                        print("Unsubscribed to Bengali")
+                    })
+                }
+
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        })
     }
 }

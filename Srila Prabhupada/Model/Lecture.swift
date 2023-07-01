@@ -17,6 +17,7 @@ struct Lecture: Hashable, Codable {
 
     static func == (lhs: Self, rhs: Self) -> Bool {
         return lhs.id == rhs.id &&
+        lhs.titleDisplay == rhs.titleDisplay &&
         lhs.creationTimestamp == rhs.creationTimestamp &&
         lhs.resources == rhs.resources &&
         lhs.downloadState == rhs.downloadState &&
