@@ -114,4 +114,15 @@ import UIKit
 
         return nil
     }
+    
+    func relatedConstraints() -> [NSLayoutConstraint] {
+        var constraints = self.constraints
+
+        var parent = superview
+        while parent != nil {
+            constraints.append(contentsOf: parent!.constraints.filter { $0.firstItem === self || $0.secondItem === self })
+            parent = parent!.superview
+        }
+        return constraints
+    }
 }

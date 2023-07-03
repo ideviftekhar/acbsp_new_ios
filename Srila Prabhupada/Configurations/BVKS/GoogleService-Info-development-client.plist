@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>184985407900-1sqibj3d2scqq3u1brei60k9t97ae0o7.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.184985407900-1sqibj3d2scqq3u1brei60k9t97ae0o7</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>184985407900-1nmp0aqacm8uc1dc004j2atluhuf7g23.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBoedJVXM5NVadPggo-Kp8qHmA2b2wipOg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>184985407900</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.bhakti.bvks</string>
+	<key>PROJECT_ID</key>
+	<string>bvks-ee662</string>
+	<key>STORAGE_BUCKET</key>
+	<string>bvks-ee662.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:184985407900:ios:3ba6dbba58d0e65927b859</string>
+	<key>DATABASE_URL</key>
+	<string>https://bvks-ee662.firebaseio.com</string>
+</dict>
+</plist>

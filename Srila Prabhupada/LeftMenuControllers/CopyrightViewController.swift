@@ -9,8 +9,11 @@ import UIKit
 
 class CopyrightViewController: UIViewController {
 
+    @IBOutlet private var copyrightLabel: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        copyrightLabel.text = CommonConstants.copyrightText
     }
     @IBAction private func cancelButtonTapped(_ sender: UIButton) {
         self.dismiss(animated: true)

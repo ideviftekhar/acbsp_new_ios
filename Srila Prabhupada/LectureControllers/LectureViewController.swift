@@ -127,6 +127,11 @@ class LectureViewController: SearchViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardDidShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: DefaultLectureViewModel.Notification.lectureUpdated, object: nil)
     }
+    
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        self.lectureTebleView.reloadData()
+    }
 
     @objc func lectureUpdateNotification(_ notification: Notification) {
 
@@ -149,8 +154,8 @@ class LectureViewController: SearchViewController {
                                 newModels.insert(lecture, at: 0)
                             }
                         }
-                    } else if self is FavouritesViewController {    // If favourites controller, then we also need to remove or add it in UI
-                        if lecture.isFavourite {
+                    } else if self is FavoriteViewController {    // If favorites controller, then we also need to remove or add it in UI
+                        if lecture.isFavorite {
                             let lectureIndexes = newModels.allIndex(where: { $0.id == lecture.id })
                             if !lectureIndexes.isEmpty {
                                 for index in lectureIndexes {
@@ -391,16 +396,16 @@ extension LectureViewController {
                 menuItems.append(deleteFromDownloads)
             }
 
-            let eligibleMarkAsFavouriteModels: [Model] = selectedModels.filter { !$0.isFavourite }
-            if !eligibleMarkAsFavouriteModels.isEmpty, let markAsFavourite = allActions[.markAsFavourite] {
-                markAsFavourite.action.title = LectureOption.markAsFavourite.rawValue + " (\(eligibleMarkAsFavouriteModels.count))"
-                menuItems.append(markAsFavourite)
+            let eligibleMarkAsFavoriteModels: [Model] = selectedModels.filter { !$0.isFavorite }
+            if !eligibleMarkAsFavoriteModels.isEmpty, let markAsFavorite = allActions[.markAsFavorite] {
+                markAsFavorite.action.title = LectureOption.markAsFavorite.rawValue + " (\(eligibleMarkAsFavoriteModels.count))"
+                menuItems.append(markAsFavorite)
             }
 
-            let eligibleRemoveFromFavouritesModels: [Model] = selectedModels.filter { $0.isFavourite }
-            if !eligibleRemoveFromFavouritesModels.isEmpty, let removeFromFavourites = allActions[.removeFromFavourites] {
-                removeFromFavourites.action.title = LectureOption.removeFromFavourites.rawValue + " (\(eligibleRemoveFromFavouritesModels.count))"
-                menuItems.append(removeFromFavourites)
+            let eligibleRemoveFromFavoriteModels: [Model] = selectedModels.filter { $0.isFavorite }
+            if !eligibleRemoveFromFavoriteModels.isEmpty, let removeFromFavorite = allActions[.removeFromFavorite] {
+                removeFromFavorite.action.title = LectureOption.removeFromFavorite.rawValue + " (\(eligibleRemoveFromFavoriteModels.count))"
+                menuItems.append(removeFromFavorite)
             }
 
             if let addToPlaylist = allActions[.addToPlaylist] {
@@ -465,7 +470,7 @@ extension LectureViewController {
                     let eligibleDownloadModels: [Model] = selectedModels.filter { $0.downloadState == .notDownloaded || $0.downloadState == .error || $0.downloadState == .pause }
                     Persistant.shared.save(lectures: eligibleDownloadModels, completion: { _ in })
 
-                    DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleDownloadModels, isCompleted: nil, isDownloaded: true, isFavourite: nil, lastPlayedPoint: nil, postUpdate: false, completion: { _ in
+                    DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: eligibleDownloadModels, isCompleted: nil, isDownloaded: true, isFavorite: nil, lastPlayedPoint: nil, postUpdate: false, completion: { _ in
                     })
                 case .pauseDownload:
                     Haptic.warning()
@@ -476,15 +481,15 @@ extension LectureViewController {
                     let eligibleDeleteFromDownloadsModels: [Model] = selectedModels.filter { $0.downloadState != .notDownloaded }
                     askToDeleteFromDownloads(lectures: eligibleDeleteFromDownloadsModels, sourceView: moreButton)
 
-                case .markAsFavourite:
+                case .markAsFavorite:
                     Haptic.softImpact()
-                    let eligibleMarkAsFavouriteModels: [Model] = selectedModels.filter { !$0.isFavourite }
-                    markAsFavourites(lectures: eligibleMarkAsFavouriteModels, sourceView: moreButton)
+                    let eligibleMarkAsFavoriteModels: [Model] = selectedModels.filter { !$0.isFavorite }
+                    markAsFavorite(lectures: eligibleMarkAsFavoriteModels, sourceView: moreButton)
 
-                case .removeFromFavourites:
+                case .removeFromFavorite:
                     Haptic.warning()
-                    let eligibleRemoveFromFavouritesModels: [Model] = selectedModels.filter { $0.isFavourite }
-                    askToRemoveFromFavourites(lectures: eligibleRemoveFromFavouritesModels, sourceView: moreButton)
+                    let eligibleRemoveFromFavoriteModels: [Model] = selectedModels.filter { $0.isFavorite }
+                    askToRemoveFromFavorite(lectures: eligibleRemoveFromFavoriteModels, sourceView: moreButton)
 
                 case .addToPlaylist:
                     Haptic.softImpact()
@@ -513,9 +518,9 @@ extension LectureViewController {
             })
 
             switch option {
-            case .download, .resumeDownload, .pauseDownload, .markAsFavourite, .addToPlaylist, .markAsHeard, .resetProgress, .share:
+            case .download, .resumeDownload, .pauseDownload, .markAsFavorite, .addToPlaylist, .markAsHeard, .resetProgress, .share:
                 break
-            case .deleteFromDownloads, .removeFromPlaylist, .removeFromFavourites:
+            case .deleteFromDownloads, .removeFromPlaylist, .removeFromFavorite:
                 action.action.attributes = .destructive
             }
 
@@ -541,18 +546,18 @@ extension LectureViewController: LectureCellDelegate {
         case .download, .resumeDownload:
             Haptic.softImpact()
             Persistant.shared.save(lectures: [lecture], completion: { _ in })
-            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: nil, isDownloaded: true, isFavourite: nil, lastPlayedPoint: nil, postUpdate: false, completion: {_ in })
+            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: nil, isDownloaded: true, isFavorite: nil, lastPlayedPoint: nil, postUpdate: false, completion: {_ in })
         case .pauseDownload:
             Persistant.shared.pauseDownloads(lectures: [lecture])
         case .deleteFromDownloads:
             Haptic.warning()
             askToDeleteFromDownloads(lectures: [lecture], sourceView: cell)
-        case .markAsFavourite:
+        case .markAsFavorite:
             Haptic.softImpact()
-            markAsFavourites(lectures: [lecture], sourceView: cell)
-        case .removeFromFavourites:
+            markAsFavorite(lectures: [lecture], sourceView: cell)
+        case .removeFromFavorite:
             Haptic.warning()
-            askToRemoveFromFavourites(lectures: [lecture], sourceView: cell)
+            askToRemoveFromFavorite(lectures: [lecture], sourceView: cell)
         case .addToPlaylist:
             Haptic.softImpact()
 
@@ -659,23 +664,23 @@ extension LectureViewController {
                        cancel: ("Cancel", nil),
                        destructive: ("Delete", {
             Persistant.shared.delete(lectures: lectures)
-            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: lectures, isCompleted: nil, isDownloaded: false, isFavourite: nil, lastPlayedPoint: nil, postUpdate: false, completion: {_ in })
+            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: lectures, isCompleted: nil, isDownloaded: false, isFavorite: nil, lastPlayedPoint: nil, postUpdate: false, completion: {_ in })
         }))
     }
 
-    func markAsFavourites(lectures: [Model], sourceView: Any?) {
-        DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: lectures, isCompleted: nil, isDownloaded: nil, isFavourite: true, lastPlayedPoint: nil, postUpdate: true, completion: { result in
+    func markAsFavorite(lectures: [Model], sourceView: Any?) {
+        DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: lectures, isCompleted: nil, isDownloaded: nil, isFavorite: true, lastPlayedPoint: nil, postUpdate: true, completion: { result in
             switch result {
             case .success:
 
                 let message: String?
                 if lectures.count > 1 {
-                    message = "\(lectures.count) lecture(s) added to favourites"
+                    message = "\(lectures.count) lecture(s) added to favorites"
                 } else {
                     message = nil
                 }
 
-                StatusAlert.show(image: LectureOption.markAsFavourite.image, title: "Added to favourites", message: message, in: self.view)
+                StatusAlert.show(image: LectureOption.markAsFavorite.image, title: "Added to favorites", message: message, in: self.view)
 
             case .failure(let error):
                 Haptic.error()
@@ -685,32 +690,32 @@ extension LectureViewController {
         })
     }
 
-    func askToRemoveFromFavourites(lectures: [Model], sourceView: Any?) {
+    func askToRemoveFromFavorite(lectures: [Model], sourceView: Any?) {
 
         let message: String
         if lectures.count == 1, let lecture = lectures.first {
-            message = "Are you sure you would like to remove '\(lecture.titleDisplay)' from Favourites?"
+            message = "Are you sure you would like to remove '\(lecture.titleDisplay)' from Favorites?"
         } else {
-            message = "Are you sure you would like to remove \(lectures.count) lecture(s) from Favourites?"
+            message = "Are you sure you would like to remove \(lectures.count) lecture(s) from Favorites?"
         }
 
-        self.showAlert(title: "Remove From Favourites",
+        self.showAlert(title: "Remove From Favorites",
                        message: message,
                        sourceView: moreButton,
                        cancel: ("Cancel", nil),
                        destructive: ("Remove", {
-            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: lectures, isCompleted: nil, isDownloaded: nil, isFavourite: false, lastPlayedPoint: nil, postUpdate: true, completion: { result in
+            DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: lectures, isCompleted: nil, isDownloaded: nil, isFavorite: false, lastPlayedPoint: nil, postUpdate: true, completion: { result in
                 switch result {
                 case .success:
 
                     let message: String?
                     if lectures.count > 1 {
-                        message = "\(lectures.count) lecture(s) removed from favourites"
+                        message = "\(lectures.count) lecture(s) removed from favorites"
                     } else {
                         message = nil
                     }
 
-                    StatusAlert.show(image: LectureOption.removeFromFavourites.image, title: "Removed from favourites", message: message, in: self.view)
+                    StatusAlert.show(image: LectureOption.removeFromFavorite.image, title: "Removed from favorites", message: message, in: self.view)
 
                 case .failure(let error):
                     Haptic.error()
@@ -739,7 +744,10 @@ extension LectureViewController {
                        cancel: ("Cancel", nil),
                        destructive: ("Remove", {
 
+            SKActivityIndicator.statusTextColor(.textDarkGray)
+            SKActivityIndicator.spinnerColor(.textDarkGray)
             SKActivityIndicator.show("Removing from playlist...")
+            
             DefaultPlaylistViewModel.defaultModel.remove(lectures: lectures, from: playlistLectureController.playlist, completion: { result in
                 SKActivityIndicator.dismiss()
                 switch result {
@@ -807,7 +815,7 @@ extension LectureViewController {
             }
         }
 
-        DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: lectures, isCompleted: true, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: -1, postUpdate: true, completion: { result in
+        DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: lectures, isCompleted: true, isDownloaded: nil, isFavorite: nil, lastPlayedPoint: -1, postUpdate: true, completion: { result in
             switch result {
             case .success:
 
@@ -829,7 +837,7 @@ extension LectureViewController {
     }
 
     private func resetProgress(lectures: [Model], sourceView: Any?) {
-        DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: lectures, isCompleted: false, isDownloaded: nil, isFavourite: nil, lastPlayedPoint: 0, postUpdate: true, completion: { result in
+        DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: lectures, isCompleted: false, isDownloaded: nil, isFavorite: nil, lastPlayedPoint: 0, postUpdate: true, completion: { result in
             switch result {
             case .success:
 

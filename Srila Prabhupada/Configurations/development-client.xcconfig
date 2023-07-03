@@ -9,3 +9,6 @@
 // https://help.apple.com/xcode/#/dev745c5c974
 
 GOOGLE_SERVICE_FILE_NAME = GoogleService-Info-development-client
+
+//use to test with old firestore database
+//GOOGLE_SERVICE_FILE_NAME = GoogleServiceTest-Info

@@ -308,6 +308,8 @@ extension PlaylistViewController: IQListViewDelegateDataSource {
                 self.showAlert(title: "Add to '\(model.title)'?", message: message, cancel: (title: "Cancel", {
                 }), buttons: (title: "Add", {
 
+                    SKActivityIndicator.statusTextColor(.textDarkGray)
+                    SKActivityIndicator.spinnerColor(.textDarkGray)
                     SKActivityIndicator.show("Adding to '\(model.title)' ...")
 
                     DefaultPlaylistViewModel.defaultModel.add(lectures: self.lecturesToAdd, to: model, completion: { result in
@@ -413,7 +415,9 @@ extension PlaylistViewController: PlaylistCellDelegate {
             self.showAlert(title: "Delete '\(playlist.title)'?", message: "Would you really like to delete '\(playlist.title)' playlist?",
                            cancel: (title: "Cancel", {}),
                            destructive: (title: "Delete", {
-
+                
+                SKActivityIndicator.statusTextColor(.textDarkGray)
+                SKActivityIndicator.spinnerColor(.textDarkGray)
                 SKActivityIndicator.show("Deleting...")
                 DefaultPlaylistViewModel.defaultModel.delete(playlist: playlist) { result in
                     SKActivityIndicator.dismiss()

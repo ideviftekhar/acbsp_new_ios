@@ -80,7 +80,7 @@ extension DefaultLectureViewModel {
                 }
 //            } else {  // Due to the documentID issue, we are skipping this.
 //                let currentTimestamp = Int(Date().timeIntervalSince1970*1000)
-//                let newLectureInfo = LectureInfo(id: lecture.id, creationTimestamp: currentTimestamp, isFavourite: false, lastPlayedPoint: lastPlayedPoint, documentId: /*documentReference.documentID*/)
+//                let newLectureInfo = LectureInfo(id: lecture.id, creationTimestamp: currentTimestamp, isFavorite: false, lastPlayedPoint: lastPlayedPoint, documentId: /*documentReference.documentID*/)
 //                self.userLectureInfo.append(newLectureInfo)
             }
 
@@ -93,7 +93,7 @@ extension DefaultLectureViewModel {
     func updateLectureInfo(lectures: [Lecture],
                            isCompleted: Bool?,
                            isDownloaded: Bool?,
-                           isFavourite: Bool?,
+                           isFavorite: Bool?,
                            lastPlayedPoint: Int?,
                            postUpdate: Bool,
                            completion: @escaping (Swift.Result<Bool, Error>) -> Void) {
@@ -123,7 +123,7 @@ extension DefaultLectureViewModel {
 
                 if let isCompleted = isCompleted {  data["isCompleted"] = isCompleted   }
                 if let isDownloaded = isDownloaded {  data["isDownloaded"] = isDownloaded   }
-                if let isFavourite = isFavourite {  data["isFavourite"] = isFavourite   }
+                if let isFavorite = isFavorite {  data["isFavourite"] = isFavorite   }
 
                 var lastPlayedPoint = lastPlayedPoint
 
@@ -154,7 +154,7 @@ extension DefaultLectureViewModel {
                     data["totalPlayedTime"] = 0
                     data["totallength"] = lecture.length
 
-                    data["isFavourite"] = isFavourite ?? false
+                    data["isFavourite"] = isFavorite ?? false
                     data["creationTimestamp"] = currentTimestamp
                     data["isCompleted"] = isCompleted ?? false
                     data["isDownloaded"] = isDownloaded ?? false
@@ -173,7 +173,7 @@ extension DefaultLectureViewModel {
                             let lectureInfoIndexes = self.userLectureInfo.allIndex(where: { $0.id == lecture.id })
                             if !lectureInfoIndexes.isEmpty {
                                 for index in lectureInfoIndexes {
-                                    self.userLectureInfo[index].isFavourite = lecture.isFavourite
+                                    self.userLectureInfo[index].isFavorite = lecture.isFavorite
                                     self.userLectureInfo[index].lastPlayedPoint = lecture.lastPlayedPoint
                                 }
                             }
@@ -224,23 +224,23 @@ extension DefaultLectureViewModel {
                     if !lectureInfoIndexes.isEmpty {
                         for index in lectureInfoIndexes {
 
-                            if let isFavourite = isFavourite {
-                                self.userLectureInfo[index].isFavourite = isFavourite
+                            if let isFavorite = isFavorite {
+                                self.userLectureInfo[index].isFavorite = isFavorite
                             }
                             if let lastPlayedPoint = lastPlayedPoint {
                                 self.userLectureInfo[index].lastPlayedPoint = lastPlayedPoint
                             }
                         }
                     } else {
-                        let newLectureInfo = LectureInfo(id: lecture.id, creationTimestamp: currentTimestamp, isFavourite: isFavourite ?? false, lastPlayedPoint: lastPlayedPoint ?? 0, documentId: documentReference.documentID)
+                        let newLectureInfo = LectureInfo(id: lecture.id, creationTimestamp: currentTimestamp, isFavorite: isFavorite ?? false, lastPlayedPoint: lastPlayedPoint ?? 0, documentId: documentReference.documentID)
                         self.userLectureInfo.append(newLectureInfo)
                     }
 
                     let lectureIndexes = self.allLectures.allIndex(where: { $0.id == lecture.id })
                     for index in lectureIndexes {
                         var isUpdated: Bool = false
-                        if let isFavourite = isFavourite {
-                            self.allLectures[index].isFavourite = isFavourite
+                        if let isFavorite = isFavorite {
+                            self.allLectures[index].isFavorite = isFavorite
                             isUpdated = true
                         }
                         if let lastPlayedPoint = lastPlayedPoint {

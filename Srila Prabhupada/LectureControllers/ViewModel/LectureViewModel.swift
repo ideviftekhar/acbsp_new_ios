@@ -29,7 +29,7 @@ protocol LectureViewModel: AnyObject {
     func updateLectureInfo(lectures: [Lecture],
                            isCompleted: Bool?,
                            isDownloaded: Bool?,
-                           isFavourite: Bool?,
+                           isFavorite: Bool?,
                            lastPlayedPoint: Int?,
                            postUpdate: Bool,
                            completion: @escaping (Swift.Result<Bool, Error>) -> Void)
@@ -47,6 +47,19 @@ protocol LectureViewModel: AnyObject {
     func getRecentlyPlayedLectureIDs(source: FirestoreSource, completion: @escaping (Swift.Result<[Int], Error>) -> Void)
     func addToRecentlyPlayed(lecture: Lecture, completion: @escaping (Swift.Result<[Int], Error>) -> Void)
     func removeFromRecentlyPlayed(lecture: Lecture, completion: @escaping (Swift.Result<[Int], Error>) -> Void)
+    
+    func getTimestamp(
+        source: FirestoreSource,
+        completion: @escaping (Result<LastSyncTimestamp, Error>) -> Void)
+    
+    func getNotificationInfo(
+        source: FirestoreSource,
+        completion: @escaping (Result<UserSettings, Error>) -> Void)
+    
+    func updateNotification(
+        documentData: [String: Any],
+        completion: @escaping (Result<Bool, Error>) -> Void)
+    
 }
 
 class DefaultLectureViewModel: NSObject, LectureViewModel {
@@ -61,6 +74,9 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
     lazy var parallelLectureWorkerQueue = DispatchQueue(label: "parallelLectureWorkerQueue\(Self.self)", qos: .userInteractive, attributes: .concurrent)
 
     func clearCache() {
+        let keyUserDefaults = CommonConstants.keyTimestamp
+        UserDefaults.standard.removeObject(forKey: keyUserDefaults)
+        UserDefaults.standard.synchronize()
         serialLectureWorkerQueue.async { [self] in
             allLectures.removeAll()
             userLectureInfo.removeAll()
@@ -150,6 +166,47 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
                 })
             }
         }
+    }
+    
+    func getTimestamp(source: FirestoreSource, completion: @escaping (Result<LastSyncTimestamp, Error>) -> Void) {
+        
+        let metadataPath = FirestoreCollection.metadata.path
+        
+        let documentReference: DocumentReference = FirestoreManager.shared.firestore.collection(metadataPath).document(CommonConstants.metadataTimestampDocumentID)
+        
+        FirestoreManager.shared.getDocument(documentReference: documentReference, source: .server, completion: completion)
+    }
+    
+    func getNotificationInfo(source: FirestoreSource, completion: @escaping (Result<UserSettings, Error>) -> Void) {
+        guard let id = FirestoreManager.shared.currentUserUID else {
+            let error = NSError(domain: "Firestore Database", code: 0, userInfo: [NSLocalizedDescriptionKey: "UID not available"])
+            completion(.failure(error))
+            return
+        }
+
+        let usersSettingsPath = FirestoreCollection.usersSettings(userId: id).path
+        print(usersSettingsPath)
+        let documentReference: DocumentReference = FirestoreManager.shared.firestore.collection(usersSettingsPath).document("userSettings")
+        
+        FirestoreManager.shared.getDocument(documentReference: documentReference, source: .server, completion: completion)
+    }
+    
+    func updateNotification(documentData: [String: Any], completion: @escaping (Result<Bool, Error>) -> Void) {
+        
+        guard let id = FirestoreManager.shared.currentUserUID else {
+            let error = NSError(domain: "Firestore Database", code: 0, userInfo: [NSLocalizedDescriptionKey: "UID not available"])
+            completion(.failure(error))
+            return
+        }
+
+        let usersSettingsPath = FirestoreCollection.usersSettings(userId: id).path
+        
+        print(usersSettingsPath)
+        
+        let documentReference: DocumentReference = FirestoreManager.shared.firestore.collection(usersSettingsPath).document("userSettings")
+                
+        FirestoreManager.shared.updateDocument(documentData: documentData, documentReference: documentReference, completion: completion)
+        
     }
 }
 

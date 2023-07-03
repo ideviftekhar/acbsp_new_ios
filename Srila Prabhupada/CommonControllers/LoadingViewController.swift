@@ -13,6 +13,8 @@ class LoadingViewController: UIViewController {
     @IBOutlet private var imageView: UIImageView!
     @IBOutlet private var loadingLabel: UILabel!
     @IBOutlet private var progressView: UIProgressView!
+    @IBOutlet private var titleLabel: UILabel!
+    var forceLoading: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,15 +22,57 @@ class LoadingViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        loadLectures()
+        setTimestampAndLoadLectures()
     }
 
-    private func loadLectures() {
+    private func setTimestampAndLoadLectures() {
+        
+        titleLabel.text = Constants.loadingTitleText
+        
+        self.loadingLabel.text = "Please wait..."
+        progressView.progress = 0
+        progressView.alpha = 0.0
+        
+        DefaultLectureViewModel.defaultModel.getTimestamp(source: .default) { [self] result in
+            
+            progressView.alpha = 0.0
+            loadingLabel.text = nil
+
+            switch result {
+            case .success(let result):
+
+                let keyUserDefaults = CommonConstants.keyTimestamp
+                let oldTimestamp: Date = (UserDefaults.standard.object(forKey: keyUserDefaults) as? Date) ?? Date(timeIntervalSince1970: 0)
+
+                let newTimestamp: Date = result.timestamp
+                                
+                let firestoreSource: FirestoreSource
+                if self.forceLoading {
+                    firestoreSource = .default
+                } else if oldTimestamp != newTimestamp {
+                    firestoreSource = .default
+                } else {
+                    firestoreSource = .cache
+                }
+                self.loadLectures(newTimestamp: newTimestamp, firestoreSource: firestoreSource)
+            case .failure(let error):
+                Haptic.error()
+                self.showAlert(title: "Error!", message: error.localizedDescription, cancel: ("Retry", { [self] in
+                    setTimestampAndLoadLectures()
+                }), destructive: ("Logout", { [self] in
+                    self.askToLogout()
+                }))
+            }
+        }
+    }
+
+    private func loadLectures(newTimestamp: Date, firestoreSource: FirestoreSource) {
+        
         self.loadingLabel.text = "Loading lectures..."
         progressView.progress = 0
         progressView.alpha = 0.0
 
-        DefaultLectureViewModel.defaultModel.getLectures(searchText: nil, sortType: .default, filter: [:], lectureIDs: nil, source: .default, progress: { [self] progress in
+        DefaultLectureViewModel.defaultModel.getLectures(searchText: nil, sortType: .default, filter: [:], lectureIDs: nil, source: firestoreSource, progress: { [self] progress in
             progressView.alpha = 1.0
 
             let intProgress = Int(progress*100)
@@ -42,12 +86,20 @@ class LoadingViewController: UIViewController {
 
             switch result {
             case .success(let lectures):
-                Filter.updateFilterSubtypes(lectures: lectures)
-                loadLectureInfo()
+                
+                if firestoreSource == .cache, lectures.isEmpty {
+                    loadLectures(newTimestamp: newTimestamp, firestoreSource: .default)
+                } else {
+                    UserDefaults.standard.set(newTimestamp, forKey: CommonConstants.keyTimestamp)
+                    UserDefaults.standard.synchronize()
+
+                    Filter.updateFilterSubtypes(lectures: lectures)
+                    loadLectureInfo()
+                }
             case .failure(let error):
                 Haptic.error()
                 showAlert(title: "Error!", message: error.localizedDescription, cancel: ("Retry", { [self] in
-                    loadLectures()
+                    loadLectures(newTimestamp: newTimestamp, firestoreSource: firestoreSource)
                 }), destructive: ("Logout", { [self] in
                     self.askToLogout()
                 }))
@@ -86,7 +138,6 @@ class LoadingViewController: UIViewController {
                 }
 
             case .failure(let error):
-
                 Haptic.error()
                 showAlert(title: "Error!", message: error.localizedDescription, cancel: ("Retry", {
                     self.loadLectureInfo()

@@ -77,7 +77,10 @@ extension PlaylistLecturesViewController: LectureViewControllerDelegate {
                        cancel: ("Cancel", nil),
                        buttons: ("Add", {
 
+            SKActivityIndicator.statusTextColor(.textDarkGray)
+            SKActivityIndicator.spinnerColor(.textDarkGray)
             SKActivityIndicator.show("Adding to '\(self.playlist.title)' ...")
+
             DefaultPlaylistViewModel.defaultModel.add(lectures: lectures, to: self.playlist, completion: { result in
                 SKActivityIndicator.dismiss()
 

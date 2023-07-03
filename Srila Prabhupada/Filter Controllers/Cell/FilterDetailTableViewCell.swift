@@ -20,13 +20,20 @@ class FilterDetailTableViewCell: UITableViewCell, IQModelableCell {
         self.checkView.isUserInteractionEnabled = false
     }
 
+    override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        setupCheckView()
+    }
+    
     func setupCheckView() {
-        self.checkView.boxType = .square
+        self.checkView.boxType = .circle
         self.checkView.tintColor = .white
+        self.checkView.onFillColor = UIColor.themeColor
+        self.checkView.onCheckColor = UIColor.white
 
         self.checkView.layer.borderWidth = 2.0
         self.checkView.layer.borderColor = UIColor.themeColor.cgColor
-        self.checkView.layer.cornerRadius = 3.0
+        self.checkView.layer.cornerRadius = 10.0
 
     }
 

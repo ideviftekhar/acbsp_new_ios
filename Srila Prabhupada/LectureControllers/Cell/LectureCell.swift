@@ -18,7 +18,7 @@ protocol LectureCellDelegate: AnyObject {
 class LectureCell: UITableViewCell, IQModelableCell {
 
     @IBOutlet private var downloadedIconImageView: UIImageView?
-    @IBOutlet private var favouritesIconImageView: UIImageView?
+    @IBOutlet private var favoriteIconImageView: UIImageView?
     @IBOutlet private var completedIconImageView: UIImageView?
     @IBOutlet private var playlistIconView: UIView?
 
@@ -205,7 +205,7 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 }
             })
 
-            favouritesIconImageView?.isHidden = !lecture.isFavourite
+            favoriteIconImageView?.isHidden = !lecture.isFavorite
             playlistIconView?.isHidden = !model.showPlaylistIcon
 
             do {
@@ -243,11 +243,11 @@ class LectureCell: UITableViewCell, IQModelableCell {
                     }
                 }
 
-                // Is Favourites
-                if lecture.isFavourite, let removeFromFavourites = allActions[.removeFromFavourites] {
-                    actions.append(removeFromFavourites)
-                } else if let markAsFavourite = allActions[.markAsFavourite] {
-                    actions.append(markAsFavourite)
+                // Is Favorites
+                if lecture.isFavorite, let removeFromFavorite = allActions[.removeFromFavorite] {
+                    actions.append(removeFromFavorite)
+                } else if let markAsFavorite = allActions[.markAsFavorite] {
+                    actions.append(markAsFavorite)
                 }
 
                 // addToPlaylist
@@ -275,7 +275,7 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 self.menuButton?.isHidden = actions.isEmpty || model.isSelectionEnabled
                 self.selectedImageView?.isHidden = !model.isSelectionEnabled
                 if model.isSelectionEnabled {
-                    self.selectedImageView?.image = model.isSelected ? UIImage(compatibleSystemName: "checkmark.circle") : UIImage(compatibleSystemName: "circle")
+                    self.selectedImageView?.image = model.isSelected ? UIImage(compatibleSystemName: "checkmark.circle.fill") : UIImage(compatibleSystemName: "circle")
                     self.backgroundColor = model.isSelected ? UIColor.zero_0099CC.withAlphaComponent(0.2) : nil
                 } else if model.isHighlited {
                     self.backgroundColor = .systemOrange.withAlphaComponent(0.2)
@@ -302,9 +302,9 @@ extension LectureCell {
             })
 
             switch option {
-            case .download, .resumeDownload, .pauseDownload, .markAsFavourite, .addToPlaylist, .markAsHeard, .resetProgress, .share:
+            case .download, .resumeDownload, .pauseDownload, .markAsFavorite, .addToPlaylist, .markAsHeard, .resetProgress, .share:
                 break
-            case .deleteFromDownloads, .removeFromPlaylist, .removeFromFavourites:
+            case .deleteFromDownloads, .removeFromPlaylist, .removeFromFavorite:
                 action.action.attributes = .destructive
             }
 

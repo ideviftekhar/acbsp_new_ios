@@ -54,7 +54,7 @@ extension DefaultLectureViewModel {
         var updatedLectures: [Lecture] = []
         for var lecture in lectures {
             if let lectureInfo = lectureInfos.first(where: { $0.id == lecture.id }) {
-                lecture.isFavourite = lectureInfo.isFavourite
+                lecture.isFavorite = lectureInfo.isFavorite
                 if lectureInfo.lastPlayedPoint == -1 {
                     lecture.lastPlayedPoint = lecture.length
                 } else {

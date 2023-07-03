@@ -18,9 +18,9 @@ enum LectureOption: String, CaseIterable {
 
     case deleteFromDownloads    =   "Delete from Downloads"
 
-    case markAsFavourite        =   "Mark as Favourite"
+    case markAsFavorite        =   "Mark as Favorite"
 
-    case removeFromFavourites   =   "Remove From Favourite"
+    case removeFromFavorite   =   "Remove From Favorite"
 
     case addToPlaylist          =   "Add to playlist"
 
@@ -40,9 +40,9 @@ enum LectureOption: String, CaseIterable {
             return UIImage(compatibleSystemName: "pause.fill")
         case .deleteFromDownloads:
             return UIImage(compatibleSystemName: "icloud.slash")
-        case .markAsFavourite:
+        case .markAsFavorite:
             return UIImage(compatibleSystemName: "star.fill")
-        case .removeFromFavourites:
+        case .removeFromFavorite:
             return UIImage(compatibleSystemName: "star.slash.fill")
         case .addToPlaylist:
             return UIImage(compatibleSystemName: "music.note.list")

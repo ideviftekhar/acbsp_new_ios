@@ -21,17 +21,38 @@ class AboutViewController: UIViewController {
 
         self.configureTappableLabel()
 
-        titleLabel.text = ""
+        titleLabel.text = Constants.aboutTitle
+        aboutLabel.text = Constants.aboutText
+
+        let attributedText = getNSAttributedString(mainString: Constants.aboutAttributedText, tapableString: Constants.aboutAttributedLinkString)
+        aboutAttributedLabel.attributedText = attributedText
     }
 
     func configureTappableLabel() {
 
         aboutAttributedLabel.delegate = self
-        let linkString: String = "His Divine Grace A.C.Bhaktivedanta Swami Prabhupada"
+        let linkString: String = Constants.aboutAttributedLinkString
         aboutAttributedLabel.addLink(linkString)
     }
     @IBAction private func cancelButtonTapped(_ sender: UIButton) {
         self.dismiss(animated: true)
+    }
+    
+    private func getNSAttributedString(mainString: String, tapableString: String) -> NSAttributedString {
+        
+        let range = (mainString as NSString).range(of: tapableString)
+        
+        let attributedStringColor = [
+            NSAttributedString.Key.foregroundColor : UIColor.systemOrange,
+            .font: UIFont(name: "AvenirNextCondensed-Regular", size: 17)]// as [NSAttributedString.Key : Any]
+        
+        let mutableAttributedString = NSMutableAttributedString(string: mainString, attributes: attributedStringColor as [NSAttributedString.Key : Any])
+
+        let attributes: [NSAttributedString.Key : Any] = [.underlineStyle: NSUnderlineStyle.single.rawValue, .foregroundColor: UIColor.F96D00]
+        
+        mutableAttributedString.addAttributes(attributes, range: range)
+        
+        return mutableAttributedString
     }
 }
 

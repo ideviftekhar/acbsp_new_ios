@@ -12,6 +12,8 @@ extension StatusAlert {
 
     static func show(image: UIImage?, title: String?, message: String?, in view: UIView) {
         let statusAlert = StatusAlert()
+        statusAlert.appearance.tintColor = .textDarkGray
+        statusAlert.appearance.backgroundColor = .popupBackground
         statusAlert.image = image
         statusAlert.title = title
         statusAlert.message = message

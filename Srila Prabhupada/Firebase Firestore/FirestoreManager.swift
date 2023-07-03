@@ -90,6 +90,10 @@ class FirestoreManager: NSObject {
     func getRawDocument(documentReference: DocumentReference, source: FirestoreSource, completion: @escaping ((Swift.Result<DocumentSnapshot, Error>) -> Void)) {
         documentReference.spGetRawDocument(source: source, completion: completion)
     }
+    
+    func updateDocument(documentData: [String: Any], documentReference: DocumentReference, completion: @escaping ((Swift.Result<Bool, Error>) -> Void)) {
+        documentReference.updateDocument(documentData: documentData, completion: completion)
+    }
 }
 
 extension Query {
@@ -173,5 +177,15 @@ extension DocumentReference {
                 completion(.failure(error))
             }
         })
+    }
+    
+    fileprivate func updateDocument(documentData: [String: Any], completion: @escaping ((Swift.Result<Bool, Error>) -> Void)) {
+        setData(documentData, merge: true) { error in
+            if let error = error {
+                completion(.failure(error))
+            } else {
+                completion(.success(true))
+            }
+        }
     }
 }
