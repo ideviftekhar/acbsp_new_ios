@@ -332,9 +332,9 @@ class PlayerViewController: LectureViewController {
             secondDotLabel?.isHidden = locationLabel?.text?.isEmpty ?? true
 
             if let url = currentLecture.thumbnailURL {
-                thumbnailImageView.af.setImage(withURL: url, placeholderImage: UIImage(named: "logo_40"))
+                thumbnailImageView.af.setImage(withURL: url, placeholderImage: UIImage(named: "playerViewLogo"))
             } else {
-                thumbnailImageView.image = UIImage(named: "logo_40")
+                thumbnailImageView.image = UIImage(named: "playerViewLogo")
             }
         } else {
             titleLabel.text = "--"
@@ -348,7 +348,7 @@ class PlayerViewController: LectureViewController {
             locationLabel.text = "--"
             firstDotLabel?.isHidden = false
             secondDotLabel?.isHidden = false
-            thumbnailImageView.image = UIImage(named: "logo_40")
+            thumbnailImageView.image = UIImage(named: "playerViewLogo")
         }
     }
     private func setupPlayerIcons() {
@@ -488,9 +488,13 @@ extension PlayerViewController {
                     self.selectedRate = rate
                 }
 
-            case .skipBackward, .skipForward:
+            case .skipForward:
                 if let value = value as? TimeInterval {
                     seek(seconds: Int(value))
+                }
+            case .skipBackward:
+                if let value = value as? TimeInterval {
+                    seek(seconds: Int(-value))
                 }
             case .changePlaybackPosition:
                 if let value = value as? TimeInterval {

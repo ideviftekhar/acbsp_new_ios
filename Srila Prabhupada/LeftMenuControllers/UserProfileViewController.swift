@@ -108,7 +108,15 @@ class UserProfileViewController: UIViewController {
             self.usernameLabel.text = firestoreManagerShared.currentUserDisplayName
             self.userEmailLabel.text = firestoreManagerShared.currentUserEmail
             
-            let placeholderImage = userProfileImageView.placeholderImage(text: firestoreManagerShared.currentUserDisplayName)
+            var text = ""
+            
+            if let name = FirestoreManager.shared.currentUserDisplayName {
+                text = name
+            } else if let email = FirestoreManager.shared.currentUserEmail {
+                text = email
+            }
+            
+            let placeholderImage = userProfileImageView.placeholderImage(text: text)
             if let photoURL = firestoreManagerShared.currentUserPhotoURL {
                 userProfileImageView.af.setImage(withURL: photoURL, placeholderImage: placeholderImage)
             } else {
@@ -127,5 +135,12 @@ class UserProfileViewController: UIViewController {
     }
     @objc func doneButtonTapped() {
         self.navigationController?.dismiss(animated: true)
+    }
+    
+    @IBAction func notificationAction(_ sender: UIButton) {
+        
+        if let notificationViewController = UIStoryboard.sideMenu.instantiateViewController(withIdentifier: "NotificationViewController") as? NotificationViewController {
+            self.navigationController?.pushViewController(notificationViewController, animated: true)
+        }
     }
 }

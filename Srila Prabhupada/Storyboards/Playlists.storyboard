@@ -13,7 +13,7 @@
         <!--Playlists-->
         <scene sceneID="2A7-EA-AXG">
             <objects>
-                <navigationController storyboardIdentifier="PlaylistNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="2ix-al-xMc" customClass="NavigationController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="PlaylistNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="2ix-al-xMc" customClass="NavigationController" customModule="BVKS" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Playlists" image="music.note.list" catalog="system" id="OHl-3v-G7E"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" largeTitles="YES" id="PUT-kO-Asm">
@@ -40,23 +40,13 @@
         <!--Playlists-->
         <scene sceneID="tf0-n4-tGv">
             <objects>
-                <viewController storyboardIdentifier="PlaylistViewController" id="gmj-55-TrK" customClass="PlaylistViewController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PlaylistViewController" id="gmj-55-TrK" customClass="PlaylistViewController" customModule="BVKS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="PCq-Gu-O19">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="YRT-Cq-oUI">
-                                <rect key="frame" x="0.0" y="144" width="414" height="32"/>
-                                <segments>
-                                    <segment title="Public"/>
-                                    <segment title="Private"/>
-                                </segments>
-                                <connections>
-                                    <action selector="segmentChanged:" destination="gmj-55-TrK" eventType="valueChanged" id="2RE-J8-qNT"/>
-                                </connections>
-                            </segmentedControl>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="bS6-wd-u2X">
-                                <rect key="frame" x="0.0" y="175" width="414" height="721"/>
+                                <rect key="frame" x="0.0" y="123" width="414" height="773"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="PlaylistCell" textLabel="4oC-pL-z5w" style="IBUITableViewCellStyleDefault" id="bBS-gS-dqc">
@@ -85,6 +75,16 @@
                                     <outlet property="delegate" destination="gmj-55-TrK" id="WNd-US-tcL"/>
                                 </connections>
                             </tableView>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="YRT-Cq-oUI">
+                                <rect key="frame" x="0.0" y="92" width="414" height="32"/>
+                                <segments>
+                                    <segment title="Public"/>
+                                    <segment title="Private"/>
+                                </segments>
+                                <connections>
+                                    <action selector="segmentChanged:" destination="gmj-55-TrK" eventType="valueChanged" id="2RE-J8-qNT"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="mbR-df-oGq"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -119,7 +119,7 @@
         <!--Playlist Lectures-->
         <scene sceneID="x7k-Ys-ZBo">
             <objects>
-                <viewController storyboardIdentifier="PlaylistLecturesViewController" id="e29-iI-P3k" customClass="PlaylistLecturesViewController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PlaylistLecturesViewController" id="e29-iI-P3k" customClass="PlaylistLecturesViewController" customModule="BVKS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="uFq-Tc-XYI">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -154,7 +154,7 @@
         <!--Create New Playlist-->
         <scene sceneID="SuO-XD-j4H">
             <objects>
-                <viewController storyboardIdentifier="CreatePlayListViewController" id="Epx-Gk-cDm" customClass="CreatePlaylistViewController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="CreatePlayListViewController" id="Epx-Gk-cDm" customClass="CreatePlaylistViewController" customModule="BVKS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="c8X-jM-ZBn">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -347,7 +347,7 @@
         <!--Playlists-->
         <scene sceneID="jSo-dD-A4W">
             <objects>
-                <navigationController storyboardIdentifier="CreatePlaylistNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="7aN-3z-CaJ" customClass="NavigationController" customModule="Srila_Prabhupada" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="CreatePlaylistNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="7aN-3z-CaJ" customClass="NavigationController" customModule="BVKS" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Playlists" image="music.note.list" catalog="system" id="KNM-Hk-dkA"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" largeTitles="YES" id="oqp-Lg-Ejm">
