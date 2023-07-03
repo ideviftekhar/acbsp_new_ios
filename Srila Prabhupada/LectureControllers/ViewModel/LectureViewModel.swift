@@ -95,6 +95,34 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(downloadsRemovedNotification(_:)), name: Persistant.Notification.downloadsRemoved, object: nil)
     }
 
+//    private static let lectureEncoder = JSONEncoder()
+//    private static let lectureDecoder = JSONDecoder()
+//    internal func saveAllLectures(lectures: [Lecture]) {
+//        parallelLectureWorkerQueue.async {
+//            guard let data = try? Self.lectureEncoder.encode(lectures) else {
+//                return
+//            }
+//            UserDefaults.standard.set(data, forKey: "DefaultLectureViewModel.allLectures")
+//            UserDefaults.standard.synchronize()
+//        }
+//    }
+//    private func getAllCachedLectures(completion: @escaping ([Lecture]) -> Void) {
+//        serialLectureWorkerQueue.async {
+//
+//            guard let data = UserDefaults.standard.data(forKey: "DefaultLectureViewModel.allLectures"),
+//            let lectures = try? Self.lectureDecoder.decode([Lecture].self, from: data) else {
+//                DispatchQueue.main.async {
+//                    completion([])
+//                }
+//                return
+//            }
+//
+//            DispatchQueue.main.async {
+//                completion(lectures)
+//            }
+//        }
+//    }
+
     func getLectures(searchText: String?, sortType: LectureSortType?, filter: [Filter: [String]], lectureIDs: [Int]?, source: FirestoreSource, progress: ((_ progress: CGFloat) -> Void)?, completion: @escaping (Swift.Result<[Lecture], Error>) -> Void) {
 
         if let lectureIDs = lectureIDs, lectureIDs.isEmpty {
@@ -103,7 +131,7 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
             }
         } else {
 
-            if source == .cache {
+            if source == .cache && !self.allLectures.isEmpty {
                 parallelLectureWorkerQueue.async {
                     let success: [Lecture] = Self.filter(lectures: self.allLectures, searchText: searchText, sortType: sortType, filter: filter, lectureIDs: lectureIDs)
 
@@ -112,62 +140,102 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
                     }
                 }
             } else {
-                let query: Query = FirestoreManager.shared.firestore.collection(FirestoreCollection.lectures.path)
 
-                FirestoreManager.shared.getDocuments(query: query, source: source, completion: { [self] (result: Swift.Result<[Lecture], Error>) in
-                    switch result {
-                    case .success(var success):
-                        serialLectureWorkerQueue.async {
-
-                            var results = [Lecture]()
-
-                            let startDate = Date()
-
-                            let incomingIDs: Set<Int> = Set(success.map({ $0.id }))
-
-                            var leftoverIDs = incomingIDs
-
-                            let total: CGFloat = CGFloat(success.count)
-                            var iteration: CGFloat = 0
-                            results = success.reduce([]) { result, lecture in
-                                iteration += 1
-                                if let progress = progress {
-                                    DispatchQueue.main.async {
-                                        progress(iteration/total)
-                                    }
+//                if source == .cache {
+//                    getAllCachedLectures { success in
+//                        // If there are no cached lecture then recursive call with .default source
+//                        if success.isEmpty {
+//                            self.getLectures(searchText: searchText, sortType: sortType, filter: filter, lectureIDs: lectureIDs, source: .default, progress: progress, completion: completion)
+//                        } else {
+//                            self.serialLectureWorkerQueue.async {
+//                                var success = success
+//                                if !self.userLectureInfo.isEmpty {
+//                                    success = Self.refreshLectureWithLectureInfo(lectures: success, lectureInfos: self.userLectureInfo, downloadedLectures: Persistant.shared.getAllDBLectures(), progress: progress)
+//                                }
+//
+//                                self.allLectures = success
+//
+//                                success = Self.filter(lectures: success, searchText: searchText, sortType: sortType, filter: filter, lectureIDs: lectureIDs)
+//                                DispatchQueue.main.async {
+//                                    completion(.success(success))
+//                                }
+//                            }
+//                        }
+//                    }
+//                } else {
+                    getLectures(source: source, progress: progress, completion: { [self] (result: Swift.Result<[Lecture], Error>) in
+                        switch result {
+                        case .success(var success):
+                            serialLectureWorkerQueue.async {
+                                if !self.userLectureInfo.isEmpty {
+                                    success = Self.refreshLectureWithLectureInfo(lectures: success, lectureInfos: self.userLectureInfo, downloadedLectures: Persistant.shared.getAllDBLectures(), progress: progress)
                                 }
-                                let lectureID = lecture.id
-                                guard leftoverIDs.contains(where: { $0 == lectureID }) else {
-                                    return result
+
+                                self.allLectures = success
+//                                self.saveAllLectures(lectures: success)
+
+                                success = Self.filter(lectures: success, searchText: searchText, sortType: sortType, filter: filter, lectureIDs: lectureIDs)
+                                DispatchQueue.main.async {
+                                    completion(.success(success))
                                 }
-
-                                leftoverIDs.remove(lectureID)
-                                return result + [lecture]
                             }
-
-                            let endDate = Date()
-                            print("Took \(endDate.timeIntervalSince1970-startDate.timeIntervalSince1970) seconds to remove \(success.count - results.count) duplicate lecture(s)")
-                            success = results   // Unique
-
-                            if !self.userLectureInfo.isEmpty {
-                                success = Self.refreshLectureWithLectureInfo(lectures: success, lectureInfos: self.userLectureInfo, downloadedLectures: Persistant.shared.getAllDBLectures(), progress: progress)
-                            }
-
-                            self.allLectures = success
-
-                            let success = Self.filter(lectures: success, searchText: searchText, sortType: sortType, filter: filter, lectureIDs: lectureIDs)
-                            DispatchQueue.main.async {
-                                completion(.success(success))
-                            }
+                        case .failure(let error):
+                            completion(.failure(error))
                         }
-                    case .failure(let error):
-                        completion(.failure(error))
-                    }
-                })
+                    })
+//                }
             }
         }
     }
-    
+
+    private func getLectures(source: FirestoreSource, progress: ((_ progress: CGFloat) -> Void)?, completion: @escaping (Swift.Result<[Lecture], Error>) -> Void) {
+
+        let query: Query = FirestoreManager.shared.firestore.collection(FirestoreCollection.lectures.path)
+
+        FirestoreManager.shared.getDocuments(query: query, source: source, completion: { [self] (result: Swift.Result<[Lecture], Error>) in
+            switch result {
+            case .success(let success):
+                serialLectureWorkerQueue.async {
+
+                    var results = [Lecture]()
+
+                    let startDate = Date()
+
+                    let incomingIDs: Set<Int> = Set(success.map({ $0.id }))
+
+                    var leftoverIDs = incomingIDs
+
+                    let total: CGFloat = CGFloat(success.count)
+                    var iteration: CGFloat = 0
+                    results = success.reduce([]) { result, lecture in
+                        iteration += 1
+                        if let progress = progress {
+                            DispatchQueue.main.async {
+                                progress(iteration/total)
+                            }
+                        }
+                        let lectureID = lecture.id
+                        guard leftoverIDs.contains(where: { $0 == lectureID }) else {
+                            return result
+                        }
+
+                        leftoverIDs.remove(lectureID)
+                        return result + [lecture]
+                    }
+
+                    let endDate = Date()
+                    print("Took \(endDate.timeIntervalSince1970-startDate.timeIntervalSince1970) seconds to remove \(success.count - results.count) duplicate lecture(s)")
+
+                    DispatchQueue.main.async {
+                        completion(.success(results))
+                    }
+                }
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        })
+    }
+
     func getTimestamp(source: FirestoreSource, completion: @escaping (Result<LastSyncTimestamp, Error>) -> Void) {
         
         let metadataPath = FirestoreCollection.metadata.path

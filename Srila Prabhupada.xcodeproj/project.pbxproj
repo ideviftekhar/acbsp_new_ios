@@ -285,7 +285,6 @@
 		6E68EA9D2A2E07A200C6DB6D /* Srila Prabhupada.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "Srila Prabhupada.entitlements"; sourceTree = "<group>"; };
 		6E68EA9E2A2E07AB00C6DB6D /* BVKS.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = BVKS.entitlements; sourceTree = "<group>"; };
 		6E6900F12A25C4C20086C7DB /* BVKS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BVKS.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		6E6900F22A25C4C20086C7DB /* BVKS-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "BVKS-Info.plist"; path = "/Users/ie03/Desktop/HDD Data/Absp/absp/acbsp_new_ios /BVKS-Info.plist"; sourceTree = "<absolute>"; };
 		6E6900F52A25D7E90086C7DB /* GoogleService-Info-development-client.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-development-client.plist"; sourceTree = "<group>"; };
 		6E6900F62A25D7E90086C7DB /* GoogleService-Info-production-client.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-production-client.plist"; sourceTree = "<group>"; };
 		6E6AED102A3D9D87009BB06D /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
@@ -367,6 +366,7 @@
 		C017E68B293E24C1005DA700 /* Haptic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptic.swift; sourceTree = "<group>"; };
 		C018A99328F421A000C0E002 /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		C01B889F2913F5FE00EF0EA0 /* LoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
+		C02B4D372A532828004D298B /* BVKS-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "BVKS-Info.plist"; sourceTree = "<group>"; };
 		C03E3F2528DCC20A00B987DD /* FirestoreCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreCollection.swift; sourceTree = "<group>"; };
 		C03E3F2728DCC6C500B987DD /* ListenInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenInfo.swift; sourceTree = "<group>"; };
 		C047E6202959F94100C6D50E /* BackgroundSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundSession.swift; sourceTree = "<group>"; };
@@ -579,7 +579,6 @@
 				C00E4DC928CA36F100F1A123 /* Srila Prabhupada */,
 				C00E4DC828CA36F100F1A123 /* Products */,
 				718E9976842A38ECCABB0218 /* Pods */,
-				6E6900F22A25C4C20086C7DB /* BVKS-Info.plist */,
 				C18860D36A2E32E82D66B5BC /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -618,6 +617,7 @@
 				C00E4DD528CA36F200F1A123 /* LaunchScreenSP.storyboard */,
 				6E9C17102A2A292400F170F4 /* LaunchScreenBVKS.storyboard */,
 				C00E4DD828CA36F200F1A123 /* Info.plist */,
+				C02B4D372A532828004D298B /* BVKS-Info.plist */,
 			);
 			path = "Srila Prabhupada";
 			sourceTree = "<group>";
@@ -1500,7 +1500,7 @@
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "BVKS-Info.plist";
+				INFOPLIST_FILE = "Srila Prabhupada/BVKS-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreenBVKS.storyboard;
@@ -1543,7 +1543,7 @@
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = "BVKS-Info.plist";
+				INFOPLIST_FILE = "Srila Prabhupada/BVKS-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreenBVKS.storyboard;

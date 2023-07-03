@@ -22,7 +22,7 @@ extension DefaultLectureViewModel {
             return
         }
 
-        if source == .cache {
+        if source == .cache && !self.userLectureInfo.isEmpty {
             parallelLectureWorkerQueue.async {
                 DispatchQueue.main.async {
                     completion(.success(self.userLectureInfo))
@@ -39,6 +39,7 @@ extension DefaultLectureViewModel {
                     serialLectureWorkerQueue.async {
                         if !self.allLectures.isEmpty {
                             self.allLectures = Self.refreshLectureWithLectureInfo(lectures: self.allLectures, lectureInfos: success, downloadedLectures: Persistant.shared.getAllDBLectures(), progress: progress)
+//                            self.saveAllLectures(lectures: self.allLectures)
                         }
                         DispatchQueue.main.async {
                             completion(.success(success))
@@ -203,7 +204,7 @@ extension DefaultLectureViewModel {
                                     var userInfo = lastError.userInfo
                                     userInfo[NSLocalizedDescriptionKey] = descriptions.joined(separator: "\n")
                                     let error = NSError(domain: lastError.domain, code: lastError.code, userInfo: userInfo)
-                                    completion(.failure(lastError))
+                                    completion(.failure(error))
                                 }
 
                                 if postUpdate {
