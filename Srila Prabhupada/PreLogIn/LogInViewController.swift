@@ -73,9 +73,9 @@ class LogInViewController: UIViewController {
 
                     if let keyWindow = self.view.window {
                         UIView.transition(with: keyWindow, duration: 0.5, options: .transitionFlipFromRight, animations: {
-                            let loadingController = UIStoryboard.main.instantiate(LoadingViewController.self)
-                            loadingController.forceLoading = true
-                            keyWindow.rootViewController = loadingController
+                            let controller = UIStoryboard.main.instantiate(TabBarController.self)
+                            controller.forceLoading = true
+                            keyWindow.rootViewController = controller
                         })
                     }
 
@@ -108,9 +108,9 @@ class LogInViewController: UIViewController {
 
                 if let keyWindow = self.view.window {
                     UIView.transition(with: keyWindow, duration: 0.5, options: .transitionFlipFromRight, animations: {
-                        let loadingController = UIStoryboard.main.instantiate(LoadingViewController.self)
-                        loadingController.forceLoading = true
-                        keyWindow.rootViewController = loadingController
+                        let controller = UIStoryboard.main.instantiate(TabBarController.self)
+                        controller.forceLoading = true
+                        keyWindow.rootViewController = controller
                     })
                 }
 
@@ -137,9 +137,9 @@ class LogInViewController: UIViewController {
 
                 if let keyWindow = self.view.window {
                     UIView.transition(with: keyWindow, duration: 0.5, options: .transitionFlipFromRight, animations: {
-                        let loadingController = UIStoryboard.main.instantiate(LoadingViewController.self)
-                        loadingController.forceLoading = true
-                        keyWindow.rootViewController = loadingController
+                        let controller = UIStoryboard.main.instantiate(TabBarController.self)
+                        controller.forceLoading = true
+                        keyWindow.rootViewController = controller
                     })
                 }
 

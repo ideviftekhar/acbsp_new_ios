@@ -82,13 +82,17 @@ class SideMenuViewController: UIViewController {
             list.registerCell(type: Cell.self, registerType: .nib)
             sideMenuTableView.tableFooterView = UIView()
             sideMenuTableView.separatorStyle = .singleLine
-            refreshUI(animated: false)
         }
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(stackViewTapped))
         userProfileStackView.addGestureRecognizer(tapGesture)
     }
-    
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        refreshUI(animated: false)
+    }
+
     @objc func stackViewTapped() {
         let userProfileController = UIStoryboard.sideMenu.instantiate(UINavigationController.self, identifier: "UserProfileNavigationController")
         
@@ -104,11 +108,25 @@ extension SideMenuViewController: IQListViewDelegateDataSource {
 
     private func refreshUI(animated: Bool? = nil) {
 
+        let footer = NSMutableAttributedString()
+        if let lastTimestamp: Date = UserDefaults.standard.object(forKey: CommonConstants.keyTimestamp) as? Date {
+            footer.append(.init(string: "\n\tLectures Updated On:", attributes: [.font: UIFont(name: "AvenirNextCondensed-Medium", size: 12)!, .foregroundColor: UIColor.gray]))
+
+            
+
+            let dateString = "\n\t" + DateFormatter.localizedString(from: lastTimestamp, dateStyle: .medium, timeStyle: .short)
+            footer.append(.init(string: dateString, attributes: [.font: UIFont(name: "AvenirNextCondensed-Regular", size: 12)!, .foregroundColor: UIColor.lightGray]))
+        }
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.attributedText = footer
+        label.sizeToFit()
+
         serialListKitQueue.async { [self] in
             let animated: Bool = animated ?? (models.count <= 1000)
             list.reloadData({
 
-                let section = IQSection(identifier: "Cell", headerSize: CGSize.zero, footerSize: CGSize.zero)
+                let section = IQSection(identifier: "Cell", headerSize: CGSize.zero, footerView: label)
                 list.append([section])
 
                 list.append(Cell.self, models: models, section: section)

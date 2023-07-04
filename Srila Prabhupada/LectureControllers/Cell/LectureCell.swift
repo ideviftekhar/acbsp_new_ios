@@ -324,10 +324,10 @@ extension LectureCell {
 extension LectureCell {
 
     static func estimatedSize(for model: AnyHashable?, listView: IQListView) -> CGSize {
-        return CGSize(width: listView.frame.width, height: 63.5)
+        return CGSize(width: listView.frame.width, height: 64)
     }
 
     static func size(for model: AnyHashable?, listView: IQListView) -> CGSize {
-        return CGSize(width: listView.frame.width, height: UITableView.automaticDimension)
+        return CGSize(width: listView.frame.width, height: 64)
     }
 }

@@ -39,7 +39,7 @@ extension DefaultLectureViewModel {
                     serialLectureWorkerQueue.async {
                         if !self.allLectures.isEmpty {
                             self.allLectures = Self.refreshLectureWithLectureInfo(lectures: self.allLectures, lectureInfos: success, downloadedLectures: Persistant.shared.getAllDBLectures(), progress: progress)
-//                            self.saveAllLectures(lectures: self.allLectures)
+                            self.saveAllLectures(lectures: self.allLectures)
                         }
                         DispatchQueue.main.async {
                             completion(.success(success))

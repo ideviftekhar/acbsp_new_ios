@@ -180,6 +180,10 @@
 		C00DC57128E1DA66001EDE95 /* DBLecture+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00DC56C28E1DA65001EDE95 /* DBLecture+CoreDataClass.swift */; };
 		C00DC57228E1DA66001EDE95 /* DBLecture+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00DC56D28E1DA66001EDE95 /* DBLecture+CoreDataProperties.swift */; };
 		C00DC57328E1DA66001EDE95 /* NSManagedObject+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00DC56E28E1DA66001EDE95 /* NSManagedObject+Extensions.swift */; };
+		C00DE1142A5439900047ED72 /* TabBarController+LectureLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00DE1132A5439900047ED72 /* TabBarController+LectureLoading.swift */; };
+		C00DE1152A5439900047ED72 /* TabBarController+LectureLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00DE1132A5439900047ED72 /* TabBarController+LectureLoading.swift */; };
+		C00DE1172A543B920047ED72 /* TabBarController+TimestampObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00DE1162A543B920047ED72 /* TabBarController+TimestampObserver.swift */; };
+		C00DE1182A543B920047ED72 /* TabBarController+TimestampObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00DE1162A543B920047ED72 /* TabBarController+TimestampObserver.swift */; };
 		C00E4DCB28CA36F100F1A123 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4DCA28CA36F100F1A123 /* AppDelegate.swift */; };
 		C00E4DCD28CA36F100F1A123 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4DCC28CA36F100F1A123 /* SceneDelegate.swift */; };
 		C00E4DD228CA36F100F1A123 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C00E4DD028CA36F100F1A123 /* Main.storyboard */; };
@@ -323,6 +327,8 @@
 		C00DC56C28E1DA65001EDE95 /* DBLecture+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBLecture+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C00DC56D28E1DA66001EDE95 /* DBLecture+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBLecture+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C00DC56E28E1DA66001EDE95 /* NSManagedObject+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+Extensions.swift"; sourceTree = "<group>"; };
+		C00DE1132A5439900047ED72 /* TabBarController+LectureLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabBarController+LectureLoading.swift"; sourceTree = "<group>"; };
+		C00DE1162A543B920047ED72 /* TabBarController+TimestampObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabBarController+TimestampObserver.swift"; sourceTree = "<group>"; };
 		C00E4DC728CA36F100F1A123 /* Srila Prabhupada.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Srila Prabhupada.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C00E4DCA28CA36F100F1A123 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C00E4DCC28CA36F100F1A123 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -673,6 +679,8 @@
 			children = (
 				C01B889F2913F5FE00EF0EA0 /* LoadingViewController.swift */,
 				C00E4DFE28CA39FE00F1A123 /* TabBarController.swift */,
+				C00DE1132A5439900047ED72 /* TabBarController+LectureLoading.swift */,
+				C00DE1162A543B920047ED72 /* TabBarController+TimestampObserver.swift */,
 				C0CAF25C28D45B8C00DA9878 /* NavigationController.swift */,
 				C00E4E1B28CA462000F1A123 /* SearchViewController.swift */,
 			);
@@ -1244,8 +1252,10 @@
 				6E6900712A25C4C20086C7DB /* PlayerViewController+Observers.swift in Sources */,
 				6E6900722A25C4C20086C7DB /* Filter.swift in Sources */,
 				6E6900732A25C4C20086C7DB /* Language.swift in Sources */,
+				C00DE1182A543B920047ED72 /* TabBarController+TimestampObserver.swift in Sources */,
 				6E6900742A25C4C20086C7DB /* PlayRate.swift in Sources */,
 				6E6900752A25C4C20086C7DB /* LectureViewModel.swift in Sources */,
+				C00DE1152A5439900047ED72 /* TabBarController+LectureLoading.swift in Sources */,
 				6E6900762A25C4C20086C7DB /* CreateAccountViewController.swift in Sources */,
 				6E6900772A25C4C20086C7DB /* LectureInfo.swift in Sources */,
 				6E6900782A25C4C20086C7DB /* FilterTypeTableViewCell.swift in Sources */,
@@ -1361,8 +1371,10 @@
 				C07A8F3D28F8033A001A6162 /* PlayerViewController+Observers.swift in Sources */,
 				C00AB20628D1F19500A62A2F /* Filter.swift in Sources */,
 				C007D37A28E809D900CFBED0 /* Language.swift in Sources */,
+				C00DE1172A543B920047ED72 /* TabBarController+TimestampObserver.swift in Sources */,
 				C00F8A4328EF192A00FA9A7B /* PlayRate.swift in Sources */,
 				C0B7990C28DC4DCE00681649 /* LectureViewModel.swift in Sources */,
+				C00DE1142A5439900047ED72 /* TabBarController+LectureLoading.swift in Sources */,
 				C00E4DE228CA393600F1A123 /* CreateAccountViewController.swift in Sources */,
 				C0FA049F28DB37FA003177DA /* LectureInfo.swift in Sources */,
 				C00AB20B28D1F52D00A62A2F /* FilterTypeTableViewCell.swift in Sources */,
@@ -1495,10 +1507,12 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Configurations/BVKS/BVKS.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 9;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
-				DEVELOPMENT_TEAM = S92372RU6B;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/BVKS-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
@@ -1519,6 +1533,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bhakti.bvks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = bvks_development;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -1538,10 +1553,12 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Configurations/BVKS/BVKS.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 9;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
-				DEVELOPMENT_TEAM = S92372RU6B;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/BVKS-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
@@ -1562,6 +1579,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bhakti.bvks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = bvks_development;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -1637,9 +1655,13 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Configurations/ShrilaPrabhupada/Srila Prabhupada.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 36;
-				DEVELOPMENT_TEAM = S92372RU6B;
+				DEVELOPMENT_TEAM = "";
+				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = S92372RU6B;
+				"DEVELOPMENT_TEAM[sdk=macosx*]" = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
@@ -1660,6 +1682,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bvksdigital.acbsp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = sp_development;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = sp_development_mac;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

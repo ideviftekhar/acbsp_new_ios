@@ -93,7 +93,6 @@ class LoadingViewController: UIViewController {
                     UserDefaults.standard.set(newTimestamp, forKey: CommonConstants.keyTimestamp)
                     UserDefaults.standard.synchronize()
 
-                    Filter.updateFilterSubtypes(lectures: lectures)
                     loadLectureInfo()
                 }
             case .failure(let error):

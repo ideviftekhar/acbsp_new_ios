@@ -42,6 +42,7 @@ class PlayerViewController: LectureViewController {
 
     weak var playerDelegate: PlayerViewControllerDelegate?
 
+    @IBOutlet var thumbnailBackgroundImageView: UIImageView!
     @IBOutlet var thumbnailImageView: UIImageView!
     @IBOutlet private var titleLabel: UILabel!
     @IBOutlet private var verseLabel: UILabel!
@@ -277,7 +278,7 @@ class PlayerViewController: LectureViewController {
 
         configurePlayRateMenu()
         configureMenuButton()
-        
+
         do {
             loopLectureButton.isSelected = false
             shuffleLectureButton.isSelected = false
@@ -287,12 +288,19 @@ class PlayerViewController: LectureViewController {
             miniPlayerView.delegate = self
         }
 
+        timeSlider.thumbTintColor = UIColor.textDarkGray
+
+        let normalImage = UIImage(color: UIColor.clear, size: CGSize(width: 40, height: 40))?.withRadius(radius: 20)
+        let highlightedImage = UIImage(color: UIColor.clear, size: CGSize(width: 40, height: 40))?.withRadius(radius: 20)
+
         if #available(iOS 14.0, *) {
             if UIDevice.current.userInterfaceIdiom != .mac {
-                timeSlider.setThumbImage(UIImage(), for: .normal)
+                timeSlider.setThumbImage(normalImage, for: .normal)
+                timeSlider.setThumbImage(highlightedImage, for: .highlighted)
             }
         } else {
-            timeSlider.setThumbImage(UIImage(), for: .normal)
+            timeSlider.setThumbImage(normalImage, for: .normal)
+            timeSlider.setThumbImage(highlightedImage, for: .highlighted)
         }
 
         do {
@@ -331,10 +339,13 @@ class PlayerViewController: LectureViewController {
             firstDotLabel?.isHidden = currentLecture.legacyData.verse.isEmpty || categoryString.isEmpty
             secondDotLabel?.isHidden = locationLabel?.text?.isEmpty ?? true
 
+            let placeholderImage: UIImage? = UIImage(named: "playerViewLogo")?.withRadius(radius: 10)
             if let url = currentLecture.thumbnailURL {
-                thumbnailImageView.af.setImage(withURL: url, placeholderImage: UIImage(named: "playerViewLogo"))
+                thumbnailImageView.af.setImage(withURL: url, placeholderImage: placeholderImage, filter: RoundedCornersFilter(radius: 10))
+                thumbnailBackgroundImageView.af.setImage(withURL: url, placeholderImage: placeholderImage, filter: RoundedCornersFilter(radius: 10))
             } else {
-                thumbnailImageView.image = UIImage(named: "playerViewLogo")
+                thumbnailImageView.image = placeholderImage
+                thumbnailBackgroundImageView.image = placeholderImage
             }
         } else {
             titleLabel.text = "--"
@@ -348,7 +359,9 @@ class PlayerViewController: LectureViewController {
             locationLabel.text = "--"
             firstDotLabel?.isHidden = false
             secondDotLabel?.isHidden = false
-            thumbnailImageView.image = UIImage(named: "playerViewLogo")
+            let placeholderImage: UIImage? = UIImage(named: "playerViewLogo")?.withRadius(radius: 10)
+            thumbnailImageView.image = placeholderImage
+            thumbnailBackgroundImageView.image = placeholderImage
         }
     }
     private func setupPlayerIcons() {
@@ -559,7 +572,8 @@ extension PlayerViewController {
         DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [currentLecture], isCompleted: nil, isDownloaded: nil, isFavorite: nil, lastPlayedPoint: currentTime, postUpdate: false, completion: { result in
             switch result {
             case .success(let success):
-                print("Update lecture \"\(currentLecture.titleDisplay)\" current time: \(currentTime) / \(currentLecture.length)")
+//                print("Update lecture \"\(currentLecture.titleDisplay)\" current time: \(currentTime) / \(currentLecture.length)")
+                break
             case .failure(let error):
                 print("Update lecture failed: \(error.localizedDescription)")
             }

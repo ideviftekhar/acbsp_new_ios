@@ -34,14 +34,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 }
             }
 
-            let loadingController = UIStoryboard.main.instantiate(LoadingViewController.self)
-            loadingController.forceLoading = false
+            let controller = UIStoryboard.main.instantiate(TabBarController.self)
+            controller.forceLoading = false
 
             windowScene.sizeRestrictions?.minimumSize = CGSize(width: 375, height: 667)
             windowScene.sizeRestrictions?.maximumSize = CGSize(width: 1024, height: 1366)
 
             window = UIWindow(windowScene: windowScene)
-            window?.rootViewController = loadingController
+            window?.rootViewController = controller
             window?.makeKeyAndVisible()
         }
     }

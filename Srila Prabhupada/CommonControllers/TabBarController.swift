@@ -12,6 +12,7 @@ import FirebaseFirestore
 class TabBarController: UITabBarController {
 
     let playerViewController = UIStoryboard.common.instantiate(PlayerViewController.self)
+    var forceLoading: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,33 +82,13 @@ class TabBarController: UITabBarController {
         playerViewController.playerDelegate = self
         playerViewController.addToTabBarController(self)
 
-        // Loading last played lectures
-        do {
-            let lectureIDDefaultKey: String = "\(PlayerViewController.self).\(Lecture.self)"
-            let lectureID = UserDefaults.standard.integer(forKey: lectureIDDefaultKey)
+        DefaultLectureViewModel.defaultModel.getAllCachedLectures { lectures in
 
-            if lectureID != 0 {
-                let playlistLecturesKey: String = "\(PlayerViewController.self).playlistLectures"
-                var playlistLectureIDs: [Int] = (UserDefaults.standard.array(forKey: playlistLecturesKey) as? [Int]) ?? []
-                if !playlistLectureIDs.contains(where: { $0 == lectureID }) {
-                    playlistLectureIDs.insert(lectureID, at: 0)
-                }
-
-                DefaultLectureViewModel.defaultModel.getLectures(searchText: nil, sortType: nil, filter: [:], lectureIDs: playlistLectureIDs, source: .cache, progress: nil) { result in
-                    switch result {
-                    case .success(let success):
-                        if self.playerViewController.currentLecture == nil,
-                           let lectureToPlay = success.first(where: { $0.id == lectureID }) {
-                            self.showPlayer(lecture: lectureToPlay, playlistLectures: success, shouldPlay: false)
-                        }
-                    case .failure:
-                        break
-                    }
-                }
-            } else {
-                playerViewController.currentLecture = nil
-            }
+            self.reloadAllControllers()
+            self.loadLastPlayedLectures(lectures: lectures)
+            self.fetchServerTimestampAndLoadLectures(cachedLectures: lectures)
         }
+
         if #available(iOS 14.0, *), #available(macCatalyst 14.0, *),
            UIDevice.current.userInterfaceIdiom == .mac,
            let viewControllers = viewControllers {
@@ -181,7 +162,69 @@ class TabBarController: UITabBarController {
     }
 }
 
+extension TabBarController {
+
+    internal func reloadAllControllers() {
+
+        guard let navigationControllers = viewControllers as? [UINavigationController] else {
+            return
+        }
+
+        let viewControllers: [UIViewController] = navigationControllers.flatMap { $0.viewControllers }
+        var lectureControllers: [LectureViewController] = viewControllers.filter { $0 is LectureViewController } as? [LectureViewController] ?? []
+        lectureControllers.append(playerViewController)
+        for lectureController in lectureControllers where lectureController.isViewLoaded {
+            lectureController.refresh(source: .cache)
+        }
+    }
+}
+
 extension TabBarController: PlayerViewControllerDelegate {
+
+    // Loading last played lectures
+    func loadLastPlayedLectures(lectures: [Lecture]) {
+        DispatchQueue.global(priority: .background).async {
+            let lectureIDDefaultKey: String = "\(PlayerViewController.self).\(Lecture.self)"
+            let lectureID = UserDefaults.standard.integer(forKey: lectureIDDefaultKey)
+
+            if lectureID != 0 {
+                let playlistLecturesKey: String = "\(PlayerViewController.self).playlistLectures"
+                var playlistLectureIDs: [Int] = (UserDefaults.standard.array(forKey: playlistLecturesKey) as? [Int]) ?? []
+                if !playlistLectureIDs.contains(where: { $0 == lectureID }) {
+                    playlistLectureIDs.insert(lectureID, at: 0)
+                }
+
+                var lectures = lectures
+
+                if let currentLecture = lectures.first(where: { $0.id == lectureID }) {
+                    DispatchQueue.main.async {
+                        self.showPlayer(lecture: currentLecture, playlistLectures: [currentLecture], shouldPlay: false)
+                    }
+
+                    let playlistLectures: [Lecture]
+                    if playlistLectureIDs.count < 1000 {
+                        playlistLectures = playlistLectureIDs.compactMap { id in
+                            if let index = lectures.firstIndex(where: { $0.id == id }) {
+                                let lecture = lectures.remove(at: index)
+                                return lecture
+                            }
+                            return nil
+                        }
+                    } else {
+                        playlistLectures = lectures
+                    }
+
+                    DispatchQueue.main.async {
+                        self.playerViewController.playlistLectures = playlistLectures
+                    }
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.playerViewController.currentLecture = nil
+                }
+            }
+        }
+    }
 
     func showPlayer(lecture: Lecture, playlistLectures: [Lecture], shouldPlay: Bool? = nil) {
 
@@ -257,84 +300,5 @@ extension TabBarController: UNUserNotificationCenterDelegate {
 extension TabBarController {
     convenience init(abc: String) {
         self.init(nibName: "Nib", bundle: nil)
-    }
-}
-
-extension TabBarController {
-
-    private func addTimestampObserver() {
-        timestampUpdated(completion: { result in
-            switch result {
-                
-            case .success(let newTimestamp):
-
-                let keyUserDefaults = CommonConstants.keyTimestamp
-                let oldTimestamp: Date = (UserDefaults.standard.object(forKey: keyUserDefaults) as? Date) ?? Date(timeIntervalSince1970: 0)
-
-                if oldTimestamp != newTimestamp {
-                    self.reloadLectures(newTimestamp: newTimestamp, firestoreSource: .server)
-                } else{
-                    print("No new lectures")
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        })
-    }
-    
-    private func timestampUpdated(completion: @escaping (Swift.Result<Date, Error>) -> Void) {
-        
-        let metadataPath = FirestoreCollection.metadata.path
-        let documentReference: DocumentReference = FirestoreManager.shared.firestore.collection(metadataPath).document(CommonConstants.metadataTimestampDocumentID)
-        
-        documentReference.addSnapshotListener { snapshot, error in
-            
-            if let error = error {
-                completion(.failure(error))
-            } else {
-                guard let attributes = snapshot?.data(),
-                let timestampValue = attributes[CommonConstants.keyTimestamp] else { return }
-                let newTimestamp = (timestampValue as AnyObject).dateValue()
-                completion(.success(newTimestamp))
-            }
-        }
-    }
-    
-    private func reloadLectures(newTimestamp: Date, firestoreSource: FirestoreSource) {
-        DefaultLectureViewModel.defaultModel.getLectures(searchText: nil, sortType: .default, filter: [:], lectureIDs: nil, source: firestoreSource, progress: { _ in }, completion: { [self] result in
-
-            switch result {
-            case .success(let lectures):
-                UserDefaults.standard.set(newTimestamp, forKey: CommonConstants.keyTimestamp)
-                UserDefaults.standard.synchronize()
-
-                self.reloadAllControllers()
-                Filter.updateFilterSubtypes(lectures: lectures)
-            case .failure(let error):
-                Haptic.error()
-
-                let okButton: ButtonConfig = (title: "OK", handler: nil)
-
-                showAlert(title: "Error!", message: error.localizedDescription, cancel: ("Retry", { [self] in
-                    self.reloadLectures(newTimestamp: newTimestamp, firestoreSource: firestoreSource)
-                }), buttons: [okButton])
-            }
-        })
-    }
-
-    private func reloadAllControllers() {
-
-        guard let navigationControllers = viewControllers as? [UINavigationController] else {
-            return
-        }
-
-        let viewControllers: [UIViewController] = navigationControllers.flatMap { $0.viewControllers }
-        let lectureControllers: [LectureViewController] = viewControllers.filter { $0 is LectureViewController } as? [LectureViewController] ?? []
-
-        for lectureController in lectureControllers {
-            if lectureController.isViewLoaded {
-                lectureController.refresh(source: .cache)
-            }
-        }
     }
 }

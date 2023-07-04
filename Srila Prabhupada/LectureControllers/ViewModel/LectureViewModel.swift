@@ -14,6 +14,7 @@ protocol LectureViewModel: AnyObject {
     static var defaultModel: LectureViewModel { get }
 
     func clearCache()
+    func getAllCachedLectures(completion: @escaping ([Lecture]) -> Void)
 
     func getLectures(searchText: String?,
                      sortType: LectureSortType?,
@@ -22,7 +23,6 @@ protocol LectureViewModel: AnyObject {
                      source: FirestoreSource,
                      progress: ((_ progress: CGFloat) -> Void)?,
                      completion: @escaping (Swift.Result<[Lecture], Error>) -> Void)
-
     // Lecture Info
     func getUsersLectureInfo(source: FirestoreSource, progress: ((_ progress: CGFloat) -> Void)?, completion: @escaping (Swift.Result<[LectureInfo], Error>) -> Void)
     func offlineUpdateLectureProgress(lecture: Lecture, lastPlayedPoint: Int)
@@ -76,6 +76,7 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
     func clearCache() {
         let keyUserDefaults = CommonConstants.keyTimestamp
         UserDefaults.standard.removeObject(forKey: keyUserDefaults)
+        UserDefaults.standard.removeObject(forKey: "DefaultLectureViewModel.allLectures")
         UserDefaults.standard.synchronize()
         serialLectureWorkerQueue.async { [self] in
             allLectures.removeAll()
@@ -95,33 +96,34 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(downloadsRemovedNotification(_:)), name: Persistant.Notification.downloadsRemoved, object: nil)
     }
 
-//    private static let lectureEncoder = JSONEncoder()
-//    private static let lectureDecoder = JSONDecoder()
-//    internal func saveAllLectures(lectures: [Lecture]) {
-//        parallelLectureWorkerQueue.async {
-//            guard let data = try? Self.lectureEncoder.encode(lectures) else {
-//                return
-//            }
-//            UserDefaults.standard.set(data, forKey: "DefaultLectureViewModel.allLectures")
-//            UserDefaults.standard.synchronize()
-//        }
-//    }
-//    private func getAllCachedLectures(completion: @escaping ([Lecture]) -> Void) {
-//        serialLectureWorkerQueue.async {
-//
-//            guard let data = UserDefaults.standard.data(forKey: "DefaultLectureViewModel.allLectures"),
-//            let lectures = try? Self.lectureDecoder.decode([Lecture].self, from: data) else {
-//                DispatchQueue.main.async {
-//                    completion([])
-//                }
-//                return
-//            }
-//
-//            DispatchQueue.main.async {
-//                completion(lectures)
-//            }
-//        }
-//    }
+    private static let lectureEncoder = JSONEncoder()
+    private static let lectureDecoder = JSONDecoder()
+    internal func saveAllLectures(lectures: [Lecture]) {
+        parallelLectureWorkerQueue.async {
+            guard let data = try? Self.lectureEncoder.encode(lectures) else {
+                return
+            }
+            UserDefaults.standard.set(data, forKey: "DefaultLectureViewModel.allLectures")
+            UserDefaults.standard.synchronize()
+        }
+    }
+
+    func getAllCachedLectures(completion: @escaping ([Lecture]) -> Void) {
+        parallelLectureWorkerQueue.async {
+
+            guard let data = UserDefaults.standard.data(forKey: "DefaultLectureViewModel.allLectures"),
+            let lectures = try? Self.lectureDecoder.decode([Lecture].self, from: data) else {
+                DispatchQueue.main.async {
+                    completion([])
+                }
+                return
+            }
+
+            DispatchQueue.main.async {
+                completion(lectures)
+            }
+        }
+    }
 
     func getLectures(searchText: String?, sortType: LectureSortType?, filter: [Filter: [String]], lectureIDs: [Int]?, source: FirestoreSource, progress: ((_ progress: CGFloat) -> Void)?, completion: @escaping (Swift.Result<[Lecture], Error>) -> Void) {
 
@@ -141,28 +143,28 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
                 }
             } else {
 
-//                if source == .cache {
-//                    getAllCachedLectures { success in
-//                        // If there are no cached lecture then recursive call with .default source
-//                        if success.isEmpty {
-//                            self.getLectures(searchText: searchText, sortType: sortType, filter: filter, lectureIDs: lectureIDs, source: .default, progress: progress, completion: completion)
-//                        } else {
-//                            self.serialLectureWorkerQueue.async {
-//                                var success = success
-//                                if !self.userLectureInfo.isEmpty {
-//                                    success = Self.refreshLectureWithLectureInfo(lectures: success, lectureInfos: self.userLectureInfo, downloadedLectures: Persistant.shared.getAllDBLectures(), progress: progress)
-//                                }
-//
-//                                self.allLectures = success
-//
-//                                success = Self.filter(lectures: success, searchText: searchText, sortType: sortType, filter: filter, lectureIDs: lectureIDs)
-//                                DispatchQueue.main.async {
-//                                    completion(.success(success))
-//                                }
-//                            }
-//                        }
-//                    }
-//                } else {
+                if source == .cache {
+                    getAllCachedLectures { success in
+                        // If there are no cached lecture then recursive call with .default source
+                        if success.isEmpty {
+                            self.getLectures(searchText: searchText, sortType: sortType, filter: filter, lectureIDs: lectureIDs, source: .default, progress: progress, completion: completion)
+                        } else {
+                            self.serialLectureWorkerQueue.async {
+                                var success = success
+                                if !self.userLectureInfo.isEmpty {
+                                    success = Self.refreshLectureWithLectureInfo(lectures: success, lectureInfos: self.userLectureInfo, downloadedLectures: Persistant.shared.getAllDBLectures(), progress: progress)
+                                }
+
+                                self.allLectures = success
+
+                                success = Self.filter(lectures: success, searchText: searchText, sortType: sortType, filter: filter, lectureIDs: lectureIDs)
+                                DispatchQueue.main.async {
+                                    completion(.success(success))
+                                }
+                            }
+                        }
+                    }
+                } else {
                     getLectures(source: source, progress: progress, completion: { [self] (result: Swift.Result<[Lecture], Error>) in
                         switch result {
                         case .success(var success):
@@ -172,7 +174,8 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
                                 }
 
                                 self.allLectures = success
-//                                self.saveAllLectures(lectures: success)
+                                self.saveAllLectures(lectures: success)
+                                Filter.updateFilterSubtypes(lectures: success)
 
                                 success = Self.filter(lectures: success, searchText: searchText, sortType: sortType, filter: filter, lectureIDs: lectureIDs)
                                 DispatchQueue.main.async {
@@ -183,7 +186,7 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
                             completion(.failure(error))
                         }
                     })
-//                }
+                }
             }
         }
     }
