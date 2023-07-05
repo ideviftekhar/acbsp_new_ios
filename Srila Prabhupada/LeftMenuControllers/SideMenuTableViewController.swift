@@ -24,9 +24,11 @@ class SideMenuViewController: UIViewController {
     @IBOutlet private var userEmailLabel: UILabel!
     @IBOutlet private var userProfileStackView: UIStackView!
 
-    @IBOutlet private var syncButton: RefreshButton!
+    @IBOutlet private var syncImageView: RotableImageView!
     @IBOutlet private var lastLecturePublishedStaticLabel: UILabel!
     @IBOutlet private var lastLectureDateLabel: UILabel!
+    @IBOutlet private var lastUpdateCheckStaticLabel: UILabel!
+    @IBOutlet private var lastUpdateCheckDateLabel: UILabel!
 
     typealias Model = SideMenuItem
     typealias Cell = SideMenuCell
@@ -129,18 +131,18 @@ extension SideMenuViewController {
 
         switch tabBarController.lectureSyncManager.syncStatus {
         case .none:
-            syncButton.stopSpinning()
+            syncImageView.stopSpinning()
         case .syncing:
-            syncButton.startSpinning()
+            syncImageView.startSpinning()
         }
         updateLastSyncTime()
 
         tabBarController.lectureSyncManager.syncStatusHandler = { [self] status in
             switch status {
             case .none:
-                syncButton.stopSpinning()
+                syncImageView.stopSpinning()
             case .syncing:
-                syncButton.startSpinning()
+                syncImageView.startSpinning()
             }
             updateLastSyncTime()
         }
@@ -151,17 +153,21 @@ extension SideMenuViewController {
             return
         }
 
-        switch tabBarController.lectureSyncManager.syncStatus {
-        case .none:
-            lastLecturePublishedStaticLabel.text = "Last Lecture Published On:"
-        case .syncing:
-            lastLecturePublishedStaticLabel.text = "Syncing..."
-        }
-
-        if let lastTimestamp: Date = UserDefaults.standard.object(forKey: CommonConstants.keyTimestamp) as? Date {
+        if let lastTimestamp: Date = UserDefaults.standard.object(forKey: CommonConstants.lastSyncTimestamp) as? Date {
             lastLectureDateLabel.text = DateFormatter.localizedString(from: lastTimestamp, dateStyle: .medium, timeStyle: .short)
         } else {
             lastLectureDateLabel.text = nil
+        }
+
+        switch tabBarController.lectureSyncManager.syncStatus {
+        case .none:
+            if let lastCheckedTimestamp: Date = UserDefaults.standard.object(forKey: CommonConstants.lastCheckedTimestamp) as? Date {
+                lastUpdateCheckDateLabel.text = DateFormatter.localizedString(from: lastCheckedTimestamp, dateStyle: .medium, timeStyle: .short)
+            } else {
+                lastUpdateCheckDateLabel.text = nil
+            }
+        case .syncing:
+            lastUpdateCheckDateLabel.text = "Syncing..."
         }
     }
 

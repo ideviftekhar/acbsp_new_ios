@@ -16,10 +16,10 @@ extension TabBarController {
 
             case .success(let newTimestamp):
 
-                let keyUserDefaults = CommonConstants.keyTimestamp
+                let keyUserDefaults = CommonConstants.lastSyncTimestamp
                 let oldTimestamp: Date = (UserDefaults.standard.object(forKey: keyUserDefaults) as? Date) ?? Date(timeIntervalSince1970: 0)
 
-                if oldTimestamp != newTimestamp {
+                if oldTimestamp != newTimestamp.timestamp {
                     self.startSyncing()
                 }
             case .failure(let error):
@@ -28,20 +28,26 @@ extension TabBarController {
         })
     }
 
-    private func timestampUpdated(completion: @escaping (Swift.Result<Date, Error>) -> Void) {
+    private func timestampUpdated(completion: @escaping (Swift.Result<LastSyncTimestamp, Error>) -> Void) {
 
         let metadataPath = FirestoreCollection.metadata.path
-        let documentReference: DocumentReference = FirestoreManager.shared.firestore.collection(metadataPath).document(CommonConstants.metadataTimestampDocumentID)
+        let documentReference: DocumentReference = FirestoreManager.shared.firestore.collection(metadataPath).document(CommonConstants.lastSyncTimestamp)
 
         documentReference.addSnapshotListener { snapshot, error in
 
             if let error = error {
                 completion(.failure(error))
-            } else {
-                guard let attributes = snapshot?.data(),
-                let timestampValue = attributes[CommonConstants.keyTimestamp] else { return }
-                let newTimestamp = (timestampValue as AnyObject).dateValue()
-                completion(.success(newTimestamp))
+            } else if let snapshot = snapshot {
+                do {
+                    let object = try snapshot.data(as: LastSyncTimestamp.self)
+                    DispatchQueue.main.async {
+                        completion(.success(object))
+                    }
+                } catch let error {
+                    DispatchQueue.main.async {
+                        completion(.failure(error))
+                    }
+                }
             }
         }
     }

@@ -33,7 +33,7 @@ class LectureSyncManager {
 
     private func fetchServerTimestampAndLoadLectures(force: Bool, progress: ((_ progress: CGFloat) -> Void)?, completion: @escaping ((_ lectures: [Lecture]) -> Void)) {
 
-        let keyUserDefaults = CommonConstants.keyTimestamp
+        let keyUserDefaults = CommonConstants.lastSyncTimestamp
         let oldTimestamp: Date = (UserDefaults.standard.object(forKey: keyUserDefaults) as? Date) ?? Date(timeIntervalSince1970: 0)
 
         DefaultLectureViewModel.defaultModel.getTimestamp(source: .default) { [self] result in
@@ -78,7 +78,8 @@ class LectureSyncManager {
                 if firestoreSource == .cache, lectures.isEmpty {
                     loadLectures(newTimestamp: newTimestamp, firestoreSource: .default, progress: progress, completion: completion)
                 } else {
-                    UserDefaults.standard.set(newTimestamp, forKey: CommonConstants.keyTimestamp)
+                    UserDefaults.standard.set(newTimestamp, forKey: CommonConstants.lastSyncTimestamp)
+                    UserDefaults.standard.set(Date(), forKey: CommonConstants.lastCheckedTimestamp)
                     UserDefaults.standard.synchronize()
                     self.lectures = lectures
                     completion(lectures)

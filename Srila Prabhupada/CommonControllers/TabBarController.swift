@@ -84,7 +84,7 @@ class TabBarController: UITabBarController {
         playerViewController.playerDelegate = self
         playerViewController.addToTabBarController(self)
 
-        self.loadLastPlayedLectures(lectures: lectures)
+        self.loadLastPlayedLectures()
 
         if #available(iOS 14.0, *), #available(macCatalyst 14.0, *),
            UIDevice.current.userInterfaceIdiom == .mac,
@@ -203,8 +203,8 @@ extension TabBarController {
 extension TabBarController: PlayerViewControllerDelegate {
 
     // Loading last played lectures
-    func loadLastPlayedLectures(lectures: [Lecture]) {
-        DispatchQueue.global(priority: .background).async {
+    func loadLastPlayedLectures() {
+        DispatchQueue.global(qos: .background).async {
             let lectureIDDefaultKey: String = "\(PlayerViewController.self).\(Lecture.self)"
             let lectureID = UserDefaults.standard.integer(forKey: lectureIDDefaultKey)
 
@@ -215,7 +215,7 @@ extension TabBarController: PlayerViewControllerDelegate {
                     playlistLectureIDs.insert(lectureID, at: 0)
                 }
 
-                var lectures = lectures
+                var lectures = self.lectures
 
                 if let currentLecture = lectures.first(where: { $0.id == lectureID }) {
                     DispatchQueue.main.async {

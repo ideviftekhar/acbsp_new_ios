@@ -288,6 +288,39 @@ class LectureCell: UITableViewCell, IQModelableCell {
 }
 
 extension LectureCell {
+    func contextMenuConfiguration() -> UIContextMenuConfiguration? {
+
+        guard let model = model else {
+            return nil
+        }
+
+        return .init(identifier: nil, previewProvider: {
+
+            let controller = UIStoryboard.common.instantiate(LectureInfoViewController.self)
+            controller.lecture = model.lecture
+
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                controller.modalPresentationStyle = .formSheet
+            } else {
+                controller.modalPresentationStyle = .automatic
+            }
+
+            return controller
+        }, actionProvider: { _ in
+            return self.optionMenu.menu
+        })
+    }
+
+    func performPreviewAction(configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
+        if let previewViewController = animator.previewViewController {
+            animator.addAnimations {
+                self.parentViewController?.present(previewViewController, animated: true)
+            }
+        }
+    }
+}
+
+extension LectureCell {
 
     private func configureMenuButton() {
 

@@ -76,7 +76,13 @@ enum LectureSortType: String, CaseIterable {
         case .dateOldestFirst:
             return lectures.sorted { obj1, obj2 in
                 if obj1.dateOfRecording == obj2.dateOfRecording {
-                    return obj1.creationTimestamp < obj2.creationTimestamp
+                    if let obj1CreationTimestamp = obj1.creationTimestamp, let obj2CreationTimestamp = obj2.creationTimestamp {
+                        return obj1CreationTimestamp < obj2CreationTimestamp
+                    } else if obj1.creationTimestamp != nil {
+                        return true
+                    } else {
+                        return false
+                    }
                 } else {
                     return obj1.dateOfRecording < obj2.dateOfRecording
                 }
@@ -84,7 +90,13 @@ enum LectureSortType: String, CaseIterable {
         case .dateLatestFirst:
             return lectures.sorted { obj1, obj2 in
                 if obj1.dateOfRecording == obj2.dateOfRecording {
-                    return obj1.creationTimestamp > obj2.creationTimestamp
+                    if let obj1CreationTimestamp = obj1.creationTimestamp, let obj2CreationTimestamp = obj2.creationTimestamp {
+                        return obj1CreationTimestamp > obj2CreationTimestamp
+                    } else if obj2.creationTimestamp != nil {
+                        return true
+                    } else {
+                        return false
+                    }
                 } else {
                     return obj1.dateOfRecording > obj2.dateOfRecording
                 }

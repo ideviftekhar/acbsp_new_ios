@@ -74,7 +74,7 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
     lazy var parallelLectureWorkerQueue = DispatchQueue(label: "parallelLectureWorkerQueue\(Self.self)", qos: .userInteractive, attributes: .concurrent)
 
     func clearCache() {
-        let keyUserDefaults = CommonConstants.keyTimestamp
+        let keyUserDefaults = CommonConstants.lastSyncTimestamp
         UserDefaults.standard.removeObject(forKey: keyUserDefaults)
         UserDefaults.standard.removeObject(forKey: "DefaultLectureViewModel.allLectures")
         UserDefaults.standard.synchronize()
@@ -243,7 +243,7 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
         
         let metadataPath = FirestoreCollection.metadata.path
         
-        let documentReference: DocumentReference = FirestoreManager.shared.firestore.collection(metadataPath).document(CommonConstants.metadataTimestampDocumentID)
+        let documentReference: DocumentReference = FirestoreManager.shared.firestore.collection(metadataPath).document(CommonConstants.lastSyncTimestamp)
         
         FirestoreManager.shared.getDocument(documentReference: documentReference, source: .server, completion: completion)
     }

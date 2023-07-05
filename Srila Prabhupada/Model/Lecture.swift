@@ -18,6 +18,7 @@ struct Lecture: Hashable, Codable {
     static func == (lhs: Self, rhs: Self) -> Bool {
         return lhs.id == rhs.id &&
         lhs.titleDisplay == rhs.titleDisplay &&
+        lhs.dateOfRecording == rhs.dateOfRecording &&
         lhs.creationTimestamp == rhs.creationTimestamp &&
         lhs.resources == rhs.resources &&
         lhs.downloadState == rhs.downloadState &&
@@ -26,12 +27,12 @@ struct Lecture: Hashable, Codable {
     }
 
     let category: [String]
-    let creationTimestamp: String
+    let creationTimestamp: Date?
     let dateOfRecording: Day
     let description: [String]
     let id: Int
     let language: Language
-    let lastModifiedTimestamp: String
+    let lastModifiedTimestamp: Date?
     let legacyData: LegacyData
     let length: Int
     let lengthType: [String]
@@ -86,11 +87,9 @@ struct Lecture: Hashable, Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(Int.self, forKey: .id)
         self.category = (try? container.decode([String].self, forKey: .category)) ?? []
-        self.creationTimestamp = try container.decode(String.self, forKey: .creationTimestamp)
         self.dateOfRecording = try container.decode(Day.self, forKey: .dateOfRecording)
         self.description = try container.decode([String].self, forKey: .description)
         self.language = try container.decode(Language.self, forKey: .language)
-        self.lastModifiedTimestamp = try container.decode(String.self, forKey: .lastModifiedTimestamp)
         self.legacyData = try container.decode(LegacyData.self, forKey: .legacyData)
         self.length = try container.decodeIfPresent(Int.self, forKey: .length) ?? 0
         self.lengthType = try container.decode([String].self, forKey: .lengthType)
@@ -101,6 +100,12 @@ struct Lecture: Hashable, Codable {
         self.tags = try container.decode([String].self, forKey: .tags)
         self.thumbnail = (try? container.decode(String.self, forKey: .thumbnail)) ?? ""
         self.title = try container.decode([String].self, forKey: .title)
+
+        let creationTimestamp = try container.decode(String.self, forKey: .creationTimestamp)
+        self.creationTimestamp = DateFormatter.isoDateFormatter.date(from: creationTimestamp)
+
+        let lastModifiedTimestamp = try container.decode(String.self, forKey: .lastModifiedTimestamp)
+        self.lastModifiedTimestamp = DateFormatter.isoDateFormatter.date(from: lastModifiedTimestamp)
 
         isFavorite = (try? container.decodeIfPresent(Bool.self, forKey: .isFavorite)) ?? false
         lastPlayedPoint = (try? container.decodeIfPresent(Int.self, forKey: .lastPlayedPoint)) ?? 0
