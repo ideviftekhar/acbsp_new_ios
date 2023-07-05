@@ -34,7 +34,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
                 }
             }
 
-            let controller = UIStoryboard.main.instantiate(TabBarController.self)
+            let controller = UIStoryboard.main.instantiate(LoadingViewController.self)
             controller.forceLoading = false
 
             windowScene.sizeRestrictions?.minimumSize = CGSize(width: 375, height: 667)

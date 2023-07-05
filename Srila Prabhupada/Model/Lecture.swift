@@ -102,9 +102,10 @@ struct Lecture: Hashable, Codable {
         self.thumbnail = (try? container.decode(String.self, forKey: .thumbnail)) ?? ""
         self.title = try container.decode([String].self, forKey: .title)
 
-        isFavorite = false
-        lastPlayedPoint = 0
-        downloadState = .notDownloaded
+        isFavorite = (try? container.decodeIfPresent(Bool.self, forKey: .isFavorite)) ?? false
+        lastPlayedPoint = (try? container.decodeIfPresent(Int.self, forKey: .lastPlayedPoint)) ?? 0
+        downloadState = (try? container.decodeIfPresent(DBLecture.DownloadState.self, forKey: .downloadState)) ?? .notDownloaded
+        downloadError = (try? container.decodeIfPresent(String.self, forKey: .downloadError)) ?? nil
     }
 
     static func createNewDBLecture(lecture: Lecture) -> DBLecture {

@@ -12,7 +12,9 @@ import FirebaseFirestore
 class TabBarController: UITabBarController {
 
     let playerViewController = UIStoryboard.common.instantiate(PlayerViewController.self)
-    var forceLoading: Bool = false
+    var lectures: [Lecture] = []
+
+    let lectureSyncManager = LectureSyncManager()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -82,12 +84,7 @@ class TabBarController: UITabBarController {
         playerViewController.playerDelegate = self
         playerViewController.addToTabBarController(self)
 
-        DefaultLectureViewModel.defaultModel.getAllCachedLectures { lectures in
-
-            self.reloadAllControllers()
-            self.loadLastPlayedLectures(lectures: lectures)
-            self.fetchServerTimestampAndLoadLectures(cachedLectures: lectures)
-        }
+        self.loadLastPlayedLectures(lectures: lectures)
 
         if #available(iOS 14.0, *), #available(macCatalyst 14.0, *),
            UIDevice.current.userInterfaceIdiom == .mac,
@@ -163,6 +160,30 @@ class TabBarController: UITabBarController {
 }
 
 extension TabBarController {
+
+
+    func startSyncing() {
+
+//        self.loadingLabel.text = "Loading..."
+//        progressView.progress = 0
+//        progressView.alpha = 0.0
+
+        lectureSyncManager.startSync(initialLectures: lectures, force: false, progress: { [self] progress in
+
+//            progressView.alpha = 1.0
+//
+//            let intProgress = Int(progress*100)
+//            loadingLabel.text = "Loading... \(intProgress)%"
+//            progressView.setProgress(Float(progress), animated: false)
+
+        }, completion: { [self] lectures in
+//            progressView.alpha = 0.0
+//            loadingLabel.text = nil
+            self.lectures = lectures
+
+            reloadAllControllers()
+        })
+    }
 
     internal func reloadAllControllers() {
 
@@ -294,11 +315,5 @@ extension TabBarController: UNUserNotificationCenterDelegate {
 
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         completionHandler()
-    }
-}
-
-extension TabBarController {
-    convenience init(abc: String) {
-        self.init(nibName: "Nib", bundle: nil)
     }
 }

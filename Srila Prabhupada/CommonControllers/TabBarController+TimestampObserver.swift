@@ -20,9 +20,7 @@ extension TabBarController {
                 let oldTimestamp: Date = (UserDefaults.standard.object(forKey: keyUserDefaults) as? Date) ?? Date(timeIntervalSince1970: 0)
 
                 if oldTimestamp != newTimestamp {
-                    self.reloadLectures(newTimestamp: newTimestamp, firestoreSource: .server)
-                } else {
-                    print("No new lectures")
+                    self.startSyncing()
                 }
             case .failure(let error):
                 print(error.localizedDescription)
@@ -46,26 +44,5 @@ extension TabBarController {
                 completion(.success(newTimestamp))
             }
         }
-    }
-
-    private func reloadLectures(newTimestamp: Date, firestoreSource: FirestoreSource) {
-        DefaultLectureViewModel.defaultModel.getLectures(searchText: nil, sortType: .default, filter: [:], lectureIDs: nil, source: firestoreSource, progress: { _ in }, completion: { [self] result in
-
-            switch result {
-            case .success(let lectures):
-                UserDefaults.standard.set(newTimestamp, forKey: CommonConstants.keyTimestamp)
-                UserDefaults.standard.synchronize()
-
-                self.reloadAllControllers()
-            case .failure(let error):
-                Haptic.error()
-
-                let okButton: ButtonConfig = (title: "OK", handler: nil)
-
-                showAlert(title: "Error!", message: error.localizedDescription, cancel: ("Retry", { [self] in
-                    self.reloadLectures(newTimestamp: newTimestamp, firestoreSource: firestoreSource)
-                }), buttons: [okButton])
-            }
-        })
     }
 }

@@ -36,6 +36,8 @@ class LectureViewController: SearchViewController {
     private lazy var doneSelectionButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneSelectionAction(_:)))
     private lazy var cancelSelectionButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(cancelButtonAction(_:)))
 
+    private var isFirstTimeLoaded: Bool = false
+
     var removeFromPlaylistEnabled: Bool = false
     var isSelectionEnabled: Bool = false
     var selectedModels: [Model] = [] {
@@ -134,7 +136,9 @@ class LectureViewController: SearchViewController {
     }
 
     @objc func lectureUpdateNotification(_ notification: Notification) {
-
+        guard isFirstTimeLoaded else {
+            return
+        }
         if let lectures: [Model] = notification.object as? [Model] {
 
             serialListKitQueue.async { [self] in
@@ -249,6 +253,7 @@ class LectureViewController: SearchViewController {
             switch result {
             case .success(let success):
                 self.models = success
+                self.isFirstTimeLoaded = true
                 refreshUI(showNoItems: true)
             case .failure(let error):
                 Haptic.error()

@@ -180,8 +180,6 @@
 		C00DC57128E1DA66001EDE95 /* DBLecture+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00DC56C28E1DA65001EDE95 /* DBLecture+CoreDataClass.swift */; };
 		C00DC57228E1DA66001EDE95 /* DBLecture+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00DC56D28E1DA66001EDE95 /* DBLecture+CoreDataProperties.swift */; };
 		C00DC57328E1DA66001EDE95 /* NSManagedObject+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00DC56E28E1DA66001EDE95 /* NSManagedObject+Extensions.swift */; };
-		C00DE1142A5439900047ED72 /* TabBarController+LectureLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00DE1132A5439900047ED72 /* TabBarController+LectureLoading.swift */; };
-		C00DE1152A5439900047ED72 /* TabBarController+LectureLoading.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00DE1132A5439900047ED72 /* TabBarController+LectureLoading.swift */; };
 		C00DE1172A543B920047ED72 /* TabBarController+TimestampObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00DE1162A543B920047ED72 /* TabBarController+TimestampObserver.swift */; };
 		C00DE1182A543B920047ED72 /* TabBarController+TimestampObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00DE1162A543B920047ED72 /* TabBarController+TimestampObserver.swift */; };
 		C00E4DCB28CA36F100F1A123 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4DCA28CA36F100F1A123 /* AppDelegate.swift */; };
@@ -223,6 +221,10 @@
 		C017E68C293E24C1005DA700 /* Haptic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C017E68B293E24C1005DA700 /* Haptic.swift */; };
 		C018A99428F421A000C0E002 /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C018A99328F421A000C0E002 /* Int+Extension.swift */; };
 		C01B88A02913F5FE00EF0EA0 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01B889F2913F5FE00EF0EA0 /* LoadingViewController.swift */; };
+		C02C132A2A554ACA008D89DB /* LectureSyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02C13292A554ACA008D89DB /* LectureSyncManager.swift */; };
+		C02C132B2A554ACA008D89DB /* LectureSyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02C13292A554ACA008D89DB /* LectureSyncManager.swift */; };
+		C02C132D2A556497008D89DB /* RefreshButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02C132C2A556497008D89DB /* RefreshButton.swift */; };
+		C02C132E2A556497008D89DB /* RefreshButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02C132C2A556497008D89DB /* RefreshButton.swift */; };
 		C03E3F2628DCC20A00B987DD /* FirestoreCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03E3F2528DCC20A00B987DD /* FirestoreCollection.swift */; };
 		C03E3F2828DCC6C500B987DD /* ListenInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03E3F2728DCC6C500B987DD /* ListenInfo.swift */; };
 		C047E6212959F94100C6D50E /* BackgroundSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E6202959F94100C6D50E /* BackgroundSession.swift */; };
@@ -327,7 +329,6 @@
 		C00DC56C28E1DA65001EDE95 /* DBLecture+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBLecture+CoreDataClass.swift"; sourceTree = "<group>"; };
 		C00DC56D28E1DA66001EDE95 /* DBLecture+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBLecture+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		C00DC56E28E1DA66001EDE95 /* NSManagedObject+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+Extensions.swift"; sourceTree = "<group>"; };
-		C00DE1132A5439900047ED72 /* TabBarController+LectureLoading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabBarController+LectureLoading.swift"; sourceTree = "<group>"; };
 		C00DE1162A543B920047ED72 /* TabBarController+TimestampObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TabBarController+TimestampObserver.swift"; sourceTree = "<group>"; };
 		C00E4DC728CA36F100F1A123 /* Srila Prabhupada.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Srila Prabhupada.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C00E4DCA28CA36F100F1A123 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -373,6 +374,8 @@
 		C018A99328F421A000C0E002 /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		C01B889F2913F5FE00EF0EA0 /* LoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		C02B4D372A532828004D298B /* BVKS-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "BVKS-Info.plist"; sourceTree = "<group>"; };
+		C02C13292A554ACA008D89DB /* LectureSyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureSyncManager.swift; sourceTree = "<group>"; };
+		C02C132C2A556497008D89DB /* RefreshButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshButton.swift; sourceTree = "<group>"; };
 		C03E3F2528DCC20A00B987DD /* FirestoreCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreCollection.swift; sourceTree = "<group>"; };
 		C03E3F2728DCC6C500B987DD /* ListenInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenInfo.swift; sourceTree = "<group>"; };
 		C047E6202959F94100C6D50E /* BackgroundSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundSession.swift; sourceTree = "<group>"; };
@@ -610,6 +613,7 @@
 				C07A8F3128F7FCF2001A6162 /* Third Party */,
 				C007586728E5D9100010EBE6 /* DownloadManager */,
 				C00E4DDE28CA393600F1A123 /* PreLogIn */,
+				C02C13282A554ABB008D89DB /* Managers */,
 				C00E4DFA28CA39F400F1A123 /* LeftMenuControllers */,
 				C0F1A08728F05EE5009578BA /* Player */,
 				C00E4DFD28CA39FE00F1A123 /* CommonControllers */,
@@ -679,7 +683,6 @@
 			children = (
 				C01B889F2913F5FE00EF0EA0 /* LoadingViewController.swift */,
 				C00E4DFE28CA39FE00F1A123 /* TabBarController.swift */,
-				C00DE1132A5439900047ED72 /* TabBarController+LectureLoading.swift */,
 				C00DE1162A543B920047ED72 /* TabBarController+TimestampObserver.swift */,
 				C0CAF25C28D45B8C00DA9878 /* NavigationController.swift */,
 				C00E4E1B28CA462000F1A123 /* SearchViewController.swift */,
@@ -702,6 +705,14 @@
 				C00E4E0628CA39FE00F1A123 /* HistoryViewController.swift */,
 			);
 			path = LectureControllers;
+			sourceTree = "<group>";
+		};
+		C02C13282A554ABB008D89DB /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				C02C13292A554ACA008D89DB /* LectureSyncManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 		C03E3F2428DCC1EB00B987DD /* Firebase Firestore */ = {
@@ -840,6 +851,7 @@
 				C0BC770F28D5AE1000C2629F /* TappableLabel.swift */,
 				C0EA13EC28CF685E00BE9110 /* RoundButton.swift */,
 				C0DA677C28FD8190003BF8E4 /* SPMenu.swift */,
+				C02C132C2A556497008D89DB /* RefreshButton.swift */,
 			);
 			path = Subclasses;
 			sourceTree = "<group>";
@@ -1252,10 +1264,10 @@
 				6E6900712A25C4C20086C7DB /* PlayerViewController+Observers.swift in Sources */,
 				6E6900722A25C4C20086C7DB /* Filter.swift in Sources */,
 				6E6900732A25C4C20086C7DB /* Language.swift in Sources */,
+				C02C132B2A554ACA008D89DB /* LectureSyncManager.swift in Sources */,
 				C00DE1182A543B920047ED72 /* TabBarController+TimestampObserver.swift in Sources */,
 				6E6900742A25C4C20086C7DB /* PlayRate.swift in Sources */,
 				6E6900752A25C4C20086C7DB /* LectureViewModel.swift in Sources */,
-				C00DE1152A5439900047ED72 /* TabBarController+LectureLoading.swift in Sources */,
 				6E6900762A25C4C20086C7DB /* CreateAccountViewController.swift in Sources */,
 				6E6900772A25C4C20086C7DB /* LectureInfo.swift in Sources */,
 				6E6900782A25C4C20086C7DB /* FilterTypeTableViewCell.swift in Sources */,
@@ -1343,6 +1355,7 @@
 				6E6900C72A25C4C20086C7DB /* PlaylistOption.swift in Sources */,
 				6E6900C82A25C4C20086C7DB /* SearchViewController.swift in Sources */,
 				6E6900C92A25C4C20086C7DB /* LegacyData.swift in Sources */,
+				C02C132E2A556497008D89DB /* RefreshButton.swift in Sources */,
 				6E6900CA2A25C4C20086C7DB /* LoadingViewController.swift in Sources */,
 				6E6B183B2A418C3600B5E098 /* NotificationViewController.swift in Sources */,
 				6E6900CC2A25C4C20086C7DB /* LogInViewController.swift in Sources */,
@@ -1371,10 +1384,10 @@
 				C07A8F3D28F8033A001A6162 /* PlayerViewController+Observers.swift in Sources */,
 				C00AB20628D1F19500A62A2F /* Filter.swift in Sources */,
 				C007D37A28E809D900CFBED0 /* Language.swift in Sources */,
+				C02C132A2A554ACA008D89DB /* LectureSyncManager.swift in Sources */,
 				C00DE1172A543B920047ED72 /* TabBarController+TimestampObserver.swift in Sources */,
 				C00F8A4328EF192A00FA9A7B /* PlayRate.swift in Sources */,
 				C0B7990C28DC4DCE00681649 /* LectureViewModel.swift in Sources */,
-				C00DE1142A5439900047ED72 /* TabBarController+LectureLoading.swift in Sources */,
 				C00E4DE228CA393600F1A123 /* CreateAccountViewController.swift in Sources */,
 				C0FA049F28DB37FA003177DA /* LectureInfo.swift in Sources */,
 				C00AB20B28D1F52D00A62A2F /* FilterTypeTableViewCell.swift in Sources */,
@@ -1462,6 +1475,7 @@
 				C00DC57128E1DA66001EDE95 /* DBLecture+CoreDataClass.swift in Sources */,
 				C0B7990A28DC427B00681649 /* PlaylistOption.swift in Sources */,
 				C00E4E1C28CA462000F1A123 /* SearchViewController.swift in Sources */,
+				C02C132D2A556497008D89DB /* RefreshButton.swift in Sources */,
 				C007D37C28E80AAB00CFBED0 /* LegacyData.swift in Sources */,
 				C01B88A02913F5FE00EF0EA0 /* LoadingViewController.swift in Sources */,
 				C0065D4B28D883F300B18AA6 /* Constants.swift in Sources */,

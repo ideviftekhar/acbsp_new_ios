@@ -203,8 +203,8 @@
                             <userDefinedRuntimeAttribute type="color" keyPath="fontColor">
                                 <color key="value" name="TextDarkGray"/>
                             </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="string" keyPath="valueFontName" value="Arial Bold"/>
-                            <userDefinedRuntimeAttribute type="string" keyPath="unitFontName" value="Arial Bold"/>
+                            <userDefinedRuntimeAttribute type="string" keyPath="valueFontName" value="AvenirNextCondensed-Medium"/>
+                            <userDefinedRuntimeAttribute type="string" keyPath="unitFontName" value="AvenirNextCondensed-Medium"/>
                         </userDefinedRuntimeAttributes>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q0B-mL-dK8">

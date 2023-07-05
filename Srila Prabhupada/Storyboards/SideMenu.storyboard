@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QfZ-UK-gEc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QfZ-UK-gEc">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -80,6 +80,58 @@
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="af6-UT-yxw">
                                 <rect key="frame" x="0.0" y="108" width="414" height="788"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="zOp-ZV-tgp">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="0.0"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                </view>
+                                <view key="tableFooterView" contentMode="scaleToFill" id="kA4-SN-mdK">
+                                    <rect key="frame" x="0.0" y="157" width="414" height="44"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Vu0-Zd-jfd">
+                                            <rect key="frame" x="0.0" y="5" width="178" height="34.5"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yhX-Zc-XWb" customClass="RefreshButton" customModule="BVKS" customModuleProvider="target">
+                                                    <rect key="frame" x="0.0" y="0.0" width="53.5" height="34.5"/>
+                                                    <state key="normal" title=""/>
+                                                    <buttonConfiguration key="configuration" style="plain" image="arrow.2.circlepath" catalog="system"/>
+                                                    <connections>
+                                                        <action selector="syncAction:" destination="Bg7-AS-CAc" eventType="touchUpInside" id="Fxb-z4-4Tx"/>
+                                                    </connections>
+                                                </button>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="uV8-fN-fjb">
+                                                    <rect key="frame" x="53.5" y="0.0" width="124.5" height="34.5"/>
+                                                    <subviews>
+                                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" insetsLayoutMarginsFromSafeArea="NO" text="Last Lecture Published On:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1pj-uc-kPb">
+                                                            <rect key="frame" x="0.0" y="0.0" width="124.5" height="18"/>
+                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="13"/>
+                                                            <color key="textColor" name="TextDarkGray"/>
+                                                            <nil key="highlightedColor"/>
+                                                            <variation key="heightClass=regular-widthClass=regular">
+                                                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="18"/>
+                                                            </variation>
+                                                        </label>
+                                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="-" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ciK-4f-oIf">
+                                                            <rect key="frame" x="0.0" y="18" width="124.5" height="16.5"/>
+                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
+                                                            <color key="textColor" name="747474"/>
+                                                            <nil key="highlightedColor"/>
+                                                            <variation key="heightClass=regular-widthClass=regular">
+                                                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="18"/>
+                                                            </variation>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                        </stackView>
+                                    </subviews>
+                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                    <constraints>
+                                        <constraint firstItem="Vu0-Zd-jfd" firstAttribute="leading" secondItem="kA4-SN-mdK" secondAttribute="leading" id="cMQ-1Z-Gah"/>
+                                        <constraint firstItem="Vu0-Zd-jfd" firstAttribute="centerY" secondItem="kA4-SN-mdK" secondAttribute="centerY" id="eTq-12-qYH"/>
+                                    </constraints>
+                                </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="SideMenuCell" textLabel="Nwx-HR-hLx" rowHeight="79" style="IBUITableViewCellStyleDefault" id="GZ6-3T-gw6">
                                         <rect key="frame" x="0.0" y="50" width="414" height="79"/>
@@ -119,7 +171,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="j21-Sc-J9o"/>
                     <connections>
+                        <outlet property="lastLectureDateLabel" destination="ciK-4f-oIf" id="SK2-2i-b2u"/>
+                        <outlet property="lastLecturePublishedStaticLabel" destination="1pj-uc-kPb" id="B6S-UA-UWD"/>
                         <outlet property="sideMenuTableView" destination="af6-UT-yxw" id="KNq-6C-jfU"/>
+                        <outlet property="syncButton" destination="yhX-Zc-XWb" id="R9a-Xh-Oqk"/>
                         <outlet property="userEmailLabel" destination="IWD-71-nF1" id="of7-rm-1Hk"/>
                         <outlet property="userImageView" destination="Odt-0N-hgQ" id="rSH-v8-pIQ"/>
                         <outlet property="userNameLabel" destination="pbo-RL-FLZ" id="eXg-zG-KZp"/>
@@ -1148,10 +1203,10 @@ This material may not be reproduced in whole or in part by any means, without wr
                                                                         </subviews>
                                                                     </stackView>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="UB1-de-ucp">
-                                                                        <rect key="frame" x="325" y="0.0" width="49" height="64"/>
+                                                                        <rect key="frame" x="324" y="0.0" width="50" height="64"/>
                                                                         <subviews>
                                                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="71d-N0-tYZ">
-                                                                                <rect key="frame" x="0.0" y="16.5" width="51" height="31"/>
+                                                                                <rect key="frame" x="0.0" y="16.5" width="52" height="31"/>
                                                                                 <color key="onTintColor" name="F96D00"/>
                                                                             </switch>
                                                                         </subviews>
@@ -1328,10 +1383,10 @@ This material may not be reproduced in whole or in part by any means, without wr
                                                                         </subviews>
                                                                     </stackView>
                                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0UC-hd-6BH">
-                                                                        <rect key="frame" x="325" y="0.0" width="49" height="64"/>
+                                                                        <rect key="frame" x="324" y="0.0" width="50" height="64"/>
                                                                         <subviews>
                                                                             <switch opaque="NO" tag="2" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="SYx-bJ-8pp">
-                                                                                <rect key="frame" x="0.0" y="16.5" width="51" height="31"/>
+                                                                                <rect key="frame" x="0.0" y="16.5" width="52" height="31"/>
                                                                                 <color key="onTintColor" name="F96D00"/>
                                                                             </switch>
                                                                         </subviews>
@@ -1437,9 +1492,13 @@ This material may not be reproduced in whole or in part by any means, without wr
         <designable name="nMz-1S-As9">
             <size key="intrinsicContentSize" width="160.5" height="28"/>
         </designable>
+        <designable name="yhX-Zc-XWb">
+            <size key="intrinsicContentSize" width="53.5" height="34"/>
+        </designable>
     </designables>
     <resources>
         <image name="aboutImage" width="1078" height="524"/>
+        <image name="arrow.2.circlepath" catalog="system" width="128" height="104"/>
         <image name="bell.badge" catalog="system" width="125" height="128"/>
         <image name="chevron.right" catalog="system" width="97" height="128"/>
         <image name="keyFill" width="18.5" height="35.5"/>
@@ -1454,6 +1513,9 @@ This material may not be reproduced in whole or in part by any means, without wr
         </namedColor>
         <namedColor name="0C1572">
             <color red="0.047058823529411764" green="0.082352941176470587" blue="0.44705882352941179" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="747474">
+            <color red="0.45490196078431372" green="0.45490196078431372" blue="0.45490196078431372" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="AccentColor">
             <color red="0.97647058823529409" green="0.42745098039215684" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1472,6 +1534,9 @@ This material may not be reproduced in whole or in part by any means, without wr
         </namedColor>
         <namedColor name="FAFAFA">
             <color red="0.98039215686274506" green="0.98039215686274506" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="TextDarkGray">
+            <color red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="ThemeColor">
             <color red="0.97647058823529409" green="0.42745098039215684" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

@@ -23,7 +23,11 @@ class SideMenuViewController: UIViewController {
     @IBOutlet private var userNameLabel: UILabel!
     @IBOutlet private var userEmailLabel: UILabel!
     @IBOutlet private var userProfileStackView: UIStackView!
-    
+
+    @IBOutlet private var syncButton: RefreshButton!
+    @IBOutlet private var lastLecturePublishedStaticLabel: UILabel!
+    @IBOutlet private var lastLectureDateLabel: UILabel!
+
     typealias Model = SideMenuItem
     typealias Cell = SideMenuCell
 
@@ -80,12 +84,13 @@ class SideMenuViewController: UIViewController {
 
         do {
             list.registerCell(type: Cell.self, registerType: .nib)
-            sideMenuTableView.tableFooterView = UIView()
             sideMenuTableView.separatorStyle = .singleLine
         }
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(stackViewTapped))
         userProfileStackView.addGestureRecognizer(tapGesture)
+
+        addSyncStatusListener()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -104,29 +109,86 @@ class SideMenuViewController: UIViewController {
     }
 }
 
+extension SideMenuViewController {
+    var appTabBarController: TabBarController? {
+        var controller: UIViewController = self
+
+        while let presenting = controller.presentingViewController {
+            controller = presenting
+            if let controller = controller as? TabBarController {
+                return controller
+            }
+        }
+        return nil
+    }
+
+    private func addSyncStatusListener() {
+        guard let tabBarController = self.appTabBarController else {
+            return
+        }
+
+        switch tabBarController.lectureSyncManager.syncStatus {
+        case .none:
+            syncButton.stopSpinning()
+        case .syncing:
+            syncButton.startSpinning()
+        }
+        updateLastSyncTime()
+
+        tabBarController.lectureSyncManager.syncStatusHandler = { [self] status in
+            switch status {
+            case .none:
+                syncButton.stopSpinning()
+            case .syncing:
+                syncButton.startSpinning()
+            }
+            updateLastSyncTime()
+        }
+    }
+
+    private func updateLastSyncTime() {
+        guard let tabBarController = self.appTabBarController else {
+            return
+        }
+
+        switch tabBarController.lectureSyncManager.syncStatus {
+        case .none:
+            lastLecturePublishedStaticLabel.text = "Last Lecture Published On:"
+        case .syncing:
+            lastLecturePublishedStaticLabel.text = "Syncing..."
+        }
+
+        if let lastTimestamp: Date = UserDefaults.standard.object(forKey: CommonConstants.keyTimestamp) as? Date {
+            lastLectureDateLabel.text = DateFormatter.localizedString(from: lastTimestamp, dateStyle: .medium, timeStyle: .short)
+        } else {
+            lastLectureDateLabel.text = nil
+        }
+    }
+
+    @IBAction func syncAction(_ sender: UIButton) {
+
+        guard let tabBarController = self.appTabBarController else {
+            return
+        }
+
+        switch tabBarController.lectureSyncManager.syncStatus {
+        case .none:
+            tabBarController.startSyncing()
+        case .syncing:
+            break
+        }
+    }
+}
+
 extension SideMenuViewController: IQListViewDelegateDataSource {
 
     private func refreshUI(animated: Bool? = nil) {
-
-        let footer = NSMutableAttributedString()
-        if let lastTimestamp: Date = UserDefaults.standard.object(forKey: CommonConstants.keyTimestamp) as? Date {
-            footer.append(.init(string: "\n\tLectures Updated On:", attributes: [.font: UIFont(name: "AvenirNextCondensed-Medium", size: 12)!, .foregroundColor: UIColor.gray]))
-
-            
-
-            let dateString = "\n\t" + DateFormatter.localizedString(from: lastTimestamp, dateStyle: .medium, timeStyle: .short)
-            footer.append(.init(string: dateString, attributes: [.font: UIFont(name: "AvenirNextCondensed-Regular", size: 12)!, .foregroundColor: UIColor.lightGray]))
-        }
-        let label = UILabel()
-        label.numberOfLines = 0
-        label.attributedText = footer
-        label.sizeToFit()
 
         serialListKitQueue.async { [self] in
             let animated: Bool = animated ?? (models.count <= 1000)
             list.reloadData({
 
-                let section = IQSection(identifier: "Cell", headerSize: CGSize.zero, footerView: label)
+                let section = IQSection(identifier: "Cell", headerSize: CGSize.zero, footerSize: CGSize.zero)
                 list.append([section])
 
                 list.append(Cell.self, models: models, section: section)

@@ -73,7 +73,7 @@ class LogInViewController: UIViewController {
 
                     if let keyWindow = self.view.window {
                         UIView.transition(with: keyWindow, duration: 0.5, options: .transitionFlipFromRight, animations: {
-                            let controller = UIStoryboard.main.instantiate(TabBarController.self)
+                            let controller = UIStoryboard.main.instantiate(LoadingViewController.self)
                             controller.forceLoading = true
                             keyWindow.rootViewController = controller
                         })
@@ -108,7 +108,7 @@ class LogInViewController: UIViewController {
 
                 if let keyWindow = self.view.window {
                     UIView.transition(with: keyWindow, duration: 0.5, options: .transitionFlipFromRight, animations: {
-                        let controller = UIStoryboard.main.instantiate(TabBarController.self)
+                        let controller = UIStoryboard.main.instantiate(LoadingViewController.self)
                         controller.forceLoading = true
                         keyWindow.rootViewController = controller
                     })
@@ -137,7 +137,7 @@ class LogInViewController: UIViewController {
 
                 if let keyWindow = self.view.window {
                     UIView.transition(with: keyWindow, duration: 0.5, options: .transitionFlipFromRight, animations: {
-                        let controller = UIStoryboard.main.instantiate(TabBarController.self)
+                        let controller = UIStoryboard.main.instantiate(LoadingViewController.self)
                         controller.forceLoading = true
                         keyWindow.rootViewController = controller
                     })
