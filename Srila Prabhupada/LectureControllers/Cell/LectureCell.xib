@@ -47,7 +47,7 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="toB-kP-27M">
-                        <rect key="frame" x="60" y="5.5" width="210" height="53.5"/>
+                        <rect key="frame" x="60" y="5.5" width="235" height="53.5"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7cs-uh-SL9">
                                 <rect key="frame" x="0.0" y="0.0" width="22" height="20.5"/>
@@ -142,79 +142,38 @@
                             </stackView>
                         </subviews>
                     </stackView>
-                    <view contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="f6l-Bp-fUH" customClass="MBCircularProgressBarView">
-                        <rect key="frame" x="275" y="15" width="34" height="34"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <view contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="f6l-Bp-fUH" customClass="IQCircularProgressView" customModule="BVKS" customModuleProvider="target">
+                        <rect key="frame" x="300" y="19.5" width="25" height="25"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0%" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="stx-Ge-eEI">
+                                <rect key="frame" x="0.0" y="0.0" width="25" height="25"/>
+                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="8"/>
+                                <color key="textColor" name="TextDarkGray"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="tintColor" name="ProgressColor"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="34" id="e6q-TU-Yc1">
+                            <constraint firstAttribute="bottom" secondItem="stx-Ge-eEI" secondAttribute="bottom" id="LvY-sP-oQu"/>
+                            <constraint firstAttribute="trailing" secondItem="stx-Ge-eEI" secondAttribute="trailing" id="UeO-hb-F6W"/>
+                            <constraint firstItem="stx-Ge-eEI" firstAttribute="top" secondItem="f6l-Bp-fUH" secondAttribute="top" id="cCx-Dy-tca"/>
+                            <constraint firstAttribute="height" constant="25" id="e6q-TU-Yc1">
                                 <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact" constant="40"/>
                             </constraint>
-                            <constraint firstAttribute="width" constant="34" id="rtt-Uu-pTq">
+                            <constraint firstItem="stx-Ge-eEI" firstAttribute="leading" secondItem="f6l-Bp-fUH" secondAttribute="leading" id="hfB-RW-nXc"/>
+                            <constraint firstAttribute="width" constant="25" id="rtt-Uu-pTq">
                                 <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact" constant="40"/>
                             </constraint>
                         </constraints>
-                        <userDefinedRuntimeAttributes>
-                            <userDefinedRuntimeAttribute type="boolean" keyPath="showValueString" value="YES"/>
-                            <userDefinedRuntimeAttribute type="number" keyPath="maxValue">
-                                <real key="value" value="100"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="number" keyPath="value">
-                                <real key="value" value="0.0"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="boolean" keyPath="showUnitString" value="YES"/>
-                            <userDefinedRuntimeAttribute type="string" keyPath="unitString" value="%"/>
-                            <userDefinedRuntimeAttribute type="color" keyPath="progressColor">
-                                <color key="value" systemColor="systemBlueColor"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="number" keyPath="valueFontSize">
-                                <integer key="value" value="8"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="number" keyPath="unitFontSize">
-                                <integer key="value" value="8"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="number" keyPath="progressAngle">
-                                <real key="value" value="100"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="number" keyPath="progressLineWidth">
-                                <real key="value" value="2"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="number" keyPath="emptyLineWidth">
-                                <real key="value" value="0.5"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="color" keyPath="progressStrokeColor">
-                                <color key="value" systemColor="systemBlueColor"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="color" keyPath="emptyLineColor">
-                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="color" keyPath="emptyLineStrokeColor">
-                                <color key="value" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="number" keyPath="progressRotationAngle">
-                                <real key="value" value="50"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                <real key="value" value="17"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="boolean" keyPath="masksToBounds" value="YES"/>
-                            <userDefinedRuntimeAttribute type="number" keyPath="progressCapType">
-                                <integer key="value" value="2"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="color" keyPath="fontColor">
-                                <color key="value" name="TextDarkGray"/>
-                            </userDefinedRuntimeAttribute>
-                            <userDefinedRuntimeAttribute type="string" keyPath="valueFontName" value="AvenirNextCondensed-Medium"/>
-                            <userDefinedRuntimeAttribute type="string" keyPath="unitFontName" value="AvenirNextCondensed-Medium"/>
-                        </userDefinedRuntimeAttributes>
                     </view>
                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q0B-mL-dK8">
-                        <rect key="frame" x="317" y="0.0" width="50" height="64"/>
+                        <rect key="frame" x="325" y="0.0" width="50" height="64"/>
                         <color key="tintColor" name="0099CC"/>
                         <state key="normal" title=""/>
                         <buttonConfiguration key="configuration" style="plain" image="ellipsis.circle" catalog="system"/>
                     </button>
                     <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.circle" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="vfZ-ce-T4q">
-                        <rect key="frame" x="329.5" y="20" width="25" height="24"/>
+                        <rect key="frame" x="337.5" y="20" width="25" height="24"/>
                         <color key="tintColor" name="0099CC"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="25" id="9gU-FC-Ww5">
@@ -226,7 +185,7 @@
                         </constraints>
                     </imageView>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="Mfu-JH-XN3">
-                        <rect key="frame" x="275" y="15.5" width="34" height="33"/>
+                        <rect key="frame" x="300" y="20" width="25" height="24"/>
                         <color key="tintColor" name="0080FF"/>
                     </imageView>
                     <view contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" translatesAutoresizingMaskIntoConstraints="NO" id="ZTZ-0b-Ptx" customClass="MBCircularProgressBarView">
@@ -348,7 +307,7 @@
                     <constraint firstItem="toB-kP-27M" firstAttribute="leading" secondItem="1Pj-Yk-u2T" secondAttribute="trailing" constant="10" id="A3j-iB-hV2"/>
                     <constraint firstItem="f6l-Bp-fUH" firstAttribute="trailing" secondItem="Mfu-JH-XN3" secondAttribute="trailing" id="AP3-fe-Mkw"/>
                     <constraint firstItem="f6l-Bp-fUH" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Ibi-ZE-P5r"/>
-                    <constraint firstItem="Q0B-mL-dK8" firstAttribute="leading" secondItem="f6l-Bp-fUH" secondAttribute="trailing" constant="8" id="STR-57-w8h"/>
+                    <constraint firstItem="Q0B-mL-dK8" firstAttribute="leading" secondItem="f6l-Bp-fUH" secondAttribute="trailing" id="STR-57-w8h"/>
                     <constraint firstItem="CnE-6x-y4s" firstAttribute="trailing" secondItem="1Pj-Yk-u2T" secondAttribute="trailing" id="TYu-Sa-Wyn"/>
                     <constraint firstItem="CnE-6x-y4s" firstAttribute="bottom" secondItem="1Pj-Yk-u2T" secondAttribute="bottom" id="Y4M-yD-ugQ"/>
                     <constraint firstItem="vfZ-ce-T4q" firstAttribute="centerY" secondItem="Q0B-mL-dK8" secondAttribute="centerY" id="Ycn-q9-J9x"/>
@@ -359,7 +318,7 @@
                     <constraint firstItem="CnE-6x-y4s" firstAttribute="leading" secondItem="1Pj-Yk-u2T" secondAttribute="leading" id="ldd-SF-aUd"/>
                     <constraint firstItem="CnE-6x-y4s" firstAttribute="top" secondItem="1Pj-Yk-u2T" secondAttribute="top" id="mjG-me-soE"/>
                     <constraint firstItem="AdV-AQ-xel" firstAttribute="centerX" secondItem="ZTZ-0b-Ptx" secondAttribute="centerX" id="mua-PG-0Zk"/>
-                    <constraint firstAttribute="trailing" secondItem="Q0B-mL-dK8" secondAttribute="trailing" constant="8" id="oxx-FM-xiV"/>
+                    <constraint firstAttribute="trailing" secondItem="Q0B-mL-dK8" secondAttribute="trailing" id="oxx-FM-xiV"/>
                     <constraint firstItem="eDN-pj-FYV" firstAttribute="centerX" secondItem="1Pj-Yk-u2T" secondAttribute="trailing" id="uC5-2B-rW6"/>
                     <constraint firstItem="1Pj-Yk-u2T" firstAttribute="leading" secondItem="ZTZ-0b-Ptx" secondAttribute="centerX" id="vEY-H7-bw3"/>
                     <constraint firstItem="toB-kP-27M" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="xau-al-0rJ"/>
@@ -379,6 +338,7 @@
                 <outlet property="durationLabel" destination="N9l-9l-L9l" id="98h-lU-srK"/>
                 <outlet property="favoriteIconImageView" destination="eiF-YO-8YM" id="Dvz-os-Nga"/>
                 <outlet property="firstDotLabel" destination="qTp-hj-off" id="rXT-Xu-YQT"/>
+                <outlet property="labelListenProgress" destination="stx-Ge-eEI" id="Zb0-SM-X8S"/>
                 <outlet property="listenProgressView" destination="f6l-Bp-fUH" id="DDZ-eX-bNG"/>
                 <outlet property="locationLabel" destination="j2s-UD-Jnl" id="A9J-F7-CYm"/>
                 <outlet property="menuButton" destination="Q0B-mL-dK8" id="wRP-cu-9aA"/>
@@ -416,9 +376,6 @@
         <namedColor name="TextDarkGray">
             <color red="0.33333333333333331" green="0.33333333333333331" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <systemColor name="systemBackgroundColor">
-            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemBlueColor">
             <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

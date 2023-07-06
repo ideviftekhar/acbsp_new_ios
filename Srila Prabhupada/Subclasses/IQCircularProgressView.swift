@@ -117,7 +117,7 @@ class IQCircularProgressView : UIView {
                             clockwise:true)
     }
 
-    func setProgress(_ progress: CGFloat?, animated:Bool) {
+    func setProgress(_ progress: CGFloat?, animated: Bool) {
 
         guard _progress != progress else {
             return
@@ -129,12 +129,23 @@ class IQCircularProgressView : UIView {
             return
         }
 
-        //Keeping progress between 0 and 1
-        progress = CGFloat.maximum(0.0, progress)
-        progress = CGFloat.minimum(1.0, progress)
         _progress = progress
 
-        if progress == 0.0 || progress == 1.0 {
+        if progress >= 0 && progress <= 1 {
+            progressLayer.removeAllAnimations()
+            self.isHidden = false
+
+            if animated {
+                progressLayer.strokeEnd = progress
+            } else {
+                CATransaction.begin()
+                CATransaction.setValue(true, forKey: kCATransactionDisableActions)
+                progressLayer.strokeEnd = progress
+                CATransaction.commit()
+            }
+
+            progressLayer.borderWidth = 1.0
+        } else {
             self.isHidden = false
             progressLayer.strokeEnd = indeterminateProgress
             progressLayer.borderWidth = 0.0
@@ -145,20 +156,6 @@ class IQCircularProgressView : UIView {
             spinAnimation.duration       = 1.0
             spinAnimation.repeatCount    = .infinity
             progressLayer.add(spinAnimation, forKey: indeterminantAnimationKey)
-        } else {
-            progressLayer.removeAllAnimations()
-            self.isHidden = false
-
-            if animated {
-                progressLayer.strokeEnd = progress
-            } else {
-                CATransaction.begin()
-                CATransaction.setValue(true, forKey:kCATransactionDisableActions)
-                progressLayer.strokeEnd = progress
-                CATransaction.commit()
-            }
-
-            progressLayer.borderWidth = 1.0
         }
     }
 }

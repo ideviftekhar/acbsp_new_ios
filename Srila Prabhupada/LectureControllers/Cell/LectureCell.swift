@@ -36,7 +36,8 @@ class LectureCell: UITableViewCell, IQModelableCell {
     @IBOutlet private var menuButton: UIButton?
     @IBOutlet private var selectedImageView: UIImageView?
     @IBOutlet private var downloadProgressView: MBCircularProgressBarView?
-    @IBOutlet private var listenProgressView: MBCircularProgressBarView?
+    @IBOutlet private var listenProgressView: IQCircularProgressView?
+    @IBOutlet private var labelListenProgress: UILabel?
     @IBOutlet private var audioVisualizerView: ESTMusicIndicatorView!
 
     weak var delegate: LectureCellDelegate?
@@ -113,7 +114,8 @@ class LectureCell: UITableViewCell, IQModelableCell {
 
             let playProgress: CGFloat = model.lecture.playProgress
 
-            listenProgressView?.value = playProgress * 100
+            labelListenProgress?.text = "\(Int(playProgress * 100))%"
+            listenProgressView?.progress = playProgress
             listenProgressView?.isHidden = playProgress >= 1.0
             completedIconImageView?.isHidden = playProgress < 1.0
 
@@ -129,7 +131,8 @@ class LectureCell: UITableViewCell, IQModelableCell {
                     audioVisualizerView.state = .stopped
                 case .playing(let playProgress):
 
-                    listenProgressView?.value = playProgress * 100
+                    labelListenProgress?.text = "\(Int(playProgress * 100))%"
+                    listenProgressView?.progress = playProgress
                     listenProgressView?.isHidden = playProgress >= 1.0
                     completedIconImageView?.isHidden = playProgress < 1.0
 

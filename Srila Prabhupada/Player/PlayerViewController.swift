@@ -560,7 +560,10 @@ extension PlayerViewController {
         guard totalDuration > 0 else {
             return 0
         }
-        return CGFloat(currentTime) / CGFloat(totalDuration)
+        var progress = CGFloat(currentTime) / CGFloat(totalDuration)
+        progress = CGFloat.maximum(0.0, progress)
+        progress = CGFloat.minimum(1.0, progress)
+        return progress
     }
 
     func updateLectureProgress() {
