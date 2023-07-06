@@ -170,7 +170,7 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
                         case .success(var success):
                             serialLectureWorkerQueue.async {
                                 if !self.userLectureInfo.isEmpty {
-                                    success = Self.refreshLectureWithLectureInfo(lectures: success, lectureInfos: self.userLectureInfo, downloadedLectures: Persistant.shared.getAllDBLectures(), progress: progress)
+                                    success = Self.refreshLectureWithLectureInfo(lectures: success, lectureInfos: self.userLectureInfo, downloadedLectures: Persistant.shared.getAllDBLectures(), progress: nil)
                                 }
 
                                 self.allLectures = success

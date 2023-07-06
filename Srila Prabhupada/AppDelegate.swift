@@ -188,8 +188,8 @@ extension AppDelegate {
             switch result {
 
             case .success(let success):
-                print(success)
-            //To subscribe to a topic, call the subscription method from your application's main thread (FCM is not thread-safe).
+
+                //To subscribe to a topic, call the subscription method from your application's main thread (FCM is not thread-safe).
                 if let notification = success.notification, notification.english ?? false {
                     DispatchQueue.main.async {
                         Messaging.messaging().subscribe(toTopic: Constants.topicEnglish) { _ in

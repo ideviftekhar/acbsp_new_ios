@@ -197,6 +197,7 @@ extension SearchViewController: SideMenuControllerDelegate {
             controller.navigationController?.pushViewController(popularLectureController, animated: true)
         case .about:
             let aboutController = UIStoryboard.sideMenu.instantiate(UINavigationController.self, identifier: "AboutNavigationController")
+            aboutController.popoverPresentationController?.sourceView = cell
             controller.present(aboutController, animated: true, completion: nil)
         case .share:
 
@@ -214,6 +215,7 @@ extension SearchViewController: SideMenuControllerDelegate {
             }
         case .copyright:
             let copyrightController = UIStoryboard.sideMenu.instantiate(UINavigationController.self, identifier: "CopyrightNavigationController")
+            copyrightController.popoverPresentationController?.sourceView = cell
             controller.present(copyrightController, animated: true, completion: nil)
         case .rateUs:
             controller.dismiss(animated: true, completion: nil)

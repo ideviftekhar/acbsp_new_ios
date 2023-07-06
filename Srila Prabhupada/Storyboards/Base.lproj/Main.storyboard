@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="gmZ-qk-tiz">
-    <device id="retina6_1" orientation="portrait" appearance="dark"/>
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
@@ -865,10 +865,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.5" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_1024_corner" translatesAutoresizingMaskIntoConstraints="NO" id="wcl-uZ-UiX">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </imageView>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5kh-8u-odW">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="nv3-fI-bIU">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <blurEffect style="light"/>
+                            </visualEffectView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="ahu-fG-vcc">
                                 <rect key="frame" x="102" y="305" width="210" height="286.5"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_120" translatesAutoresizingMaskIntoConstraints="NO" id="RR7-e4-b4U">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_1024_corner" translatesAutoresizingMaskIntoConstraints="NO" id="RR7-e4-b4U">
                                         <rect key="frame" x="5" y="0.0" width="200" height="200"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="RR7-e4-b4U" secondAttribute="height" multiplier="1:1" id="nGY-yk-Rzd"/>
@@ -886,7 +897,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Srila Prabhupada" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WVi-wL-j1E">
                                         <rect key="frame" x="0.0" y="240" width="210" height="46.5"/>
                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="34"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="textColor" name="000000"/>
                                         <nil key="highlightedColor"/>
                                         <variation key="userInterfaceIdiom=mac">
                                             <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="40"/>
@@ -900,17 +911,17 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gvM-hW-MmN">
                                         <rect key="frame" x="0.0" y="0.0" width="354" height="20.5"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="jAq-Lu-2YX">
-                                                <rect key="frame" x="138.5" y="0.0" width="77.5" height="20.5"/>
+                                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="jAq-Lu-2YX">
+                                                <rect key="frame" x="137" y="0.0" width="80.5" height="20.5"/>
                                                 <subviews>
                                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="jW1-6f-dRS">
                                                         <rect key="frame" x="0.0" y="0.0" width="20" height="20.5"/>
-                                                        <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="color" name="000000"/>
                                                     </activityIndicatorView>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Loading..." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ehO-wT-hBo">
-                                                        <rect key="frame" x="25" y="0.0" width="52.5" height="20.5"/>
+                                                        <rect key="frame" x="28" y="0.0" width="52.5" height="20.5"/>
                                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
-                                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                        <color key="textColor" name="000000"/>
                                                         <nil key="highlightedColor"/>
                                                         <variation key="userInterfaceIdiom=mac">
                                                             <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="22"/>
@@ -950,11 +961,19 @@
                         <viewLayoutGuide key="safeArea" id="eNs-uh-wMj"/>
                         <color key="backgroundColor" name="ThemeColor"/>
                         <constraints>
+                            <constraint firstItem="wcl-uZ-UiX" firstAttribute="trailing" secondItem="5kh-8u-odW" secondAttribute="trailing" id="1lw-oz-Io9"/>
                             <constraint firstItem="eNs-uh-wMj" firstAttribute="trailing" secondItem="qsJ-QD-NQw" secondAttribute="trailing" constant="30" id="4pm-58-tR4"/>
+                            <constraint firstAttribute="bottom" secondItem="5kh-8u-odW" secondAttribute="bottom" id="JY3-bs-6RA"/>
                             <constraint firstItem="qsJ-QD-NQw" firstAttribute="leading" secondItem="eNs-uh-wMj" secondAttribute="leading" constant="30" id="KbA-78-OhP"/>
                             <constraint firstItem="qsJ-QD-NQw" firstAttribute="top" secondItem="ahu-fG-vcc" secondAttribute="bottom" constant="40" id="NTN-fi-XgM"/>
+                            <constraint firstItem="wcl-uZ-UiX" firstAttribute="leading" secondItem="5kh-8u-odW" secondAttribute="leading" id="O8f-4s-vqe"/>
+                            <constraint firstItem="5kh-8u-odW" firstAttribute="top" secondItem="kug-s8-z5B" secondAttribute="top" id="P9s-Qp-jG8"/>
                             <constraint firstItem="ahu-fG-vcc" firstAttribute="centerY" secondItem="kug-s8-z5B" secondAttribute="centerY" id="WZy-Dx-ccY"/>
+                            <constraint firstItem="wcl-uZ-UiX" firstAttribute="top" secondItem="5kh-8u-odW" secondAttribute="top" id="Zsg-tz-h08"/>
+                            <constraint firstItem="5kh-8u-odW" firstAttribute="leading" secondItem="kug-s8-z5B" secondAttribute="leading" id="gfp-5p-KI9"/>
+                            <constraint firstAttribute="trailing" secondItem="5kh-8u-odW" secondAttribute="trailing" id="jM2-lH-5IQ"/>
                             <constraint firstItem="qsJ-QD-NQw" firstAttribute="centerX" secondItem="kug-s8-z5B" secondAttribute="centerX" id="u5w-em-BNB"/>
+                            <constraint firstItem="wcl-uZ-UiX" firstAttribute="bottom" secondItem="5kh-8u-odW" secondAttribute="bottom" id="xeT-hh-37n"/>
                             <constraint firstItem="ahu-fG-vcc" firstAttribute="centerX" secondItem="kug-s8-z5B" secondAttribute="centerX" id="yud-Iz-08w"/>
                         </constraints>
                         <variation key="heightClass=regular-widthClass=regular">
@@ -966,6 +985,7 @@
                     </view>
                     <connections>
                         <outlet property="activtiyIndicator" destination="jW1-6f-dRS" id="GhA-5e-VNh"/>
+                        <outlet property="backgroundImageView" destination="wcl-uZ-UiX" id="Hdw-ZO-Zql"/>
                         <outlet property="imageView" destination="RR7-e4-b4U" id="CKs-5e-MBY"/>
                         <outlet property="loadingLabel" destination="ehO-wT-hBo" id="y51-lg-4J6"/>
                         <outlet property="progressView" destination="Koh-Iz-WSH" id="252-4G-OQ9"/>
@@ -1067,8 +1087,12 @@
     </designables>
     <color key="tintColor" name="F96D00"/>
     <resources>
+        <image name="logo_1024_corner" width="360" height="360"/>
         <image name="logo_120" width="120" height="120"/>
         <image name="selection" width="50" height="49"/>
+        <namedColor name="000000">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="0099CA">
             <color red="0.0" green="0.59999999999999998" blue="0.792156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

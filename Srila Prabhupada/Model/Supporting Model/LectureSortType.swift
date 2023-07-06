@@ -58,7 +58,6 @@ enum LectureSortType: String, CaseIterable {
     func sort(_ lectures: [Lecture]) -> [Lecture] {
         switch self {
         case .default:
-            
 #if SP
             return LectureSortType.dateOldestFirst.sort(lectures)
 #elseif BVKS

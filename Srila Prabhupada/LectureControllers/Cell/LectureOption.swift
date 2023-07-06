@@ -32,6 +32,8 @@ enum LectureOption: String, CaseIterable {
 
     case share                  =   "Share"
 
+    case info                  =   "Info"
+
     var image: UIImage? {
         switch self {
         case .download, .resumeDownload:
@@ -54,6 +56,8 @@ enum LectureOption: String, CaseIterable {
             return UIImage(compatibleSystemName: "arrow.clockwise")
         case .share:
             return UIImage(compatibleSystemName: "square.and.arrow.up.fill")
+        case .info:
+            return UIImage(compatibleSystemName: "info.circle")
         }
     }
 }

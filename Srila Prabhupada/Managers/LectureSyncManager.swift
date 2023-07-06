@@ -61,7 +61,7 @@ class LectureSyncManager {
 
         // We always get lecture info from default source
         DefaultLectureViewModel.defaultModel.getUsersLectureInfo(source: .default, progress: { lectureProgress in
-            progress?(lectureProgress/2.0)
+            progress?(lectureProgress)
         }, completion: { [self] result in
             self.loadLectures(newTimestamp: newTimestamp, firestoreSource: firestoreSource, progress: progress, completion: completion)
         })
@@ -70,7 +70,7 @@ class LectureSyncManager {
     private func loadLectures(newTimestamp: Date, firestoreSource: FirestoreSource, progress: ((_ progress: CGFloat) -> Void)?, completion: @escaping ((_ lectures: [Lecture]) -> Void)) {
 
         DefaultLectureViewModel.defaultModel.getLectures(searchText: nil, sortType: .default, filter: [:], lectureIDs: nil, source: firestoreSource, progress: { lectureProgress in
-            progress?(0.5 + lectureProgress/2.0)
+            progress?(lectureProgress)
         }, completion: { [self] result in
             switch result {
             case .success(let lectures):

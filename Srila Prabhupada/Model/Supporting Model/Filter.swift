@@ -14,6 +14,7 @@ enum Filter: String, CaseIterable {
     case place = "Place"
     case years = "Years"
     case month = "Month"
+    case Length = "Length"
     case categories = "Categories"
     case translation = "Translation"
 
@@ -70,6 +71,9 @@ enum Filter: String, CaseIterable {
         case .translation:
             let subTypesSet = Set(selectedSubtypes)
             return lectures.filter { !subTypesSet.isDisjoint(with: $0.language.translations) }
+        case .Length:
+            let subTypesSet = Set(selectedSubtypes)
+            return lectures.filter { !subTypesSet.isDisjoint(with: $0.lengthType) }
         }
     }
 
@@ -149,6 +153,15 @@ enum Filter: String, CaseIterable {
                     categories.formUnion(lecture.category)
                 }
                 UserDefaults.standard.set(categories.sorted(), forKey: Filter.categories.rawValue)
+            }
+
+            do {
+                var lengths: Set<String> = []
+
+                for lecture in lectures where !lecture.lengthType.isEmpty {
+                    lengths.formUnion(lecture.lengthType)
+                }
+                UserDefaults.standard.set(lengths.sorted(), forKey: Filter.Length.rawValue)
             }
 
             do {

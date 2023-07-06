@@ -1,61 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="9Op-zQ-M3x">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
-        <scene sceneID="bQO-MP-dXd">
+        <scene sceneID="BRh-sd-8Iq">
             <objects>
-                <viewController id="9Op-zQ-M3x" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="k2k-6V-ZKh">
+                <viewController storyboardIdentifier="LoadingViewController" id="GWA-vf-cU9" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="U6i-0s-jwv">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="NJq-eT-zZU">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_1024_corner" translatesAutoresizingMaskIntoConstraints="NO" id="MJV-Y0-fX3">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                            </imageView>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fKD-Sb-TmW">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="c5S-bb-8K7">
+                                    <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                </view>
+                                <blurEffect style="light"/>
+                            </visualEffectView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="BLs-Jr-ENb">
                                 <rect key="frame" x="70.666666666666671" y="282.66666666666663" width="251.66666666666663" height="286.66666666666663"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_1024_corner" translatesAutoresizingMaskIntoConstraints="NO" id="mMD-uD-Ezb">
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_1024_corner" translatesAutoresizingMaskIntoConstraints="NO" id="EGb-2z-5Ix">
                                         <rect key="frame" x="26" y="0.0" width="200" height="200"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="200" id="PtS-jM-pgi">
+                                            <constraint firstAttribute="width" constant="200" id="6JX-rb-EHd">
                                                 <variation key="heightClass=compact" constant="100"/>
+                                                <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact" constant="250"/>
                                             </constraint>
-                                            <constraint firstAttribute="width" secondItem="mMD-uD-Ezb" secondAttribute="height" multiplier="1:1" id="SB7-Pb-hYt"/>
+                                            <constraint firstAttribute="width" secondItem="EGb-2z-5Ix" secondAttribute="height" multiplier="1:1" id="KAE-60-Rlt"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bhakti Vikasa Swami" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="b13-Mi-uYJ">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bhakti Vikasa Swami" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Qe-j5-MgZ">
                                         <rect key="frame" x="0.0" y="239.99999999999991" width="251.66666666666666" height="46.666666666666657"/>
                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="34"/>
-                                        <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="textColor" name="000000"/>
                                         <nil key="highlightedColor"/>
                                         <variation key="userInterfaceIdiom=mac">
-                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="40"/>
+                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="40"/>
                                         </variation>
                                     </label>
                                 </subviews>
                             </stackView>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="bz0-PY-QVM"/>
+                        <viewLayoutGuide key="safeArea" id="M8e-Cy-ZrD"/>
                         <color key="backgroundColor" name="ThemeColor"/>
                         <constraints>
-                            <constraint firstItem="NJq-eT-zZU" firstAttribute="centerY" secondItem="k2k-6V-ZKh" secondAttribute="centerY" id="R2w-6X-9px"/>
-                            <constraint firstItem="NJq-eT-zZU" firstAttribute="centerX" secondItem="k2k-6V-ZKh" secondAttribute="centerX" id="viD-My-SCk"/>
+                            <constraint firstAttribute="bottom" secondItem="fKD-Sb-TmW" secondAttribute="bottom" id="0CN-fM-fof"/>
+                            <constraint firstAttribute="trailing" secondItem="fKD-Sb-TmW" secondAttribute="trailing" id="4Pm-gH-61S"/>
+                            <constraint firstItem="BLs-Jr-ENb" firstAttribute="centerX" secondItem="U6i-0s-jwv" secondAttribute="centerX" id="AQ4-v0-o7v"/>
+                            <constraint firstItem="MJV-Y0-fX3" firstAttribute="top" secondItem="fKD-Sb-TmW" secondAttribute="top" id="AyC-8V-Fze"/>
+                            <constraint firstItem="fKD-Sb-TmW" firstAttribute="leading" secondItem="U6i-0s-jwv" secondAttribute="leading" id="Czs-k9-dtM"/>
+                            <constraint firstItem="fKD-Sb-TmW" firstAttribute="top" secondItem="U6i-0s-jwv" secondAttribute="top" id="EfG-ak-c5E"/>
+                            <constraint firstItem="MJV-Y0-fX3" firstAttribute="trailing" secondItem="fKD-Sb-TmW" secondAttribute="trailing" id="Low-ip-gkQ"/>
+                            <constraint firstItem="BLs-Jr-ENb" firstAttribute="centerY" secondItem="U6i-0s-jwv" secondAttribute="centerY" id="XXh-45-94n"/>
+                            <constraint firstItem="MJV-Y0-fX3" firstAttribute="bottom" secondItem="fKD-Sb-TmW" secondAttribute="bottom" id="pCj-FO-vFH"/>
+                            <constraint firstItem="MJV-Y0-fX3" firstAttribute="leading" secondItem="fKD-Sb-TmW" secondAttribute="leading" id="t9L-MC-xfy"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="backgroundImageView" destination="MJV-Y0-fX3" id="CBK-g3-ppm"/>
+                        <outlet property="imageView" destination="EGb-2z-5Ix" id="cKc-V8-0O1"/>
+                        <outlet property="titleLabel" destination="3Qe-j5-MgZ" id="D4E-UD-GQE"/>
+                    </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="IRx-qj-4Pe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7kS-Nw-6FP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="53" y="375"/>
+            <point key="canvasLocation" x="3454" y="60"/>
         </scene>
     </scenes>
     <resources>
         <image name="logo_1024_corner" width="360" height="360"/>
+        <namedColor name="000000">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="ThemeColor">
             <color red="0.97647058823529409" green="0.42745098039215684" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

@@ -10,6 +10,7 @@ import FirebaseFirestore
 
 class LoadingViewController: UIViewController {
 
+    @IBOutlet private var backgroundImageView: UIImageView!
     @IBOutlet private var imageView: UIImageView!
     @IBOutlet private var loadingLabel: UILabel!
     @IBOutlet private var activtiyIndicator: UIActivityIndicatorView!

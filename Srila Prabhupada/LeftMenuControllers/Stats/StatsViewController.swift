@@ -101,7 +101,7 @@ class StatsViewController: UIViewController, ChartViewDelegate {
         setUpChart()
 
         let image = UIImage(systemName: "square.and.arrow.up")
-        let barButton = UIBarButtonItem(image: image, style: UIBarButtonItem.Style.plain, target: self, action: #selector(shareAction))
+        let barButton = UIBarButtonItem(image: image, style: UIBarButtonItem.Style.plain, target: self, action: #selector(shareAction(_:)))
         self.navigationItem.rightBarButtonItem = barButton
     }
 
@@ -111,7 +111,7 @@ class StatsViewController: UIViewController, ChartViewDelegate {
         getAllLectures()
     }
 
-    @objc func shareAction() {
+    @objc func shareAction(_ barButtonItem: UIBarButtonItem) {
         
         let pdf = SimplePDF(
             pageSize: self.scrollView.contentSize,
@@ -128,7 +128,7 @@ class StatsViewController: UIViewController, ChartViewDelegate {
         pdf.addImage(image)
 
         let pdfData = pdf.generatePDFdata()
-        self.openShareActivityControler(data: pdfData)
+        self.openShareActivityControler(data: pdfData, barButtonItem: barButtonItem)
     }
                                               
     @IBAction func choosStartDate(sender: UIDatePicker) {
@@ -565,7 +565,7 @@ extension StatsViewController {
         return image
     }
     
-    private func openShareActivityControler(data: Data){
+    private func openShareActivityControler(data: Data, barButtonItem: UIBarButtonItem) {
         self.loadingIndecator.startAnimating()
         
         self.getDocName(completion: { docName in
@@ -588,7 +588,7 @@ extension StatsViewController {
                 }
                 
                 activitycontroller.excludedActivityTypes = [UIActivity.ActivityType.airDrop]
-                activitycontroller.popoverPresentationController?.sourceView = self.view
+                activitycontroller.popoverPresentationController?.barButtonItem = barButtonItem
                 self.present(activitycontroller, animated: true, completion: nil)
                 
             } catch let error {

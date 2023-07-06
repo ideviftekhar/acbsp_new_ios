@@ -23,6 +23,7 @@ class LectureInfoViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        list.noItemTitle = nil
         refreshUI(animated: false)
     }
 
@@ -65,7 +66,7 @@ extension LectureInfoViewController: IQListViewDelegateDataSource {
 
                 let lengthTypes = lecture.lengthType.filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
                 if !lengthTypes.isEmpty {
-                    userModels.append(.init(title: "Length Type", subtitle: lengthTypes.joined(separator: ", "), axis: .vertical))
+                    userModels.append(.init(title: "Length Type", subtitle: lengthTypes.joined(separator: ", ").capitalized, axis: .vertical))
                 }
 
                 let categories = lecture.category.filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
@@ -95,15 +96,15 @@ extension LectureInfoViewController: IQListViewDelegateDataSource {
                 if !lecture.legacyData.lectureCode.isEmpty {
                     legacyDataModels.append(.init(title: "Lecture Code", subtitle: lecture.legacyData.lectureCode, axis: .vertical))
                 }
-                if !lecture.legacyData.slug.isEmpty {
-                    legacyDataModels.append(.init(title: "Slug", subtitle: lecture.legacyData.slug, axis: .vertical))
-                }
+//                if !lecture.legacyData.slug.isEmpty {
+//                    legacyDataModels.append(.init(title: "Slug", subtitle: lecture.legacyData.slug, axis: .vertical))
+//                }
                 if !lecture.legacyData.verse.isEmpty {
                     legacyDataModels.append(.init(title: "Verse", subtitle: lecture.legacyData.verse, axis: .vertical))
                 }
-                if lecture.legacyData.wpId != 0 {
-                    legacyDataModels.append(.init(title: "WP ID", subtitle: "\(lecture.legacyData.wpId)", axis: .vertical))
-                }
+//                if lecture.legacyData.wpId != 0 {
+//                    legacyDataModels.append(.init(title: "WP ID", subtitle: "\(lecture.legacyData.wpId)", axis: .vertical))
+//                }
 
                 developerModels.append(.init(title: "Lecture ID", subtitle: "\(lecture.id)", axis: .vertical))
                 if let creationTimestamp = lecture.creationTimestamp {

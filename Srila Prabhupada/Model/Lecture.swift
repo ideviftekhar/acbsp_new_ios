@@ -101,11 +101,21 @@ struct Lecture: Hashable, Codable {
         self.thumbnail = (try? container.decode(String.self, forKey: .thumbnail)) ?? ""
         self.title = try container.decode([String].self, forKey: .title)
 
-        let creationTimestamp = try container.decode(String.self, forKey: .creationTimestamp)
-        self.creationTimestamp = DateFormatter.isoDateFormatter.date(from: creationTimestamp)
+        if let value = try? container.decode(Date.self, forKey: .creationTimestamp) {
+            self.creationTimestamp = value
+        } else if let creationTimestamp = try? container.decode(String.self, forKey: .creationTimestamp) {
+            self.creationTimestamp = DateFormatter.isoDateFormatter.date(from: creationTimestamp)
+        } else {
+            self.creationTimestamp = nil
+        }
 
-        let lastModifiedTimestamp = try container.decode(String.self, forKey: .lastModifiedTimestamp)
-        self.lastModifiedTimestamp = DateFormatter.isoDateFormatter.date(from: lastModifiedTimestamp)
+        if let value = try? container.decode(Date.self, forKey: .lastModifiedTimestamp) {
+            self.lastModifiedTimestamp = value
+        } else if let lastModifiedTimestamp = try? container.decode(String.self, forKey: .lastModifiedTimestamp) {
+            self.lastModifiedTimestamp = DateFormatter.isoDateFormatter.date(from: lastModifiedTimestamp)
+        } else {
+            self.lastModifiedTimestamp = nil
+        }
 
         isFavorite = (try? container.decodeIfPresent(Bool.self, forKey: .isFavorite)) ?? false
         lastPlayedPoint = (try? container.decodeIfPresent(Int.self, forKey: .lastPlayedPoint)) ?? 0

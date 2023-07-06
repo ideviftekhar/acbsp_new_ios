@@ -48,7 +48,7 @@ class FilterDetailTableViewCell: UITableViewCell, IQModelableCell {
                 return
             }
             checkView.on = model.isSelected
-            detailTypeLabel.text = model.details
+            detailTypeLabel.text = model.details.capitalized
         }
     }
 

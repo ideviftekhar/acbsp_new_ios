@@ -227,6 +227,8 @@
 		C01B88A02913F5FE00EF0EA0 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01B889F2913F5FE00EF0EA0 /* LoadingViewController.swift */; };
 		C02A4BA82A55C8FB006BF465 /* LectureInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02A4BA72A55C8FB006BF465 /* LectureInfoCell.swift */; };
 		C02A4BA92A55CA83006BF465 /* LectureInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02A4BA72A55C8FB006BF465 /* LectureInfoCell.swift */; };
+		C02A842F2A56BB0D008A21E3 /* IQCircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02A842E2A56BB0D008A21E3 /* IQCircularProgressView.swift */; };
+		C02A84302A56BB0D008A21E3 /* IQCircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02A842E2A56BB0D008A21E3 /* IQCircularProgressView.swift */; };
 		C02C132A2A554ACA008D89DB /* LectureSyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02C13292A554ACA008D89DB /* LectureSyncManager.swift */; };
 		C02C132B2A554ACA008D89DB /* LectureSyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02C13292A554ACA008D89DB /* LectureSyncManager.swift */; };
 		C02C132D2A556497008D89DB /* RefreshButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02C132C2A556497008D89DB /* RefreshButton.swift */; };
@@ -382,6 +384,7 @@
 		C018A99328F421A000C0E002 /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		C01B889F2913F5FE00EF0EA0 /* LoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		C02A4BA72A55C8FB006BF465 /* LectureInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureInfoCell.swift; sourceTree = "<group>"; };
+		C02A842E2A56BB0D008A21E3 /* IQCircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IQCircularProgressView.swift; sourceTree = "<group>"; };
 		C02B4D372A532828004D298B /* BVKS-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "BVKS-Info.plist"; sourceTree = "<group>"; };
 		C02C13292A554ACA008D89DB /* LectureSyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureSyncManager.swift; sourceTree = "<group>"; };
 		C02C132C2A556497008D89DB /* RefreshButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshButton.swift; sourceTree = "<group>"; };
@@ -864,6 +867,7 @@
 				C0DA677C28FD8190003BF8E4 /* SPMenu.swift */,
 				C02C132C2A556497008D89DB /* RefreshButton.swift */,
 				C0034A932A5593F7005ADBBA /* RotableImageView.swift */,
+				C02A842E2A56BB0D008A21E3 /* IQCircularProgressView.swift */,
 			);
 			path = Subclasses;
 			sourceTree = "<group>";
@@ -1338,6 +1342,7 @@
 				6E6900A72A25C4C20086C7DB /* FirestoreManager+SignIn.swift in Sources */,
 				6E6900A82A25C4C20086C7DB /* LectureSortType.swift in Sources */,
 				6E6900A92A25C4C20086C7DB /* AboutViewController.swift in Sources */,
+				C02A842F2A56BB0D008A21E3 /* IQCircularProgressView.swift in Sources */,
 				6E6900AA2A25C4C20086C7DB /* StatsType.swift in Sources */,
 				6E6900AB2A25C4C20086C7DB /* Day.swift in Sources */,
 				6E6900AC2A25C4C20086C7DB /* CopyrightViewController.swift in Sources */,
@@ -1461,6 +1466,7 @@
 				C088178C28DDE69600D3106C /* PlaylistSortType.swift in Sources */,
 				C088178A28DDBC9100D3106C /* FirestoreManager+SignIn.swift in Sources */,
 				C00AB21128D1FD5600A62A2F /* LectureSortType.swift in Sources */,
+				C02A84302A56BB0D008A21E3 /* IQCircularProgressView.swift in Sources */,
 				C00E4E1728CA433A00F1A123 /* AboutViewController.swift in Sources */,
 				C052D8C129125DF40003307B /* StatsType.swift in Sources */,
 				C007D37828E8096D00CFBED0 /* Day.swift in Sources */,

@@ -271,6 +271,11 @@ class LectureCell: UITableViewCell, IQModelableCell {
                     actions.append(share)
                 }
 
+                // share
+                if let info = allActions[.info] {
+                    actions.append(info)
+                }
+
                 self.optionMenu.children = actions
                 self.menuButton?.isHidden = actions.isEmpty || model.isSelectionEnabled
                 self.selectedImageView?.isHidden = !model.isSelectionEnabled
@@ -304,6 +309,7 @@ extension LectureCell {
             } else {
                 controller.modalPresentationStyle = .automatic
             }
+            controller.popoverPresentationController?.sourceView = self
 
             return controller
         }, actionProvider: { _ in
@@ -335,7 +341,7 @@ extension LectureCell {
             })
 
             switch option {
-            case .download, .resumeDownload, .pauseDownload, .markAsFavorite, .addToPlaylist, .markAsHeard, .resetProgress, .share:
+            case .download, .resumeDownload, .pauseDownload, .markAsFavorite, .addToPlaylist, .markAsHeard, .resetProgress, .share, .info:
                 break
             case .deleteFromDownloads, .removeFromPlaylist, .removeFromFavorite:
                 action.action.attributes = .destructive

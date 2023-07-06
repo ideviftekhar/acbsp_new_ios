@@ -515,7 +515,7 @@ extension LectureViewController {
                     Haptic.softImpact()
                     let eligibleResetProgressModels: [Model] = selectedModels.filter { $0.playProgress >= 1.0 }
                     resetProgress(lectures: eligibleResetProgressModels, sourceView: moreButton)
-                case .share:
+                case .share, .info:
                     break
                }
 
@@ -523,7 +523,7 @@ extension LectureViewController {
             })
 
             switch option {
-            case .download, .resumeDownload, .pauseDownload, .markAsFavorite, .addToPlaylist, .markAsHeard, .resetProgress, .share:
+            case .download, .resumeDownload, .pauseDownload, .markAsFavorite, .addToPlaylist, .markAsHeard, .resetProgress, .share, .info:
                 break
             case .deleteFromDownloads, .removeFromPlaylist, .removeFromFavorite:
                 action.action.attributes = .destructive
@@ -571,6 +571,7 @@ extension LectureViewController: LectureCellDelegate {
                 return
             }
             playlistController.lecturesToAdd = [lecture]
+            playlistController.popoverPresentationController?.sourceView = cell
             self.present(navigationController, animated: true, completion: nil)
 
         case .removeFromPlaylist:
@@ -648,6 +649,17 @@ extension LectureViewController: LectureCellDelegate {
                 shareController.popoverPresentationController?.sourceView = cell
                 self.present(shareController, animated: true)
             })
+        case .info:
+            let controller = UIStoryboard.common.instantiate(LectureInfoViewController.self)
+            controller.lecture = lecture
+
+            if UIDevice.current.userInterfaceIdiom == .pad {
+                controller.modalPresentationStyle = .formSheet
+            } else {
+                controller.modalPresentationStyle = .automatic
+            }
+            controller.popoverPresentationController?.sourceView = cell
+            self.present(controller, animated: true)
         }
     }
 }
