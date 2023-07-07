@@ -230,30 +230,6 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
                         }
                     }
 
-//                    do {
-//                        let incomingIDs: Set<Int> = Set(success.map({ $0.id }))
-//
-//                        var leftoverIDs = incomingIDs
-//
-//                        let total: CGFloat = CGFloat(success.count)
-//                        var iteration: CGFloat = 0
-//                        results = success.reduce([]) { result, lecture in
-//                            iteration += 1
-//                            if let progress = progress {
-//                                DispatchQueue.main.async {
-//                                    progress(iteration/total)
-//                                }
-//                            }
-//                            let lectureID = lecture.id
-//                            guard leftoverIDs.contains(where: { $0 == lectureID }) else {
-//                                return result
-//                            }
-//
-//                            leftoverIDs.remove(lectureID)
-//                            return result + [lecture]
-//                        }
-//                    }
-
                     let endDate = Date()
                     print("Took \(endDate.timeIntervalSince1970-startDate.timeIntervalSince1970) seconds to remove \(success.count - results.count) duplicate lecture(s)")
 

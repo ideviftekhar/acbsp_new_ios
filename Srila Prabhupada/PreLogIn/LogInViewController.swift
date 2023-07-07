@@ -54,6 +54,8 @@ class LogInViewController: UIViewController {
         #if targetEnvironment(simulator)
         emailTextField.text = "hack.iftekhar@gmail.com"
         passwordTextField.text = "123456"
+        emailLoginViewModel.username = "hack.iftekhar@gmail.com"
+        emailLoginViewModel.password = "123456"
         #endif
 
         emailTextField.addTarget(self, action: #selector(textFieldDidChanged(_:)), for: .editingChanged)

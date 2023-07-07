@@ -1588,7 +1588,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Configurations/BVKS/BVKS.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1631,7 +1631,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Configurations/BVKS/BVKS.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 16;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1730,7 +1730,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Configurations/ShrilaPrabhupada/Srila Prabhupada.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 41;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/Info.plist";
@@ -1834,7 +1834,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Configurations/ShrilaPrabhupada/Srila Prabhupada.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development: Himanshu Akhria (35554LNBHY)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 40;
+				CURRENT_PROJECT_VERSION = 41;
 				DEVELOPMENT_TEAM = 35554LNBHY;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = S92372RU6B;
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = S92372RU6B;

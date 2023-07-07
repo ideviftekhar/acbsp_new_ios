@@ -180,13 +180,20 @@ class LectureViewController: SearchViewController {
                     }
                 }
 
+                var removedIndexes: [Int] = []
                 for removedID in removedIDs {
                     if let index = lectureIDHashTable[removedID] {
-                        newModels.remove(at: index)
+                        removedIndexes.append(index)
                     }
                 }
 
-                newModels.append(contentsOf: addedLectures)
+                if !removedIndexes.isEmpty {
+                    let indices: IndexSet = IndexSet(removedIndexes)
+
+                    newModels.remove(atOffsets: indices)
+                }
+
+                newModels.insert(contentsOf: addedLectures, at: 0)
 
                 DispatchQueue.main.async {
                     self.models = newModels
@@ -899,8 +906,14 @@ extension LectureViewController: IQListViewDelegateDataSource {
                 let section = IQSection(identifier: "Cell", headerSize: CGSize.zero, footerSize: CGSize.zero)
                 list.append([section])
 
+                let selecteIDHashTable: [Int: Int] = selectedModels.enumerated().reduce(into: [Int: Int]()) { result, lecture in
+                    if result[lecture.element.id] == nil {
+                        result[lecture.element.id] = lecture.offset
+                    }
+                }
+
                 let newModels: [Cell.Model] = models.map { modelLecture in
-                    let isSelected: Bool = selectedModels.contains(where: { modelLecture.id == $0.id })
+                    let isSelected: Bool = selecteIDHashTable[modelLecture.id] != nil
 
                     var showPlaylistIcon: Bool = false
                     if let selectedPlaylist = selectedPlaylist {
