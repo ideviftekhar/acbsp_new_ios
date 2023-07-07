@@ -179,6 +179,8 @@
 		C00AB21B28D2080800A62A2F /* LectureCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00AB21928D2080800A62A2F /* LectureCell.swift */; };
 		C00AB21C28D2080800A62A2F /* LectureCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C00AB21A28D2080800A62A2F /* LectureCell.xib */; };
 		C00AB22028D2137C00A62A2F /* Time.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00AB21F28D2137C00A62A2F /* Time.swift */; };
+		C00C95CD2A58532500951AFA /* RecentPlayID.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00C95CC2A58532500951AFA /* RecentPlayID.swift */; };
+		C00C95CE2A58532500951AFA /* RecentPlayID.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00C95CC2A58532500951AFA /* RecentPlayID.swift */; };
 		C00DC56F28E1DA66001EDE95 /* Persistant.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00DC56928E1DA65001EDE95 /* Persistant.swift */; };
 		C00DC57028E1DA66001EDE95 /* SrilaDatabase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C00DC56A28E1DA65001EDE95 /* SrilaDatabase.xcdatamodeld */; };
 		C00DC57128E1DA66001EDE95 /* DBLecture+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00DC56C28E1DA65001EDE95 /* DBLecture+CoreDataClass.swift */; };
@@ -346,6 +348,7 @@
 		C00AB21928D2080800A62A2F /* LectureCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureCell.swift; sourceTree = "<group>"; };
 		C00AB21A28D2080800A62A2F /* LectureCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LectureCell.xib; sourceTree = "<group>"; };
 		C00AB21F28D2137C00A62A2F /* Time.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Time.swift; sourceTree = "<group>"; };
+		C00C95CC2A58532500951AFA /* RecentPlayID.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentPlayID.swift; sourceTree = "<group>"; };
 		C00DC56928E1DA65001EDE95 /* Persistant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistant.swift; sourceTree = "<group>"; };
 		C00DC56B28E1DA65001EDE95 /* Model.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model.xcdatamodel; sourceTree = "<group>"; };
 		C00DC56C28E1DA65001EDE95 /* DBLecture+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "DBLecture+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -577,6 +580,7 @@
 				C0B7990028DC3FF700681649 /* TopLectures.swift */,
 				6E67687F2A24BBAB000E0509 /* LastSyncTimestamp.swift */,
 				6E6AED122A3DC62F009BB06D /* UserSettings.swift */,
+				C00C95CC2A58532500951AFA /* RecentPlayID.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1363,6 +1367,7 @@
 				6E6900A12A25C4C20086C7DB /* FilterViewController.swift in Sources */,
 				6E6900A22A25C4C20086C7DB /* Environment.swift in Sources */,
 				6E6900A32A25C4C20086C7DB /* UIColor+Extension.swift in Sources */,
+				C00C95CE2A58532500951AFA /* RecentPlayID.swift in Sources */,
 				6E6900A42A25C4C20086C7DB /* FirestoreCollection.swift in Sources */,
 				6E6900A52A25C4C20086C7DB /* SideMenuCell.swift in Sources */,
 				6E6900A62A25C4C20086C7DB /* PlaylistSortType.swift in Sources */,
@@ -1493,6 +1498,7 @@
 				C018A99428F421A000C0E002 /* Int+Extension.swift in Sources */,
 				C00AB20428D1E6DD00A62A2F /* FilterViewController.swift in Sources */,
 				C0D76E2528CF7C9B00F69320 /* Environment.swift in Sources */,
+				C00C95CD2A58532500951AFA /* RecentPlayID.swift in Sources */,
 				C0DA677928FD7883003BF8E4 /* UIColor+Extension.swift in Sources */,
 				C03E3F2628DCC20A00B987DD /* FirestoreCollection.swift in Sources */,
 				C0CE0D1828E870DB00C2C825 /* SideMenuCell.swift in Sources */,

@@ -139,45 +139,54 @@ class LectureViewController: SearchViewController {
         guard isFirstTimeLoaded else {
             return
         }
-        if let lectures: [Model] = notification.object as? [Model] {
+        if let lectures: [Lecture] = notification.object as? [Lecture] {
 
             serialListKitQueue.async { [self] in
                 var newModels = self.models
+
+                let lectureIDHashTable: [Int: Int] = newModels.enumerated().reduce(into: [Int: Int]()) { result, lecture in
+                    result[lecture.element.id] = lecture.offset
+                }
+
+                var removedIDs: [Int] = []
+                var addedLectures: [Lecture] = []
+
                 for lecture in lectures {
 
                     if self is DownloadViewController { // If download controller, then we also need to remove or add it in UI
                         if lecture.downloadState == .notDownloaded {
-                            newModels.removeAll(where: { $0.id == lecture.id })
+                            removedIDs.append(lecture.id)
                         } else {
-                            let lectureIndexes = newModels.allIndex(where: { $0.id == lecture.id })
-                            if !lectureIndexes.isEmpty {
-                                for index in lectureIndexes {
-                                    newModels[index] = lecture
-                                }
+                            if let index = lectureIDHashTable[lecture.id] {
+                                newModels[index] = lecture
                             } else {
-                                newModels.insert(lecture, at: 0)
+                                addedLectures.append(lecture)
                             }
                         }
                     } else if self is FavoriteViewController {    // If favorites controller, then we also need to remove or add it in UI
                         if lecture.isFavorite {
-                            let lectureIndexes = newModels.allIndex(where: { $0.id == lecture.id })
-                            if !lectureIndexes.isEmpty {
-                                for index in lectureIndexes {
-                                    newModels[index] = lecture
-                                }
+                            if let index = lectureIDHashTable[lecture.id] {
+                                newModels[index] = lecture
                             } else {
-                                newModels.insert(lecture, at: 0)
+                                addedLectures.append(lecture)
                             }
                         } else {
-                            newModels.removeAll(where: { $0.id == lecture.id })
+                            removedIDs.append(lecture.id)
                         }
                     } else {
-                        let lectureIndexes = newModels.allIndex(where: { $0.id == lecture.id })
-                        for index in lectureIndexes {
+                        if let index = lectureIDHashTable[lecture.id] {
                             newModels[index] = lecture
                         }
                     }
                 }
+
+                for removedID in removedIDs {
+                    if let index = lectureIDHashTable[removedID] {
+                        newModels.remove(at: index)
+                    }
+                }
+
+                newModels.append(contentsOf: addedLectures)
 
                 DispatchQueue.main.async {
                     self.models = newModels
@@ -770,9 +779,9 @@ extension LectureViewController {
                 switch result {
                 case .success(let success):
 
-                    playlistLectureController.playlist.lectureIds = success
+                    playlistLectureController.playlist = success
 
-                    let existing: [Model] = self.models.filter { success.contains($0.id) }
+                    let existing: [Model] = self.models.filter { success.lectureIds.contains($0.id) }
                     self.refresh(source: .cache, existing: existing)
 
                     let message: String?

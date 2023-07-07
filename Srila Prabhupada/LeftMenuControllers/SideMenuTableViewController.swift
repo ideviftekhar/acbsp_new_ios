@@ -179,7 +179,16 @@ extension SideMenuViewController {
 
         switch tabBarController.lectureSyncManager.syncStatus {
         case .none:
+
+            #if targetEnvironment(simulator)
+            self.showAlert(title: nil, message: nil, preferredStyle: .actionSheet, sourceView: sender, cancel: (title: "Cancel", handler: nil), buttons: [(title: "Forcefully Sync", handler: {
+                tabBarController.startSyncing(force: true)
+            }), (title: "Optimized Sync", handler: {
+                tabBarController.startSyncing(force: false)
+            })])
+            #else
             tabBarController.startSyncing(force: false)
+            #endif
         case .syncing:
             break
         }

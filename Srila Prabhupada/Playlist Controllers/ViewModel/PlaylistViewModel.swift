@@ -19,8 +19,8 @@ protocol PlaylistViewModel: AnyObject {
     func getPrivatePlaylist(searchText: String?, sortType: PlaylistSortType, completion: @escaping (Swift.Result<[Playlist], Error>) -> Void)
     func getPublicPlaylist(searchText: String?, sortType: PlaylistSortType, userEmail: String?, completion: @escaping (Swift.Result<[Playlist], Error>) -> Void)
 
-    func add(lectures: [Lecture], to playlist: Playlist, completion: @escaping (Swift.Result<[Int], Error>) -> Void)
-    func remove(lectures: [Lecture], from playlist: Playlist, completion: @escaping (Swift.Result<[Int], Error>) -> Void)
+    func add(lectures: [Lecture], to playlist: Playlist, completion: @escaping (Swift.Result<Playlist, Error>) -> Void)
+    func remove(lectures: [Lecture], from playlist: Playlist, completion: @escaping (Swift.Result<Playlist, Error>) -> Void)
     func delete(playlist: Playlist, completion: @escaping (Swift.Result<Bool, Error>) -> Void)
 }
 
@@ -66,15 +66,7 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
             data["docPath"] = newDocument.path
             data["listID"] = newDocument.documentID
 
-            newDocument.setData(data, completion: { error in
-                mainThreadSafe {
-                    if let error = error {
-                        completion(.failure(error))
-                    } else {
-                        FirestoreManager.shared.getDocument(documentReference: newDocument, source: .default, completion: completion)
-                    }
-                }
-            })
+            newDocument.updateDocument(documentData: data, completion: completion)
 
         case .public:
             let publicPlaylistsPath = FirestoreCollection.publicPlaylists.path
@@ -86,15 +78,7 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
             data["docPath"] = newDocument.path
             data["listID"] = newDocument.documentID
 
-            newDocument.setData(data, completion: { error in
-                mainThreadSafe {
-                    if let error = error {
-                        completion(.failure(error))
-                    } else {
-                        FirestoreManager.shared.getDocument(documentReference: newDocument, source: .default, completion: completion)
-                    }
-                }
-            })
+            newDocument.updateDocument(documentData: data, completion: completion)
         case .unknown:
             break
         }
@@ -126,30 +110,14 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
             let collectionReference: FirebaseFirestore.CollectionReference = FirestoreManager.shared.firestore.collection(privatePlaylistsPath).document(uid).collection(email)
             let existingDocument = collectionReference.document(playlist.listID)
 
-            existingDocument.setData(data, merge: true, completion: { error in
-                mainThreadSafe {
-                    if let error = error {
-                        completion(.failure(error))
-                    } else {
-                        FirestoreManager.shared.getDocument(documentReference: existingDocument, source: .default, completion: completion)
-                    }
-                }
-            })
+            existingDocument.updateDocument(documentData: data, completion: completion)
 
         case .public:
             let publicPlaylistsPath = FirestoreCollection.publicPlaylists.path
             let collectionReference: FirebaseFirestore.CollectionReference = FirestoreManager.shared.firestore.collection(publicPlaylistsPath)
             let existingDocument = collectionReference.document(playlist.listID)
 
-            existingDocument.setData(data, merge: true, completion: { error in
-                mainThreadSafe {
-                    if let error = error {
-                        completion(.failure(error))
-                    } else {
-                        FirestoreManager.shared.getDocument(documentReference: existingDocument, source: .default, completion: completion)
-                    }
-                }
-            })
+            existingDocument.updateDocument(documentData: data, completion: completion)
         case .unknown:
             break
        }
@@ -214,7 +182,7 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
         })
     }
 
-    func add(lectures: [Lecture], to playlist: Playlist, completion: @escaping (Swift.Result<[Int], Error>) -> Void) {
+    func add(lectures: [Lecture], to playlist: Playlist, completion: @escaping (Swift.Result<Playlist, Error>) -> Void) {
         switch playlist.listType {
         case .private:
             guard FirestoreManager.shared.currentUser != nil,
@@ -250,17 +218,11 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
                     data["lectureCount"] = lectureIds.count
                     data["lastUpdate"] = currentTimestamp
 
-                    document.reference.setData(data, merge: true, completion: { error in
-                        mainThreadSafe {
-                            if let error = error {
-                                completion(.failure(error))
-                            } else {
-                                completion(.success(lectureIds))
-                            }
-                        }
-                    })
+                    document.reference.updateDocument(documentData: data, completion: completion)
                 case .failure(let error):
-                    completion(.failure(error))
+                    mainThreadSafe {
+                        completion(.failure(error))
+                    }
                 }
             })
 
@@ -287,15 +249,7 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
                     data["lectureCount"] = lectureIds.count
                     data["lastUpdate"] = currentTimestamp
 
-                    documentReference.setData(data, merge: true, completion: { error in
-                        mainThreadSafe {
-                            if let error = error {
-                                completion(.failure(error))
-                            } else {
-                                completion(.success(lectureIds))
-                            }
-                        }
-                    })
+                    documentReference.updateDocument(documentData: data, completion: completion)
                 case .failure(let error):
                     completion(.failure(error))
                 }
@@ -305,7 +259,7 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
         }
     }
 
-    func remove(lectures: [Lecture], from playlist: Playlist, completion: @escaping (Swift.Result<[Int], Error>) -> Void) {
+    func remove(lectures: [Lecture], from playlist: Playlist, completion: @escaping (Swift.Result<Playlist, Error>) -> Void) {
         switch playlist.listType {
         case .private:
             guard FirestoreManager.shared.currentUser != nil,
@@ -339,17 +293,11 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
                     data["lectureCount"] = lectureIds.count
                     data["lastUpdate"] = currentTimestamp
 
-                    document.reference.setData(data, merge: true, completion: { error in
-                        mainThreadSafe {
-                            if let error = error {
-                                completion(.failure(error))
-                            } else {
-                                completion(.success(lectureIds))
-                            }
-                        }
-                    })
+                    document.reference.updateDocument(documentData: data, completion: completion)
                 case .failure(let error):
-                    completion(.failure(error))
+                    mainThreadSafe {
+                        completion(.failure(error))
+                    }
                 }
             })
 
@@ -374,15 +322,7 @@ class DefaultPlaylistViewModel: NSObject, PlaylistViewModel {
                     data["lectureCount"] = lectureIds.count
                     data["lastUpdate"] = currentTimestamp
 
-                    documentReference.setData(data, merge: true, completion: { error in
-                        mainThreadSafe {
-                            if let error = error {
-                                completion(.failure(error))
-                            } else {
-                                completion(.success(lectureIds))
-                            }
-                        }
-                    })
+                    documentReference.updateDocument(documentData: data, completion: completion)
                 case .failure(let error):
                     completion(.failure(error))
                 }

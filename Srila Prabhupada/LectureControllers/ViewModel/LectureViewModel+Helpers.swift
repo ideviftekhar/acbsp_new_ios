@@ -53,33 +53,59 @@ extension DefaultLectureViewModel {
     static func refreshLectureWithLectureInfo(lectures: [Lecture], lectureInfos: [LectureInfo], downloadedLectures: [DBLecture], progress: ((_ progress: CGFloat) -> Void)?) -> [Lecture] {
 
         let total: CGFloat = CGFloat(lectures.count)
-        var iteration: CGFloat = 0
+
+        let startDate = Date()
 
         var updatedLectures: [Lecture] = []
-        for var lecture in lectures {
-            if let lectureInfo = lectureInfos.first(where: { $0.id == lecture.id }) {
-                lecture.isFavorite = lectureInfo.isFavorite
-                if lectureInfo.lastPlayedPoint == -1 {
-                    lecture.lastPlayedPoint = lecture.length
-                } else {
-                    lecture.lastPlayedPoint = lectureInfo.lastPlayedPoint
+
+        do {
+            var lectureInfoIDHashTable: [Int: Int] = lectureInfos.enumerated().reduce(into: [Int: Int]()) { result, lecture in
+                if result[lecture.element.id] == nil {
+                    result[lecture.element.id] = lecture.offset
                 }
             }
 
-            if let downloadedLecture = downloadedLectures.first(where: { $0.id == lecture.id }) {
-                lecture.downloadState = downloadedLecture.downloadStateEnum
-                lecture.downloadError = downloadedLecture.downloadError
+            var downloadedLectureIDHashTable: [Int: Int] = downloadedLectures.enumerated().reduce(into: [Int: Int]()) { result, lecture in
+                if result[lecture.element.id] == nil {
+                    result[lecture.element.id] = lecture.offset
+                }
             }
 
-            updatedLectures.append(lecture)
-
-            iteration += 1
-            if let progress = progress {
-                DispatchQueue.main.async {
-                    progress(iteration/total)
+            lectures.enumerated().forEach { obj in
+                if let progress = progress {
+                    DispatchQueue.main.async {
+                        progress(CGFloat(obj.offset+1)/total)
+                    }
                 }
+
+                var lecture: Lecture = obj.element
+
+                if let index = lectureInfoIDHashTable[lecture.id] {
+                    let lectureInfo = lectureInfos[index]
+                    lectureInfoIDHashTable[lecture.id] = nil
+
+                    lecture.isFavorite = lectureInfo.isFavorite
+                    if lectureInfo.lastPlayedPoint == -1 {
+                        lecture.lastPlayedPoint = lecture.length
+                    } else {
+                        lecture.lastPlayedPoint = lectureInfo.lastPlayedPoint
+                    }
+                }
+
+                if let index = downloadedLectureIDHashTable[lecture.id] {
+                    let downloadedLecture = downloadedLectures[index]
+                    downloadedLectureIDHashTable[lecture.id] = nil
+
+                    lecture.downloadState = downloadedLecture.downloadStateEnum
+                    lecture.downloadError = downloadedLecture.downloadError
+                }
+
+                updatedLectures.append(lecture)
             }
         }
+
+        let endDate = Date()
+        print("Took \(endDate.timeIntervalSince1970-startDate.timeIntervalSince1970) seconds to merge \(lectures.count) lectures with \(lectureInfos.count) lectureInfos")
 
         return updatedLectures
     }

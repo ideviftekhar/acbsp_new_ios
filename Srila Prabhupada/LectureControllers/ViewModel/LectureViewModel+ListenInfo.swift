@@ -102,17 +102,11 @@ extension DefaultLectureViewModel {
                     data["listenDetails"] = listenDetails
                 }
 
-                success.reference.setData(data, merge: true, completion: { error in
-                    mainThreadSafe {
-                        if let error = error {
-                            completion(.failure(error))
-                        } else {
-                            FirestoreManager.shared.getDocument(documentReference: documentReference, source: .default, completion: completion)
-                        }
-                    }
-                })
+                success.reference.updateDocument(documentData: data, completion: completion)
             case .failure(let error):
-                completion(.failure(error))
+                mainThreadSafe {
+                    completion(.failure(error))
+                }
             }
         })
     }

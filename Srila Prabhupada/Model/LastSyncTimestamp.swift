@@ -7,18 +7,14 @@
 
 import Foundation
 
-enum LastSyncTimestampKeys: CodingKey {
-    case message, source, status, timestamp
-}
-
-struct LastSyncTimestamp: Hashable, Decodable {
+struct LastSyncTimestamp: Hashable, Codable {
     let message: String?
     let source: String?
     let status: String?
     var timestamp: Date
     
     init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: LastSyncTimestampKeys.self)
+        let values = try decoder.container(keyedBy: CodingKeys.self)
         message = try values.decode(String.self, forKey: .message)
         source = try values.decode(String.self, forKey: .source)
         status = try values.decode(String.self, forKey: .status)

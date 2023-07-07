@@ -10,7 +10,7 @@ import FirebaseFirestore
 
 extension DefaultLectureViewModel {
 
-    func getRecentlyPlayedLectureIDs(source: FirestoreSource, completion: @escaping (Swift.Result<[Int], Error>) -> Void) {
+    func getRecentlyPlayedLectureIDs(source: FirestoreSource, completion: @escaping (Swift.Result<RecentPlayID, Error>) -> Void) {
 
         guard FirestoreManager.shared.currentUser != nil,
               let uid = FirestoreManager.shared.currentUserUID else {
@@ -25,19 +25,10 @@ extension DefaultLectureViewModel {
 
         let documentReference = collectionReference.document(uid)
 
-        FirestoreManager.shared.getRawDocument(documentReference: documentReference, source: .server, completion: { result in
-            switch result {
-            case .success(let success):
-
-                let lectureIDs: [Int] = (success.data()?["recentPlayIDs"] as? [Int]) ?? []
-                completion(.success(lectureIDs))
-            case .failure(let error):
-                completion(.failure(error))
-            }
-        })
+        FirestoreManager.shared.getDocument(documentReference: documentReference, source: .server, completion: completion)
     }
 
-    func addToRecentlyPlayed(lecture: Lecture, completion: @escaping (Swift.Result<[Int], Error>) -> Void) {
+    func addToRecentlyPlayed(lecture: Lecture, completion: @escaping (Swift.Result<RecentPlayID, Error>) -> Void) {
 
         guard FirestoreManager.shared.currentUser != nil,
                 let uid = FirestoreManager.shared.currentUserUID else {
@@ -64,22 +55,16 @@ extension DefaultLectureViewModel {
                     data["recentPlayIDs"] = FieldValue.arrayUnion([lecture.id])
                 }
 
-                success.reference.setData(data, merge: true, completion: { error in
-                    mainThreadSafe {
-                        if let error = error {
-                            completion(.failure(error))
-                        } else {
-                            FirestoreManager.shared.getDocument(documentReference: documentReference, source: .default, completion: completion)
-                        }
-                    }
-                })
+                success.reference.updateDocument(documentData: data, completion: completion)
             case .failure(let error):
-                completion(.failure(error))
+                mainThreadSafe {
+                    completion(.failure(error))
+                }
             }
         })
     }
 
-    func removeFromRecentlyPlayed(lecture: Lecture, completion: @escaping (Swift.Result<[Int], Error>) -> Void) {
+    func removeFromRecentlyPlayed(lecture: Lecture, completion: @escaping (Swift.Result<RecentPlayID, Error>) -> Void) {
 
         guard FirestoreManager.shared.currentUser != nil,
                 let uid = FirestoreManager.shared.currentUserUID else {
@@ -106,17 +91,11 @@ extension DefaultLectureViewModel {
                     data["recentPlayIDs"] = FieldValue.arrayRemove([lecture.id])
                 }
 
-                success.reference.setData(data, merge: true, completion: { error in
-                    mainThreadSafe {
-                        if let error = error {
-                            completion(.failure(error))
-                        } else {
-                            FirestoreManager.shared.getDocument(documentReference: documentReference, source: .default, completion: completion)
-                        }
-                    }
-                })
+                success.reference.updateDocument(documentData: data, completion: completion)
             case .failure(let error):
-                completion(.failure(error))
+                mainThreadSafe {
+                    completion(.failure(error))
+                }
             }
         })
     }

@@ -51,6 +51,11 @@ class LogInViewController: UIViewController {
             signWithAppleButton.addTarget(self, action: #selector(signWithAppleTapped(_:)), for: .touchUpInside)
         }
 
+        #if targetEnvironment(simulator)
+        emailTextField.text = "hack.iftekhar@gmail.com"
+        passwordTextField.text = "123456"
+        #endif
+
         emailTextField.addTarget(self, action: #selector(textFieldDidChanged(_:)), for: .editingChanged)
         passwordTextField.addTarget(self, action: #selector(textFieldDidChanged(_:)), for: .editingChanged)
     }

@@ -6,8 +6,11 @@
 //
 
 import Foundation
+//import FirebaseFirestoreSwift
 
 struct ListenInfo: Hashable, Codable {
+//    @DocumentID private(set) var id: String?
+
     let audioListen: Int
     let creationTimestamp: Int
     let dateOfRecord: Day

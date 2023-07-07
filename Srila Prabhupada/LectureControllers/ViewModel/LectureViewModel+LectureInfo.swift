@@ -39,12 +39,22 @@ extension DefaultLectureViewModel {
                     serialLectureWorkerQueue.async {
                         if !self.allLectures.isEmpty {
                             self.allLectures = Self.refreshLectureWithLectureInfo(lectures: self.allLectures, lectureInfos: success, downloadedLectures: Persistant.shared.getAllDBLectures(), progress: progress)
-                            self.saveAllLectures(lectures: self.allLectures)
                         }
                         DispatchQueue.main.async {
                             completion(.success(success))
                         }
                     }
+
+                    DispatchQueue.global(qos: .background).async {
+                        let crossReference = Dictionary(grouping: success, by: \.id)
+                        let duplicates = crossReference.filter { $1.count > 1 }
+                        let duplicateIDs: [Int] = duplicates.flatMap { $0.key }.sorted()
+
+                        if !duplicateIDs.isEmpty {
+                            self.removeDuplicateLectureInfo(lectureInfoID: duplicateIDs)
+                        }
+                    }
+
                 case .failure(let error):
                     completion(.failure(error))
                 }
@@ -56,28 +66,23 @@ extension DefaultLectureViewModel {
         // This is to temporarily update the information
         serialLectureWorkerQueue.async { [self] in
             var updatedLectures: [Lecture] = []
-            let lectureIndexes = self.allLectures.allIndex(where: { $0.id == lecture.id })
-            for index in lectureIndexes {
+            var updatedAllLectures = self.allLectures
 
+            if let index = updatedAllLectures.firstIndex(where: { $0.id == lecture.id }) {
                 if lastPlayedPoint == -1 {
-                    self.allLectures[index].lastPlayedPoint = lecture.length
+                    updatedAllLectures[index].lastPlayedPoint = lecture.length
                 } else {
-                    self.allLectures[index].lastPlayedPoint = lastPlayedPoint
+                    updatedAllLectures[index].lastPlayedPoint = lastPlayedPoint
                 }
-
-                updatedLectures.append(self.allLectures[index])
+                updatedLectures.append(updatedAllLectures[index])
+                self.allLectures = updatedAllLectures
             }
 
-            let lectureInfoIndexes = self.userLectureInfo.allIndex(where: { $0.id == lecture.id })
-
-            if !lectureInfoIndexes.isEmpty {
-                for index in lectureInfoIndexes {
-
-                    if lastPlayedPoint == -1 {
-                        self.userLectureInfo[index].lastPlayedPoint = lecture.length
-                    } else {
-                        self.userLectureInfo[index].lastPlayedPoint = lastPlayedPoint
-                    }
+            if let index = self.userLectureInfo.firstIndex(where: { $0.id == lecture.id }) {
+                if lastPlayedPoint == -1 {
+                    self.userLectureInfo[index].lastPlayedPoint = lecture.length
+                } else {
+                    self.userLectureInfo[index].lastPlayedPoint = lastPlayedPoint
                 }
 //            } else {  // Due to the documentID issue, we are skipping this.
 //                let currentTimestamp = Int(Date().timeIntervalSince1970*1000)
@@ -117,6 +122,15 @@ extension DefaultLectureViewModel {
             var permanentUpdatedLectures: [Lecture] = []
             var failedLectures: [Lecture] = []
             var lastError: Error?
+
+            let lectureInfoIDHashTable: [Int: Int] = self.userLectureInfo.enumerated().reduce(into: [Int: Int]()) { result, lecture in
+                result[lecture.element.id] = lecture.offset
+            }
+
+            var updatedAllLectures = self.allLectures
+            let lectureIDHashTable: [Int: Int] = updatedAllLectures.enumerated().reduce(into: [Int: Int]()) { result, lecture in
+                result[lecture.element.id] = lecture.offset
+            }
 
             for lecture in lectures {
                 var data: [String: Any] = [:]
@@ -164,103 +178,127 @@ extension DefaultLectureViewModel {
                     data["lastPlayedPoint"] = lastPlayedPoint ?? 0
                 }
 
-                documentReference.setData(data, merge: true, completion: { error in
-                    if let error = error {
-                        lastError = error
+                documentReference.updateDocument(documentData: data, completion: { (result: (Swift.Result<LectureInfo, Error>)) in
+                    switch result {
+                    case .success(let success):
+                        permanentUpdatedLectures.append(lecture)
+                    case .failure(let failure):
+                        lastError = failure
                         failedLectures.append(lecture)
 
                         self.serialLectureWorkerQueue.async {
                             // Reverting userLectureInfo
-                            let lectureInfoIndexes = self.userLectureInfo.allIndex(where: { $0.id == lecture.id })
-                            if !lectureInfoIndexes.isEmpty {
-                                for index in lectureInfoIndexes {
-                                    self.userLectureInfo[index].isFavorite = lecture.isFavorite
-                                    self.userLectureInfo[index].lastPlayedPoint = lecture.lastPlayedPoint
-                                }
+                            if let index = self.userLectureInfo.firstIndex(where: { $0.id == lecture.id }) {
+                                self.userLectureInfo[index].isFavorite = lecture.isFavorite
+                                self.userLectureInfo[index].lastPlayedPoint = lecture.lastPlayedPoint
                             }
                         }
-                    } else {
-                        permanentUpdatedLectures.append(lecture)
                     }
 
                     // Completed
                     if lectures.count >= (failedLectures.count + permanentUpdatedLectures.count) {
                         if let lastError = lastError as? NSError {
-                            mainThreadSafe {
-                                if lectures.count == 1 {
-                                    completion(.failure(lastError))
-                                } else {
-                                    var descriptions: [String] = []
-                                    if permanentUpdatedLectures.count > 0 {
-                                        descriptions.append("Updated \(permanentUpdatedLectures.count) lecture(s)")
-                                    }
-
-                                    if permanentUpdatedLectures.count > 0 {
-                                        descriptions.append("Unable to update \(permanentUpdatedLectures.count) lecture(s)")
-                                    }
-
-                                    descriptions.append(lastError.localizedDescription)
-
-                                    var userInfo = lastError.userInfo
-                                    userInfo[NSLocalizedDescriptionKey] = descriptions.joined(separator: "\n")
-                                    let error = NSError(domain: lastError.domain, code: lastError.code, userInfo: userInfo)
-                                    completion(.failure(error))
+                            if lectures.count == 1 {
+                                completion(.failure(lastError))
+                            } else {
+                                var descriptions: [String] = []
+                                if permanentUpdatedLectures.count > 0 {
+                                    descriptions.append("Updated \(permanentUpdatedLectures.count) lecture(s)")
                                 }
 
-                                if postUpdate {
-                                    NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: failedLectures)
+                                if permanentUpdatedLectures.count > 0 {
+                                    descriptions.append("Unable to update \(permanentUpdatedLectures.count) lecture(s)")
                                 }
+
+                                descriptions.append(lastError.localizedDescription)
+
+                                var userInfo = lastError.userInfo
+                                userInfo[NSLocalizedDescriptionKey] = descriptions.joined(separator: "\n")
+                                let error = NSError(domain: lastError.domain, code: lastError.code, userInfo: userInfo)
+                                completion(.failure(error))
+                            }
+
+                            if postUpdate {
+                                NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: failedLectures)
                             }
                         } else {
-                            mainThreadSafe {
-                                completion(.success(true))
-                            }
+                            completion(.success(true))
                         }
                     }
                 })
 
                 // This is to temporarily update the information
                 do {
-                    let lectureInfoIndexes = self.userLectureInfo.allIndex(where: { $0.id == lecture.id })
-                    if !lectureInfoIndexes.isEmpty {
-                        for index in lectureInfoIndexes {
-
-                            if let isFavorite = isFavorite {
-                                self.userLectureInfo[index].isFavorite = isFavorite
-                            }
-                            if let lastPlayedPoint = lastPlayedPoint {
-                                self.userLectureInfo[index].lastPlayedPoint = lastPlayedPoint
-                            }
+                    if let index = lectureInfoIDHashTable[lecture.id] {
+                        if let isFavorite = isFavorite {
+                            self.userLectureInfo[index].isFavorite = isFavorite
+                        }
+                        if let lastPlayedPoint = lastPlayedPoint {
+                            self.userLectureInfo[index].lastPlayedPoint = lastPlayedPoint
                         }
                     } else {
                         let newLectureInfo = LectureInfo(id: lecture.id, creationTimestamp: currentTimestamp, isFavorite: isFavorite ?? false, lastPlayedPoint: lastPlayedPoint ?? 0, documentId: documentReference.documentID)
                         self.userLectureInfo.append(newLectureInfo)
                     }
 
-                    let lectureIndexes = self.allLectures.allIndex(where: { $0.id == lecture.id })
-                    for index in lectureIndexes {
+                    if let index = lectureIDHashTable[lecture.id] {
                         var isUpdated: Bool = false
                         if let isFavorite = isFavorite {
-                            self.allLectures[index].isFavorite = isFavorite
+                            updatedAllLectures[index].isFavorite = isFavorite
                             isUpdated = true
                         }
                         if let lastPlayedPoint = lastPlayedPoint {
-                            self.allLectures[index].lastPlayedPoint = lastPlayedPoint
+                            updatedAllLectures[index].lastPlayedPoint = lastPlayedPoint
                             isUpdated = true
                         }
 
                         if isUpdated {
-                            temporaryUpdatedLectures.append(self.allLectures[index])
+                            temporaryUpdatedLectures.append(updatedAllLectures[index])
                         }
                     }
                 }
             }
+
+            self.allLectures = updatedAllLectures
 
             if postUpdate {
                 DispatchQueue.main.async {
                     NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: temporaryUpdatedLectures)
                 }
             }
+        }
+    }
+}
+
+extension DefaultLectureViewModel {
+    internal func removeDuplicateLectureInfo(lectureInfoID: [Int]) {
+
+        guard FirestoreManager.shared.currentUser != nil,
+                let uid = FirestoreManager.shared.currentUserUID else {
+            let error = NSError(domain: "Firebase", code: 0, userInfo: [NSLocalizedDescriptionKey: "User not logged in"])
+            return
+        }
+
+        for lectureID in lectureInfoID {
+            let query: Query = FirestoreManager.shared.firestore.collection(FirestoreCollection.usersLectureInfo(userId: uid).path).whereField("id", isEqualTo: lectureID)
+
+            FirestoreManager.shared.getRawDocuments(query: query, source: .default, completion: { result in
+                switch result {
+                case .success(var success):
+
+                    // It's a duplicate record
+                    if success.count > 1 {
+                        //Keeping the first record
+                        success.remove(at: 0)
+
+                        for snapshot in success {
+                            snapshot.reference.delete()
+                        }
+                    }
+                case .failure(let error):
+                    break
+                }
+            })
         }
     }
 }

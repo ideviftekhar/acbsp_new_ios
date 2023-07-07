@@ -44,9 +44,9 @@ protocol LectureViewModel: AnyObject {
     func getPopularLectureIds(completion: @escaping (Swift.Result<[Int], Error>) -> Void)
     func updateTopLecture(date: Date, lectureID: Int, completion: @escaping (Swift.Result<TopLecture, Error>) -> Void)
 
-    func getRecentlyPlayedLectureIDs(source: FirestoreSource, completion: @escaping (Swift.Result<[Int], Error>) -> Void)
-    func addToRecentlyPlayed(lecture: Lecture, completion: @escaping (Swift.Result<[Int], Error>) -> Void)
-    func removeFromRecentlyPlayed(lecture: Lecture, completion: @escaping (Swift.Result<[Int], Error>) -> Void)
+    func getRecentlyPlayedLectureIDs(source: FirestoreSource, completion: @escaping (Swift.Result<RecentPlayID, Error>) -> Void)
+    func addToRecentlyPlayed(lecture: Lecture, completion: @escaping (Swift.Result<RecentPlayID, Error>) -> Void)
+    func removeFromRecentlyPlayed(lecture: Lecture, completion: @escaping (Swift.Result<RecentPlayID, Error>) -> Void)
     
     func getTimestamp(
         source: FirestoreSource,
@@ -78,11 +78,8 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
         UserDefaults.standard.removeObject(forKey: "\(PlayerViewController.self).playlistLectures")
         UserDefaults.standard.removeObject(forKey: "\(PlayerViewController.self).\(PlayRate.self)")
         UserDefaults.standard.removeObject(forKey: "\(PlayerViewController.self).\(Lecture.self)")
-
-        UserDefaults.standard.removeObject(forKey: "DefaultLectureViewModel.allLectures")
         UserDefaults.standard.synchronize()
 
-        FileUserDefaults.standard.set(nil, for: "DefaultLectureViewModel.allLectures")
         FileUserDefaults.standard.set(nil, for: "\(PlayerViewController.self).playlistLectures")
 
         serialLectureWorkerQueue.async { [self] in
@@ -91,7 +88,17 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
         }
     }
 
-    var allLectures: [Lecture] = []
+    var allLectures: [Lecture] = [] {
+        didSet {
+            let lectures = allLectures
+            parallelLectureWorkerQueue.async {
+                guard let data = try? Self.lectureEncoder.encode(lectures) else {
+                    return
+                }
+                FileUserDefaults.standard.set(data, for: "DefaultLectureViewModel.allLectures")
+            }
+        }
+    }
 
     var userLectureInfo: [LectureInfo] = []
 
@@ -105,14 +112,6 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
 
     private static let lectureEncoder = JSONEncoder()
     private static let lectureDecoder = JSONDecoder()
-    internal func saveAllLectures(lectures: [Lecture]) {
-        parallelLectureWorkerQueue.async {
-            guard let data = try? Self.lectureEncoder.encode(lectures) else {
-                return
-            }
-            FileUserDefaults.standard.set(data, for: "DefaultLectureViewModel.allLectures")
-        }
-    }
 
     func getAllCachedLectures(completion: @escaping ([Lecture]) -> Void) {
         parallelLectureWorkerQueue.async {
@@ -175,12 +174,11 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
                         switch result {
                         case .success(var success):
                             serialLectureWorkerQueue.async {
-                                if !self.userLectureInfo.isEmpty {
+                                if !self.userLectureInfo.isEmpty && self.allLectures.isEmpty {
                                     success = Self.refreshLectureWithLectureInfo(lectures: success, lectureInfos: self.userLectureInfo, downloadedLectures: Persistant.shared.getAllDBLectures(), progress: nil)
                                 }
 
                                 self.allLectures = success
-                                self.saveAllLectures(lectures: success)
                                 Filter.updateFilterSubtypes(lectures: success)
 
                                 success = Self.filter(lectures: success, searchText: searchText, sortType: sortType, filter: filter, lectureIDs: lectureIDs)
@@ -207,30 +205,54 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
                 serialLectureWorkerQueue.async {
 
                     var results = [Lecture]()
-
                     let startDate = Date()
+                    do {
 
-                    let incomingIDs: Set<Int> = Set(success.map({ $0.id }))
-
-                    var leftoverIDs = incomingIDs
-
-                    let total: CGFloat = CGFloat(success.count)
-                    var iteration: CGFloat = 0
-                    results = success.reduce([]) { result, lecture in
-                        iteration += 1
-                        if let progress = progress {
-                            DispatchQueue.main.async {
-                                progress(iteration/total)
+                        var lectureIDHashTable: [Int: Int] = success.enumerated().reduce(into: [Int: Int]()) { result, lecture in
+                            if result[lecture.element.id] == nil {
+                                result[lecture.element.id] = lecture.offset
                             }
                         }
-                        let lectureID = lecture.id
-                        guard leftoverIDs.contains(where: { $0 == lectureID }) else {
-                            return result
-                        }
 
-                        leftoverIDs.remove(lectureID)
-                        return result + [lecture]
+                        let total: CGFloat = CGFloat(success.count)
+
+                        success.enumerated().forEach { obj in
+                            if let progress = progress {
+                                DispatchQueue.main.async {
+                                    progress(CGFloat(obj.offset+1)/total)
+                                }
+                            }
+
+                            if lectureIDHashTable[obj.element.id] != nil {
+                                lectureIDHashTable[obj.element.id] = nil
+                                results.append(obj.element)
+                            }
+                        }
                     }
+
+//                    do {
+//                        let incomingIDs: Set<Int> = Set(success.map({ $0.id }))
+//
+//                        var leftoverIDs = incomingIDs
+//
+//                        let total: CGFloat = CGFloat(success.count)
+//                        var iteration: CGFloat = 0
+//                        results = success.reduce([]) { result, lecture in
+//                            iteration += 1
+//                            if let progress = progress {
+//                                DispatchQueue.main.async {
+//                                    progress(iteration/total)
+//                                }
+//                            }
+//                            let lectureID = lecture.id
+//                            guard leftoverIDs.contains(where: { $0 == lectureID }) else {
+//                                return result
+//                            }
+//
+//                            leftoverIDs.remove(lectureID)
+//                            return result + [lecture]
+//                        }
+//                    }
 
                     let endDate = Date()
                     print("Took \(endDate.timeIntervalSince1970-startDate.timeIntervalSince1970) seconds to remove \(success.count - results.count) duplicate lecture(s)")
@@ -277,9 +299,7 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
         }
 
         let usersSettingsPath = FirestoreCollection.usersSettings(userId: id).path
-        
-        print(usersSettingsPath)
-        
+                
         let documentReference: DocumentReference = FirestoreManager.shared.firestore.collection(usersSettingsPath).document("userSettings")
                 
         FirestoreManager.shared.updateDocument(documentData: documentData, documentReference: documentReference, completion: completion)
@@ -293,15 +313,20 @@ extension DefaultLectureViewModel {
         serialLectureWorkerQueue.async {
             guard let dbLectures = notification.object as? [DBLecture] else { return }
 
+            var updatedAllLectures = self.allLectures
+            let lectureIDHashTable: [Int: Int] = updatedAllLectures.enumerated().reduce(into: [Int: Int]()) { result, lecture in
+                result[lecture.element.id] = lecture.offset
+            }
+
             var updatedLectures: [Lecture] = []
             for dbLecture in dbLectures {
-                let lectureIndexes = self.allLectures.allIndex(where: { $0.id == dbLecture.id })
-                for index in lectureIndexes {
-                    self.allLectures[index].downloadState = dbLecture.downloadStateEnum
-                    self.allLectures[index].downloadError = dbLecture.downloadError
-                    updatedLectures.append(self.allLectures[index])
+                if let index = lectureIDHashTable[dbLecture.id] {
+                    updatedAllLectures[index].downloadState = dbLecture.downloadStateEnum
+                    updatedAllLectures[index].downloadError = dbLecture.downloadError
+                    updatedLectures.append(updatedAllLectures[index])
                 }
             }
+            self.allLectures = updatedAllLectures
 
             if !updatedLectures.isEmpty {
                 mainThreadSafe {
@@ -316,15 +341,20 @@ extension DefaultLectureViewModel {
         serialLectureWorkerQueue.async {
             guard let dbLectures = notification.object as? [DBLecture] else { return }
 
+            var updatedAllLectures = self.allLectures
+            let lectureIDHashTable: [Int: Int] = updatedAllLectures.enumerated().reduce(into: [Int: Int]()) { result, lecture in
+                result[lecture.element.id] = lecture.offset
+            }
+
             var updatedLectures: [Lecture] = []
             for dbLecture in dbLectures {
-                let lectureIndexes = self.allLectures.allIndex(where: { $0.id == dbLecture.id })
-                for index in lectureIndexes {
-                    self.allLectures[index].downloadError = dbLecture.downloadError
-                    self.allLectures[index].downloadState = dbLecture.downloadStateEnum
-                    updatedLectures.append(self.allLectures[index])
+                if let index = lectureIDHashTable[dbLecture.id] {
+                    updatedAllLectures[index].downloadError = dbLecture.downloadError
+                    updatedAllLectures[index].downloadState = dbLecture.downloadStateEnum
+                    updatedLectures.append(updatedAllLectures[index])
                 }
             }
+            self.allLectures = updatedAllLectures
             if !updatedLectures.isEmpty {
                 mainThreadSafe {
                     NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: updatedLectures)
@@ -338,15 +368,20 @@ extension DefaultLectureViewModel {
         serialLectureWorkerQueue.async {
             guard let lectureIDs = notification.object as? [Int] else { return }
 
+            var updatedAllLectures = self.allLectures
+            let lectureIDHashTable: [Int: Int] = updatedAllLectures.enumerated().reduce(into: [Int: Int]()) { result, lecture in
+                result[lecture.element.id] = lecture.offset
+            }
+
             var updatedLectures: [Lecture] = []
             for lectureID in lectureIDs {
-                let lectureIndexes = self.allLectures.allIndex(where: { $0.id ==  lectureID })
-                for index in lectureIndexes {
-                    self.allLectures[index].downloadState = .notDownloaded
-                    self.allLectures[index].downloadError = nil
-                    updatedLectures.append(self.allLectures[index])
+                if let index = lectureIDHashTable[lectureID] {
+                    updatedAllLectures[index].downloadState = .notDownloaded
+                    updatedAllLectures[index].downloadError = nil
+                    updatedLectures.append(updatedAllLectures[index])
                 }
             }
+            self.allLectures = updatedAllLectures
 
             if !updatedLectures.isEmpty {
                 mainThreadSafe {

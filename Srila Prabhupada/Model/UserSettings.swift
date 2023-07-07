@@ -16,14 +16,14 @@ struct UserSettings: Hashable, Codable {
 }
 
 struct NotificationModel: Hashable, Codable {
-    var bengali: Bool?
-    var english: Bool?
-    var hindi: Bool?
+    var bengali: Bool
+    var english: Bool
+    var hindi: Bool
     
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        self.bengali = try container.decodeIfPresent(Bool.self, forKey: .bengali)
-        self.english = try container.decodeIfPresent(Bool.self, forKey: .english)
-        self.hindi = try container.decodeIfPresent(Bool.self, forKey: .hindi)
+        self.bengali = (try container.decodeIfPresent(Bool.self, forKey: .bengali)) ?? true
+        self.english = (try container.decodeIfPresent(Bool.self, forKey: .english)) ?? true
+        self.hindi = (try container.decodeIfPresent(Bool.self, forKey: .hindi)) ?? true
     }
 }

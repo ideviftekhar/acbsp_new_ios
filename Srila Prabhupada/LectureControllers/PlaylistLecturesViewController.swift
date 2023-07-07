@@ -85,10 +85,10 @@ extension PlaylistLecturesViewController: LectureViewControllerDelegate {
                 SKActivityIndicator.dismiss()
 
                 switch result {
-                case .success(let lectureIds):
+                case .success(let success):
                     Haptic.success()
                     self.highlightedLectures = lectures
-                    self.playlist.lectureIds = lectureIds
+                    self.playlist = success
                     self.refresh(source: .cache)
                     controller.dismiss(animated: true, completion: {
 

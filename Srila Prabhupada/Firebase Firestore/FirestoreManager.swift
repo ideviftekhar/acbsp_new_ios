@@ -27,6 +27,8 @@ class FirestoreManager: NSObject {
         Auth.auth().currentUser
     }
 
+    // hack.iftekhar@gmail.com // uid: 6JquqE4j4yPBrtrAhvRyIvCMxN02
+
     #if DEBUG
     private var simulatedUID: String?
     private var simulatedEmail: String?
@@ -91,7 +93,7 @@ class FirestoreManager: NSObject {
         documentReference.spGetRawDocument(source: source, completion: completion)
     }
     
-    func updateDocument(documentData: [String: Any], documentReference: DocumentReference, completion: @escaping ((Swift.Result<Bool, Error>) -> Void)) {
+    func updateDocument<T: Decodable>(documentData: [String: Any], documentReference: DocumentReference, completion: @escaping ((Swift.Result<T, Error>) -> Void)) {
         documentReference.updateDocument(documentData: documentData, completion: completion)
     }
 }
@@ -99,9 +101,9 @@ class FirestoreManager: NSObject {
 extension Query {
 
     fileprivate func spGetRawDocuments(source: FirestoreSource, completion: @escaping ((Swift.Result<[QueryDocumentSnapshot], Error>) -> Void)) {
-        getDocuments(completion: { snapshot, error in
+//        DispatchQueue.global().async {
+            self.getDocuments(completion: { snapshot, error in
 
-            mainThreadSafe {
                 if let error = error {
                     completion(.failure(error))
                 } else if let documents: [QueryDocumentSnapshot] = snapshot?.documents {
@@ -110,8 +112,8 @@ extension Query {
                     let error = NSError(domain: "Firestore Database", code: 0, userInfo: [NSLocalizedDescriptionKey: "Documents are not available"])
                     completion(.failure(error))
                 }
-            }
-        })
+            })
+//        }
     }
 
     fileprivate func spGetDocuments<T: Decodable>(source: FirestoreSource, completion: @escaping ((Swift.Result<[T], Error>) -> Void)) {
@@ -132,7 +134,9 @@ extension Query {
                     }
                 }
             case .failure(let error):
-                completion(.failure(error))
+                mainThreadSafe {
+                    completion(.failure(error))
+                }
             }
         })
     }
@@ -141,9 +145,8 @@ extension Query {
 extension DocumentReference {
 
     fileprivate func spGetRawDocument(source: FirestoreSource, completion: @escaping ((Swift.Result<DocumentSnapshot, Error>) -> Void)) {
-        getDocument(source: source, completion: { snapshot, error in
-
-            mainThreadSafe {
+//        DispatchQueue.global().async {
+            self.getDocument(source: source, completion: { snapshot, error in
                 if let error = error {
                     completion(.failure(error))
                 } else if let document: DocumentSnapshot = snapshot {
@@ -152,8 +155,8 @@ extension DocumentReference {
                     let error = NSError(domain: "Firestore Database", code: 0, userInfo: [NSLocalizedDescriptionKey: "Document is not available"])
                     completion(.failure(error))
                 }
-            }
-        })
+            })
+//        }
     }
 
     fileprivate func spGetDocument<T: Decodable>(source: FirestoreSource, completion: @escaping ((Swift.Result<T, Error>) -> Void)) {
@@ -174,18 +177,24 @@ extension DocumentReference {
                     }
                 }
             case .failure(let error):
-                completion(.failure(error))
+                mainThreadSafe {
+                    completion(.failure(error))
+                }
             }
         })
     }
-    
-    fileprivate func updateDocument(documentData: [String: Any], completion: @escaping ((Swift.Result<Bool, Error>) -> Void)) {
-        setData(documentData, merge: true) { error in
-            if let error = error {
-                completion(.failure(error))
-            } else {
-                completion(.success(true))
-            }
-        }
+
+    func updateDocument<T: Decodable>(documentData: [String: Any], completion: @escaping ((Swift.Result<T, Error>) -> Void)) {
+//        DispatchQueue.global().async {
+            self.setData(documentData, merge: true, completion: { error in
+                if let error = error {
+                    mainThreadSafe {
+                        completion(.failure(error))
+                    }
+                } else {
+                    self.spGetDocument(source: .default, completion: completion)
+                }
+            })
+//        }
     }
 }
