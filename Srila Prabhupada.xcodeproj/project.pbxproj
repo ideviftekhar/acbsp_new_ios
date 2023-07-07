@@ -224,7 +224,19 @@
 		C0118A7C28D34AB400F6002D /* GoogleService-Info-production-client.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0118A7B28D34AB400F6002D /* GoogleService-Info-production-client.plist */; };
 		C017E68C293E24C1005DA700 /* Haptic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C017E68B293E24C1005DA700 /* Haptic.swift */; };
 		C018A99428F421A000C0E002 /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C018A99328F421A000C0E002 /* Int+Extension.swift */; };
+		C01ACC002A5809E200906CDF /* FileUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01ACBFF2A5809E200906CDF /* FileUserDefaults.swift */; };
+		C01ACC012A5809E200906CDF /* FileUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01ACBFF2A5809E200906CDF /* FileUserDefaults.swift */; };
 		C01B88A02913F5FE00EF0EA0 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01B889F2913F5FE00EF0EA0 /* LoadingViewController.swift */; };
+		C02856F02A56EEB300C34D49 /* PlayerViewController+Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02856EF2A56EEB300C34D49 /* PlayerViewController+Gesture.swift */; };
+		C02856F12A56EEB300C34D49 /* PlayerViewController+Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02856EF2A56EEB300C34D49 /* PlayerViewController+Gesture.swift */; };
+		C02856F32A56EEE100C34D49 /* MiniPlayerView+Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02856F22A56EEE100C34D49 /* MiniPlayerView+Gesture.swift */; };
+		C02856F42A56EEE100C34D49 /* MiniPlayerView+Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02856F22A56EEE100C34D49 /* MiniPlayerView+Gesture.swift */; };
+		C02857102A5707AA00C34D49 /* ContactUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C028570F2A5707AA00C34D49 /* ContactUsViewController.swift */; };
+		C02857112A5707AA00C34D49 /* ContactUsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C028570F2A5707AA00C34D49 /* ContactUsViewController.swift */; };
+		C02857132A571ABE00C34D49 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02857122A571ABE00C34D49 /* Video.swift */; };
+		C02857142A571ABE00C34D49 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02857122A571ABE00C34D49 /* Video.swift */; };
+		C02857162A571F4800C34D49 /* Transcription.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02857152A571F4800C34D49 /* Transcription.swift */; };
+		C02857172A571F4800C34D49 /* Transcription.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02857152A571F4800C34D49 /* Transcription.swift */; };
 		C02A4BA82A55C8FB006BF465 /* LectureInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02A4BA72A55C8FB006BF465 /* LectureInfoCell.swift */; };
 		C02A4BA92A55CA83006BF465 /* LectureInfoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02A4BA72A55C8FB006BF465 /* LectureInfoCell.swift */; };
 		C02A842F2A56BB0D008A21E3 /* IQCircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02A842E2A56BB0D008A21E3 /* IQCircularProgressView.swift */; };
@@ -382,7 +394,13 @@
 		C0118A7B28D34AB400F6002D /* GoogleService-Info-production-client.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-production-client.plist"; sourceTree = "<group>"; };
 		C017E68B293E24C1005DA700 /* Haptic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptic.swift; sourceTree = "<group>"; };
 		C018A99328F421A000C0E002 /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
+		C01ACBFF2A5809E200906CDF /* FileUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUserDefaults.swift; sourceTree = "<group>"; };
 		C01B889F2913F5FE00EF0EA0 /* LoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
+		C02856EF2A56EEB300C34D49 /* PlayerViewController+Gesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerView\U0010Controller+Gesture.swift"; sourceTree = "<group>"; };
+		C02856F22A56EEE100C34D49 /* MiniPlayerView+Gesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MiniPlayerView+Gesture.swift"; sourceTree = "<group>"; };
+		C028570F2A5707AA00C34D49 /* ContactUsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactUsViewController.swift; sourceTree = "<group>"; };
+		C02857122A571ABE00C34D49 /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
+		C02857152A571F4800C34D49 /* Transcription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Transcription.swift; sourceTree = "<group>"; };
 		C02A4BA72A55C8FB006BF465 /* LectureInfoCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureInfoCell.swift; sourceTree = "<group>"; };
 		C02A842E2A56BB0D008A21E3 /* IQCircularProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IQCircularProgressView.swift; sourceTree = "<group>"; };
 		C02B4D372A532828004D298B /* BVKS-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "BVKS-Info.plist"; sourceTree = "<group>"; };
@@ -577,6 +595,7 @@
 		C00DC56828E1DA65001EDE95 /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				C01ACBFF2A5809E200906CDF /* FileUserDefaults.swift */,
 				C00DC57428E1DA80001EDE95 /* CoreData Classes */,
 				C00DC56A28E1DA65001EDE95 /* SrilaDatabase.xcdatamodeld */,
 				C00DC56928E1DA65001EDE95 /* Persistant.swift */,
@@ -687,6 +706,7 @@
 				EECCDCE929E56C8F00144C66 /* DeleteAccountViewController.swift */,
 				EE97BEED29E7EA4D00B9A80B /* ChangePasswordViewController.swift */,
 				6E6AED102A3D9D87009BB06D /* NotificationViewController.swift */,
+				C028570F2A5707AA00C34D49 /* ContactUsViewController.swift */,
 			);
 			path = LeftMenuControllers;
 			sourceTree = "<group>";
@@ -797,10 +817,12 @@
 				C007D37D28E80ABB00CFBED0 /* Location.swift */,
 				C007D37F28E80AD000CFBED0 /* Resources.swift */,
 				C007D38128E80ADC00CFBED0 /* Audio.swift */,
+				C02857122A571ABE00C34D49 /* Video.swift */,
 				C007D38328E80AEE00CFBED0 /* Search.swift */,
 				C00F8A4228EF192A00FA9A7B /* PlayRate.swift */,
 				C052D8C029125DF40003307B /* StatsType.swift */,
 				C052D8C229125E7C0003307B /* ListenDetails.swift */,
+				C02857152A571F4800C34D49 /* Transcription.swift */,
 			);
 			path = "Supporting Model";
 			sourceTree = "<group>";
@@ -889,9 +911,11 @@
 				C0DD1B3728FE979000995994 /* PlayerViewController+Position.swift */,
 				C07A8F3C28F8033A001A6162 /* PlayerViewController+Observers.swift */,
 				C00EB93A29BC75FA00D331A6 /* PlayerViewController+LectureOption.swift */,
+				C02856EF2A56EEB300C34D49 /* PlayerViewController+Gesture.swift */,
 				C002119928F6A03200BE94EC /* SPNowPlayingInfoCenter.swift */,
 				C002119B28F6AD5300BE94EC /* SPNowPlayableCommand.swift */,
 				C0F1A08828F05F06009578BA /* MiniPlayerView.swift */,
+				C02856F22A56EEE100C34D49 /* MiniPlayerView+Gesture.swift */,
 			);
 			path = Player;
 			sourceTree = "<group>";
@@ -1277,6 +1301,7 @@
 				6E69006E2A25C4C20086C7DB /* ForgotPasswordViewModel.swift in Sources */,
 				6E69006F2A25C4C20086C7DB /* LastSyncTimestamp.swift in Sources */,
 				6E6900702A25C4C20086C7DB /* LectureViewModel+ListenInfo.swift in Sources */,
+				C02857142A571ABE00C34D49 /* Video.swift in Sources */,
 				6E6900712A25C4C20086C7DB /* PlayerViewController+Observers.swift in Sources */,
 				6E6900722A25C4C20086C7DB /* Filter.swift in Sources */,
 				6E6900732A25C4C20086C7DB /* Language.swift in Sources */,
@@ -1301,6 +1326,7 @@
 				6E6900822A25C4C20086C7DB /* FavoriteViewController.swift in Sources */,
 				6E6900832A25C4C20086C7DB /* PlayerViewController+Position.swift in Sources */,
 				6E6900842A25C4C20086C7DB /* SideMenuItem.swift in Sources */,
+				C02856F42A56EEE100C34D49 /* MiniPlayerView+Gesture.swift in Sources */,
 				6E6900852A25C4C20086C7DB /* PlayerViewController.swift in Sources */,
 				6E6900862A25C4C20086C7DB /* SceneDelegate.swift in Sources */,
 				6E6900872A25C4C20086C7DB /* HistoryViewController.swift in Sources */,
@@ -1314,6 +1340,7 @@
 				6E69008D2A25C4C20086C7DB /* PlayerViewController+LectureOption.swift in Sources */,
 				6E69008E2A25C4C20086C7DB /* LectureViewModel+LectureInfo.swift in Sources */,
 				6E6B183A2A418BED00B5E098 /* UserSettings.swift in Sources */,
+				C01ACC012A5809E200906CDF /* FileUserDefaults.swift in Sources */,
 				6E68EA932A2DEDD300C6DB6D /* SimplePDF.swift in Sources */,
 				6E69008F2A25C4C20086C7DB /* NSManagedObject+Extensions.swift in Sources */,
 				6E6900902A25C4C20086C7DB /* FilterDetailTableViewCell.swift in Sources */,
@@ -1346,6 +1373,7 @@
 				6E6900AA2A25C4C20086C7DB /* StatsType.swift in Sources */,
 				6E6900AB2A25C4C20086C7DB /* Day.swift in Sources */,
 				6E6900AC2A25C4C20086C7DB /* CopyrightViewController.swift in Sources */,
+				C02856F12A56EEB300C34D49 /* PlayerViewController+Gesture.swift in Sources */,
 				6E6900AD2A25C4C20086C7DB /* ListenDetails.swift in Sources */,
 				6E6900AE2A25C4C20086C7DB /* ESTMusicIndicatorContentView.swift in Sources */,
 				6E6900AF2A25C4C20086C7DB /* PlaylistViewModel.swift in Sources */,
@@ -1361,6 +1389,7 @@
 				6E6900B92A25C4C20086C7DB /* RoundButton.swift in Sources */,
 				6E6900BA2A25C4C20086C7DB /* PlaylistViewController.swift in Sources */,
 				6E6900BB2A25C4C20086C7DB /* TabBarController.swift in Sources */,
+				C02857172A571F4800C34D49 /* Transcription.swift in Sources */,
 				6E6900BC2A25C4C20086C7DB /* TopLectures.swift in Sources */,
 				6E6900BD2A25C4C20086C7DB /* ForgotPasswordViewController.swift in Sources */,
 				6E6900BE2A25C4C20086C7DB /* CreatePlaylistViewController.swift in Sources */,
@@ -1375,6 +1404,7 @@
 				6E6900C72A25C4C20086C7DB /* PlaylistOption.swift in Sources */,
 				6E6900C82A25C4C20086C7DB /* SearchViewController.swift in Sources */,
 				6E6900C92A25C4C20086C7DB /* LegacyData.swift in Sources */,
+				C02857112A5707AA00C34D49 /* ContactUsViewController.swift in Sources */,
 				C02C132E2A556497008D89DB /* RefreshButton.swift in Sources */,
 				6E6900CA2A25C4C20086C7DB /* LoadingViewController.swift in Sources */,
 				6E6B183B2A418C3600B5E098 /* NotificationViewController.swift in Sources */,
@@ -1401,6 +1431,7 @@
 				C0EA13E428CF53FA00BE9110 /* ForgotPasswordViewModel.swift in Sources */,
 				6E6768802A24BBAB000E0509 /* LastSyncTimestamp.swift in Sources */,
 				C0EE5BCC28F8404000528AA7 /* LectureViewModel+ListenInfo.swift in Sources */,
+				C02857132A571ABE00C34D49 /* Video.swift in Sources */,
 				C07A8F3D28F8033A001A6162 /* PlayerViewController+Observers.swift in Sources */,
 				C00AB20628D1F19500A62A2F /* Filter.swift in Sources */,
 				C007D37A28E809D900CFBED0 /* Language.swift in Sources */,
@@ -1425,6 +1456,7 @@
 				C00E4E0A28CA39FE00F1A123 /* FavoriteViewController.swift in Sources */,
 				C0DD1B3828FE979000995994 /* PlayerViewController+Position.swift in Sources */,
 				C0065D4828D881A400B18AA6 /* SideMenuItem.swift in Sources */,
+				C02856F32A56EEE100C34D49 /* MiniPlayerView+Gesture.swift in Sources */,
 				C00F8A4128EF13AE00FA9A7B /* PlayerViewController.swift in Sources */,
 				C00E4DCD28CA36F100F1A123 /* SceneDelegate.swift in Sources */,
 				C00E4E0F28CA39FE00F1A123 /* HistoryViewController.swift in Sources */,
@@ -1438,6 +1470,7 @@
 				C00EB93B29BC75FA00D331A6 /* PlayerViewController+LectureOption.swift in Sources */,
 				C0EE5BCA28F8403700528AA7 /* LectureViewModel+LectureInfo.swift in Sources */,
 				6E5AFADD2A2B7213008FABA0 /* SimplePDF.swift in Sources */,
+				C01ACC002A5809E200906CDF /* FileUserDefaults.swift in Sources */,
 				C00DC57328E1DA66001EDE95 /* NSManagedObject+Extensions.swift in Sources */,
 				C00AB20A28D1F52D00A62A2F /* FilterDetailTableViewCell.swift in Sources */,
 				C03E3F2828DCC6C500B987DD /* ListenInfo.swift in Sources */,
@@ -1470,6 +1503,7 @@
 				C00E4E1728CA433A00F1A123 /* AboutViewController.swift in Sources */,
 				C052D8C129125DF40003307B /* StatsType.swift in Sources */,
 				C007D37828E8096D00CFBED0 /* Day.swift in Sources */,
+				C02856F02A56EEB300C34D49 /* PlayerViewController+Gesture.swift in Sources */,
 				C00E4E1828CA433A00F1A123 /* CopyrightViewController.swift in Sources */,
 				C052D8C329125E7C0003307B /* ListenDetails.swift in Sources */,
 				C07A8F3A28F7FD44001A6162 /* ESTMusicIndicatorContentView.swift in Sources */,
@@ -1485,6 +1519,7 @@
 				C0B7990328DC3FF700681649 /* Playlist.swift in Sources */,
 				C0EA13ED28CF685E00BE9110 /* RoundButton.swift in Sources */,
 				C00E4E0D28CA39FE00F1A123 /* PlaylistViewController.swift in Sources */,
+				C02857162A571F4800C34D49 /* Transcription.swift in Sources */,
 				C00E4E0828CA39FE00F1A123 /* TabBarController.swift in Sources */,
 				C0B7990228DC3FF700681649 /* TopLectures.swift in Sources */,
 				C00E4E1228CA3A1700F1A123 /* ForgotPasswordViewController.swift in Sources */,
@@ -1499,6 +1534,7 @@
 				C00DC57128E1DA66001EDE95 /* DBLecture+CoreDataClass.swift in Sources */,
 				C0B7990A28DC427B00681649 /* PlaylistOption.swift in Sources */,
 				C00E4E1C28CA462000F1A123 /* SearchViewController.swift in Sources */,
+				C02857102A5707AA00C34D49 /* ContactUsViewController.swift in Sources */,
 				C02C132D2A556497008D89DB /* RefreshButton.swift in Sources */,
 				C007D37C28E80AAB00CFBED0 /* LegacyData.swift in Sources */,
 				C01B88A02913F5FE00EF0EA0 /* LoadingViewController.swift in Sources */,
@@ -1545,12 +1581,10 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Configurations/BVKS/BVKS.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 9;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 15;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = S92372RU6B;
+				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/BVKS-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
@@ -1571,7 +1605,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bhakti.bvks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = bvks_development;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -1591,12 +1624,10 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Configurations/BVKS/BVKS.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 9;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 15;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = S92372RU6B;
+				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/BVKS-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
@@ -1617,7 +1648,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bhakti.bvks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = bvks_development;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -1693,13 +1723,9 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Configurations/ShrilaPrabhupada/Srila Prabhupada.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
-				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 36;
-				DEVELOPMENT_TEAM = "";
-				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = S92372RU6B;
-				"DEVELOPMENT_TEAM[sdk=macosx*]" = S92372RU6B;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 40;
+				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
@@ -1720,8 +1746,6 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.bvksdigital.acbsp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = sp_development;
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=macosx*]" = sp_development_mac;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -1804,7 +1828,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Configurations/ShrilaPrabhupada/Srila Prabhupada.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development: Himanshu Akhria (35554LNBHY)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 36;
+				CURRENT_PROJECT_VERSION = 40;
 				DEVELOPMENT_TEAM = 35554LNBHY;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = S92372RU6B;
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = S92372RU6B;

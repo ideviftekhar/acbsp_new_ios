@@ -42,8 +42,9 @@ class PlayerViewController: LectureViewController {
 
     weak var playerDelegate: PlayerViewControllerDelegate?
 
-    @IBOutlet var thumbnailBackgroundImageView: UIImageView!
-    @IBOutlet var thumbnailImageView: UIImageView!
+    @IBOutlet private var thumbnailBackgroundImageView: UIImageView!
+    @IBOutlet private var stackViewMain: UIStackView!
+    @IBOutlet internal var thumbnailImageView: UIImageView!
     @IBOutlet private var titleLabel: UILabel!
     @IBOutlet private var verseLabel: UILabel!
     @IBOutlet private var languageLabel: UILabel!
@@ -54,10 +55,11 @@ class PlayerViewController: LectureViewController {
     @IBOutlet private var secondDotLabel: UILabel?
 
     @IBOutlet private var bufferingActivityIndicator: UIActivityIndicatorView!
-    @IBOutlet private var currentTimeLabel: UILabel!
+    @IBOutlet internal var currentTimeLabel: UILabel!
     @IBOutlet private var totalTimeLabel: UILabel!
-    @IBOutlet private var timeSlider: UISlider!
+    @IBOutlet internal var timeSlider: UISlider!
 
+    @IBOutlet internal var videoButton: UIButton!
     @IBOutlet internal var menuButton: UIButton!
     @IBOutlet internal var playlistButton: UIButton!
     @IBOutlet private var playPauseButton: UIButton!
@@ -86,6 +88,9 @@ class PlayerViewController: LectureViewController {
     @IBOutlet var playingInfoStackView: UIStackView!
     @IBOutlet var playingInfoImageViewWidthConstraint: NSLayoutConstraint!
     @IBOutlet var playingInfoTitleStackView: UIStackView!
+
+    internal lazy var seekGesture = UIPanGestureRecognizer(target: self, action: #selector(panRecognized(_:)))
+    internal var direction: UISwipeGestureRecognizer.Direction = .down
 
     var optionMenu: SPMenu!
     var allActions: [LectureOption: SPAction] = [:]
@@ -216,12 +221,14 @@ class PlayerViewController: LectureViewController {
                     seekTo(seconds: currentLecture.lastPlayedPoint)
                 }
 
+                videoButton.isHidden = currentLecture.resources.videos.first?.videoURL != nil
                 DefaultLectureViewModel.defaultModel.addToRecentlyPlayed(lecture: currentLecture, completion: { _ in })
                 DefaultLectureViewModel.defaultModel.updateTopLecture(date: Date(), lectureID: currentLecture.id, completion: { _ in })
             } else {
                 try? AVAudioSession.sharedInstance().setCategory(.ambient)
                 try? AVAudioSession.sharedInstance().setActive(true)
                 player = nil
+                videoButton.isHidden = true
 
                 close(animated: true)
                 Self.nowPlaying = nil
@@ -244,11 +251,13 @@ class PlayerViewController: LectureViewController {
         didSet {
             loadViewIfNeeded()
 
-            let userDefaultKey: String = "\(Self.self).playlistLectures"
-            let lectureIDs = self.playlistLectures.map { $0.id }
-            UserDefaults.standard.set(lectureIDs, forKey: userDefaultKey)
-            UserDefaults.standard.synchronize()
-
+            DispatchQueue.global(qos: .background).async {
+                let userDefaultKey: String = "\(Self.self).playlistLectures"
+                let lectureIDs = self.playlistLectures.map { $0.id }
+                let data = try? JSONEncoder().encode(lectureIDs)
+                FileUserDefaults.standard.set(data, for: userDefaultKey)
+            }
+            
             if loopLectureButton.isSelected == true {
 
                 if let currentLecture = currentLecture {
@@ -307,6 +316,10 @@ class PlayerViewController: LectureViewController {
             self.playerContainerView.clipsToBounds = true
         }
 
+        do {
+            seekGesture.delegate = self
+            stackViewMain.addGestureRecognizer(seekGesture)
+        }
         do {
             let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeRecognized(_:)))
             swipeGesture.direction = .down
@@ -601,7 +614,7 @@ extension PlayerViewController {
 
     func seekTo(seconds: Int) {
         let seconds: Int64 = Int64(seconds)
-        let targetTime: CMTime = CMTimeMake(value: seconds, timescale: 1)
+        let targetTime: CMTime = CMTime(seconds: Double(seconds), preferredTimescale: player?.currentTime().timescale ?? 1)
 
         isSeeking = true
         player?.seek(to: targetTime, completionHandler: { [self] _ in
@@ -642,12 +655,17 @@ extension PlayerViewController {
             }
         })
 
-        timeSlider.value = Float(currentTime)
-        miniPlayerView.playedSeconds = timeSlider.value
-        currentTimeLabel.text = Int(timeSlider.value).toHHMMSS
+        if seekGesture.state != .changed {
+            timeSlider.value = Float(currentTime)
+            miniPlayerView.playedSeconds = timeSlider.value
+            currentTimeLabel.text = Int(timeSlider.value).toHHMMSS
+        }
     }
 
     private func updatePlayProgressUI(to seconds: Double) {
+        guard seekGesture.state != .changed else {
+            return
+        }
         if !timeSlider.isTracking && !isSeeking {
             timeSlider.value = Float(seconds)
             miniPlayerView.playedSeconds = timeSlider.value
@@ -657,6 +675,7 @@ extension PlayerViewController {
         if seconds % 60 == 0, let currentLecture = currentLecture {
             DefaultLectureViewModel.defaultModel.offlineUpdateLectureProgress(lecture: currentLecture, lastPlayedPoint: seconds)
         }
+
         currentTimeLabel.text = seconds.toHHMMSS
         if !isPaused, let currentLecture = currentLecture {
             Self.nowPlaying = (currentLecture, .playing(progress: self.currentProgress))
@@ -880,6 +899,18 @@ extension PlayerViewController {
         } else {
             change(shuffle: true, loop: false)
         }
+    }
+
+    @IBAction func videoLectureButtonPressed(_ sender: UIButton) {
+
+        guard let currentLecture = currentLecture,
+        let videoURL = currentLecture.resources.videos.first?.videoURL else { return }
+
+        guard UIApplication.shared.canOpenURL(videoURL) else {
+            self.showAlert(title: "Error", message: "Sorry, we are unable to show this video.")
+            return
+        }
+        UIApplication.shared.open(videoURL, options: [:], completionHandler: nil)
     }
 }
 

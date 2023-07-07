@@ -102,9 +102,9 @@ extension LectureInfoViewController: IQListViewDelegateDataSource {
                 if !lecture.legacyData.verse.isEmpty {
                     legacyDataModels.append(.init(title: "Verse", subtitle: lecture.legacyData.verse, axis: .vertical))
                 }
-//                if lecture.legacyData.wpId != 0 {
-//                    legacyDataModels.append(.init(title: "WP ID", subtitle: "\(lecture.legacyData.wpId)", axis: .vertical))
-//                }
+                if lecture.legacyData.wpId != 0 {
+                    legacyDataModels.append(.init(title: "WP ID", subtitle: "\(lecture.legacyData.wpId)", axis: .vertical))
+                }
 
                 developerModels.append(.init(title: "Lecture ID", subtitle: "\(lecture.id)", axis: .vertical))
                 if let creationTimestamp = lecture.creationTimestamp {

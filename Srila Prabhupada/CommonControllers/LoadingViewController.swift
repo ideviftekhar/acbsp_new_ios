@@ -23,7 +23,7 @@ class LoadingViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        titleLabel.text = Constants.loadingTitleText
+        titleLabel.text = Constants.appName
     }
 
     override func viewWillAppear(_ animated: Bool) {

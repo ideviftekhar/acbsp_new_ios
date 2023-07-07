@@ -17,6 +17,7 @@ protocol LectureCellDelegate: AnyObject {
 
 class LectureCell: UITableViewCell, IQModelableCell {
 
+    @IBOutlet private var videoIconImageView: UIImageView?
     @IBOutlet private var downloadedIconImageView: UIImageView?
     @IBOutlet private var favoriteIconImageView: UIImageView?
     @IBOutlet private var completedIconImageView: UIImageView?
@@ -102,6 +103,18 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 locationLabel?.text = lecture.location.displayString
             } else {
                 locationLabel?.text = lecture.place.joined(separator: ", ")
+            }
+
+            if lecture.resources.videos.first?.videoURL != nil {
+                videoIconImageView?.image = UIImage(systemName: "video.fill")
+                videoIconImageView?.tintColor = UIColor.F96D00
+                videoIconImageView?.isHidden = false
+            } else if lecture.resources.audios.first?.audioURL != nil {
+                videoIconImageView?.image = UIImage(systemName: "music.note.list")
+                videoIconImageView?.tintColor = UIColor(named: "ProgressColor")
+                videoIconImageView?.isHidden = false
+            } else {
+                videoIconImageView?.isHidden = true
             }
 
             durationLabel?.text = lecture.lengthTime.displayString
@@ -298,7 +311,7 @@ class LectureCell: UITableViewCell, IQModelableCell {
 extension LectureCell {
     func contextMenuConfiguration() -> UIContextMenuConfiguration? {
 
-        guard let model = model else {
+        guard let model = model, !model.isSelectionEnabled else {
             return nil
         }
 

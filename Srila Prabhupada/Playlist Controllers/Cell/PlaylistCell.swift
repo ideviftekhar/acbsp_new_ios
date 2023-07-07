@@ -36,7 +36,14 @@ class PlaylistCell: UITableViewCell, IQModelableCell {
         configureMenuButton()
     }
 
-    typealias Model = Playlist
+    struct Model: Hashable {
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(playlist)
+        }
+
+        var playlist: Playlist
+        var isSelectionEnabled: Bool
+    }
 
     var model: Model? {
         didSet {
@@ -44,18 +51,18 @@ class PlaylistCell: UITableViewCell, IQModelableCell {
                 return
             }
 
-            titleLabel.text = model.title
-            categoryLabel.text = model.lecturesCategory
-            let dateString = DateFormatter.dd_MMM_yyyy.string(from: model.creationTime)
+            titleLabel.text = model.playlist.title
+            categoryLabel.text = model.playlist.lecturesCategory
+            let dateString = DateFormatter.dd_MMM_yyyy.string(from: model.playlist.creationTime)
             dateLabel.text = dateString
 
-            lectureCountLabel.text = "Lecture: \(model.lectureIds.count)"
-            emailLabel.text = model.authorEmail
+            lectureCountLabel.text = "Lecture: \(model.playlist.lectureIds.count)"
+            emailLabel.text = model.playlist.authorEmail
 
-            firstDotLabel?.isHidden = model.lecturesCategory.isEmpty || dateString.isEmpty
-            secondDotLabel?.isHidden = model.authorEmail.isEmpty
+            firstDotLabel?.isHidden = model.playlist.lecturesCategory.isEmpty || dateString.isEmpty
+            secondDotLabel?.isHidden = model.playlist.authorEmail.isEmpty
 
-            if let url = model.thumbnailURL {
+            if let url = model.playlist.thumbnailURL {
                 thumbnailImageView.af.setImage(withURL: url, placeholderImage: UIImage(named: "logo_40"))
             } else {
                 thumbnailImageView.image = UIImage(named: "logo_40")
@@ -66,7 +73,7 @@ class PlaylistCell: UITableViewCell, IQModelableCell {
 
                 if FirestoreManager.shared.currentUser != nil,
                       let email = FirestoreManager.shared.currentUserEmail,
-                      model.authorEmail.elementsEqual(email) {
+                      model.playlist.authorEmail.elementsEqual(email) {
 
                     if let deletePlaylist = allActions[.delete] {
                         actions.append(deletePlaylist)
@@ -85,6 +92,34 @@ class PlaylistCell: UITableViewCell, IQModelableCell {
 }
 
 extension PlaylistCell {
+    func contextMenuConfiguration() -> UIContextMenuConfiguration? {
+
+        guard let model = model, !model.isSelectionEnabled else {
+            return nil
+        }
+
+        return .init(identifier: nil, previewProvider: {
+
+            let controller = UIStoryboard.playlists.instantiate(PlaylistLecturesViewController.self)
+            controller.playlist = model.playlist
+            controller.popoverPresentationController?.sourceView = self
+
+            return controller
+        }, actionProvider: { _ in
+            return self.optionMenu.menu
+        })
+    }
+
+    func performPreviewAction(configuration: UIContextMenuConfiguration, animator: UIContextMenuInteractionCommitAnimating) {
+        if let previewViewController = animator.previewViewController {
+            animator.addAnimations {
+                self.parentViewController?.navigationController?.pushViewController(previewViewController, animated: true)
+            }
+        }
+    }
+}
+
+extension PlaylistCell {
 
     private func configureMenuButton() {
 
@@ -96,7 +131,7 @@ extension PlaylistCell {
                     return
                 }
 
-                delegate?.playlistCell(self, didSelected: option, with: model)
+                delegate?.playlistCell(self, didSelected: option, with: model.playlist)
             })
 
             if option == .delete {

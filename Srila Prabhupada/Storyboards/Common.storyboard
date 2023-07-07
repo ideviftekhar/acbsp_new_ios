@@ -331,10 +331,10 @@
                                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="3Sp-yi-mP4">
                                                     <rect key="frame" x="8" y="3.5" width="359" height="53.5"/>
                                                     <subviews>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="GAZ-CZ-sdW">
-                                                            <rect key="frame" x="0.0" y="0.0" width="119" height="53.5"/>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="GAZ-CZ-sdW">
+                                                            <rect key="frame" x="0.0" y="0.0" width="122" height="53.5"/>
                                                             <subviews>
-                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_40" translatesAutoresizingMaskIntoConstraints="NO" id="MN5-HM-8T7">
+                                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_40" translatesAutoresizingMaskIntoConstraints="NO" id="MN5-HM-8T7">
                                                                     <rect key="frame" x="0.0" y="6.5" width="40" height="40"/>
                                                                     <color key="backgroundColor" systemColor="systemGray6Color"/>
                                                                     <constraints>
@@ -352,7 +352,7 @@
                                                                     </userDefinedRuntimeAttributes>
                                                                 </imageView>
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="Psf-JA-obH">
-                                                                    <rect key="frame" x="45" y="0.0" width="74" height="53.5"/>
+                                                                    <rect key="frame" x="48" y="0.0" width="74" height="53.5"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jpi-aP-CHX" customClass="MarqueeLabel" customModule="MarqueeLabel">
                                                                             <rect key="frame" x="0.0" y="0.0" width="22" height="20.5"/>
@@ -451,7 +451,9 @@
                                                                     <state key="normal" title="">
                                                                         <imageReference key="image" image="play.fill" catalog="system" symbolScale="medium"/>
                                                                     </state>
-                                                                    <buttonConfiguration key="configuration" style="plain" image="play.fill" catalog="system" title=""/>
+                                                                    <buttonConfiguration key="configuration" style="plain" title="">
+                                                                        <imageReference key="image" image="play.fill" catalog="system" symbolScale="large"/>
+                                                                    </buttonConfiguration>
                                                                     <connections>
                                                                         <action selector="playAction:" destination="QX9-Hg-KCZ" eventType="touchUpInside" id="FzL-ac-U7t"/>
                                                                     </connections>
@@ -662,51 +664,70 @@
                                                             </subviews>
                                                         </stackView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="8Zn-u8-LwV" userLabel="Stack View Options">
-                                                            <rect key="frame" x="0.0" y="440.5" width="355" height="80"/>
+                                                            <rect key="frame" x="0.0" y="440.5" width="355" height="66.5"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gvi-ua-Cpq">
-                                                                    <rect key="frame" x="0.0" y="40" width="0.0" height="0.0"/>
+                                                                    <rect key="frame" x="0.0" y="33.5" width="0.0" height="0.0"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="width" id="LOh-dN-E0u"/>
                                                                         <constraint firstAttribute="height" id="Rcd-Ib-lO5"/>
                                                                     </constraints>
                                                                 </view>
-                                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B4d-Qh-QTT">
-                                                                    <rect key="frame" x="28.5" y="29" width="20" height="22"/>
+                                                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ymg-UJ-C1h">
+                                                                    <rect key="frame" x="0.0" y="22.5" width="0.0" height="21.5"/>
                                                                     <color key="tintColor" name="TextDarkGray"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                    <state key="normal" title="" image="ellipsis.circle" catalog="system"/>
+                                                                    <state key="normal">
+                                                                        <imageReference key="image" image="arrow.up.right.video.fill" catalog="system" symbolScale="large"/>
+                                                                    </state>
+                                                                    <connections>
+                                                                        <action selector="videoLectureButtonPressed:" destination="WLM-gm-tMu" eventType="touchUpInside" id="ADG-Fh-muK"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B4d-Qh-QTT">
+                                                                    <rect key="frame" x="28" y="20.5" width="26" height="26"/>
+                                                                    <color key="tintColor" name="TextDarkGray"/>
+                                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                                                    <state key="normal" title="">
+                                                                        <imageReference key="image" image="ellipsis.circle" catalog="system" symbolScale="large"/>
+                                                                    </state>
                                                                 </button>
                                                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VC2-HT-h1A">
-                                                                    <rect key="frame" x="77.5" y="27.5" width="27" height="25.5"/>
+                                                                    <rect key="frame" x="81.5" y="20.5" width="27" height="25.5"/>
                                                                     <color key="tintColor" name="TextDarkGray"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                    <state key="normal" title="" image="music.note.list" catalog="system"/>
+                                                                    <state key="normal" title="">
+                                                                        <imageReference key="image" image="music.note.list" catalog="system" symbolScale="large"/>
+                                                                    </state>
                                                                     <variation key="heightClass=compact" hidden="YES"/>
                                                                     <connections>
                                                                         <action selector="playlistButtonTapped:" destination="WLM-gm-tMu" eventType="touchUpInside" id="KKN-Sz-qDS"/>
                                                                     </connections>
                                                                 </button>
                                                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uC6-xR-tN2">
-                                                                    <rect key="frame" x="133" y="28.5" width="29.5" height="23"/>
+                                                                    <rect key="frame" x="136.5" y="22" width="29.5" height="23"/>
                                                                     <color key="tintColor" name="TextDarkGray"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                    <state key="normal" title="" image="shuffle" catalog="system"/>
+                                                                    <state key="normal" title="">
+                                                                        <imageReference key="image" image="shuffle" catalog="system" symbolScale="large"/>
+                                                                    </state>
                                                                     <connections>
                                                                         <action selector="shuffleLectureButtonPressed:" destination="WLM-gm-tMu" eventType="touchUpInside" id="8Ab-mf-efx"/>
                                                                     </connections>
                                                                 </button>
                                                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="282-tg-DG4">
-                                                                    <rect key="frame" x="191.5" y="28.5" width="27.5" height="23"/>
+                                                                    <rect key="frame" x="194" y="22" width="27.5" height="23"/>
                                                                     <color key="tintColor" name="TextDarkGray"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                    <state key="normal" title="" image="repeat" catalog="system"/>
+                                                                    <state key="normal" title="">
+                                                                        <imageReference key="image" image="repeat" catalog="system" symbolScale="large"/>
+                                                                    </state>
                                                                     <connections>
                                                                         <action selector="loopLectureButtonPressed:" destination="WLM-gm-tMu" eventType="touchUpInside" id="3Ns-pK-ngx"/>
                                                                     </connections>
                                                                 </button>
                                                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l13-7g-WYl">
-                                                                    <rect key="frame" x="247.5" y="23.5" width="30" height="33"/>
+                                                                    <rect key="frame" x="249.5" y="17" width="30" height="33"/>
                                                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="15"/>
                                                                     <color key="tintColor" name="TextDarkGray"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -716,10 +737,10 @@
                                                                     </variation>
                                                                 </button>
                                                                 <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="ig1-GC-h9t">
-                                                                    <rect key="frame" x="306.5" y="30" width="20" height="20"/>
+                                                                    <rect key="frame" x="307" y="23.5" width="20" height="20"/>
                                                                 </activityIndicatorView>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Bc-96-ejq">
-                                                                    <rect key="frame" x="355" y="40" width="0.0" height="0.0"/>
+                                                                    <rect key="frame" x="355" y="33.5" width="0.0" height="0.0"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" id="GEM-U3-dcH"/>
                                                                         <constraint firstAttribute="width" id="JYc-Mk-lOw"/>
@@ -728,7 +749,7 @@
                                                             </subviews>
                                                         </stackView>
                                                         <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="6HM-pK-w8t" userLabel="Stack View Slider">
-                                                            <rect key="frame" x="0.0" y="525.5" width="355" height="30"/>
+                                                            <rect key="frame" x="0.0" y="512" width="355" height="30"/>
                                                             <subviews>
                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" text="--:--" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="IQI-q6-Ul5">
                                                                     <rect key="frame" x="0.0" y="8" width="36.5" height="14"/>
@@ -759,32 +780,41 @@
                                                                 </label>
                                                             </subviews>
                                                         </stackView>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="f3V-1y-uHQ" userLabel="Stack View Controls">
-                                                            <rect key="frame" x="0.0" y="560.5" width="355" height="22.5"/>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="f3V-1y-uHQ" userLabel="Stack View Controls">
+                                                            <rect key="frame" x="0.0" y="547" width="355" height="36"/>
                                                             <subviews>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Ei-Xj-vTp">
-                                                                    <rect key="frame" x="0.0" y="0.5" width="71" height="22"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="71" height="36"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                                                     <color key="tintColor" name="TextDarkGray"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                    <state key="normal" title="" image="backward.end.fill" catalog="system"/>
+                                                                    <state key="normal" title="">
+                                                                        <imageReference key="image" image="backward.end.fill" catalog="system" symbolScale="large"/>
+                                                                    </state>
                                                                     <connections>
                                                                         <action selector="previousLecturePressed:" destination="WLM-gm-tMu" eventType="touchUpInside" id="wzV-U3-kLQ"/>
                                                                     </connections>
                                                                 </button>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ubF-ZP-8SM">
-                                                                    <rect key="frame" x="71" y="0.0" width="71" height="22.5"/>
+                                                                    <rect key="frame" x="71" y="0.0" width="71" height="36"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                                                     <color key="tintColor" name="TextDarkGray"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                    <state key="normal" title="" image="gobackward.10" catalog="system"/>
+                                                                    <state key="normal" title="">
+                                                                        <imageReference key="image" image="gobackward.10" catalog="system" symbolScale="large"/>
+                                                                    </state>
                                                                     <connections>
                                                                         <action selector="backwardXSecondsPressed:" destination="WLM-gm-tMu" eventType="touchUpInside" id="Ut6-Ev-hv0"/>
                                                                     </connections>
                                                                 </button>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QCv-aO-13w">
-                                                                    <rect key="frame" x="142" y="0.5" width="71" height="22"/>
+                                                                    <rect key="frame" x="142" y="0.0" width="71" height="36"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                                                     <color key="tintColor" name="TextDarkGray"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                    <state key="normal" title="" image="play.fill" catalog="system"/>
+                                                                    <state key="normal" title="">
+                                                                        <imageReference key="image" image="play.fill" catalog="system" symbolScale="large"/>
+                                                                    </state>
                                                                     <userDefinedRuntimeAttributes>
                                                                         <userDefinedRuntimeAttribute type="size" keyPath="shadowOffset">
                                                                             <size key="value" width="0.0" height="0.0"/>
@@ -795,19 +825,25 @@
                                                                     </connections>
                                                                 </button>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VVc-TO-fMU">
-                                                                    <rect key="frame" x="213" y="0.0" width="71" height="22.5"/>
+                                                                    <rect key="frame" x="213" y="0.0" width="71" height="36"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                                                     <color key="tintColor" name="TextDarkGray"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                    <state key="normal" title="" image="goforward.10" catalog="system"/>
+                                                                    <state key="normal" title="">
+                                                                        <imageReference key="image" image="goforward.10" catalog="system" symbolScale="large"/>
+                                                                    </state>
                                                                     <connections>
                                                                         <action selector="forwardXSecondPressed:" destination="WLM-gm-tMu" eventType="touchUpInside" id="UbD-0g-jTN"/>
                                                                     </connections>
                                                                 </button>
                                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ai5-0H-dkz">
-                                                                    <rect key="frame" x="284" y="0.5" width="71" height="22"/>
+                                                                    <rect key="frame" x="284" y="0.0" width="71" height="36"/>
+                                                                    <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                                                     <color key="tintColor" name="TextDarkGray"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                    <state key="normal" title="" image="forward.end.fill" catalog="system"/>
+                                                                    <state key="normal" title="">
+                                                                        <imageReference key="image" image="forward.end.fill" catalog="system" symbolScale="large"/>
+                                                                    </state>
                                                                     <connections>
                                                                         <action selector="nextLecturePressed:" destination="WLM-gm-tMu" eventType="touchUpInside" id="RoA-yv-ZQE"/>
                                                                     </connections>
@@ -862,7 +898,7 @@
                                             <constraints>
                                                 <constraint firstItem="aNp-J0-a0R" firstAttribute="top" secondItem="BZ4-0Y-7GY" secondAttribute="bottom" id="3xL-yb-sKm"/>
                                                 <constraint firstItem="aNp-J0-a0R" firstAttribute="bottom" secondItem="Zgh-bt-SB1" secondAttribute="bottom" id="4ft-zH-zvT"/>
-                                                <constraint firstItem="aNp-J0-a0R" firstAttribute="leading" secondItem="3Qa-zs-4hu" secondAttribute="trailing" id="6ob-pl-S6h"/>
+                                                <constraint firstItem="aNp-J0-a0R" firstAttribute="leading" secondItem="3Qa-zs-4hu" secondAttribute="trailing" constant="10" id="6ob-pl-S6h"/>
                                                 <constraint firstItem="aNp-J0-a0R" firstAttribute="leading" secondItem="D0B-ya-G7f" secondAttribute="leading" id="GEG-nr-JE0"/>
                                                 <constraint firstAttribute="bottom" secondItem="aNp-J0-a0R" secondAttribute="bottom" id="M0V-5o-61U"/>
                                                 <constraint firstItem="3Qa-zs-4hu" firstAttribute="leading" secondItem="BZ4-0Y-7GY" secondAttribute="leading" id="UFN-i1-csa"/>
@@ -962,6 +998,7 @@
                         <outlet property="secondDotLabel" destination="DRu-Y1-0XI" id="4w7-93-fob"/>
                         <outlet property="shuffleLectureButton" destination="uC6-xR-tN2" id="ho0-Ck-BGz"/>
                         <outlet property="speedMenuButton" destination="l13-7g-WYl" id="DBd-Qc-I5W"/>
+                        <outlet property="stackViewMain" destination="3Qa-zs-4hu" id="Ix1-mu-xSH"/>
                         <outlet property="tableViewHeightConstraint" destination="cnl-7F-68l" id="b1N-L3-D3B"/>
                         <outlet property="thumbnailBackgroundImageView" destination="Owx-Kc-8Zh" id="aA4-c1-QBn"/>
                         <outlet property="thumbnailImageView" destination="dUv-eR-arW" id="bsx-L9-yWg"/>
@@ -969,6 +1006,7 @@
                         <outlet property="titleLabel" destination="Vjh-lB-SX1" id="2x9-cM-Wax"/>
                         <outlet property="totalTimeLabel" destination="B9L-GY-BgF" id="XDG-Hi-z8f"/>
                         <outlet property="verseLabel" destination="BnU-9y-Mdd" id="43G-pA-Zsp"/>
+                        <outlet property="videoButton" destination="Ymg-UJ-C1h" id="gb3-JF-a87"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UV6-aF-EQS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1143,6 +1181,7 @@
     </designables>
     <color key="tintColor" name="0099CA"/>
     <resources>
+        <image name="arrow.up.right.video.fill" catalog="system" width="128" height="81"/>
         <image name="backward.end.fill" catalog="system" width="128" height="101"/>
         <image name="chevron.down" catalog="system" width="128" height="70"/>
         <image name="ellipsis.circle" catalog="system" width="128" height="123"/>

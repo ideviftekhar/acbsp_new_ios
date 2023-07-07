@@ -20,15 +20,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // hack.iftekhar@gmail.com // uid: 6JquqE4j4yPBrtrAhvRyIvCMxN02
         if let user = Auth.auth().currentUser {
             DispatchQueue.global().async {
-                user.getIDToken { _, error in
-                    if error != nil {
+                user.getIDToken { token, error in
+                    if let error = error as? NSError {
+                        if error.code == AuthErrorCode.userNotFound.rawValue ||
+                            error.code == AuthErrorCode.userTokenExpired.rawValue ||
+                            error.code == AuthErrorCode.invalidAPIKey.rawValue ||
+                            error.code == AuthErrorCode.appNotAuthorized.rawValue ||
+                            error.code == AuthErrorCode.invalidUserToken.rawValue ||
+                            error.code == AuthErrorCode.userDisabled.rawValue {
+                            DispatchQueue.main.async { [self] in
+                                DefaultLectureViewModel.defaultModel.clearCache()
+                                let loginNavigationController = UIStoryboard.main.instantiate(UINavigationController.self, identifier: "LoginNavigationController")
 
-                        DispatchQueue.main.async { [self] in
-                            let loginNavigationController = UIStoryboard.main.instantiate(UINavigationController.self, identifier: "LoginNavigationController")
-
-                            window = UIWindow(windowScene: windowScene)
-                            window?.rootViewController = loginNavigationController
-                            window?.makeKeyAndVisible()
+                                window = UIWindow(windowScene: windowScene)
+                                window?.rootViewController = loginNavigationController
+                                window?.makeKeyAndVisible()
+                            }
                         }
                     }
                 }

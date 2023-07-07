@@ -616,6 +616,7 @@ PODS:
     - Charts/Core (= 4.1.0)
   - Charts/Core (4.1.0):
     - SwiftAlgorithms (~> 1.0)
+  - DeviceKit (5.0.0)
   - FirebaseAuth (10.1.0):
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.8)
@@ -783,6 +784,7 @@ DEPENDENCIES:
   - AlamofireImage
   - BEMCheckBox
   - Charts
+  - DeviceKit
   - FirebaseAuth
   - FirebaseCore
   - FirebaseCrashlytics
@@ -811,6 +813,7 @@ SPEC REPOS:
     - BEMCheckBox
     - BoringSSL-GRPC
     - Charts
+    - DeviceKit
     - FirebaseAuth
     - FirebaseCore
     - FirebaseCoreExtension
@@ -854,6 +857,7 @@ SPEC CHECKSUMS:
   BEMCheckBox: 5ba6e37ade3d3657b36caecc35c8b75c6c2b1a4e
   BoringSSL-GRPC: 3175b25143e648463a56daeaaa499c6cb86dad33
   Charts: ce0768268078eee0336f122c3c4ca248e4e204c5
+  DeviceKit: 0fd016a2cb67aca17c33dc23171cac270131eb88
   FirebaseAuth: 19a85b8a42e7c1104a2ffa6987c748daa79a5e64
   FirebaseCore: 55e7ae35991ccca4db03ff8d8df6ed5f17a3e4c7
   FirebaseCoreExtension: 69b966c399abc4ca6dc75006ab87160f81512725
@@ -889,6 +893,6 @@ SPEC CHECKSUMS:
   SwiftLint: 32ee33ded0636d0905ef6911b2b67bbaeeedafa5
   SwiftTryCatch: fb6d2b34abe48efd69578dac919293a44f95b481
 
-PODFILE CHECKSUM: 72a0b7722f3102c141507c5b0543939397932a35
+PODFILE CHECKSUM: 18bbf0353280569b5541432c75d744b2a2286fad
 
 COCOAPODS: 1.12.1

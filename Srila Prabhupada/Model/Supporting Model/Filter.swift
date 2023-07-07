@@ -14,7 +14,8 @@ enum Filter: String, CaseIterable {
     case place = "Place"
     case years = "Years"
     case month = "Month"
-    case Length = "Length"
+    case length = "Length"
+    case type = "Type"
     case categories = "Categories"
     case translation = "Translation"
 
@@ -22,6 +23,8 @@ enum Filter: String, CaseIterable {
         switch self {
         case .month:
             return Self.monthNames
+        case .type:
+            return Self.typeNames
         default:
             return UserDefaults.standard.array(forKey: self.rawValue) as? [String] ?? []
         }
@@ -40,6 +43,11 @@ enum Filter: String, CaseIterable {
         "October",
         "November",
         "December"
+    ]
+
+    private static let typeNames: [String] = [
+        "Audio",
+        "Video",
     ]
 
     func filter(_ lectures: [Lecture], selectedSubtypes: [String]) -> [Lecture] {
@@ -71,9 +79,22 @@ enum Filter: String, CaseIterable {
         case .translation:
             let subTypesSet = Set(selectedSubtypes)
             return lectures.filter { !subTypesSet.isDisjoint(with: $0.language.translations) }
-        case .Length:
+        case .length:
             let subTypesSet = Set(selectedSubtypes)
             return lectures.filter { !subTypesSet.isDisjoint(with: $0.lengthType) }
+        case .type:
+            let shouldHaveAudio = selectedSubtypes.contains("Audio")
+            let shouldHaveVideo = selectedSubtypes.contains("Video")
+
+            if shouldHaveAudio && shouldHaveVideo {
+                return lectures.filter { $0.resources.audios.first?.audioURL != nil && $0.resources.videos.first?.videoURL != nil }
+            } else if shouldHaveAudio {
+                return lectures.filter { $0.resources.audios.first?.audioURL != nil }
+            } else if shouldHaveVideo {
+                return lectures.filter { $0.resources.videos.first?.videoURL != nil }
+            } else {
+                return lectures
+            }
         }
     }
 
@@ -161,7 +182,7 @@ enum Filter: String, CaseIterable {
                 for lecture in lectures where !lecture.lengthType.isEmpty {
                     lengths.formUnion(lecture.lengthType)
                 }
-                UserDefaults.standard.set(lengths.sorted(), forKey: Filter.Length.rawValue)
+                UserDefaults.standard.set(lengths.sorted(), forKey: Filter.length.rawValue)
             }
 
             do {

@@ -1001,15 +1001,21 @@ extension LectureViewController: IQListViewDelegateDataSource {
                 updateLecture(lecture: model.lecture, isSelected: isSelected)
             } else {
 
-                guard model.lecture.resources.audios.first?.audioURL != nil else {
-                    showAlert(title: "No Lecture found", message: "We did not found any lectures to play for '\(model.lecture.titleDisplay)'")
-                    return
-                }
+                if model.lecture.resources.audios.first?.audioURL != nil {
+                    if let playerController = self as? PlayerViewController, let tabController = playerController.parentTabBarController {
+                        tabController.showPlayer(lecture: model.lecture, playlistLectures: self.models)
+                    } else if let tabController = self.tabBarController as? TabBarController {
+                        tabController.showPlayer(lecture: model.lecture, playlistLectures: self.models)
+                    }
+                } else if let videoURL = model.lecture.resources.videos.first?.videoURL {
 
-                if let playerController = self as? PlayerViewController, let tabController = playerController.parentTabBarController {
-                    tabController.showPlayer(lecture: model.lecture, playlistLectures: self.models)
-                } else if let tabController = self.tabBarController as? TabBarController {
-                    tabController.showPlayer(lecture: model.lecture, playlistLectures: self.models)
+                    guard UIApplication.shared.canOpenURL(videoURL) else {
+                        self.showAlert(title: "Error", message: "Sorry, we are unable to show this video.")
+                        return
+                    }
+                    UIApplication.shared.open(videoURL, options: [:], completionHandler: nil)
+                } else {
+                    showAlert(title: "No Lecture found", message: "We did not found any lectures to play for '\(model.lecture.titleDisplay)'")
                 }
             }
         }

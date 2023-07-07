@@ -22,7 +22,7 @@ def shared_pods
   pod 'IQListKit'
 
   pod 'BEMCheckBox'
-
+  pod 'DeviceKit'
   pod 'AlamofireImage'
 
   pod "MBCircularProgressBar"

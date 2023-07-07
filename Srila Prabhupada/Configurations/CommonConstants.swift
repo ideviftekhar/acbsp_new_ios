@@ -22,5 +22,8 @@ struct CommonConstants {
     static let notificationKeyEnglish: String = "english"
     static let notificationKeyHindi: String = "hindi"
     static let notificationKeyBengali: String = "bengali"
-}
 
+    static let contactEmail: String = "hrsikesadasa.bvks@gmail.com"
+    static let contactPhone: String = "+91-74151-28866"
+    static let contactLink: String = "https://bvks.com/contact-us/"
+}

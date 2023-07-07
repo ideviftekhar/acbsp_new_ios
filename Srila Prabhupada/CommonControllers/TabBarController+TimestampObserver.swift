@@ -20,7 +20,7 @@ extension TabBarController {
                 let oldTimestamp: Date = (UserDefaults.standard.object(forKey: keyUserDefaults) as? Date) ?? Date(timeIntervalSince1970: 0)
 
                 if oldTimestamp != newTimestamp.timestamp {
-                    self.startSyncing()
+                    self.startSyncing(force: true)
                 }
             case .failure(let error):
                 print(error.localizedDescription)

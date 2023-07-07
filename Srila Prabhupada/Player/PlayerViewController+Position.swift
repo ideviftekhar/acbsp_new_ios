@@ -165,7 +165,6 @@ extension PlayerViewController {
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
 
-            thumbnailImageView.cornerRadius = 4
             thumbnailImageView.shadowColor = nil
             thumbnailImageView.shadowOffset = .zero
             thumbnailImageView.shadowRadius = 0
@@ -195,7 +194,6 @@ extension PlayerViewController {
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
 
-            thumbnailImageView.cornerRadius = 20
             thumbnailImageView.shadowColor = UIColor.black
             thumbnailImageView.shadowOffset = .zero
             thumbnailImageView.shadowRadius = 100

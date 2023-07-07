@@ -49,6 +49,7 @@ struct Lecture: Hashable, Codable {
         searchableTexts.append(title.joined(separator: " "))
         searchableTexts.append(contentsOf: category)
         searchableTexts.append(contentsOf: description)
+        searchableTexts.append("\(id)")
         searchableTexts.append(language.main)
         searchableTexts.append(contentsOf: language.translations)
         searchableTexts.append(legacyData.verse)

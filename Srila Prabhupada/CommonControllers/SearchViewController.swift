@@ -234,6 +234,10 @@ extension SearchViewController: SideMenuControllerDelegate {
             storeViewController.popoverPresentationController?.sourceView = cell
             // Parent class of self is UIViewContorller
             self.present(storeViewController, animated: true, completion: nil)
+        case .contactUs:
+            let aboutController = UIStoryboard.sideMenu.instantiate(UINavigationController.self, identifier: "ContactUsNavigationController")
+            aboutController.popoverPresentationController?.sourceView = cell
+            controller.present(aboutController, animated: true, completion: nil)
         }
     }
 }

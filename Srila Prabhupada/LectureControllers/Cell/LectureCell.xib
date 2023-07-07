@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <device id="retina6_1" orientation="portrait" appearance="dark"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -19,7 +20,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_40" translatesAutoresizingMaskIntoConstraints="NO" id="1Pj-Yk-u2T">
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_40" translatesAutoresizingMaskIntoConstraints="NO" id="1Pj-Yk-u2T">
                         <rect key="frame" x="10" y="12" width="40" height="40"/>
                         <color key="backgroundColor" systemColor="systemGray6Color"/>
                         <constraints>
@@ -47,7 +48,7 @@
                         </userDefinedRuntimeAttributes>
                     </view>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="toB-kP-27M">
-                        <rect key="frame" x="60" y="5.5" width="235" height="53.5"/>
+                        <rect key="frame" x="60" y="3.5" width="235" height="57"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7cs-uh-SL9">
                                 <rect key="frame" x="0.0" y="0.0" width="22" height="20.5"/>
@@ -91,10 +92,15 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="2Px-ai-gLn">
-                                <rect key="frame" x="0.0" y="37" width="132.5" height="16.5"/>
+                                <rect key="frame" x="0.0" y="37" width="153" height="20"/>
                                 <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="FRM-va-460">
+                                        <rect key="frame" x="0.0" y="2.5" width="16.5" height="15.5"/>
+                                        <color key="tintColor" name="ProgressColor"/>
+                                        <imageReference key="image" image="music.note.list" catalog="system" symbolScale="small"/>
+                                    </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="j2s-UD-Jnl">
-                                        <rect key="frame" x="0.0" y="0.0" width="36.5" height="16.5"/>
+                                        <rect key="frame" x="20.5" y="0.0" width="36.5" height="20"/>
                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="12"/>
                                         <color key="textColor" name="TextDarkGray"/>
                                         <nil key="highlightedColor"/>
@@ -103,7 +109,7 @@
                                         </variation>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" text="●" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="m6b-nj-VnU">
-                                        <rect key="frame" x="40.5" y="0.0" width="5" height="16.5"/>
+                                        <rect key="frame" x="61" y="0.0" width="5" height="20"/>
                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="8"/>
                                         <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -112,7 +118,7 @@
                                         </variation>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z5O-MH-zt7">
-                                        <rect key="frame" x="49.5" y="0.0" width="19.5" height="16.5"/>
+                                        <rect key="frame" x="70" y="0.0" width="19.5" height="20"/>
                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
                                         <color key="textColor" name="TextDarkGray"/>
                                         <nil key="highlightedColor"/>
@@ -121,7 +127,7 @@
                                         </variation>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" text="●" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o4r-m7-03j">
-                                        <rect key="frame" x="73" y="0.0" width="5" height="16.5"/>
+                                        <rect key="frame" x="93.5" y="0.0" width="5" height="20"/>
                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="8"/>
                                         <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <nil key="highlightedColor"/>
@@ -130,7 +136,7 @@
                                         </variation>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="249" verticalHuggingPriority="249" horizontalCompressionResistancePriority="749" verticalCompressionResistancePriority="749" text="0KB of 2MB" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="P7h-rT-rAy">
-                                        <rect key="frame" x="82" y="0.0" width="50.5" height="16.5"/>
+                                        <rect key="frame" x="102.5" y="0.0" width="50.5" height="20"/>
                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
                                         <color key="textColor" name="ProgressColor"/>
                                         <nil key="highlightedColor"/>
@@ -349,6 +355,7 @@
                 <outlet property="thumbnailImageView" destination="1Pj-Yk-u2T" id="UHT-hM-G1o"/>
                 <outlet property="titleLabel" destination="7cs-uh-SL9" id="bjy-Rl-STU"/>
                 <outlet property="verseLabel" destination="nQB-Ua-gsO" id="hJf-Jn-kJG"/>
+                <outlet property="videoIconImageView" destination="FRM-va-460" id="1m2-CH-M1w"/>
             </connections>
             <point key="canvasLocation" x="131.15942028985509" y="114.17410714285714"/>
         </tableViewCell>
@@ -359,6 +366,7 @@
         <image name="checkmark.circle.fill" catalog="system" width="128" height="123"/>
         <image name="ellipsis.circle" catalog="system" width="128" height="123"/>
         <image name="logo_40" width="40" height="40"/>
+        <image name="music.note.list" catalog="system" width="128" height="115"/>
         <image name="music.note.list_60" width="59.666667938232422" height="60.333332061767578"/>
         <image name="star.circle.fill" catalog="system" width="128" height="123"/>
         <namedColor name="0080FF">

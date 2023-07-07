@@ -9,8 +9,12 @@ import Foundation
 
 struct Resources: Hashable, Codable {
     let audios: [Audio]
+    let transcriptions: [Transcription]
+    let videos: [Video]
 
-    init(audios: [Audio]) {
+    init(audios: [Audio], transcriptions: [Transcription], videos: [Video]) {
         self.audios = audios
+        self.transcriptions = transcriptions
+        self.videos = videos
     }
 }

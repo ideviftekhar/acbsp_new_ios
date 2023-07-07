@@ -59,7 +59,6 @@ protocol LectureViewModel: AnyObject {
     func updateNotification(
         documentData: [String: Any],
         completion: @escaping (Result<Bool, Error>) -> Void)
-    
 }
 
 class DefaultLectureViewModel: NSObject, LectureViewModel {
@@ -74,10 +73,18 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
     lazy var parallelLectureWorkerQueue = DispatchQueue(label: "parallelLectureWorkerQueue\(Self.self)", qos: .userInteractive, attributes: .concurrent)
 
     func clearCache() {
-        let keyUserDefaults = CommonConstants.lastSyncTimestamp
-        UserDefaults.standard.removeObject(forKey: keyUserDefaults)
+        UserDefaults.standard.removeObject(forKey: CommonConstants.lastSyncTimestamp)
+        UserDefaults.standard.removeObject(forKey: CommonConstants.lastCheckedTimestamp)
+        UserDefaults.standard.removeObject(forKey: "\(PlayerViewController.self).playlistLectures")
+        UserDefaults.standard.removeObject(forKey: "\(PlayerViewController.self).\(PlayRate.self)")
+        UserDefaults.standard.removeObject(forKey: "\(PlayerViewController.self).\(Lecture.self)")
+
         UserDefaults.standard.removeObject(forKey: "DefaultLectureViewModel.allLectures")
         UserDefaults.standard.synchronize()
+
+        FileUserDefaults.standard.set(nil, for: "DefaultLectureViewModel.allLectures")
+        FileUserDefaults.standard.set(nil, for: "\(PlayerViewController.self).playlistLectures")
+
         serialLectureWorkerQueue.async { [self] in
             allLectures.removeAll()
             userLectureInfo.removeAll()
@@ -103,15 +110,14 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
             guard let data = try? Self.lectureEncoder.encode(lectures) else {
                 return
             }
-            UserDefaults.standard.set(data, forKey: "DefaultLectureViewModel.allLectures")
-            UserDefaults.standard.synchronize()
+            FileUserDefaults.standard.set(data, for: "DefaultLectureViewModel.allLectures")
         }
     }
 
     func getAllCachedLectures(completion: @escaping ([Lecture]) -> Void) {
         parallelLectureWorkerQueue.async {
 
-            guard let data = UserDefaults.standard.data(forKey: "DefaultLectureViewModel.allLectures"),
+            guard let data = FileUserDefaults.standard.data(for: "DefaultLectureViewModel.allLectures"),
             let lectures = try? Self.lectureDecoder.decode([Lecture].self, from: data) else {
                 DispatchQueue.main.async {
                     completion([])

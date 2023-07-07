@@ -162,13 +162,13 @@ class TabBarController: UITabBarController {
 extension TabBarController {
 
 
-    func startSyncing() {
+    func startSyncing(force: Bool) {
 
 //        self.loadingLabel.text = "Loading..."
 //        progressView.progress = 0
 //        progressView.alpha = 0.0
 
-        lectureSyncManager.startSync(initialLectures: lectures, force: false, progress: { [self] progress in
+        lectureSyncManager.startSync(initialLectures: lectures, force: force, progress: { [self] progress in
 
 //            progressView.alpha = 1.0
 //
@@ -209,8 +209,16 @@ extension TabBarController: PlayerViewControllerDelegate {
             let lectureID = UserDefaults.standard.integer(forKey: lectureIDDefaultKey)
 
             if lectureID != 0 {
+
                 let playlistLecturesKey: String = "\(PlayerViewController.self).playlistLectures"
-                var playlistLectureIDs: [Int] = (UserDefaults.standard.array(forKey: playlistLecturesKey) as? [Int]) ?? []
+
+                let data = FileUserDefaults.standard.data(for: playlistLecturesKey)
+
+                var playlistLectureIDs: [Int] = []
+
+                if let data = data {
+                    playlistLectureIDs = (try? JSONDecoder().decode([Int].self, from: data)) ?? []
+                }
                 if !playlistLectureIDs.contains(where: { $0 == lectureID }) {
                     playlistLectureIDs.insert(lectureID, at: 0)
                 }

@@ -237,6 +237,9 @@ extension PlaylistViewController: IQListViewDelegateDataSource {
                 let section = IQSection(identifier: "Cell", headerSize: CGSize.zero, footerSize: CGSize.zero)
                 list.append([section])
 
+                let isSelectionEnabled = !lecturesToAdd.isEmpty
+                let models: [Cell.Model] = models.map { .init(playlist: $0, isSelectionEnabled: isSelectionEnabled)
+                }
                 list.append(Cell.self, models: models, section: section)
 
             }, animatingDifferences: animated, endLoadingOnCompletion: showNoItems, completion: { [self] in
@@ -300,19 +303,19 @@ extension PlaylistViewController: IQListViewDelegateDataSource {
                 let message: String
 
                 if lecturesToAdd.count == 1, let lecture = lecturesToAdd.first {
-                    message = "Would you like to add '\(lecture.titleDisplay)' to '\(model.title)' Playlist?"
+                    message = "Would you like to add '\(lecture.titleDisplay)' to '\(model.playlist.title)' Playlist?"
                 } else {
-                    message = "Would you like to add \(lecturesToAdd.count) lecture(s) to '\(model.title)' Playlist?"
+                    message = "Would you like to add \(lecturesToAdd.count) lecture(s) to '\(model.playlist.title)' Playlist?"
                 }
 
-                self.showAlert(title: "Add to '\(model.title)'?", message: message, cancel: (title: "Cancel", {
+                self.showAlert(title: "Add to '\(model.playlist.title)'?", message: message, cancel: (title: "Cancel", {
                 }), buttons: (title: "Add", {
 
                     SKActivityIndicator.statusTextColor(.textDarkGray)
                     SKActivityIndicator.spinnerColor(.textDarkGray)
-                    SKActivityIndicator.show("Adding to '\(model.title)' ...")
+                    SKActivityIndicator.show("Adding to '\(model.playlist.title)' ...")
 
-                    DefaultPlaylistViewModel.defaultModel.add(lectures: self.lecturesToAdd, to: model, completion: { result in
+                    DefaultPlaylistViewModel.defaultModel.add(lectures: self.lecturesToAdd, to: model.playlist, completion: { result in
                         SKActivityIndicator.dismiss()
 
                         switch result {
@@ -330,7 +333,7 @@ extension PlaylistViewController: IQListViewDelegateDataSource {
                                     }
 
                                     let playlistIcon = UIImage(compatibleSystemName: "music.note.list")
-                                    StatusAlert.show(image: playlistIcon, title: "Added to '\(model.title)'", message: message, in: presenting.view)
+                                    StatusAlert.show(image: playlistIcon, title: "Added to '\(model.playlist.title)'", message: message, in: presenting.view)
                                 }
                             })
                         case .failure(let error):
@@ -341,7 +344,7 @@ extension PlaylistViewController: IQListViewDelegateDataSource {
                 }))
             } else {
                 let controller = UIStoryboard.playlists.instantiate(PlaylistLecturesViewController.self)
-                controller.playlist = model
+                controller.playlist = model.playlist
                 self.navigationController?.pushViewController(controller, animated: true)
             }
         }

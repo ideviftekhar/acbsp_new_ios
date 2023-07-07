@@ -10,7 +10,8 @@ import SafariServices
 
 class AboutViewController: UIViewController {
 
-    @IBOutlet private var aboutImage: UIImageView!
+    @IBOutlet private var aboutImageContentView: UIView!
+    @IBOutlet private var aboutImageView: UIImageView!
 
     @IBOutlet private var aboutAttributedLabel: TappableLabel!
     @IBOutlet private var titleLabel: UILabel!
@@ -21,11 +22,27 @@ class AboutViewController: UIViewController {
 
         self.configureTappableLabel()
 
-        titleLabel.text = Constants.aboutTitle
+        titleLabel.text = Constants.appName
         aboutLabel.text = Constants.aboutText
 
         let attributedText = getNSAttributedString(mainString: Constants.aboutAttributedText, tapableString: Constants.aboutAttributedLinkString)
         aboutAttributedLabel.attributedText = attributedText
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.view.setNeedsLayout()
+        self.view.layoutIfNeeded()
+        addShadowToImageView()
+    }
+
+    private func addShadowToImageView() {
+        aboutImageContentView.shadowColor = UIColor.black
+        aboutImageContentView.shadowOffset = .zero
+        aboutImageContentView.shadowRadius = 100
+        aboutImageContentView.shadowOpacity = 0.5
+        aboutImageContentView.clipsToBounds = false
+        aboutImageContentView.layer.shadowPath = UIBezierPath(roundedRect: aboutImageContentView.bounds, cornerRadius: 20).cgPath
     }
 
     func configureTappableLabel() {

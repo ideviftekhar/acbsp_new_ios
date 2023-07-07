@@ -14,6 +14,7 @@ enum SideMenuItem: String, CaseIterable {
     case stats = "Stats"
     case popularLectures = "Popular Lectures"
     case about = "About"
+    case contactUs = "Contact Us"
     case share = "Share"
     case donate = "Donate"
     case copyright = "Copyright"
@@ -39,6 +40,8 @@ enum SideMenuItem: String, CaseIterable {
             return UIImage(compatibleSystemName: "c.circle")
         case .rateUs:
             return UIImage(compatibleSystemName: "star.circle")
+        case .contactUs:
+            return UIImage(compatibleSystemName: "message.circle")
         }
     }
 }

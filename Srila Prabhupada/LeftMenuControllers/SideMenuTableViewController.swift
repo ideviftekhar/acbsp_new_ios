@@ -179,7 +179,7 @@ extension SideMenuViewController {
 
         switch tabBarController.lectureSyncManager.syncStatus {
         case .none:
-            tabBarController.startSyncing()
+            tabBarController.startSyncing(force: false)
         case .syncing:
             break
         }

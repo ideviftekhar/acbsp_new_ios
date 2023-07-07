@@ -18,8 +18,12 @@ extension DefaultLectureViewModel {
 
             var filteredLectures: [Lecture] = []
 
+            let lecturesHashTable: [Int: Lecture] = lectures.reduce(into: [Int: Lecture]()) { result, lecture in
+                result[lecture.id] = lecture
+            }
+
             for lectureID in lectureIDs {
-                if let lecture = lectures.first(where: { $0.id == lectureID }) {
+                if let lecture = lecturesHashTable[lectureID] {
                     filteredLectures.append(lecture)
                 }
             }
