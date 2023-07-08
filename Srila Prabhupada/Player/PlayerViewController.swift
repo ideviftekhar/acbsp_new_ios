@@ -221,7 +221,7 @@ class PlayerViewController: LectureViewController {
                     seekTo(seconds: currentLecture.lastPlayedPoint)
                 }
 
-                videoButton.isHidden = currentLecture.resources.videos.first?.videoURL != nil
+                videoButton.isHidden = currentLecture.resources.videos.first?.videoURL == nil
                 DefaultLectureViewModel.defaultModel.addToRecentlyPlayed(lecture: currentLecture, completion: { _ in })
                 DefaultLectureViewModel.defaultModel.updateTopLecture(date: Date(), lectureID: currentLecture.id, completion: { _ in })
             } else {
