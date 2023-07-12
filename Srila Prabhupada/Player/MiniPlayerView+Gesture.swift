@@ -25,7 +25,7 @@ extension MiniPlayerView: UIGestureRecognizerDelegate {
 
         switch sender.state {
         case .began:
-            let velocity = seekGesture.velocity(in: self)
+            let velocity = sender.velocity(in: self)
 
             if abs(velocity.x) >= abs(velocity.y) {
                 if velocity.x < 0 {
@@ -61,7 +61,7 @@ extension MiniPlayerView: UIGestureRecognizerDelegate {
                 delegate?.miniPlayerView(self, didSeekTo: Int(proposedSeek))
             case .up, .down:
 
-                let velocity = seekGesture.velocity(in: self)
+                let velocity = sender.velocity(in: self)
 
                 if velocity.y < 0 && abs(velocity.y) > 250 {
                     delegate?.miniPlayerViewDidExpand(self)

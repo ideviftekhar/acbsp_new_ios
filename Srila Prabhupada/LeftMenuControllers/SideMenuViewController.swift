@@ -92,7 +92,7 @@ class SideMenuViewController: UIViewController {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(stackViewTapped))
         userProfileStackView.addGestureRecognizer(tapGesture)
 
-        addSyncStatusListener()
+        updateLastSyncTime()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -109,6 +109,18 @@ class SideMenuViewController: UIViewController {
 
         self.present(userProfileController, animated: true)
     }
+
+    func syncStarted() {
+        syncImageView.startSpinning()
+    }
+
+    func syncProgressUpdated(progress: CGFloat) {
+    }
+
+    func syncEnded() {
+        syncImageView.stopSpinning()
+        updateLastSyncTime()
+    }
 }
 
 extension SideMenuViewController {
@@ -122,30 +134,6 @@ extension SideMenuViewController {
             }
         }
         return nil
-    }
-
-    private func addSyncStatusListener() {
-        guard let tabBarController = self.appTabBarController else {
-            return
-        }
-
-        switch tabBarController.lectureSyncManager.syncStatus {
-        case .none:
-            syncImageView.stopSpinning()
-        case .syncing:
-            syncImageView.startSpinning()
-        }
-        updateLastSyncTime()
-
-        tabBarController.lectureSyncManager.syncStatusHandler = { [self] status in
-            switch status {
-            case .none:
-                syncImageView.stopSpinning()
-            case .syncing:
-                syncImageView.startSpinning()
-            }
-            updateLastSyncTime()
-        }
     }
 
     private func updateLastSyncTime() {

@@ -17,7 +17,22 @@ class HistoryViewController: LectureViewController {
             noItemTitle = "No Lectures"
             noItemMessage = "Your past played lectures will display here"
         }
+
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshTriggered(_:)), for: .valueChanged)
+        lectureTebleView.refreshControl = refreshControl
     }
+
+    @objc private func refreshTriggered(_ sender: UIRefreshControl) {
+        refresh(source: .default)
+    }
+
+    override func syncStarted() {
+    }
+
+    override func syncEnded() {
+    }
+
 
     override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[LectureViewController.Model], Error>) -> Void) {
 
@@ -30,9 +45,13 @@ class HistoryViewController: LectureViewController {
                 let uniqueIds: Set<Int> = Set(lectureIDs)
                 lectureIDs = Array(uniqueIds)
 
-                DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: completion)
+                DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: { result in
+                    self.lectureTebleView.refreshControl?.endRefreshing()
+                    completion(result)
+                })
 
             case .failure(let error):
+                self.lectureTebleView.refreshControl?.endRefreshing()
                 completion(.failure(error))
             }
         })

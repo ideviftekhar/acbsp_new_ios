@@ -8,6 +8,7 @@
 import Foundation
 
 struct LastSyncTimestamp: Hashable, Codable {
+
     let message: String?
     let source: String?
     let status: String?

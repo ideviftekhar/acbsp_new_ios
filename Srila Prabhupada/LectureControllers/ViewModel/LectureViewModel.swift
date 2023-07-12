@@ -88,17 +88,7 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
         }
     }
 
-    var allLectures: [Lecture] = [] {
-        didSet {
-            let lectures = allLectures
-            parallelLectureWorkerQueue.async {
-                guard let data = try? Self.lectureEncoder.encode(lectures) else {
-                    return
-                }
-                FileUserDefaults.standard.set(data, for: "DefaultLectureViewModel.allLectures")
-            }
-        }
-    }
+    var allLectures: [Lecture] = []
 
     var userLectureInfo: [LectureInfo] = []
 
@@ -113,19 +103,35 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
     private static let lectureEncoder = JSONEncoder()
     private static let lectureDecoder = JSONDecoder()
 
+    func saveAllCachedLectures() {
+        let lectures = allLectures
+        parallelLectureWorkerQueue.async {
+            do {
+                let data = try Self.lectureEncoder.encode(lectures)
+                FileUserDefaults.standard.set(data, for: "DefaultLectureViewModel.allLectures")
+            } catch {
+                print(error)
+            }
+        }
+    }
+
     func getAllCachedLectures(completion: @escaping ([Lecture]) -> Void) {
         parallelLectureWorkerQueue.async {
 
-            guard let data = FileUserDefaults.standard.data(for: "DefaultLectureViewModel.allLectures"),
-            let lectures = try? Self.lectureDecoder.decode([Lecture].self, from: data) else {
+            guard let data = FileUserDefaults.standard.data(for: "DefaultLectureViewModel.allLectures") else {
                 DispatchQueue.main.async {
                     completion([])
                 }
                 return
             }
 
-            DispatchQueue.main.async {
-                completion(lectures)
+            do {
+                let lectures = try Self.lectureDecoder.decode([Lecture].self, from: data)
+                DispatchQueue.main.async {
+                    completion(lectures)
+                }
+            } catch {
+                print(error)
             }
         }
     }
@@ -158,9 +164,11 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
                                 var success = success
                                 if !self.userLectureInfo.isEmpty {
                                     success = Self.refreshLectureWithLectureInfo(lectures: success, lectureInfos: self.userLectureInfo, downloadedLectures: Persistant.shared.getAllDBLectures(), progress: progress)
+                                    self.allLectures = success
+                                    self.saveAllCachedLectures()
+                                } else {
+                                    self.allLectures = success
                                 }
-
-                                self.allLectures = success
 
                                 success = Self.filter(lectures: success, searchText: searchText, sortType: sortType, filter: filter, lectureIDs: lectureIDs)
                                 DispatchQueue.main.async {
@@ -176,9 +184,12 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
                             serialLectureWorkerQueue.async {
                                 if !self.userLectureInfo.isEmpty && self.allLectures.isEmpty {
                                     success = Self.refreshLectureWithLectureInfo(lectures: success, lectureInfos: self.userLectureInfo, downloadedLectures: Persistant.shared.getAllDBLectures(), progress: nil)
+                                    self.allLectures = success
+                                } else {
+                                    self.allLectures = success
+                                    self.saveAllCachedLectures()
                                 }
 
-                                self.allLectures = success
                                 Filter.updateFilterSubtypes(lectures: success)
 
                                 success = Self.filter(lectures: success, searchText: searchText, sortType: sortType, filter: filter, lectureIDs: lectureIDs)
@@ -303,6 +314,7 @@ extension DefaultLectureViewModel {
                 }
             }
             self.allLectures = updatedAllLectures
+            self.saveAllCachedLectures()
 
             if !updatedLectures.isEmpty {
                 mainThreadSafe {
@@ -331,6 +343,7 @@ extension DefaultLectureViewModel {
                 }
             }
             self.allLectures = updatedAllLectures
+            self.saveAllCachedLectures()
             if !updatedLectures.isEmpty {
                 mainThreadSafe {
                     NotificationCenter.default.post(name: DefaultLectureViewModel.Notification.lectureUpdated, object: updatedLectures)
@@ -358,6 +371,7 @@ extension DefaultLectureViewModel {
                 }
             }
             self.allLectures = updatedAllLectures
+            self.saveAllCachedLectures()
 
             if !updatedLectures.isEmpty {
                 mainThreadSafe {

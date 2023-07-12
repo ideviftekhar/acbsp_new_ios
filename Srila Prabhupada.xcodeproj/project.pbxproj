@@ -123,7 +123,7 @@
 		6E6900D02A25C4C20086C7DB /* Resources.swift in Sources */ = {isa = PBXBuildFile; fileRef = C007D37F28E80AD000CFBED0 /* Resources.swift */; };
 		6E6900D12A25C4C20086C7DB /* SrilaDatabase.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = C00DC56A28E1DA65001EDE95 /* SrilaDatabase.xcdatamodeld */; };
 		6E6900D22A25C4C20086C7DB /* DeleteAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EECCDCE929E56C8F00144C66 /* DeleteAccountViewController.swift */; };
-		6E6900D32A25C4C20086C7DB /* SideMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4DFB28CA39F400F1A123 /* SideMenuTableViewController.swift */; };
+		6E6900D32A25C4C20086C7DB /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4DFB28CA39F400F1A123 /* SideMenuViewController.swift */; };
 		6E6900D72A25C4C20086C7DB /* LectureCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C00AB21A28D2080800A62A2F /* LectureCell.xib */; };
 		6E6900D82A25C4C20086C7DB /* Home.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C00E4DE728CA39CB00F1A123 /* Home.storyboard */; };
 		6E6900D92A25C4C20086C7DB /* Downloads.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C00E4DEA28CA39CB00F1A123 /* Downloads.storyboard */; };
@@ -203,7 +203,7 @@
 		C00E4DF528CA39CB00F1A123 /* Downloads.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C00E4DEA28CA39CB00F1A123 /* Downloads.storyboard */; };
 		C00E4DF628CA39CB00F1A123 /* Favorites.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C00E4DEB28CA39CB00F1A123 /* Favorites.storyboard */; };
 		C00E4DF828CA39CB00F1A123 /* PopularLecture.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C00E4DED28CA39CB00F1A123 /* PopularLecture.storyboard */; };
-		C00E4DFC28CA39F400F1A123 /* SideMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4DFB28CA39F400F1A123 /* SideMenuTableViewController.swift */; };
+		C00E4DFC28CA39F400F1A123 /* SideMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4DFB28CA39F400F1A123 /* SideMenuViewController.swift */; };
 		C00E4E0828CA39FE00F1A123 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4DFE28CA39FE00F1A123 /* TabBarController.swift */; };
 		C00E4E0928CA39FE00F1A123 /* DownloadViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E0028CA39FE00F1A123 /* DownloadViewController.swift */; };
 		C00E4E0A28CA39FE00F1A123 /* FavoriteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C00E4E0128CA39FE00F1A123 /* FavoriteViewController.swift */; };
@@ -373,7 +373,7 @@
 		C00E4DEA28CA39CB00F1A123 /* Downloads.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Downloads.storyboard; sourceTree = "<group>"; };
 		C00E4DEB28CA39CB00F1A123 /* Favorites.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Favorites.storyboard; sourceTree = "<group>"; };
 		C00E4DED28CA39CB00F1A123 /* PopularLecture.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = PopularLecture.storyboard; sourceTree = "<group>"; };
-		C00E4DFB28CA39F400F1A123 /* SideMenuTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuTableViewController.swift; sourceTree = "<group>"; };
+		C00E4DFB28CA39F400F1A123 /* SideMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuViewController.swift; sourceTree = "<group>"; };
 		C00E4DFE28CA39FE00F1A123 /* TabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
 		C00E4E0028CA39FE00F1A123 /* DownloadViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DownloadViewController.swift; sourceTree = "<group>"; };
 		C00E4E0128CA39FE00F1A123 /* FavoriteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavoriteViewController.swift; sourceTree = "<group>"; };
@@ -703,7 +703,7 @@
 				C052D8C729125F9B0003307B /* Stats */,
 				C0CE0D1528E870C800C2C825 /* Cell */,
 				C0065D4928D881AC00B18AA6 /* Model */,
-				C00E4DFB28CA39F400F1A123 /* SideMenuTableViewController.swift */,
+				C00E4DFB28CA39F400F1A123 /* SideMenuViewController.swift */,
 				C00E4E1428CA433A00F1A123 /* AboutViewController.swift */,
 				C00E4E1528CA433A00F1A123 /* CopyrightViewController.swift */,
 				EE23BB3C29E54ECE00E9D72E /* UserProfileViewController.swift */,
@@ -1421,7 +1421,7 @@
 				6E6900D12A25C4C20086C7DB /* SrilaDatabase.xcdatamodeld in Sources */,
 				6E67E2822A29DBD7000CE184 /* Constants.swift in Sources */,
 				6E6900D22A25C4C20086C7DB /* DeleteAccountViewController.swift in Sources */,
-				6E6900D32A25C4C20086C7DB /* SideMenuTableViewController.swift in Sources */,
+				6E6900D32A25C4C20086C7DB /* SideMenuViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1552,7 +1552,7 @@
 				C007D38028E80AD000CFBED0 /* Resources.swift in Sources */,
 				C00DC57028E1DA66001EDE95 /* SrilaDatabase.xcdatamodeld in Sources */,
 				EECCDCEA29E56C8F00144C66 /* DeleteAccountViewController.swift in Sources */,
-				C00E4DFC28CA39F400F1A123 /* SideMenuTableViewController.swift in Sources */,
+				C00E4DFC28CA39F400F1A123 /* SideMenuViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1591,6 +1591,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
 				DEVELOPMENT_TEAM = S92372RU6B;
+				"EXCLUDED_ARCHS[sdk=iphoneos*]" = x86_64;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/BVKS-Info.plist";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";

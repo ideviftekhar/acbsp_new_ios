@@ -39,6 +39,7 @@ extension DefaultLectureViewModel {
                     serialLectureWorkerQueue.async {
                         if !self.allLectures.isEmpty {
                             self.allLectures = Self.refreshLectureWithLectureInfo(lectures: self.allLectures, lectureInfos: success, downloadedLectures: Persistant.shared.getAllDBLectures(), progress: progress)
+                            self.saveAllCachedLectures()
                         }
                         DispatchQueue.main.async {
                             completion(.success(success))
@@ -48,7 +49,7 @@ extension DefaultLectureViewModel {
                     DispatchQueue.global(qos: .background).async {
                         let crossReference = Dictionary(grouping: success, by: \.id)
                         let duplicates = crossReference.filter { $1.count > 1 }
-                        let duplicateIDs: [Int] = duplicates.flatMap { $0.key }.sorted()
+                        let duplicateIDs: [Int] = duplicates.compactMap { $0.key }.sorted()
 
                         if !duplicateIDs.isEmpty {
                             self.removeDuplicateLectureInfo(lectureInfoID: duplicateIDs)
@@ -180,7 +181,7 @@ extension DefaultLectureViewModel {
 
                 documentReference.updateDocument(documentData: data, completion: { (result: (Swift.Result<LectureInfo, Error>)) in
                     switch result {
-                    case .success(let success):
+                    case .success:
                         permanentUpdatedLectures.append(lecture)
                     case .failure(let failure):
                         lastError = failure
@@ -260,6 +261,7 @@ extension DefaultLectureViewModel {
             }
 
             self.allLectures = updatedAllLectures
+            self.saveAllCachedLectures()
 
             if postUpdate {
                 DispatchQueue.main.async {
@@ -295,7 +297,7 @@ extension DefaultLectureViewModel {
                             snapshot.reference.delete()
                         }
                     }
-                case .failure(let error):
+                case .failure:
                     break
                 }
             })

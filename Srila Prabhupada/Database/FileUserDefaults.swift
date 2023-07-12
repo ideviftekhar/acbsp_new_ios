@@ -15,7 +15,11 @@ class FileUserDefaults {
     private lazy var fileUserDefaultDirectoryURL: URL = {
         let url: URL = documentDirectoryURL.appendingPathComponent("FileUserDefaults", isDirectory: true)
         if !FileManager.default.fileExists(atPath: url.path) {
-            try? FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
+            do {
+                try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true)
+            } catch {
+                print(error)
+            }
         }
         return url
     }()
@@ -24,10 +28,14 @@ class FileUserDefaults {
 
     func set(_ data: Data?, for key: String) {
         let url = fileUserDefaultDirectoryURL.appendingPathComponent(key, isDirectory: false)
-        if let data = data {
-            try? data.write(to: url)
-        } else {
-            try? FileManager.default.removeItem(at: url)
+        do {
+            if let data = data {
+                try data.write(to: url)
+            } else {
+                try FileManager.default.removeItem(at: url)
+            }
+        } catch {
+            print(error)
         }
     }
 

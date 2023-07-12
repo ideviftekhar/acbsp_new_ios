@@ -20,7 +20,7 @@ protocol LectureViewControllerDelegate: AnyObject {
 
 class LectureViewController: SearchViewController {
 
-    @IBOutlet private var lectureTebleView: UITableView!
+    @IBOutlet internal var lectureTebleView: UITableView!
 
     weak var delegate: LectureViewControllerDelegate?
 
@@ -76,7 +76,7 @@ class LectureViewController: SearchViewController {
     var noItemMessage: String?
 
     override func viewDidLoad() {
-       super.viewDidLoad()
+        super.viewDidLoad()
 
         var rightButtons = self.navigationItem.rightBarButtonItems ?? []
 
@@ -240,6 +240,12 @@ class LectureViewController: SearchViewController {
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
+    }
+
+    func syncStarted() {
+    }
+
+    func syncEnded() {
     }
 
     override func refresh(source: FirestoreSource) {
