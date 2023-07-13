@@ -44,6 +44,7 @@ class PlayerViewController: LectureViewController {
 
     @IBOutlet private var thumbnailBackgroundImageView: UIImageView!
     @IBOutlet private var stackViewMain: UIStackView!
+    @IBOutlet private var stackViewMinimize: UIStackView!
     @IBOutlet internal var thumbnailImageView: UIImageView!
     @IBOutlet private var titleLabel: UILabel!
     @IBOutlet private var verseLabel: UILabel!
@@ -90,6 +91,7 @@ class PlayerViewController: LectureViewController {
     @IBOutlet var playingInfoTitleStackView: UIStackView!
 
     internal lazy var seekGesture = UIPanGestureRecognizer(target: self, action: #selector(panRecognized(_:)))
+    internal lazy var minimizeGesture = UIPanGestureRecognizer(target: self, action: #selector(panMinimizeRecognized(_:)))
     internal var direction: UISwipeGestureRecognizer.Direction = .down
 
     var optionMenu: SPMenu!
@@ -169,6 +171,25 @@ class PlayerViewController: LectureViewController {
     }
 
     var _privateCurrentLecture: Model?
+
+    internal func updateCurrentLecture(lecture: Lecture) {
+        if lecture.id == _privateCurrentLecture?.id {
+            _privateCurrentLecture = lecture
+            loadViewIfNeeded()
+
+            updateMenuOption()
+            updateMetadata()
+
+            let playedSeconds = miniPlayerView.playedSeconds
+            miniPlayerView.currentLecture = lecture
+            miniPlayerView.playedSeconds = playedSeconds
+
+            if isPaused {
+                seekTo(seconds: lecture.lastPlayedPoint, updateServer: false)
+            }
+        }
+    }
+
     var currentLecture: Model? {
         get {
             _privateCurrentLecture
@@ -193,8 +214,12 @@ class PlayerViewController: LectureViewController {
             if let currentLecture = newValue {
                 UIApplication.shared.beginReceivingRemoteControlEvents()
 
-                try? AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
-                try? AVAudioSession.sharedInstance().setActive(true)
+                do {
+                    try AVAudioSession.sharedInstance().setCategory(.playback, mode: .default)
+                    try AVAudioSession.sharedInstance().setActive(true)
+                } catch {
+                    print(error)
+                }
 
                 if currentLecture.downloadState == .downloaded,
                    let audioURL = DownloadManager.shared.localFileURL(for: currentLecture) {
@@ -218,15 +243,20 @@ class PlayerViewController: LectureViewController {
                 Self.nowPlaying = (currentLecture, .paused)
 
                 if currentLecture.playProgress < 1.0 {
-                    seekTo(seconds: currentLecture.lastPlayedPoint)
+                    seekTo(seconds: currentLecture.lastPlayedPoint, updateServer: false)
                 }
 
-                videoButton.isHidden = currentLecture.resources.videos.first?.videoURL != nil
                 DefaultLectureViewModel.defaultModel.addToRecentlyPlayed(lecture: currentLecture, completion: { _ in })
                 DefaultLectureViewModel.defaultModel.updateTopLecture(date: Date(), lectureID: currentLecture.id, completion: { _ in })
             } else {
-                try? AVAudioSession.sharedInstance().setCategory(.ambient)
-                try? AVAudioSession.sharedInstance().setActive(true)
+
+                do {
+                    try AVAudioSession.sharedInstance().setCategory(.ambient)
+                    try AVAudioSession.sharedInstance().setActive(true)
+                } catch {
+                    print(error)
+                }
+
                 player = nil
                 videoButton.isHidden = true
 
@@ -317,14 +347,12 @@ class PlayerViewController: LectureViewController {
         }
 
         do {
-            seekGesture.delegate = self
             stackViewMain.addGestureRecognizer(seekGesture)
+            stackViewMinimize.addGestureRecognizer(minimizeGesture)
+
+            lectureTebleView.panGestureRecognizer.addTarget(self, action: #selector(tableViewPanRecognized(_:)))
         }
-        do {
-            let swipeGesture = UISwipeGestureRecognizer(target: self, action: #selector(swipeRecognized(_:)))
-            swipeGesture.direction = .down
-            self.view.addGestureRecognizer(swipeGesture)
-        }
+        hidePlaylist(animated: false)
         setupPlayerIcons()
         registerNowPlayingCommands()
         registerAudioSessionObservers()
@@ -360,6 +388,7 @@ class PlayerViewController: LectureViewController {
                 thumbnailImageView.image = placeholderImage
                 thumbnailBackgroundImageView.image = placeholderImage
             }
+            videoButton.isHidden = currentLecture.resources.videos.first?.videoURL == nil
         } else {
             titleLabel.text = "--"
             verseLabel.text = "--"
@@ -375,6 +404,7 @@ class PlayerViewController: LectureViewController {
             let placeholderImage: UIImage? = UIImage(named: "playerViewLogo")?.withRadius(radius: 10)
             thumbnailImageView.image = placeholderImage
             thumbnailBackgroundImageView.image = placeholderImage
+            videoButton.isHidden = true
         }
     }
     private func setupPlayerIcons() {
@@ -413,12 +443,6 @@ class PlayerViewController: LectureViewController {
                 _privateCurrentLecture = updatedLecture
                 updateMetadata()
             }
-        }
-    }
-
-    @objc private func swipeRecognized(_ sender: UISwipeGestureRecognizer) {
-        if sender.state == .ended {
-            minimize(animated: true)
         }
     }
 
@@ -612,7 +636,7 @@ extension PlayerViewController {
         seekTo(seconds: newTime)
     }
 
-    func seekTo(seconds: Int) {
+    func seekTo(seconds: Int, updateServer: Bool = true) {
         let seconds: Int64 = Int64(seconds)
         let targetTime: CMTime = CMTime(seconds: Double(seconds), preferredTimescale: player?.currentTime().timescale ?? 1)
 
@@ -620,7 +644,9 @@ extension PlayerViewController {
         player?.seek(to: targetTime, completionHandler: { [self] _ in
             self.isSeeking = false
             SPNowPlayingInfoCenter.shared.update(lecture: self.currentLecture, player: self.player, selectedRate: self.selectedRate)
-            self.updateLectureProgress()
+            if updateServer {
+                self.updateLectureProgress()
+            }
             updatePlayProgressUI(to: Double(seconds))
         })
     }

@@ -7,6 +7,7 @@
 
 import Foundation
 import CoreGraphics
+import FirebaseFirestoreSwift
 
 struct Lecture: Hashable, Codable {
 
@@ -63,10 +64,10 @@ struct Lecture: Hashable, Codable {
         return searchableTexts
     }()
 
-    var downloadState: DBLecture.DownloadState = .notDownloaded
+    var downloadState: DBLecture.DownloadState
     var downloadError: String?
     var isFavorite: Bool
-    var lastPlayedPoint: Int = 0
+    var lastPlayedPoint: Int
 
     var isCompleted: Bool {
         lastPlayedPoint == length || lastPlayedPoint == -1
@@ -118,10 +119,29 @@ struct Lecture: Hashable, Codable {
             self.lastModifiedTimestamp = nil
         }
 
-        isFavorite = (try? container.decodeIfPresent(Bool.self, forKey: .isFavorite)) ?? false
-        lastPlayedPoint = (try? container.decodeIfPresent(Int.self, forKey: .lastPlayedPoint)) ?? 0
-        downloadState = (try? container.decodeIfPresent(DBLecture.DownloadState.self, forKey: .downloadState)) ?? .notDownloaded
-        downloadError = (try? container.decodeIfPresent(String.self, forKey: .downloadError)) ?? nil
+        if let value = try? container.decodeIfPresent(Bool.self, forKey: .isFavorite) {
+            self.isFavorite = value
+        } else {
+            self.isFavorite = false
+        }
+
+        if let value = try? container.decodeIfPresent(Int.self, forKey: .lastPlayedPoint) {
+            self.lastPlayedPoint = value
+        } else {
+            self.lastPlayedPoint = 0
+        }
+
+        if let value = try? container.decodeIfPresent(DBLecture.DownloadState.self, forKey: .downloadState) {
+            self.downloadState = value
+        } else {
+            self.downloadState = .notDownloaded
+        }
+
+        if let value = try? container.decodeIfPresent(String.self, forKey: .downloadError) {
+            self.downloadError = value
+        } else {
+            self.downloadError = nil
+        }
     }
 
     static func createNewDBLecture(lecture: Lecture) -> DBLecture {

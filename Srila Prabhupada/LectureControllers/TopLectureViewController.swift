@@ -43,6 +43,12 @@ class TopLectureViewController: LectureViewController {
         }
     }
 
+    override func syncStarted() {
+    }
+
+    override func syncEnded() {
+    }
+
     @IBAction func segmentAction(_ sender: UISegmentedControl) {
 
         do {
@@ -58,6 +64,7 @@ class TopLectureViewController: LectureViewController {
     override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[LectureViewController.Model], Error>) -> Void) {
 
         guard let selectedLectureType = TopLectureType(rawValue: topLecturesSegmentControl.selectedSegmentIndex) else {
+            self.lectureTebleView.refreshControl?.endRefreshing()
             return
         }
 
@@ -68,8 +75,12 @@ class TopLectureViewController: LectureViewController {
 
                 switch result {
                 case .success(let lectureIDs):
-                    DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: completion)
+                    DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: { result in
+                        self.lectureTebleView.refreshControl?.endRefreshing()
+                        completion(result)
+                    })
                 case .failure(let error):
+                    self.lectureTebleView.refreshControl?.endRefreshing()
                     completion(.failure(error))
                 }
             })
@@ -83,8 +94,12 @@ class TopLectureViewController: LectureViewController {
 
                 switch result {
                 case .success(let lectureIDs):
-                    DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: completion)
+                    DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: { result in
+                        self.lectureTebleView.refreshControl?.endRefreshing()
+                        completion(result)
+                    })
                 case .failure(let error):
+                    self.lectureTebleView.refreshControl?.endRefreshing()
                     completion(.failure(error))
                 }
             })
@@ -94,8 +109,12 @@ class TopLectureViewController: LectureViewController {
 
                 switch result {
                 case .success(let lectureIDs):
-                    DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: completion)
+                    DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: { result in
+                        self.lectureTebleView.refreshControl?.endRefreshing()
+                        completion(result)
+                    })
                 case .failure(let error):
+                    self.lectureTebleView.refreshControl?.endRefreshing()
                     completion(.failure(error))
                 }
             })
@@ -115,8 +134,12 @@ class TopLectureViewController: LectureViewController {
 
                 switch result {
                 case .success(let lectureIDs):
-                    DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: completion)
+                    DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: { result in
+                        self.lectureTebleView.refreshControl?.endRefreshing()
+                        completion(result)
+                    })
                 case .failure(let error):
+                    self.lectureTebleView.refreshControl?.endRefreshing()
                     completion(.failure(error))
                 }
             })

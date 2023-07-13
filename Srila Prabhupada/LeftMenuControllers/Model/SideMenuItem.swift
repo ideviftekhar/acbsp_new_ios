@@ -17,7 +17,9 @@ enum SideMenuItem: String, CaseIterable {
     case contactUs = "Contact Us"
     case share = "Share"
     case donate = "Donate"
+    #if SP
     case copyright = "Copyright"
+    #endif
     case rateUs = "Rate Us"
 
     var image: UIImage? {
@@ -36,8 +38,10 @@ enum SideMenuItem: String, CaseIterable {
             return UIImage(named: "square.and.arrow.up.circle")
         case .donate:
             return UIImage(named: "gift.circle")
+#if SP
         case .copyright:
             return UIImage(compatibleSystemName: "c.circle")
+#endif
         case .rateUs:
             return UIImage(compatibleSystemName: "star.circle")
         case .contactUs:

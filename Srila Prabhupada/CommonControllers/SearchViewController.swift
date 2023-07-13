@@ -59,7 +59,7 @@ class SearchViewController: UIViewController {
                 searchController.searchBar.text = searchText
                 searchController.searchBar.placeholder = "Search..."
                 searchController.searchBar.barStyle = .black
-                if#available(iOS 14.0, *), #available(macCatalyst 14.0, *), UIDevice.current.userInterfaceIdiom == .mac {
+                if #available(iOS 14.0, *), #available(macCatalyst 14.0, *), UIDevice.current.userInterfaceIdiom == .mac {
                     searchController.searchBar.barStyle = .default
                 }
                 searchController.searchBar.enablesReturnKeyAutomatically = false
@@ -171,7 +171,7 @@ extension SearchViewController: SideMenuControllerDelegate {
     @IBAction func humburgerBarButtonTapped(_ sender: UIBarButtonItem) {
         let sideMenuNavigationController = UIStoryboard.sideMenu.instantiate(SideMenuNavigationController.self)
         sideMenuNavigationController.settings.presentationStyle = .menuSlideIn
-        sideMenuNavigationController .settings.presentationStyle.presentingEndAlpha = 0.7
+        sideMenuNavigationController.settings.presentationStyle.presentingEndAlpha = 0.7
         sideMenuNavigationController.settings.presentationStyle.onTopShadowOpacity = 0.3
 
         if let sideMenuNavigationController = sideMenuNavigationController.viewControllers.first as? SideMenuViewController {
@@ -213,10 +213,12 @@ extension SearchViewController: SideMenuControllerDelegate {
                 safariController.popoverPresentationController?.sourceView = cell
                 controller.present(safariController, animated: true, completion: nil)
             }
+#if SP
         case .copyright:
             let copyrightController = UIStoryboard.sideMenu.instantiate(UINavigationController.self, identifier: "CopyrightNavigationController")
             copyrightController.popoverPresentationController?.sourceView = cell
             controller.present(copyrightController, animated: true, completion: nil)
+#endif
         case .rateUs:
             controller.dismiss(animated: true, completion: nil)
 

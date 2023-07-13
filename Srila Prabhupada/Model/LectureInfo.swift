@@ -6,8 +6,10 @@
 //
 
 import Foundation
+import FirebaseFirestoreSwift
 
 struct LectureInfo: Hashable, Codable {
+
     let id: Int
     let creationTimestamp: Int
     var isFavorite: Bool

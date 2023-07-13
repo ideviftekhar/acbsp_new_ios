@@ -97,6 +97,7 @@ class TabBarController: UITabBarController {
         }
         
         addTimestampObserver()
+        addSyncStatusListener()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -161,6 +162,40 @@ class TabBarController: UITabBarController {
 
 extension TabBarController {
 
+    private func addSyncStatusListener() {
+
+        sendSyncStatus(lectureSyncManager.syncStatus)
+        lectureSyncManager.syncStatusHandler = { [self] status in
+            sendSyncStatus(status)
+        }
+    }
+
+    private func sendSyncStatus(_ status: LectureSyncManager.Status) {
+        if let tabNavigationControllers = viewControllers as? [UINavigationController] {
+            let viewControllers: [UIViewController] = tabNavigationControllers.flatMap { $0.viewControllers }
+            var lectureControllers: [LectureViewController] = viewControllers.compactMap({ $0 as? LectureViewController })
+            for lectureController in lectureControllers where lectureController.isViewLoaded {
+                switch status {
+                case .none:
+                    lectureController.syncEnded()
+                case .syncing:
+                    lectureController.syncStarted()
+                }
+            }
+        }
+
+        if let sideNavigationController = self.presentedViewController as? UINavigationController {
+            var sideMenuControllers: [SideMenuViewController] = sideNavigationController.viewControllers.compactMap { $0 as? SideMenuViewController }
+            for sideMenuController in sideMenuControllers where sideMenuController.isViewLoaded {
+                switch status {
+                case .none:
+                    sideMenuController.syncEnded()
+                case .syncing:
+                    sideMenuController.syncStarted()
+                }
+            }
+        }
+    }
 
     func startSyncing(force: Bool) {
 
@@ -180,6 +215,11 @@ extension TabBarController {
 //            progressView.alpha = 0.0
 //            loadingLabel.text = nil
             self.lectures = lectures
+
+            if let playingLecture = playerViewController.currentLecture,
+                let updatedPlayingLecture: Lecture = lectures.first(where: { $0.id == playingLecture.id }) {
+                playerViewController.updateCurrentLecture(lecture: updatedPlayingLecture)
+            }
 
             reloadAllControllers()
         })

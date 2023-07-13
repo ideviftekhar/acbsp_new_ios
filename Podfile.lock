@@ -755,7 +755,7 @@ PODS:
     - GTMSessionFetcher/Core (< 3.0, >= 1.5)
   - GTMSessionFetcher/Core (2.1.0)
   - IQKeyboardManagerSwift (6.5.10)
-  - IQListKit (4.0.0):
+  - IQListKit (6.1.0):
     - SwiftTryCatch (~> 0.0.1)
   - leveldb-library (1.22.1)
   - Libuv-gRPC (0.0.10):
@@ -878,7 +878,7 @@ SPEC CHECKSUMS:
   GTMAppAuth: 0ff230db599948a9ad7470ca667337803b3fc4dd
   GTMSessionFetcher: ffbb25ec00ebcb5201adab0a56d808f6f1902d9f
   IQKeyboardManagerSwift: 52962c76ab33532f15ad9f3ff4e5715eda5335bb
-  IQListKit: 2462357fe0416cd198893adecece31dc78f94338
+  IQListKit: c1936c22e36df5acec33671a2ca070d20a9f03a8
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   Libuv-gRPC: 55e51798e14ef436ad9bc45d12d43b77b49df378
   MarqueeLabel: 02f5ac8fd6877c94564556cb93fa86c70c08baeb
@@ -893,6 +893,6 @@ SPEC CHECKSUMS:
   SwiftLint: 32ee33ded0636d0905ef6911b2b67bbaeeedafa5
   SwiftTryCatch: fb6d2b34abe48efd69578dac919293a44f95b481
 
-PODFILE CHECKSUM: 18bbf0353280569b5541432c75d744b2a2286fad
+PODFILE CHECKSUM: 8cec9f9b9764da0bacc2bd2583afd03a4a75a93a
 
 COCOAPODS: 1.12.1

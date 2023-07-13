@@ -7,6 +7,7 @@
 
 import Foundation
 import UIKit
+import FirebaseFirestoreSwift
 
 enum PlaylistType: String, Codable, CaseIterable {
     case `public`   = "Public"

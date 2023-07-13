@@ -31,6 +31,10 @@ class PlaylistLecturesViewController: LectureViewController {
             rightButtons.insert(addLecturesButton, at: 0)
             self.navigationItem.rightBarButtonItems = rightButtons
         }
+
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshTriggered(_:)), for: .valueChanged)
+        lectureTebleView.refreshControl = refreshControl
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -41,9 +45,22 @@ class PlaylistLecturesViewController: LectureViewController {
         }
     }
 
+    @objc private func refreshTriggered(_ sender: UIRefreshControl) {
+        refresh(source: .default)
+    }
+
+    override func syncStarted() {
+    }
+
+    override func syncEnded() {
+    }
+
     override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[LectureViewController.Model], Error>) -> Void) {
 
-        DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: playlist.lectureIds, source: source, progress: nil, completion: completion)
+        DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: playlist.lectureIds, source: source, progress: nil, completion: { result in
+            self.lectureTebleView.refreshControl?.endRefreshing()
+            completion(result)
+        })
     }
 
     @objc func addLecturesButtonAction(_ sender: UIBarButtonItem) {
