@@ -31,11 +31,11 @@ class CreatePlaylistViewController: UIViewController {
 
             switch playlistType {
             case .private:
-                privatePlaylistButton.setImage(UIImage(compatibleSystemName: "circle.inset.filled"), for: .normal)
-                publicPlaylistButton.setImage(UIImage(compatibleSystemName: "circle"), for: .normal)
+                privatePlaylistButton.setImage(UIImage(systemName: "circle.inset.filled"), for: .normal)
+                publicPlaylistButton.setImage(UIImage(systemName: "circle"), for: .normal)
             case .public:
-                publicPlaylistButton.setImage(UIImage(compatibleSystemName: "circle.inset.filled"), for: .normal)
-                privatePlaylistButton.setImage(UIImage(compatibleSystemName: "circle"), for: .normal)
+                publicPlaylistButton.setImage(UIImage(systemName: "circle.inset.filled"), for: .normal)
+                privatePlaylistButton.setImage(UIImage(systemName: "circle"), for: .normal)
             case .unknown:
                 break
             }
@@ -143,9 +143,7 @@ extension CreatePlaylistViewController {
     private func showLoading() {
         loadingIndicatorView.startAnimating()
 
-        if #available(iOS 13.0, *) {
-            isModalInPresentation = true
-        }
+        isModalInPresentation = true
 
         var rightButtons = self.navigationItem.rightBarButtonItems ?? []
         rightButtons.removeAll { $0 == doneButton }
@@ -164,9 +162,7 @@ extension CreatePlaylistViewController {
     private func hideLoading() {
         loadingIndicatorView.stopAnimating()
 
-        if #available(iOS 13.0, *) {
-            isModalInPresentation = false
-        }
+        isModalInPresentation = true
 
         var rightButtons = self.navigationItem.rightBarButtonItems ?? []
         rightButtons.insert(doneButton, at: 0)

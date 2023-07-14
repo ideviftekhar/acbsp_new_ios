@@ -20,14 +20,7 @@ class DeleteAccountViewController: UIViewController {
     private let emailLoginViewModel: LoginViewModel = FirebaseEmailLoginViewModel()
     private let googleLoginViewModel: LoginViewModel = FirebaseGoogleLoginViewModel()
 
-    private var _appleLoginViewModel: Any?
-    @available(iOS 13.0, *)
-    fileprivate var appleLoginViewModel: LoginViewModel {
-        if _appleLoginViewModel == nil {
-            _appleLoginViewModel = FirebaseAppleLoginViewModel()
-        }
-        return _appleLoginViewModel as! LoginViewModel
-    }
+    fileprivate var appleLoginViewModel: LoginViewModel = FirebaseAppleLoginViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()

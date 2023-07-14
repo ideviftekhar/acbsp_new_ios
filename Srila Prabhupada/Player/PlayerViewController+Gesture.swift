@@ -39,6 +39,7 @@ extension PlayerViewController {
                     direction = .up
                 } else {
                     direction = .down
+                    self.view.cornerRadius = 30
                 }
 
             } else {
@@ -72,6 +73,7 @@ extension PlayerViewController {
                 seekTo(seconds: Int(proposedSeek))
             case .up, .down:
 
+                self.view.cornerRadius = 0.0
                 let velocity = sender.velocity(in: self.view)
                 if velocity.y < 0 {
                     expand(animated: true)
@@ -109,7 +111,10 @@ extension PlayerViewController {
 
             bounds.origin.y += move
             self.view.frame = bounds
+            self.view.cornerRadius = 30
         case .ended, .cancelled:
+
+            self.view.cornerRadius = 0.0
             let velocity = sender.velocity(in: self.view)
             if velocity.y < 0 {
                 expand(animated: true)
@@ -145,6 +150,7 @@ extension PlayerViewController {
 
                 bounds.origin.y += move
                 self.view.frame = bounds
+                self.view.cornerRadius = 30
             } else {
                 let needed = self.view.frame.origin.y
                 let adjustment = CGFloat.minimum(needed, -move)
@@ -157,11 +163,15 @@ extension PlayerViewController {
                     var bounds = self.view.frame
                     bounds.origin.y -= adjustment
                     self.view.frame = bounds
+                    self.view.cornerRadius = 30
+                } else {
+                    self.view.cornerRadius = 0.0
                 }
             }
 
         case .ended, .cancelled:
 
+            self.view.cornerRadius = 0.0
             let velocity = sender.velocity(in: self.view)
             if velocity.y < 0 {
                 expand(animated: true)
@@ -171,7 +181,6 @@ extension PlayerViewController {
                 expand(animated: true)
             }
 
-            break
         case .possible, .failed:
             break
         @unknown default:

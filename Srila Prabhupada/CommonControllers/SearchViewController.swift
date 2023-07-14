@@ -59,13 +59,13 @@ class SearchViewController: UIViewController {
                 searchController.searchBar.text = searchText
                 searchController.searchBar.placeholder = "Search..."
                 searchController.searchBar.barStyle = .black
-                if #available(iOS 14.0, *), #available(macCatalyst 14.0, *), UIDevice.current.userInterfaceIdiom == .mac {
+                if Environment.current.device == .mac {
                     searchController.searchBar.barStyle = .default
                 }
                 searchController.searchBar.enablesReturnKeyAutomatically = false
             }
 
-            if #available(iOS 13.0, *) {
+            do {
                 searchController.automaticallyShowsCancelButton = false
                 searchController.searchBar.searchTextField.font = UIFont(name: "AvenirNextCondensed-Regular", size: 17)
                 searchController.searchBar.searchTextField.leftView?.tintColor = UIColor.D5D5D5

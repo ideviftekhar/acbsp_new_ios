@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <device id="ipad12_9rounded" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
@@ -14,40 +14,40 @@
             <objects>
                 <viewController storyboardIdentifier="LoadingViewController" id="GWA-vf-cU9" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="U6i-0s-jwv">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_1024_corner" translatesAutoresizingMaskIntoConstraints="NO" id="MJV-Y0-fX3">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                             </imageView>
                             <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fKD-Sb-TmW">
-                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="c5S-bb-8K7">
-                                    <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                                 <blurEffect style="light"/>
                             </visualEffectView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="40" translatesAutoresizingMaskIntoConstraints="NO" id="BLs-Jr-ENb">
-                                <rect key="frame" x="70.666666666666671" y="282.66666666666663" width="251.66666666666663" height="286.66666666666663"/>
+                                <rect key="frame" x="364" y="510.5" width="296" height="345"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_1024_corner" translatesAutoresizingMaskIntoConstraints="NO" id="EGb-2z-5Ix">
-                                        <rect key="frame" x="26" y="0.0" width="200" height="200"/>
+                                        <rect key="frame" x="23" y="0.0" width="250" height="250"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="6JX-rb-EHd">
                                                 <variation key="heightClass=compact" constant="100"/>
-                                                <variation key="heightClass=regular-userInterfaceIdiom=mac-widthClass=compact" constant="250"/>
+                                                <variation key="heightClass=regular-widthClass=regular" constant="250"/>
                                             </constraint>
                                             <constraint firstAttribute="width" secondItem="EGb-2z-5Ix" secondAttribute="height" multiplier="1:1" id="KAE-60-Rlt"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bhakti Vikasa Swami" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Qe-j5-MgZ">
-                                        <rect key="frame" x="0.0" y="239.99999999999991" width="251.66666666666666" height="46.666666666666657"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bhakti Vikāsa Swami" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Qe-j5-MgZ">
+                                        <rect key="frame" x="0.0" y="290" width="296" height="55"/>
                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="34"/>
                                         <color key="textColor" name="000000"/>
                                         <nil key="highlightedColor"/>
-                                        <variation key="userInterfaceIdiom=mac">
-                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="40"/>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="40"/>
                                         </variation>
                                     </label>
                                 </subviews>

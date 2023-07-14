@@ -17,24 +17,14 @@ class HomeViewController: LectureViewController {
             noItemTitle = "No Lectures"
             noItemMessage = "No lectures to display here"
         }
-
-        let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(refreshTriggered(_:)), for: .valueChanged)
-        lectureTebleView.refreshControl = refreshControl
-    }
-
-    @objc private func refreshTriggered(_ sender: UIRefreshControl) {
-        if let tabBarController = self.tabBarController as? TabBarController {
-            tabBarController.startSyncing(force: false)
-        }
     }
 
     override func syncStarted() {
-        lectureTebleView.refreshControl?.beginRefreshing()
+        searchController.searchBar.placeholder = "Loading..."
     }
 
     override func syncEnded() {
-        lectureTebleView.refreshControl?.endRefreshing()
+        searchController.searchBar.placeholder = "Search..."
     }
 
     override func viewWillAppear(_ animated: Bool) {

@@ -657,7 +657,7 @@ PODS:
     - FirebaseCoreExtension (~> 10.0)
     - FirebaseFirestore (~> 10.0)
     - FirebaseSharedSwift (~> 10.0)
-  - FirebaseInstallations (10.1.0):
+  - FirebaseInstallations (10.12.0):
     - FirebaseCore (~> 10.0)
     - GoogleUtilities/Environment (~> 7.8)
     - GoogleUtilities/UserDefaults (~> 7.8)
@@ -866,7 +866,7 @@ SPEC CHECKSUMS:
   FirebaseDynamicLinks: f832045bdb98db10ecaca9ab7e258f1602395d7c
   FirebaseFirestore: d482e5e0f95dba8ef5d499a7efa87ba2f56ef0c0
   FirebaseFirestoreSwift: ba0e8ae1dca6cd395c646671a7fe2dcc077db225
-  FirebaseInstallations: 99d24bac0243cf8b0e96cf5426340d211f0bcc80
+  FirebaseInstallations: 7b99ef103f013624444c614397038219c45f8e63
   FirebaseMessaging: 4487bbff9b9b927ba1dd3ea40d1ceb58e4ee3cb5
   FirebaseSharedSwift: 6966c4de41fba13a4270de1e421e6eee2cf90113
   GoogleDataTransport: 1c8145da7117bd68bbbed00cf304edb6a24de00f
@@ -893,6 +893,6 @@ SPEC CHECKSUMS:
   SwiftLint: 32ee33ded0636d0905ef6911b2b67bbaeeedafa5
   SwiftTryCatch: fb6d2b34abe48efd69578dac919293a44f95b481
 
-PODFILE CHECKSUM: 8cec9f9b9764da0bacc2bd2583afd03a4a75a93a
+PODFILE CHECKSUM: abb85628d575b3a9a1ff43b11b51d463c065587b
 
 COCOAPODS: 1.12.1

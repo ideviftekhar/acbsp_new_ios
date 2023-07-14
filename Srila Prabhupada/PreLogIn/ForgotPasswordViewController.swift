@@ -67,9 +67,7 @@ class ForgotPasswordViewController: UIViewController {
     private func showLoading() {
         loadingIndicatorView.startAnimating()
 
-        if #available(iOS 13.0, *) {
-            isModalInPresentation = true
-        }
+        isModalInPresentation = true
         emailTextField.isEnabled = false
 
         submitButton.isEnabled = false
@@ -79,9 +77,7 @@ class ForgotPasswordViewController: UIViewController {
     private func hideLoading() {
         loadingIndicatorView.stopAnimating()
 
-        if #available(iOS 13.0, *) {
-            isModalInPresentation = false
-        }
+        isModalInPresentation = true
         emailTextField.isEnabled = true
 
         submitButton.isEnabled = true

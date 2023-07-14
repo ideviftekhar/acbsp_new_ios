@@ -28,9 +28,9 @@ enum PlaylistType: String, Codable, CaseIterable {
     var image: UIImage? {
         switch self {
         case .public:
-            return UIImage(compatibleSystemName: "person.3")
+            return UIImage(systemName: "person.3")
         case .private:
-            return UIImage(compatibleSystemName: "lock")
+            return UIImage(systemName: "lock")
         case .unknown:
             return nil
         }
@@ -39,9 +39,9 @@ enum PlaylistType: String, Codable, CaseIterable {
     var selectedImage: UIImage? {
         switch self {
         case .public:
-            return UIImage(compatibleSystemName: "person.3.fill")
+            return UIImage(systemName: "person.3.fill")
         case .private:
-            return UIImage(compatibleSystemName: "lock.fill")
+            return UIImage(systemName: "lock.fill")
         case .unknown:
             return nil
         }

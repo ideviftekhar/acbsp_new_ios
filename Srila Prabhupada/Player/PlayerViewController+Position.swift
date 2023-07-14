@@ -65,6 +65,7 @@ extension PlayerViewController {
         let middleAnimationBlock = { [self] in
             miniPlayerView.alpha = 0.0
             fullPlayerContainerView.alpha = 1.0
+            self.view.cornerRadius = 0.0
         }
 
         let animationBlock = { [self] in
@@ -93,6 +94,7 @@ extension PlayerViewController {
         let middleAnimationBlock = { [self] in
             miniPlayerView.alpha = 1.0
             fullPlayerContainerView.alpha = 0.0
+            self.view.cornerRadius = 0.0
         }
 
         let animationBlock = { [self] in
@@ -135,6 +137,7 @@ extension PlayerViewController {
             self.view.frame = tabBarController.view.bounds
             miniPlayerView.alpha = 1.0
             fullPlayerContainerView.alpha = 0.0
+            self.view.cornerRadius = 0.0
         }
 
         visibleState = .close

@@ -19,16 +19,6 @@ class DownloadViewController: LectureViewController {
         }
     }
 
-    @objc private func refreshTriggered(_ sender: UIRefreshControl) {
-    }
-
-    override func syncStarted() {
-    }
-
-    override func syncEnded() {
-    }
-
-
     override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[Model], Error>) -> Void) {
 
         var lectureIDs: [Int] = []

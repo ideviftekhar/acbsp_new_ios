@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_1" orientation="portrait" appearance="dark"/>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="ipad12_9rounded" orientation="portrait" layout="fullscreen" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -17,7 +17,7 @@
                     <tabBarItem key="tabBarItem" title="Playlists" image="music.note.list" catalog="system" id="OHl-3v-G7E"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" largeTitles="YES" id="PUT-kO-Asm">
-                        <rect key="frame" x="0.0" y="48" width="414" height="96"/>
+                        <rect key="frame" x="0.0" y="24" width="1024" height="102"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="barTintColor" name="ThemeColor"/>
@@ -42,41 +42,24 @@
             <objects>
                 <viewController storyboardIdentifier="PlaylistViewController" id="gmj-55-TrK" customClass="PlaylistViewController" customModule="BVKS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="PCq-Gu-O19">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="bS6-wd-u2X">
-                                <rect key="frame" x="0.0" y="123" width="414" height="773"/>
+                                <rect key="frame" x="0.0" y="176" width="1024" height="1190"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="PlaylistCell" textLabel="4oC-pL-z5w" style="IBUITableViewCellStyleDefault" id="bBS-gS-dqc">
-                                        <rect key="frame" x="0.0" y="50" width="414" height="46.5"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bBS-gS-dqc" id="4iP-5O-E4a">
-                                            <rect key="frame" x="0.0" y="0.0" width="383.5" height="46.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="4oC-pL-z5w">
-                                                    <rect key="frame" x="20" y="0.0" width="355.5" height="46.5"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <variation key="heightClass=regular-widthClass=regular">
-                                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="22"/>
-                                                    </variation>
-                                                </label>
-                                            </subviews>
-                                        </tableViewCellContentView>
-                                    </tableViewCell>
-                                </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="gmj-55-TrK" id="BRF-9X-SRH"/>
                                     <outlet property="delegate" destination="gmj-55-TrK" id="WNd-US-tcL"/>
                                 </connections>
                             </tableView>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="YRT-Cq-oUI">
-                                <rect key="frame" x="0.0" y="92" width="414" height="32"/>
+                                <rect key="frame" x="0.0" y="126" width="1024" height="51"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="Rcy-aP-cnt">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="50"/>
+                                    </constraint>
+                                </constraints>
                                 <segments>
                                     <segment title="Public"/>
                                     <segment title="Private"/>
@@ -121,11 +104,11 @@
             <objects>
                 <viewController storyboardIdentifier="PlaylistLecturesViewController" id="e29-iI-P3k" customClass="PlaylistLecturesViewController" customModule="BVKS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="uFq-Tc-XYI">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="21l-0e-ZhV">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <connections>
                                     <outlet property="dataSource" destination="e29-iI-P3k" id="AhZ-hV-DYx"/>
@@ -156,19 +139,19 @@
             <objects>
                 <viewController storyboardIdentifier="CreatePlayListViewController" id="Epx-Gk-cDm" customClass="CreatePlaylistViewController" customModule="BVKS" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="c8X-jM-ZBn">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="dRO-cn-uM2">
-                                <rect key="frame" x="10" y="154" width="394" height="350"/>
+                                <rect key="frame" x="10" y="136" width="1004" height="419.5"/>
                                 <subviews>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Playlist Title" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ifZ-dF-o1X" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
-                                        <rect key="frame" x="0.0" y="0.0" width="394" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="1004" height="50"/>
                                         <color key="tintColor" name="0099CA"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="Wfj-rl-Yrx"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="14"/>
+                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="titleColor">
@@ -187,17 +170,17 @@
                                                 <real key="value" value="1"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
-                                        <variation key="userInterfaceIdiom=mac">
-                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="20"/>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="22"/>
                                         </variation>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Category" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="pbG-B6-gAP" customClass="SkyFloatingLabelTextField" customModule="SkyFloatingLabelTextField">
-                                        <rect key="frame" x="0.0" y="60" width="394" height="50"/>
+                                        <rect key="frame" x="0.0" y="80" width="1004" height="50"/>
                                         <color key="tintColor" name="0099CA"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="50" id="wqr-gv-QgO"/>
                                         </constraints>
-                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="14"/>
+                                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                         <userDefinedRuntimeAttributes>
                                             <userDefinedRuntimeAttribute type="color" keyPath="titleColor">
@@ -216,24 +199,24 @@
                                                 <real key="value" value="1"/>
                                             </userDefinedRuntimeAttribute>
                                         </userDefinedRuntimeAttributes>
-                                        <variation key="userInterfaceIdiom=mac">
-                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="20"/>
+                                        <variation key="heightClass=regular-widthClass=regular">
+                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="22"/>
                                         </variation>
                                     </textField>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="5Mu-HV-7By">
-                                        <rect key="frame" x="0.0" y="120" width="394" height="178.5"/>
+                                        <rect key="frame" x="0.0" y="160" width="1004" height="188"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z8s-8r-IfT">
-                                                <rect key="frame" x="0.0" y="0.0" width="394" height="23.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="1004" height="33"/>
                                                 <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="17"/>
                                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
-                                                <variation key="userInterfaceIdiom=mac">
+                                                <variation key="heightClass=regular-widthClass=regular">
                                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="24"/>
                                                 </variation>
                                             </label>
                                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="hsc-mg-D4I">
-                                                <rect key="frame" x="0.0" y="28.5" width="394" height="150"/>
+                                                <rect key="frame" x="0.0" y="38" width="1004" height="150"/>
                                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="150" id="bpl-RM-fHL"/>
@@ -259,10 +242,10 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="YBE-4w-zmq">
-                                        <rect key="frame" x="0.0" y="308.5" width="394" height="41.5"/>
+                                        <rect key="frame" x="0.0" y="378" width="1004" height="41.5"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lJT-7P-kmK">
-                                                <rect key="frame" x="0.0" y="0.0" width="192.5" height="41.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="490.5" height="41.5"/>
                                                 <color key="tintColor" name="0099CC"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" image="largecircle.fill.circle" catalog="system" title="  Private">
@@ -273,7 +256,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7Ad-aA-VZl">
-                                                <rect key="frame" x="202.5" y="0.0" width="191.5" height="41.5"/>
+                                                <rect key="frame" x="500.5" y="0.0" width="503.5" height="41.5"/>
                                                 <color key="tintColor" name="0099CC"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" image="circle" catalog="system" title="  Public">
@@ -286,6 +269,7 @@
                                         </subviews>
                                     </stackView>
                                 </subviews>
+                                <variation key="heightClass=regular-widthClass=regular" spacing="30"/>
                             </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="1bZ-Oh-H5z"/>
@@ -312,7 +296,7 @@
                             </barButtonItem>
                             <barButtonItem style="plain" id="qUL-nd-wqB">
                                 <view key="customView" contentMode="scaleToFill" id="LmG-VC-saP">
-                                    <rect key="frame" x="292.5" y="12" width="40" height="20"/>
+                                    <rect key="frame" x="902.5" y="15" width="40" height="20"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Zcs-b0-F88">
@@ -351,7 +335,7 @@
                     <tabBarItem key="tabBarItem" title="Playlists" image="music.note.list" catalog="system" id="KNM-Hk-dkA"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" largeTitles="YES" id="oqp-Lg-Ejm">
-                        <rect key="frame" x="0.0" y="48" width="414" height="96"/>
+                        <rect key="frame" x="0.0" y="24" width="1024" height="102"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <color key="barTintColor" name="ThemeColor"/>
@@ -374,10 +358,10 @@
     </scenes>
     <designables>
         <designable name="ifZ-dF-o1X">
-            <size key="intrinsicContentSize" width="57.5" height="21"/>
+            <size key="intrinsicContentSize" width="90.5" height="32"/>
         </designable>
         <designable name="pbG-B6-gAP">
-            <size key="intrinsicContentSize" width="43.5" height="21"/>
+            <size key="intrinsicContentSize" width="68.5" height="32"/>
         </designable>
     </designables>
     <color key="tintColor" name="F96D00"/>

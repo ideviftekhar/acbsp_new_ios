@@ -19,13 +19,13 @@ protocol MiniPlayerViewDelegate: AnyObject {
 class MiniPlayerView: UIView {
 
     static let miniPlayerHeight: CGFloat = {
-        let height: CGFloat
-        if #available(iOS 14.0, *), #available(macCatalyst 14.0, *), UIDevice.current.userInterfaceIdiom == .mac {
-            height = 90
-        } else {
-            height = 60
+
+        switch Environment.current.device {
+        case .mac, .pad:
+            return 90
+        default:
+            return 64
         }
-        return height
     }()
     
     @IBOutlet private var thumbnailImageView: UIImageView!
@@ -48,8 +48,8 @@ class MiniPlayerView: UIView {
 
     weak var delegate: MiniPlayerViewDelegate?
 
-    var playFillImage = UIImage(compatibleSystemName: "play.fill")
-    var pauseFillImage = UIImage(compatibleSystemName: "pause.fill")
+    var playFillImage = UIImage(systemName: "play.fill")
+    var pauseFillImage = UIImage(systemName: "pause.fill")
     
     static func loadFromXIB() -> MiniPlayerView {
         let playerView = Bundle.main.loadNibNamed("MiniPlayerView", owner: nil)?.first as! MiniPlayerView
@@ -65,18 +65,13 @@ class MiniPlayerView: UIView {
         seekGesture.delegate = self
         expandButton.addGestureRecognizer(seekGesture)
 
-        if #available(iOS 14.0, *), #available(macCatalyst 14.0, *), UIDevice.current.userInterfaceIdiom == .mac {
+        switch Environment.current.device {
+        case .mac:
             playFillImage = UIImage(named: "playFill")
             pauseFillImage = UIImage(named: "pauseFill")
             let newImage: UIImage? = isPlaying ? pauseFillImage :  playFillImage
             playButton.setImage(newImage, for: .normal)
-        }
-
-        if #available(iOS 14.0, *) {
-            if UIDevice.current.userInterfaceIdiom != .mac {
-                timeSlider.setThumbImage(UIImage(), for: .normal)
-            }
-        } else {
+        default:
             timeSlider.setThumbImage(UIImage(), for: .normal)
         }
     }

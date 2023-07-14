@@ -14,7 +14,7 @@ class CreateAccountViewController: UIViewController {
     @IBOutlet private var rePasswordTextField: UITextField!
     @IBOutlet private var createButton: UIButton!
     @IBOutlet private var loadingIndicatorView: UIActivityIndicatorView!
-    
+
     private let signupViewModel: SignupViewModel = FirebaseEmailSignupViewModel()
 
     override func viewDidLoad() {
@@ -81,9 +81,7 @@ class CreateAccountViewController: UIViewController {
     private func showLoading() {
         loadingIndicatorView.startAnimating()
 
-        if #available(iOS 13.0, *) {
-            isModalInPresentation = true
-        }
+        isModalInPresentation = true
         emailTextField.isEnabled = false
         passwordTextField.isEnabled = false
         rePasswordTextField.isEnabled = false
@@ -95,9 +93,7 @@ class CreateAccountViewController: UIViewController {
     private func hideLoading() {
         loadingIndicatorView.stopAnimating()
 
-        if #available(iOS 13.0, *) {
-            isModalInPresentation = false
-        }
+        isModalInPresentation = false
         emailTextField.isEnabled = true
         passwordTextField.isEnabled = true
         rePasswordTextField.isEnabled = true

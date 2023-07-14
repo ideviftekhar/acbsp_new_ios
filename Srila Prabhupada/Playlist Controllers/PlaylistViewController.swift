@@ -19,7 +19,7 @@ class PlaylistViewController: SearchViewController {
 
     private lazy var addPlaylistButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addPlaylistButtonAction(_:)))
 
-    private let sortButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(compatibleSystemName: "arrow.up.arrow.down"), style: .plain, target: nil, action: nil)
+    private let sortButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.up.arrow.down"), style: .plain, target: nil, action: nil)
     private var sortMenu: SPMenu!
 
     var selectedSortType: PlaylistSortType {
@@ -221,7 +221,7 @@ extension PlaylistViewController {
         if let icon = selectedSortType.imageSelected {
             sortButton.image = icon
         } else {
-            sortButton.image = UIImage(compatibleSystemName: "arrow.up.arrow.down.circle")
+            sortButton.image = UIImage(systemName: "arrow.up.arrow.down.circle")
         }
     }
 }
@@ -332,7 +332,7 @@ extension PlaylistViewController: IQListViewDelegateDataSource {
                                         message = nil
                                     }
 
-                                    let playlistIcon = UIImage(compatibleSystemName: "music.note.list")
+                                    let playlistIcon = UIImage(systemName: "music.note.list")
                                     StatusAlert.show(image: playlistIcon, title: "Added to '\(model.playlist.title)'", message: message, in: presenting.view)
                                 }
                             })
@@ -373,7 +373,7 @@ extension PlaylistViewController: CreatePlaylistViewControllerDelegate {
 
         let message: String = "'\(playlist.title)' playlist created!"
 
-        let playlistIcon = UIImage(compatibleSystemName: "music.note.list")
+        let playlistIcon = UIImage(systemName: "music.note.list")
         StatusAlert.show(image: playlistIcon, title: "Playlist Created", message: message, in: self.view)
 
         if lecturesToAdd.isEmpty {
@@ -404,7 +404,7 @@ extension PlaylistViewController: CreatePlaylistViewControllerDelegate {
 
         let message: String = "'\(playlist.title)' playlist updated!"
 
-        let playlistIcon = UIImage(compatibleSystemName: "music.note.list")
+        let playlistIcon = UIImage(systemName: "music.note.list")
         StatusAlert.show(image: playlistIcon, title: "Playlist Updated", message: message, in: self.view)
     }
 }

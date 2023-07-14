@@ -31,10 +31,6 @@ class PlaylistLecturesViewController: LectureViewController {
             rightButtons.insert(addLecturesButton, at: 0)
             self.navigationItem.rightBarButtonItems = rightButtons
         }
-
-        let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: #selector(refreshTriggered(_:)), for: .valueChanged)
-        lectureTebleView.refreshControl = refreshControl
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -43,16 +39,6 @@ class PlaylistLecturesViewController: LectureViewController {
         if !isSelectionEnabled && Auth.auth().currentUser?.email == playlist.authorEmail, playlist.lectureIds.isEmpty {
             addLecturesButtonAction(addLecturesButton)
         }
-    }
-
-    @objc private func refreshTriggered(_ sender: UIRefreshControl) {
-        refresh(source: .default)
-    }
-
-    override func syncStarted() {
-    }
-
-    override func syncEnded() {
     }
 
     override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[LectureViewController.Model], Error>) -> Void) {
@@ -116,7 +102,7 @@ extension PlaylistLecturesViewController: LectureViewControllerDelegate {
                             message = nil
                         }
 
-                        let playlistIcon = UIImage(compatibleSystemName: "music.note.list")
+                        let playlistIcon = UIImage(systemName: "music.note.list")
                         StatusAlert.show(image: playlistIcon, title: "Added to '\(self.playlist.title)'", message: message, in: self.view)
                     })
                 case .failure(let error):

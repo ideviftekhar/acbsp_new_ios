@@ -208,9 +208,10 @@ extension PlayerViewController {
             let controller = UIStoryboard.common.instantiate(LectureInfoViewController.self)
             controller.lecture = lecture
 
-            if UIDevice.current.userInterfaceIdiom == .pad {
+            switch Environment.current.device {
+            case .mac, .pad:
                 controller.modalPresentationStyle = .formSheet
-            } else {
+            default:
                 controller.modalPresentationStyle = .automatic
             }
             controller.popoverPresentationController?.sourceView = self.menuButton

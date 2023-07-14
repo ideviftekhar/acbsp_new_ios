@@ -27,25 +27,25 @@ enum SideMenuItem: String, CaseIterable {
         case .mediaLibrary:
             return UIImage(named: "photo.circle")
         case .history:
-            return UIImage(compatibleSystemName: "clock")
+            return UIImage(systemName: "clock")
         case .stats:
-            return UIImage(compatibleSystemName: "chart.pie")
+            return UIImage(systemName: "chart.pie")
         case .popularLectures:
-            return UIImage(compatibleSystemName: "heart.circle")
+            return UIImage(systemName: "heart.circle")
         case .about:
-            return UIImage(compatibleSystemName: "exclamationmark.circle")
+            return UIImage(systemName: "exclamationmark.circle")
         case .share:
             return UIImage(named: "square.and.arrow.up.circle")
         case .donate:
             return UIImage(named: "gift.circle")
 #if SP
         case .copyright:
-            return UIImage(compatibleSystemName: "c.circle")
+            return UIImage(systemName: "c.circle")
 #endif
         case .rateUs:
-            return UIImage(compatibleSystemName: "star.circle")
+            return UIImage(systemName: "star.circle")
         case .contactUs:
-            return UIImage(compatibleSystemName: "message.circle")
+            return UIImage(systemName: "message.circle")
         }
     }
 }

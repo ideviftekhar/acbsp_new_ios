@@ -96,9 +96,9 @@ class PlayerViewController: LectureViewController {
 
     var optionMenu: SPMenu!
     var allActions: [LectureOption: SPAction] = [:]
-    
-    var playFillImage = UIImage(compatibleSystemName: "play.fill")
-    var pauseFillImage = UIImage(compatibleSystemName: "pause.fill")
+
+    var playFillImage = UIImage(systemName: "play.fill")
+    var pauseFillImage = UIImage(systemName: "pause.fill")
 
     static var lecturePlayStateObservers = [Int: [PlayStateObserver]]()
     static var nowPlaying: (lecture: Lecture, state: PlayState)? {
@@ -327,19 +327,16 @@ class PlayerViewController: LectureViewController {
             miniPlayerView.delegate = self
         }
 
-        timeSlider.thumbTintColor = UIColor.textDarkGray
+        switch Environment.current.device {
+        case .mac:
+            break
+        default:
+            let normalImage = UIImage(color: UIColor.clear, size: CGSize(width: 40, height: 40))?.withRadius(radius: 20)
+            let highlightedImage = UIImage(color: UIColor.clear, size: CGSize(width: 40, height: 40))?.withRadius(radius: 20)
 
-        let normalImage = UIImage(color: UIColor.clear, size: CGSize(width: 40, height: 40))?.withRadius(radius: 20)
-        let highlightedImage = UIImage(color: UIColor.clear, size: CGSize(width: 40, height: 40))?.withRadius(radius: 20)
-
-        if #available(iOS 14.0, *) {
-            if UIDevice.current.userInterfaceIdiom != .mac {
-                timeSlider.setThumbImage(normalImage, for: .normal)
-                timeSlider.setThumbImage(highlightedImage, for: .highlighted)
-            }
-        } else {
             timeSlider.setThumbImage(normalImage, for: .normal)
             timeSlider.setThumbImage(highlightedImage, for: .highlighted)
+            timeSlider.thumbTintColor = UIColor.textDarkGray
         }
 
         do {
@@ -409,7 +406,7 @@ class PlayerViewController: LectureViewController {
     }
     private func setupPlayerIcons() {
 
-        if #available(iOS 14.0, *), #available(macCatalyst 14.0, *), UIDevice.current.userInterfaceIdiom == .mac {
+        if Environment.current.device == .mac {
             playFillImage = UIImage(named: "playFill")
             pauseFillImage = UIImage(named: "pauseFill")
 
@@ -482,7 +479,7 @@ class PlayerViewController: LectureViewController {
 //    var wasShowingPlaylist: Bool = false
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
-        if UIDevice.current.userInterfaceIdiom == .phone {
+        if Environment.current.device == .phone {
             if traitCollection.verticalSizeClass == .compact {
 //                wasShowingPlaylist = playlistButton.isSelected
                 hidePlaylist(animated: true)
@@ -494,6 +491,7 @@ class PlayerViewController: LectureViewController {
             }
         }
     }
+
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
         return .fade
     }

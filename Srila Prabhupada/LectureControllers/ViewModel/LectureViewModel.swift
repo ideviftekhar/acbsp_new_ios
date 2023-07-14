@@ -182,12 +182,12 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
                         switch result {
                         case .success(var success):
                             serialLectureWorkerQueue.async {
-                                if !self.userLectureInfo.isEmpty && self.allLectures.isEmpty {
+                                if !self.userLectureInfo.isEmpty {
                                     success = Self.refreshLectureWithLectureInfo(lectures: success, lectureInfos: self.userLectureInfo, downloadedLectures: Persistant.shared.getAllDBLectures(), progress: nil)
                                     self.allLectures = success
+                                    self.saveAllCachedLectures()
                                 } else {
                                     self.allLectures = success
-                                    self.saveAllCachedLectures()
                                 }
 
                                 Filter.updateFilterSubtypes(lectures: success)

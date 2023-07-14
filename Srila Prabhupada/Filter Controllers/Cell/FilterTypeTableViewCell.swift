@@ -31,7 +31,17 @@ class FilterTypeTableViewCell: UITableViewCell, IQModelableCell {
         }
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.filterCountLabel.layer.cornerRadius = filterCountLabel.bounds.size.width/2
+    }
+
     static func size(for model: AnyHashable?, listView: IQListView) -> CGSize {
-        return CGSize(width: listView.frame.width, height: 44)
+        switch Environment.current.device {
+        case .mac, .pad:
+            return CGSize(width: listView.frame.width, height: 75)
+        default:
+            return CGSize(width: listView.frame.width, height: 50)
+        }
     }
 }

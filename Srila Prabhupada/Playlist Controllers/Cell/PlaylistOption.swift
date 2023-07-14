@@ -17,9 +17,9 @@ enum PlaylistOption: String, CaseIterable {
     var image: UIImage? {
         switch self {
         case .edit:
-            return UIImage(compatibleSystemName: "square.and.pencil")
+            return UIImage(systemName: "square.and.pencil")
         case .delete:
-            return UIImage(compatibleSystemName: "trash")
+            return UIImage(systemName: "trash")
         }
     }
 }

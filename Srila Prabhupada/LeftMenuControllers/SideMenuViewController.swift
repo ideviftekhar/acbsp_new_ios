@@ -43,7 +43,7 @@ class SideMenuViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        if #available(iOS 13.0, *) {
+        do {
             let navigationBarAppearance = UINavigationBarAppearance()
             navigationBarAppearance.backgroundColor = UIColor.themeColor
             navigationBarAppearance.titleTextAttributes = [.foregroundColor: UIColor.white]
@@ -100,10 +100,15 @@ class SideMenuViewController: UIViewController {
         refreshUI(animated: false)
     }
 
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.userImageView.layer.cornerRadius = self.userImageView.bounds.size.width/2
+    }
+
     @objc func stackViewTapped() {
         let userProfileController = UIStoryboard.sideMenu.instantiate(UINavigationController.self, identifier: "UserProfileNavigationController")
         
-        if UIDevice.current.userInterfaceIdiom == .phone {
+        if Environment.current.device == .phone {
             userProfileController.modalPresentationStyle = .fullScreen
         }
 

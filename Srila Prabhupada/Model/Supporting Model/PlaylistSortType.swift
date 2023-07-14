@@ -20,38 +20,38 @@ enum PlaylistSortType: String, CaseIterable {
     var image: UIImage? {
         switch self {
         case .`default`:
-            return UIImage(compatibleSystemName: "arrow.up.arrow.down")
+            return UIImage(systemName: "arrow.up.arrow.down")
         case .lecturesLessToMore:
-            return UIImage(compatibleSystemName: "lessthan.circle")
+            return UIImage(systemName: "lessthan.circle")
         case .lecturesMoreToLess:
-            return UIImage(compatibleSystemName: "greaterthan.circle")
+            return UIImage(systemName: "greaterthan.circle")
         case .dateOldestFirst:
-            return UIImage(compatibleSystemName: "calendar.badge.clock")
+            return UIImage(systemName: "calendar.badge.clock")
         case .dateLatestFirst:
-            return UIImage(compatibleSystemName: "calendar.badge.clock")
+            return UIImage(systemName: "calendar.badge.clock")
         case .aToZ:
-            return UIImage(compatibleSystemName: "a.square")
+            return UIImage(systemName: "a.square")
         case .zToA:
-            return UIImage(compatibleSystemName: "z.square")
+            return UIImage(systemName: "z.square")
         }
     }
 
     var imageSelected: UIImage? {
         switch self {
         case .`default`:
-            return UIImage(compatibleSystemName: "arrow.up.arrow.down.circle")
+            return UIImage(systemName: "arrow.up.arrow.down.circle")
         case .lecturesLessToMore:
-            return UIImage(compatibleSystemName: "lessthan.circle.fill")
+            return UIImage(systemName: "lessthan.circle.fill")
         case .lecturesMoreToLess:
-            return UIImage(compatibleSystemName: "greaterthan.circle.fill")
+            return UIImage(systemName: "greaterthan.circle.fill")
         case .dateOldestFirst:
-            return UIImage(compatibleSystemName: "calendar.circle.fill")
+            return UIImage(systemName: "calendar.circle.fill")
         case .dateLatestFirst:
-            return UIImage(compatibleSystemName: "calendar.circle.fill")
+            return UIImage(systemName: "calendar.circle.fill")
         case .aToZ:
-            return UIImage(compatibleSystemName: "a.circle.fill")
+            return UIImage(systemName: "a.circle.fill")
         case .zToA:
-            return UIImage(compatibleSystemName: "z.circle.fill")
+            return UIImage(systemName: "z.circle.fill")
         }
     }
 

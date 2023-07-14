@@ -24,10 +24,10 @@ class LectureViewController: SearchViewController {
 
     weak var delegate: LectureViewControllerDelegate?
 
-    private let sortButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(compatibleSystemName: "arrow.up.arrow.down.circle"), style: .plain, target: nil, action: nil)
+    private let sortButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "arrow.up.arrow.down.circle"), style: .plain, target: nil, action: nil)
     private var sortMenu: SPMenu!
 
-    private let moreButton = UIBarButtonItem(image: UIImage(compatibleSystemName: "ellipsis.circle"), style: .plain, target: nil, action: nil)
+    private let moreButton = UIBarButtonItem(image: UIImage(systemName: "ellipsis.circle"), style: .plain, target: nil, action: nil)
     private var moreMenu: SPMenu!
     private var defaultSelectionActions: [SPAction] = []
     private var defaultNormalActions: [SPAction] = []
@@ -349,7 +349,7 @@ extension LectureViewController {
         if let icon = selectedSortType.imageSelected {
             sortButton.image = icon
         } else {
-            sortButton.image = UIImage(compatibleSystemName: "arrow.up.arrow.down.circle")
+            sortButton.image = UIImage(systemName: "arrow.up.arrow.down.circle")
         }
     }
 }
@@ -473,12 +473,12 @@ extension LectureViewController {
             cancelSelection()
         })
 
-        let selectAll: SPAction = SPAction(title: "Select All", image: UIImage(compatibleSystemName: "checkmark.circle"), handler: { [self] (_) in
+        let selectAll: SPAction = SPAction(title: "Select All", image: UIImage(systemName: "checkmark.circle"), handler: { [self] (_) in
             selectedModels = models
             reloadSelectedAll(isSelected: true)
             Haptic.selection()
         })
-        let deselectAll: SPAction = SPAction(title: "Deselect All", image: UIImage(compatibleSystemName: "circle"), handler: { [self] (_) in
+        let deselectAll: SPAction = SPAction(title: "Deselect All", image: UIImage(systemName: "circle"), handler: { [self] (_) in
             selectedModels.removeAll()
             reloadSelectedAll(isSelected: false)
             Haptic.selection()
@@ -675,11 +675,13 @@ extension LectureViewController: LectureCellDelegate {
             let controller = UIStoryboard.common.instantiate(LectureInfoViewController.self)
             controller.lecture = lecture
 
-            if UIDevice.current.userInterfaceIdiom == .pad {
+            switch Environment.current.device {
+            case .mac, .pad:
                 controller.modalPresentationStyle = .formSheet
-            } else {
+            default:
                 controller.modalPresentationStyle = .automatic
             }
+
             controller.popoverPresentationController?.sourceView = cell
             self.present(controller, animated: true)
         }

@@ -30,7 +30,7 @@ class TabBarController: UITabBarController {
                 tabBar.selectionIndicatorImage =  UIImage()
             }
 
-            if #available(iOS 13.0, *) {
+            do {
                 let tabBarAppearance = UITabBarAppearance()
                 tabBarAppearance.backgroundColor = UIColor.themeColor
                 tabBarAppearance.selectionIndicatorTintColor = UIColor.white
@@ -86,8 +86,7 @@ class TabBarController: UITabBarController {
 
         self.loadLastPlayedLectures()
 
-        if #available(iOS 14.0, *), #available(macCatalyst 14.0, *),
-           UIDevice.current.userInterfaceIdiom == .mac,
+        if Environment.current.device == .mac,
            let viewControllers = viewControllers {
             viewControllers[0].tabBarItem.image = UIImage(named: "houseFill")
             viewControllers[1].tabBarItem.image = UIImage(named: "musicNoteList")

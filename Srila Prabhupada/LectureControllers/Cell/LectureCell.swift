@@ -165,18 +165,18 @@ class LectureCell: UITableViewCell, IQModelableCell {
             case .downloading:
                 downloadedIconImageView?.isHidden = false
                 downloadedIconImageView?.tintColor = UIColor.systemBlue
-                downloadedIconImageView?.image = UIImage(compatibleSystemName: "arrow.down.circle.fill")
+                downloadedIconImageView?.image = UIImage(systemName: "arrow.down.circle.fill")
                 downloadProgressView?.isHidden = false
             case .downloaded:
                 downloadedIconImageView?.isHidden = false
                 downloadedIconImageView?.tintColor = UIColor.systemGreen
-                downloadedIconImageView?.image = UIImage(compatibleSystemName: "arrow.down.circle.fill")
+                downloadedIconImageView?.image = UIImage(systemName: "arrow.down.circle.fill")
                 downloadProgressView?.isHidden = false
                 downloadProgressView?.value = 0
             case .error:
                 downloadedIconImageView?.isHidden = false
                 downloadedIconImageView?.tintColor = UIColor.systemRed
-                downloadedIconImageView?.image = UIImage(compatibleSystemName: "exclamationmark.circle.fill")
+                downloadedIconImageView?.image = UIImage(systemName: "exclamationmark.circle.fill")
                 downloadProgressView?.isHidden = false
                 downloadProgressView?.value = 0
                 if let downloadError = lecture.downloadError {
@@ -186,7 +186,7 @@ class LectureCell: UITableViewCell, IQModelableCell {
             case .pause:
                 downloadedIconImageView?.isHidden = false
                 downloadedIconImageView?.tintColor = UIColor.F96D00
-                downloadedIconImageView?.image = UIImage(compatibleSystemName: "pause.circle.fill")
+                downloadedIconImageView?.image = UIImage(systemName: "pause.circle.fill")
                 downloadProgressView?.isHidden = false
                 downloadProgressView?.value = 0
             }
@@ -197,7 +197,7 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 if fractionCompleted >= 1.0 {
                     downloadedIconImageView?.isHidden = false
                     downloadedIconImageView?.tintColor = UIColor.systemGreen
-                    downloadedIconImageView?.image = UIImage(compatibleSystemName: "arrow.down.circle.fill")
+                    downloadedIconImageView?.image = UIImage(systemName: "arrow.down.circle.fill")
                     downloadProgressView?.isHidden = false
                     downloadProgressView?.value = 0
                     thirdDotLabel?.isHidden = true
@@ -205,7 +205,7 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 } else if fractionCompleted > 0 {
                     downloadedIconImageView?.isHidden = false
                     downloadedIconImageView?.tintColor = UIColor.systemBlue
-                    downloadedIconImageView?.image = UIImage(compatibleSystemName: "arrow.down.circle.fill")
+                    downloadedIconImageView?.image = UIImage(systemName: "arrow.down.circle.fill")
                     downloadProgressView?.isHidden = false
                     downloadProgressView?.value = fractionCompleted * 100
                     thirdDotLabel?.isHidden = false
@@ -296,7 +296,7 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 self.menuButton?.isHidden = actions.isEmpty || model.isSelectionEnabled
                 self.selectedImageView?.isHidden = !model.isSelectionEnabled
                 if model.isSelectionEnabled {
-                    self.selectedImageView?.image = model.isSelected ? UIImage(compatibleSystemName: "checkmark.circle.fill") : UIImage(compatibleSystemName: "circle")
+                    self.selectedImageView?.image = model.isSelected ? UIImage(systemName: "checkmark.circle.fill") : UIImage(systemName: "circle")
                     self.backgroundColor = model.isSelected ? UIColor.zero_0099CC.withAlphaComponent(0.2) : nil
                 } else if model.isHighlited {
                     self.backgroundColor = .systemOrange.withAlphaComponent(0.2)
@@ -320,9 +320,10 @@ extension LectureCell {
             let controller = UIStoryboard.common.instantiate(LectureInfoViewController.self)
             controller.lecture = model.lecture
 
-            if UIDevice.current.userInterfaceIdiom == .pad {
+            switch Environment.current.device {
+            case .mac, .pad:
                 controller.modalPresentationStyle = .formSheet
-            } else {
+            default:
                 controller.modalPresentationStyle = .automatic
             }
             controller.popoverPresentationController?.sourceView = self
@@ -379,10 +380,20 @@ extension LectureCell {
 extension LectureCell {
 
     static func estimatedSize(for model: AnyHashable?, listView: IQListView) -> CGSize {
-        return CGSize(width: listView.frame.width, height: 64)
+        switch Environment.current.device {
+        case .mac,.pad:
+            return CGSize(width: listView.frame.width, height: 90)
+        default:
+            return CGSize(width: listView.frame.width, height: 64)
+        }
     }
 
     static func size(for model: AnyHashable?, listView: IQListView) -> CGSize {
-        return CGSize(width: listView.frame.width, height: 64)
+        switch Environment.current.device {
+        case .mac,.pad:
+            return CGSize(width: listView.frame.width, height: 90)
+        default:
+            return CGSize(width: listView.frame.width, height: 64)
+        }
     }
 }

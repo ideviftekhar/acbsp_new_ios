@@ -143,9 +143,11 @@ class StatsViewController: UIViewController, ChartViewDelegate {
     }
 
     func setUpChart() {
-        if #available(iOS 14.0, *), #available(macCatalyst 14.0, *), UIDevice.current.userInterfaceIdiom == .mac {
+
+        switch UIDevice.current.userInterfaceIdiom {
+        case .mac, .pad:
             thisWeekChartView.noDataFont = UIFont(name: "AvenirNextCondensed-Regular", size: 22)!
-        } else {
+        default:
             thisWeekChartView.noDataFont = UIFont(name: "AvenirNextCondensed-Regular", size: 16)!
         }
 

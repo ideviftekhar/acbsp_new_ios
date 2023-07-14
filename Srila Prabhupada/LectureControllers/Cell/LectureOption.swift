@@ -37,27 +37,27 @@ enum LectureOption: String, CaseIterable {
     var image: UIImage? {
         switch self {
         case .download, .resumeDownload:
-            return UIImage(compatibleSystemName: "square.and.arrow.down")
+            return UIImage(systemName: "square.and.arrow.down")
         case .pauseDownload:
-            return UIImage(compatibleSystemName: "pause.fill")
+            return UIImage(systemName: "pause.fill")
         case .deleteFromDownloads:
-            return UIImage(compatibleSystemName: "icloud.slash")
+            return UIImage(systemName: "icloud.slash")
         case .markAsFavorite:
-            return UIImage(compatibleSystemName: "star.fill")
+            return UIImage(systemName: "star.fill")
         case .removeFromFavorite:
-            return UIImage(compatibleSystemName: "star.slash.fill")
+            return UIImage(systemName: "star.slash.fill")
         case .addToPlaylist:
-            return UIImage(compatibleSystemName: "music.note.list")
+            return UIImage(systemName: "music.note.list")
         case .removeFromPlaylist:
-            return UIImage(compatibleSystemName: "text.badge.minus")
+            return UIImage(systemName: "text.badge.minus")
         case .markAsHeard:
-            return UIImage(compatibleSystemName: "checkmark")
+            return UIImage(systemName: "checkmark")
         case .resetProgress:
-            return UIImage(compatibleSystemName: "arrow.clockwise")
+            return UIImage(systemName: "arrow.clockwise")
         case .share:
-            return UIImage(compatibleSystemName: "square.and.arrow.up.fill")
+            return UIImage(systemName: "square.and.arrow.up.fill")
         case .info:
-            return UIImage(compatibleSystemName: "info.circle")
+            return UIImage(systemName: "info.circle")
         }
     }
 }

@@ -8,6 +8,7 @@ def shared_pods
 
   pod 'FirebaseAuth'
   pod 'FirebaseCore'
+#  pod 'FirebaseAnalytics'
   pod 'FirebaseCrashlytics'
   pod 'FirebaseDynamicLinks'
   pod 'FirebaseFirestore'

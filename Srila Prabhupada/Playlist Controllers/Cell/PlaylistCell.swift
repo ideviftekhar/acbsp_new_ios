@@ -72,8 +72,8 @@ class PlaylistCell: UITableViewCell, IQModelableCell {
                 var actions: [SPAction] = []
 
                 if FirestoreManager.shared.currentUser != nil,
-                      let email = FirestoreManager.shared.currentUserEmail,
-                      model.playlist.authorEmail.elementsEqual(email) {
+                   let email = FirestoreManager.shared.currentUserEmail,
+                   model.playlist.authorEmail.elementsEqual(email) {
 
                     if let deletePlaylist = allActions[.delete] {
                         actions.append(deletePlaylist)
@@ -87,6 +87,15 @@ class PlaylistCell: UITableViewCell, IQModelableCell {
                 self.optionMenu.children = actions
                 self.menuButton.isHidden = actions.isEmpty
             }
+        }
+    }
+
+    static func size(for model: AnyHashable?, listView: IQListView) -> CGSize {
+        switch Environment.current.device {
+        case .mac, .pad:
+            return CGSize(width: listView.frame.width, height: 75)
+        default:
+            return CGSize(width: listView.frame.width, height: 50)
         }
     }
 }

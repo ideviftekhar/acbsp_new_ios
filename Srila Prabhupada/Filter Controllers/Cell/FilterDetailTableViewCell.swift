@@ -33,8 +33,11 @@ class FilterDetailTableViewCell: UITableViewCell, IQModelableCell {
 
         self.checkView.layer.borderWidth = 2.0
         self.checkView.layer.borderColor = UIColor.themeColor.cgColor
-        self.checkView.layer.cornerRadius = 10.0
+    }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.checkView.layer.cornerRadius = checkView.bounds.size.width/2
     }
 
     struct Model: Hashable {
@@ -53,6 +56,11 @@ class FilterDetailTableViewCell: UITableViewCell, IQModelableCell {
     }
 
     static func size(for model: AnyHashable?, listView: IQListView) -> CGSize {
-        return CGSize(width: listView.frame.width, height: 44)
+        switch Environment.current.device {
+        case .mac, .pad:
+            return CGSize(width: listView.frame.width, height: 75)
+        default:
+            return CGSize(width: listView.frame.width, height: 50)
+        }
     }
 }

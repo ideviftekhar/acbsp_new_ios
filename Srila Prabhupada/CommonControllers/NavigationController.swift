@@ -18,7 +18,7 @@ class NavigationController: UINavigationController {
         navigationBar.titleTextAttributes = titleTextAttributes
         navigationBar.largeTitleTextAttributes = largeTitleTextAttributes
 
-        if #available(iOS 13.0, *) {
+        do {
             let navigationBarAppearance = UINavigationBarAppearance()
             navigationBarAppearance.configureWithTransparentBackground()
             navigationBarAppearance.backgroundColor = UIColor.themeColor

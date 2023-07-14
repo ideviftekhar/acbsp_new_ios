@@ -78,7 +78,6 @@ class FirebaseGoogleLoginViewModel: NSObject, LoginViewModel {
     }
 }
 
-@available(iOS 13.0, *)
 class FirebaseAppleLoginViewModel: NSObject, LoginViewModel {
 
     var username: String?
@@ -180,7 +179,6 @@ class FirebaseAppleLoginViewModel: NSObject, LoginViewModel {
     }
 }
 
-@available(iOS 13.0, *)
 extension FirebaseAppleLoginViewModel: ASAuthorizationControllerDelegate {
 
     func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {

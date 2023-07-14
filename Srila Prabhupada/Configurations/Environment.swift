@@ -6,14 +6,32 @@
 //
 
 import Foundation
+import UIKit
 
 struct Environment {
+
+    enum Device {
+        case phone
+        case pad
+        case mac
+    }
 
     static let current: Environment = Environment(infoDictionary: Bundle.main.infoDictionary)
 
     let googleServiceFileName: String
+    let device: Device
 
     private init(infoDictionary: [String: Any]?) {
+
+        switch UIDevice.current.userInterfaceIdiom {
+        case .pad:
+            device = .pad
+        case .mac:
+            device = .mac
+        default:
+            device = .phone
+        }
+
         guard let infoDictionary = infoDictionary else {
             googleServiceFileName = ""
             return
