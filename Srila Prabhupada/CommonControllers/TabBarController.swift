@@ -88,11 +88,11 @@ class TabBarController: UITabBarController {
 
         if Environment.current.device == .mac,
            let viewControllers = viewControllers {
-            viewControllers[0].tabBarItem.image = UIImage(named: "houseFill")
-            viewControllers[1].tabBarItem.image = UIImage(named: "musicNoteList")
-            viewControllers[2].tabBarItem.image = UIImage(named: "chartBarXaxis")
-            viewControllers[3].tabBarItem.image = UIImage(named: "squareAndArrowDownFill")
-            viewControllers[4].tabBarItem.image = UIImage(named: "starFill")
+            viewControllers[0].tabBarItem.image = UIImage(named: "house.fill")
+            viewControllers[1].tabBarItem.image = UIImage(named: "music.note.list")
+            viewControllers[2].tabBarItem.image = UIImage(named: "chart.bar.xaxis")
+            viewControllers[3].tabBarItem.image = UIImage(named: "square.and.arrow.down.fill")
+            viewControllers[4].tabBarItem.image = UIImage(named: "star.fill")
         }
         
         addTimestampObserver()

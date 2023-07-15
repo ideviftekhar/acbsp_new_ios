@@ -45,6 +45,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             windowScene.sizeRestrictions?.minimumSize = CGSize(width: 667, height: 667)
             windowScene.sizeRestrictions?.maximumSize = CGSize(width: 1366, height: 1366)
 
+//            windowScene.sizeRestrictions?.maximumSize = CGSize(width: 1440, height: 900)
+
             window = UIWindow(windowScene: windowScene)
             window?.rootViewController = controller
             window?.makeKeyAndVisible()

@@ -67,8 +67,8 @@ class MiniPlayerView: UIView {
 
         switch Environment.current.device {
         case .mac:
-            playFillImage = UIImage(named: "playFill")
-            pauseFillImage = UIImage(named: "pauseFill")
+            playFillImage = UIImage(named: "play.fill")
+            pauseFillImage = UIImage(named: "pause.fill")
             let newImage: UIImage? = isPlaying ? pauseFillImage :  playFillImage
             playButton.setImage(newImage, for: .normal)
         default:

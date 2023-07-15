@@ -418,11 +418,11 @@ class PlayerViewController: LectureViewController {
     private func setupPlayerIcons() {
 
         if Environment.current.device == .mac {
-            playFillImage = UIImage(named: "playFill")
-            pauseFillImage = UIImage(named: "pauseFill")
+            playFillImage = UIImage(named: "play.fill")
+            pauseFillImage = UIImage(named: "pause.fill")
 
-            menuButton.setImage(UIImage(named: "ellipsisCircle"), for: .normal)
-            playlistButton.setImage(UIImage(named: "musicNoteList"), for: .normal)
+            menuButton.setImage(UIImage(named: "ellipsis.circle"), for: .normal)
+            playlistButton.setImage(UIImage(named: "list.bullet"), for: .normal)
 
             if miniPlayerView.isPlaying {
                 playPauseButton.setImage(pauseFillImage, for: .normal)
@@ -430,13 +430,13 @@ class PlayerViewController: LectureViewController {
                 playPauseButton.setImage(playFillImage, for: .normal)
             }
 
-            previousLectureButton.setImage(UIImage(named: "backwardEndFill"), for: .normal)
-            nextLectureButton.setImage(UIImage(named: "forwardEndFill"), for: .normal)
+            previousLectureButton.setImage(UIImage(named: "backward.end.fill"), for: .normal)
+            nextLectureButton.setImage(UIImage(named: "forward.end.fill"), for: .normal)
 
             loopLectureButton.setImage(UIImage(named: "repeat"), for: .normal)
             shuffleLectureButton.setImage(UIImage(named: "shuffle"), for: .normal)
-            forwardTenSecondsButton.setImage(UIImage(named: "goForward10"), for: .normal)
-            backwardTenSecondsButton.setImage(UIImage(named: "goBackward10"), for: .normal)
+            forwardTenSecondsButton.setImage(UIImage(named: "goforward.10"), for: .normal)
+            backwardTenSecondsButton.setImage(UIImage(named: "gobackward.10"), for: .normal)
         }
     }
 
