@@ -336,7 +336,6 @@ class PlayerViewController: LectureViewController {
 
             timeSlider.setThumbImage(normalImage, for: .normal)
             timeSlider.setThumbImage(highlightedImage, for: .highlighted)
-            timeSlider.thumbTintColor = UIColor.textDarkGray
         }
 
         do {
@@ -353,6 +352,18 @@ class PlayerViewController: LectureViewController {
         setupPlayerIcons()
         registerNowPlayingCommands()
         registerAudioSessionObservers()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        if self.traitCollection.verticalSizeClass == .compact {
+            self.showPlaylist(animated: true)
+        }
     }
 
     func updateMetadata() {
@@ -443,10 +454,6 @@ class PlayerViewController: LectureViewController {
         }
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-
     override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[LectureViewController.Model], Error>) -> Void) {
 
         let lectureIDs = self.currentLectureQueue.map { $0.id }
@@ -480,14 +487,12 @@ class PlayerViewController: LectureViewController {
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         if Environment.current.device == .phone {
+//            let hasSizeClassChanged = previousTraitCollection?.verticalSizeClass != traitCollection.verticalSizeClass || previousTraitCollection?.horizontalSizeClass != traitCollection.horizontalSizeClass
+
             if traitCollection.verticalSizeClass == .compact {
-//                wasShowingPlaylist = playlistButton.isSelected
-                hidePlaylist(animated: true)
+                showPlaylist(animated: true)
             } else {
                 hidePlaylist(animated: true)
-//                if wasShowingPlaylist {
-//                    showPlaylist(animated: true)
-//                }
             }
         }
     }
@@ -713,8 +718,15 @@ extension PlayerViewController {
         seek(seconds: -10)
     }
 
-    @IBAction func timeSlider(_ sender: UISlider) {
+    @IBAction func timeSliderEnded(_ sender: UISlider) {
         seekTo(seconds: Int(sender.value))
+    }
+
+    @IBAction func timeChanged(_ sender: UISlider) {
+
+        timeSlider.value = sender.value
+        currentTimeLabel.text = Int(sender.value).toHHMMSS
+        miniPlayerView.playedSeconds = sender.value
     }
 
     @IBAction func forwardXSecondPressed(_ sender: UIButton) {
@@ -963,7 +975,7 @@ extension PlayerViewController {
             actions.append(action)
         }
 
-        self.playRateMenu = SPMenu(title: "", image: nil, identifier: .init(rawValue: "PlayRate"), options: .displayInline, children: actions, button: speedMenuButton)
+        self.playRateMenu = SPMenu(title: "Speed", image: nil, identifier: .init(rawValue: "PlayRate"), options: .displayInline, children: actions, button: speedMenuButton)
 
         let playRate = self.selectedRate
         speedMenuButton.setTitle(playRate.rawValue, for: .normal)

@@ -42,8 +42,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             let controller = UIStoryboard.main.instantiate(LoadingViewController.self)
             controller.forceLoading = false
 
-            windowScene.sizeRestrictions?.minimumSize = CGSize(width: 375, height: 667)
-            windowScene.sizeRestrictions?.maximumSize = CGSize(width: 1024, height: 1366)
+            windowScene.sizeRestrictions?.minimumSize = CGSize(width: 667, height: 667)
+            windowScene.sizeRestrictions?.maximumSize = CGSize(width: 1366, height: 1366)
 
             window = UIWindow(windowScene: windowScene)
             window?.rootViewController = controller
