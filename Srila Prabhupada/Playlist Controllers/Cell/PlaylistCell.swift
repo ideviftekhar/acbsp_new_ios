@@ -91,11 +91,23 @@ class PlaylistCell: UITableViewCell, IQModelableCell {
     }
 
     static func size(for model: AnyHashable?, listView: IQListView) -> CGSize {
-        switch Environment.current.device {
-        case .mac, .pad:
-            return CGSize(width: listView.frame.width, height: 75)
-        default:
-            return CGSize(width: listView.frame.width, height: 50)
+
+        static func estimatedSize(for model: AnyHashable?, listView: IQListView) -> CGSize {
+            switch Environment.current.device {
+            case .mac, .pad:
+                return CGSize(width: listView.frame.width, height: 90)
+            default:
+                return CGSize(width: listView.frame.width, height: 64)
+            }
+        }
+
+        static func size(for model: AnyHashable?, listView: IQListView) -> CGSize {
+            switch Environment.current.device {
+            case .mac, .pad:
+                return CGSize(width: listView.frame.width, height: 90)
+            default:
+                return CGSize(width: listView.frame.width, height: 64)
+            }
         }
     }
 }

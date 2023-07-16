@@ -27,7 +27,6 @@ def shared_pods
   pod 'AlamofireImage'
 
   pod "MBCircularProgressBar"
-#  pod 'LoadingPlaceholderView'
 
   pod 'StatusAlert'
   pod 'SKActivityIndicatorView'
