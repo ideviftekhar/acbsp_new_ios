@@ -354,12 +354,12 @@
                                                                     <rect key="frame" x="48" y="0.0" width="74" height="53.5"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jpi-aP-CHX" customClass="MarqueeLabel" customModule="MarqueeLabel">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="22" height="20.5"/>
-                                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
-                                                                            <color key="textColor" name="TextDarkGray"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="23" height="20.5"/>
+                                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="15"/>
+                                                                            <color key="textColor" name="000000"/>
                                                                             <nil key="highlightedColor"/>
                                                                             <variation key="heightClass=regular-widthClass=regular">
-                                                                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="20"/>
+                                                                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="20"/>
                                                                             </variation>
                                                                         </label>
                                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="H7c-Sd-SBL">
@@ -386,7 +386,7 @@
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Duration" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oSs-yN-HGN">
                                                                                     <rect key="frame" x="37" y="0.0" width="37" height="16.5"/>
                                                                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
-                                                                                    <color key="textColor" name="TextDarkGray"/>
+                                                                                    <color key="textColor" name="000000"/>
                                                                                     <nil key="highlightedColor"/>
                                                                                     <variation key="heightClass=regular-widthClass=regular">
                                                                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="16"/>
@@ -1272,7 +1272,7 @@
     </scenes>
     <designables>
         <designable name="Jpi-aP-CHX">
-            <size key="intrinsicContentSize" width="22" height="20.5"/>
+            <size key="intrinsicContentSize" width="23" height="20.5"/>
         </designable>
         <designable name="dL3-B5-RVy">
             <size key="intrinsicContentSize" width="36" height="37"/>
@@ -1292,6 +1292,9 @@
         <image name="playerViewLogo" width="256" height="256"/>
         <image name="repeat" catalog="system" width="128" height="98"/>
         <image name="shuffle" catalog="system" width="128" height="95"/>
+        <namedColor name="000000">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="0099CA">
             <color red="0.0" green="0.59999999999999998" blue="0.792156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
