@@ -354,12 +354,12 @@
                                                                     <rect key="frame" x="48" y="0.0" width="74" height="53.5"/>
                                                                     <subviews>
                                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Jpi-aP-CHX" customClass="MarqueeLabel" customModule="MarqueeLabel">
-                                                                            <rect key="frame" x="0.0" y="0.0" width="22" height="20.5"/>
-                                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
-                                                                            <color key="textColor" name="TextDarkGray"/>
+                                                                            <rect key="frame" x="0.0" y="0.0" width="23" height="20.5"/>
+                                                                            <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="15"/>
+                                                                            <color key="textColor" name="000000"/>
                                                                             <nil key="highlightedColor"/>
                                                                             <variation key="heightClass=regular-widthClass=regular">
-                                                                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="20"/>
+                                                                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="20"/>
                                                                             </variation>
                                                                         </label>
                                                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="H7c-Sd-SBL">
@@ -386,7 +386,7 @@
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Duration" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oSs-yN-HGN">
                                                                                     <rect key="frame" x="37" y="0.0" width="37" height="16.5"/>
                                                                                     <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
-                                                                                    <color key="textColor" name="TextDarkGray"/>
+                                                                                    <color key="textColor" name="000000"/>
                                                                                     <nil key="highlightedColor"/>
                                                                                     <variation key="heightClass=regular-widthClass=regular">
                                                                                         <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="16"/>
@@ -527,10 +527,10 @@
                                                             <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
                                                             <subviews>
                                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fu0-Xf-4qa">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="171.5" height="0.0"/>
+                                                                    <rect key="frame" x="0.0" y="0.0" width="228" height="0.0"/>
                                                                     <subviews>
-                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Play Next" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kPw-oL-sfy">
-                                                                            <rect key="frame" x="20" y="-11.5" width="57.5" height="23.5"/>
+                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Playlist" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kPw-oL-sfy">
+                                                                            <rect key="frame" x="20" y="-11.5" width="44.5" height="23.5"/>
                                                                             <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="17"/>
                                                                             <color key="textColor" name="TextDarkGray"/>
                                                                             <nil key="highlightedColor"/>
@@ -544,17 +544,6 @@
                                                                         <constraint firstItem="kPw-oL-sfy" firstAttribute="centerY" secondItem="fu0-Xf-4qa" secondAttribute="centerY" id="yOu-HG-dVP"/>
                                                                     </constraints>
                                                                 </view>
-                                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6H7-xE-1yR">
-                                                                    <rect key="frame" x="201.5" y="0.0" width="26.5" height="0.0"/>
-                                                                    <color key="tintColor" name="TextDarkGray"/>
-                                                                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                                                    <state key="normal" title="">
-                                                                        <imageReference key="image" image="text.badge.xmark" catalog="system" symbolScale="large"/>
-                                                                    </state>
-                                                                    <connections>
-                                                                        <action selector="clearPlayNextButtonPressed:" destination="WLM-gm-tMu" eventType="touchUpInside" id="TjG-r8-4Zf"/>
-                                                                    </connections>
-                                                                </button>
                                                                 <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uC6-xR-tN2">
                                                                     <rect key="frame" x="258" y="0.0" width="29.5" height="0.0"/>
                                                                     <color key="tintColor" name="TextDarkGray"/>
@@ -1086,7 +1075,6 @@
                         <outlet property="backwardTenSecondsButton" destination="ubF-ZP-8SM" id="Ej7-hZ-SFx"/>
                         <outlet property="bufferingActivityIndicator" destination="ig1-GC-h9t" id="URf-d0-lbV"/>
                         <outlet property="categoryLabel" destination="DE5-Uj-4Tg" id="wDa-Q3-EOC"/>
-                        <outlet property="clearPlayNextButton" destination="6H7-xE-1yR" id="YiU-Qe-DAn"/>
                         <outlet property="currentTimeLabel" destination="IQI-q6-Ul5" id="tbf-ZC-q3N"/>
                         <outlet property="dateLabel" destination="d8t-Zs-TT0" id="Qsd-Pg-ck1"/>
                         <outlet property="firstDotLabel" destination="aYH-pc-fmI" id="k5d-L8-tQK"/>
@@ -1284,7 +1272,7 @@
     </scenes>
     <designables>
         <designable name="Jpi-aP-CHX">
-            <size key="intrinsicContentSize" width="22" height="20.5"/>
+            <size key="intrinsicContentSize" width="23" height="20.5"/>
         </designable>
         <designable name="dL3-B5-RVy">
             <size key="intrinsicContentSize" width="36" height="37"/>
@@ -1304,7 +1292,9 @@
         <image name="playerViewLogo" width="256" height="256"/>
         <image name="repeat" catalog="system" width="128" height="98"/>
         <image name="shuffle" catalog="system" width="128" height="95"/>
-        <image name="text.badge.xmark" catalog="system" width="128" height="107"/>
+        <namedColor name="000000">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="0099CA">
             <color red="0.0" green="0.59999999999999998" blue="0.792156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>

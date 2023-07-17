@@ -7,7 +7,6 @@
 
 import UIKit
 import IQListKit
-import MBCircularProgressBar
 import AlamofireImage
 import IQKeyboardManagerSwift
 
@@ -18,6 +17,7 @@ protocol LectureCellDelegate: AnyObject {
 class LectureCell: UITableViewCell, IQModelableCell {
 
     @IBOutlet private var videoIconImageView: UIImageView?
+    @IBOutlet private var downloadedContentView: UIView?
     @IBOutlet private var downloadedIconImageView: UIImageView?
     @IBOutlet private var favoriteIconImageView: UIImageView?
     @IBOutlet private var completedIconImageView: UIImageView?
@@ -36,7 +36,7 @@ class LectureCell: UITableViewCell, IQModelableCell {
     @IBOutlet private var downloadInfoLabel: UILabel?
     @IBOutlet private var menuButton: UIButton?
     @IBOutlet private var selectedImageView: UIImageView?
-    @IBOutlet private var downloadProgressView: MBCircularProgressBarView?
+    @IBOutlet private var downloadProgressView: IQCircularProgressView?
     @IBOutlet private var listenProgressView: IQCircularProgressView?
     @IBOutlet private var labelListenProgress: UILabel?
     @IBOutlet private var audioVisualizerView: ESTMusicIndicatorView!
@@ -161,62 +161,72 @@ class LectureCell: UITableViewCell, IQModelableCell {
 
             switch lecture.downloadState {
             case .notDownloaded:
-                downloadedIconImageView?.isHidden = true
-                downloadProgressView?.isHidden = true
+                downloadedContentView?.isHidden = true
             case .downloading:
+                downloadedContentView?.isHidden = false
                 downloadedIconImageView?.isHidden = false
+                downloadProgressView?.isHidden = false
+
                 downloadedIconImageView?.tintColor = UIColor.systemBlue
                 downloadedIconImageView?.image = UIImage(systemName: "arrow.down.circle.fill")
-                downloadProgressView?.isHidden = false
             case .downloaded:
+                downloadedContentView?.isHidden = false
                 downloadedIconImageView?.isHidden = false
+                downloadProgressView?.isHidden = true
+
                 downloadedIconImageView?.tintColor = UIColor.systemGreen
                 downloadedIconImageView?.image = UIImage(systemName: "arrow.down.circle.fill")
-                downloadProgressView?.isHidden = false
-                downloadProgressView?.value = 0
             case .error:
+                downloadedContentView?.isHidden = false
                 downloadedIconImageView?.isHidden = false
+                downloadProgressView?.isHidden = true
+
                 downloadedIconImageView?.tintColor = UIColor.systemRed
                 downloadedIconImageView?.image = UIImage(systemName: "exclamationmark.circle.fill")
-                downloadProgressView?.isHidden = false
-                downloadProgressView?.value = 0
                 if let downloadError = lecture.downloadError {
                     thirdDotLabel?.isHidden = false
                     downloadInfoLabel?.text = downloadError
                 }
             case .pause:
+                downloadedContentView?.isHidden = false
                 downloadedIconImageView?.isHidden = false
+                downloadProgressView?.isHidden = false
+                downloadProgressView?.progress = 0.0
+
                 downloadedIconImageView?.tintColor = UIColor.F96D00
                 downloadedIconImageView?.image = UIImage(systemName: "pause.circle.fill")
-                downloadProgressView?.isHidden = false
-                downloadProgressView?.value = 0
             }
 
             DownloadManager.shared.registerProgress(observer: self, lectureID: lecture.id, progressHandler: { [self] progress in
                 let fractionCompleted: CGFloat = CGFloat(progress.fractionCompleted)
 
                 if fractionCompleted >= 1.0 {
+                    downloadedContentView?.isHidden = false
                     downloadedIconImageView?.isHidden = false
+                    downloadProgressView?.isHidden = true
+
                     downloadedIconImageView?.tintColor = UIColor.systemGreen
                     downloadedIconImageView?.image = UIImage(systemName: "arrow.down.circle.fill")
-                    downloadProgressView?.isHidden = false
-                    downloadProgressView?.value = 0
                     thirdDotLabel?.isHidden = true
                     downloadInfoLabel?.text = nil
                 } else if fractionCompleted > 0 {
+                    downloadedContentView?.isHidden = false
                     downloadedIconImageView?.isHidden = false
+                    downloadProgressView?.isHidden = false
+
                     downloadedIconImageView?.tintColor = UIColor.systemBlue
                     downloadedIconImageView?.image = UIImage(systemName: "arrow.down.circle.fill")
-                    downloadProgressView?.isHidden = false
-                    downloadProgressView?.value = fractionCompleted * 100
+                    downloadProgressView?.progress = fractionCompleted
                     thirdDotLabel?.isHidden = false
 
                     let completedUnitCountString: String = BackgroundSession.shared.byteFormatter.string(fromByteCount: progress.completedUnitCount)
                     let totalUnitCountString: String = BackgroundSession.shared.byteFormatter.string(fromByteCount: progress.totalUnitCount)
                     downloadInfoLabel?.text = "\(completedUnitCountString) of \(totalUnitCountString)"
                 } else if fractionCompleted == 0 {
+                    downloadedContentView?.isHidden = true
                     downloadedIconImageView?.isHidden = true
                     downloadProgressView?.isHidden = true
+
                     thirdDotLabel?.isHidden = true
                     downloadInfoLabel?.text = nil
                 }
@@ -390,18 +400,13 @@ extension LectureCell {
     static func estimatedSize(for model: AnyHashable?, listView: IQListView) -> CGSize {
         switch Environment.current.device {
         case .mac, .pad:
-            return CGSize(width: listView.frame.width, height: 90)
+            return CGSize(width: listView.frame.width, height: 97)
         default:
-            return CGSize(width: listView.frame.width, height: 64)
+            return CGSize(width: listView.frame.width, height: 71)
         }
     }
 
     static func size(for model: AnyHashable?, listView: IQListView) -> CGSize {
-        switch Environment.current.device {
-        case .mac, .pad:
-            return CGSize(width: listView.frame.width, height: 90)
-        default:
-            return CGSize(width: listView.frame.width, height: 64)
-        }
+        return CGSize(width: listView.frame.width, height: UITableView.automaticDimension)
     }
 }

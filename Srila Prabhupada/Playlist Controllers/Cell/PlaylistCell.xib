@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
-    <device id="retina6_72" orientation="portrait" appearance="dark"/>
+    <device id="retina6_72" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
@@ -12,14 +12,14 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="ROE-HP-6A3" customClass="PlaylistCell" customModule="BVKS" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="100"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="71"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ROE-HP-6A3" id="YxG-zk-TLG">
-                <rect key="frame" x="0.0" y="0.0" width="344.66666666666669" height="100"/>
+                <rect key="frame" x="0.0" y="0.0" width="344.66666666666669" height="71"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo_40" translatesAutoresizingMaskIntoConstraints="NO" id="SaM-du-oZe">
-                        <rect key="frame" x="10" y="30" width="40" height="40"/>
+                        <rect key="frame" x="10" y="15.666666666666664" width="40" height="40"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="40" id="KMb-A7-GD2">
                                 <variation key="heightClass=regular-widthClass=regular" constant="60"/>
@@ -35,19 +35,19 @@
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="fZC-jx-OEg">
-                        <rect key="frame" x="60" y="21" width="227" height="58"/>
+                        <rect key="frame" x="60" y="5" width="227" height="61"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HQG-yb-jYz">
-                                <rect key="frame" x="0.0" y="0.0" width="22" height="20.666666666666668"/>
-                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="15"/>
-                                <color key="textColor" name="TextDarkGray"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="751" verticalCompressionResistancePriority="751" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HQG-yb-jYz">
+                                <rect key="frame" x="0.0" y="0.0" width="23" height="23.666666666666668"/>
+                                <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="15"/>
+                                <color key="textColor" name="000000"/>
                                 <nil key="highlightedColor"/>
                                 <variation key="heightClass=regular-widthClass=regular">
-                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="20"/>
+                                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="20"/>
                                 </variation>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="sOG-Oy-xja">
-                                <rect key="frame" x="0.0" y="22.666666666666664" width="71.333333333333329" height="16.666666666666664"/>
+                                <rect key="frame" x="0.0" y="25.666666666666664" width="71.333333333333329" height="16.666666666666664"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Category" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" translatesAutoresizingMaskIntoConstraints="NO" id="W2O-Ag-g5H">
                                         <rect key="frame" x="0.0" y="0.0" width="38.666666666666664" height="16.666666666666668"/>
@@ -79,7 +79,7 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="gl0-oS-S4d">
-                                <rect key="frame" x="0.0" y="41.333333333333336" width="79.666666666666671" height="16.666666666666664"/>
+                                <rect key="frame" x="0.0" y="44.333333333333336" width="79.666666666666671" height="16.666666666666664"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Lecture: 0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000001192092896" translatesAutoresizingMaskIntoConstraints="NO" id="Hms-Ia-AgS">
                                         <rect key="frame" x="0.0" y="0.0" width="42.666666666666664" height="16.666666666666668"/>
@@ -112,23 +112,24 @@
                             </stackView>
                         </subviews>
                     </stackView>
-                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fQG-Rf-zkX">
-                        <rect key="frame" x="287" y="0.0" width="49.666666666666686" height="100"/>
+                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fQG-Rf-zkX">
+                        <rect key="frame" x="287" y="0.0" width="49.666666666666686" height="71"/>
                         <color key="tintColor" name="0099CC"/>
                         <state key="normal" title=""/>
                         <buttonConfiguration key="configuration" style="plain" image="ellipsis.circle" catalog="system"/>
                     </button>
                 </subviews>
                 <constraints>
+                    <constraint firstAttribute="bottom" secondItem="fZC-jx-OEg" secondAttribute="bottom" constant="5" id="64N-bq-jck"/>
                     <constraint firstAttribute="trailing" secondItem="fQG-Rf-zkX" secondAttribute="trailing" constant="8" id="7kw-Iz-3Kd"/>
                     <constraint firstItem="fQG-Rf-zkX" firstAttribute="top" secondItem="YxG-zk-TLG" secondAttribute="top" id="86R-aX-dRB"/>
+                    <constraint firstItem="fZC-jx-OEg" firstAttribute="top" secondItem="YxG-zk-TLG" secondAttribute="top" constant="5" id="88g-oH-oqJ"/>
                     <constraint firstItem="fZC-jx-OEg" firstAttribute="leading" secondItem="SaM-du-oZe" secondAttribute="trailing" constant="10" id="C74-rR-Tff"/>
                     <constraint firstItem="SaM-du-oZe" firstAttribute="leading" secondItem="YxG-zk-TLG" secondAttribute="leading" constant="10" id="HdN-gC-ATb">
                         <variation key="heightClass=regular-widthClass=regular" constant="20"/>
                     </constraint>
                     <constraint firstAttribute="bottom" secondItem="fQG-Rf-zkX" secondAttribute="bottom" id="In6-h2-0z3"/>
                     <constraint firstItem="fQG-Rf-zkX" firstAttribute="leading" secondItem="fZC-jx-OEg" secondAttribute="trailing" id="YUu-bF-8rl"/>
-                    <constraint firstItem="fZC-jx-OEg" firstAttribute="centerY" secondItem="YxG-zk-TLG" secondAttribute="centerY" id="bly-Na-xGC"/>
                     <constraint firstItem="SaM-du-oZe" firstAttribute="centerY" secondItem="YxG-zk-TLG" secondAttribute="centerY" id="dwa-u7-0bE"/>
                 </constraints>
             </tableViewCellContentView>
@@ -150,6 +151,9 @@
     <resources>
         <image name="ellipsis.circle" catalog="system" width="128" height="123"/>
         <image name="logo_40" width="40" height="40"/>
+        <namedColor name="000000">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
         <namedColor name="0099CC">
             <color red="0.0" green="0.59999999999999998" blue="0.792156862745098" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
