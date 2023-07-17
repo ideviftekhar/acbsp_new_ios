@@ -87,9 +87,9 @@ extension PlayerViewController {
             })
 
             switch option {
-            case .addToQueue, .download, .resumeDownload, .pauseDownload, .markAsFavorite, .addToPlaylist, .markAsHeard, .resetProgress, .share, .info:
+            case .addToQueue, .addToPlayNext, .download, .resumeDownload, .pauseDownload, .markAsFavorite, .addToPlaylist, .markAsHeard, .resetProgress, .share, .info:
                 break
-            case .deleteFromDownloads, .removeFromPlaylist, .removeFromFavorite, .removeFromPlayNext:
+            case .deleteFromDownloads, .removeFromPlaylist, .removeFromFavorite, .removeFromQueue:
                 action.action.attributes = .destructive
             }
 
@@ -135,10 +135,10 @@ extension PlayerViewController {
             playlistController.popoverPresentationController?.sourceView = self.menuButton
             self.present(navigationController, animated: true, completion: nil)
 
-        case .removeFromPlaylist, .markAsHeard, .resetProgress, .pauseDownload, .addToQueue:
+        case .removeFromPlaylist, .markAsHeard, .resetProgress, .pauseDownload, .addToQueue, .addToPlayNext:
             break
-        case .removeFromPlayNext:
-            self.removeFromPlayNext(lectureIDs: [lecture.id])
+        case .removeFromQueue:
+            self.removeFromQueue(lectureIDs: [lecture.id])
         case .share:
 
             let deepLinkBaseURL = "https://bvks.com?lectureId=\(lecture.id)"

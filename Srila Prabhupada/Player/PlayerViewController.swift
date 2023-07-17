@@ -204,7 +204,7 @@ class PlayerViewController: LectureViewController {
 
         set {
             updateLectureProgress()
-
+            let oldValue = _privateCurrentLecture
             _privateCurrentLecture = newValue
 
             loadViewIfNeeded()
@@ -219,6 +219,7 @@ class PlayerViewController: LectureViewController {
             self.pause()
             updateMetadata()
             if let currentLecture = newValue {
+
                 UIApplication.shared.beginReceivingRemoteControlEvents()
 
                 do {
@@ -241,6 +242,25 @@ class PlayerViewController: LectureViewController {
                 do {
                     if loopLectureButton.isSelected == true {
                         updateCurrentLectureIDsQueue(lectureIDs: [currentLecture.id], animated: nil)
+                    } else {
+                        let userDefaultKey: String = "\(Self.self).playlistLectures"
+                        var updatedLectureIDs: [Int] = []
+
+                        if let data = FileUserDefaults.standard.data(for: userDefaultKey),
+                           var mergedLectureIDs = try? JSONDecoder().decode([Int].self, from: data), !mergedLectureIDs.isEmpty {
+                            updatedLectureIDs = mergedLectureIDs
+                        }
+
+                        if !updatedLectureIDs.contains(currentLecture.id) {
+                            if let oldValue = oldValue, let oldValueIndex = updatedLectureIDs.firstIndex(of: oldValue.id) {
+                                updatedLectureIDs.insert(currentLecture.id, at: oldValueIndex + 1)
+                            } else {
+                                updatedLectureIDs.append(currentLecture.id)
+                            }
+                            let data = try? JSONEncoder().encode(updatedLectureIDs)
+                            FileUserDefaults.standard.set(data, for: userDefaultKey)
+                            updatePlaylistLectureIDs(ids: updatedLectureIDs, canShuffle: false, animated: nil)
+                        }
                     }
                 }
 
@@ -255,6 +275,11 @@ class PlayerViewController: LectureViewController {
 
                 DefaultLectureViewModel.defaultModel.addToRecentlyPlayed(lecture: currentLecture, completion: { _ in })
                 DefaultLectureViewModel.defaultModel.updateTopLecture(date: Date(), lectureID: currentLecture.id, completion: { _ in })
+
+                DispatchQueue.global().async {
+                    self.scrollTo(lectureID: currentLecture.id)
+                }
+
             } else {
 
                 do {
@@ -507,6 +532,12 @@ class PlayerViewController: LectureViewController {
 
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
         return .fade
+    }
+
+    override func lecturesLoadingFinished() {
+        if currentLecture == nil, let firstLecture = self.models.first {
+            self.currentLecture = firstLecture
+        }
     }
 }
 
@@ -973,7 +1004,7 @@ extension PlayerViewController {
 
         let clearWatchedAction: SPAction = SPAction(title: "Clear Watched", image: UIImage(systemName: "text.badge.minus"), identifier: .init("Clear Watched"), handler: { [self] _ in
             let completedIDs: [Int] = models.filter { $0.isCompleted }.map { $0.id }
-            self.removeFromPlayNext(lectureIDs: completedIDs)
+            self.removeFromQueue(lectureIDs: completedIDs)
         })
         childrens.append(clearWatchedAction)
 
@@ -1060,6 +1091,11 @@ extension PlayerViewController: MiniPlayerViewDelegate {
         } else {
             pause()
         }
+    }
+
+    func miniPlayerViewDidRequestedNext(_ playerView: MiniPlayerView) {
+        let isPlaying = !self.isPaused
+        gotoNext(play: isPlaying)
     }
 
     func miniPlayerViewDidExpand(_ playerView: MiniPlayerView) {

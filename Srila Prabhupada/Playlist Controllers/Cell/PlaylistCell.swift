@@ -71,21 +71,25 @@ class PlaylistCell: UITableViewCell, IQModelableCell {
             do {
                 var actions: [SPAction] = []
 
-                if FirestoreManager.shared.currentUser != nil,
-                   let email = FirestoreManager.shared.currentUserEmail,
-                   model.playlist.authorEmail.elementsEqual(email) {
-
-                    if let deletePlaylist = allActions[.delete] {
-                        actions.append(deletePlaylist)
-                    }
-
-                    if let editPlaylist = allActions[.edit] {
-                        actions.append(editPlaylist)
-                    }
+                if !model.playlist.lectureIds.isEmpty, let addToPlayNext = allActions[.addToPlayNext] {
+                    actions.append(addToPlayNext)
                 }
 
                 if !model.playlist.lectureIds.isEmpty, let addToQueue = allActions[.addToQueue] {
                     actions.append(addToQueue)
+                }
+
+                if FirestoreManager.shared.currentUser != nil,
+                   let email = FirestoreManager.shared.currentUserEmail,
+                   model.playlist.authorEmail.elementsEqual(email) {
+
+                    if let editPlaylist = allActions[.edit] {
+                        actions.append(editPlaylist)
+                    }
+
+                    if let deletePlaylist = allActions[.delete] {
+                        actions.append(deletePlaylist)
+                    }
                 }
 
                 self.optionMenu.children = actions

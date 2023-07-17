@@ -43,12 +43,6 @@ class TopLectureViewController: LectureViewController {
         }
     }
 
-    override func syncStarted() {
-    }
-
-    override func syncEnded() {
-    }
-
     @IBAction func segmentAction(_ sender: UISegmentedControl) {
 
         do {

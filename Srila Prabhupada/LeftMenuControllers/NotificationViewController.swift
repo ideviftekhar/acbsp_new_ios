@@ -49,7 +49,7 @@ class NotificationViewController: UITableViewController {
                 bengaliSwitch.isOn = result.notification?.bengali ?? false
 
             case .failure(let error):
-                self.showAlert(error: error.localizedDescription as! Error)
+                self.showAlert(error: error)
             }
         })
     }
@@ -62,7 +62,7 @@ class NotificationViewController: UITableViewController {
             return
         }
 
-        var documentData :[String: Any] = [:]
+        var documentData: [String: Any] = [:]
         documentData = ["notification": [CommonConstants.notificationKeyEnglish: sender.isOn]]
 
         englishSwitch.isHidden = true

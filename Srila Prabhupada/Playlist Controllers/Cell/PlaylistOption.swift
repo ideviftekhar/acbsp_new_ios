@@ -16,6 +16,8 @@ enum PlaylistOption: String, CaseIterable {
 
     case addToQueue =   "Add to Queue"
 
+    case addToPlayNext          =   "Play Next"
+
     var image: UIImage? {
         switch self {
         case .edit:
@@ -23,6 +25,13 @@ enum PlaylistOption: String, CaseIterable {
         case .delete:
             return UIImage(systemName: "trash")
         case .addToQueue:
+            guard let image = UIImage(systemName: "text.badge.plus"), let cgImage = image.cgImage else {
+                return nil
+            }
+
+            let flippedImage = UIImage(cgImage: cgImage, scale: image.scale, orientation: .downMirrored)
+            return flippedImage
+        case .addToPlayNext:
             return UIImage(systemName: "text.badge.plus")
         }
     }

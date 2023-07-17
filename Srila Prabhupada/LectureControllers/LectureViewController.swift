@@ -248,6 +248,10 @@ class LectureViewController: SearchViewController {
     func syncEnded() {
     }
 
+    func lecturesLoadingFinished() {
+
+    }
+
     override func refresh(source: FirestoreSource, animated: Bool?) {
         refresh(source: source, existing: nil, animated: animated)
     }
@@ -398,8 +402,13 @@ extension LectureViewController {
 
         if !selectedModels.isEmpty {
 
-            if !selectedModels.isEmpty, let addToPlayNext = allActions[.addToQueue] {
-                addToPlayNext.action.title = LectureOption.addToQueue.rawValue + " (\(selectedModels.count))"
+            if !selectedModels.isEmpty, let addToQueue = allActions[.addToQueue] {
+                addToQueue.action.title = LectureOption.addToQueue.rawValue + " (\(selectedModels.count))"
+                menuItems.append(addToQueue)
+            }
+
+            if !selectedModels.isEmpty, let addToPlayNext = allActions[.addToPlayNext] {
+                addToPlayNext.action.title = LectureOption.addToPlayNext.rawValue + " (\(selectedModels.count))"
                 menuItems.append(addToPlayNext)
             }
 
@@ -491,16 +500,26 @@ extension LectureViewController {
 
                 switch option {
                 case .addToQueue:
+                    let lectureIDs = selectedModels.map({ $0.id })
                     if let playerController = self as? PlayerViewController {
-                        playerController.addToPlayNext(lectureIDs: models.map({ $0.id }))
+                        playerController.addToQueue(lectureIDs: lectureIDs)
                     } else if let tabController = self.tabBarController as? TabBarController {
-                        tabController.addLecturesToPlayNext(lectures: selectedModels)
+                        tabController.addToQueue(lectureIDs: lectureIDs)
                     }
-                case .removeFromPlayNext:
+                case .removeFromQueue:
+                    let lectureIDs = selectedModels.map({ $0.id })
+
                     if let playerController = self as? PlayerViewController {
-                        playerController.removeFromPlayNext(lectureIDs: models.map({ $0.id }))
+                        playerController.removeFromQueue(lectureIDs: lectureIDs)
                     } else if let tabController = self.tabBarController as? TabBarController {
-                        tabController.removeLecturesFromPlayNext(lectures: selectedModels)
+                        tabController.removeFromQueue(lectureIDs: lectureIDs)
+                    }
+                case .addToPlayNext:
+                    let lectureIDs = selectedModels.map({ $0.id })
+                    if let playerController = self as? PlayerViewController {
+                        playerController.addToPlayNext(lectureIDs: lectureIDs)
+                    } else if let tabController = self.tabBarController as? TabBarController {
+                        tabController.addToPlayNext(lectureIDs: lectureIDs)
                     }
                 case .download, .resumeDownload:
                     Haptic.softImpact()
@@ -555,9 +574,9 @@ extension LectureViewController {
             })
 
             switch option {
-            case .addToQueue, .download, .resumeDownload, .pauseDownload, .markAsFavorite, .addToPlaylist, .markAsHeard, .resetProgress, .share, .info:
+            case .addToQueue, .addToPlayNext, .download, .resumeDownload, .pauseDownload, .markAsFavorite, .addToPlaylist, .markAsHeard, .resetProgress, .share, .info:
                 break
-            case .deleteFromDownloads, .removeFromPlaylist, .removeFromFavorite, .removeFromPlayNext:
+            case .deleteFromDownloads, .removeFromPlaylist, .removeFromFavorite, .removeFromQueue:
                 action.action.attributes = .destructive
             }
 
@@ -582,15 +601,22 @@ extension LectureViewController: LectureCellDelegate {
         switch option {
         case .addToQueue:
             if let playerController = self as? PlayerViewController {
+                playerController.addToQueue(lectureIDs: [lecture.id])
+            } else if let tabController = self.tabBarController as? TabBarController {
+                tabController.addToQueue(lectureIDs: [lecture.id])
+            }
+        case .removeFromQueue:
+            if let playerController = self as? PlayerViewController {
+                playerController.removeFromQueue(lectureIDs: [lecture.id])
+            } else if let tabController = self.tabBarController as? TabBarController {
+                tabController.removeFromQueue(lectureIDs: [lecture.id])
+            }
+        case .addToPlayNext:
+            let lectureIDs = selectedModels.map({ $0.id })
+            if let playerController = self as? PlayerViewController {
                 playerController.addToPlayNext(lectureIDs: [lecture.id])
             } else if let tabController = self.tabBarController as? TabBarController {
-                tabController.addLecturesToPlayNext(lectures: [lecture])
-            }
-        case .removeFromPlayNext:
-            if let playerController = self as? PlayerViewController {
-                playerController.removeFromPlayNext(lectureIDs: [lecture.id])
-            } else if let tabController = self.tabBarController as? TabBarController {
-                tabController.removeLecturesFromPlayNext(lectures: [lecture])
+                tabController.addToPlayNext(lectureIDs: [lecture.id])
             }
         case .download, .resumeDownload:
             Haptic.softImpact()
@@ -915,6 +941,16 @@ extension LectureViewController {
 
 extension LectureViewController: IQListViewDelegateDataSource {
 
+    func scrollTo(lectureID: Int) {
+        serialListKitQueue.async { [self] in
+            if let item = self.list.itemIdentifier(of: LectureCell.self, where: { $0.lecture.id == lectureID }) {
+                DispatchQueue.main.async {
+                    self.list.scrollTo(item: item, at: .none, animated: true)
+                }
+            }
+        }
+    }
+
     private func refreshUI(animated: Bool?, showNoItems: Bool) {
 
         serialListKitQueue.async { [self] in
@@ -976,6 +1012,7 @@ extension LectureViewController: IQListViewDelegateDataSource {
                 }
 
                 activityIndicatorView.stopAnimating()
+                self.lecturesLoadingFinished()
             })
         }
     }
@@ -1053,7 +1090,7 @@ extension LectureViewController: IQListViewDelegateDataSource {
     func listView(_ listView: IQListView, commit item: IQItem, style: UITableViewCell.EditingStyle, at indexPath: IndexPath) {
         if let playerController = self as? PlayerViewController,
            style == .delete, let model = item.model as? LectureCell.Model {
-            playerController.removeFromPlayNext(lectureIDs: [model.lecture.id])
+            playerController.removeFromQueue(lectureIDs: [model.lecture.id])
         }
     }
 

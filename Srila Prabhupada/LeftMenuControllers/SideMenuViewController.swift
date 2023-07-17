@@ -98,7 +98,14 @@ class SideMenuViewController: UIViewController {
             list.registerCell(type: Cell.self, registerType: .nib)
             sideMenuTableView.separatorStyle = .singleLine
         }
-        
+
+        switch Environment.current.device {
+        case .mac, .pad:
+            self.userImageView.layer.cornerRadius = 30
+        case .phone:
+            self.userImageView.layer.cornerRadius = 20
+        }
+
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(stackViewTapped))
         userProfileStackView.addGestureRecognizer(tapGesture)
 
@@ -108,11 +115,6 @@ class SideMenuViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         refreshUI(animated: false)
-    }
-
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        self.userImageView.layer.cornerRadius = self.userImageView.bounds.size.width/2
     }
 
     @objc func stackViewTapped() {

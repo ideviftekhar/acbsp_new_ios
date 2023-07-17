@@ -58,7 +58,7 @@ protocol LectureViewModel: AnyObject {
     
     func updateNotification(
         documentData: [String: Any],
-        completion: @escaping (Result<Bool, Error>) -> Void)
+        completion: @escaping (Result<UserSettings, Error>) -> Void)
 }
 
 class DefaultLectureViewModel: NSObject, LectureViewModel {
@@ -276,7 +276,7 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
         FirestoreManager.shared.getDocument(documentReference: documentReference, source: .server, completion: completion)
     }
     
-    func updateNotification(documentData: [String: Any], completion: @escaping (Result<Bool, Error>) -> Void) {
+    func updateNotification(documentData: [String: Any], completion: @escaping (Result<UserSettings, Error>) -> Void) {
         
         guard let id = FirestoreManager.shared.currentUserUID else {
             let error = NSError(domain: "Firestore Database", code: 0, userInfo: [NSLocalizedDescriptionKey: "UID not available"])
