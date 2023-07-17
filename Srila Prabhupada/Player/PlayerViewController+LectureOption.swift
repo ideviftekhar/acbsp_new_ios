@@ -87,7 +87,7 @@ extension PlayerViewController {
             })
 
             switch option {
-            case .addToPlayNext, .download, .resumeDownload, .pauseDownload, .markAsFavorite, .addToPlaylist, .markAsHeard, .resetProgress, .share, .info:
+            case .addToQueue, .download, .resumeDownload, .pauseDownload, .markAsFavorite, .addToPlaylist, .markAsHeard, .resetProgress, .share, .info:
                 break
             case .deleteFromDownloads, .removeFromPlaylist, .removeFromFavorite, .removeFromPlayNext:
                 action.action.attributes = .destructive
@@ -135,7 +135,7 @@ extension PlayerViewController {
             playlistController.popoverPresentationController?.sourceView = self.menuButton
             self.present(navigationController, animated: true, completion: nil)
 
-        case .removeFromPlaylist, .markAsHeard, .resetProgress, .pauseDownload, .addToPlayNext:
+        case .removeFromPlaylist, .markAsHeard, .resetProgress, .pauseDownload, .addToQueue:
             break
         case .removeFromPlayNext:
             self.removeFromPlayNext(lectureIDs: [lecture.id])

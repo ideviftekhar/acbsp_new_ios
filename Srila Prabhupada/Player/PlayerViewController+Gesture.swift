@@ -17,7 +17,13 @@ extension PlayerViewController {
 
         let translation = sender.translation(in: self.view)
         let totalSeconds: Float = Float(model.lengthTime.totalSeconds)
-        let seekProgress: Float = Float(translation.x / self.view.bounds.width)
+        let progressViewWidth = progressView.bounds.width
+//        let multiplier = (progressViewWidth - abs(translation.y)) / progressViewWidth
+//        let distanceMultiplier = CGFloat.maximum(0.1, multiplier)
+//        let translationInX = translation.x * distanceMultiplier
+        let translationInX = translation.x
+
+        let seekProgress: Float = Float(translationInX / progressViewWidth)
         let maxSeekSeconds: Float = totalSeconds // 10*60 // 10 minutes
         let changedSeconds: Float = maxSeekSeconds*seekProgress
         var proposedSeek: Float = Float(currentTime) + changedSeconds
@@ -49,7 +55,7 @@ extension PlayerViewController {
         case .changed:
             switch direction {
             case .left, .right:
-                timeSlider.value = proposedSeek
+                progressView.progress = proposedSeek / totalSeconds
                 currentTimeLabel.text = Int(proposedSeek).toHHMMSS
                 miniPlayerView.playedSeconds = proposedSeek
             case .up:
@@ -81,7 +87,6 @@ extension PlayerViewController {
                     minimize(animated: true)
                 }
 
-                break
             default:
                 break
             }
@@ -93,12 +98,6 @@ extension PlayerViewController {
     }
 
     @objc internal func panMinimizeRecognized(_ sender: UIPanGestureRecognizer) {
-
-        guard let model = currentLecture else {
-            return
-        }
-
-        let translation = sender.translation(in: self.view)
 
         switch sender.state {
         case .began:

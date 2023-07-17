@@ -16,7 +16,13 @@ extension MiniPlayerView: UIGestureRecognizerDelegate {
         }
         let translation = sender.translation(in: self)
         let totalSeconds: Float = Float(lectureDuration.totalSeconds)
-        let seekProgress: Float = Float(translation.x / self.bounds.width)
+        let progressViewWidth = progressView.bounds.width
+//        let multiplier = (progressViewWidth - abs(translation.y)) / progressViewWidth
+//        let distanceMultiplier = CGFloat.maximum(0.1, multiplier)
+//        let translationInX = translation.x * distanceMultiplier
+        let translationInX = translation.x
+
+        let seekProgress: Float = Float(translationInX / progressViewWidth)
         let maxSeekSeconds: Float = totalSeconds // 10*60 // 10 minutes
         let changedSeconds: Float = maxSeekSeconds*seekProgress
         var proposedSeek: Float = playedSeconds + changedSeconds
@@ -47,7 +53,7 @@ extension MiniPlayerView: UIGestureRecognizerDelegate {
         case .changed:
             switch direction {
             case .left, .right:
-                timeSlider.value = proposedSeek
+                progressView.progress = proposedSeek / totalSeconds
                 currentTimeLabel.text = Int(proposedSeek).toHHMMSS
             case .up, .down:
                 break

@@ -58,20 +58,23 @@ class PlayerViewController: LectureViewController {
     @IBOutlet private var bufferingActivityIndicator: UIActivityIndicatorView!
     @IBOutlet internal var currentTimeLabel: UILabel!
     @IBOutlet private var totalTimeLabel: UILabel!
-    @IBOutlet internal var timeSlider: UISlider!
+    @IBOutlet internal var progressView: UIProgressView!
 
     @IBOutlet internal var videoButton: UIButton!
     @IBOutlet internal var menuButton: UIButton!
     @IBOutlet internal var playlistButton: UIButton!
     @IBOutlet private var playPauseButton: UIButton!
     @IBOutlet private var speedMenuButton: UIButton!
+    @IBOutlet private var stackViewOptions: UIStackView!
 
     @IBOutlet private var previousLectureButton: UIButton!
     @IBOutlet private var nextLectureButton: UIButton!
 
+    @IBOutlet private var playNextOptionStackView: UIStackView!
     @IBOutlet private var loopLectureButton: UIButton!
     @IBOutlet private var shuffleLectureButton: UIButton!
-    @IBOutlet private var clearPlayNextButton: UIButton!
+    @IBOutlet private var playNextMenuButton: UIButton!
+    @IBOutlet private var playNextMenuDoneButton: UIButton!
 
     @IBOutlet private var forwardTenSecondsButton: UIButton!
     @IBOutlet private var backwardTenSecondsButton: UIButton!
@@ -93,7 +96,10 @@ class PlayerViewController: LectureViewController {
 
     internal lazy var seekGesture = UIPanGestureRecognizer(target: self, action: #selector(panRecognized(_:)))
     internal lazy var minimizeGesture = UIPanGestureRecognizer(target: self, action: #selector(panMinimizeRecognized(_:)))
+    internal lazy var minimize2Gesture = UIPanGestureRecognizer(target: self, action: #selector(panMinimizeRecognized(_:)))
     internal var direction: UISwipeGestureRecognizer.Direction = .down
+
+    var playNextOptionMenu: SPMenu!
 
     var optionMenu: SPMenu!
     var allActions: [LectureOption: SPAction] = [:]
@@ -234,7 +240,7 @@ class PlayerViewController: LectureViewController {
 
                 do {
                     if loopLectureButton.isSelected == true {
-                        currentLectureIDsQueue = [currentLecture.id]
+                        updateCurrentLectureIDsQueue(lectureIDs: [currentLecture.id], animated: nil)
                     }
                 }
 
@@ -287,32 +293,49 @@ class PlayerViewController: LectureViewController {
         }
     }
 
-    private(set) var playlistLectureIDs: [Int] = [] {
-        didSet {
-            loadViewIfNeeded()
+    func updatePlaylistLectureIDs(ids: [Int], canShuffle: Bool, lectureIDsQueue: [Int]? = nil, animated: Bool?) {
+        self.playlistLectureIDs = ids
 
-            if loopLectureButton.isSelected == true {
+        loadViewIfNeeded()
 
-                if let currentLecture = currentLecture {
-                    currentLectureIDsQueue = [currentLecture.id]
-                } else {
-                    currentLectureIDsQueue.removeAll()
-                }
-            } else if shuffleLectureButton.isSelected == true {
-                currentLectureIDsQueue = playlistLectureIDs.shuffled()
+        let updatedLectureIDsQueue: [Int]
+
+        if loopLectureButton.isSelected == true {
+            if let currentLecture = currentLecture {
+                updatedLectureIDsQueue = [currentLecture.id]
             } else {
-                currentLectureIDsQueue = playlistLectureIDs
+                updatedLectureIDsQueue = []
             }
+        } else if shuffleLectureButton.isSelected == true {
+            if let lectureIDsQueue = lectureIDsQueue {
+                updatedLectureIDsQueue = lectureIDsQueue
+            } else if canShuffle {
+                updatedLectureIDsQueue = playlistLectureIDs.shuffled()
+            } else {
+                let added = ids.filter { !currentLectureIDsQueue.contains($0) }
+
+                var updatedQueueIDs = currentLectureIDsQueue
+                updatedQueueIDs.removeAll { !ids.contains($0) }
+                updatedQueueIDs.append(contentsOf: added.shuffled())
+
+                updatedLectureIDsQueue = updatedQueueIDs
+            }
+        } else {
+            updatedLectureIDsQueue = playlistLectureIDs
         }
+
+        updateCurrentLectureIDsQueue(lectureIDs: updatedLectureIDsQueue, animated: animated)
     }
 
-    private var currentLectureIDsQueue: [Int] = [] {
-        didSet {
-            loadViewIfNeeded()
-            refresh(source: .cache)
-            updatePreviousNextButtonUI()
-        }
+    private func updateCurrentLectureIDsQueue(lectureIDs: [Int], animated: Bool?) {
+        self.currentLectureIDsQueue = lectureIDs
+        loadViewIfNeeded()
+        refresh(source: .cache, animated: animated)
+        updatePreviousNextButtonUI()
     }
+
+    private(set) var playlistLectureIDs: [Int] = []
+    private(set) var currentLectureIDsQueue: [Int] = []
 
     override func viewDidLoad() {
 
@@ -320,6 +343,7 @@ class PlayerViewController: LectureViewController {
 
         configurePlayRateMenu()
         configureMenuButton()
+        configurePlaylistOptionMenu()
 
         do {
             loopLectureButton.isSelected = false
@@ -330,17 +354,6 @@ class PlayerViewController: LectureViewController {
             miniPlayerView.delegate = self
         }
 
-        switch Environment.current.device {
-        case .mac:
-            break
-        default:
-            let normalImage = UIImage(color: UIColor.clear, size: CGSize(width: 40, height: 40))?.withRadius(radius: 20)
-            let highlightedImage = UIImage(color: UIColor.clear, size: CGSize(width: 40, height: 40))?.withRadius(radius: 20)
-
-            timeSlider.setThumbImage(normalImage, for: .normal)
-            timeSlider.setThumbImage(highlightedImage, for: .highlighted)
-        }
-
         do {
             self.playerContainerView.clipsToBounds = true
         }
@@ -348,6 +361,7 @@ class PlayerViewController: LectureViewController {
         do {
             stackViewMain.addGestureRecognizer(seekGesture)
             stackViewMinimize.addGestureRecognizer(minimizeGesture)
+            playNextOptionStackView.addGestureRecognizer(minimize2Gesture)
 
             lectureTebleView.panGestureRecognizer.addTarget(self, action: #selector(tableViewPanRecognized(_:)))
         }
@@ -361,11 +375,14 @@ class PlayerViewController: LectureViewController {
         super.viewWillAppear(animated)
     }
 
+    var isFirstTime: Bool = true
+
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        if self.traitCollection.verticalSizeClass == .compact {
+        if isFirstTime {
             self.showPlaylist(animated: true)
+            isFirstTime = false
         }
     }
 
@@ -379,7 +396,6 @@ class PlayerViewController: LectureViewController {
             categoryLabel.text = categoryString
             locationLabel.text = currentLecture.location.displayString
             dateLabel.text = currentLecture.dateOfRecording.display_dd_MMM_yyyy
-            timeSlider.maximumValue = Float(currentLecture.lengthTime.totalSeconds)
             totalTimeLabel.text = currentLecture.lengthTime.displayString
 
             if !currentLecture.location.displayString.isEmpty {
@@ -407,7 +423,6 @@ class PlayerViewController: LectureViewController {
             categoryLabel.text = "--"
             locationLabel.text = "--"
             dateLabel.text = "--"
-            timeSlider.maximumValue = 0
             totalTimeLabel.text = "--"
             locationLabel.text = "--"
             firstDotLabel?.isHidden = false
@@ -478,8 +493,6 @@ class PlayerViewController: LectureViewController {
         }
     }
 
-//    var wasShowingPlaylist: Bool = false
-
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
         if Environment.current.device == .phone {
 //            let hasSizeClassChanged = previousTraitCollection?.verticalSizeClass != traitCollection.verticalSizeClass || previousTraitCollection?.horizontalSizeClass != traitCollection.horizontalSizeClass
@@ -494,11 +507,6 @@ class PlayerViewController: LectureViewController {
 
     override var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
         return .fade
-    }
-
-    override func listView(_ listView: IQListView, modifyCell cell: IQListCell, at indexPath: IndexPath) {
-        super.listView(listView, modifyCell: cell, at: indexPath)
-        cell.backgroundColor = UIColor.clear
     }
 }
 
@@ -679,10 +687,15 @@ extension PlayerViewController {
             }
         })
 
-        if seekGesture.state != .changed {
-            timeSlider.value = Float(currentTime)
-            miniPlayerView.playedSeconds = timeSlider.value
-            currentTimeLabel.text = Int(timeSlider.value).toHHMMSS
+        if seekGesture.state != .changed, let currentLecture = currentLecture {
+
+            let totalSeconds = Float(currentLecture.lengthTime.totalSeconds)
+            let playedSeconds = Float(currentTime)
+            let progress = playedSeconds / Float(totalSeconds)
+            progressView.progress = progress
+
+            miniPlayerView.playedSeconds = playedSeconds
+            currentTimeLabel.text = currentTime.toHHMMSS
         }
     }
 
@@ -690,19 +703,29 @@ extension PlayerViewController {
         guard seekGesture.state != .changed else {
             return
         }
-        if !timeSlider.isTracking && !isSeeking {
-            timeSlider.value = Float(seconds)
-            miniPlayerView.playedSeconds = timeSlider.value
-        }
 
-        let seconds: Int = Int(timeSlider.value.rounded(.up))
-        if seconds % 60 == 0, let currentLecture = currentLecture {
-            DefaultLectureViewModel.defaultModel.offlineUpdateLectureProgress(lecture: currentLecture, lastPlayedPoint: seconds)
-        }
+        let roundedUpSeconds: Int = Int(seconds.rounded(.up))
+        currentTimeLabel.text = roundedUpSeconds.toHHMMSS
 
-        currentTimeLabel.text = seconds.toHHMMSS
-        if !isPaused, let currentLecture = currentLecture {
-            Self.nowPlaying = (currentLecture, .playing(progress: self.currentProgress))
+        if let currentLecture = currentLecture {
+            if !isSeeking {
+                let totalSeconds = Float(currentLecture.lengthTime.totalSeconds)
+                let playedSeconds = Float(seconds)
+                let progress = playedSeconds / Float(totalSeconds)
+                progressView.progress = progress
+                miniPlayerView.playedSeconds = playedSeconds
+
+                if roundedUpSeconds % 60 == 0 {
+                    DefaultLectureViewModel.defaultModel.offlineUpdateLectureProgress(lecture: currentLecture, lastPlayedPoint: roundedUpSeconds)
+                }
+
+                if !isPaused {
+                    Self.nowPlaying = (currentLecture, .playing(progress: self.currentProgress))
+                }
+            }
+        } else {
+            progressView.progress = 0
+            miniPlayerView.playedSeconds = 0
         }
     }
 }
@@ -711,17 +734,6 @@ extension PlayerViewController {
 
     @IBAction func backwardXSecondsPressed(_ sender: UIButton) {
         seek(seconds: -10)
-    }
-
-    @IBAction func timeSliderEnded(_ sender: UISlider) {
-        seekTo(seconds: Int(sender.value))
-    }
-
-    @IBAction func timeChanged(_ sender: UISlider) {
-
-        timeSlider.value = sender.value
-        currentTimeLabel.text = Int(sender.value).toHHMMSS
-        miniPlayerView.playedSeconds = sender.value
     }
 
     @IBAction func forwardXSecondPressed(_ sender: UIButton) {
@@ -835,7 +847,6 @@ extension PlayerViewController {
         self.timeControlStatusObserver = player?.observe(\.timeControlStatus, options: [.new, .old], changeHandler: { [self] (player, _) in
 
             let totalDuration: Int = self.totalDuration
-            timeSlider.maximumValue = Float(totalDuration)
             let time = Time(totalSeconds: totalDuration)
             totalTimeLabel.text = time.displayString
             miniPlayerView.lectureDuration = time
@@ -853,7 +864,6 @@ extension PlayerViewController {
         self.itemStatusObserver = item.observe(\.status, options: [.new, .old], changeHandler: { [self] (_, change) in
 
             let totalDuration: Int = self.totalDuration
-            timeSlider.maximumValue = Float(totalDuration)
             let time = Time(totalSeconds: totalDuration)
             totalTimeLabel.text = time.displayString
             miniPlayerView.lectureDuration = time
@@ -902,8 +912,7 @@ extension PlayerViewController {
             shuffleLectureButton.isSelected = false
         }
 
-        let allLectureIDs = self.playlistLectureIDs
-        self.playlistLectureIDs = allLectureIDs // This is to reload current playlist
+        self.updatePlaylistLectureIDs(ids: self.playlistLectureIDs, canShuffle: true, animated: nil) // This is to reload current playlist
     }
 
     private func updatePreviousNextButtonUI() {
@@ -939,10 +948,49 @@ extension PlayerViewController {
         }
     }
 
-    @IBAction func clearPlayNextButtonPressed(_ sender: UIButton) {
-        self.showAlert(title: "Clear Play Next?", message: "Are you sure you would like to clear Play Next Queue?", preferredStyle: .alert, sourceView: sender, cancel: ("Cancel", nil), destructive: ("Clear", {
-            self.clearPlayingQueue(keepPlayingLecture: true)
-        }))
+    private func configurePlaylistOptionMenu() {
+        var childrens: [SPAction] = []
+
+        let editAction: SPAction = SPAction(title: "Edit", image: UIImage(systemName: "pencil"), identifier: .init("Edit"), handler: { [self] _ in
+            self.lectureTebleView.setEditing(true, animated: true)
+            playNextMenuButton.isHidden = true
+            loopLectureButton.isHidden = true
+            shuffleLectureButton.isHidden = true
+            playingInfoStackView.isHidden = true
+
+            playNextMenuDoneButton.isHidden = false
+
+        })
+        childrens.append(editAction)
+
+        let clearAllAction: SPAction = SPAction(title: "Clear All", image: UIImage(systemName: "text.badge.xmark"), identifier: .init("Clear All"), handler: { [self] _ in
+            self.showAlert(title: "Clear Play Next?", message: "Are you sure you would like to clear Play Next Queue?", preferredStyle: .alert, sourceView: playNextMenuButton, cancel: ("Cancel", nil), destructive: ("Clear", {
+                self.clearPlayingQueue(keepPlayingLecture: true)
+            }))
+        })
+        clearAllAction.action.attributes = .destructive
+        childrens.append(clearAllAction)
+
+        let clearWatchedAction: SPAction = SPAction(title: "Clear Watched", image: UIImage(systemName: "text.badge.minus"), identifier: .init("Clear Watched"), handler: { [self] _ in
+            let completedIDs: [Int] = models.filter { $0.isCompleted }.map { $0.id }
+            self.removeFromPlayNext(lectureIDs: completedIDs)
+        })
+        childrens.append(clearWatchedAction)
+
+        if let playNextMenuButton = playNextMenuButton {
+            self.playNextOptionMenu = SPMenu(title: "", image: nil, identifier: .init(rawValue: "PlaylistOption"), options: .displayInline, children: childrens, button: playNextMenuButton)
+        }
+    }
+
+    @IBAction func playlistMenuDoneButtonPressed(_ sender: UIButton) {
+        self.lectureTebleView.setEditing(false, animated: true)
+        playNextMenuButton.isHidden = false
+        loopLectureButton.isHidden = false
+        shuffleLectureButton.isHidden = false
+        stackViewMain.isHidden = false
+        playingInfoStackView.isHidden = false
+
+        playNextMenuDoneButton.isHidden = true
     }
 
     @IBAction func videoLectureButtonPressed(_ sender: UIButton) {
@@ -1000,7 +1048,6 @@ extension PlayerViewController {
 extension PlayerViewController: MiniPlayerViewDelegate {
     func miniPlayerViewDidClose(_ playerView: MiniPlayerView) {
         self.currentLecture = nil
-        self.playlistLectureIDs = []
     }
 
     func miniPlayerView(_ playerView: MiniPlayerView, didSeekTo seconds: Int) {
@@ -1017,166 +1064,5 @@ extension PlayerViewController: MiniPlayerViewDelegate {
 
     func miniPlayerViewDidExpand(_ playerView: MiniPlayerView) {
         expand(animated: true)
-    }
-}
-
-extension PlayerViewController {
-
-    // Loading last played lectures
-    func loadLastPlayedLectures(cachedLectures: [Lecture]) {
-        DispatchQueue.global(qos: .background).async {
-            let lectureIDDefaultKey: String = "\(Self.self).\(Lecture.self)"
-            let lectureID = UserDefaults.standard.integer(forKey: lectureIDDefaultKey)
-
-            let currentLecture: Model?
-            do {
-                if let lecture = cachedLectures.first(where: { $0.id == lectureID }) {
-                    currentLecture = lecture
-                } else {
-                    currentLecture = nil
-                }
-            }
-
-            do {
-                let playlistLecturesKey: String = "\(PlayerViewController.self).playlistLectures"
-                let data = FileUserDefaults.standard.data(for: playlistLecturesKey)
-
-                var playlistLectureIDs: [Int] = []
-
-                if let data = data {
-                    playlistLectureIDs = (try? JSONDecoder().decode([Int].self, from: data)) ?? []
-                }
-                if !playlistLectureIDs.contains(where: { $0 == lectureID }) {
-                    playlistLectureIDs.insert(lectureID, at: 0)
-                }
-
-                var updatedLectureIDs: [Int] = []
-                // Removing duplicates
-                do {
-                    var lectureIDsHashTable: [Int: Int] = playlistLectureIDs.enumerated().reduce(into: [Int: Int]()) { result, object in
-                        if result[object.element] == nil {
-                            result[object.element] = object.offset
-                        }
-                    }
-
-                    for lectureID in playlistLectureIDs where lectureIDsHashTable[lectureID] != nil {
-                        updatedLectureIDs.append(lectureID)
-                        lectureIDsHashTable[lectureID] = nil
-                    }
-                }
-
-                DispatchQueue.main.async {
-                    self.currentLecture = currentLecture
-                    self.playlistLectureIDs = updatedLectureIDs
-                }
-            }
-        }
-    }
-
-    func addToPlayNext(lectureIDs: [Int]) {
-
-        DispatchQueue.global(qos: .background).async {
-
-            let userDefaultKey: String = "\(Self.self).playlistLectures"
-            var updatedLectureIDs: [Int] = []
-
-            if let data = FileUserDefaults.standard.data(for: userDefaultKey),
-               let oldLectureIDs = try? JSONDecoder().decode([Int].self, from: data), !oldLectureIDs.isEmpty {
-
-                let mergedLectureIDs: [Int] = oldLectureIDs + lectureIDs
-
-                // Removing duplicates
-                do {
-                    var lectureIDsHashTable: [Int: Int] = mergedLectureIDs.enumerated().reduce(into: [Int: Int]()) { result, object in
-                        if result[object.element] == nil {
-                            result[object.element] = object.offset
-                        }
-                    }
-
-                    for lectureID in mergedLectureIDs where lectureIDsHashTable[lectureID] != nil {
-                        updatedLectureIDs.append(lectureID)
-                        lectureIDsHashTable[lectureID] = nil
-                    }
-                }
-            } else {
-                updatedLectureIDs = lectureIDs
-            }
-
-            if let currentLecture = self.currentLecture {
-                if !updatedLectureIDs.contains(currentLecture.id) {
-                    updatedLectureIDs.insert(currentLecture.id, at: 0)
-                }
-            }
-
-            let data = try? JSONEncoder().encode(updatedLectureIDs)
-            FileUserDefaults.standard.set(data, for: userDefaultKey)
-
-            DispatchQueue.main.async {
-                self.playlistLectureIDs = updatedLectureIDs
-            }
-        }
-    }
-
-    func removeFromPlayNext(lectureIDs: [Int]) {
-
-        DispatchQueue.global(qos: .background).async {
-
-            let userDefaultKey: String = "\(Self.self).playlistLectures"
-            var updatedLectureIDs: [Int] = []
-
-            if let data = FileUserDefaults.standard.data(for: userDefaultKey),
-               var mergedLectureIDs = try? JSONDecoder().decode([Int].self, from: data), !mergedLectureIDs.isEmpty {
-                mergedLectureIDs.removeAll(where: { lectureIDs.contains($0) })
-                updatedLectureIDs = mergedLectureIDs
-            }
-
-            if let currentLecture = self.currentLecture {
-                if !updatedLectureIDs.contains(currentLecture.id) {
-                    updatedLectureIDs.insert(currentLecture.id, at: 0)
-                }
-            }
-
-            // Removing duplicates
-            var finalLectureIDs: [Int] = []
-            do {
-                var lectureIDsHashTable: [Int: Int] = updatedLectureIDs.enumerated().reduce(into: [Int: Int]()) { result, object in
-                    if result[object.element] == nil {
-                        result[object.element] = object.offset
-                    }
-                }
-
-                for lectureID in updatedLectureIDs where lectureIDsHashTable[lectureID] != nil {
-                    finalLectureIDs.append(lectureID)
-                    lectureIDsHashTable[lectureID] = nil
-                }
-            }
-
-            let data = try? JSONEncoder().encode(finalLectureIDs)
-            FileUserDefaults.standard.set(data, for: userDefaultKey)
-
-            DispatchQueue.main.async {
-                self.playlistLectureIDs = finalLectureIDs
-            }
-        }
-    }
-
-    func clearPlayingQueue(keepPlayingLecture: Bool) {
-
-        DispatchQueue.global(qos: .background).async {
-
-            let userDefaultKey: String = "\(Self.self).playlistLectures"
-            var updatedLectureIDs: [Int] = []
-
-            if keepPlayingLecture, let currentLecture = self.currentLecture {
-                updatedLectureIDs.insert(currentLecture.id, at: 0)
-            }
-
-            let data = try? JSONEncoder().encode(updatedLectureIDs)
-            FileUserDefaults.standard.set(data, for: userDefaultKey)
-
-            DispatchQueue.main.async {
-                self.playlistLectureIDs = updatedLectureIDs
-            }
-        }
     }
 }

@@ -36,7 +36,7 @@ class MiniPlayerView: UIView {
     @IBOutlet private var dateLabel: UILabel!
     @IBOutlet private var expandButton: UIButton!
     @IBOutlet private var playButton: UIButton!
-    @IBOutlet internal var timeSlider: UISlider!
+    @IBOutlet internal var progressView: UIProgressView!
     @IBOutlet private var firstDotLabel: UILabel?
     @IBOutlet private var secondDotLabel: UILabel?
 
@@ -72,7 +72,7 @@ class MiniPlayerView: UIView {
             let newImage: UIImage? = isPlaying ? pauseFillImage :  playFillImage
             playButton.setImage(newImage, for: .normal)
         default:
-            timeSlider.setThumbImage(UIImage(), for: .normal)
+            break
         }
     }
 
@@ -105,7 +105,7 @@ class MiniPlayerView: UIView {
                     thumbnailImageView.image = UIImage(named: "logo_40")
                 }
 
-                timeSlider.value = 0
+                progressView.progress = 0
             } else {
                 lectureDuration = Time(totalSeconds: 0)
                 titleLabel.text = "--"
@@ -118,7 +118,7 @@ class MiniPlayerView: UIView {
                 firstDotLabel?.isHidden = false
                 secondDotLabel?.isHidden = false
                 thumbnailImageView.image = UIImage(named: "logo_40")
-                timeSlider.value = 0
+                progressView.progress = 0
             }
         }
     }
@@ -126,8 +126,7 @@ class MiniPlayerView: UIView {
     var lectureDuration: Time = Time(totalSeconds: 0) {
         didSet {
             durationLabel.text = lectureDuration.displayString
-            timeSlider.isHidden = lectureDuration.totalSeconds == 0
-            timeSlider.maximumValue = Float(lectureDuration.totalSeconds)
+            progressView.isHidden = lectureDuration.totalSeconds == 0
         }
     }
 
@@ -140,7 +139,7 @@ class MiniPlayerView: UIView {
 
                     currentTimeLabel.text = Int(playedSeconds).toHHMMSS
 
-                    timeSlider.value = playedSeconds
+                    progressView.progress = playedSeconds / Float(totalSeconds)
                 }
             }
         }

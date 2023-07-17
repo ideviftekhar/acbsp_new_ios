@@ -10,7 +10,7 @@ import UIKit
 
 enum LectureOption: String, CaseIterable {
 
-    case addToPlayNext          =   "Add to Play Next"
+    case addToQueue             =   "Add to Queue"
 
     case removeFromPlayNext     =   "Remove from Play Next"
 
@@ -40,7 +40,7 @@ enum LectureOption: String, CaseIterable {
 
     var image: UIImage? {
         switch self {
-        case .addToPlayNext:
+        case .addToQueue:
             return UIImage(systemName: "text.badge.plus")
         case .removeFromPlayNext:
             return UIImage(systemName: "text.badge.minus")

@@ -105,14 +105,14 @@ class PlaylistViewController: SearchViewController {
         }
 
         Haptic.selection()
-        refresh(source: .cache, existing: [])
+        refresh(source: .cache, existing: [], animated: nil)
     }
 
-    override func refresh(source: FirestoreSource) {
-        refresh(source: source, existing: nil)
+    override func refresh(source: FirestoreSource, animated: Bool?) {
+        refresh(source: source, existing: nil, animated: animated)
     }
 
-    func refresh(source: FirestoreSource, existing: [Playlist]?) {
+    func refresh(source: FirestoreSource, existing: [Playlist]?, animated: Bool?) {
         self.list.noItemImage = nil
         self.list.noItemTitle = nil
         self.list.noItemMessage = nil
@@ -213,7 +213,7 @@ extension PlaylistViewController {
 
         Haptic.selection()
 
-        refresh(source: .cache, existing: self.models)
+        refresh(source: .cache, existing: self.models, animated: nil)
     }
 
     private func updateSortButtonUI() {
@@ -355,7 +355,7 @@ extension PlaylistViewController: CreatePlaylistViewControllerDelegate {
     func controller(_ controller: CreatePlaylistViewController, didAdd playlist: Playlist) {
 
         guard let selectedPlaylistType = PlaylistType(rawValue: playlistSegmentControl.selectedSegmentIndex) else {
-            refresh(source: .default)
+            refresh(source: .default, animated: nil)
             return
         }
 
@@ -366,9 +366,9 @@ extension PlaylistViewController: CreatePlaylistViewControllerDelegate {
             } else {
                 models.insert(playlist, at: 0)
             }
-            refresh(source: .default, existing: models)
+            refresh(source: .default, existing: models, animated: nil)
         } else {
-            refresh(source: .default)
+            refresh(source: .default, animated: nil)
         }
 
         let message: String = "'\(playlist.title)' playlist created!"
@@ -386,7 +386,7 @@ extension PlaylistViewController: CreatePlaylistViewControllerDelegate {
 
     func controller(_ controller: CreatePlaylistViewController, didUpdate playlist: Playlist) {
         guard let selectedPlaylistType = PlaylistType(rawValue: playlistSegmentControl.selectedSegmentIndex) else {
-            refresh(source: .default)
+            refresh(source: .default, animated: nil)
             return
         }
 
@@ -397,9 +397,9 @@ extension PlaylistViewController: CreatePlaylistViewControllerDelegate {
             } else {
                 models.insert(playlist, at: 0)
             }
-            refresh(source: .default, existing: models)
+            refresh(source: .default, existing: models, animated: nil)
         } else {
-            refresh(source: .default)
+            refresh(source: .default, animated: nil)
         }
 
         let message: String = "'\(playlist.title)' playlist updated!"
@@ -432,7 +432,7 @@ extension PlaylistViewController: PlaylistCellDelegate {
                         if let index = self.models.firstIndex(where: { $0.listID == playlist.listID }) {
                             var models = self.models
                             models.remove(at: index)
-                            self.refresh(source: .default, existing: models)
+                            self.refresh(source: .default, existing: models, animated: nil)
                         }
 
                     case .failure(let error):
@@ -449,6 +449,10 @@ extension PlaylistViewController: PlaylistCellDelegate {
 
             }
             present(navController, animated: true, completion: nil)
+        case .addToQueue:
+            if let tabBarController = self.tabBarController as? TabBarController {
+                tabBarController.addLectureIDsToPlayNext(lectureIDs: playlist.lectureIds)
+            }
         }
     }
 }

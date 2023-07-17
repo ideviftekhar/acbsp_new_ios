@@ -70,7 +70,7 @@ struct Lecture: Hashable, Codable {
     var lastPlayedPoint: Int
 
     var isCompleted: Bool {
-        lastPlayedPoint == length || lastPlayedPoint == -1
+        lastPlayedPoint >= length || lastPlayedPoint == -1
     }
 
     var playProgress: CGFloat {

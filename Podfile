@@ -20,7 +20,7 @@ def shared_pods
 
   pod 'SkyFloatingLabelTextField'
   pod 'IQKeyboardManagerSwift'
-  pod 'IQListKit'
+  pod 'IQListKit', '6.1.1'
 
   pod 'BEMCheckBox'
   pod 'DeviceKit'

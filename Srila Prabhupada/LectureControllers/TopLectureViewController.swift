@@ -58,7 +58,7 @@ class TopLectureViewController: LectureViewController {
         }
 
         Haptic.selection()
-        refresh(source: .cache, existing: [])
+        refresh(source: .cache, existing: [], animated: nil)
     }
 
     override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[LectureViewController.Model], Error>) -> Void) {

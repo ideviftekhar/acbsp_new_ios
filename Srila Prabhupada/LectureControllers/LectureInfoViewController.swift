@@ -139,27 +139,3 @@ extension LectureInfoViewController: IQListViewDelegateDataSource {
         }
     }
 }
-
-//let resources: Resources
-//let search: Search
-
-//var downloadState: DBLecture.DownloadState = .notDownloaded
-//var downloadError: String?
-//var isFavorite: Bool
-//var lastPlayedPoint: Int = 0
-//
-//var isCompleted: Bool {
-//    lastPlayedPoint == length || lastPlayedPoint == -1
-//}
-//
-//var playProgress: CGFloat {
-//    let progress: CGFloat
-//
-//    if length != 0 {
-//        progress = CGFloat(lastPlayedPoint) / CGFloat(length)
-//    } else {
-//        progress = 0
-//    }
-//
-//    return progress
-//}

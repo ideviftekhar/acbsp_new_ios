@@ -75,7 +75,6 @@ class DefaultLectureViewModel: NSObject, LectureViewModel {
     func clearCache() {
         UserDefaults.standard.removeObject(forKey: CommonConstants.lastSyncTimestamp)
         UserDefaults.standard.removeObject(forKey: CommonConstants.lastCheckedTimestamp)
-        UserDefaults.standard.removeObject(forKey: "\(PlayerViewController.self).playlistLectures")
         UserDefaults.standard.removeObject(forKey: "\(PlayerViewController.self).\(PlayRate.self)")
         UserDefaults.standard.removeObject(forKey: "\(PlayerViewController.self).\(Lecture.self)")
         UserDefaults.standard.synchronize()

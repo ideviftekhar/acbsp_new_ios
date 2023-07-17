@@ -234,7 +234,7 @@ extension TabBarController {
         var lectureControllers: [LectureViewController] = viewControllers.filter { $0 is LectureViewController } as? [LectureViewController] ?? []
         lectureControllers.append(playerViewController)
         for lectureController in lectureControllers where lectureController.isViewLoaded {
-            lectureController.refresh(source: .cache)
+            lectureController.refresh(source: .cache, animated: nil)
         }
     }
 }
@@ -248,6 +248,10 @@ extension TabBarController: PlayerViewControllerDelegate {
 
     func addLecturesToPlayNext(lectures: [Lecture]) {
         let lectureIDs = lectures.map { $0.id }
+        addLectureIDsToPlayNext(lectureIDs: lectureIDs)
+    }
+
+    func addLectureIDsToPlayNext(lectureIDs: [Int]) {
         playerViewController.addToPlayNext(lectureIDs: lectureIDs)
     }
 

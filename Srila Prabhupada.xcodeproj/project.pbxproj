@@ -247,6 +247,8 @@
 		C02C132B2A554ACA008D89DB /* LectureSyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02C13292A554ACA008D89DB /* LectureSyncManager.swift */; };
 		C02C132D2A556497008D89DB /* RefreshButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02C132C2A556497008D89DB /* RefreshButton.swift */; };
 		C02C132E2A556497008D89DB /* RefreshButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02C132C2A556497008D89DB /* RefreshButton.swift */; };
+		C0399A8C2A655BE600A51F04 /* PlayerViewController+Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0399A8B2A655BE600A51F04 /* PlayerViewController+Playlist.swift */; };
+		C0399A8D2A655BEE00A51F04 /* PlayerViewController+Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0399A8B2A655BE600A51F04 /* PlayerViewController+Playlist.swift */; };
 		C03E3F2628DCC20A00B987DD /* FirestoreCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03E3F2528DCC20A00B987DD /* FirestoreCollection.swift */; };
 		C03E3F2828DCC6C500B987DD /* ListenInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03E3F2728DCC6C500B987DD /* ListenInfo.swift */; };
 		C047E6212959F94100C6D50E /* BackgroundSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E6202959F94100C6D50E /* BackgroundSession.swift */; };
@@ -409,6 +411,7 @@
 		C02B4D372A532828004D298B /* BVKS-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "BVKS-Info.plist"; sourceTree = "<group>"; };
 		C02C13292A554ACA008D89DB /* LectureSyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureSyncManager.swift; sourceTree = "<group>"; };
 		C02C132C2A556497008D89DB /* RefreshButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshButton.swift; sourceTree = "<group>"; };
+		C0399A8B2A655BE600A51F04 /* PlayerViewController+Playlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerViewController+Playlist.swift"; sourceTree = "<group>"; };
 		C03E3F2528DCC20A00B987DD /* FirestoreCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreCollection.swift; sourceTree = "<group>"; };
 		C03E3F2728DCC6C500B987DD /* ListenInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenInfo.swift; sourceTree = "<group>"; };
 		C047E6202959F94100C6D50E /* BackgroundSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundSession.swift; sourceTree = "<group>"; };
@@ -912,6 +915,7 @@
 			isa = PBXGroup;
 			children = (
 				C00F8A4028EF13AE00FA9A7B /* PlayerViewController.swift */,
+				C0399A8B2A655BE600A51F04 /* PlayerViewController+Playlist.swift */,
 				C0DD1B3728FE979000995994 /* PlayerViewController+Position.swift */,
 				C07A8F3C28F8033A001A6162 /* PlayerViewController+Observers.swift */,
 				C00EB93A29BC75FA00D331A6 /* PlayerViewController+LectureOption.swift */,
@@ -1374,6 +1378,7 @@
 				C00C95CE2A58532500951AFA /* RecentPlayID.swift in Sources */,
 				6E6900A42A25C4C20086C7DB /* FirestoreCollection.swift in Sources */,
 				6E6900A52A25C4C20086C7DB /* SideMenuCell.swift in Sources */,
+				C0399A8D2A655BEE00A51F04 /* PlayerViewController+Playlist.swift in Sources */,
 				6E6900A62A25C4C20086C7DB /* PlaylistSortType.swift in Sources */,
 				6E6900A72A25C4C20086C7DB /* FirestoreManager+SignIn.swift in Sources */,
 				6E6900A82A25C4C20086C7DB /* LectureSortType.swift in Sources */,
@@ -1505,6 +1510,7 @@
 				C00C95CD2A58532500951AFA /* RecentPlayID.swift in Sources */,
 				C0DA677928FD7883003BF8E4 /* UIColor+Extension.swift in Sources */,
 				C03E3F2628DCC20A00B987DD /* FirestoreCollection.swift in Sources */,
+				C0399A8C2A655BE600A51F04 /* PlayerViewController+Playlist.swift in Sources */,
 				C0CE0D1828E870DB00C2C825 /* SideMenuCell.swift in Sources */,
 				C088178C28DDE69600D3106C /* PlaylistSortType.swift in Sources */,
 				C088178A28DDBC9100D3106C /* FirestoreManager+SignIn.swift in Sources */,

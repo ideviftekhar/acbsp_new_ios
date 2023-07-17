@@ -197,7 +197,7 @@ class LectureViewController: SearchViewController {
 
                 DispatchQueue.main.async {
                     self.models = newModels
-                    self.refreshUI(showNoItems: true)
+                    self.refreshUI(animated: nil, showNoItems: true)
                 }
             }
         }
@@ -248,11 +248,11 @@ class LectureViewController: SearchViewController {
     func syncEnded() {
     }
 
-    override func refresh(source: FirestoreSource) {
-        refresh(source: source, existing: nil)
+    override func refresh(source: FirestoreSource, animated: Bool?) {
+        refresh(source: source, existing: nil, animated: animated)
     }
 
-    func refresh(source: FirestoreSource, existing: [Model]?) {
+    func refresh(source: FirestoreSource, existing: [Model]?, animated: Bool?) {
 
         self.list.noItemImage = nil
         self.list.noItemTitle = nil
@@ -260,7 +260,7 @@ class LectureViewController: SearchViewController {
 
         if let existing = existing {
             self.models = existing
-            refreshUI(showNoItems: false)
+            refreshUI(animated: animated, showNoItems: false)
         }
 
         serialListKitQueue.async {
@@ -276,7 +276,7 @@ class LectureViewController: SearchViewController {
             case .success(let success):
                 self.models = success
                 self.isFirstTimeLoaded = true
-                refreshUI(showNoItems: true)
+                refreshUI(animated: animated, showNoItems: true)
             case .failure(let error):
                 Haptic.error()
                 self.list.setIsLoading(false, animated: true)
@@ -287,13 +287,6 @@ class LectureViewController: SearchViewController {
 
     func refreshAsynchronous(source: FirestoreSource, completion: @escaping (_ result: Swift.Result<[Model], Error>) -> Void) {
         completion(.success(self.models))
-    }
-
-    // This delegate Declared here because some subclasses are overriding it.
-    func listView(_ listView: IQListView, modifyCell cell: IQListCell, at indexPath: IndexPath) {
-        if let cell = cell as? Cell {
-            cell.delegate = self
-        }
     }
 }
 
@@ -342,7 +335,7 @@ extension LectureViewController {
 
         Haptic.selection()
 
-        refresh(source: .cache)
+        refresh(source: .cache, animated: nil)
     }
 
     private func updateSortButtonUI() {
@@ -405,8 +398,8 @@ extension LectureViewController {
 
         if !selectedModels.isEmpty {
 
-            if !selectedModels.isEmpty, let addToPlayNext = allActions[.addToPlayNext] {
-                addToPlayNext.action.title = LectureOption.addToPlayNext.rawValue + " (\(selectedModels.count))"
+            if !selectedModels.isEmpty, let addToPlayNext = allActions[.addToQueue] {
+                addToPlayNext.action.title = LectureOption.addToQueue.rawValue + " (\(selectedModels.count))"
                 menuItems.append(addToPlayNext)
             }
 
@@ -497,7 +490,7 @@ extension LectureViewController {
                 }
 
                 switch option {
-                case .addToPlayNext:
+                case .addToQueue:
                     if let playerController = self as? PlayerViewController {
                         playerController.addToPlayNext(lectureIDs: models.map({ $0.id }))
                     } else if let tabController = self.tabBarController as? TabBarController {
@@ -562,7 +555,7 @@ extension LectureViewController {
             })
 
             switch option {
-            case .addToPlayNext, .download, .resumeDownload, .pauseDownload, .markAsFavorite, .addToPlaylist, .markAsHeard, .resetProgress, .share, .info:
+            case .addToQueue, .download, .resumeDownload, .pauseDownload, .markAsFavorite, .addToPlaylist, .markAsHeard, .resetProgress, .share, .info:
                 break
             case .deleteFromDownloads, .removeFromPlaylist, .removeFromFavorite, .removeFromPlayNext:
                 action.action.attributes = .destructive
@@ -587,7 +580,7 @@ extension LectureViewController: LectureCellDelegate {
     func lectureCell(_ cell: LectureCell, didSelected option: LectureOption, with lecture: Lecture) {
 
         switch option {
-        case .addToPlayNext:
+        case .addToQueue:
             if let playerController = self as? PlayerViewController {
                 playerController.addToPlayNext(lectureIDs: [lecture.id])
             } else if let tabController = self.tabBarController as? TabBarController {
@@ -826,7 +819,7 @@ extension LectureViewController {
                     playlistLectureController.playlist = success
 
                     let existing: [Model] = self.models.filter { success.lectureIds.contains($0.id) }
-                    self.refresh(source: .cache, existing: existing)
+                    self.refresh(source: .cache, existing: existing, animated: nil)
 
                     let message: String?
                     if lectures.count > 1 {
@@ -922,7 +915,7 @@ extension LectureViewController {
 
 extension LectureViewController: IQListViewDelegateDataSource {
 
-    private func refreshUI(animated: Bool? = nil, showNoItems: Bool) {
+    private func refreshUI(animated: Bool?, showNoItems: Bool) {
 
         serialListKitQueue.async { [self] in
 
@@ -942,6 +935,7 @@ extension LectureViewController: IQListViewDelegateDataSource {
                     }
                 }
 
+                let isOnPlayingList = self is PlayerViewController
                 let newModels: [Cell.Model] = models.map { modelLecture in
                     let isSelected: Bool = selecteIDHashTable[modelLecture.id] != nil
 
@@ -951,13 +945,12 @@ extension LectureViewController: IQListViewDelegateDataSource {
                     }
 
                     let isHighlited: Bool = highlightedLectures.contains(where: { modelLecture.id == $0.id })
-                    let enableRemoveFromPlayNext = self is PlayerViewController
-                    return Cell.Model(lecture: modelLecture, isSelectionEnabled: isSelectionEnabled, isSelected: isSelected, enableRemoveFromPlaylist: removeFromPlaylistEnabled, enableRemoveFromPlayNext: enableRemoveFromPlayNext, showPlaylistIcon: showPlaylistIcon, isHighlited: isHighlited)
+                    return Cell.Model(lecture: modelLecture, isSelectionEnabled: isSelectionEnabled, isSelected: isSelected, enableRemoveFromPlaylist: removeFromPlaylistEnabled, isOnPlayingList: isOnPlayingList, showPlaylistIcon: showPlaylistIcon, isHighlited: isHighlited)
                 }
 
                 list.append(Cell.self, models: newModels, section: section)
 
-            }, animatingDifferences: animated, endLoadingOnCompletion: showNoItems, completion: { [self] in
+            }, animatingDifferences: animated, diffing: false, endLoadingOnCompletion: showNoItems, completion: { [self] in
                 if showNoItems {
                     let noItemImage = UIImage(named: "music.mic_60")
                     self.list.noItemImage = noItemImage
@@ -1032,6 +1025,41 @@ extension LectureViewController: IQListViewDelegateDataSource {
                 }
             }, updateExistingSnapshot: true, animatingDifferences: false)
         }
+    }
+
+    // This delegate Declared here because some subclasses are overriding it.
+    func listView(_ listView: IQListView, modifyCell cell: IQListCell, at indexPath: IndexPath) {
+        if let cell = cell as? Cell {
+            cell.delegate = self
+        }
+    }
+
+    func listView(_ listView: IQListView, canEdit item: IQItem, at indexPath: IndexPath) -> Bool {
+        return self is PlayerViewController
+    }
+
+    func listView(_ listView: IQListView, canMove item: IQItem, at indexPath: IndexPath) -> Bool {
+        return self is PlayerViewController
+    }
+
+    func listView(_ listView: IQListView, move sourceItem: IQItem, at sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        if let playerController = self as? PlayerViewController,
+           let model = sourceItem.model as? LectureCell.Model,
+           sourceIndexPath != destinationIndexPath {
+            playerController.moveQueueLecture(id: model.lecture.id, toIndex: destinationIndexPath.item)
+        }
+    }
+
+    func listView(_ listView: IQListView, commit item: IQItem, style: UITableViewCell.EditingStyle, at indexPath: IndexPath) {
+        if let playerController = self as? PlayerViewController,
+           style == .delete, let model = item.model as? LectureCell.Model {
+            playerController.removeFromPlayNext(lectureIDs: [model.lecture.id])
+        }
+    }
+
+    func tableView(_ tableView: UITableView,
+                   shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
+        return false
     }
 
     func listView(_ listView: IQListView, didSelect item: IQItem, at indexPath: IndexPath) {

@@ -84,6 +84,10 @@ class PlaylistCell: UITableViewCell, IQModelableCell {
                     }
                 }
 
+                if !model.playlist.lectureIds.isEmpty, let addToQueue = allActions[.addToQueue] {
+                    actions.append(addToQueue)
+                }
+
                 self.optionMenu.children = actions
                 self.menuButton.isHidden = actions.isEmpty
             }

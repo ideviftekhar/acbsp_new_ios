@@ -755,8 +755,7 @@ PODS:
     - GTMSessionFetcher/Core (< 3.0, >= 1.5)
   - GTMSessionFetcher/Core (2.1.0)
   - IQKeyboardManagerSwift (6.5.10)
-  - IQListKit (6.1.0):
-    - SwiftTryCatch (~> 0.0.1)
+  - IQListKit (6.1.1)
   - leveldb-library (1.22.1)
   - Libuv-gRPC (0.0.10):
     - Libuv-gRPC/Implementation (= 0.0.10)
@@ -777,7 +776,6 @@ PODS:
   - StatusAlert (1.1.1)
   - SwiftAlgorithms (1.0.0)
   - SwiftLint (0.49.1)
-  - SwiftTryCatch (0.0.1)
 
 DEPENDENCIES:
   - AlamofireImage
@@ -794,7 +792,7 @@ DEPENDENCIES:
   - GoogleSignIn
   - GoogleSignInSwiftSupport
   - IQKeyboardManagerSwift
-  - IQListKit
+  - IQListKit (= 6.1.1)
   - MarqueeLabel
   - SideMenu
   - SKActivityIndicatorView
@@ -844,7 +842,6 @@ SPEC REPOS:
     - StatusAlert
     - SwiftAlgorithms
     - SwiftLint
-    - SwiftTryCatch
 
 SPEC CHECKSUMS:
   abseil: ebe5b5529fb05d93a8bdb7951607be08b7fa71bc
@@ -875,7 +872,7 @@ SPEC CHECKSUMS:
   GTMAppAuth: 0ff230db599948a9ad7470ca667337803b3fc4dd
   GTMSessionFetcher: ffbb25ec00ebcb5201adab0a56d808f6f1902d9f
   IQKeyboardManagerSwift: 52962c76ab33532f15ad9f3ff4e5715eda5335bb
-  IQListKit: c1936c22e36df5acec33671a2ca070d20a9f03a8
+  IQListKit: 064c1dbebbdf34adcedc61c82fff6e2c18640fdf
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
   Libuv-gRPC: 55e51798e14ef436ad9bc45d12d43b77b49df378
   MarqueeLabel: 02f5ac8fd6877c94564556cb93fa86c70c08baeb
@@ -887,8 +884,7 @@ SPEC CHECKSUMS:
   StatusAlert: a18ec3c33d36a06d4479c1f2b15ffac67aaf7ab1
   SwiftAlgorithms: 38dda4731d19027fdeee1125f973111bf3386b53
   SwiftLint: 32ee33ded0636d0905ef6911b2b67bbaeeedafa5
-  SwiftTryCatch: fb6d2b34abe48efd69578dac919293a44f95b481
 
-PODFILE CHECKSUM: 5d8297bdf8123dbaeabdc4525763a98fd2da0a0d
+PODFILE CHECKSUM: d19bc01e5bfa09a3a2283e76b99ff5cec6144e4b
 
 COCOAPODS: 1.12.1

@@ -34,6 +34,7 @@ class LectureCell: UITableViewCell, IQModelableCell {
     @IBOutlet private var locationLabel: UILabel?
     @IBOutlet private var dateLabel: UILabel?
     @IBOutlet private var downloadInfoLabel: UILabel?
+    @IBOutlet private var menuSelectionContentView: UIView?
     @IBOutlet private var menuButton: UIButton?
     @IBOutlet private var selectedImageView: UIImageView?
     @IBOutlet private var downloadProgressView: IQCircularProgressView?
@@ -80,7 +81,7 @@ class LectureCell: UITableViewCell, IQModelableCell {
         var isSelectionEnabled: Bool
         var isSelected: Bool
         let enableRemoveFromPlaylist: Bool
-        let enableRemoveFromPlayNext: Bool
+        let isOnPlayingList: Bool
         var showPlaylistIcon: Bool
         var isHighlited: Bool
     }
@@ -89,6 +90,10 @@ class LectureCell: UITableViewCell, IQModelableCell {
         didSet {
             guard let model = model else {
                 return
+            }
+
+            if model.isOnPlayingList {
+                backgroundColor = UIColor.clear
             }
 
             let lecture = model.lecture
@@ -239,9 +244,9 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 var actions: [SPAction] = []
 
                 // addToPlayNext, removeFromPlayNext
-                if model.enableRemoveFromPlayNext, let removeFromPlayNext = allActions[.removeFromPlayNext] {
+                if model.isOnPlayingList, let removeFromPlayNext = allActions[.removeFromPlayNext] {
                     actions.append(removeFromPlayNext)
-                } else if let addToPlayNext = allActions[.addToPlayNext] {
+                } else if let addToPlayNext = allActions[.addToQueue] {
                     actions.append(addToPlayNext)
                 }
 
@@ -324,6 +329,12 @@ class LectureCell: UITableViewCell, IQModelableCell {
             }
         }
     }
+
+    override func setEditing(_ editing: Bool, animated: Bool) {
+        super.setEditing(editing, animated: animated)
+
+        menuSelectionContentView?.isHidden = editing
+    }
 }
 
 extension LectureCell {
@@ -376,7 +387,7 @@ extension LectureCell {
             })
 
             switch option {
-            case .addToPlayNext, .download, .resumeDownload, .pauseDownload, .markAsFavorite, .addToPlaylist, .markAsHeard, .resetProgress, .share, .info:
+            case .addToQueue, .download, .resumeDownload, .pauseDownload, .markAsFavorite, .addToPlaylist, .markAsHeard, .resetProgress, .share, .info:
                 break
             case .deleteFromDownloads, .removeFromPlaylist, .removeFromFavorite, .removeFromPlayNext:
                 action.action.attributes = .destructive

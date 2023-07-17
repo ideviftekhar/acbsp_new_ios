@@ -86,14 +86,14 @@ class SearchViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 
-        refresh(source: .cache)
+        refresh(source: .cache, animated: nil)
     }
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
     }
 
-    @objc func refresh(source: FirestoreSource) {
+    func refresh(source: FirestoreSource, animated: Bool?) {
     }
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -138,7 +138,7 @@ extension SearchViewController: FilterViewControllerDelegate {
         let userDefaultKey: String = "\(Self.self).\(Filter.self)"
         Filter.set(filters: filters, userDefaultKey: userDefaultKey)
 
-        refresh(source: .cache)
+        refresh(source: .cache, animated: nil)
     }
 }
 
@@ -162,7 +162,7 @@ extension SearchViewController: UISearchControllerDelegate, UISearchResultsUpdat
     }
 
     @objc private func userDidStoppedTyping() {
-        refresh(source: .cache)
+        refresh(source: .cache, animated: nil)
     }
 }
 

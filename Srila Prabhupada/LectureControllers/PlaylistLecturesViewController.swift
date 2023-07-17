@@ -92,7 +92,7 @@ extension PlaylistLecturesViewController: LectureViewControllerDelegate {
                     Haptic.success()
                     self.highlightedLectures = lectures
                     self.playlist = success
-                    self.refresh(source: .cache)
+                    self.refresh(source: .cache, animated: nil)
                     controller.dismiss(animated: true, completion: {
 
                         let message: String?

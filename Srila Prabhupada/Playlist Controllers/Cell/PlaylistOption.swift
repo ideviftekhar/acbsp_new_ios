@@ -10,9 +10,11 @@ import UIKit
 
 enum PlaylistOption: String, CaseIterable {
 
-    case edit =   "Edit"
+    case edit       =   "Edit"
 
-    case delete =   "Delete"
+    case delete     =   "Delete"
+
+    case addToQueue =   "Add to Queue"
 
     var image: UIImage? {
         switch self {
@@ -20,6 +22,8 @@ enum PlaylistOption: String, CaseIterable {
             return UIImage(systemName: "square.and.pencil")
         case .delete:
             return UIImage(systemName: "trash")
+        case .addToQueue:
+            return UIImage(systemName: "text.badge.plus")
         }
     }
 }
