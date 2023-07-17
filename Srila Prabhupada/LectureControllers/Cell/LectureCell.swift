@@ -80,6 +80,7 @@ class LectureCell: UITableViewCell, IQModelableCell {
         var isSelectionEnabled: Bool
         var isSelected: Bool
         let enableRemoveFromPlaylist: Bool
+        let enableRemoveFromPlayNext: Bool
         var showPlaylistIcon: Bool
         var isHighlited: Bool
     }
@@ -227,6 +228,13 @@ class LectureCell: UITableViewCell, IQModelableCell {
             do {
                 var actions: [SPAction] = []
 
+                // addToPlayNext, removeFromPlayNext
+                if model.enableRemoveFromPlayNext, let removeFromPlayNext = allActions[.removeFromPlayNext] {
+                    actions.append(removeFromPlayNext)
+                } else if let addToPlayNext = allActions[.addToPlayNext] {
+                    actions.append(addToPlayNext)
+                }
+
                 switch lecture.downloadState {
                 case .notDownloaded:
                     if let download = allActions[.download] {
@@ -358,9 +366,9 @@ extension LectureCell {
             })
 
             switch option {
-            case .download, .resumeDownload, .pauseDownload, .markAsFavorite, .addToPlaylist, .markAsHeard, .resetProgress, .share, .info:
+            case .addToPlayNext, .download, .resumeDownload, .pauseDownload, .markAsFavorite, .addToPlaylist, .markAsHeard, .resetProgress, .share, .info:
                 break
-            case .deleteFromDownloads, .removeFromPlaylist, .removeFromFavorite:
+            case .deleteFromDownloads, .removeFromPlaylist, .removeFromFavorite, .removeFromPlayNext:
                 action.action.attributes = .destructive
             }
 
@@ -381,7 +389,7 @@ extension LectureCell {
 
     static func estimatedSize(for model: AnyHashable?, listView: IQListView) -> CGSize {
         switch Environment.current.device {
-        case .mac,.pad:
+        case .mac, .pad:
             return CGSize(width: listView.frame.width, height: 90)
         default:
             return CGSize(width: listView.frame.width, height: 64)
@@ -390,7 +398,7 @@ extension LectureCell {
 
     static func size(for model: AnyHashable?, listView: IQListView) -> CGSize {
         switch Environment.current.device {
-        case .mac,.pad:
+        case .mac, .pad:
             return CGSize(width: listView.frame.width, height: 90)
         default:
             return CGSize(width: listView.frame.width, height: 64)

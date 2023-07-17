@@ -243,63 +243,23 @@ extension TabBarController: PlayerViewControllerDelegate {
 
     // Loading last played lectures
     func loadLastPlayedLectures() {
-        DispatchQueue.global(qos: .background).async {
-            let lectureIDDefaultKey: String = "\(PlayerViewController.self).\(Lecture.self)"
-            let lectureID = UserDefaults.standard.integer(forKey: lectureIDDefaultKey)
-
-            if lectureID != 0 {
-
-                let playlistLecturesKey: String = "\(PlayerViewController.self).playlistLectures"
-
-                let data = FileUserDefaults.standard.data(for: playlistLecturesKey)
-
-                var playlistLectureIDs: [Int] = []
-
-                if let data = data {
-                    playlistLectureIDs = (try? JSONDecoder().decode([Int].self, from: data)) ?? []
-                }
-                if !playlistLectureIDs.contains(where: { $0 == lectureID }) {
-                    playlistLectureIDs.insert(lectureID, at: 0)
-                }
-
-                var lectures = self.lectures
-
-                if let currentLecture = lectures.first(where: { $0.id == lectureID }) {
-                    DispatchQueue.main.async {
-                        self.showPlayer(lecture: currentLecture, playlistLectures: [currentLecture], shouldPlay: false)
-                    }
-
-                    let playlistLectures: [Lecture]
-                    if playlistLectureIDs.count < 1000 {
-                        playlistLectures = playlistLectureIDs.compactMap { id in
-                            if let index = lectures.firstIndex(where: { $0.id == id }) {
-                                let lecture = lectures.remove(at: index)
-                                return lecture
-                            }
-                            return nil
-                        }
-                    } else {
-                        playlistLectures = lectures
-                    }
-
-                    DispatchQueue.main.async {
-                        self.playerViewController.playlistLectures = playlistLectures
-                    }
-                }
-            } else {
-                DispatchQueue.main.async {
-                    self.playerViewController.currentLecture = nil
-                }
-            }
-        }
+        playerViewController.loadLastPlayedLectures(cachedLectures: self.lectures)
     }
 
-    func showPlayer(lecture: Lecture, playlistLectures: [Lecture], shouldPlay: Bool? = nil) {
+    func addLecturesToPlayNext(lectures: [Lecture]) {
+        let lectureIDs = lectures.map { $0.id }
+        playerViewController.addToPlayNext(lectureIDs: lectureIDs)
+    }
 
-        playerViewController.playlistLectures = playlistLectures
+    func removeLecturesFromPlayNext(lectures: [Lecture]) {
+        let lectureIDs = lectures.map { $0.id }
+        playerViewController.removeFromPlayNext(lectureIDs: lectureIDs)
+    }
+
+    func showPlayer(lecture: Lecture, shouldPlay: Bool? = nil) {
 
         if let playerLecture = playerViewController.currentLecture,
-           playerLecture.id == lecture.id, playerLecture.creationTimestamp == lecture.creationTimestamp {
+           playerLecture.id == lecture.id {
 
             if let shouldPlay = shouldPlay {
                 if shouldPlay {

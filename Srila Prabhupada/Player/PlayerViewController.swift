@@ -71,6 +71,7 @@ class PlayerViewController: LectureViewController {
 
     @IBOutlet private var loopLectureButton: UIButton!
     @IBOutlet private var shuffleLectureButton: UIButton!
+    @IBOutlet private var clearPlayNextButton: UIButton!
 
     @IBOutlet private var forwardTenSecondsButton: UIButton!
     @IBOutlet private var backwardTenSecondsButton: UIButton!
@@ -233,7 +234,7 @@ class PlayerViewController: LectureViewController {
 
                 do {
                     if loopLectureButton.isSelected == true {
-                        currentLectureQueue = [currentLecture]
+                        currentLectureIDsQueue = [currentLecture.id]
                     }
                 }
 
@@ -265,7 +266,7 @@ class PlayerViewController: LectureViewController {
 
                 do {
                     if loopLectureButton.isSelected == true {
-                        currentLectureQueue.removeAll()
+                        currentLectureIDsQueue.removeAll()
                     }
                 }
 
@@ -277,36 +278,38 @@ class PlayerViewController: LectureViewController {
         }
     }
 
-    var playlistLectures: [Model] = [] {
-        didSet {
-            loadViewIfNeeded()
-
-            DispatchQueue.global(qos: .background).async {
-                let userDefaultKey: String = "\(Self.self).playlistLectures"
-                let lectureIDs = self.playlistLectures.map { $0.id }
-                let data = try? JSONEncoder().encode(lectureIDs)
-                FileUserDefaults.standard.set(data, for: userDefaultKey)
-            }
-            
-            if loopLectureButton.isSelected == true {
-
-                if let currentLecture = currentLecture {
-                    currentLectureQueue = [currentLecture]
-                } else {
-                    currentLectureQueue.removeAll()
-                }
-            } else if shuffleLectureButton.isSelected == true {
-                currentLectureQueue = playlistLectures.shuffled()
-            } else {
-                currentLectureQueue = playlistLectures
+    func moveToLectureID(id: Int, shouldPlay: Bool) {
+        if let model = self.models.first(where: { $0.id == id }) {
+            currentLecture = model
+            if shouldPlay {
+                self.play()
             }
         }
     }
 
-    private var currentLectureQueue: [Model] = [] {
+    private(set) var playlistLectureIDs: [Int] = [] {
         didSet {
             loadViewIfNeeded()
-            refresh(source: .cache, existing: currentLectureQueue)
+
+            if loopLectureButton.isSelected == true {
+
+                if let currentLecture = currentLecture {
+                    currentLectureIDsQueue = [currentLecture.id]
+                } else {
+                    currentLectureIDsQueue.removeAll()
+                }
+            } else if shuffleLectureButton.isSelected == true {
+                currentLectureIDsQueue = playlistLectureIDs.shuffled()
+            } else {
+                currentLectureIDsQueue = playlistLectureIDs
+            }
+        }
+    }
+
+    private var currentLectureIDsQueue: [Int] = [] {
+        didSet {
+            loadViewIfNeeded()
+            refresh(source: .cache)
             updatePreviousNextButtonUI()
         }
     }
@@ -415,6 +418,7 @@ class PlayerViewController: LectureViewController {
             videoButton.isHidden = true
         }
     }
+    
     private func setupPlayerIcons() {
 
         if Environment.current.device == .mac {
@@ -433,6 +437,7 @@ class PlayerViewController: LectureViewController {
             previousLectureButton.setImage(UIImage(named: "backward.end.fill"), for: .normal)
             nextLectureButton.setImage(UIImage(named: "forward.end.fill"), for: .normal)
 
+            loopLectureButton.setImage(UIImage(named: "text.badge.xmark"), for: .normal)
             loopLectureButton.setImage(UIImage(named: "repeat"), for: .normal)
             shuffleLectureButton.setImage(UIImage(named: "shuffle"), for: .normal)
             forwardTenSecondsButton.setImage(UIImage(named: "goforward.10"), for: .normal)
@@ -455,17 +460,7 @@ class PlayerViewController: LectureViewController {
     }
 
     override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[LectureViewController.Model], Error>) -> Void) {
-
-        let lectureIDs = self.currentLectureQueue.map { $0.id }
-
-        DefaultLectureViewModel.defaultModel.getLectures(searchText: nil, sortType: nil, filter: [:], lectureIDs: lectureIDs, source: source, progress: nil, completion: { result in
-            switch result {
-            case .success(let success):
-                completion(.success(success))
-            default:
-                completion(.success(self.currentLectureQueue))
-            }
-        })
+        DefaultLectureViewModel.defaultModel.getLectures(searchText: nil, sortType: nil, filter: [:], lectureIDs: self.currentLectureIDsQueue, source: source, progress: nil, completion: completion)
     }
 
     @IBAction func backButtonTapped(_ sender: UIButton) {
@@ -742,11 +737,15 @@ extension PlayerViewController {
             self.play()
         } else {
             if let currentLecture = currentLecture,
-               let index = currentLectureQueue.firstIndex(where: { $0.id == currentLecture.id && $0.creationTimestamp == currentLecture.creationTimestamp }), (index+1) < currentLectureQueue.count {
-                let newLecture = currentLectureQueue[index+1]
-                self.currentLecture = newLecture
-                if play {
-                    self.play()
+               let index = currentLectureIDsQueue.firstIndex(where: { $0 == currentLecture.id }),
+                (index+1) < currentLectureIDsQueue.count {
+                let newLectureID = currentLectureIDsQueue[index+1]
+                if let lecture = models.first(where: { $0.id == newLectureID }) {
+                    self.currentLecture = lecture
+
+                    if play {
+                        self.play()
+                    }
                 }
             }
         }
@@ -758,12 +757,15 @@ extension PlayerViewController {
             self.play()
         } else {
             if let currentLecture = currentLecture,
-               let index = currentLectureQueue.firstIndex(where: { $0.id == currentLecture.id && $0.creationTimestamp == currentLecture.creationTimestamp }), index > 0 {
+               let index = currentLectureIDsQueue.firstIndex(where: { $0 == currentLecture.id }),
+               index > 0 {
+                let newLectureID = currentLectureIDsQueue[index-1]
+                if let lecture = models.first(where: { $0.id == newLectureID }) {
+                    self.currentLecture = lecture
 
-                let newLecture = currentLectureQueue[index-1]
-                self.currentLecture = newLecture
-                if play {
-                    self.play()
+                    if play {
+                        self.play()
+                    }
                 }
             }
         }
@@ -900,16 +902,16 @@ extension PlayerViewController {
             shuffleLectureButton.isSelected = false
         }
 
-        let allLectures = self.playlistLectures
-        self.playlistLectures = allLectures // This is to reload current playlist
+        let allLectureIDs = self.playlistLectureIDs
+        self.playlistLectureIDs = allLectureIDs // This is to reload current playlist
     }
 
     private func updatePreviousNextButtonUI() {
 
         if let currentLecture = currentLecture {
-            if let index = currentLectureQueue.firstIndex(where: { $0.id == currentLecture.id && $0.creationTimestamp == currentLecture.creationTimestamp }) {
+            if let index = currentLectureIDsQueue.firstIndex(where: { $0 == currentLecture.id }) {
                 previousLectureButton.isEnabled = (index != 0)
-                nextLectureButton.isEnabled = (index+1 < currentLectureQueue.count)
+                nextLectureButton.isEnabled = (index+1 < currentLectureIDsQueue.count)
             } else {
                 previousLectureButton.isEnabled = false
                 nextLectureButton.isEnabled = false
@@ -935,6 +937,12 @@ extension PlayerViewController {
         } else {
             change(shuffle: true, loop: false)
         }
+    }
+
+    @IBAction func clearPlayNextButtonPressed(_ sender: UIButton) {
+        self.showAlert(title: "Clear Play Next?", message: "Are you sure you would like to clear Play Next Queue?", preferredStyle: .alert, sourceView: sender, cancel: ("Cancel", nil), destructive: ("Clear", {
+            self.clearPlayingQueue(keepPlayingLecture: true)
+        }))
     }
 
     @IBAction func videoLectureButtonPressed(_ sender: UIButton) {
@@ -992,7 +1000,7 @@ extension PlayerViewController {
 extension PlayerViewController: MiniPlayerViewDelegate {
     func miniPlayerViewDidClose(_ playerView: MiniPlayerView) {
         self.currentLecture = nil
-        self.playlistLectures = []
+        self.playlistLectureIDs = []
     }
 
     func miniPlayerView(_ playerView: MiniPlayerView, didSeekTo seconds: Int) {
@@ -1009,5 +1017,166 @@ extension PlayerViewController: MiniPlayerViewDelegate {
 
     func miniPlayerViewDidExpand(_ playerView: MiniPlayerView) {
         expand(animated: true)
+    }
+}
+
+extension PlayerViewController {
+
+    // Loading last played lectures
+    func loadLastPlayedLectures(cachedLectures: [Lecture]) {
+        DispatchQueue.global(qos: .background).async {
+            let lectureIDDefaultKey: String = "\(Self.self).\(Lecture.self)"
+            let lectureID = UserDefaults.standard.integer(forKey: lectureIDDefaultKey)
+
+            let currentLecture: Model?
+            do {
+                if let lecture = cachedLectures.first(where: { $0.id == lectureID }) {
+                    currentLecture = lecture
+                } else {
+                    currentLecture = nil
+                }
+            }
+
+            do {
+                let playlistLecturesKey: String = "\(PlayerViewController.self).playlistLectures"
+                let data = FileUserDefaults.standard.data(for: playlistLecturesKey)
+
+                var playlistLectureIDs: [Int] = []
+
+                if let data = data {
+                    playlistLectureIDs = (try? JSONDecoder().decode([Int].self, from: data)) ?? []
+                }
+                if !playlistLectureIDs.contains(where: { $0 == lectureID }) {
+                    playlistLectureIDs.insert(lectureID, at: 0)
+                }
+
+                var updatedLectureIDs: [Int] = []
+                // Removing duplicates
+                do {
+                    var lectureIDsHashTable: [Int: Int] = playlistLectureIDs.enumerated().reduce(into: [Int: Int]()) { result, object in
+                        if result[object.element] == nil {
+                            result[object.element] = object.offset
+                        }
+                    }
+
+                    for lectureID in playlistLectureIDs where lectureIDsHashTable[lectureID] != nil {
+                        updatedLectureIDs.append(lectureID)
+                        lectureIDsHashTable[lectureID] = nil
+                    }
+                }
+
+                DispatchQueue.main.async {
+                    self.currentLecture = currentLecture
+                    self.playlistLectureIDs = updatedLectureIDs
+                }
+            }
+        }
+    }
+
+    func addToPlayNext(lectureIDs: [Int]) {
+
+        DispatchQueue.global(qos: .background).async {
+
+            let userDefaultKey: String = "\(Self.self).playlistLectures"
+            var updatedLectureIDs: [Int] = []
+
+            if let data = FileUserDefaults.standard.data(for: userDefaultKey),
+               let oldLectureIDs = try? JSONDecoder().decode([Int].self, from: data), !oldLectureIDs.isEmpty {
+
+                let mergedLectureIDs: [Int] = oldLectureIDs + lectureIDs
+
+                // Removing duplicates
+                do {
+                    var lectureIDsHashTable: [Int: Int] = mergedLectureIDs.enumerated().reduce(into: [Int: Int]()) { result, object in
+                        if result[object.element] == nil {
+                            result[object.element] = object.offset
+                        }
+                    }
+
+                    for lectureID in mergedLectureIDs where lectureIDsHashTable[lectureID] != nil {
+                        updatedLectureIDs.append(lectureID)
+                        lectureIDsHashTable[lectureID] = nil
+                    }
+                }
+            } else {
+                updatedLectureIDs = lectureIDs
+            }
+
+            if let currentLecture = self.currentLecture {
+                if !updatedLectureIDs.contains(currentLecture.id) {
+                    updatedLectureIDs.insert(currentLecture.id, at: 0)
+                }
+            }
+
+            let data = try? JSONEncoder().encode(updatedLectureIDs)
+            FileUserDefaults.standard.set(data, for: userDefaultKey)
+
+            DispatchQueue.main.async {
+                self.playlistLectureIDs = updatedLectureIDs
+            }
+        }
+    }
+
+    func removeFromPlayNext(lectureIDs: [Int]) {
+
+        DispatchQueue.global(qos: .background).async {
+
+            let userDefaultKey: String = "\(Self.self).playlistLectures"
+            var updatedLectureIDs: [Int] = []
+
+            if let data = FileUserDefaults.standard.data(for: userDefaultKey),
+               var mergedLectureIDs = try? JSONDecoder().decode([Int].self, from: data), !mergedLectureIDs.isEmpty {
+                mergedLectureIDs.removeAll(where: { lectureIDs.contains($0) })
+                updatedLectureIDs = mergedLectureIDs
+            }
+
+            if let currentLecture = self.currentLecture {
+                if !updatedLectureIDs.contains(currentLecture.id) {
+                    updatedLectureIDs.insert(currentLecture.id, at: 0)
+                }
+            }
+
+            // Removing duplicates
+            var finalLectureIDs: [Int] = []
+            do {
+                var lectureIDsHashTable: [Int: Int] = updatedLectureIDs.enumerated().reduce(into: [Int: Int]()) { result, object in
+                    if result[object.element] == nil {
+                        result[object.element] = object.offset
+                    }
+                }
+
+                for lectureID in updatedLectureIDs where lectureIDsHashTable[lectureID] != nil {
+                    finalLectureIDs.append(lectureID)
+                    lectureIDsHashTable[lectureID] = nil
+                }
+            }
+
+            let data = try? JSONEncoder().encode(finalLectureIDs)
+            FileUserDefaults.standard.set(data, for: userDefaultKey)
+
+            DispatchQueue.main.async {
+                self.playlistLectureIDs = finalLectureIDs
+            }
+        }
+    }
+
+    func clearPlayingQueue(keepPlayingLecture: Bool) {
+
+        DispatchQueue.global(qos: .background).async {
+
+            let userDefaultKey: String = "\(Self.self).playlistLectures"
+            var updatedLectureIDs: [Int] = []
+
+            if keepPlayingLecture, let currentLecture = self.currentLecture {
+                updatedLectureIDs.insert(currentLecture.id, at: 0)
+            }
+
+            let data = try? JSONEncoder().encode(updatedLectureIDs)
+            FileUserDefaults.standard.set(data, for: userDefaultKey)
+
+            DispatchQueue.main.async {
+                self.playlistLectureIDs = updatedLectureIDs
+            }
+        }
     }
 }

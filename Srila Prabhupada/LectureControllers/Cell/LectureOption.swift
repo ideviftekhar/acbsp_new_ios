@@ -10,6 +10,10 @@ import UIKit
 
 enum LectureOption: String, CaseIterable {
 
+    case addToPlayNext          =   "Add to Play Next"
+
+    case removeFromPlayNext     =   "Remove from Play Next"
+
     case download               =   "Download"
 
     case resumeDownload         =   "Resume Download"
@@ -18,24 +22,28 @@ enum LectureOption: String, CaseIterable {
 
     case deleteFromDownloads    =   "Delete from Downloads"
 
-    case markAsFavorite        =   "Mark as Favorite"
+    case markAsFavorite         =   "Mark as Favorite"
 
-    case removeFromFavorite   =   "Remove From Favorite"
+    case removeFromFavorite     =   "Remove from Favorite"
 
-    case addToPlaylist          =   "Add to playlist"
+    case addToPlaylist          =   "Add to Playlist"
 
-    case removeFromPlaylist     =   "Remove from playlist"
+    case removeFromPlaylist     =   "Remove from Playlist"
 
-    case markAsHeard            =   "Mark as heard"
+    case markAsHeard            =   "Mark as Heard"
 
     case resetProgress          =   "Reset Progress"
 
     case share                  =   "Share"
 
-    case info                  =   "Info"
+    case info                   =   "Info"
 
     var image: UIImage? {
         switch self {
+        case .addToPlayNext:
+            return UIImage(systemName: "text.badge.plus")
+        case .removeFromPlayNext:
+            return UIImage(systemName: "text.badge.minus")
         case .download, .resumeDownload:
             return UIImage(systemName: "square.and.arrow.down")
         case .pauseDownload:

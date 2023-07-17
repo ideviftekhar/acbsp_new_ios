@@ -68,7 +68,7 @@ class LectureViewController: SearchViewController {
     typealias Model = Lecture
     typealias Cell = LectureCell
 
-    private var models: [Model] = []
+    private(set) var models: [Model] = []
     private(set) lazy var list = IQList(listView: lectureTebleView, delegateDataSource: self)
     private lazy var serialListKitQueue = DispatchQueue(label: "ListKitQueue_\(Self.self)", qos: .userInteractive)
 
@@ -405,6 +405,11 @@ extension LectureViewController {
 
         if !selectedModels.isEmpty {
 
+            if !selectedModels.isEmpty, let addToPlayNext = allActions[.addToPlayNext] {
+                addToPlayNext.action.title = LectureOption.addToPlayNext.rawValue + " (\(selectedModels.count))"
+                menuItems.append(addToPlayNext)
+            }
+
             let eligibleDownloadModels: [Model] = selectedModels.filter { $0.downloadState == .notDownloaded || $0.downloadState == .error || $0.downloadState == .pause}
             if !eligibleDownloadModels.isEmpty, let download = allActions[.download] {
                 download.action.title = LectureOption.download.rawValue + " (\(eligibleDownloadModels.count))"
@@ -492,6 +497,18 @@ extension LectureViewController {
                 }
 
                 switch option {
+                case .addToPlayNext:
+                    if let playerController = self as? PlayerViewController {
+                        playerController.addToPlayNext(lectureIDs: models.map({ $0.id }))
+                    } else if let tabController = self.tabBarController as? TabBarController {
+                        tabController.addLecturesToPlayNext(lectures: selectedModels)
+                    }
+                case .removeFromPlayNext:
+                    if let playerController = self as? PlayerViewController {
+                        playerController.removeFromPlayNext(lectureIDs: models.map({ $0.id }))
+                    } else if let tabController = self.tabBarController as? TabBarController {
+                        tabController.removeLecturesFromPlayNext(lectures: selectedModels)
+                    }
                 case .download, .resumeDownload:
                     Haptic.softImpact()
                     let eligibleDownloadModels: [Model] = selectedModels.filter { $0.downloadState == .notDownloaded || $0.downloadState == .error || $0.downloadState == .pause }
@@ -545,9 +562,9 @@ extension LectureViewController {
             })
 
             switch option {
-            case .download, .resumeDownload, .pauseDownload, .markAsFavorite, .addToPlaylist, .markAsHeard, .resetProgress, .share, .info:
+            case .addToPlayNext, .download, .resumeDownload, .pauseDownload, .markAsFavorite, .addToPlaylist, .markAsHeard, .resetProgress, .share, .info:
                 break
-            case .deleteFromDownloads, .removeFromPlaylist, .removeFromFavorite:
+            case .deleteFromDownloads, .removeFromPlaylist, .removeFromFavorite, .removeFromPlayNext:
                 action.action.attributes = .destructive
             }
 
@@ -570,6 +587,18 @@ extension LectureViewController: LectureCellDelegate {
     func lectureCell(_ cell: LectureCell, didSelected option: LectureOption, with lecture: Lecture) {
 
         switch option {
+        case .addToPlayNext:
+            if let playerController = self as? PlayerViewController {
+                playerController.addToPlayNext(lectureIDs: [lecture.id])
+            } else if let tabController = self.tabBarController as? TabBarController {
+                tabController.addLecturesToPlayNext(lectures: [lecture])
+            }
+        case .removeFromPlayNext:
+            if let playerController = self as? PlayerViewController {
+                playerController.removeFromPlayNext(lectureIDs: [lecture.id])
+            } else if let tabController = self.tabBarController as? TabBarController {
+                tabController.removeLecturesFromPlayNext(lectures: [lecture])
+            }
         case .download, .resumeDownload:
             Haptic.softImpact()
             Persistant.shared.save(lectures: [lecture], completion: { _ in })
@@ -822,10 +851,10 @@ extension LectureViewController {
            let currentPlayingLecture = tabBarController.playerViewController.currentLecture,
            lectures.contains(where: { currentPlayingLecture.id == $0.id }) {
 
-            let playlistLectures: [Model] = tabBarController.playerViewController.playlistLectures
-            if var index = playlistLectures.firstIndex(where: { currentPlayingLecture.id == $0.id }) {
+            let playlistLectureIDs: [Int] = tabBarController.playerViewController.playlistLectureIDs
+            if var index = playlistLectureIDs.firstIndex(where: { currentPlayingLecture.id == $0 }) {
 
-                while (index+1) < playlistLectures.count {
+                while (index+1) < playlistLectureIDs.count {
 
                     // This is the lecture we want to move
                     if !lectures.contains(models[index+1]) {
@@ -835,24 +864,17 @@ extension LectureViewController {
                     }
                 }
 
-                if (index+1) < playlistLectures.count {
+                if (index+1) < playlistLectureIDs.count {
                     // We found a lecture which should be played next
 
                     let shouldPlay: Bool = !tabBarController.playerViewController.isPaused
-                    tabBarController.playerViewController.currentLecture = playlistLectures[index+1]
-
-                    if shouldPlay {
-                        tabBarController.playerViewController.play()
-                    }
-
+                    tabBarController.playerViewController.moveToLectureID(id: playlistLectureIDs[index+1], shouldPlay: shouldPlay)
                 } else {
                     // We reached at the end of the playlist but haven't found any lecture to play
                     tabBarController.playerViewController.currentLecture = nil
-                    tabBarController.playerViewController.playlistLectures = []
                 }
             } else {
                 tabBarController.playerViewController.currentLecture = nil
-                tabBarController.playerViewController.playlistLectures = []
             }
         }
 
@@ -929,8 +951,8 @@ extension LectureViewController: IQListViewDelegateDataSource {
                     }
 
                     let isHighlited: Bool = highlightedLectures.contains(where: { modelLecture.id == $0.id })
-
-                    return Cell.Model(lecture: modelLecture, isSelectionEnabled: isSelectionEnabled, isSelected: isSelected, enableRemoveFromPlaylist: removeFromPlaylistEnabled, showPlaylistIcon: showPlaylistIcon, isHighlited: isHighlited)
+                    let enableRemoveFromPlayNext = self is PlayerViewController
+                    return Cell.Model(lecture: modelLecture, isSelectionEnabled: isSelectionEnabled, isSelected: isSelected, enableRemoveFromPlaylist: removeFromPlaylistEnabled, enableRemoveFromPlayNext: enableRemoveFromPlayNext, showPlaylistIcon: showPlaylistIcon, isHighlited: isHighlited)
                 }
 
                 list.append(Cell.self, models: newModels, section: section)
@@ -1033,9 +1055,9 @@ extension LectureViewController: IQListViewDelegateDataSource {
 
                 if model.lecture.resources.audios.first?.audioURL != nil {
                     if let playerController = self as? PlayerViewController, let tabController = playerController.parentTabBarController {
-                        tabController.showPlayer(lecture: model.lecture, playlistLectures: self.models)
+                        tabController.showPlayer(lecture: model.lecture)
                     } else if let tabController = self.tabBarController as? TabBarController {
-                        tabController.showPlayer(lecture: model.lecture, playlistLectures: self.models)
+                        tabController.showPlayer(lecture: model.lecture)
                     }
                 } else if let videoURL = model.lecture.resources.videos.first?.videoURL {
 

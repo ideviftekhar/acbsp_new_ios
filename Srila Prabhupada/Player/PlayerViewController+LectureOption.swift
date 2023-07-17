@@ -87,9 +87,9 @@ extension PlayerViewController {
             })
 
             switch option {
-            case .download, .resumeDownload, .pauseDownload, .markAsFavorite, .addToPlaylist, .markAsHeard, .resetProgress, .share, .info:
+            case .addToPlayNext, .download, .resumeDownload, .pauseDownload, .markAsFavorite, .addToPlaylist, .markAsHeard, .resetProgress, .share, .info:
                 break
-            case .deleteFromDownloads, .removeFromPlaylist, .removeFromFavorite:
+            case .deleteFromDownloads, .removeFromPlaylist, .removeFromFavorite, .removeFromPlayNext:
                 action.action.attributes = .destructive
             }
 
@@ -108,7 +108,6 @@ extension PlayerViewController {
     func menuButtonActions(controller: PlayerViewController, option: LectureOption, lecture: Lecture) {
 
         switch option {
-
         case .download, .resumeDownload:
             Haptic.softImpact()
             Persistant.shared.save(lectures: [lecture], completion: { _ in })
@@ -136,8 +135,10 @@ extension PlayerViewController {
             playlistController.popoverPresentationController?.sourceView = self.menuButton
             self.present(navigationController, animated: true, completion: nil)
 
-        case .removeFromPlaylist, .markAsHeard, .resetProgress, .pauseDownload:
+        case .removeFromPlaylist, .markAsHeard, .resetProgress, .pauseDownload, .addToPlayNext:
             break
+        case .removeFromPlayNext:
+            self.removeFromPlayNext(lectureIDs: [lecture.id])
         case .share:
 
             let deepLinkBaseURL = "https://bvks.com?lectureId=\(lecture.id)"

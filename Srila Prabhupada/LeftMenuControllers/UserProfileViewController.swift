@@ -49,11 +49,10 @@ class UserProfileViewController: UIViewController {
                 switch result {
                 case .success:
                     
-                    if let appTabBarController = self.appTabBarController,
-                       !appTabBarController.playerViewController.isPaused {
+                    if let appTabBarController = self.appTabBarController {
                         appTabBarController.playerViewController.pause()
                         appTabBarController.playerViewController.currentLecture = nil
-                        appTabBarController.playerViewController.playlistLectures = []
+                        appTabBarController.playerViewController.clearPlayingQueue(keepPlayingLecture: false)
                     }
                     
                     if let keyWindow = self.view.window {
