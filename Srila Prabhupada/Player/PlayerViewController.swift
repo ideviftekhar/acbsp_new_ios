@@ -247,7 +247,7 @@ class PlayerViewController: LectureViewController {
                         var updatedLectureIDs: [Int] = []
 
                         if let data = FileUserDefaults.standard.data(for: userDefaultKey),
-                           var mergedLectureIDs = try? JSONDecoder().decode([Int].self, from: data), !mergedLectureIDs.isEmpty {
+                           let mergedLectureIDs = try? JSONDecoder().decode([Int].self, from: data), !mergedLectureIDs.isEmpty {
                             updatedLectureIDs = mergedLectureIDs
                         }
 

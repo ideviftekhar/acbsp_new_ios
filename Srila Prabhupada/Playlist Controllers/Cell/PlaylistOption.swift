@@ -29,7 +29,7 @@ enum PlaylistOption: String, CaseIterable {
                 return nil
             }
 
-            let flippedImage = UIImage(cgImage: cgImage, scale: image.scale, orientation: .downMirrored)
+            let flippedImage = UIImage(cgImage: cgImage, scale: image.scale, orientation: .downMirrored).withRenderingMode(.alwaysTemplate)
             return flippedImage
         case .addToPlayNext:
             return UIImage(systemName: "text.badge.plus")
