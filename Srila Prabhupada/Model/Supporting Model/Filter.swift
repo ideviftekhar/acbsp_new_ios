@@ -18,6 +18,7 @@ enum Filter: String, CaseIterable {
     case type = "Type"
     case categories = "Categories"
     case translation = "Translation"
+    case completed = "Completed"
 
     var subtypes: [String] {
         switch self {
@@ -25,6 +26,8 @@ enum Filter: String, CaseIterable {
             return Self.monthNames
         case .type:
             return Self.typeNames
+        case .completed:
+            return Self.completedNames
         default:
             return UserDefaults.standard.array(forKey: self.rawValue) as? [String] ?? []
         }
@@ -47,7 +50,11 @@ enum Filter: String, CaseIterable {
 
     private static let typeNames: [String] = [
         "Audio",
-        "Video",
+        "Video"
+    ]
+
+    private static let completedNames: [String] = [
+        "Exclude Completed"
     ]
 
     func filter(_ lectures: [Lecture], selectedSubtypes: [String]) -> [Lecture] {
@@ -95,6 +102,14 @@ enum Filter: String, CaseIterable {
             } else {
                 return lectures
             }
+        case .completed:
+            let shouldExcludeCompleted = selectedSubtypes.contains("Exclude Completed")
+            if shouldExcludeCompleted {
+                return lectures.filter { !$0.isCompleted }
+            } else {
+                return lectures
+            }
+
         }
     }
 

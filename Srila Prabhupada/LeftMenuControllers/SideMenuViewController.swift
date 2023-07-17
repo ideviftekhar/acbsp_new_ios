@@ -33,7 +33,17 @@ class SideMenuViewController: UIViewController {
     typealias Model = SideMenuItem
     typealias Cell = SideMenuCell
 
-    private let models: [SideMenuItem] = SideMenuItem.allCases
+    private let models: [SideMenuItem] = {
+        var allCases = SideMenuItem.allCases
+
+        if Environment.current.device == .mac {
+            if let index = allCases.firstIndex(of: .donate) {
+                allCases.remove(at: index)
+            }
+        }
+        return allCases
+    }()
+    
     private lazy var list = IQList(listView: sideMenuTableView, delegateDataSource: self)
     private lazy var serialListKitQueue = DispatchQueue(label: "ListKitQueue_\(Self.self)", qos: .userInteractive)
 
