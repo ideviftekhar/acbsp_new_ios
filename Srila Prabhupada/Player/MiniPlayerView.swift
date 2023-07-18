@@ -13,6 +13,7 @@ protocol MiniPlayerViewDelegate: AnyObject {
     func miniPlayerViewDidExpand(_ playerView: MiniPlayerView)
     func miniPlayerViewDidClose(_ playerView: MiniPlayerView)
     func miniPlayerView(_ playerView: MiniPlayerView, didChangePlay isPlay: Bool)
+    func miniPlayerViewDidRequestedNext(_ playerView: MiniPlayerView)
     func miniPlayerView(_ playerView: MiniPlayerView, didSeekTo seconds: Int)
 }
 
@@ -22,9 +23,9 @@ class MiniPlayerView: UIView {
 
         switch Environment.current.device {
         case .mac, .pad:
-            return 90
+            return 100
         default:
-            return 64
+            return 70
         }
     }()
     
@@ -32,13 +33,12 @@ class MiniPlayerView: UIView {
     @IBOutlet private var titleLabel: MarqueeLabel!
     @IBOutlet private var verseLabel: UILabel!
     @IBOutlet private var durationLabel: UILabel!
-    @IBOutlet private var locationLabel: UILabel!
     @IBOutlet private var dateLabel: UILabel!
     @IBOutlet private var expandButton: UIButton!
     @IBOutlet private var playButton: UIButton!
+    @IBOutlet private var nextButton: UIButton!
     @IBOutlet internal var progressView: UIProgressView!
     @IBOutlet private var firstDotLabel: UILabel?
-    @IBOutlet private var secondDotLabel: UILabel?
 
     @IBOutlet internal var currentTimeLabel: UILabel!
     @IBOutlet private var heightConstraint: NSLayoutConstraint!
@@ -81,7 +81,6 @@ class MiniPlayerView: UIView {
             if let model = currentLecture {
                 titleLabel.text = model.titleDisplay
                 lectureDuration = model.lengthTime
-                dateLabel.text = model.dateOfRecording.display_dd_MMM_yyyy
                 currentTimeLabel.text = 0.toHHMMSS
 
                 if !model.legacyData.verse.isEmpty {
@@ -90,14 +89,16 @@ class MiniPlayerView: UIView {
                     verseLabel?.text = model.category.joined(separator: ", ")
                 }
 
-                if !model.location.displayString.isEmpty {
-                    locationLabel?.text = model.location.displayString
-                } else {
-                    locationLabel?.text = model.place.joined(separator: ", ")
-                }
+//                if !model.location.displayString.isEmpty {
+//                    locationLabel?.text = model.location.displayString
+//                } else {
+//                    locationLabel?.text = model.place.joined(separator: ", ")
+//                }
+
+                dateLabel.text = model.dateOfRecording.display_dd_MMM_yyyy
 
                 firstDotLabel?.isHidden = verseLabel?.text?.isEmpty ?? true
-                secondDotLabel?.isHidden = locationLabel?.text?.isEmpty ?? true
+//                secondDotLabel?.isHidden = locationLabel?.text?.isEmpty ?? true
 
                 if let url = model.thumbnailURL {
                     thumbnailImageView.af.setImage(withURL: url, placeholderImage: UIImage(named: "logo_40"))
@@ -111,12 +112,12 @@ class MiniPlayerView: UIView {
                 titleLabel.text = "--"
                 verseLabel.text = "--"
                 durationLabel.text = "--"
-                locationLabel.text = "--"
+//                locationLabel.text = "--"
                 dateLabel.text = "--"
                 currentTimeLabel.text = "--"
 
                 firstDotLabel?.isHidden = false
-                secondDotLabel?.isHidden = false
+//                secondDotLabel?.isHidden = false
                 thumbnailImageView.image = UIImage(named: "logo_40")
                 progressView.progress = 0
             }
@@ -154,6 +155,10 @@ class MiniPlayerView: UIView {
 
     @IBAction private func playAction(_ sender: UIButton) {
         delegate?.miniPlayerView(self, didChangePlay: !isPlaying)
+    }
+
+    @IBAction private func playNextAction(_ sender: UIButton) {
+        delegate?.miniPlayerViewDidRequestedNext(self)
     }
 
     @IBAction private func expandAction(_ sender: UIButton) {

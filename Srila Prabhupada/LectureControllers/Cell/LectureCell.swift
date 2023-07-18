@@ -133,7 +133,11 @@ class LectureCell: UITableViewCell, IQModelableCell {
 
             let playProgress: CGFloat = model.lecture.playProgress
 
-            labelListenProgress?.text = "\(Int(playProgress * 100))%"
+            let font: UIFont = self.labelListenProgress?.font ?? UIFont.systemFont(ofSize: 17)
+            let percentageAttributedString = NSAttributedString(string: "%", attributes: [.font: font.withSize(font.pointSize*2.0/3.0)])
+            let attributedText = NSMutableAttributedString(string: "\(Int(playProgress * 100))")
+            attributedText.append(percentageAttributedString)
+            labelListenProgress?.attributedText = attributedText
             listenProgressView?.progress = playProgress
             listenProgressView?.isHidden = playProgress >= 1.0
             completedIconImageView?.isHidden = playProgress < 1.0
@@ -150,7 +154,9 @@ class LectureCell: UITableViewCell, IQModelableCell {
                     audioVisualizerView.state = .stopped
                 case .playing(let playProgress):
 
-                    labelListenProgress?.text = "\(Int(playProgress * 100))%"
+                    let attributedText = NSMutableAttributedString(string: "\(Int(playProgress * 100))")
+                    attributedText.append(percentageAttributedString)
+                    labelListenProgress?.attributedText = attributedText
                     listenProgressView?.progress = playProgress
                     listenProgressView?.isHidden = playProgress >= 1.0
                     completedIconImageView?.isHidden = playProgress < 1.0
@@ -243,11 +249,17 @@ class LectureCell: UITableViewCell, IQModelableCell {
             do {
                 var actions: [SPAction] = []
 
-                // addToPlayNext, removeFromPlayNext
-                if model.isOnPlayingList, let removeFromPlayNext = allActions[.removeFromPlayNext] {
-                    actions.append(removeFromPlayNext)
-                } else if let addToPlayNext = allActions[.addToQueue] {
-                    actions.append(addToPlayNext)
+                // addToQueue, removeFromQueue
+                if model.isOnPlayingList, let removeFromQueue = allActions[.removeFromQueue] {
+                    actions.append(removeFromQueue)
+                } else {
+                    if let addToPlayNext = allActions[.addToPlayNext] {
+                        actions.append(addToPlayNext)
+                    }
+
+                    if let addToQueue = allActions[.addToQueue] {
+                        actions.append(addToQueue)
+                    }
                 }
 
                 switch lecture.downloadState {
@@ -387,9 +399,9 @@ extension LectureCell {
             })
 
             switch option {
-            case .addToQueue, .download, .resumeDownload, .pauseDownload, .markAsFavorite, .addToPlaylist, .markAsHeard, .resetProgress, .share, .info:
+            case .addToQueue, .addToPlayNext, .download, .resumeDownload, .pauseDownload, .markAsFavorite, .addToPlaylist, .markAsHeard, .resetProgress, .share, .info:
                 break
-            case .deleteFromDownloads, .removeFromPlaylist, .removeFromFavorite, .removeFromPlayNext:
+            case .deleteFromDownloads, .removeFromPlaylist, .removeFromFavorite, .removeFromQueue:
                 action.action.attributes = .destructive
             }
 

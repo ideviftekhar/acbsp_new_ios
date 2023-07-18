@@ -52,10 +52,8 @@ class PlaylistViewController: SearchViewController {
         do {
             playlistSegmentControl.removeAllSegments()
 
-            for (index, listType) in PlaylistType.allCases.enumerated() {
-                if listType != .unknown {
-                    playlistSegmentControl.insertSegment(withTitle: listType.rawValue, at: index, animated: false)
-                }
+            for (index, listType) in PlaylistType.allCases.enumerated() where listType != .unknown {
+                playlistSegmentControl.insertSegment(withTitle: listType.rawValue, at: index, animated: false)
             }
 
             let userDefaultKey: String = "\(Self.self).\(UISegmentedControl.self)"
@@ -451,7 +449,11 @@ extension PlaylistViewController: PlaylistCellDelegate {
             present(navController, animated: true, completion: nil)
         case .addToQueue:
             if let tabBarController = self.tabBarController as? TabBarController {
-                tabBarController.addLectureIDsToPlayNext(lectureIDs: playlist.lectureIds)
+                tabBarController.addToQueue(lectureIDs: playlist.lectureIds)
+            }
+        case .addToPlayNext:
+            if let tabBarController = self.tabBarController as? TabBarController {
+                tabBarController.addToPlayNext(lectureIDs: playlist.lectureIds)
             }
         }
     }

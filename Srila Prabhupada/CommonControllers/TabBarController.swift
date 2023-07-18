@@ -246,18 +246,16 @@ extension TabBarController: PlayerViewControllerDelegate {
         playerViewController.loadLastPlayedLectures(cachedLectures: self.lectures)
     }
 
-    func addLecturesToPlayNext(lectures: [Lecture]) {
-        let lectureIDs = lectures.map { $0.id }
-        addLectureIDsToPlayNext(lectureIDs: lectureIDs)
+    func addToQueue(lectureIDs: [Int]) {
+        playerViewController.addToQueue(lectureIDs: lectureIDs)
     }
 
-    func addLectureIDsToPlayNext(lectureIDs: [Int]) {
+    func removeFromQueue(lectureIDs: [Int]) {
+        playerViewController.removeFromQueue(lectureIDs: lectureIDs)
+    }
+
+    func addToPlayNext(lectureIDs: [Int]) {
         playerViewController.addToPlayNext(lectureIDs: lectureIDs)
-    }
-
-    func removeLecturesFromPlayNext(lectures: [Lecture]) {
-        let lectureIDs = lectures.map { $0.id }
-        playerViewController.removeFromPlayNext(lectureIDs: lectureIDs)
     }
 
     func showPlayer(lecture: Lecture, shouldPlay: Bool? = nil) {

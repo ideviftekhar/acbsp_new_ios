@@ -61,7 +61,7 @@ extension PlayerViewController {
         }
     }
 
-    func addToPlayNext(lectureIDs: [Int]) {
+    func addToQueue(lectureIDs: [Int]) {
 
         DispatchQueue.global(qos: .background).async {
 
@@ -105,7 +105,64 @@ extension PlayerViewController {
         }
     }
 
-    func removeFromPlayNext(lectureIDs: [Int]) {
+    func addToPlayNext(lectureIDs: [Int]) {
+
+        DispatchQueue.global(qos: .background).async {
+
+            let userDefaultKey: String = "\(Self.self).playlistLectures"
+            var updatedLectureIDs: [Int] = []
+
+            if let data = FileUserDefaults.standard.data(for: userDefaultKey),
+               let oldLectureIDs = try? JSONDecoder().decode([Int].self, from: data) {
+
+                var mergedLectureIDs: [Int] = oldLectureIDs
+
+                if let currentLecture = self.currentLecture {
+                    if !mergedLectureIDs.contains(currentLecture.id) {
+                        mergedLectureIDs.append(currentLecture.id)
+                    }
+                }
+
+                if let currentLecture = self.currentLecture,
+                   let oldValueIndex = mergedLectureIDs.firstIndex(of: currentLecture.id) {
+                    mergedLectureIDs.insert(contentsOf: lectureIDs, at: oldValueIndex + 1)
+                } else {
+                    mergedLectureIDs.append(contentsOf: lectureIDs)
+                }
+
+                // Removing duplicates
+                do {
+                    var lectureIDsHashTable: [Int: Int] = mergedLectureIDs.enumerated().reduce(into: [Int: Int]()) { result, object in
+                        if result[object.element] == nil {
+                            result[object.element] = object.offset
+                        }
+                    }
+
+                    for lectureID in mergedLectureIDs where lectureIDsHashTable[lectureID] != nil {
+                        updatedLectureIDs.append(lectureID)
+                        lectureIDsHashTable[lectureID] = nil
+                    }
+                }
+            } else {
+                updatedLectureIDs = lectureIDs
+
+                if let currentLecture = self.currentLecture {
+                    if !updatedLectureIDs.contains(currentLecture.id) {
+                        updatedLectureIDs.append(currentLecture.id)
+                    }
+                }
+            }
+
+            let data = try? JSONEncoder().encode(updatedLectureIDs)
+            FileUserDefaults.standard.set(data, for: userDefaultKey)
+
+            DispatchQueue.main.async {
+                self.updatePlaylistLectureIDs(ids: updatedLectureIDs, canShuffle: true, animated: nil)
+            }
+        }
+    }
+
+    func removeFromQueue(lectureIDs: [Int]) {
 
         DispatchQueue.global(qos: .background).async {
 

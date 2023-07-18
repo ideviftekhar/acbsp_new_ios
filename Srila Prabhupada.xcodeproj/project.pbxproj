@@ -225,6 +225,8 @@
 		C0118A7928D34AA800F6002D /* GoogleService-Info-development-client.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0118A7728D34AA700F6002D /* GoogleService-Info-development-client.plist */; };
 		C0118A7C28D34AB400F6002D /* GoogleService-Info-production-client.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0118A7B28D34AB400F6002D /* GoogleService-Info-production-client.plist */; };
 		C017E68C293E24C1005DA700 /* Haptic.swift in Sources */ = {isa = PBXBuildFile; fileRef = C017E68B293E24C1005DA700 /* Haptic.swift */; };
+		C01861CA2A65D29F00E05FA0 /* UIAnimatedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01861C92A65D29F00E05FA0 /* UIAnimatedButton.swift */; };
+		C01861CB2A65D99000E05FA0 /* UIAnimatedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01861C92A65D29F00E05FA0 /* UIAnimatedButton.swift */; };
 		C018A99428F421A000C0E002 /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C018A99328F421A000C0E002 /* Int+Extension.swift */; };
 		C01ACC002A5809E200906CDF /* FileUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01ACBFF2A5809E200906CDF /* FileUserDefaults.swift */; };
 		C01ACC012A5809E200906CDF /* FileUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01ACBFF2A5809E200906CDF /* FileUserDefaults.swift */; };
@@ -398,6 +400,7 @@
 		C0118A7728D34AA700F6002D /* GoogleService-Info-development-client.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-development-client.plist"; sourceTree = "<group>"; };
 		C0118A7B28D34AB400F6002D /* GoogleService-Info-production-client.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-production-client.plist"; sourceTree = "<group>"; };
 		C017E68B293E24C1005DA700 /* Haptic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptic.swift; sourceTree = "<group>"; };
+		C01861C92A65D29F00E05FA0 /* UIAnimatedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAnimatedButton.swift; sourceTree = "<group>"; };
 		C018A99328F421A000C0E002 /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
 		C01ACBFF2A5809E200906CDF /* FileUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUserDefaults.swift; sourceTree = "<group>"; };
 		C01B889F2913F5FE00EF0EA0 /* LoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
@@ -943,6 +946,7 @@
 				C018A99328F421A000C0E002 /* Int+Extension.swift */,
 				C0DA677828FD7883003BF8E4 /* UIColor+Extension.swift */,
 				C094A6562934A1A100710647 /* StatusAlert+Extension.swift */,
+				C01861C92A65D29F00E05FA0 /* UIAnimatedButton.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1386,6 +1390,7 @@
 				C02A842F2A56BB0D008A21E3 /* IQCircularProgressView.swift in Sources */,
 				6E6900AA2A25C4C20086C7DB /* StatsType.swift in Sources */,
 				6E6900AB2A25C4C20086C7DB /* Day.swift in Sources */,
+				C01861CB2A65D99000E05FA0 /* UIAnimatedButton.swift in Sources */,
 				6E6900AC2A25C4C20086C7DB /* CopyrightViewController.swift in Sources */,
 				C02856F12A56EEB300C34D49 /* PlayerViewController+Gesture.swift in Sources */,
 				6E6900AD2A25C4C20086C7DB /* ListenDetails.swift in Sources */,
@@ -1544,6 +1549,7 @@
 				C0CE0D1428E86EF500C2C825 /* UIImage+Extension.swift in Sources */,
 				C07A8F3B28F7FD44001A6162 /* ESTMusicIndicatorView.swift in Sources */,
 				C007D38228E80ADC00CFBED0 /* Audio.swift in Sources */,
+				C01861CA2A65D29F00E05FA0 /* UIAnimatedButton.swift in Sources */,
 				C0F1A08928F05F06009578BA /* MiniPlayerView.swift in Sources */,
 				C0DA677B28FD7D2E003BF8E4 /* LectureViewModel+Helpers.swift in Sources */,
 				C00E4E1028CA39FE00F1A123 /* TopLectureViewController.swift in Sources */,
@@ -1598,7 +1604,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Configurations/BVKS/BVKS.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				"EXCLUDED_ARCHS[sdk=iphoneos*]" = x86_64;
@@ -1618,7 +1624,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5.2;
+				MARKETING_VERSION = 2.5.3;
 				OTHER_SWIFT_FLAGS = "$(inherited) -DBVKS";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bhakti.bvks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1643,7 +1649,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Configurations/BVKS/BVKS.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 1;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1661,7 +1667,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5.2;
+				MARKETING_VERSION = 2.5.3;
 				OTHER_SWIFT_FLAGS = "$(inherited) -DBVKS";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bhakti.bvks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1742,7 +1748,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Configurations/ShrilaPrabhupada/Srila Prabhupada.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 41;
+				CURRENT_PROJECT_VERSION = 30;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/Info.plist";
@@ -1759,7 +1765,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.2;
+				MARKETING_VERSION = 2.0.3;
 				OTHER_SWIFT_FLAGS = "$(inherited) -DSP";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bvksdigital.acbsp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1846,7 +1852,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Configurations/ShrilaPrabhupada/Srila Prabhupada.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development: Himanshu Akhria (35554LNBHY)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 41;
+				CURRENT_PROJECT_VERSION = 30;
 				DEVELOPMENT_TEAM = 35554LNBHY;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = S92372RU6B;
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = S92372RU6B;
@@ -1865,7 +1871,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.2;
+				MARKETING_VERSION = 2.0.3;
 				OTHER_SWIFT_FLAGS = "$(inherited) -DSP";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bvksdigital.acbsp;
 				PRODUCT_NAME = "$(TARGET_NAME)";

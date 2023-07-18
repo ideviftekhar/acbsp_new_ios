@@ -10,9 +10,11 @@ import UIKit
 
 enum LectureOption: String, CaseIterable {
 
+    case addToPlayNext          =   "Play Next"
+
     case addToQueue             =   "Add to Queue"
 
-    case removeFromPlayNext     =   "Remove from Play Next"
+    case removeFromQueue        =   "Remove from Queue"
 
     case download               =   "Download"
 
@@ -41,9 +43,17 @@ enum LectureOption: String, CaseIterable {
     var image: UIImage? {
         switch self {
         case .addToQueue:
-            return UIImage(systemName: "text.badge.plus")
-        case .removeFromPlayNext:
+
+            guard let image = UIImage(systemName: "text.badge.plus"), let cgImage = image.cgImage else {
+                return nil
+            }
+
+            let flippedImage = UIImage(cgImage: cgImage, scale: image.scale, orientation: .downMirrored).withRenderingMode(.alwaysTemplate)
+            return flippedImage
+        case .removeFromQueue:
             return UIImage(systemName: "text.badge.minus")
+        case .addToPlayNext:
+            return UIImage(systemName: "text.badge.plus")
         case .download, .resumeDownload:
             return UIImage(systemName: "square.and.arrow.down")
         case .pauseDownload:
