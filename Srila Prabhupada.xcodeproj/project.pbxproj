@@ -517,8 +517,8 @@
 			isa = PBXGroup;
 			children = (
 				6E67E2802A29DBD5000CE184 /* Constants.swift */,
-				6E6900F52A25D7E90086C7DB /* GoogleService-Info-development-client.plist */,
 				6E68EA9E2A2E07AB00C6DB6D /* BVKS.entitlements */,
+				6E6900F52A25D7E90086C7DB /* GoogleService-Info-development-client.plist */,
 				6E6900F62A25D7E90086C7DB /* GoogleService-Info-production-client.plist */,
 				6E8746C42A260D3B00C6A313 /* BVKS.xcassets */,
 			);

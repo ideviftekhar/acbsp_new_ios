@@ -206,7 +206,7 @@ extension SearchViewController: SideMenuControllerDelegate {
             shareController.popoverPresentationController?.sourceView = cell
             controller.present(shareController, animated: true)
         case .donate:
-            if let donateWebsite = URL(string: Constants.donateURLString) {
+            if let donateWebsite = URL(string: CommonConstants.donateURLString) {
                 let config = SFSafariViewController.Configuration()
                 config.entersReaderIfAvailable = true
                 let safariController = SFSafariViewController(url: donateWebsite, configuration: config)

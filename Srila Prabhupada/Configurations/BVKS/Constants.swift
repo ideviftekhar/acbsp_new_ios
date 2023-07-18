@@ -9,7 +9,6 @@ import Foundation
 
 struct Constants {
 
-    static let donateURLString: String = "https://bvks.com/donate/"
     static let appStoreIdentifier: Int = 1536451261
     static let appStoreURLString: String = "https://apps.apple.com/in/app/bhakti-vikasa-swami/id1536451261"
     static let playStoreURLString: String = "https://play.google.com/store/apps/details?id=com.iskcon.bvks&hl=en_GB&pli=1"
