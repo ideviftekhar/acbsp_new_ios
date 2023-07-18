@@ -12,6 +12,8 @@ enum LectureSortType: String, CaseIterable {
     case `default` = "Default"
     case durationLowToHigh = "Duration: Low to High"
     case durationHighToLow = "Duration: High to Low"
+    case progressLowToHigh = "Progress: Low to High"
+    case progressHighToLow = "Progress: High to Low"
     case dateOldestFirst = "Recording Date: Oldest First"
     case dateLatestFirst = "Recording Date: Latest First"
     case aToZ = "Alphabetically: A -> Z"
@@ -24,9 +26,13 @@ enum LectureSortType: String, CaseIterable {
         case .durationLowToHigh:
             return UIImage(systemName: "clock")
         case .durationHighToLow:
-            return LectureSortType.durationLowToHigh.image
+            return UIImage(systemName: "clock")?.flipHorizontally()?.withRenderingMode(.alwaysTemplate)
+        case .progressLowToHigh:
+            return UIImage(systemName: "chart.bar")
+        case .progressHighToLow:
+            return UIImage(systemName: "chart.bar")?.flipHorizontally()?.withRenderingMode(.alwaysTemplate)
         case .dateOldestFirst:
-            return UIImage(systemName: "calendar.badge.clock")
+            return UIImage(systemName: "calendar.badge.clock")?.flipHorizontally()?.withRenderingMode(.alwaysTemplate)
         case .dateLatestFirst:
             return UIImage(systemName: "calendar.badge.clock")
         case .aToZ:
@@ -43,9 +49,13 @@ enum LectureSortType: String, CaseIterable {
         case .durationLowToHigh:
             return UIImage(systemName: "clock.fill")
         case .durationHighToLow:
-           return LectureSortType.durationLowToHigh.imageSelected
+           return UIImage(systemName: "clock.fill")?.flipHorizontally()?.withRenderingMode(.alwaysTemplate)
+        case .progressLowToHigh:
+            return UIImage(systemName: "chart.bar.fill")
+        case .progressHighToLow:
+            return UIImage(systemName: "chart.bar.fill")?.flipHorizontally()?.withRenderingMode(.alwaysTemplate)
         case .dateOldestFirst:
-            return UIImage(systemName: "calendar.circle.fill")
+            return UIImage(systemName: "calendar.circle.fill")?.flipHorizontally()?.withRenderingMode(.alwaysTemplate)
         case .dateLatestFirst:
             return UIImage(systemName: "calendar.circle.fill")
         case .aToZ:
@@ -63,7 +73,6 @@ enum LectureSortType: String, CaseIterable {
 #elseif BVKS
             return LectureSortType.dateLatestFirst.sort(lectures)
 #endif
-                    
         case .durationLowToHigh:
             return lectures.sorted { obj1, obj2 in
                 obj1.length < obj2.length
@@ -71,6 +80,14 @@ enum LectureSortType: String, CaseIterable {
         case .durationHighToLow:
             return lectures.sorted { obj1, obj2 in
                 obj1.length > obj2.length
+            }
+        case .progressLowToHigh:
+            return lectures.sorted { obj1, obj2 in
+                obj1.playProgress < obj2.playProgress
+            }
+        case .progressHighToLow:
+            return lectures.sorted { obj1, obj2 in
+                obj1.playProgress > obj2.playProgress
             }
         case .dateOldestFirst:
             return lectures.sorted { obj1, obj2 in

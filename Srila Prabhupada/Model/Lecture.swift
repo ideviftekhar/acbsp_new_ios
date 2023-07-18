@@ -76,7 +76,9 @@ struct Lecture: Hashable, Codable {
     var playProgress: CGFloat {
         let progress: CGFloat
 
-        if length != 0 {
+        if lastPlayedPoint == -1 {
+            progress = 1.0
+        } else if length != 0 {
             progress = CGFloat(lastPlayedPoint) / CGFloat(length)
         } else {
             progress = 0
@@ -163,6 +165,22 @@ struct Lecture: Hashable, Codable {
 
     var titleDisplay: String {
         title.joined(separator: " ")
+    }
+
+    var playedTime: Time {
+
+        let playedTime: Int
+        if length != 0 {
+            if lastPlayedPoint < 0 {
+                playedTime = length
+            } else {
+                playedTime = lastPlayedPoint
+            }
+        } else {
+            playedTime = 0
+        }
+
+        return Time(totalSeconds: playedTime)
     }
 
     var lengthTime: Time {

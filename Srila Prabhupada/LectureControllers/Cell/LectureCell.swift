@@ -25,7 +25,6 @@ class LectureCell: UITableViewCell, IQModelableCell {
 
     @IBOutlet private var firstDotLabel: UILabel?
     @IBOutlet private var secondDotLabel: UILabel?
-    @IBOutlet private var thirdDotLabel: UILabel?
 
     @IBOutlet private var thumbnailImageView: UIImageView?
     @IBOutlet private var titleLabel: UILabel?
@@ -38,7 +37,8 @@ class LectureCell: UITableViewCell, IQModelableCell {
     @IBOutlet private var menuButton: UIButton?
     @IBOutlet private var selectedImageView: UIImageView?
     @IBOutlet private var downloadProgressView: IQCircularProgressView?
-    @IBOutlet private var listenProgressView: IQCircularProgressView?
+    @IBOutlet private var listenProgressView: IQProgressView?
+    @IBOutlet private var listenProgressStackView: UIStackView?
     @IBOutlet private var labelListenProgress: UILabel?
     @IBOutlet private var audioVisualizerView: ESTMusicIndicatorView!
 
@@ -128,19 +128,14 @@ class LectureCell: UITableViewCell, IQModelableCell {
 
             firstDotLabel?.isHidden = verseLabel?.text?.isEmpty ?? true
             secondDotLabel?.isHidden = locationLabel?.text?.isEmpty ?? true
-            thirdDotLabel?.isHidden = true
             downloadInfoLabel?.text = nil
 
             let playProgress: CGFloat = model.lecture.playProgress
 
-            let font: UIFont = self.labelListenProgress?.font ?? UIFont.systemFont(ofSize: 17)
-            let percentageAttributedString = NSAttributedString(string: "%", attributes: [.font: font.withSize(font.pointSize*2.0/3.0)])
-            let attributedText = NSMutableAttributedString(string: "\(Int(playProgress * 100))")
-            attributedText.append(percentageAttributedString)
-            labelListenProgress?.attributedText = attributedText
-            listenProgressView?.progress = playProgress
-            listenProgressView?.isHidden = playProgress >= 1.0
+            listenProgressStackView?.isHidden = playProgress >= 1.0 || playProgress <= 0
             completedIconImageView?.isHidden = playProgress < 1.0
+            labelListenProgress?.text = "\(Int(playProgress * 100))%"
+            listenProgressView?.progress = playProgress
 
             if let url = lecture.thumbnailURL {
                 thumbnailImageView?.af.setImage(withURL: url, placeholderImage: UIImage(named: "logo_40"))
@@ -152,22 +147,22 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 switch state {
                 case .stopped:
                     audioVisualizerView.state = .stopped
+                    listenProgressView?.tintColor = UIColor.zero_0099CC
                 case .playing(let playProgress):
 
-                    let attributedText = NSMutableAttributedString(string: "\(Int(playProgress * 100))")
-                    attributedText.append(percentageAttributedString)
-                    labelListenProgress?.attributedText = attributedText
+                    listenProgressStackView?.isHidden = playProgress >= 1.0
+                    labelListenProgress?.text = "\(Int(playProgress * 100))%"
                     listenProgressView?.progress = playProgress
-                    listenProgressView?.isHidden = playProgress >= 1.0
                     completedIconImageView?.isHidden = playProgress < 1.0
 
                     audioVisualizerView.state = .playing
+                    listenProgressView?.tintColor = UIColor(named: "ProgressColor")
                 case .paused:
                     audioVisualizerView.state = .paused
+                    listenProgressView?.tintColor = UIColor.zero_0099CC
                 }
             })
 
-            thirdDotLabel?.isHidden = true
             downloadInfoLabel?.text = nil
 
             switch lecture.downloadState {
@@ -195,7 +190,6 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 downloadedIconImageView?.tintColor = UIColor.systemRed
                 downloadedIconImageView?.image = UIImage(systemName: "exclamationmark.circle.fill")
                 if let downloadError = lecture.downloadError {
-                    thirdDotLabel?.isHidden = false
                     downloadInfoLabel?.text = downloadError
                 }
             case .pause:
@@ -218,7 +212,6 @@ class LectureCell: UITableViewCell, IQModelableCell {
 
                     downloadedIconImageView?.tintColor = UIColor.systemGreen
                     downloadedIconImageView?.image = UIImage(systemName: "arrow.down.circle.fill")
-                    thirdDotLabel?.isHidden = true
                     downloadInfoLabel?.text = nil
                 } else if fractionCompleted > 0 {
                     downloadedContentView?.isHidden = false
@@ -228,7 +221,6 @@ class LectureCell: UITableViewCell, IQModelableCell {
                     downloadedIconImageView?.tintColor = UIColor.systemBlue
                     downloadedIconImageView?.image = UIImage(systemName: "arrow.down.circle.fill")
                     downloadProgressView?.progress = fractionCompleted
-                    thirdDotLabel?.isHidden = false
 
                     let completedUnitCountString: String = BackgroundSession.shared.byteFormatter.string(fromByteCount: progress.completedUnitCount)
                     let totalUnitCountString: String = BackgroundSession.shared.byteFormatter.string(fromByteCount: progress.totalUnitCount)
@@ -238,7 +230,6 @@ class LectureCell: UITableViewCell, IQModelableCell {
                     downloadedIconImageView?.isHidden = true
                     downloadProgressView?.isHidden = true
 
-                    thirdDotLabel?.isHidden = true
                     downloadInfoLabel?.text = nil
                 }
             })

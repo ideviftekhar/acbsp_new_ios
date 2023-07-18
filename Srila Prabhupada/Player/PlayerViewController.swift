@@ -994,6 +994,12 @@ extension PlayerViewController {
         })
         childrens.append(editAction)
 
+        let clearWatchedAction: SPAction = SPAction(title: "Clear Watched", image: UIImage(systemName: "text.badge.minus"), identifier: .init("Clear Watched"), handler: { [self] _ in
+            let completedIDs: [Int] = models.filter { $0.isCompleted }.map { $0.id }
+            self.removeFromQueue(lectureIDs: completedIDs)
+        })
+        childrens.append(clearWatchedAction)
+
         let clearAllAction: SPAction = SPAction(title: "Clear All", image: UIImage(systemName: "text.badge.xmark"), identifier: .init("Clear All"), handler: { [self] _ in
             self.showAlert(title: "Clear Play Next?", message: "Are you sure you would like to clear Play Next Queue?", preferredStyle: .alert, sourceView: playNextMenuButton, cancel: ("Cancel", nil), destructive: ("Clear", {
                 self.clearPlayingQueue(keepPlayingLecture: true)
@@ -1001,12 +1007,6 @@ extension PlayerViewController {
         })
         clearAllAction.action.attributes = .destructive
         childrens.append(clearAllAction)
-
-        let clearWatchedAction: SPAction = SPAction(title: "Clear Watched", image: UIImage(systemName: "text.badge.minus"), identifier: .init("Clear Watched"), handler: { [self] _ in
-            let completedIDs: [Int] = models.filter { $0.isCompleted }.map { $0.id }
-            self.removeFromQueue(lectureIDs: completedIDs)
-        })
-        childrens.append(clearWatchedAction)
 
         if let playNextMenuButton = playNextMenuButton {
             self.playNextOptionMenu = SPMenu(title: "", image: nil, identifier: .init(rawValue: "PlaylistOption"), options: .displayInline, children: childrens, button: playNextMenuButton)

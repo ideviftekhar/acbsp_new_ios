@@ -253,6 +253,8 @@
 		C0399A8D2A655BEE00A51F04 /* PlayerViewController+Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0399A8B2A655BE600A51F04 /* PlayerViewController+Playlist.swift */; };
 		C03E3F2628DCC20A00B987DD /* FirestoreCollection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03E3F2528DCC20A00B987DD /* FirestoreCollection.swift */; };
 		C03E3F2828DCC6C500B987DD /* ListenInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C03E3F2728DCC6C500B987DD /* ListenInfo.swift */; };
+		C0443FA12A66888600F633D6 /* IQProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0443FA02A66888600F633D6 /* IQProgressView.swift */; };
+		C0443FA22A66888600F633D6 /* IQProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0443FA02A66888600F633D6 /* IQProgressView.swift */; };
 		C047E6212959F94100C6D50E /* BackgroundSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = C047E6202959F94100C6D50E /* BackgroundSession.swift */; };
 		C052D8C129125DF40003307B /* StatsType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C052D8C029125DF40003307B /* StatsType.swift */; };
 		C052D8C329125E7C0003307B /* ListenDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = C052D8C229125E7C0003307B /* ListenDetails.swift */; };
@@ -417,6 +419,7 @@
 		C0399A8B2A655BE600A51F04 /* PlayerViewController+Playlist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerViewController+Playlist.swift"; sourceTree = "<group>"; };
 		C03E3F2528DCC20A00B987DD /* FirestoreCollection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirestoreCollection.swift; sourceTree = "<group>"; };
 		C03E3F2728DCC6C500B987DD /* ListenInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenInfo.swift; sourceTree = "<group>"; };
+		C0443FA02A66888600F633D6 /* IQProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IQProgressView.swift; sourceTree = "<group>"; };
 		C047E6202959F94100C6D50E /* BackgroundSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundSession.swift; sourceTree = "<group>"; };
 		C052D8C029125DF40003307B /* StatsType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatsType.swift; sourceTree = "<group>"; };
 		C052D8C229125E7C0003307B /* ListenDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListenDetails.swift; sourceTree = "<group>"; };
@@ -900,6 +903,7 @@
 				C02C132C2A556497008D89DB /* RefreshButton.swift */,
 				C0034A932A5593F7005ADBBA /* RotableImageView.swift */,
 				C02A842E2A56BB0D008A21E3 /* IQCircularProgressView.swift */,
+				C0443FA02A66888600F633D6 /* IQProgressView.swift */,
 			);
 			path = Subclasses;
 			sourceTree = "<group>";
@@ -1382,6 +1386,7 @@
 				C00C95CE2A58532500951AFA /* RecentPlayID.swift in Sources */,
 				6E6900A42A25C4C20086C7DB /* FirestoreCollection.swift in Sources */,
 				6E6900A52A25C4C20086C7DB /* SideMenuCell.swift in Sources */,
+				C0443FA22A66888600F633D6 /* IQProgressView.swift in Sources */,
 				C0399A8D2A655BEE00A51F04 /* PlayerViewController+Playlist.swift in Sources */,
 				6E6900A62A25C4C20086C7DB /* PlaylistSortType.swift in Sources */,
 				6E6900A72A25C4C20086C7DB /* FirestoreManager+SignIn.swift in Sources */,
@@ -1515,6 +1520,7 @@
 				C00C95CD2A58532500951AFA /* RecentPlayID.swift in Sources */,
 				C0DA677928FD7883003BF8E4 /* UIColor+Extension.swift in Sources */,
 				C03E3F2628DCC20A00B987DD /* FirestoreCollection.swift in Sources */,
+				C0443FA12A66888600F633D6 /* IQProgressView.swift in Sources */,
 				C0399A8C2A655BE600A51F04 /* PlayerViewController+Playlist.swift in Sources */,
 				C0CE0D1828E870DB00C2C825 /* SideMenuCell.swift in Sources */,
 				C088178C28DDE69600D3106C /* PlaylistSortType.swift in Sources */,

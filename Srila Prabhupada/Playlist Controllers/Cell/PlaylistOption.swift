@@ -25,12 +25,7 @@ enum PlaylistOption: String, CaseIterable {
         case .delete:
             return UIImage(systemName: "trash")
         case .addToQueue:
-            guard let image = UIImage(systemName: "text.badge.plus"), let cgImage = image.cgImage else {
-                return nil
-            }
-
-            let flippedImage = UIImage(cgImage: cgImage, scale: image.scale, orientation: .downMirrored).withRenderingMode(.alwaysTemplate)
-            return flippedImage
+            return UIImage(systemName: "text.badge.plus")?.flipVertically()?.withRenderingMode(.alwaysTemplate)
         case .addToPlayNext:
             return UIImage(systemName: "text.badge.plus")
         }

@@ -43,13 +43,7 @@ enum LectureOption: String, CaseIterable {
     var image: UIImage? {
         switch self {
         case .addToQueue:
-
-            guard let image = UIImage(systemName: "text.badge.plus"), let cgImage = image.cgImage else {
-                return nil
-            }
-
-            let flippedImage = UIImage(cgImage: cgImage, scale: image.scale, orientation: .downMirrored).withRenderingMode(.alwaysTemplate)
-            return flippedImage
+            return UIImage(systemName: "text.badge.plus")?.flipVertically()?.withRenderingMode(.alwaysTemplate)
         case .removeFromQueue:
             return UIImage(systemName: "text.badge.minus")
         case .addToPlayNext:

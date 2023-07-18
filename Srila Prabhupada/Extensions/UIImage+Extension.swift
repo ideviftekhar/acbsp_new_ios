@@ -37,4 +37,22 @@ extension UIImage {
         UIGraphicsEndImageContext()
         return image
     }
+
+    public func flipHorizontally() -> UIImage? {
+        guard let cgImage = cgImage else {
+            return self
+        }
+
+        let flippedImage = UIImage(cgImage: cgImage, scale: scale, orientation: .upMirrored).withRenderingMode(renderingMode)
+        return flippedImage
+    }
+
+    public func flipVertically() -> UIImage? {
+        guard let cgImage = cgImage else {
+            return self
+        }
+
+        let flippedImage = UIImage(cgImage: cgImage, scale: scale, orientation: .downMirrored).withRenderingMode(renderingMode)
+        return flippedImage
+    }
 }
