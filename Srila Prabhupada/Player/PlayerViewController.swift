@@ -667,7 +667,7 @@ extension PlayerViewController {
         let currentTime = currentTime
         DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [currentLecture], isCompleted: nil, isDownloaded: nil, isFavorite: nil, lastPlayedPoint: currentTime, postUpdate: false, completion: { result in
             switch result {
-            case .success(let success):
+            case .success:
 //                print("Update lecture \"\(currentLecture.titleDisplay)\" current time: \(currentTime) / \(currentLecture.length)")
                 break
             case .failure(let error):

@@ -850,19 +850,24 @@
                                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="QQg-rd-KCo" userLabel="Stack View Time">
                                                                             <rect key="frame" x="0.0" y="30" width="370" height="20"/>
                                                                             <subviews>
-                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" text="--:--" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="IQI-q6-Ul5">
-                                                                                    <rect key="frame" x="0.0" y="0.0" width="36.333333333333336" height="20"/>
-                                                                                    <color key="tintColor" name="TextDarkGray"/>
-                                                                                    <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="12"/>
-                                                                                    <color key="textColor" name="TextDarkGray"/>
-                                                                                    <nil key="highlightedColor"/>
-                                                                                    <variation key="heightClass=regular-widthClass=regular">
-                                                                                        <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="18"/>
-                                                                                    </variation>
-                                                                                </label>
-                                                                                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="ig1-GC-h9t">
-                                                                                    <rect key="frame" x="175" y="0.0" width="20" height="20"/>
-                                                                                </activityIndicatorView>
+                                                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="NXp-54-5Ab">
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="60.333333333333336" height="20"/>
+                                                                                    <subviews>
+                                                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" text="--:--" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="IQI-q6-Ul5">
+                                                                                            <rect key="frame" x="0.0" y="0.0" width="36.333333333333336" height="20"/>
+                                                                                            <color key="tintColor" name="TextDarkGray"/>
+                                                                                            <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="12"/>
+                                                                                            <color key="textColor" name="TextDarkGray"/>
+                                                                                            <nil key="highlightedColor"/>
+                                                                                            <variation key="heightClass=regular-widthClass=regular">
+                                                                                                <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="18"/>
+                                                                                            </variation>
+                                                                                        </label>
+                                                                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="ig1-GC-h9t">
+                                                                                            <rect key="frame" x="40.333333333333329" y="0.0" width="20" height="20"/>
+                                                                                        </activityIndicatorView>
+                                                                                    </subviews>
+                                                                                </stackView>
                                                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" text="--:--" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B9L-GY-BgF">
                                                                                     <rect key="frame" x="333.66666666666669" y="0.0" width="36.333333333333314" height="20"/>
                                                                                     <color key="tintColor" name="TextDarkGray"/>

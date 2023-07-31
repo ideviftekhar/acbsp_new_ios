@@ -43,6 +43,8 @@
 	</array>
 	<key>FirebaseAppDelegateProxyEnabled</key>
 	<false/>
+	<key>GIDClientID</key>
+	<string>897989727803-bubgiq4689affhgike3lmoc8ejdekda4.apps.googleusercontent.com</string>
 	<key>GOOGLE_SERVICE_FILE_NAME</key>
 	<string>$(GOOGLE_SERVICE_FILE_NAME)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>

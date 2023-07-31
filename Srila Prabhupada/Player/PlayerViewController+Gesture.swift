@@ -31,7 +31,7 @@ extension PlayerViewController {
     }
 
     @objc internal func prevNextLongPressRecognized(_ sender: UILongPressGestureRecognizer) {
-        guard let model = currentLecture, !self.isPaused else {
+        guard !self.isPaused else {
             return
         }
 
@@ -93,6 +93,9 @@ extension PlayerViewController {
                 } else {
                     direction = .right
                 }
+                UIView.animate(withDuration: 0.2, delay: 0, options: [.beginFromCurrentState, .curveEaseOut], animations: { [self] in
+                    progressView.transform = .init(scaleX: 1, y: 3.0)
+                })
             } else if abs(velocity.x) < abs(velocity.y) {
                 if velocity.y < 0 {
                     direction = .up
@@ -132,6 +135,9 @@ extension PlayerViewController {
 
             switch direction {
             case .left, .right:
+                UIView.animate(withDuration: 0.2, delay: 0, options: [.beginFromCurrentState, .curveEaseOut], animations: { [self] in
+                    progressView.transform = .identity
+                })
                 seekTo(seconds: Int(proposedSeek))
             case .up, .down:
 
@@ -184,10 +190,6 @@ extension PlayerViewController {
     }
 
     @objc internal func tableViewPanRecognized(_ sender: UIPanGestureRecognizer) {
-
-        guard let model = currentLecture else {
-            return
-        }
 
         switch sender.state {
         case .began:

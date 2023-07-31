@@ -32,9 +32,6 @@ def shared_pods
   pod 'MarqueeLabel'
 
   pod'Charts'
-  pod'SwiftLint'
-  
-  #pod 'SimplePDF'
 end
 
 target 'Srila Prabhupada' do

@@ -70,23 +70,24 @@ extension FirestoreManager {
         }
 
         let config = GIDConfiguration(clientID: clientID)
+        GIDSignIn.sharedInstance.configuration = config
 
-        GIDSignIn.sharedInstance.signIn(with: config, presenting: presentingController, callback: { [self] user, error in
+        GIDSignIn.sharedInstance.signIn(withPresenting: presentingController) { [self] result, error in
 
             if let error = error {
                 completion(.failure(error))
-            } else if let authentication = user?.authentication,
-                      let idToken = authentication.idToken {
+            } else if let user = result?.user,
+                      let idToken = user.idToken?.tokenString {
 
                 let credential = GoogleAuthProvider.credential(withIDToken: idToken,
-                                                               accessToken: authentication.accessToken)
+                                                               accessToken: user.accessToken.tokenString)
 
                 signIn(credential: credential, completion: completion)
             } else {
                 let error = NSError(domain: "Login", code: 0, userInfo: [NSLocalizedDescriptionKey: "Something went wrong"])
                 completion(.failure(error))
             }
-        })
+        }
     }
 
     func signIn(credential: AuthCredential, completion: @escaping (Result<FirebaseAuth.User, Error>) -> Void) {

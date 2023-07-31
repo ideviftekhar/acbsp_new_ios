@@ -27,7 +27,7 @@ extension MiniPlayerView: UIGestureRecognizerDelegate {
     }
 
     @objc internal func longPressRecognized(_ sender: UILongPressGestureRecognizer) {
-        guard let model = currentLecture, isPlaying else {
+        guard isPlaying else {
             return
         }
 
@@ -88,6 +88,9 @@ extension MiniPlayerView: UIGestureRecognizerDelegate {
                 } else {
                     direction = .right
                 }
+                UIView.animate(withDuration: 0.2, delay: 0, options: [.beginFromCurrentState, .curveEaseOut], animations: { [self] in
+                    progressView.transform = .init(scaleX: 1, y: 2.0).concatenating(.init(translationX: 0, y: 2))
+                })
             } else if abs(velocity.x) < abs(velocity.y) {
                 if velocity.y < 0 {
                     direction = .up
@@ -116,6 +119,9 @@ extension MiniPlayerView: UIGestureRecognizerDelegate {
 
             switch direction {
             case .left, .right:
+                UIView.animate(withDuration: 0.2, delay: 0, options: [.beginFromCurrentState, .curveEaseOut], animations: { [self] in
+                    progressView.transform = .identity
+                })
                 delegate?.miniPlayerView(self, didSeekTo: Int(proposedSeek))
             case .up, .down:
 

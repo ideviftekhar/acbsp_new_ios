@@ -29,7 +29,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // This is just to instantiate background session
         BackgroundSession.shared.performFetchWithCompletionHandler {}
         
-        //Setting permission to send notification
+        // Setting permission to send notification
         UNUserNotificationCenter.current().delegate = self
 
         let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
