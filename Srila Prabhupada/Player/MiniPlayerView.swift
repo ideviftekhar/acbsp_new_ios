@@ -13,8 +13,14 @@ protocol MiniPlayerViewDelegate: AnyObject {
     func miniPlayerViewDidExpand(_ playerView: MiniPlayerView)
     func miniPlayerViewDidClose(_ playerView: MiniPlayerView)
     func miniPlayerView(_ playerView: MiniPlayerView, didChangePlay isPlay: Bool)
+    func miniPlayerView(_ playerView: MiniPlayerView, didTemporaryChangeRate rate: Float)
     func miniPlayerViewDidRequestedNext(_ playerView: MiniPlayerView)
     func miniPlayerView(_ playerView: MiniPlayerView, didSeekTo seconds: Int)
+}
+
+protocol MiniPlayerViewDataSource: AnyObject {
+
+    func miniPlayerViewCurrentRate(_ playerView: MiniPlayerView) -> PlayRate
 }
 
 class MiniPlayerView: UIView {
@@ -36,7 +42,7 @@ class MiniPlayerView: UIView {
     @IBOutlet private var dateLabel: UILabel!
     @IBOutlet private var expandButton: UIButton!
     @IBOutlet private var playButton: UIButton!
-    @IBOutlet private var nextButton: UIButton!
+    @IBOutlet internal var nextButton: UIButton!
     @IBOutlet internal var progressView: UIProgressView!
     @IBOutlet private var firstDotLabel: UILabel?
 
@@ -44,9 +50,20 @@ class MiniPlayerView: UIView {
     @IBOutlet private var heightConstraint: NSLayoutConstraint!
 
     internal lazy var seekGesture = UIPanGestureRecognizer(target: self, action: #selector(panRecognized(_:)))
+    internal lazy var longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPressRecognized(_:)))
+    internal var longPressTimer: Timer?
+    internal var initialRate: Float = 1
+    internal var temporaryRate: Float = 1
+
+    internal static let temporaryRates: [Float] = [1.0, 1.5, 2.0, 3.0, 4.0, 5.0, 10.0]
+
     var direction: UISwipeGestureRecognizer.Direction = .down
+    internal var lastPanTranslation: CGPoint = .zero
+    internal var lastProposedSeek: Float = 0
+    internal var initialYDiff: CGFloat = 0
 
     weak var delegate: MiniPlayerViewDelegate?
+    weak var dataSource: MiniPlayerViewDataSource?
 
     var playFillImage = UIImage(systemName: "play.fill")
     var pauseFillImage = UIImage(systemName: "pause.fill")
@@ -64,6 +81,8 @@ class MiniPlayerView: UIView {
         titleLabel.trailingBuffer = 30.0
         seekGesture.delegate = self
         expandButton.addGestureRecognizer(seekGesture)
+
+        nextButton.addGestureRecognizer(longPressGesture)
 
         switch Environment.current.device {
         case .mac:
@@ -165,4 +184,3 @@ class MiniPlayerView: UIView {
         delegate?.miniPlayerViewDidExpand(self)
     }
 }
-

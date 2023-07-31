@@ -9,26 +9,82 @@ import UIKit
 
 extension PlayerViewController {
 
+    private func startLondPressTimer() {
+        longPressTimer?.invalidate()
+        longPressTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true, block: { [self] _ in
+            if let index = Self.temporaryRates.firstIndex(of: temporaryRate),
+                (index + 1) < Self.temporaryRates.count {
+                temporaryRate = Self.temporaryRates[index + 1]
+                if isNegativeRate {
+                    player?.rate = -temporaryRate
+                } else {
+                    player?.rate = temporaryRate
+                }
+            }
+        })
+        longPressTimer?.fire()
+    }
+
+    private func stopLongPressTimer() {
+        longPressTimer?.invalidate()
+        longPressTimer = nil
+    }
+
+    @objc internal func prevNextLongPressRecognized(_ sender: UILongPressGestureRecognizer) {
+        guard let model = currentLecture, !self.isPaused else {
+            return
+        }
+
+        switch sender.state {
+        case .began:
+            DispatchQueue.main.async {
+                (sender.view as? UIAnimatedButton)?.animateDown()
+            }
+            initialRate = self.selectedRate.rate
+            isNegativeRate = sender.view == previousLectureButton
+            temporaryRate = initialRate
+            startLondPressTimer()
+        case .ended, .cancelled, .failed:
+            DispatchQueue.main.async {
+                (sender.view as? UIAnimatedButton)?.animateUp()
+            }
+            stopLongPressTimer()
+            player?.rate = initialRate
+        default:
+            break
+        }
+    }
+
     @objc internal func panRecognized(_ sender: UIPanGestureRecognizer) {
 
         guard let model = currentLecture else {
             return
         }
 
+        if lastProposedSeek == 0 {
+            lastProposedSeek = Float(currentTime)
+            let viewLocation = sender.location(in: self.view)
+            let progressViewLocation = progressView.convert(CGPoint(x: progressView.bounds.midX, y: progressView.bounds.midY), to: self.view)
+            initialYDiff = viewLocation.y - progressViewLocation.y
+        }
+
         let translation = sender.translation(in: self.view)
         let totalSeconds: Float = Float(model.lengthTime.totalSeconds)
         let progressViewWidth = progressView.bounds.width
-//        let multiplier = (progressViewWidth - abs(translation.y)) / progressViewWidth
-//        let distanceMultiplier = CGFloat.maximum(0.1, multiplier)
-//        let translationInX = translation.x * distanceMultiplier
-        let translationInX = translation.x
 
-        let seekProgress: Float = Float(translationInX / progressViewWidth)
-        let maxSeekSeconds: Float = totalSeconds // 10*60 // 10 minutes
-        let changedSeconds: Float = maxSeekSeconds*seekProgress
-        var proposedSeek: Float = Float(currentTime) + changedSeconds
+        let translationDiff: CGFloat = translation.x - lastPanTranslation.x
+
+        let multiplier = (progressViewWidth - abs(translation.y + initialYDiff)) / progressViewWidth
+        let distanceMultiplier = CGFloat.maximum(0.1, multiplier)
+        let translationDiffInX = translationDiff * distanceMultiplier
+
+        let seekDiff: Float = totalSeconds * Float(translationDiffInX / progressViewWidth)
+        var proposedSeek: Float = lastProposedSeek + seekDiff
         proposedSeek = Float.maximum(proposedSeek, 0)
         proposedSeek = Float.minimum(proposedSeek, totalSeconds-1.0)    // 1 seconds to not reach at the end instantly
+
+        lastPanTranslation = translation
+        lastProposedSeek = proposedSeek
 
         switch sender.state {
         case .began:
@@ -73,6 +129,9 @@ extension PlayerViewController {
                 break
             }
         case .ended, .cancelled:
+
+            lastPanTranslation = .zero
+            lastProposedSeek = 0
 
             switch direction {
             case .left, .right:

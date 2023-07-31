@@ -15,22 +15,22 @@ class UIAnimatedButton: UIButton {
         addTarget(self, action: #selector(animateUp), for: [.touchDragExit, .touchCancel, .touchUpInside, .touchUpOutside])
     }
 
-    @objc private func animateDown(sender: UIButton) {
-        animate(sender, transform: CGAffineTransform.identity.scaledBy(x: 0.8, y: 0.8))
+    @objc func animateDown() {
+        animate(transform: CGAffineTransform.identity.scaledBy(x: 0.8, y: 0.8))
     }
 
-    @objc private func animateUp(sender: UIButton) {
-        animate(sender, transform: .identity)
+    @objc func animateUp() {
+        animate(transform: .identity)
     }
 
-    private func animate(_ button: UIButton, transform: CGAffineTransform) {
+    private func animate(transform: CGAffineTransform) {
         UIView.animate(withDuration: 0.4,
                        delay: 0,
                        usingSpringWithDamping: 0.5,
                        initialSpringVelocity: 3,
                        options: [.curveEaseInOut, .allowUserInteraction, .beginFromCurrentState],
                        animations: {
-                        button.transform = transform
+            self.transform = transform
             }, completion: nil)
     }
 }

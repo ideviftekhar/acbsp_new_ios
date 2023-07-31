@@ -67,8 +67,16 @@ class PlayerViewController: LectureViewController {
     @IBOutlet private var speedMenuButton: UIButton!
     @IBOutlet private var stackViewOptions: UIStackView!
 
-    @IBOutlet private var previousLectureButton: UIButton!
-    @IBOutlet private var nextLectureButton: UIButton!
+    @IBOutlet internal var previousLectureButton: UIButton!
+    @IBOutlet internal var nextLectureButton: UIButton!
+
+    internal lazy var previousLongPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(prevNextLongPressRecognized(_:)))
+    internal lazy var nextLongPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(prevNextLongPressRecognized(_:)))
+    internal var longPressTimer: Timer?
+    internal var initialRate: Float = 1
+    internal var isNegativeRate: Bool = false
+    internal var temporaryRate: Float = 1
+    internal static let temporaryRates: [Float] = [1.0, 1.5, 2.0, 3.0, 4.0, 5.0, 10.0]
 
     @IBOutlet private var playNextOptionStackView: UIStackView!
     @IBOutlet private var loopLectureButton: UIButton!
@@ -98,6 +106,9 @@ class PlayerViewController: LectureViewController {
     internal lazy var minimizeGesture = UIPanGestureRecognizer(target: self, action: #selector(panMinimizeRecognized(_:)))
     internal lazy var minimize2Gesture = UIPanGestureRecognizer(target: self, action: #selector(panMinimizeRecognized(_:)))
     internal var direction: UISwipeGestureRecognizer.Direction = .down
+    internal var lastPanTranslation: CGPoint = .zero
+    internal var lastProposedSeek: Float = 0
+    internal var initialYDiff: CGFloat = 0
 
     var playNextOptionMenu: SPMenu!
 
@@ -128,7 +139,7 @@ class PlayerViewController: LectureViewController {
     }
 
     private var isSeeking = false
-    private var player: AVPlayer? {
+    internal var player: AVPlayer? {
         willSet {
             if let item = player?.currentItem {
                 removePlayerItemNotificationObserver(item: item)
@@ -377,6 +388,7 @@ class PlayerViewController: LectureViewController {
 
         do {
             miniPlayerView.delegate = self
+            miniPlayerView.dataSource = self
         }
 
         do {
@@ -384,6 +396,8 @@ class PlayerViewController: LectureViewController {
         }
 
         do {
+            nextLectureButton.addGestureRecognizer(nextLongPressGesture)
+            previousLectureButton.addGestureRecognizer(previousLongPressGesture)
             stackViewMain.addGestureRecognizer(seekGesture)
             stackViewMinimize.addGestureRecognizer(minimizeGesture)
             playNextOptionStackView.addGestureRecognizer(minimize2Gesture)
@@ -736,7 +750,6 @@ extension PlayerViewController {
         }
 
         let roundedUpSeconds: Int = Int(seconds.rounded(.up))
-        currentTimeLabel.text = roundedUpSeconds.toHHMMSS
 
         if let currentLecture = currentLecture {
             if !isSeeking {
@@ -745,6 +758,7 @@ extension PlayerViewController {
                 let progress = playedSeconds / Float(totalSeconds)
                 progressView.progress = progress
                 miniPlayerView.playedSeconds = playedSeconds
+                currentTimeLabel.text = roundedUpSeconds.toHHMMSS
 
                 if roundedUpSeconds % 60 == 0 {
                     DefaultLectureViewModel.defaultModel.offlineUpdateLectureProgress(lecture: currentLecture, lastPlayedPoint: roundedUpSeconds)
@@ -755,6 +769,7 @@ extension PlayerViewController {
                 }
             }
         } else {
+            currentTimeLabel.text = roundedUpSeconds.toHHMMSS
             progressView.progress = 0
             miniPlayerView.playedSeconds = 0
         }
@@ -1077,6 +1092,10 @@ extension PlayerViewController {
 }
 
 extension PlayerViewController: MiniPlayerViewDelegate {
+    func miniPlayerView(_ playerView: MiniPlayerView, didTemporaryChangeRate rate: Float) {
+        player?.rate = rate
+    }
+
     func miniPlayerViewDidClose(_ playerView: MiniPlayerView) {
         self.currentLecture = nil
     }
@@ -1100,5 +1119,11 @@ extension PlayerViewController: MiniPlayerViewDelegate {
 
     func miniPlayerViewDidExpand(_ playerView: MiniPlayerView) {
         expand(animated: true)
+    }
+}
+
+extension PlayerViewController: MiniPlayerViewDataSource {
+    func miniPlayerViewCurrentRate(_ playerView: MiniPlayerView) -> PlayRate {
+        return self.selectedRate
     }
 }

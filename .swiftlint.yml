@@ -4,6 +4,7 @@ disabled_rules:
     - cyclomatic_complexity
 
 excluded:
+  - Carthage
   - Pods
 
 force_cast: warning
@@ -20,3 +21,7 @@ file_length:
     error: 1200
 
 line_length: 400
+
+type_body_length:
+    warning: 400
+    error: 800
