@@ -33,9 +33,6 @@ extension MiniPlayerView: UIGestureRecognizerDelegate {
 
         switch sender.state {
         case .began:
-            DispatchQueue.main.async {
-                (sender.view as? UIAnimatedButton)?.animateDown()
-            }
             initialRate = dataSource?.miniPlayerViewCurrentRate(self).rate ?? 1
             temporaryRate = initialRate
             startLondPressTimer()

@@ -37,9 +37,6 @@ extension PlayerViewController {
 
         switch sender.state {
         case .began:
-            DispatchQueue.main.async {
-                (sender.view as? UIAnimatedButton)?.animateDown()
-            }
             initialRate = self.selectedRate.rate
             isNegativeRate = sender.view == previousLectureButton
             temporaryRate = initialRate

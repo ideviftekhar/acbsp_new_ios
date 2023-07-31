@@ -50,7 +50,7 @@ class MiniPlayerView: UIView {
     @IBOutlet private var heightConstraint: NSLayoutConstraint!
 
     internal lazy var seekGesture = UIPanGestureRecognizer(target: self, action: #selector(panRecognized(_:)))
-    internal lazy var longPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPressRecognized(_:)))
+    internal lazy var nextLongPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPressRecognized(_:)))
     internal var longPressTimer: Timer?
     internal var initialRate: Float = 1
     internal var temporaryRate: Float = 1
@@ -82,7 +82,8 @@ class MiniPlayerView: UIView {
         seekGesture.delegate = self
         expandButton.addGestureRecognizer(seekGesture)
 
-        nextButton.addGestureRecognizer(longPressGesture)
+        nextLongPressGesture.isEnabled = false
+        nextButton.addGestureRecognizer(nextLongPressGesture)
 
         switch Environment.current.device {
         case .mac:
@@ -168,6 +169,7 @@ class MiniPlayerView: UIView {
     var isPlaying: Bool = false {
         didSet {
             let newImage: UIImage? = isPlaying ? pauseFillImage :  playFillImage
+            nextLongPressGesture.isEnabled = isPlaying
             playButton.setImage(newImage, for: .normal)
         }
     }

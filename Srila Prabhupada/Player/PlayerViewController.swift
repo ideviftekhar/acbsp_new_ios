@@ -396,6 +396,8 @@ class PlayerViewController: LectureViewController {
         }
 
         do {
+            previousLongPressGesture.isEnabled = false
+            nextLongPressGesture.isEnabled = false
             nextLectureButton.addGestureRecognizer(nextLongPressGesture)
             previousLectureButton.addGestureRecognizer(previousLongPressGesture)
             stackViewMain.addGestureRecognizer(seekGesture)
@@ -487,6 +489,9 @@ class PlayerViewController: LectureViewController {
             } else if miniPlayerView.isPlaying == false {
                 playPauseButton.setImage(playFillImage, for: .normal)
             }
+
+            previousLongPressGesture.isEnabled = miniPlayerView.isPlaying
+            nextLongPressGesture.isEnabled = miniPlayerView.isPlaying
 
             previousLectureButton.setImage(UIImage(named: "backward.end.fill"), for: .normal)
             nextLectureButton.setImage(UIImage(named: "forward.end.fill"), for: .normal)
@@ -871,6 +876,7 @@ extension PlayerViewController {
             if let newValue = change.newValue, newValue != 0.0 {
                 playPauseButton.setImage(pauseFillImage, for: .normal)
                 miniPlayerView.isPlaying = true
+
                 SPNowPlayingInfoCenter.shared.update(lecture: currentLecture, player: player, selectedRate: selectedRate)
                 if let currentLecture = currentLecture {
                     Self.nowPlaying = (currentLecture, .playing(progress: self.currentProgress))
@@ -888,6 +894,9 @@ extension PlayerViewController {
                     Self.nowPlaying = nil
                 }
             }
+
+            previousLongPressGesture.isEnabled = miniPlayerView.isPlaying
+            nextLongPressGesture.isEnabled = miniPlayerView.isPlaying
         })
 
         self.timeControlStatusObserver = player?.observe(\.timeControlStatus, options: [.new, .old], changeHandler: { [self] (player, _) in
