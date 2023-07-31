@@ -274,6 +274,12 @@
 		C0B7990C28DC4DCE00681649 /* LectureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B7990B28DC4DCE00681649 /* LectureViewModel.swift */; };
 		C0B7991128DC524500681649 /* PlaylistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B7991028DC524500681649 /* PlaylistViewModel.swift */; };
 		C0BC771028D5AE1000C2629F /* TappableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BC770F28D5AE1000C2629F /* TappableLabel.swift */; };
+		C0C51B8C2A7803D60015199E /* PlayerViewController+PlayControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C51B8B2A7803D60015199E /* PlayerViewController+PlayControl.swift */; };
+		C0C51B8D2A7803D60015199E /* PlayerViewController+PlayControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C51B8B2A7803D60015199E /* PlayerViewController+PlayControl.swift */; };
+		C0C51B8F2A7804840015199E /* PlayerViewController+PlayerObservers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C51B8E2A7804840015199E /* PlayerViewController+PlayerObservers.swift */; };
+		C0C51B902A7804840015199E /* PlayerViewController+PlayerObservers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C51B8E2A7804840015199E /* PlayerViewController+PlayerObservers.swift */; };
+		C0C51B922A7804CB0015199E /* PlayerViewController+MiniPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C51B912A7804CB0015199E /* PlayerViewController+MiniPlayer.swift */; };
+		C0C51B932A7804CB0015199E /* PlayerViewController+MiniPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C51B912A7804CB0015199E /* PlayerViewController+MiniPlayer.swift */; };
 		C0CAF25D28D45B8C00DA9878 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CAF25C28D45B8C00DA9878 /* NavigationController.swift */; };
 		C0CBCF7D28FD3CED00ED8132 /* UIImageView+Letters.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CBCF7C28FD3CED00ED8132 /* UIImageView+Letters.swift */; };
 		C0CE0D1428E86EF500C2C825 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CE0D1328E86EF500C2C825 /* UIImage+Extension.swift */; };
@@ -439,6 +445,9 @@
 		C0B7990B28DC4DCE00681649 /* LectureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureViewModel.swift; sourceTree = "<group>"; };
 		C0B7991028DC524500681649 /* PlaylistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistViewModel.swift; sourceTree = "<group>"; };
 		C0BC770F28D5AE1000C2629F /* TappableLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TappableLabel.swift; sourceTree = "<group>"; };
+		C0C51B8B2A7803D60015199E /* PlayerViewController+PlayControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerViewController+PlayControl.swift"; sourceTree = "<group>"; };
+		C0C51B8E2A7804840015199E /* PlayerViewController+PlayerObservers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerViewController+PlayerObservers.swift"; sourceTree = "<group>"; };
+		C0C51B912A7804CB0015199E /* PlayerViewController+MiniPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerViewController+MiniPlayer.swift"; sourceTree = "<group>"; };
 		C0CAF25C28D45B8C00DA9878 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		C0CBCF7C28FD3CED00ED8132 /* UIImageView+Letters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Letters.swift"; sourceTree = "<group>"; };
 		C0CE0D1328E86EF500C2C825 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
@@ -922,6 +931,9 @@
 			isa = PBXGroup;
 			children = (
 				C00F8A4028EF13AE00FA9A7B /* PlayerViewController.swift */,
+				C0C51B8B2A7803D60015199E /* PlayerViewController+PlayControl.swift */,
+				C0C51B8E2A7804840015199E /* PlayerViewController+PlayerObservers.swift */,
+				C0C51B912A7804CB0015199E /* PlayerViewController+MiniPlayer.swift */,
 				C0399A8B2A655BE600A51F04 /* PlayerViewController+Playlist.swift */,
 				C0DD1B3728FE979000995994 /* PlayerViewController+Position.swift */,
 				C07A8F3C28F8033A001A6162 /* PlayerViewController+Observers.swift */,
@@ -1329,6 +1341,7 @@
 				C02C132B2A554ACA008D89DB /* LectureSyncManager.swift in Sources */,
 				C02A4BA92A55CA83006BF465 /* LectureInfoCell.swift in Sources */,
 				C00DE1182A543B920047ED72 /* TabBarController+TimestampObserver.swift in Sources */,
+				C0C51B8D2A7803D60015199E /* PlayerViewController+PlayControl.swift in Sources */,
 				6E6900742A25C4C20086C7DB /* PlayRate.swift in Sources */,
 				6E6900752A25C4C20086C7DB /* LectureViewModel.swift in Sources */,
 				6E6900762A25C4C20086C7DB /* CreateAccountViewController.swift in Sources */,
@@ -1344,6 +1357,7 @@
 				6E6900802A25C4C20086C7DB /* UIViewController+Alert.swift in Sources */,
 				6E6900812A25C4C20086C7DB /* PlaylistLecturesViewController.swift in Sources */,
 				6E6900822A25C4C20086C7DB /* FavoriteViewController.swift in Sources */,
+				C0C51B902A7804840015199E /* PlayerViewController+PlayerObservers.swift in Sources */,
 				6E6900832A25C4C20086C7DB /* PlayerViewController+Position.swift in Sources */,
 				6E6900842A25C4C20086C7DB /* SideMenuItem.swift in Sources */,
 				C02856F42A56EEE100C34D49 /* MiniPlayerView+Gesture.swift in Sources */,
@@ -1393,6 +1407,7 @@
 				6E6900A82A25C4C20086C7DB /* LectureSortType.swift in Sources */,
 				6E6900A92A25C4C20086C7DB /* AboutViewController.swift in Sources */,
 				C02A842F2A56BB0D008A21E3 /* IQCircularProgressView.swift in Sources */,
+				C0C51B932A7804CB0015199E /* PlayerViewController+MiniPlayer.swift in Sources */,
 				6E6900AA2A25C4C20086C7DB /* StatsType.swift in Sources */,
 				6E6900AB2A25C4C20086C7DB /* Day.swift in Sources */,
 				C01861CB2A65D99000E05FA0 /* UIAnimatedButton.swift in Sources */,
@@ -1463,6 +1478,7 @@
 				C02C132A2A554ACA008D89DB /* LectureSyncManager.swift in Sources */,
 				C02A4BA82A55C8FB006BF465 /* LectureInfoCell.swift in Sources */,
 				C00DE1172A543B920047ED72 /* TabBarController+TimestampObserver.swift in Sources */,
+				C0C51B8C2A7803D60015199E /* PlayerViewController+PlayControl.swift in Sources */,
 				C00F8A4328EF192A00FA9A7B /* PlayRate.swift in Sources */,
 				C0B7990C28DC4DCE00681649 /* LectureViewModel.swift in Sources */,
 				C00E4DE228CA393600F1A123 /* CreateAccountViewController.swift in Sources */,
@@ -1478,6 +1494,7 @@
 				C0EA13EA28CF5A9D00BE9110 /* UIViewController+Alert.swift in Sources */,
 				C00E4E1A28CA45E000F1A123 /* PlaylistLecturesViewController.swift in Sources */,
 				C00E4E0A28CA39FE00F1A123 /* FavoriteViewController.swift in Sources */,
+				C0C51B8F2A7804840015199E /* PlayerViewController+PlayerObservers.swift in Sources */,
 				C0DD1B3828FE979000995994 /* PlayerViewController+Position.swift in Sources */,
 				C0065D4828D881A400B18AA6 /* SideMenuItem.swift in Sources */,
 				C02856F32A56EEE100C34D49 /* MiniPlayerView+Gesture.swift in Sources */,
@@ -1527,6 +1544,7 @@
 				C088178A28DDBC9100D3106C /* FirestoreManager+SignIn.swift in Sources */,
 				C00AB21128D1FD5600A62A2F /* LectureSortType.swift in Sources */,
 				C02A84302A56BB0D008A21E3 /* IQCircularProgressView.swift in Sources */,
+				C0C51B922A7804CB0015199E /* PlayerViewController+MiniPlayer.swift in Sources */,
 				C00E4E1728CA433A00F1A123 /* AboutViewController.swift in Sources */,
 				C052D8C129125DF40003307B /* StatsType.swift in Sources */,
 				C007D37828E8096D00CFBED0 /* Day.swift in Sources */,

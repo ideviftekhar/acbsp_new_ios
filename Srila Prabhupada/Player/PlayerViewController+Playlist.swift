@@ -10,6 +10,87 @@ import UIKit
 
 extension PlayerViewController {
 
+    @IBAction func loopLectureButtonPressed(_ sender: UIButton) {
+        if loopLectureButton.isSelected == true {
+            change(shuffle: false, loop: false)
+        } else {
+            change(shuffle: false, loop: true)
+        }
+    }
+
+    @IBAction func shuffleLectureButtonPressed(_ sender: UIButton) {
+
+        if shuffleLectureButton.isSelected == true {
+            change(shuffle: false, loop: false)
+        } else {
+            change(shuffle: true, loop: false)
+        }
+    }
+
+    @IBAction func playlistMenuDoneButtonPressed(_ sender: UIButton) {
+        self.lectureTebleView.setEditing(false, animated: true)
+        playNextMenuButton.isHidden = false
+        loopLectureButton.isHidden = false
+        shuffleLectureButton.isHidden = false
+        stackViewMain.isHidden = false
+        playingInfoStackView.isHidden = false
+
+        playNextMenuDoneButton.isHidden = true
+    }
+
+    internal func change(shuffle: Bool, loop: Bool) {
+
+        if shuffle {
+            shuffleLectureButton.isSelected = true
+            loopLectureButton.isSelected = false
+        } else if loop {
+            loopLectureButton.isSelected = true
+            shuffleLectureButton.isSelected = false
+        } else {
+            loopLectureButton.isSelected = false
+            shuffleLectureButton.isSelected = false
+        }
+
+        self.updatePlaylistLectureIDs(ids: self.playlistLectureIDs, canShuffle: true, animated: nil) // This is to reload current playlist
+    }
+
+    internal func configurePlaylistOptionMenu() {
+        var childrens: [SPAction] = []
+
+        let editAction: SPAction = SPAction(title: "Edit", image: UIImage(systemName: "pencil"), identifier: .init("Edit"), handler: { [self] _ in
+            self.lectureTebleView.setEditing(true, animated: true)
+            playNextMenuButton.isHidden = true
+            loopLectureButton.isHidden = true
+            shuffleLectureButton.isHidden = true
+            playingInfoStackView.isHidden = true
+
+            playNextMenuDoneButton.isHidden = false
+
+        })
+        childrens.append(editAction)
+
+        let clearWatchedAction: SPAction = SPAction(title: "Clear Watched", image: UIImage(systemName: "text.badge.minus"), identifier: .init("Clear Watched"), handler: { [self] _ in
+            let completedIDs: [Int] = models.filter { $0.isCompleted }.map { $0.id }
+            self.removeFromQueue(lectureIDs: completedIDs)
+        })
+        childrens.append(clearWatchedAction)
+
+        let clearAllAction: SPAction = SPAction(title: "Clear All", image: UIImage(systemName: "text.badge.xmark"), identifier: .init("Clear All"), handler: { [self] _ in
+            self.showAlert(title: "Clear Play Next?", message: "Are you sure you would like to clear Play Next Queue?", preferredStyle: .alert, sourceView: playNextMenuButton, cancel: ("Cancel", nil), destructive: ("Clear", {
+                self.clearPlayingQueue(keepPlayingLecture: true)
+            }))
+        })
+        clearAllAction.action.attributes = .destructive
+        childrens.append(clearAllAction)
+
+        if let playNextMenuButton = playNextMenuButton {
+            self.playNextOptionMenu = SPMenu(title: "", image: nil, identifier: .init(rawValue: "PlaylistOption"), options: .displayInline, children: childrens, button: playNextMenuButton)
+        }
+    }
+}
+
+extension PlayerViewController {
+
     // Loading last played lectures
     func loadLastPlayedLectures(cachedLectures: [Lecture]) {
         DispatchQueue.global(qos: .background).async {
