@@ -19,28 +19,34 @@ class IQProgressView: UIView {
         set {
             _progress = CGFloat.minimum(1.0, newValue)
             _progress = CGFloat.maximum(0.0, _progress)
-            CATransaction.begin()
-            CATransaction.setDisableActions(true)
             updateProgress()
-            CATransaction.commit()
         }
     }
 
     override func awakeFromNib() {
         super.awakeFromNib()
         self.layer.addSublayer(progressLayer)
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
         progressLayer.backgroundColor = tintColor?.cgColor
+        CATransaction.commit()
     }
 
     override var tintColor: UIColor? {
         didSet {
+            CATransaction.begin()
+            CATransaction.setDisableActions(true)
             progressLayer.backgroundColor = tintColor?.cgColor
+            CATransaction.commit()
         }
     }
 
     override func tintColorDidChange() {
         super.tintColorDidChange()
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
         progressLayer.backgroundColor = tintColor?.cgColor
+        CATransaction.commit()
     }
 
     override func layoutSublayers(of layer: CALayer) {
@@ -53,7 +59,10 @@ class IQProgressView: UIView {
     private func updateProgress() {
         var bounds = self.layer.bounds
         bounds.size.width = bounds.width * progress
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
         self.progressLayer.frame = bounds
+        CATransaction.commit()
     }
 
     override var intrinsicContentSize: CGSize {

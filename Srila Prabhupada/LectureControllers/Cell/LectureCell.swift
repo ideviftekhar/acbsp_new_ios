@@ -127,7 +127,6 @@ class LectureCell: UITableViewCell, IQModelableCell {
             dateLabel?.text = lecture.dateOfRecording.display_dd_MMM_yyyy
 
             firstDotLabel?.isHidden = verseLabel?.text?.isEmpty ?? true
-            secondDotLabel?.isHidden = locationLabel?.text?.isEmpty ?? true
             downloadInfoLabel?.text = nil
 
             let playProgress: CGFloat = model.lecture.playProgress
@@ -233,6 +232,8 @@ class LectureCell: UITableViewCell, IQModelableCell {
                     downloadInfoLabel?.text = nil
                 }
             })
+
+            secondDotLabel?.isHidden = (locationLabel?.text?.isEmpty ?? true) || (downloadInfoLabel?.text?.isEmpty ?? true)
 
             favoriteIconImageView?.isHidden = !lecture.isFavorite
             playlistIconView?.isHidden = !model.showPlaylistIcon
