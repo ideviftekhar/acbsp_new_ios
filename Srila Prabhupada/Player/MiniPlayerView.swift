@@ -45,6 +45,7 @@ class MiniPlayerView: UIView {
     @IBOutlet internal var nextButton: UIButton!
     @IBOutlet internal var progressView: UIProgressView!
     @IBOutlet private var firstDotLabel: UILabel?
+    @IBOutlet private var audioVisualizerView: ESTMusicIndicatorView!
 
     @IBOutlet internal var currentTimeLabel: UILabel!
     @IBOutlet private var heightConstraint: NSLayoutConstraint!
@@ -98,6 +99,11 @@ class MiniPlayerView: UIView {
 
     var currentLecture: Lecture? {
         didSet {
+
+            if let oldValue = oldValue {
+                PlayerViewController.unregister(observer: self, lectureID: oldValue.id)
+            }
+
             if let model = currentLecture {
                 titleLabel.text = model.titleDisplay
                 lectureDuration = model.lengthTime
@@ -127,6 +133,19 @@ class MiniPlayerView: UIView {
                 }
 
                 progressView.progress = 0
+
+                PlayerViewController.register(observer: self, lectureID: model.id, playStateHandler: { [self] state in
+                    switch state {
+                    case .stopped:
+                        audioVisualizerView.state = .stopped
+                    case .playing(let playProgress, let audioPower):
+                        audioVisualizerView.state = .playing
+                        audioVisualizerView.audioLevel = audioPower
+                    case .paused:
+                        audioVisualizerView.state = .paused
+                    }
+                })
+
             } else {
                 lectureDuration = Time(totalSeconds: 0)
                 titleLabel.text = "--"

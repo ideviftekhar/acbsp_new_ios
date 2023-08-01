@@ -280,6 +280,8 @@
 		C0C51B902A7804840015199E /* PlayerViewController+PlayerObservers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C51B8E2A7804840015199E /* PlayerViewController+PlayerObservers.swift */; };
 		C0C51B922A7804CB0015199E /* PlayerViewController+MiniPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C51B912A7804CB0015199E /* PlayerViewController+MiniPlayer.swift */; };
 		C0C51B932A7804CB0015199E /* PlayerViewController+MiniPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C51B912A7804CB0015199E /* PlayerViewController+MiniPlayer.swift */; };
+		C0C51B982A780B430015199E /* AVPlayerItemTrack+Tap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C51B972A780B430015199E /* AVPlayerItemTrack+Tap.swift */; };
+		C0C51B992A780B430015199E /* AVPlayerItemTrack+Tap.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C51B972A780B430015199E /* AVPlayerItemTrack+Tap.swift */; };
 		C0CAF25D28D45B8C00DA9878 /* NavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CAF25C28D45B8C00DA9878 /* NavigationController.swift */; };
 		C0CBCF7D28FD3CED00ED8132 /* UIImageView+Letters.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CBCF7C28FD3CED00ED8132 /* UIImageView+Letters.swift */; };
 		C0CE0D1428E86EF500C2C825 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0CE0D1328E86EF500C2C825 /* UIImage+Extension.swift */; };
@@ -448,6 +450,7 @@
 		C0C51B8B2A7803D60015199E /* PlayerViewController+PlayControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerViewController+PlayControl.swift"; sourceTree = "<group>"; };
 		C0C51B8E2A7804840015199E /* PlayerViewController+PlayerObservers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerViewController+PlayerObservers.swift"; sourceTree = "<group>"; };
 		C0C51B912A7804CB0015199E /* PlayerViewController+MiniPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerViewController+MiniPlayer.swift"; sourceTree = "<group>"; };
+		C0C51B972A780B430015199E /* AVPlayerItemTrack+Tap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AVPlayerItemTrack+Tap.swift"; sourceTree = "<group>"; };
 		C0CAF25C28D45B8C00DA9878 /* NavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationController.swift; sourceTree = "<group>"; };
 		C0CBCF7C28FD3CED00ED8132 /* UIImageView+Letters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Letters.swift"; sourceTree = "<group>"; };
 		C0CE0D1328E86EF500C2C825 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
@@ -957,6 +960,7 @@
 				C00AB20E28D1F6CB00A62A2F /* UIStoryboard+Extension.swift */,
 				C0E9CC3828DC723B0089A9E8 /* Date+Extension.swift */,
 				C0EA5CBD28EC6C96007D9E4C /* DateFormatter+Extension.swift */,
+				C0C51B972A780B430015199E /* AVPlayerItemTrack+Tap.swift */,
 				C0CE0D1328E86EF500C2C825 /* UIImage+Extension.swift */,
 				C0CBCF7C28FD3CED00ED8132 /* UIImageView+Letters.swift */,
 				C018A99328F421A000C0E002 /* Int+Extension.swift */,
@@ -1455,6 +1459,7 @@
 				6E6900D12A25C4C20086C7DB /* SrilaDatabase.xcdatamodeld in Sources */,
 				6E67E2822A29DBD7000CE184 /* Constants.swift in Sources */,
 				6E6900D22A25C4C20086C7DB /* DeleteAccountViewController.swift in Sources */,
+				C0C51B992A780B430015199E /* AVPlayerItemTrack+Tap.swift in Sources */,
 				6E6900D32A25C4C20086C7DB /* SideMenuViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1592,6 +1597,7 @@
 				C007D38028E80AD000CFBED0 /* Resources.swift in Sources */,
 				C00DC57028E1DA66001EDE95 /* SrilaDatabase.xcdatamodeld in Sources */,
 				EECCDCEA29E56C8F00144C66 /* DeleteAccountViewController.swift in Sources */,
+				C0C51B982A780B430015199E /* AVPlayerItemTrack+Tap.swift in Sources */,
 				C00E4DFC28CA39F400F1A123 /* SideMenuViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

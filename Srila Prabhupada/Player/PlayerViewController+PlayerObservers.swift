@@ -69,6 +69,8 @@ extension PlayerViewController {
         self.timeControlStatusObserver?.invalidate()
         self.itemStatusObserver?.invalidate()
         self.itemRateObserver?.invalidate()
+        self.itemTracksObserver?.invalidate()
+        self.playerItemTracksPowerMeterPublisher?.cancel()
         if let itemDidPlayToEndObserver = itemDidPlayToEndObserver {
             NotificationCenter.default.removeObserver(itemDidPlayToEndObserver, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: item)
         }
@@ -84,9 +86,11 @@ extension PlayerViewController {
 
                 SPNowPlayingInfoCenter.shared.update(lecture: currentLecture, player: player, selectedRate: selectedRate)
                 if let currentLecture = currentLecture {
-                    Self.nowPlaying = (currentLecture, .playing(progress: self.currentProgress))
+                    Self.nowPlaying = (currentLecture, .playing(progress: self.currentProgress, audioPower: self.lastAudioPower))
+                    audioVisualizerView.state = .playing
                 } else {
                     Self.nowPlaying = nil
+                    audioVisualizerView.state = .stopped
                 }
             } else {
                 playPauseButton.setImage(playFillImage, for: .normal)
@@ -95,8 +99,10 @@ extension PlayerViewController {
                 updateLectureProgress()
                 if let currentLecture = currentLecture {
                     Self.nowPlaying = (currentLecture, .paused)
+                    audioVisualizerView.state = .paused
                 } else {
                     Self.nowPlaying = nil
+                    audioVisualizerView.state = .stopped
                 }
             }
 
@@ -143,9 +149,51 @@ extension PlayerViewController {
             }
         })
 
+        self.itemTracksObserver = item.observe(\.tracks, options: [.new, .old], changeHandler: { [self] (_, change) in
+
+            if let newValue = change.newValue?.first(where: { $0.assetTrack?.mediaType == .audio }) {
+
+                let audioMix = newValue.newAudioMixWithTap()
+                player?.currentItem?.audioMix = audioMix
+
+                addTrackObservers(track: newValue)
+            }
+        })
+
         itemDidPlayToEndObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: item, queue: nil, using: { [self] _ in
             updateLectureProgress()
             gotoNext(play: true)
+        })
+    }
+
+    private func addTrackObservers(track: AVPlayerItemTrack) {
+
+        playerItemTracksPowerMeterPublisher?.cancel()
+        playerItemTracksPowerMeterPublisher = track.publisher(for: \.audioLevel)
+            .map({
+                let newValue =  round($0 * 1000.0) / 1000.0
+                return newValue
+        })
+        .removeDuplicates()
+        .receive(on: DispatchQueue.main)
+        .sink(receiveValue: { [weak self] value in
+            guard let self = self else { return }
+
+            let power: CGFloat = CGFloat(value)
+
+            self.lastAudioPower = power
+
+            self.audioVisualizerView.audioLevel = power
+
+            if var nowPlaying = Self.nowPlaying {
+                switch nowPlaying.state {
+                case .paused, .stopped:
+                    break
+                case .playing:
+                    nowPlaying.state = .playing(progress: self.currentProgress, audioPower: power)
+                    Self.nowPlaying = nowPlaying
+                }
+            }
         })
     }
 }

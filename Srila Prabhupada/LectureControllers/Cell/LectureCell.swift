@@ -147,7 +147,7 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 case .stopped:
                     audioVisualizerView.state = .stopped
                     listenProgressView?.tintColor = UIColor.zero_0099CC
-                case .playing(let playProgress):
+                case .playing(let playProgress, let audioPower):
 
                     listenProgressStackView?.isHidden = playProgress >= 1.0
                     labelListenProgress?.text = "\(Int(playProgress * 100))%"
@@ -155,6 +155,7 @@ class LectureCell: UITableViewCell, IQModelableCell {
                     completedIconImageView?.isHidden = playProgress < 1.0
 
                     audioVisualizerView.state = .playing
+                    audioVisualizerView.audioLevel = audioPower
                     listenProgressView?.tintColor = UIColor(named: "ProgressColor")
                 case .paused:
                     audioVisualizerView.state = .paused

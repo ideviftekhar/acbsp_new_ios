@@ -38,9 +38,12 @@
                         </userDefinedRuntimeAttributes>
                     </imageView>
                     <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CnE-6x-y4s" customClass="ESTMusicIndicatorView" customModule="BVKS" customModuleProvider="target">
-                        <rect key="frame" x="10" y="25" width="40" height="40"/>
-                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
-                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <rect key="frame" x="20" y="66.666666666666671" width="20" height="20"/>
+                        <color key="tintColor" name="000000"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="LX6-he-ODa"/>
+                            <constraint firstAttribute="width" constant="20" id="zxY-gb-p9R"/>
+                        </constraints>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
                                 <real key="value" value="4"/>
@@ -305,17 +308,15 @@
                         <variation key="heightClass=regular-widthClass=regular" constant="20"/>
                     </constraint>
                     <constraint firstItem="toB-kP-27M" firstAttribute="leading" secondItem="1Pj-Yk-u2T" secondAttribute="trailing" constant="10" id="A3j-iB-hV2"/>
-                    <constraint firstItem="CnE-6x-y4s" firstAttribute="trailing" secondItem="1Pj-Yk-u2T" secondAttribute="trailing" id="TYu-Sa-Wyn"/>
-                    <constraint firstItem="CnE-6x-y4s" firstAttribute="bottom" secondItem="1Pj-Yk-u2T" secondAttribute="bottom" id="Y4M-yD-ugQ"/>
                     <constraint firstItem="KbV-GG-Mzj" firstAttribute="leading" secondItem="toB-kP-27M" secondAttribute="trailing" constant="5" id="ZKa-c0-sAr"/>
                     <constraint firstAttribute="trailing" secondItem="KbV-GG-Mzj" secondAttribute="trailing" constant="5" id="cvq-lr-hpU"/>
                     <constraint firstAttribute="bottom" secondItem="KbV-GG-Mzj" secondAttribute="bottom" id="eRK-rS-EGh"/>
                     <constraint firstItem="toB-kP-27M" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="gtn-Gy-89V"/>
                     <constraint firstAttribute="bottom" secondItem="toB-kP-27M" secondAttribute="bottom" constant="5" id="iDL-L2-Mam"/>
                     <constraint firstItem="1Pj-Yk-u2T" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="iWZ-Fv-PPJ"/>
-                    <constraint firstItem="CnE-6x-y4s" firstAttribute="leading" secondItem="1Pj-Yk-u2T" secondAttribute="leading" id="ldd-SF-aUd"/>
-                    <constraint firstItem="CnE-6x-y4s" firstAttribute="top" secondItem="1Pj-Yk-u2T" secondAttribute="top" id="mjG-me-soE"/>
                     <constraint firstItem="KbV-GG-Mzj" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="nAR-pC-2vb"/>
+                    <constraint firstItem="Msu-3Q-KyY" firstAttribute="centerY" secondItem="CnE-6x-y4s" secondAttribute="centerY" id="nDB-wh-h1C"/>
+                    <constraint firstItem="CnE-6x-y4s" firstAttribute="centerX" secondItem="1Pj-Yk-u2T" secondAttribute="centerX" id="swd-a4-nBy"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>

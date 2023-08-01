@@ -190,7 +190,7 @@ extension PlayerViewController {
             if self.traitCollection.verticalSizeClass == .compact {
                 playingInfoImageViewWidthConstraint.constant = 150
             } else {
-                playingInfoImageViewWidthConstraint.constant = 300
+                playingInfoImageViewWidthConstraint.constant = 250
             }
             playingInfoTitleStackView.alignment = .center
 

@@ -52,7 +52,7 @@ public enum ESTMusicIndicatorViewState: Int {
     case paused
 }
 
-open class ESTMusicIndicatorView: UIView {
+final class ESTMusicIndicatorView: UIView {
 
     /**
      A boolean value that controls whether the receiver is hidden
@@ -67,14 +67,20 @@ open class ESTMusicIndicatorView: UIView {
      the receiver will be shown automatically.
      */
     
-    open var hidesWhenStopped: Bool = true {
+    public var hidesWhenStopped: Bool = true {
         didSet {
             if state == .stopped {
                 isHidden = hidesWhenStopped
             }
         }
     }
-    
+
+    public var audioLevel: CGFloat = 0.0 {
+        didSet {
+            contentView.audioLevel = audioLevel
+        }
+    }
+
     /**
      The current state of the receiver.
      
@@ -146,11 +152,11 @@ open class ESTMusicIndicatorView: UIView {
 
     // MARK: Auto Layout
     
-    override open var intrinsicContentSize: CGSize {
+    override public var intrinsicContentSize: CGSize {
         return contentView.intrinsicContentSize
     }
     
-    override open func updateConstraints() {
+    override public func updateConstraints() {
         if !hasInstalledConstraints {
             addConstraint(NSLayoutConstraint(item: self,
                                         attribute: .centerX,
@@ -173,13 +179,13 @@ open class ESTMusicIndicatorView: UIView {
         super.updateConstraints()
     }
     
-    override open func forBaselineLayout() -> UIView {
+    override public func forBaselineLayout() -> UIView {
         return contentView
     }
     
     // MARK: Frame-Based Layout
     
-    override open func sizeThatFits(_ size: CGSize) -> CGSize {
+    override public func sizeThatFits(_ size: CGSize) -> CGSize {
         return intrinsicContentSize
     }
     
@@ -187,21 +193,19 @@ open class ESTMusicIndicatorView: UIView {
     
     private func startAnimating() {
         
-        if contentView.isOscillating() {
+        if contentView.isOscillating {
             return
         }
         
-        contentView.stopDecay()
         contentView.startOscillation()
     }
     
     private func stopAnimating() {
-        if !contentView.isOscillating() {
+        if !contentView.isOscillating {
             return
         }
         
         contentView.stopOscillation()
-        contentView.startDecay()
     }
     
     // MARK: Notification
@@ -218,7 +222,7 @@ open class ESTMusicIndicatorView: UIView {
 		}
 	}
 
-    open override func didMoveToWindow() {
+    public override func didMoveToWindow() {
         super.didMoveToWindow()
         if self.window != nil {
             if state == .playing {

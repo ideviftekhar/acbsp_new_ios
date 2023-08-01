@@ -10,6 +10,7 @@ import AVKit
 import AlamofireImage
 import IQListKit
 import FirebaseFirestore
+import Combine
 
 protocol PlayerViewControllerDelegate: AnyObject {
     func playerController(_ controller: PlayerViewController, didChangeVisibleState state: PlayerViewController.ViewState)
@@ -26,7 +27,7 @@ class PlayerViewController: LectureViewController {
     enum PlayState: Equatable {
 
         case stopped
-        case playing(progress: CGFloat)
+        case playing(progress: CGFloat, audioPower: CGFloat)
         case paused
     }
 
@@ -54,6 +55,7 @@ class PlayerViewController: LectureViewController {
     @IBOutlet private var dateLabel: UILabel!
     @IBOutlet private var firstDotLabel: UILabel?
     @IBOutlet private var secondDotLabel: UILabel?
+    @IBOutlet internal var audioVisualizerView: ESTMusicIndicatorView!
 
     @IBOutlet internal var bufferingActivityIndicator: UIActivityIndicatorView!
     @IBOutlet internal var currentTimeLabel: UILabel!
@@ -90,12 +92,15 @@ class PlayerViewController: LectureViewController {
     @IBOutlet var miniPlayerView: MiniPlayerView!
     @IBOutlet var fullPlayerContainerView: UIView!
 
-    let playerContainerView: UIView = UIView()
+    internal let playerContainerView: UIView = UIView()
 
-    var timeControlStatusObserver: NSKeyValueObservation?
-    var itemStatusObserver: NSKeyValueObservation?
-    var itemRateObserver: NSKeyValueObservation?
-    var itemDidPlayToEndObserver: AnyObject?
+    internal var timeControlStatusObserver: NSKeyValueObservation?
+    internal var itemStatusObserver: NSKeyValueObservation?
+    internal var itemRateObserver: NSKeyValueObservation?
+    internal var itemTracksObserver: NSKeyValueObservation?
+    internal var itemDidPlayToEndObserver: AnyObject?
+
+    internal var playerItemTracksPowerMeterPublisher: AnyCancellable?
 
     @IBOutlet var tableViewHeightConstraint: NSLayoutConstraint!
     @IBOutlet var playingInfoStackView: UIStackView!
@@ -139,6 +144,7 @@ class PlayerViewController: LectureViewController {
     }
 
     internal var isSeeking = false
+    internal var lastAudioPower: CGFloat = 0
     internal var player: AVPlayer? {
         willSet {
             if let item = player?.currentItem {
@@ -279,6 +285,7 @@ class PlayerViewController: LectureViewController {
                     minimize(animated: true)
                 }
                 Self.nowPlaying = (currentLecture, .paused)
+                audioVisualizerView.state = .paused
 
                 if currentLecture.playProgress < 1.0 {
                     seekTo(seconds: currentLecture.lastPlayedPoint, updateServer: false)
@@ -305,6 +312,7 @@ class PlayerViewController: LectureViewController {
 
                 close(animated: true)
                 Self.nowPlaying = nil
+                audioVisualizerView.state = .stopped
 
                 do {
                     if loopLectureButton.isSelected == true {
@@ -583,7 +591,7 @@ extension PlayerViewController {
                 }
 
                 if !isPaused {
-                    Self.nowPlaying = (currentLecture, .playing(progress: self.currentProgress))
+                    Self.nowPlaying = (currentLecture, .playing(progress: self.currentProgress, audioPower: self.lastAudioPower))
                 }
             }
         } else {
