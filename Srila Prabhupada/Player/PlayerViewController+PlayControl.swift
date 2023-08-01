@@ -11,6 +11,7 @@ import CoreMedia
 extension PlayerViewController {
 
     @IBAction func playPauseButtonTapped(_ sender: UIButton) {
+        Haptic.softImpact()
         if isPaused {
             play()
         } else {

@@ -151,6 +151,7 @@ extension PlayerViewController {
     }
 
     @IBAction private func playlistButtonTapped(_ sender: UIButton) {
+        Haptic.selection()
         if playlistButton.isSelected {
             hidePlaylist(animated: true)
         } else {

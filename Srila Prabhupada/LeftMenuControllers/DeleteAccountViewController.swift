@@ -148,6 +148,7 @@ extension DeleteAccountViewController {
 
                 case .failure(let error):
                     self.showAlert(title: "Incorrect Password", message: error.localizedDescription)
+                    Haptic.error()
                 }
             })
         case .invalidUsername(let message):
@@ -205,6 +206,7 @@ extension DeleteAccountViewController {
                 self.deleteUserAccount()
             case .failure(let error):
                 self.showAlert(error: error)
+                Haptic.error()
             }
         }
     }
@@ -222,7 +224,9 @@ extension DeleteAccountViewController {
 
             if let error = error {
                 self.showAlert(error: error)
+                Haptic.error()
             } else {
+                Haptic.success()
                 if let keyWindow = self.view.window {
                     UIView.transition(with: keyWindow, duration: 0.5, options: .transitionFlipFromLeft, animations: {
                         let loginNavigationController = UIStoryboard.main.instantiate(UINavigationController.self, identifier: "LoginNavigationController")

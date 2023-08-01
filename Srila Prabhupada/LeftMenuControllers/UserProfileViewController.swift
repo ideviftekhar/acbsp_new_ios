@@ -48,7 +48,7 @@ class UserProfileViewController: UIViewController {
             FirestoreManager.shared.signOut(completion: { result in
                 switch result {
                 case .success:
-                    
+                    Haptic.success()
                     if let appTabBarController = self.appTabBarController {
                         appTabBarController.playerViewController.pause()
                         appTabBarController.playerViewController.currentLecture = nil

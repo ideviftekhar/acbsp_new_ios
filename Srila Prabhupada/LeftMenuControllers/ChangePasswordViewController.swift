@@ -58,8 +58,10 @@ class ChangePasswordViewController: UIViewController {
                             case .success:
                                 updatePassword { error in
                                     if let error = error {
+                                        Haptic.error()
                                         self.showAlert(title: "Error", message: "\(error.localizedDescription)")
                                     } else {
+                                        Haptic.success()
                                         self.showAlert(title: "Success", message: "Your password is successfully updated.", cancel: (title: "OK", {
                                             self.navigationController?.popToRootViewController(animated: true)
                                         }))

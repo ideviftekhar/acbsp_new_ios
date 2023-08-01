@@ -33,10 +33,12 @@ extension MiniPlayerView: UIGestureRecognizerDelegate {
 
         switch sender.state {
         case .began:
+            Haptic.softImpact()
             initialRate = dataSource?.miniPlayerViewCurrentRate(self).rate ?? 1
             temporaryRate = initialRate
             startLondPressTimer()
         case .ended, .cancelled, .failed:
+            Haptic.selection()
             DispatchQueue.main.async {
                 (sender.view as? UIAnimatedButton)?.animateUp()
             }
@@ -83,6 +85,7 @@ extension MiniPlayerView: UIGestureRecognizerDelegate {
             let velocity = sender.velocity(in: self)
 
             if abs(velocity.x) >= abs(velocity.y) {
+                Haptic.softImpact()
                 if velocity.x < 0 {
                     direction = .left
                 } else {
@@ -90,6 +93,7 @@ extension MiniPlayerView: UIGestureRecognizerDelegate {
                 }
                 UIView.animate(withDuration: 0.2, delay: 0, options: [.beginFromCurrentState, .curveEaseOut], animations: { [self] in
                     progressView.transform = .init(scaleX: 1, y: 2.0).concatenating(.init(translationX: 0, y: 2))
+                    loadingProgressView.transform = progressView.transform
                 })
             } else if abs(velocity.x) < abs(velocity.y) {
                 if velocity.y < 0 {
@@ -119,8 +123,10 @@ extension MiniPlayerView: UIGestureRecognizerDelegate {
 
             switch direction {
             case .left, .right:
+                Haptic.selection()
                 UIView.animate(withDuration: 0.2, delay: 0, options: [.beginFromCurrentState, .curveEaseOut], animations: { [self] in
                     progressView.transform = .identity
+                    loadingProgressView.transform = progressView.transform
                 })
                 delegate?.miniPlayerView(self, didSeekTo: Int(proposedSeek))
             case .up, .down:

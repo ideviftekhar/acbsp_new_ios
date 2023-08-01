@@ -36,6 +36,7 @@ extension PlayerViewController {
             let playedSeconds = Float(currentTime)
             let progress = playedSeconds / Float(totalSeconds)
             progressView.progress = progress
+            waveformView.progress = progress
 
             miniPlayerView.playedSeconds = playedSeconds
             currentTimeLabel.text = currentTime.toHHMMSS
@@ -66,11 +67,14 @@ extension PlayerViewController {
     }
 
     internal func removePlayerItemNotificationObserver(item: AVPlayerItem) {
+        loadingProgressView.progress = 0
+        miniPlayerView.loadingProgress = 0
         self.timeControlStatusObserver?.invalidate()
         self.itemStatusObserver?.invalidate()
         self.itemRateObserver?.invalidate()
         self.itemTracksObserver?.invalidate()
         self.playerItemTracksPowerMeterPublisher?.cancel()
+        self.playerItemLoadedTimeRangesPublisher?.cancel()
         if let itemDidPlayToEndObserver = itemDidPlayToEndObserver {
             NotificationCenter.default.removeObserver(itemDidPlayToEndObserver, name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: item)
         }
@@ -159,6 +163,19 @@ extension PlayerViewController {
                 addTrackObservers(track: newValue)
             }
         })
+
+        playerItemLoadedTimeRangesPublisher?.cancel()
+        playerItemLoadedTimeRangesPublisher = item.publisher(for: \.loadedTimeRanges).sink { [weak self] newValue in
+            guard let self = self else { return }
+            guard let loadedDuration = newValue.last?.timeRangeValue.end.seconds.rounded(.up), self.totalDuration > 0 else {
+                loadingProgressView.progress = 0
+                miniPlayerView.loadingProgress = 0
+                return
+            }
+            let progress = Float(loadedDuration / Double(self.totalDuration))
+            loadingProgressView.progress = progress
+            miniPlayerView.loadingProgress = progress
+        }
 
         itemDidPlayToEndObserver = NotificationCenter.default.addObserver(forName: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: item, queue: nil, using: { [self] _ in
             updateLectureProgress()

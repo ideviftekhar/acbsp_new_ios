@@ -11,6 +11,7 @@ import UIKit
 extension PlayerViewController {
 
     @IBAction func loopLectureButtonPressed(_ sender: UIButton) {
+        Haptic.selection()
         if loopLectureButton.isSelected == true {
             change(shuffle: false, loop: false)
         } else {
@@ -19,7 +20,7 @@ extension PlayerViewController {
     }
 
     @IBAction func shuffleLectureButtonPressed(_ sender: UIButton) {
-
+        Haptic.selection()
         if shuffleLectureButton.isSelected == true {
             change(shuffle: false, loop: false)
         } else {
@@ -28,6 +29,7 @@ extension PlayerViewController {
     }
 
     @IBAction func playlistMenuDoneButtonPressed(_ sender: UIButton) {
+        Haptic.selection()
         self.lectureTebleView.setEditing(false, animated: true)
         playNextMenuButton.isHidden = false
         loopLectureButton.isHidden = false
@@ -58,6 +60,7 @@ extension PlayerViewController {
         var childrens: [SPAction] = []
 
         let editAction: SPAction = SPAction(title: "Edit", image: UIImage(systemName: "pencil"), identifier: .init("Edit"), handler: { [self] _ in
+            Haptic.softImpact()
             self.lectureTebleView.setEditing(true, animated: true)
             playNextMenuButton.isHidden = true
             loopLectureButton.isHidden = true
@@ -70,13 +73,16 @@ extension PlayerViewController {
         childrens.append(editAction)
 
         let clearWatchedAction: SPAction = SPAction(title: "Clear Watched", image: UIImage(systemName: "text.badge.minus"), identifier: .init("Clear Watched"), handler: { [self] _ in
+            Haptic.success()
             let completedIDs: [Int] = models.filter { $0.isCompleted }.map { $0.id }
             self.removeFromQueue(lectureIDs: completedIDs)
         })
         childrens.append(clearWatchedAction)
 
         let clearAllAction: SPAction = SPAction(title: "Clear All", image: UIImage(systemName: "text.badge.xmark"), identifier: .init("Clear All"), handler: { [self] _ in
+            Haptic.warning()
             self.showAlert(title: "Clear Play Next?", message: "Are you sure you would like to clear Play Next Queue?", preferredStyle: .alert, sourceView: playNextMenuButton, cancel: ("Cancel", nil), destructive: ("Clear", {
+                Haptic.success()
                 self.clearPlayingQueue(keepPlayingLecture: true)
             }))
         })

@@ -55,11 +55,13 @@ class PlayerViewController: LectureViewController {
     @IBOutlet private var dateLabel: UILabel!
     @IBOutlet private var firstDotLabel: UILabel?
     @IBOutlet private var secondDotLabel: UILabel?
+    @IBOutlet internal var waveformView: WaveformView!
     @IBOutlet internal var audioVisualizerView: ESTMusicIndicatorView!
 
     @IBOutlet internal var bufferingActivityIndicator: UIActivityIndicatorView!
     @IBOutlet internal var currentTimeLabel: UILabel!
     @IBOutlet internal var totalTimeLabel: UILabel!
+    @IBOutlet internal var loadingProgressView: UIProgressView!
     @IBOutlet internal var progressView: UIProgressView!
 
     @IBOutlet internal var videoButton: UIButton!
@@ -100,6 +102,7 @@ class PlayerViewController: LectureViewController {
     internal var itemTracksObserver: NSKeyValueObservation?
     internal var itemDidPlayToEndObserver: AnyObject?
 
+    internal var playerItemLoadedTimeRangesPublisher: AnyCancellable?
     internal var playerItemTracksPowerMeterPublisher: AnyCancellable?
 
     @IBOutlet var tableViewHeightConstraint: NSLayoutConstraint!
@@ -246,15 +249,36 @@ class PlayerViewController: LectureViewController {
                     print(error)
                 }
 
+                let loadWaveformUserDefaultKey: String = "\(Self.self).\(WaveformView.self)"
+//                let loadWaveform = UserDefaults.standard.bool(forKey: loadWaveformUserDefaultKey)
+                let loadWaveform = true
+
+                let waveformURL: URL?
+
                 if currentLecture.downloadState == .downloaded,
                    let audioURL = DownloadManager.shared.localFileURL(for: currentLecture) {
                     let item = AVPlayerItem(url: audioURL)
                     player = AVPlayer(playerItem: item)
+                    if loadWaveform {
+                        waveformURL = audioURL
+                    } else {
+                        waveformURL = nil
+                    }
                 } else if let firstAudio = currentLecture.resources.audios.first,
                           let audioURL = firstAudio.audioURL {
                     let item = AVPlayerItem(url: audioURL)
                     player = AVPlayer(playerItem: item)
+                    waveformURL = nil
+                } else {
+                    player = nil
+                    waveformURL = nil
                 }
+
+                UIView.animate(withDuration: 0.2, animations: { [self] in
+                    waveformView.audioURL = waveformURL
+                    self.view.setNeedsLayout()
+                    self.view.layoutIfNeeded()
+                })
 
                 do {
                     if loopLectureButton.isSelected == true {
@@ -308,6 +332,7 @@ class PlayerViewController: LectureViewController {
                 }
 
                 player = nil
+                waveformView.audioURL = nil
                 videoButton.isHidden = true
 
                 close(animated: true)
@@ -414,10 +439,41 @@ class PlayerViewController: LectureViewController {
 
             lectureTebleView.panGestureRecognizer.addTarget(self, action: #selector(tableViewPanRecognized(_:)))
         }
+
+        do {
+            let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(visualizerTapped))
+            audioVisualizerView.addGestureRecognizer(gestureRecognizer)
+        }
+
         hidePlaylist(animated: false)
         setupPlayerIcons()
         registerNowPlayingCommands()
         registerAudioSessionObservers()
+    }
+
+    @objc private func visualizerTapped() {
+//        let userDefaultKey: String = "\(Self.self).\(WaveformView.self)"
+//        let newSettings = !UserDefaults.standard.bool(forKey: userDefaultKey)
+//        UserDefaults.standard.set(newSettings, forKey: userDefaultKey)
+//        UserDefaults.standard.synchronize()
+//
+//        UIView.animate(withDuration: 0.2, animations: { [self] in
+//            if newSettings {
+//                if waveformView.audioURL != nil {
+//                    waveformView.isHidden = false
+//                } else {
+//                    if let currentLecture = currentLecture,
+//                       currentLecture.downloadState == .downloaded,
+//                       let audioURL = DownloadManager.shared.localFileURL(for: currentLecture) {
+//                        waveformView.audioURL = audioURL
+//                    }
+//                }
+//            } else {
+//                waveformView.isHidden = true
+//            }
+//            self.view.setNeedsLayout()
+//            self.view.layoutIfNeeded()
+//        })
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -530,10 +586,6 @@ class PlayerViewController: LectureViewController {
         DefaultLectureViewModel.defaultModel.getLectures(searchText: nil, sortType: nil, filter: [:], lectureIDs: self.currentLectureIDsQueue, source: source, progress: nil, completion: completion)
     }
 
-    @IBAction func backButtonTapped(_ sender: UIButton) {
-        minimize(animated: true)
-    }
-
     override var preferredStatusBarStyle: UIStatusBarStyle {
         switch visibleState {
         case .close:
@@ -583,6 +635,7 @@ extension PlayerViewController {
                 let playedSeconds = Float(seconds)
                 let progress = playedSeconds / Float(totalSeconds)
                 progressView.progress = progress
+                waveformView.progress = progress
                 miniPlayerView.playedSeconds = playedSeconds
                 currentTimeLabel.text = roundedUpSeconds.toHHMMSS
 
@@ -597,6 +650,8 @@ extension PlayerViewController {
         } else {
             currentTimeLabel.text = roundedUpSeconds.toHHMMSS
             progressView.progress = 0
+            loadingProgressView.progress = 0
+            waveformView.progress = 0
             miniPlayerView.playedSeconds = 0
         }
     }
@@ -605,18 +660,22 @@ extension PlayerViewController {
 extension PlayerViewController {
 
     @IBAction func backwardXSecondsPressed(_ sender: UIButton) {
+        Haptic.softImpact()
         seek(seconds: -10)
     }
 
     @IBAction func forwardXSecondPressed(_ sender: UIButton) {
+        Haptic.softImpact()
         seek(seconds: 10)
     }
 
     @IBAction func nextLecturePressed(_ sender: UIButton) {
+        Haptic.selection()
         gotoNext(play: !isPaused)
     }
 
     @IBAction func previousLecturePressed(_ sender: UIButton) {
+        Haptic.selection()
         gotoPrevious(play: !isPaused)
     }
 
@@ -680,6 +739,7 @@ extension PlayerViewController {
 
     @IBAction func videoLectureButtonPressed(_ sender: UIButton) {
 
+        Haptic.softImpact()
         guard let currentLecture = currentLecture,
         let videoURL = currentLecture.resources.videos.first?.videoURL else { return }
 
@@ -710,6 +770,7 @@ extension PlayerViewController {
             let state: UIAction.State = (lastRate == playRate ? .on : .off)
 
             let action: SPAction = SPAction(title: playRate.rawValue, image: nil, identifier: .init(playRate.rawValue), state: state, handler: { [self] action in
+                Haptic.selection()
                 playRateActionSelected(action: action)
             })
 

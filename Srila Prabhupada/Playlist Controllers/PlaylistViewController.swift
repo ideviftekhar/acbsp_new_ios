@@ -412,7 +412,7 @@ extension PlaylistViewController: PlaylistCellDelegate {
     func playlistCell(_ cell: PlaylistCell, didSelected option: PlaylistOption, with playlist: Playlist) {
         switch option {
         case .delete:
-
+            Haptic.warning()
             self.showAlert(title: "Delete '\(playlist.title)'?", message: "Would you really like to delete '\(playlist.title)' playlist?",
                            cancel: (title: "Cancel", {}),
                            destructive: (title: "Delete", {
@@ -440,6 +440,7 @@ extension PlaylistViewController: PlaylistCellDelegate {
                 }
             }))
         case .edit:
+            Haptic.softImpact()
             let navController = UIStoryboard.playlists.instantiate(UINavigationController.self, identifier: "CreatePlaylistNavigationController")
             if let addPlaylistController = navController.viewControllers.first as? CreatePlaylistViewController {
                 addPlaylistController.playlist = playlist
@@ -448,10 +449,12 @@ extension PlaylistViewController: PlaylistCellDelegate {
             }
             present(navController, animated: true, completion: nil)
         case .addToQueue:
+            Haptic.softImpact()
             if let tabBarController = self.tabBarController as? TabBarController {
                 tabBarController.addToQueue(lectureIDs: playlist.lectureIds)
             }
         case .addToPlayNext:
+            Haptic.softImpact()
             if let tabBarController = self.tabBarController as? TabBarController {
                 tabBarController.addToPlayNext(lectureIDs: playlist.lectureIds)
             }

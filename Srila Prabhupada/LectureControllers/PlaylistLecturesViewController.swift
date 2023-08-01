@@ -50,6 +50,7 @@ class PlaylistLecturesViewController: LectureViewController {
     }
 
     @objc func addLecturesButtonAction(_ sender: UIBarButtonItem) {
+        Haptic.softImpact()
         let navController = UIStoryboard.home.instantiate(UINavigationController.self, identifier: "HomeNavigationController")
         if let homeController = navController.viewControllers.first as? HomeViewController {
             homeController.isSelectionEnabled = true

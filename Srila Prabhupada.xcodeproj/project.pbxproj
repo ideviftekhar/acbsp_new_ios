@@ -228,6 +228,22 @@
 		C01861CA2A65D29F00E05FA0 /* UIAnimatedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01861C92A65D29F00E05FA0 /* UIAnimatedButton.swift */; };
 		C01861CB2A65D99000E05FA0 /* UIAnimatedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01861C92A65D29F00E05FA0 /* UIAnimatedButton.swift */; };
 		C018A99428F421A000C0E002 /* Int+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C018A99328F421A000C0E002 /* Int+Extension.swift */; };
+		C01A66D82A795E4B002FBDDF /* WaveformImageDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01A66D72A795E4B002FBDDF /* WaveformImageDrawer.swift */; };
+		C01A66D92A795E4B002FBDDF /* WaveformImageDrawer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01A66D72A795E4B002FBDDF /* WaveformImageDrawer.swift */; };
+		C01A66DB2A795E78002FBDDF /* WaveformImageTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01A66DA2A795E78002FBDDF /* WaveformImageTypes.swift */; };
+		C01A66DC2A795E78002FBDDF /* WaveformImageTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01A66DA2A795E78002FBDDF /* WaveformImageTypes.swift */; };
+		C01A66DE2A795EE0002FBDDF /* WaveformAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01A66DD2A795EE0002FBDDF /* WaveformAnalyzer.swift */; };
+		C01A66DF2A795EE0002FBDDF /* WaveformAnalyzer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01A66DD2A795EE0002FBDDF /* WaveformAnalyzer.swift */; };
+		C01A66E12A795EF2002FBDDF /* TempiFFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01A66E02A795EF2002FBDDF /* TempiFFT.swift */; };
+		C01A66E22A795EF2002FBDDF /* TempiFFT.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01A66E02A795EF2002FBDDF /* TempiFFT.swift */; };
+		C01A66E42A795F24002FBDDF /* WaveformImageDrawer+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01A66E32A795F23002FBDDF /* WaveformImageDrawer+iOS.swift */; };
+		C01A66E52A795F24002FBDDF /* WaveformImageDrawer+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01A66E32A795F23002FBDDF /* WaveformImageDrawer+iOS.swift */; };
+		C01A66E72A795FC6002FBDDF /* LinearWaveformRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01A66E62A795FC6002FBDDF /* LinearWaveformRenderer.swift */; };
+		C01A66E82A795FC6002FBDDF /* LinearWaveformRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01A66E62A795FC6002FBDDF /* LinearWaveformRenderer.swift */; };
+		C01A66EA2A795FCE002FBDDF /* WaveformRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01A66E92A795FCD002FBDDF /* WaveformRenderer.swift */; };
+		C01A66EB2A795FCE002FBDDF /* WaveformRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01A66E92A795FCD002FBDDF /* WaveformRenderer.swift */; };
+		C01A66EE2A79647B002FBDDF /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01A66ED2A79647B002FBDDF /* WaveformView.swift */; };
+		C01A66EF2A79647B002FBDDF /* WaveformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01A66ED2A79647B002FBDDF /* WaveformView.swift */; };
 		C01ACC002A5809E200906CDF /* FileUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01ACBFF2A5809E200906CDF /* FileUserDefaults.swift */; };
 		C01ACC012A5809E200906CDF /* FileUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01ACBFF2A5809E200906CDF /* FileUserDefaults.swift */; };
 		C01B88A02913F5FE00EF0EA0 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01B889F2913F5FE00EF0EA0 /* LoadingViewController.swift */; };
@@ -412,6 +428,14 @@
 		C017E68B293E24C1005DA700 /* Haptic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptic.swift; sourceTree = "<group>"; };
 		C01861C92A65D29F00E05FA0 /* UIAnimatedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAnimatedButton.swift; sourceTree = "<group>"; };
 		C018A99328F421A000C0E002 /* Int+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Int+Extension.swift"; sourceTree = "<group>"; };
+		C01A66D72A795E4B002FBDDF /* WaveformImageDrawer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveformImageDrawer.swift; sourceTree = "<group>"; };
+		C01A66DA2A795E78002FBDDF /* WaveformImageTypes.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveformImageTypes.swift; sourceTree = "<group>"; };
+		C01A66DD2A795EE0002FBDDF /* WaveformAnalyzer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveformAnalyzer.swift; sourceTree = "<group>"; };
+		C01A66E02A795EF2002FBDDF /* TempiFFT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempiFFT.swift; sourceTree = "<group>"; };
+		C01A66E32A795F23002FBDDF /* WaveformImageDrawer+iOS.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WaveformImageDrawer+iOS.swift"; sourceTree = "<group>"; };
+		C01A66E62A795FC6002FBDDF /* LinearWaveformRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LinearWaveformRenderer.swift; sourceTree = "<group>"; };
+		C01A66E92A795FCD002FBDDF /* WaveformRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaveformRenderer.swift; sourceTree = "<group>"; };
+		C01A66ED2A79647B002FBDDF /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
 		C01ACBFF2A5809E200906CDF /* FileUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUserDefaults.swift; sourceTree = "<group>"; };
 		C01B889F2913F5FE00EF0EA0 /* LoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
 		C02856EF2A56EEB300C34D49 /* PlayerViewController+Gesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerView\U0010Controller+Gesture.swift"; sourceTree = "<group>"; };
@@ -766,6 +790,28 @@
 			path = LectureControllers;
 			sourceTree = "<group>";
 		};
+		C01A66D32A795DE5002FBDDF /* DSWaveformImage */ = {
+			isa = PBXGroup;
+			children = (
+				C01A66DA2A795E78002FBDDF /* WaveformImageTypes.swift */,
+				C01A66D72A795E4B002FBDDF /* WaveformImageDrawer.swift */,
+				C01A66E32A795F23002FBDDF /* WaveformImageDrawer+iOS.swift */,
+				C01A66DD2A795EE0002FBDDF /* WaveformAnalyzer.swift */,
+				C01A66E02A795EF2002FBDDF /* TempiFFT.swift */,
+				C01A66E62A795FC6002FBDDF /* LinearWaveformRenderer.swift */,
+				C01A66E92A795FCD002FBDDF /* WaveformRenderer.swift */,
+			);
+			path = DSWaveformImage;
+			sourceTree = "<group>";
+		};
+		C01A66EC2A79646B002FBDDF /* WaveformView */ = {
+			isa = PBXGroup;
+			children = (
+				C01A66ED2A79647B002FBDDF /* WaveformView.swift */,
+			);
+			path = WaveformView;
+			sourceTree = "<group>";
+		};
 		C02C13282A554ABB008D89DB /* Managers */ = {
 			isa = PBXGroup;
 			children = (
@@ -812,6 +858,8 @@
 		C07A8F3128F7FCF2001A6162 /* Third Party */ = {
 			isa = PBXGroup;
 			children = (
+				C01A66EC2A79646B002FBDDF /* WaveformView */,
+				C01A66D32A795DE5002FBDDF /* DSWaveformImage */,
 				C07A8F3728F7FD44001A6162 /* ESTMusicIndicatorView */,
 				C017E68B293E24C1005DA700 /* Haptic.swift */,
 				6E5AFAD92A2B7213008FABA0 /* SimplePDF */,
@@ -1351,6 +1399,7 @@
 				6E6900762A25C4C20086C7DB /* CreateAccountViewController.swift in Sources */,
 				6E6900772A25C4C20086C7DB /* LectureInfo.swift in Sources */,
 				6E6900782A25C4C20086C7DB /* FilterTypeTableViewCell.swift in Sources */,
+				C01A66D92A795E4B002FBDDF /* WaveformImageDrawer.swift in Sources */,
 				6E6900792A25C4C20086C7DB /* Lecture.swift in Sources */,
 				6E69007A2A25C4C20086C7DB /* LectureOption.swift in Sources */,
 				6E69007B2A25C4C20086C7DB /* String+Extension.swift in Sources */,
@@ -1376,12 +1425,15 @@
 				6E69008C2A25C4C20086C7DB /* UIView+extension.swift in Sources */,
 				C0034A982A559841005ADBBA /* LectureInfoViewController.swift in Sources */,
 				6E69008D2A25C4C20086C7DB /* PlayerViewController+LectureOption.swift in Sources */,
+				C01A66E22A795EF2002FBDDF /* TempiFFT.swift in Sources */,
 				6E69008E2A25C4C20086C7DB /* LectureViewModel+LectureInfo.swift in Sources */,
 				6E6B183A2A418BED00B5E098 /* UserSettings.swift in Sources */,
 				C01ACC012A5809E200906CDF /* FileUserDefaults.swift in Sources */,
 				6E68EA932A2DEDD300C6DB6D /* SimplePDF.swift in Sources */,
 				6E69008F2A25C4C20086C7DB /* NSManagedObject+Extensions.swift in Sources */,
+				C01A66DF2A795EE0002FBDDF /* WaveformAnalyzer.swift in Sources */,
 				6E6900902A25C4C20086C7DB /* FilterDetailTableViewCell.swift in Sources */,
+				C01A66EB2A795FCE002FBDDF /* WaveformRenderer.swift in Sources */,
 				6E6900912A25C4C20086C7DB /* ListenInfo.swift in Sources */,
 				6E6900922A25C4C20086C7DB /* LectureViewModel+RecentlyPlayed.swift in Sources */,
 				6E6900932A25C4C20086C7DB /* LoginViewModel.swift in Sources */,
@@ -1398,6 +1450,7 @@
 				6E69009E2A25C4C20086C7DB /* Haptic.swift in Sources */,
 				6E69009F2A25C4C20086C7DB /* DownloadViewController.swift in Sources */,
 				6E6900A02A25C4C20086C7DB /* Int+Extension.swift in Sources */,
+				C01A66DC2A795E78002FBDDF /* WaveformImageTypes.swift in Sources */,
 				6E6900A12A25C4C20086C7DB /* FilterViewController.swift in Sources */,
 				6E6900A22A25C4C20086C7DB /* Environment.swift in Sources */,
 				6E6900A32A25C4C20086C7DB /* UIColor+Extension.swift in Sources */,
@@ -1431,6 +1484,7 @@
 				6E6900B82A25C4C20086C7DB /* Playlist.swift in Sources */,
 				6E6900B92A25C4C20086C7DB /* RoundButton.swift in Sources */,
 				6E6900BA2A25C4C20086C7DB /* PlaylistViewController.swift in Sources */,
+				C01A66EF2A79647B002FBDDF /* WaveformView.swift in Sources */,
 				6E6900BB2A25C4C20086C7DB /* TabBarController.swift in Sources */,
 				C02857172A571F4800C34D49 /* Transcription.swift in Sources */,
 				6E6900BC2A25C4C20086C7DB /* TopLectures.swift in Sources */,
@@ -1450,8 +1504,10 @@
 				C02857112A5707AA00C34D49 /* ContactUsViewController.swift in Sources */,
 				C02C132E2A556497008D89DB /* RefreshButton.swift in Sources */,
 				6E6900CA2A25C4C20086C7DB /* LoadingViewController.swift in Sources */,
+				C01A66E52A795F24002FBDDF /* WaveformImageDrawer+iOS.swift in Sources */,
 				6E6B183B2A418C3600B5E098 /* NotificationViewController.swift in Sources */,
 				6E6900CC2A25C4C20086C7DB /* LogInViewController.swift in Sources */,
+				C01A66E82A795FC6002FBDDF /* LinearWaveformRenderer.swift in Sources */,
 				6E6900CD2A25C4C20086C7DB /* ChangePasswordViewController.swift in Sources */,
 				6E6900CE2A25C4C20086C7DB /* TappableLabel.swift in Sources */,
 				6E6900CF2A25C4C20086C7DB /* TopLectureType.swift in Sources */,
@@ -1489,6 +1545,7 @@
 				C00E4DE228CA393600F1A123 /* CreateAccountViewController.swift in Sources */,
 				C0FA049F28DB37FA003177DA /* LectureInfo.swift in Sources */,
 				C00AB20B28D1F52D00A62A2F /* FilterTypeTableViewCell.swift in Sources */,
+				C01A66D82A795E4B002FBDDF /* WaveformImageDrawer.swift in Sources */,
 				C00AB21528D204D700A62A2F /* Lecture.swift in Sources */,
 				C0065D4D28D884AF00B18AA6 /* LectureOption.swift in Sources */,
 				C0FA305D28CF461900E78843 /* String+Extension.swift in Sources */,
@@ -1514,12 +1571,15 @@
 				C0EA13EF28CF6D0D00BE9110 /* UIView+extension.swift in Sources */,
 				C0034A972A559841005ADBBA /* LectureInfoViewController.swift in Sources */,
 				C00EB93B29BC75FA00D331A6 /* PlayerViewController+LectureOption.swift in Sources */,
+				C01A66E12A795EF2002FBDDF /* TempiFFT.swift in Sources */,
 				C0EE5BCA28F8403700528AA7 /* LectureViewModel+LectureInfo.swift in Sources */,
 				6E5AFADD2A2B7213008FABA0 /* SimplePDF.swift in Sources */,
 				C01ACC002A5809E200906CDF /* FileUserDefaults.swift in Sources */,
 				C00DC57328E1DA66001EDE95 /* NSManagedObject+Extensions.swift in Sources */,
 				C00AB20A28D1F52D00A62A2F /* FilterDetailTableViewCell.swift in Sources */,
+				C01A66DE2A795EE0002FBDDF /* WaveformAnalyzer.swift in Sources */,
 				C03E3F2828DCC6C500B987DD /* ListenInfo.swift in Sources */,
+				C01A66EA2A795FCE002FBDDF /* WaveformRenderer.swift in Sources */,
 				C00340012928B2B9008F8C81 /* LectureViewModel+RecentlyPlayed.swift in Sources */,
 				6E6AED132A3DC62F009BB06D /* UserSettings.swift in Sources */,
 				C0FA305F28CF4AF000E78843 /* LoginViewModel.swift in Sources */,
@@ -1536,6 +1596,7 @@
 				C017E68C293E24C1005DA700 /* Haptic.swift in Sources */,
 				6E6AED112A3D9D87009BB06D /* NotificationViewController.swift in Sources */,
 				C00E4E0928CA39FE00F1A123 /* DownloadViewController.swift in Sources */,
+				C01A66DB2A795E78002FBDDF /* WaveformImageTypes.swift in Sources */,
 				C018A99428F421A000C0E002 /* Int+Extension.swift in Sources */,
 				C00AB20428D1E6DD00A62A2F /* FilterViewController.swift in Sources */,
 				C0D76E2528CF7C9B00F69320 /* Environment.swift in Sources */,
@@ -1569,6 +1630,7 @@
 				C0B7990328DC3FF700681649 /* Playlist.swift in Sources */,
 				C0EA13ED28CF685E00BE9110 /* RoundButton.swift in Sources */,
 				C00E4E0D28CA39FE00F1A123 /* PlaylistViewController.swift in Sources */,
+				C01A66EE2A79647B002FBDDF /* WaveformView.swift in Sources */,
 				C02857162A571F4800C34D49 /* Transcription.swift in Sources */,
 				C00E4E0828CA39FE00F1A123 /* TabBarController.swift in Sources */,
 				C0B7990228DC3FF700681649 /* TopLectures.swift in Sources */,
@@ -1588,8 +1650,10 @@
 				C02857102A5707AA00C34D49 /* ContactUsViewController.swift in Sources */,
 				C02C132D2A556497008D89DB /* RefreshButton.swift in Sources */,
 				C007D37C28E80AAB00CFBED0 /* LegacyData.swift in Sources */,
+				C01A66E42A795F24002FBDDF /* WaveformImageDrawer+iOS.swift in Sources */,
 				C01B88A02913F5FE00EF0EA0 /* LoadingViewController.swift in Sources */,
 				C0065D4B28D883F300B18AA6 /* Constants.swift in Sources */,
+				C01A66E72A795FC6002FBDDF /* LinearWaveformRenderer.swift in Sources */,
 				C00E4DE128CA393600F1A123 /* LogInViewController.swift in Sources */,
 				EE97BEEE29E7EA4D00B9A80B /* ChangePasswordViewController.swift in Sources */,
 				C0BC771028D5AE1000C2629F /* TappableLabel.swift in Sources */,

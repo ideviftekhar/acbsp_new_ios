@@ -138,6 +138,7 @@ extension PlayerViewController {
         case .removeFromPlaylist, .markAsHeard, .resetProgress, .pauseDownload, .addToQueue, .addToPlayNext:
             break
         case .removeFromQueue:
+            Haptic.softImpact()
             self.removeFromQueue(lectureIDs: [lecture.id])
         case .share:
 

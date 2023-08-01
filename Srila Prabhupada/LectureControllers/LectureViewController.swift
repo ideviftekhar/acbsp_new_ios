@@ -600,18 +600,21 @@ extension LectureViewController: LectureCellDelegate {
 
         switch option {
         case .addToQueue:
+            Haptic.softImpact()
             if let playerController = self as? PlayerViewController {
                 playerController.addToQueue(lectureIDs: [lecture.id])
             } else if let tabController = self.tabBarController as? TabBarController {
                 tabController.addToQueue(lectureIDs: [lecture.id])
             }
         case .removeFromQueue:
+            Haptic.softImpact()
             if let playerController = self as? PlayerViewController {
                 playerController.removeFromQueue(lectureIDs: [lecture.id])
             } else if let tabController = self.tabBarController as? TabBarController {
                 tabController.removeFromQueue(lectureIDs: [lecture.id])
             }
         case .addToPlayNext:
+            Haptic.softImpact()
             let lectureIDs = selectedModels.map({ $0.id })
             if let playerController = self as? PlayerViewController {
                 playerController.addToPlayNext(lectureIDs: [lecture.id])
@@ -623,6 +626,7 @@ extension LectureViewController: LectureCellDelegate {
             Persistant.shared.save(lectures: [lecture], completion: { _ in })
             DefaultLectureViewModel.defaultModel.updateLectureInfo(lectures: [lecture], isCompleted: nil, isDownloaded: true, isFavorite: nil, lastPlayedPoint: nil, postUpdate: false, completion: {_ in })
         case .pauseDownload:
+            Haptic.softImpact()
             Persistant.shared.pauseDownloads(lectures: [lecture])
         case .deleteFromDownloads:
             Haptic.warning()

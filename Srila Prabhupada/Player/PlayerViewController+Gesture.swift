@@ -37,11 +37,13 @@ extension PlayerViewController {
 
         switch sender.state {
         case .began:
+            Haptic.softImpact()
             initialRate = self.selectedRate.rate
             isNegativeRate = sender.view == previousLectureButton
             temporaryRate = initialRate
             startLondPressTimer()
         case .ended, .cancelled, .failed:
+            Haptic.selection()
             DispatchQueue.main.async {
                 (sender.view as? UIAnimatedButton)?.animateUp()
             }
@@ -88,6 +90,7 @@ extension PlayerViewController {
             let velocity = sender.velocity(in: self.view)
 
             if abs(velocity.x) >= abs(velocity.y) {
+                Haptic.softImpact()
                 if velocity.x < 0 {
                     direction = .left
                 } else {
@@ -95,6 +98,7 @@ extension PlayerViewController {
                 }
                 UIView.animate(withDuration: 0.2, delay: 0, options: [.beginFromCurrentState, .curveEaseOut], animations: { [self] in
                     progressView.transform = .init(scaleX: 1, y: 3.0)
+                    loadingProgressView.transform = progressView.transform
                 })
             } else if abs(velocity.x) < abs(velocity.y) {
                 if velocity.y < 0 {
@@ -111,7 +115,9 @@ extension PlayerViewController {
         case .changed:
             switch direction {
             case .left, .right:
-                progressView.progress = proposedSeek / totalSeconds
+                let progress = proposedSeek / totalSeconds
+                progressView.progress = progress
+                waveformView.progress = progress
                 currentTimeLabel.text = Int(proposedSeek).toHHMMSS
                 miniPlayerView.playedSeconds = proposedSeek
             case .up:
@@ -135,8 +141,10 @@ extension PlayerViewController {
 
             switch direction {
             case .left, .right:
+                Haptic.selection()
                 UIView.animate(withDuration: 0.2, delay: 0, options: [.beginFromCurrentState, .curveEaseOut], animations: { [self] in
                     progressView.transform = .identity
+                    loadingProgressView.transform = progressView.transform
                 })
                 seekTo(seconds: Int(proposedSeek))
             case .up, .down:

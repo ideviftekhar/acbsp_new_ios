@@ -28,6 +28,7 @@ class LectureInfoViewController: UIViewController {
     }
 
     @IBAction func doneAction(_ sender: UIButton) {
+        Haptic.softImpact()
         self.dismiss(animated: true)
     }
 }

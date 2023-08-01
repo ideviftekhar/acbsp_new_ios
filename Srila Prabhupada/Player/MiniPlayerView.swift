@@ -43,6 +43,7 @@ class MiniPlayerView: UIView {
     @IBOutlet private var expandButton: UIButton!
     @IBOutlet private var playButton: UIButton!
     @IBOutlet internal var nextButton: UIButton!
+    @IBOutlet internal var loadingProgressView: UIProgressView!
     @IBOutlet internal var progressView: UIProgressView!
     @IBOutlet private var firstDotLabel: UILabel?
     @IBOutlet private var audioVisualizerView: ESTMusicIndicatorView!
@@ -133,7 +134,7 @@ class MiniPlayerView: UIView {
                 }
 
                 progressView.progress = 0
-
+                loadingProgressView.progress = 0
                 PlayerViewController.register(observer: self, lectureID: model.id, playStateHandler: { [self] state in
                     switch state {
                     case .stopped:
@@ -159,6 +160,7 @@ class MiniPlayerView: UIView {
 //                secondDotLabel?.isHidden = false
                 thumbnailImageView.image = UIImage(named: "logo_40")
                 progressView.progress = 0
+                loadingProgressView.progress = 0
             }
         }
     }
@@ -185,6 +187,12 @@ class MiniPlayerView: UIView {
         }
     }
 
+    var loadingProgress: Float = 0 {
+        didSet {
+            loadingProgressView.progress = loadingProgress
+        }
+    }
+
     var isPlaying: Bool = false {
         didSet {
             let newImage: UIImage? = isPlaying ? pauseFillImage :  playFillImage
@@ -194,14 +202,17 @@ class MiniPlayerView: UIView {
     }
 
     @IBAction private func playAction(_ sender: UIButton) {
+        Haptic.softImpact()
         delegate?.miniPlayerView(self, didChangePlay: !isPlaying)
     }
 
     @IBAction private func playNextAction(_ sender: UIButton) {
+        Haptic.success()
         delegate?.miniPlayerViewDidRequestedNext(self)
     }
 
     @IBAction private func expandAction(_ sender: UIButton) {
+        Haptic.softImpact()
         delegate?.miniPlayerViewDidExpand(self)
     }
 }

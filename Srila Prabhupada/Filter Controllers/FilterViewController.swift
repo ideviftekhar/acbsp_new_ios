@@ -76,7 +76,7 @@ class FilterViewController: UIViewController {
     }
 
     @IBAction func applyFilterAction(_ sender: Any) {
-
+        Haptic.success()
         self.delegate?.filterController(self, didSelected: self.selectedFilters)
         goBack()
     }
