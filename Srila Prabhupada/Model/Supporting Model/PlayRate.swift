@@ -44,6 +44,18 @@ enum PlayRate: String, CaseIterable {
         }
     }
 
+
+    var groupIdentifier: Int {
+        switch self {
+        case .point5, .point75:
+            return 1
+        case .one:
+            return 2
+        case .onePoint15, .onePoint25, .onePoint5, .onePoint75, .two:
+            return 3
+        }
+    }
+
     var next: PlayRate {
         switch self {
         case .point5: return .point75

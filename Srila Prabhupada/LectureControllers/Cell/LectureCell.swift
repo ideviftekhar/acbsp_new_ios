@@ -303,10 +303,11 @@ class LectureCell: UITableViewCell, IQModelableCell {
                     actions.append(removeFromPlaylist)
                 }
 
-                // Is Heard
-                if playProgress >= 1.0, let resetProgress = allActions[.resetProgress] {
+                if playProgress > 0.0, let resetProgress = allActions[.resetProgress] {
                     actions.append(resetProgress)
-                } else if let markAsHeard = allActions[.markAsHeard] {
+                }
+
+                if playProgress < 1.0, let markAsHeard = allActions[.markAsHeard] {
                     actions.append(markAsHeard)
                 }
 
@@ -382,7 +383,7 @@ extension LectureCell {
     private func configureMenuButton() {
 
         for option in LectureOption.allCases {
-            let action: SPAction = SPAction(title: option.rawValue, image: option.image, identifier: .init(option.rawValue), handler: { [self] _ in
+            let action: SPAction = SPAction(title: option.rawValue, image: option.image, identifier: .init(option.rawValue), groupIdentifier: option.groupIdentifier, handler: { [self] _ in
 
                 guard let model = model else {
                     return

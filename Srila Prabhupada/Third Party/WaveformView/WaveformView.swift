@@ -18,15 +18,17 @@ final class WaveformView: UIView {
         didSet {
             waveformImageDrawer.analyzer?.cancelLoading()
 
-            backgroundImageView.image = nil
-            foregroundImageView.image = nil
-            progress = 0
-            if let audioURL = audioURL {
-                self.isHidden = false
-                updateWaveformImages(audioURL: audioURL)
-            } else {
-                self.isHidden = true
-            }
+            UIView.animate(withDuration: 0.3, delay: 0, options: [.beginFromCurrentState], animations: {
+                self.alpha = 0.0
+//                self.transform = CGAffineTransform(scaleX: 1, y: 0)
+            }, completion: { [self] _ in
+                backgroundImageView.image = nil
+                foregroundImageView.image = nil
+                progress = 0
+                if let audioURL = audioURL {
+                    updateWaveformImages(audioURL: audioURL)
+                }
+            })
         }
     }
 
@@ -57,10 +59,17 @@ final class WaveformView: UIView {
                                           renderer: LinearWaveformRenderer(),
                                           completionHandler: { image in
             DispatchQueue.main.async {
-                self.backgroundImageView.image = image?.withRenderingMode(.alwaysTemplate)
-                self.foregroundImageView.image = image?.withRenderingMode(.alwaysTemplate)
+                // If it's still valid and audioURL has not been changed
+                if self.audioURL == audioURL {
+
+                    self.backgroundImageView.image = image?.withRenderingMode(.alwaysTemplate)
+                    self.foregroundImageView.image = image?.withRenderingMode(.alwaysTemplate)
+
+                    UIView.animate(withDuration: 0.3, delay: 0, options: [.beginFromCurrentState,.curveEaseOut], animations: {
+                        self.alpha = 1.0
+                    })
+                }
             }
         })
     }
-
 }

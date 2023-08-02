@@ -8,18 +8,20 @@
 import Foundation
 import UIKit
 
-class SPAction {
+final class SPAction {
 
     let action: UIAction
+    let groupIdentifier: Int
     let handler: UIActionHandler
 
-    init(title: String = "", image: UIImage? = nil, identifier: UIAction.Identifier? = nil, attributes: UIMenuElement.Attributes = [], state: UIMenuElement.State = .off, handler: @escaping UIActionHandler) {
+    init(title: String = "", image: UIImage? = nil, identifier: UIAction.Identifier? = nil, attributes: UIMenuElement.Attributes = [], state: UIMenuElement.State = .off, groupIdentifier: Int, handler: @escaping UIActionHandler) {
         self.action = .init(title: title, image: image, identifier: identifier, attributes: attributes, state: state, handler: handler)
+        self.groupIdentifier = groupIdentifier
         self.handler = handler
     }
 }
 
-class SPMenu {
+final class SPMenu {
 
     private(set) var menu: UIMenu?
     let button: UIButton?
@@ -29,7 +31,10 @@ class SPMenu {
     var children: [SPAction] {
         didSet {
             if #available(iOS 14.0, *) {
-                menu = menu?.replacingChildren(children.map({ $0.action }))
+
+                let groups = Self.convertToGroups(actions: children)
+
+                menu = menu?.replacingChildren(groups)
                 button?.menu = menu
                 barButton?.menu = menu
             }
@@ -50,7 +55,8 @@ class SPMenu {
         self.barButton = nil
         self.parentController = nil
         if #available(iOS 14.0, *) {
-            menu = UIMenu(title: title, image: image, identifier: identifier, options: options, children: children.map({ $0.action }))
+            let groups = Self.convertToGroups(actions: children)
+            menu = UIMenu(title: title, image: image, identifier: identifier, options: options, children: groups)
             button.showsMenuAsPrimaryAction = true
             button.menu = menu
         } else {
@@ -65,13 +71,40 @@ class SPMenu {
         self.barButton = barButton
         self.parentController = parent
         if #available(iOS 14.0, *) {
-            menu = UIMenu(title: title, image: image, identifier: identifier, options: options, children: children.map({ $0.action }))
+            let groups = Self.convertToGroups(actions: children)
+            menu = UIMenu(title: title, image: image, identifier: identifier, options: options, children: groups)
             barButton.menu = menu
         } else {
             menu = nil
             barButton.target = self
             barButton.action = #selector(menuActioniOS13(_:))
         }
+    }
+
+    private static func convertToGroups(actions: [SPAction]) -> [UIMenuElement] {
+        var groups: [[SPAction]] = []
+
+        for action in actions {
+            if let index = groups.firstIndex(where: { $0.first?.groupIdentifier == action.groupIdentifier }) {
+                groups[index].append(action)
+            } else {
+                groups.append([action])
+            }
+        }
+
+        var finalChildrens: [UIMenuElement]
+        if groups.count == 1, let group = groups.first {
+            finalChildrens = group.map({ $0.action })
+        } else {
+            finalChildrens = []
+
+            for group in groups {
+                let menu = UIMenu(options: .displayInline, children: group.map({ $0.action }))
+                finalChildrens.append(menu)
+            }
+        }
+
+        return finalChildrens
     }
 
     // Backward compatibility for iOS 13

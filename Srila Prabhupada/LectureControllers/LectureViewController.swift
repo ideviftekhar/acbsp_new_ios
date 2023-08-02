@@ -308,11 +308,11 @@ extension LectureViewController {
             lastType = .default
         }
 
-        for sortType in LectureSortType.allCases {
+        for option in LectureSortType.allCases {
 
-            let state: UIAction.State = (lastType == sortType ? .on : .off)
+            let state: UIAction.State = (lastType == option ? .on : .off)
 
-            let action: SPAction = SPAction(title: sortType.rawValue, image: sortType.image, identifier: .init(sortType.rawValue), state: state, handler: { [self] action in
+            let action: SPAction = SPAction(title: option.rawValue, image: option.image, identifier: .init(option.rawValue), state: state, groupIdentifier: option.groupIdentifier, handler: { [self] action in
                 sortActionSelected(action: action)
             })
 
@@ -460,7 +460,7 @@ extension LectureViewController {
                 menuItems.append(markAsHeard)
             }
 
-            let eligibleResetProgressModels: [Model] = selectedModels.filter { $0.playProgress >= 1.0 }
+            let eligibleResetProgressModels: [Model] = selectedModels.filter { $0.playProgress > 0.0 }
             if !eligibleResetProgressModels.isEmpty, let resetProgress = allActions[.resetProgress] {
                 resetProgress.action.title = LectureOption.resetProgress.rawValue + " (\(eligibleResetProgressModels.count))"
                 menuItems.append(resetProgress)
@@ -472,27 +472,27 @@ extension LectureViewController {
 
     private func configureSelectionButton() {
 
-        let select: SPAction = SPAction(title: "Select", image: nil, handler: { [self] (_) in
+        let select: SPAction = SPAction(title: "Select", image: nil, groupIdentifier: 10001, handler: { [self] (_) in
             startSelection()
         })
 
-        let cancel: SPAction = SPAction(title: "Cancel", image: nil, handler: { [self] (_) in
+        let cancel: SPAction = SPAction(title: "Cancel", image: nil, groupIdentifier: 1001, handler: { [self] (_) in
             cancelSelection()
         })
 
-        let selectAll: SPAction = SPAction(title: "Select All", image: UIImage(systemName: "checkmark.circle"), handler: { [self] (_) in
+        let selectAll: SPAction = SPAction(title: "Select All", image: UIImage(systemName: "checkmark.circle"), groupIdentifier: 1002, handler: { [self] (_) in
             selectedModels = models
             reloadSelectedAll(isSelected: true)
             Haptic.selection()
         })
-        let deselectAll: SPAction = SPAction(title: "Deselect All", image: UIImage(systemName: "circle"), handler: { [self] (_) in
+        let deselectAll: SPAction = SPAction(title: "Deselect All", image: UIImage(systemName: "circle"), groupIdentifier: 1002, handler: { [self] (_) in
             selectedModels.removeAll()
             reloadSelectedAll(isSelected: false)
             Haptic.selection()
         })
 
         for option in LectureOption.allCases {
-            let action: SPAction = SPAction(title: option.rawValue, image: option.image, identifier: .init(option.rawValue), handler: { [self] _ in
+            let action: SPAction = SPAction(title: option.rawValue, image: option.image, identifier: .init(option.rawValue), groupIdentifier: option.groupIdentifier, handler: { [self] _ in
 
                 guard !selectedModels.isEmpty else {
                     return

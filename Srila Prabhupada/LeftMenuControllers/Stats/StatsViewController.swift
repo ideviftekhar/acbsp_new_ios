@@ -212,11 +212,11 @@ extension StatsViewController {
             lastType = .all
         }
 
-        for statsType in StatsType.allCases {
+        for option in StatsType.allCases {
 
-            let state: UIAction.State = (lastType == statsType ? .on : .off)
+            let state: UIAction.State = (lastType == option ? .on : .off)
 
-            let action: SPAction = SPAction(title: statsType.rawValue, image: nil, identifier: .init(statsType.rawValue), state: state, handler: { [self] action in
+            let action: SPAction = SPAction(title: option.rawValue, image: nil, identifier: .init(option.rawValue), state: state, groupIdentifier: option.groupIdentifier, handler: { [self] action in
                 customTimeActionSelected(action: action)
             })
 

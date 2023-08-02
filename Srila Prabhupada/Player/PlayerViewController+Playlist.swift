@@ -59,7 +59,7 @@ extension PlayerViewController {
     internal func configurePlaylistOptionMenu() {
         var childrens: [SPAction] = []
 
-        let editAction: SPAction = SPAction(title: "Edit", image: UIImage(systemName: "pencil"), identifier: .init("Edit"), handler: { [self] _ in
+        let editAction: SPAction = SPAction(title: "Edit", image: UIImage(systemName: "pencil"), identifier: .init("Edit"), groupIdentifier: 1, handler: { [self] _ in
             Haptic.softImpact()
             self.lectureTebleView.setEditing(true, animated: true)
             playNextMenuButton.isHidden = true
@@ -72,14 +72,14 @@ extension PlayerViewController {
         })
         childrens.append(editAction)
 
-        let clearWatchedAction: SPAction = SPAction(title: "Clear Watched", image: UIImage(systemName: "text.badge.minus"), identifier: .init("Clear Watched"), handler: { [self] _ in
+        let clearWatchedAction: SPAction = SPAction(title: "Clear Watched", image: UIImage(systemName: "text.badge.minus"), identifier: .init("Clear Watched"), groupIdentifier: 2, handler: { [self] _ in
             Haptic.success()
             let completedIDs: [Int] = models.filter { $0.isCompleted }.map { $0.id }
             self.removeFromQueue(lectureIDs: completedIDs)
         })
         childrens.append(clearWatchedAction)
 
-        let clearAllAction: SPAction = SPAction(title: "Clear All", image: UIImage(systemName: "text.badge.xmark"), identifier: .init("Clear All"), handler: { [self] _ in
+        let clearAllAction: SPAction = SPAction(title: "Clear All", image: UIImage(systemName: "text.badge.xmark"), identifier: .init("Clear All"), groupIdentifier: 2, handler: { [self] _ in
             Haptic.warning()
             self.showAlert(title: "Clear Play Next?", message: "Are you sure you would like to clear Play Next Queue?", preferredStyle: .alert, sourceView: playNextMenuButton, cancel: ("Cancel", nil), destructive: ("Clear", {
                 Haptic.success()

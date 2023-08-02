@@ -180,11 +180,11 @@ extension PlaylistViewController {
             lastType = .default
         }
 
-        for sortType in PlaylistSortType.allCases {
+        for option in PlaylistSortType.allCases {
 
-            let state: UIAction.State = (lastType == sortType ? .on : .off)
+            let state: UIAction.State = (lastType == option ? .on : .off)
 
-            let action: SPAction = SPAction(title: sortType.rawValue, image: sortType.image, identifier: .init(sortType.rawValue), state: state, handler: { [self] action in
+            let action: SPAction = SPAction(title: option.rawValue, image: option.image, identifier: .init(option.rawValue), state: state, groupIdentifier: option.groupIdentifier, handler: { [self] action in
                 sortActionSelected(action: action)
             })
 

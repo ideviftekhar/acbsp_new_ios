@@ -40,6 +40,7 @@ extension PlayerViewController {
 
             miniPlayerView.playedSeconds = playedSeconds
             currentTimeLabel.text = currentTime.toHHMMSS
+            updateTotalTime(seconds: currentTime)
         }
     }
 
@@ -117,9 +118,8 @@ extension PlayerViewController {
         self.timeControlStatusObserver = player?.observe(\.timeControlStatus, options: [.new, .old], changeHandler: { [self] (player, _) in
 
             let totalDuration: Int = self.totalDuration
-            let time = Time(totalSeconds: totalDuration)
-            totalTimeLabel.text = time.displayString
-            miniPlayerView.lectureDuration = time
+            miniPlayerView.lectureDuration = Time(totalSeconds: totalDuration)
+            updateTotalTime(seconds: self.currentTime)
 
             switch player.timeControlStatus {
             case .paused, .playing:
@@ -134,9 +134,8 @@ extension PlayerViewController {
         self.itemStatusObserver = item.observe(\.status, options: [.new, .old], changeHandler: { [self] (_, change) in
 
             let totalDuration: Int = self.totalDuration
-            let time = Time(totalSeconds: totalDuration)
-            totalTimeLabel.text = time.displayString
-            miniPlayerView.lectureDuration = time
+            miniPlayerView.lectureDuration = Time(totalSeconds: totalDuration)
+            updateTotalTime(seconds: self.currentTime)
 
             if let newValue = change.newValue {
                 switch newValue {

@@ -30,4 +30,13 @@ enum PlaylistOption: String, CaseIterable {
             return UIImage(systemName: "text.badge.plus")
         }
     }
+
+    var groupIdentifier: Int {
+        switch self {
+        case .edit, .delete:
+            return 1
+        case .addToQueue, .addToPlayNext:
+            return 2
+        }
+    }
 }

@@ -180,7 +180,6 @@ class MiniPlayerView: UIView {
                 if seekGesture.state != .changed {
 
                     currentTimeLabel.text = Int(playedSeconds).toHHMMSS
-
                     progressView.progress = playedSeconds / Float(totalSeconds)
                 }
             }

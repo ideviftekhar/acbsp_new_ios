@@ -11,6 +11,7 @@ import AlamofireImage
 import IQListKit
 import FirebaseFirestore
 import Combine
+import MarqueeLabel
 
 protocol PlayerViewControllerDelegate: AnyObject {
     func playerController(_ controller: PlayerViewController, didChangeVisibleState state: PlayerViewController.ViewState)
@@ -47,7 +48,7 @@ class PlayerViewController: LectureViewController {
     @IBOutlet internal var stackViewMain: UIStackView!
     @IBOutlet private var stackViewMinimize: UIStackView!
     @IBOutlet internal var thumbnailImageView: UIImageView!
-    @IBOutlet private var titleLabel: UILabel!
+    @IBOutlet private var titleLabel: MarqueeLabel!
     @IBOutlet private var verseLabel: UILabel!
     @IBOutlet private var languageLabel: UILabel!
     @IBOutlet private var categoryLabel: UILabel!
@@ -63,6 +64,8 @@ class PlayerViewController: LectureViewController {
     @IBOutlet internal var totalTimeLabel: UILabel!
     @IBOutlet internal var loadingProgressView: UIProgressView!
     @IBOutlet internal var progressView: UIProgressView!
+
+    var showRemainingDuration: Bool = false
 
     @IBOutlet internal var videoButton: UIButton!
     @IBOutlet internal var menuButton: UIButton!
@@ -274,11 +277,7 @@ class PlayerViewController: LectureViewController {
                     waveformURL = nil
                 }
 
-                UIView.animate(withDuration: 0.2, animations: { [self] in
-                    waveformView.audioURL = waveformURL
-                    self.view.setNeedsLayout()
-                    self.view.layoutIfNeeded()
-                })
+                waveformView.audioURL = waveformURL
 
                 do {
                     if loopLectureButton.isSelected == true {
@@ -410,6 +409,7 @@ class PlayerViewController: LectureViewController {
 
         super.viewDidLoad()
 
+        lectureTebleView.contentInset = .init(top: 30, left: 0, bottom: 30, right: 0)
         configurePlayRateMenu()
         configureMenuButton()
         configurePlaylistOptionMenu()
@@ -429,6 +429,13 @@ class PlayerViewController: LectureViewController {
         }
 
         do {
+            titleLabel.type = .continuous
+            titleLabel.speed = .duration(10)
+            titleLabel.fadeLength = 30.0
+            titleLabel.trailingBuffer = 30.0
+        }
+
+        do {
             previousLongPressGesture.isEnabled = false
             nextLongPressGesture.isEnabled = false
             nextLectureButton.addGestureRecognizer(nextLongPressGesture)
@@ -440,9 +447,16 @@ class PlayerViewController: LectureViewController {
             lectureTebleView.panGestureRecognizer.addTarget(self, action: #selector(tableViewPanRecognized(_:)))
         }
 
+//        do {
+//            let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(visualizerTapped))
+//            audioVisualizerView.addGestureRecognizer(gestureRecognizer)
+//        }
+
         do {
-            let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(visualizerTapped))
-            audioVisualizerView.addGestureRecognizer(gestureRecognizer)
+            let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(totalTimeTapped))
+            totalTimeLabel.addGestureRecognizer(gestureRecognizer)
+            let userDefaultKey: String = "\(Self.self).showRemainingDuration"
+            showRemainingDuration = UserDefaults.standard.bool(forKey: userDefaultKey)
         }
 
         hidePlaylist(animated: false)
@@ -451,7 +465,38 @@ class PlayerViewController: LectureViewController {
         registerAudioSessionObservers()
     }
 
-    @objc private func visualizerTapped() {
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+
+    var isFirstTime: Bool = true
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+
+        if isFirstTime {
+            self.showPlaylist(animated: true)
+            isFirstTime = false
+        }
+    }
+
+    @objc private func totalTimeTapped() {
+        let userDefaultKey: String = "\(Self.self).showRemainingDuration"
+        showRemainingDuration = !UserDefaults.standard.bool(forKey: userDefaultKey)
+        UserDefaults.standard.set(showRemainingDuration, forKey: userDefaultKey)
+        UserDefaults.standard.synchronize()
+        updateTotalTime(seconds: self.currentTime)
+    }
+
+    internal func updateTotalTime(seconds: Int) {
+        if showRemainingDuration {
+            totalTimeLabel.text = Time(totalSeconds: self.totalDuration - seconds).displayString
+        } else {
+            totalTimeLabel.text = Time(totalSeconds: self.totalDuration).displayString
+        }
+    }
+
+//    @objc private func visualizerTapped() {
 //        let userDefaultKey: String = "\(Self.self).\(WaveformView.self)"
 //        let newSettings = !UserDefaults.standard.bool(forKey: userDefaultKey)
 //        UserDefaults.standard.set(newSettings, forKey: userDefaultKey)
@@ -474,22 +519,7 @@ class PlayerViewController: LectureViewController {
 //            self.view.setNeedsLayout()
 //            self.view.layoutIfNeeded()
 //        })
-    }
-
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-
-    var isFirstTime: Bool = true
-
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        if isFirstTime {
-            self.showPlaylist(animated: true)
-            isFirstTime = false
-        }
-    }
+//    }
 
     func updateMetadata() {
         updateMenuOption()
@@ -501,8 +531,7 @@ class PlayerViewController: LectureViewController {
             categoryLabel.text = categoryString
             locationLabel.text = currentLecture.location.displayString
             dateLabel.text = currentLecture.dateOfRecording.display_dd_MMM_yyyy
-            totalTimeLabel.text = currentLecture.lengthTime.displayString
-
+            updateTotalTime(seconds: currentLecture.lastPlayedPoint)
             if !currentLecture.location.displayString.isEmpty {
                 locationLabel?.text = currentLecture.location.displayString
             } else {
@@ -638,6 +667,7 @@ extension PlayerViewController {
                 waveformView.progress = progress
                 miniPlayerView.playedSeconds = playedSeconds
                 currentTimeLabel.text = roundedUpSeconds.toHHMMSS
+                updateTotalTime(seconds: roundedUpSeconds)
 
                 if roundedUpSeconds % 60 == 0 {
                     DefaultLectureViewModel.defaultModel.offlineUpdateLectureProgress(lecture: currentLecture, lastPlayedPoint: roundedUpSeconds)
@@ -765,11 +795,11 @@ extension PlayerViewController {
             lastRate = .one
         }
 
-        for playRate in PlayRate.allCases {
+        for option in PlayRate.allCases {
 
-            let state: UIAction.State = (lastRate == playRate ? .on : .off)
+            let state: UIAction.State = (lastRate == option ? .on : .off)
 
-            let action: SPAction = SPAction(title: playRate.rawValue, image: nil, identifier: .init(playRate.rawValue), state: state, handler: { [self] action in
+            let action: SPAction = SPAction(title: option.rawValue, image: nil, identifier: .init(option.rawValue), state: state, groupIdentifier: option.groupIdentifier, handler: { [self] action in
                 Haptic.selection()
                 playRateActionSelected(action: action)
             })

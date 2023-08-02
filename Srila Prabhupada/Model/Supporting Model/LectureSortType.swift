@@ -14,8 +14,8 @@ enum LectureSortType: String, CaseIterable {
     case durationHighToLow = "Duration: High to Low"
     case progressLowToHigh = "Progress: Low to High"
     case progressHighToLow = "Progress: High to Low"
-    case dateOldestFirst = "Recording Date: Oldest First"
-    case dateLatestFirst = "Recording Date: Latest First"
+    case dateOldestFirst = "Recording: Oldest First"
+    case dateLatestFirst = "Recording: Latest First"
     case aToZ = "Alphabetically: A -> Z"
     case zToA = "Alphabetically: Z -> A"
 
@@ -62,6 +62,21 @@ enum LectureSortType: String, CaseIterable {
             return UIImage(systemName: "a.circle.fill")
         case .zToA:
             return UIImage(systemName: "z.circle.fill")
+        }
+    }
+
+    var groupIdentifier: Int {
+        switch self {
+        case .`default`:
+            return 1
+        case .durationLowToHigh, .durationHighToLow:
+            return 2
+        case .progressLowToHigh, .progressHighToLow:
+            return 3
+        case .dateOldestFirst, .dateLatestFirst:
+            return 4
+        case .aToZ, .zToA:
+            return 5
         }
     }
 

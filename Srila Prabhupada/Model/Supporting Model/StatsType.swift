@@ -64,4 +64,17 @@ public enum StatsType: String, CaseIterable {
         }
         return nil
     }
+
+    var groupIdentifier: Int {
+        switch self {
+        case .today:
+            return 1
+        case .oneWeek, .oneMonth, .oneYear:
+            return 2
+        case .thisWeek, .lastWeek, .lastMonth:
+            return 3
+        case .all, .custom:
+            return 4
+        }
+    }
 }

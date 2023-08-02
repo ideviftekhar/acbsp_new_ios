@@ -55,6 +55,19 @@ enum PlaylistSortType: String, CaseIterable {
         }
     }
 
+    var groupIdentifier: Int {
+        switch self {
+        case .`default`:
+            return 1
+        case .lecturesLessToMore, .lecturesMoreToLess:
+            return 2
+        case .dateOldestFirst, .dateLatestFirst:
+            return 3
+        case .aToZ, .zToA:
+            return 4
+        }
+    }
+
     func sort(_ playlists: [Playlist]) -> [Playlist] {
         switch self {
         case .default:

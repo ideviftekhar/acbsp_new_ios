@@ -97,7 +97,7 @@ extension PlayerViewController {
                     direction = .right
                 }
                 UIView.animate(withDuration: 0.2, delay: 0, options: [.beginFromCurrentState, .curveEaseOut], animations: { [self] in
-                    progressView.transform = .init(scaleX: 1, y: 3.0)
+                    progressView.transform = .init(scaleX: 1, y: 2.0)
                     loadingProgressView.transform = progressView.transform
                 })
             } else if abs(velocity.x) < abs(velocity.y) {
@@ -119,6 +119,7 @@ extension PlayerViewController {
                 progressView.progress = progress
                 waveformView.progress = progress
                 currentTimeLabel.text = Int(proposedSeek).toHHMMSS
+                updateTotalTime(seconds: Int(proposedSeek))
                 miniPlayerView.playedSeconds = proposedSeek
             case .up:
                 break
@@ -203,10 +204,10 @@ extension PlayerViewController {
         case .began:
             break
         case .changed:
-            var move = -lectureTebleView.contentOffset.y
+            var move = -(lectureTebleView.contentOffset.y + lectureTebleView.contentInset.top)
 
             if move > 0 {
-                lectureTebleView.contentOffset = CGPoint.zero
+                lectureTebleView.contentOffset = CGPoint(x: 0, y: -lectureTebleView.contentInset.top)
 
                 var bounds = self.view.frame
 

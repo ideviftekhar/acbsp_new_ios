@@ -72,4 +72,19 @@ enum LectureOption: String, CaseIterable {
             return UIImage(systemName: "info.circle")
         }
     }
+
+    var groupIdentifier: Int {
+        switch self {
+        case .addToPlayNext, .addToQueue, .removeFromQueue:
+            return 1
+        case .download, .resumeDownload, .pauseDownload, .deleteFromDownloads:
+            return 2
+        case .markAsFavorite, .removeFromFavorite, .addToPlaylist, .removeFromPlaylist:
+            return 3
+        case .markAsHeard, .resetProgress:
+            return 4
+        case .share, .info:
+            return 5
+        }
+    }
 }

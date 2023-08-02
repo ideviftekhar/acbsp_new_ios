@@ -290,6 +290,8 @@
 		C0B7990C28DC4DCE00681649 /* LectureViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B7990B28DC4DCE00681649 /* LectureViewModel.swift */; };
 		C0B7991128DC524500681649 /* PlaylistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0B7991028DC524500681649 /* PlaylistViewModel.swift */; };
 		C0BC771028D5AE1000C2629F /* TappableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0BC770F28D5AE1000C2629F /* TappableLabel.swift */; };
+		C0C0D1CC2A7A717500655D0E /* GradientMaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C0D1CB2A7A717500655D0E /* GradientMaskView.swift */; };
+		C0C0D1CD2A7A717500655D0E /* GradientMaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C0D1CB2A7A717500655D0E /* GradientMaskView.swift */; };
 		C0C51B8C2A7803D60015199E /* PlayerViewController+PlayControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C51B8B2A7803D60015199E /* PlayerViewController+PlayControl.swift */; };
 		C0C51B8D2A7803D60015199E /* PlayerViewController+PlayControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C51B8B2A7803D60015199E /* PlayerViewController+PlayControl.swift */; };
 		C0C51B8F2A7804840015199E /* PlayerViewController+PlayerObservers.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0C51B8E2A7804840015199E /* PlayerViewController+PlayerObservers.swift */; };
@@ -471,6 +473,7 @@
 		C0B7990B28DC4DCE00681649 /* LectureViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LectureViewModel.swift; sourceTree = "<group>"; };
 		C0B7991028DC524500681649 /* PlaylistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaylistViewModel.swift; sourceTree = "<group>"; };
 		C0BC770F28D5AE1000C2629F /* TappableLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TappableLabel.swift; sourceTree = "<group>"; };
+		C0C0D1CB2A7A717500655D0E /* GradientMaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientMaskView.swift; sourceTree = "<group>"; };
 		C0C51B8B2A7803D60015199E /* PlayerViewController+PlayControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerViewController+PlayControl.swift"; sourceTree = "<group>"; };
 		C0C51B8E2A7804840015199E /* PlayerViewController+PlayerObservers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerViewController+PlayerObservers.swift"; sourceTree = "<group>"; };
 		C0C51B912A7804CB0015199E /* PlayerViewController+MiniPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerViewController+MiniPlayer.swift"; sourceTree = "<group>"; };
@@ -863,6 +866,7 @@
 				C07A8F3728F7FD44001A6162 /* ESTMusicIndicatorView */,
 				C017E68B293E24C1005DA700 /* Haptic.swift */,
 				6E5AFAD92A2B7213008FABA0 /* SimplePDF */,
+				C0C0D1CB2A7A717500655D0E /* GradientMaskView.swift */,
 			);
 			path = "Third Party";
 			sourceTree = "<group>";
@@ -1408,6 +1412,7 @@
 				6E69007E2A25C4C20086C7DB /* LectureViewModel+TopLecture.swift in Sources */,
 				6E69007F2A25C4C20086C7DB /* StatsViewController.swift in Sources */,
 				6E6900802A25C4C20086C7DB /* UIViewController+Alert.swift in Sources */,
+				C0C0D1CD2A7A717500655D0E /* GradientMaskView.swift in Sources */,
 				6E6900812A25C4C20086C7DB /* PlaylistLecturesViewController.swift in Sources */,
 				6E6900822A25C4C20086C7DB /* FavoriteViewController.swift in Sources */,
 				C0C51B902A7804840015199E /* PlayerViewController+PlayerObservers.swift in Sources */,
@@ -1554,6 +1559,7 @@
 				C0EE5BC828F8401E00528AA7 /* LectureViewModel+TopLecture.swift in Sources */,
 				C00E4E1628CA433A00F1A123 /* StatsViewController.swift in Sources */,
 				C0EA13EA28CF5A9D00BE9110 /* UIViewController+Alert.swift in Sources */,
+				C0C0D1CC2A7A717500655D0E /* GradientMaskView.swift in Sources */,
 				C00E4E1A28CA45E000F1A123 /* PlaylistLecturesViewController.swift in Sources */,
 				C00E4E0A28CA39FE00F1A123 /* FavoriteViewController.swift in Sources */,
 				C0C51B8F2A7804840015199E /* PlayerViewController+PlayerObservers.swift in Sources */,
@@ -1718,7 +1724,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5.3;
+				MARKETING_VERSION = 2.5.4;
 				OTHER_SWIFT_FLAGS = "$(inherited) -DBVKS";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bhakti.bvks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1761,7 +1767,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.5.3;
+				MARKETING_VERSION = 2.5.4;
 				OTHER_SWIFT_FLAGS = "$(inherited) -DBVKS";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bhakti.bvks;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1842,7 +1848,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Configurations/ShrilaPrabhupada/Srila Prabhupada.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 30;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "Srila Prabhupada/Info.plist";
@@ -1859,7 +1865,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.3;
+				MARKETING_VERSION = 2.0.4;
 				OTHER_SWIFT_FLAGS = "$(inherited) -DSP";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bvksdigital.acbsp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1946,7 +1952,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Configurations/ShrilaPrabhupada/Srila Prabhupada.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development: Himanshu Akhria (35554LNBHY)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 30;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 35554LNBHY;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = S92372RU6B;
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = S92372RU6B;
@@ -1965,7 +1971,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.0.3;
+				MARKETING_VERSION = 2.0.4;
 				OTHER_SWIFT_FLAGS = "$(inherited) -DSP";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bvksdigital.acbsp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
