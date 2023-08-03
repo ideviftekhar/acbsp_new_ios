@@ -344,7 +344,7 @@
 		6E67E2832A29DC1A000CE184 /* CommonConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonConstants.swift; sourceTree = "<group>"; };
 		6E68EA9D2A2E07A200C6DB6D /* Srila Prabhupada.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "Srila Prabhupada.entitlements"; sourceTree = "<group>"; };
 		6E68EA9E2A2E07AB00C6DB6D /* BVKS.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = BVKS.entitlements; sourceTree = "<group>"; };
-		6E6900F12A25C4C20086C7DB /* BVKS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BVKS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		6E6900F12A25C4C20086C7DB /* Bhakti Vikasa Swami.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Bhakti Vikasa Swami.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6E6900F52A25D7E90086C7DB /* GoogleService-Info-development-client.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-development-client.plist"; sourceTree = "<group>"; };
 		6E6900F62A25D7E90086C7DB /* GoogleService-Info-production-client.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-production-client.plist"; sourceTree = "<group>"; };
 		6E6AED102A3D9D87009BB06D /* NotificationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationViewController.swift; sourceTree = "<group>"; };
@@ -680,7 +680,7 @@
 			isa = PBXGroup;
 			children = (
 				C00E4DC728CA36F100F1A123 /* Srila Prabhupada.app */,
-				6E6900F12A25C4C20086C7DB /* BVKS.app */,
+				6E6900F12A25C4C20086C7DB /* Bhakti Vikasa Swami.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1064,7 +1064,7 @@
 			);
 			name = BVKS;
 			productName = "Srila Prabhupada";
-			productReference = 6E6900F12A25C4C20086C7DB /* BVKS.app */;
+			productReference = 6E6900F12A25C4C20086C7DB /* Bhakti Vikasa Swami.app */;
 			productType = "com.apple.product-type.application";
 		};
 		C00E4DC628CA36F100F1A123 /* Srila Prabhupada */ = {
@@ -1704,7 +1704,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Configurations/BVKS/BVKS.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				"EXCLUDED_ARCHS[sdk=iphoneos*]" = x86_64;
@@ -1730,7 +1730,7 @@
 				MARKETING_VERSION = 2.5.4;
 				OTHER_SWIFT_FLAGS = "$(inherited) -DBVKS";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bhakti.bvks;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Bhakti Vikasa Swami";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
@@ -1752,7 +1752,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Configurations/BVKS/BVKS.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1775,7 +1775,7 @@
 				MARKETING_VERSION = 2.5.4;
 				OTHER_SWIFT_FLAGS = "$(inherited) -DBVKS";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bhakti.bvks;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "Bhakti Vikasa Swami";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = YES;
@@ -1853,7 +1853,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Configurations/ShrilaPrabhupada/Srila Prabhupada.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				EXCLUDED_ARCHS = "";
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1867,10 +1867,12 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 10.13;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MARKETING_VERSION = 2.0.4;
 				OTHER_SWIFT_FLAGS = "$(inherited) -DSP";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bvksdigital.acbsp;
@@ -1958,7 +1960,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Configurations/ShrilaPrabhupada/Srila Prabhupada.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development: Himanshu Akhria (35554LNBHY)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 31;
 				DEVELOPMENT_TEAM = 35554LNBHY;
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = S92372RU6B;
 				"DEVELOPMENT_TEAM[sdk=macosx*]" = S92372RU6B;
@@ -1976,10 +1978,12 @@
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				"IPHONEOS_DEPLOYMENT_TARGET[sdk=macosx*]" = 10.13;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MARKETING_VERSION = 2.0.4;
 				OTHER_SWIFT_FLAGS = "$(inherited) -DSP";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bvksdigital.acbsp;

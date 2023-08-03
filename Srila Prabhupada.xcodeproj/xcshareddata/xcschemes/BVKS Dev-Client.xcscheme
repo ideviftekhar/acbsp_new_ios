@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "6E6900672A25C4C20086C7DB"
-               BuildableName = "BVKS.app"
+               BuildableName = "Bhakti Vikas Swami.app"
                BlueprintName = "BVKS"
                ReferencedContainer = "container:Srila Prabhupada.xcodeproj">
             </BuildableReference>
@@ -45,7 +45,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6E6900672A25C4C20086C7DB"
-            BuildableName = "BVKS.app"
+            BuildableName = "Bhakti Vikas Swami.app"
             BlueprintName = "BVKS"
             ReferencedContainer = "container:Srila Prabhupada.xcodeproj">
          </BuildableReference>
@@ -68,7 +68,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "6E6900672A25C4C20086C7DB"
-            BuildableName = "BVKS.app"
+            BuildableName = "Bhakti Vikas Swami.app"
             BlueprintName = "BVKS"
             ReferencedContainer = "container:Srila Prabhupada.xcodeproj">
          </BuildableReference>
