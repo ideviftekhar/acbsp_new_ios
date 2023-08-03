@@ -35,12 +35,12 @@ class MiniPlayerView: UIView {
         }
     }()
     
+    @IBOutlet private var stackViewInfo: UIStackView!
     @IBOutlet private var thumbnailImageView: UIImageView!
     @IBOutlet private var titleLabel: MarqueeLabel!
     @IBOutlet private var verseLabel: UILabel!
     @IBOutlet private var durationLabel: UILabel!
     @IBOutlet private var dateLabel: UILabel!
-    @IBOutlet private var expandButton: UIButton!
     @IBOutlet private var playButton: UIButton!
     @IBOutlet internal var nextButton: UIButton!
     @IBOutlet internal var loadingProgressView: UIProgressView!
@@ -52,6 +52,7 @@ class MiniPlayerView: UIView {
     @IBOutlet private var heightConstraint: NSLayoutConstraint!
 
     internal lazy var seekGesture = UIPanGestureRecognizer(target: self, action: #selector(panRecognized(_:)))
+    internal lazy var expandGesture = UITapGestureRecognizer(target: self, action: #selector(tapRecognized(_:)))
     internal lazy var nextLongPressGesture = UILongPressGestureRecognizer(target: self, action: #selector(longPressRecognized(_:)))
     internal var longPressTimer: Timer?
     internal var initialRate: Float = 1
@@ -82,7 +83,8 @@ class MiniPlayerView: UIView {
         titleLabel.fadeLength = 10.0
         titleLabel.trailingBuffer = 30.0
         seekGesture.delegate = self
-        expandButton.addGestureRecognizer(seekGesture)
+        stackViewInfo.addGestureRecognizer(seekGesture)
+        stackViewInfo.addGestureRecognizer(expandGesture)
 
         nextLongPressGesture.isEnabled = false
         nextButton.addGestureRecognizer(nextLongPressGesture)
@@ -208,10 +210,5 @@ class MiniPlayerView: UIView {
     @IBAction private func playNextAction(_ sender: UIButton) {
         Haptic.success()
         delegate?.miniPlayerViewDidRequestedNext(self)
-    }
-
-    @IBAction private func expandAction(_ sender: UIButton) {
-        Haptic.softImpact()
-        delegate?.miniPlayerViewDidExpand(self)
     }
 }

@@ -89,11 +89,8 @@ extension AVPlayerItemTrack {
             guard wrapper.context != nil else {
                 return
             }
-            
-            guard let audioBuffer = UnsafeMutableAudioBufferListPointer(bufferListInOut).first else {
-                NSLog("%@", "WARNING: MTAudioTap processing failed with status \(status).")
-                return
-            }
+
+            let audioBuffer = bufferListInOut.pointee.mBuffers
             let sampleCount = Int(audioBuffer.mDataByteSize) / MemoryLayout<Float>.size
             let samples = UnsafeMutableBufferPointer<Float>(
                 start: audioBuffer.mData?.assumingMemoryBound(to: Float.self),
@@ -124,7 +121,7 @@ extension AVPlayerItemTrack {
 
         var tap: Unmanaged<MTAudioProcessingTap>?
         let err = MTAudioProcessingTapCreate(kCFAllocatorDefault, &callbacks, kMTAudioProcessingTapCreationFlag_PostEffects, &tap)
-        assert(noErr == err);
+        assert(noErr == err)
 
         let inputParams = AVMutableAudioMixInputParameters(track: audioTrack)
         inputParams.audioTapProcessor = tap?.takeRetainedValue()

@@ -159,6 +159,10 @@ extension PlayerViewController {
         }
     }
 
+    @IBAction private func minimizeButtonTapped(_ sender: UIButton) {
+        minimize(animated: true)
+    }
+
     func showPlaylist(animated: Bool) {
         let animationBlock = { [self] in
             playlistButton.isSelected = true

@@ -10,10 +10,10 @@ import UIKit
 class UIAnimatedButton: UIButton {
 
     private let rippleLayer = CAShapeLayer()
-    private var initalSizeFactor: CGFloat = 1.0
+    private var initalSizeFactor: CGFloat = 1.5
     private var initialAlpha: Double = 0.3
     private var rippleColor: UIColor = UIColor.white
-    private var sizeFactor: CGFloat = 0.8
+    private var sizeFactor: CGFloat = 1.2
     private var duration: Double = 0.4
 
     override func awakeFromNib() {
@@ -64,9 +64,8 @@ class UIAnimatedButton: UIButton {
             lastSize = self.bounds.size
 
             let center = CGPoint(x: bounds.midX, y: bounds.midY)
-            let diagnolLength = sqrt(bounds.width*bounds.width + bounds.height*bounds.height)
             let endAngle: CGFloat = CGFloat.pi * 2
-            let radius: CGFloat = 0.5 * diagnolLength * initalSizeFactor
+            let radius: CGFloat = CGFloat.minimum(bounds.width, bounds.height)/2 * initalSizeFactor
             let path = UIBezierPath(arcCenter: center, radius: radius, startAngle: 0.0, endAngle: endAngle, clockwise: true)
             rippleLayer.path = path.cgPath
             rippleLayer.opacity = 0

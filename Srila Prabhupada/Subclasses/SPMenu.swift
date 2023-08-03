@@ -83,15 +83,17 @@ final class SPMenu {
 
     private static func convertToGroups(actions: [SPAction]) -> [UIMenuElement] {
         var groups: [[SPAction]] = []
-
-        for action in actions {
-            if let index = groups.firstIndex(where: { $0.first?.groupIdentifier == action.groupIdentifier }) {
-                groups[index].append(action)
-            } else {
-                groups.append([action])
+        if Environment.current.device == .mac {
+            groups = [actions]
+        } else {
+            for action in actions {
+                if let index = groups.firstIndex(where: { $0.first?.groupIdentifier == action.groupIdentifier }) {
+                    groups[index].append(action)
+                } else {
+                    groups.append([action])
+                }
             }
         }
-
         var finalChildrens: [UIMenuElement]
         if groups.count == 1, let group = groups.first {
             finalChildrens = group.map({ $0.action })
@@ -103,7 +105,6 @@ final class SPMenu {
                 finalChildrens.append(menu)
             }
         }
-
         return finalChildrens
     }
 

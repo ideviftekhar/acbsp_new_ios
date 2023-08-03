@@ -269,9 +269,10 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tUs-5A-YJI">
                                 <rect key="frame" x="0.0" y="0.0" width="40" height="90"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q0B-mL-dK8">
-                                        <rect key="frame" x="0.0" y="0.0" width="40" height="90"/>
+                                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q0B-mL-dK8">
+                                        <rect key="frame" x="0.0" y="25" width="40" height="40"/>
                                         <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="Ek9-K2-QGy"/>
                                             <constraint firstAttribute="width" constant="40" id="tnl-7a-AwF"/>
                                         </constraints>
                                         <color key="tintColor" name="0099CC"/>
@@ -293,9 +294,8 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="Q0B-mL-dK8" secondAttribute="trailing" id="6Hn-6f-ysR"/>
-                                    <constraint firstAttribute="bottom" secondItem="Q0B-mL-dK8" secondAttribute="bottom" id="DVo-dh-bJf"/>
+                                    <constraint firstItem="Q0B-mL-dK8" firstAttribute="centerY" secondItem="tUs-5A-YJI" secondAttribute="centerY" id="G0e-NA-dGR"/>
                                     <constraint firstItem="vfZ-ce-T4q" firstAttribute="centerX" secondItem="Q0B-mL-dK8" secondAttribute="centerX" id="OgV-67-sKp"/>
-                                    <constraint firstItem="Q0B-mL-dK8" firstAttribute="top" secondItem="tUs-5A-YJI" secondAttribute="top" id="akW-I8-y96"/>
                                     <constraint firstItem="Q0B-mL-dK8" firstAttribute="leading" secondItem="tUs-5A-YJI" secondAttribute="leading" id="oNv-Wo-hnu"/>
                                     <constraint firstItem="vfZ-ce-T4q" firstAttribute="centerY" secondItem="Q0B-mL-dK8" secondAttribute="centerY" id="ykw-pc-h42"/>
                                 </constraints>

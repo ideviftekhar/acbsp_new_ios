@@ -112,8 +112,8 @@
                             </stackView>
                         </subviews>
                     </stackView>
-                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fQG-Rf-zkX">
-                        <rect key="frame" x="287" y="0.0" width="49.666666666666686" height="71"/>
+                    <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fQG-Rf-zkX">
+                        <rect key="frame" x="287" y="18.333333333333332" width="49.666666666666686" height="34.333333333333343"/>
                         <color key="tintColor" name="0099CC"/>
                         <state key="normal" title=""/>
                         <buttonConfiguration key="configuration" style="plain" image="ellipsis.circle" catalog="system"/>
@@ -122,14 +122,13 @@
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="fZC-jx-OEg" secondAttribute="bottom" constant="5" id="64N-bq-jck"/>
                     <constraint firstAttribute="trailing" secondItem="fQG-Rf-zkX" secondAttribute="trailing" constant="8" id="7kw-Iz-3Kd"/>
-                    <constraint firstItem="fQG-Rf-zkX" firstAttribute="top" secondItem="YxG-zk-TLG" secondAttribute="top" id="86R-aX-dRB"/>
                     <constraint firstItem="fZC-jx-OEg" firstAttribute="top" secondItem="YxG-zk-TLG" secondAttribute="top" constant="5" id="88g-oH-oqJ"/>
                     <constraint firstItem="fZC-jx-OEg" firstAttribute="leading" secondItem="SaM-du-oZe" secondAttribute="trailing" constant="10" id="C74-rR-Tff"/>
                     <constraint firstItem="SaM-du-oZe" firstAttribute="leading" secondItem="YxG-zk-TLG" secondAttribute="leading" constant="10" id="HdN-gC-ATb">
                         <variation key="heightClass=regular-widthClass=regular" constant="20"/>
                     </constraint>
-                    <constraint firstAttribute="bottom" secondItem="fQG-Rf-zkX" secondAttribute="bottom" id="In6-h2-0z3"/>
                     <constraint firstItem="fQG-Rf-zkX" firstAttribute="leading" secondItem="fZC-jx-OEg" secondAttribute="trailing" id="YUu-bF-8rl"/>
+                    <constraint firstItem="fQG-Rf-zkX" firstAttribute="centerY" secondItem="YxG-zk-TLG" secondAttribute="centerY" id="cuH-We-nKB"/>
                     <constraint firstItem="SaM-du-oZe" firstAttribute="centerY" secondItem="YxG-zk-TLG" secondAttribute="centerY" id="dwa-u7-0bE"/>
                 </constraints>
             </tableViewCellContentView>

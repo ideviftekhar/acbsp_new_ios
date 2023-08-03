@@ -339,7 +339,7 @@ class LectureCell: UITableViewCell, IQModelableCell {
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
 
-        menuSelectionContentView?.isHidden = editing
+        menuSelectionContentView?.alpha = editing ? 0 : 1
     }
 }
 

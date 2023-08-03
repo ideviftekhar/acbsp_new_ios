@@ -13,7 +13,7 @@ extension MiniPlayerView: UIGestureRecognizerDelegate {
         longPressTimer?.invalidate()
         longPressTimer = Timer.scheduledTimer(withTimeInterval: 2, repeats: true, block: { [self] _ in
             if let index = Self.temporaryRates.firstIndex(of: temporaryRate),
-                (index + 1) < Self.temporaryRates.count {
+               (index + 1) < Self.temporaryRates.count {
                 temporaryRate = Self.temporaryRates[index + 1]
                 delegate?.miniPlayerView(self, didTemporaryChangeRate: temporaryRate)
             }
@@ -109,7 +109,8 @@ extension MiniPlayerView: UIGestureRecognizerDelegate {
         case .changed:
             switch direction {
             case .left, .right:
-                progressView.progress = proposedSeek / totalSeconds
+                let progress = proposedSeek / totalSeconds
+                progressView.progress = progress
                 currentTimeLabel.text = Int(proposedSeek).toHHMMSS
             case .up, .down:
                 break
@@ -147,6 +148,13 @@ extension MiniPlayerView: UIGestureRecognizerDelegate {
             break
         @unknown default:
             break
+        }
+    }
+
+    @objc internal func tapRecognized(_ sender: UITapGestureRecognizer) {
+        if sender.state == .ended {
+            Haptic.softImpact()
+            delegate?.miniPlayerViewDidExpand(self)
         }
     }
 }
