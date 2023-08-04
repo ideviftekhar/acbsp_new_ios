@@ -27,12 +27,12 @@ class FilterDetailTableViewCell: UITableViewCell, IQModelableCell {
     
     func setupCheckView() {
         self.checkView.boxType = .circle
-        self.checkView.tintColor = .white
-        self.checkView.onFillColor = UIColor.themeColor
-        self.checkView.onCheckColor = UIColor.white
+        self.checkView.tintColor = UIColor.FFFFFF
+        self.checkView.onFillColor = UIColor.F96D00
+        self.checkView.onCheckColor = UIColor.FFFFFF
 
         self.checkView.layer.borderWidth = 2.0
-        self.checkView.layer.borderColor = UIColor.themeColor.cgColor
+        self.checkView.layer.borderColor = UIColor.F96D00.cgColor
     }
 
     override func layoutSubviews() {

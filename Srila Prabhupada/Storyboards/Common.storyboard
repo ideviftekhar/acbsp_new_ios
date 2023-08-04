@@ -16,7 +16,7 @@
         <!--Filter-->
         <scene sceneID="O7W-uH-U9T">
             <objects>
-                <viewController storyboardIdentifier="FilterViewController" title="Filter" id="5fP-8M-h1D" customClass="FilterViewController" customModule="BVKS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="FilterViewController" title="Filter" id="5fP-8M-h1D" customClass="FilterViewController" customModule="Bhakti_Vikasa_Swami" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="zj5-A6-CTX">
                         <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -33,7 +33,7 @@
                                             </constraint>
                                         </constraints>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FilterTypeTableViewCell" rowHeight="50" id="JuC-hG-V6l" customClass="FilterTypeTableViewCell" customModule="BVKS" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FilterTypeTableViewCell" rowHeight="50" id="JuC-hG-V6l" customClass="FilterTypeTableViewCell" customModule="Bhakti_Vikasa_Swami" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="50" width="140" height="50"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="JuC-hG-V6l" id="7fF-Z4-i91">
@@ -51,7 +51,7 @@
                                                         </label>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="22" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wKP-Kh-WFR">
                                                             <rect key="frame" x="104" y="15" width="20" height="20"/>
-                                                            <color key="backgroundColor" name="ThemeColor"/>
+                                                            <color key="backgroundColor" name="F96D00"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="20" id="Nfa-1j-k53">
                                                                     <variation key="heightClass=regular-widthClass=regular" constant="30"/>
@@ -61,7 +61,7 @@
                                                                 </constraint>
                                                             </constraints>
                                                             <fontDescription key="fontDescription" name="AvenirNextCondensed-Regular" family="Avenir Next Condensed" pointSize="12"/>
-                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <color key="textColor" name="FFFFFF"/>
                                                             <nil key="highlightedColor"/>
                                                             <userDefinedRuntimeAttributes>
                                                                 <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
@@ -98,7 +98,7 @@
                                         <rect key="frame" x="140" y="0.0" width="290" height="730"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                         <prototypes>
-                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FilterDetailTableViewCell" rowHeight="51" id="bGo-0b-cEw" customClass="FilterDetailTableViewCell" customModule="BVKS" customModuleProvider="target">
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="FilterDetailTableViewCell" rowHeight="51" id="bGo-0b-cEw" customClass="FilterDetailTableViewCell" customModule="Bhakti_Vikasa_Swami" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="50" width="290" height="51"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bGo-0b-cEw" id="T4B-wQ-1gS">
@@ -107,7 +107,7 @@
                                                     <subviews>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kdI-3p-94k" customClass="BEMCheckBox">
                                                             <rect key="frame" x="15" y="15.666666666666664" width="20" height="20"/>
-                                                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                                            <color key="backgroundColor" name="F96D00"/>
                                                             <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="20" id="mjd-AX-4ui">
@@ -191,7 +191,7 @@
                                     <constraint firstItem="Dwa-ye-AVX" firstAttribute="top" secondItem="tmq-e0-9hJ" secondAttribute="top" id="vfe-9h-ZkW"/>
                                 </constraints>
                             </view>
-                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dL3-B5-RVy" customClass="RoundButton" customModule="BVKS" customModuleProvider="target">
+                            <button opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dL3-B5-RVy" customClass="RoundButton" customModule="Bhakti_Vikasa_Swami" customModuleProvider="target">
                                 <rect key="frame" x="20" y="848" width="390" height="40"/>
                                 <color key="backgroundColor" name="F96D00"/>
                                 <constraints>
@@ -272,7 +272,7 @@
         <!--Navigation Controller-->
         <scene sceneID="zLD-4I-Q9I">
             <objects>
-                <navigationController storyboardIdentifier="FilterNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="q8o-ig-Vgg" customClass="NavigationController" customModule="BVKS" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="FilterNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="q8o-ig-Vgg" customClass="NavigationController" customModule="Bhakti_Vikasa_Swami" customModuleProvider="target" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="el8-1Y-5R2">
                         <rect key="frame" x="0.0" y="59" width="430" height="44"/>
@@ -298,7 +298,7 @@
         <!--Player View Controller-->
         <scene sceneID="fNp-e4-xaf">
             <objects>
-                <viewController storyboardIdentifier="PlayerViewController" modalPresentationStyle="fullScreen" id="WLM-gm-tMu" customClass="PlayerViewController" customModule="BVKS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PlayerViewController" modalPresentationStyle="fullScreen" id="WLM-gm-tMu" customClass="PlayerViewController" customModule="Bhakti_Vikasa_Swami" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="mF5-Re-6Mr">
                         <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -317,7 +317,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QX9-Hg-KCZ" customClass="MiniPlayerView" customModule="BVKS" customModuleProvider="target">
+                                        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QX9-Hg-KCZ" customClass="MiniPlayerView" customModule="Bhakti_Vikasa_Swami" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="430" height="64"/>
                                             <subviews>
                                                 <progressView opaque="NO" alpha="0.20000000000000001" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.40000000596046448" translatesAutoresizingMaskIntoConstraints="NO" id="dbh-lf-uex">
@@ -354,7 +354,7 @@
                                                                                 </userDefinedRuntimeAttribute>
                                                                             </userDefinedRuntimeAttributes>
                                                                         </imageView>
-                                                                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C4s-lm-SFA" customClass="ESTMusicIndicatorView" customModule="BVKS" customModuleProvider="target">
+                                                                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="C4s-lm-SFA" customClass="ESTMusicIndicatorView" customModule="Bhakti_Vikasa_Swami" customModuleProvider="target">
                                                                             <rect key="frame" x="5" y="32" width="20" height="20"/>
                                                                             <color key="tintColor" name="000000"/>
                                                                             <constraints>
@@ -462,7 +462,7 @@
                                                         <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="253" verticalHuggingPriority="253" horizontalCompressionResistancePriority="753" verticalCompressionResistancePriority="753" translatesAutoresizingMaskIntoConstraints="NO" id="mDI-Xx-a6p">
                                                             <rect key="frame" x="297" y="0.0" width="117" height="54"/>
                                                             <subviews>
-                                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="253" verticalHuggingPriority="253" horizontalCompressionResistancePriority="753" verticalCompressionResistancePriority="753" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IvO-nj-v2h" customClass="UIAnimatedButton" customModule="BVKS" customModuleProvider="target">
+                                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="253" verticalHuggingPriority="253" horizontalCompressionResistancePriority="753" verticalCompressionResistancePriority="753" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IvO-nj-v2h" customClass="UIAnimatedButton" customModule="Bhakti_Vikasa_Swami" customModuleProvider="target">
                                                                     <rect key="frame" x="0.0" y="0.0" width="49.666666666666664" height="54"/>
                                                                     <color key="tintColor" name="000000"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -479,7 +479,7 @@
                                                                         <action selector="playAction:" destination="QX9-Hg-KCZ" eventType="touchUpInside" id="FzL-ac-U7t"/>
                                                                     </connections>
                                                                 </button>
-                                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="253" verticalHuggingPriority="253" horizontalCompressionResistancePriority="753" verticalCompressionResistancePriority="753" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1td-qG-pQt" customClass="UIAnimatedButton" customModule="BVKS" customModuleProvider="target">
+                                                                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="253" verticalHuggingPriority="253" horizontalCompressionResistancePriority="753" verticalCompressionResistancePriority="753" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1td-qG-pQt" customClass="UIAnimatedButton" customModule="Bhakti_Vikasa_Swami" customModuleProvider="target">
                                                                     <rect key="frame" x="49.666666666666679" y="0.0" width="67.333333333333314" height="54"/>
                                                                     <color key="tintColor" name="000000"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -674,7 +674,7 @@
                                                                 <constraint firstAttribute="height" priority="750" constant="40" id="Wk6-QB-6OW"/>
                                                             </constraints>
                                                         </stackView>
-                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jAW-gC-FnG" customClass="IQGradientMaskView" customModule="BVKS" customModuleProvider="target">
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jAW-gC-FnG" customClass="IQGradientMaskView" customModule="Bhakti_Vikasa_Swami" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="40" width="430" height="409.33333333333331"/>
                                                             <subviews>
                                                                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="67" estimatedRowHeight="67" sectionHeaderHeight="10" estimatedSectionHeaderHeight="10" sectionFooterHeight="1" estimatedSectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="aNp-J0-a0R">
@@ -916,7 +916,7 @@
                                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="Yto-xN-KLs">
                                                                     <rect key="frame" x="20" y="0.0" width="370" height="110"/>
                                                                     <subviews>
-                                                                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tr0-63-9V9" customClass="WaveformView" customModule="BVKS" customModuleProvider="target">
+                                                                        <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tr0-63-9V9" customClass="WaveformView" customModule="Bhakti_Vikasa_Swami" customModuleProvider="target">
                                                                             <rect key="frame" x="0.0" y="0.0" width="370" height="40"/>
                                                                             <subviews>
                                                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.20000000000000001" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8PG-P7-oWa">
@@ -990,7 +990,7 @@
                                                                                         </activityIndicatorView>
                                                                                     </subviews>
                                                                                 </stackView>
-                                                                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QKJ-nj-zn7" customClass="ESTMusicIndicatorView" customModule="BVKS" customModuleProvider="target">
+                                                                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QKJ-nj-zn7" customClass="ESTMusicIndicatorView" customModule="Bhakti_Vikasa_Swami" customModuleProvider="target">
                                                                                     <rect key="frame" x="187" y="0.0" width="20" height="20"/>
                                                                                     <color key="tintColor" name="000000"/>
                                                                                     <constraints>
@@ -1028,7 +1028,7 @@
                                                         <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="f3V-1y-uHQ" userLabel="Stack View Controls">
                                                             <rect key="frame" x="0.0" y="304.66666666666663" width="410" height="50"/>
                                                             <subviews>
-                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ubF-ZP-8SM" customClass="UIAnimatedButton" customModule="BVKS" customModuleProvider="target">
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ubF-ZP-8SM" customClass="UIAnimatedButton" customModule="Bhakti_Vikasa_Swami" customModuleProvider="target">
                                                                     <rect key="frame" x="0.0" y="0.0" width="82" height="50"/>
                                                                     <color key="tintColor" name="000000"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -1045,7 +1045,7 @@
                                                                         <action selector="backwardXSecondsPressed:" destination="WLM-gm-tMu" eventType="touchUpInside" id="Ut6-Ev-hv0"/>
                                                                     </connections>
                                                                 </button>
-                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Ei-Xj-vTp" customClass="UIAnimatedButton" customModule="BVKS" customModuleProvider="target">
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Ei-Xj-vTp" customClass="UIAnimatedButton" customModule="Bhakti_Vikasa_Swami" customModuleProvider="target">
                                                                     <rect key="frame" x="82" y="0.0" width="82" height="50"/>
                                                                     <color key="tintColor" name="000000"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -1062,7 +1062,7 @@
                                                                         <action selector="previousLecturePressed:" destination="WLM-gm-tMu" eventType="touchUpInside" id="wzV-U3-kLQ"/>
                                                                     </connections>
                                                                 </button>
-                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QCv-aO-13w" customClass="UIAnimatedButton" customModule="BVKS" customModuleProvider="target">
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QCv-aO-13w" customClass="UIAnimatedButton" customModule="Bhakti_Vikasa_Swami" customModuleProvider="target">
                                                                     <rect key="frame" x="164" y="0.0" width="82" height="50"/>
                                                                     <constraints>
                                                                         <constraint firstAttribute="height" constant="50" id="WtU-dp-Kdb"/>
@@ -1088,7 +1088,7 @@
                                                                         <action selector="playPauseButtonTapped:" destination="WLM-gm-tMu" eventType="touchUpInside" id="l2m-eP-vM8"/>
                                                                     </connections>
                                                                 </button>
-                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ai5-0H-dkz" customClass="UIAnimatedButton" customModule="BVKS" customModuleProvider="target">
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ai5-0H-dkz" customClass="UIAnimatedButton" customModule="Bhakti_Vikasa_Swami" customModuleProvider="target">
                                                                     <rect key="frame" x="246" y="0.0" width="82" height="50"/>
                                                                     <color key="tintColor" name="000000"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -1105,7 +1105,7 @@
                                                                         <action selector="nextLecturePressed:" destination="WLM-gm-tMu" eventType="touchUpInside" id="RoA-yv-ZQE"/>
                                                                     </connections>
                                                                 </button>
-                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VVc-TO-fMU" customClass="UIAnimatedButton" customModule="BVKS" customModuleProvider="target">
+                                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VVc-TO-fMU" customClass="UIAnimatedButton" customModule="Bhakti_Vikasa_Swami" customModuleProvider="target">
                                                                     <rect key="frame" x="328" y="0.0" width="82" height="50"/>
                                                                     <color key="tintColor" name="000000"/>
                                                                     <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
@@ -1160,8 +1160,8 @@
                                                 <mask key="constraints">
                                                     <exclude reference="IOL-Ak-CJZ"/>
                                                     <exclude reference="nTZ-Py-5Jg"/>
-                                                    <exclude reference="sf4-2Q-6zf"/>
                                                     <exclude reference="odv-db-D1S"/>
+                                                    <exclude reference="sf4-2Q-6zf"/>
                                                 </mask>
                                             </variation>
                                             <variation key="heightClass=compact">
@@ -1173,10 +1173,10 @@
                                                     <include reference="IOL-Ak-CJZ"/>
                                                     <include reference="nTZ-Py-5Jg"/>
                                                     <exclude reference="o9l-4r-oe3"/>
-                                                    <include reference="sf4-2Q-6zf"/>
                                                     <exclude reference="NKL-Kw-vAw"/>
                                                     <exclude reference="ao0-Uc-LFu"/>
                                                     <include reference="odv-db-D1S"/>
+                                                    <include reference="sf4-2Q-6zf"/>
                                                 </mask>
                                             </variation>
                                         </view>
@@ -1271,7 +1271,7 @@
         <!--Lecture Info View Controller-->
         <scene sceneID="97j-5h-PbP">
             <objects>
-                <viewController storyboardIdentifier="LectureInfoViewController" modalPresentationStyle="pageSheet" id="mCY-Wh-OTp" customClass="LectureInfoViewController" customModule="BVKS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LectureInfoViewController" modalPresentationStyle="pageSheet" id="mCY-Wh-OTp" customClass="LectureInfoViewController" customModule="Bhakti_Vikasa_Swami" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4rP-Kg-7Xd">
                         <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1331,7 +1331,7 @@
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             </view>
                                             <prototypes>
-                                                <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LectureInfoCell" rowHeight="61" id="Ucp-xQ-Osb" customClass="LectureInfoCell" customModule="BVKS" customModuleProvider="target">
+                                                <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="LectureInfoCell" rowHeight="61" id="Ucp-xQ-Osb" customClass="LectureInfoCell" customModule="Bhakti_Vikasa_Swami" customModuleProvider="target">
                                                     <rect key="frame" x="0.0" y="75.333332061767578" width="430" height="61"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ucp-xQ-Osb" id="0AP-ge-H47">
