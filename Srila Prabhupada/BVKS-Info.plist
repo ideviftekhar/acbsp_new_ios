@@ -11,30 +11,8 @@
 		<dict>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>com.googleusercontent.apps.469501944891-ddmmgd5smre7s62vunemvr1ft75u9q08</string>
-			</array>
-		</dict>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>com.iskcon.prabhupada</string>
-			</array>
-		</dict>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>com.googleusercontent.apps.897989727803-bubgiq4689affhgike3lmoc8ejdekda4</string>
-			</array>
-		</dict>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>com.bhakti.bvks</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.bhakti.bvks</string>
@@ -50,6 +28,8 @@
 		</dict>
 	</array>
 	<key>FirebaseAppDelegateProxyEnabled</key>
+	<false/>
+	<key>FirebaseDeepLinkPasteboardRetrievalEnabled</key>
 	<false/>
 	<key>GIDClientID</key>
 	<string>184985407900-1sqibj3d2scqq3u1brei60k9t97ae0o7.apps.googleusercontent.com</string>

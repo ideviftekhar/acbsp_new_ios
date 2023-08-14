@@ -10,6 +10,9 @@ import Foundation
 import Foundation
 
 struct CommonConstants {
+
+    private init() {}
+
     static let timestamp = "timestamp"
     static let lastSyncTimestamp = "lastSyncTimestamp"
     static let lastCheckedTimestamp = "lastCheckedTimestamp"

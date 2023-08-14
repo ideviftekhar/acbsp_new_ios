@@ -23,6 +23,8 @@ class LectureCell: UITableViewCell, IQModelableCell {
     @IBOutlet private var completedIconImageView: UIImageView?
     @IBOutlet private var playlistIconView: UIView?
 
+    @IBOutlet private var playedCountLabel: UILabel?
+
     @IBOutlet private var firstDotLabel: UILabel?
     @IBOutlet private var secondDotLabel: UILabel?
 
@@ -111,6 +113,13 @@ class LectureCell: UITableViewCell, IQModelableCell {
                 locationLabel?.text = lecture.place.joined(separator: ", ")
             }
 
+            if let playedCount = lecture.playedCount, playedCount > 0, let playedText = lecture.playedText {
+                playedCountLabel?.isHidden = false
+                playedCountLabel?.text = "\(playedCount) \(playedText)"
+            } else {
+                playedCountLabel?.isHidden = true
+            }
+
             if lecture.resources.videos.first?.videoURL != nil {
                 videoIconImageView?.image = UIImage(systemName: "video.fill")
                 videoIconImageView?.tintColor = UIColor.F96D00
@@ -129,11 +138,13 @@ class LectureCell: UITableViewCell, IQModelableCell {
             firstDotLabel?.isHidden = verseLabel?.text?.isEmpty ?? true
             downloadInfoLabel?.text = nil
 
+            let isPartiallyPlayed = model.lecture.isPartiallyPlayed
             let playProgress: CGFloat = model.lecture.playProgress
 
-            listenProgressStackView?.isHidden = playProgress >= 1.0 || playProgress <= 0
-            completedIconImageView?.isHidden = playProgress < 1.0
-            labelListenProgress?.text = "\(Int(playProgress * 100))%"
+            listenProgressStackView?.isHidden = !isPartiallyPlayed
+            completedIconImageView?.isHidden = !model.lecture.isCompleted
+            let intProgress = Int(playProgress * 100)
+            labelListenProgress?.text = "\(max(intProgress, 1))%"
             listenProgressView?.progress = playProgress
 
             if let url = lecture.thumbnailURL {
@@ -149,8 +160,11 @@ class LectureCell: UITableViewCell, IQModelableCell {
                     listenProgressView?.tintColor = UIColor.zero_0099CC
                 case .playing(let playProgress, let audioPower):
 
-                    listenProgressStackView?.isHidden = playProgress >= 1.0
-                    labelListenProgress?.text = "\(Int(playProgress * 100))%"
+                    let isPartiallyPlayed = playProgress > 0.0 && playProgress < 1.0
+
+                    listenProgressStackView?.isHidden = !isPartiallyPlayed
+                    let intProgress = Int(playProgress * 100)
+                    labelListenProgress?.text = "\(max(intProgress, 1))%"
                     listenProgressView?.progress = playProgress
                     completedIconImageView?.isHidden = playProgress < 1.0
 

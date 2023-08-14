@@ -6,10 +6,12 @@
 //
 
 import UIKit
-import FirebaseCore
 import GoogleSignIn
 import IQKeyboardManagerSwift
+import FirebaseAuth
+import FirebaseCore
 import FirebaseMessaging
+import FirebaseDynamicLinks
 import SKActivityIndicatorView
 
 @main
@@ -21,6 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         IQKeyboardManager.shared.enable = true
         SKActivityIndicator.spinnerStyle(.spinningFadeCircle)
+
+        FirebaseOptions.defaultOptions()?.deepLinkURLScheme = Constants.iOSBundleIdentifier
+
         if let filePath = Bundle.main.path(forResource: Environment.current.googleServiceFileName, ofType: "plist"),
            let fileopts = FirebaseOptions(contentsOfFile: filePath) {
             FirebaseApp.configure(options: fileopts)
@@ -41,6 +46,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         application.registerForRemoteNotifications()
         
         Messaging.messaging().delegate = self
+
+        if let userActivityDictionary = launchOptions?[.userActivityDictionary] as? [AnyHashable : Any],
+            let userActivity = userActivityDictionary[UIApplication.LaunchOptionsKey.userActivityType] as? NSUserActivity, let webPageUrl = userActivity.webpageURL {
+
+            print(webPageUrl)
+            DynamicLinks.dynamicLinks().handleUniversalLink(webPageUrl) { (dynamicLink, error) in
+                if let dynamicLink = dynamicLink {
+                    self.handleDynamicLink(dynamicLink: dynamicLink)
+                }
+            }
+        }
 
         return true
     }
@@ -71,9 +87,56 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
     }
 
-    @available(iOS 9.0, *)
+
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
+
+        guard Auth.auth().currentUser != nil, let url = userActivity.webpageURL else {
+            return false
+        }
+
+        let handled = DynamicLinks.dynamicLinks().handleUniversalLink(url) { dynamicLink, error in
+            if let dynamicLink = dynamicLink {
+                self.handleDynamicLink(dynamicLink: dynamicLink)
+            }
+        }
+
+        return handled
+    }
+
+    func application(_ application: UIApplication, handleOpen url: URL) -> Bool {
+        return true
+    }
+
     func application(_ application: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
-      return GIDSignIn.sharedInstance.handle(url)
+        if GIDSignIn.sharedInstance.handle(url) {
+            return true
+        } else if self.application(application, open: url, sourceApplication: options[UIApplication.OpenURLOptionsKey
+            .sourceApplication] as? String, annotation: "") {
+            return true
+        }
+
+        return false
+    }
+
+    func application(_ application: UIApplication, open url: URL, sourceApplication: String?, annotation: Any) -> Bool {
+        if let dynamicLink = DynamicLinks.dynamicLinks().dynamicLink(fromCustomSchemeURL: url) {
+            handleDynamicLink(dynamicLink: dynamicLink)
+            return true
+        }
+        return false
+    }
+
+    private func handleDynamicLink(dynamicLink: DynamicLink) {
+        if let url = dynamicLink.url {
+            if let component: URLComponents = URLComponents(url: url, resolvingAgainstBaseURL: false) {
+                if let queryItem = component.queryItems?.first(where: { $0.name == "lectureId" }),
+                    let lectureIdString = queryItem.value, let lectureID = Int(lectureIdString) {
+                    if let tabBarController = self.currentKeyWindow()?.rootViewController as? TabBarController {
+                        tabBarController.showPlayer(lectureID: lectureID, shouldPlay: true)
+                    }
+                }
+            }
+        }
     }
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {

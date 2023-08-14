@@ -243,7 +243,15 @@ extension TabBarController: PlayerViewControllerDelegate {
 
     // Loading last played lectures
     func loadLastPlayedLectures() {
-        playerViewController.loadLastPlayedLectures(cachedLectures: self.lectures)
+        let sceneDelegate: SceneDelegate?
+        if let mySceneDelegate = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+            sceneDelegate = mySceneDelegate
+        } else {
+            sceneDelegate = nil
+        }
+
+        playerViewController.loadLastPlayedLectures(cachedLectures: self.lectures, currentLectureID: sceneDelegate?.unprocessedLectureID)
+        sceneDelegate?.unprocessedLectureID = nil
     }
 
     func addToQueue(lectureIDs: [Int]) {
@@ -256,6 +264,14 @@ extension TabBarController: PlayerViewControllerDelegate {
 
     func addToPlayNext(lectureIDs: [Int]) {
         playerViewController.addToPlayNext(lectureIDs: lectureIDs)
+    }
+
+    @discardableResult func showPlayer(lectureID: Int, shouldPlay: Bool? = nil) -> Bool {
+        if let lecture = self.lectures.first(where: { $0.id == lectureID }) {
+            showPlayer(lecture: lecture, shouldPlay: shouldPlay)
+            return true
+        }
+        return false
     }
 
     func showPlayer(lecture: Lecture, shouldPlay: Bool? = nil) {

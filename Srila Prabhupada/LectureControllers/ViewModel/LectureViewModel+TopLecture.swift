@@ -11,7 +11,7 @@ import FirebaseAuth
 
 extension DefaultLectureViewModel {
 
-    func getWeekLecturesIds(weekDays: [String], completion: @escaping (Swift.Result<[Int], Error>) -> Void) {
+    func getWeekLecturesIds(weekDays: [String], completion: @escaping (Swift.Result<[Dictionary<Int, Int>.Element], Error>) -> Void) {
 
         var query: Query =  FirestoreManager.shared.firestore.collection(FirestoreCollection.topLectures.path)
 
@@ -20,20 +20,21 @@ extension DefaultLectureViewModel {
         FirestoreManager.shared.getDocuments(query: query, source: .default, completion: { (result: Swift.Result<[TopLecture], Error>) in
             switch result {
             case .success(let success):
-                var lectureIDs: [Int] = success.flatMap({ obj -> [Int] in
+                let lectureIDs: [Int] = success.flatMap({ obj -> [Int] in
                     obj.playedIds
                 })
-                let uniqueIds: Set<Int> = Set(lectureIDs)
-                lectureIDs = Array(uniqueIds)
 
-                completion(.success(lectureIDs))
+                var counts: [Int: Int] = [:]
+                lectureIDs.forEach { counts[$0, default: 0] += 1 }
+                let tuplesSortedByValue: [Dictionary<Int, Int>.Element] = counts.sorted { $0.value > $1.value }
+                completion(.success(tuplesSortedByValue))
             case .failure(let error):
                 completion(.failure(error))
             }
         })
     }
 
-    func getMonthLecturesIds(month: Int, year: Int, completion: @escaping (Swift.Result<[Int], Error>) -> Void) {
+    func getMonthLecturesIds(month: Int, year: Int, completion: @escaping (Swift.Result<[Dictionary<Int, Int>.Element], Error>) -> Void) {
 
         var query: Query =  FirestoreManager.shared.firestore.collection((FirestoreCollection.topLectures.path))
 
@@ -43,20 +44,21 @@ extension DefaultLectureViewModel {
         FirestoreManager.shared.getDocuments(query: query, source: .default, completion: { (result: Swift.Result<[TopLecture], Error>) in
             switch result {
             case .success(let success):
-                var lectureIDs: [Int] = success.flatMap({ obj -> [Int] in
+                let lectureIDs: [Int] = success.flatMap({ obj -> [Int] in
                     obj.playedIds
                 })
-                let uniqueIds: Set<Int> = Set(lectureIDs)
-                lectureIDs = Array(uniqueIds)
 
-                completion(.success(lectureIDs))
+                var counts: [Int: Int] = [:]
+                lectureIDs.forEach { counts[$0, default: 0] += 1 }
+                let tuplesSortedByValue: [Dictionary<Int, Int>.Element] = counts.sorted { $0.value > $1.value }
+                completion(.success(tuplesSortedByValue))
             case .failure(let error):
                 completion(.failure(error))
             }
         })
     }
 
-    func getPopularLectureIds(completion: @escaping (Swift.Result<[Int], Error>) -> Void) {
+    func getPopularLectureIds(completion: @escaping (Swift.Result<[Dictionary<Int, Int>.Element], Error>) -> Void) {
 
         let query: Query = FirestoreManager.shared.firestore.collection(FirestoreCollection.topLectures.path)
 
@@ -64,19 +66,14 @@ extension DefaultLectureViewModel {
 
             switch result {
             case .success(let success):
-                var lectureIDs: [Int] = success.flatMap({ obj -> [Int] in
+                let lectureIDs: [Int] = success.flatMap({ obj -> [Int] in
                     obj.playedIds
                 })
-                let uniqueIds: Set<Int> = Set(lectureIDs)
-                lectureIDs = Array(uniqueIds)
 
                 var counts: [Int: Int] = [:]
                 lectureIDs.forEach { counts[$0, default: 0] += 1 }
-
-                let tuplesSortedByValue: [Dictionary<Int, Int>.Element] = counts.sorted { $0.value > $1.value }
-                let lectureIds: [Int] = tuplesSortedByValue.map { $0.key }
-
-                completion(.success(lectureIds))
+                let tuplesSortedByValue: [Dictionary<Int, Int>.Element] = counts.sorted { $0.value > $1.value }.filter { $0.value >= 100 }
+                completion(.success(tuplesSortedByValue))
             case .failure(let error):
                 completion(.failure(error))
             }

@@ -11,7 +11,7 @@ import UIKit
 enum SideMenuItem: String, CaseIterable {
     case mediaLibrary = "Media library"
     case history = "History"
-    case stats = "Stats"
+    case stats = "Statistics"
     case popularLectures = "Popular Lectures"
     case about = "About"
     case contactUs = "Contact Us"

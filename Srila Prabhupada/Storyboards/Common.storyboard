@@ -671,7 +671,7 @@
                                                                 </button>
                                                             </subviews>
                                                             <constraints>
-                                                                <constraint firstAttribute="height" priority="750" constant="40" id="Wk6-QB-6OW"/>
+                                                                <constraint firstAttribute="height" constant="40" id="Wk6-QB-6OW"/>
                                                             </constraints>
                                                         </stackView>
                                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jAW-gC-FnG" customClass="IQGradientMaskView" customModule="Bhakti_Vikasa_Swami" customModuleProvider="target">
@@ -1240,6 +1240,7 @@
                         <outlet property="nextLectureButton" destination="ai5-0H-dkz" id="JY4-fU-dDn"/>
                         <outlet property="playNextMenuButton" destination="84q-tx-Izy" id="ahQ-MF-44a"/>
                         <outlet property="playNextMenuDoneButton" destination="aBT-7w-U2J" id="SDy-cr-MaQ"/>
+                        <outlet property="playNextOptionHeightConstrant" destination="Wk6-QB-6OW" id="kaQ-ek-J5L"/>
                         <outlet property="playNextOptionStackView" destination="chl-nj-HdH" id="WXT-1V-8gp"/>
                         <outlet property="playPauseButton" destination="QCv-aO-13w" id="rhk-Au-3Kl"/>
                         <outlet property="playingInfoImageViewWidthConstraint" destination="tDI-fy-rea" id="ok6-97-UxT"/>
@@ -1424,6 +1425,41 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="atQ-SN-Pag" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="6272.8000000000002" y="-2395.0524737631185"/>
+        </scene>
+        <!--Popular Lectures-->
+        <scene sceneID="VjR-1K-zEn">
+            <objects>
+                <viewController storyboardIdentifier="PopularLectureViewController" id="VAF-dh-HtY" customClass="LectureListViewController" customModule="Bhakti_Vikasa_Swami" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="fBD-PV-waZ">
+                        <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="mCq-18-RUB">
+                                <rect key="frame" x="0.0" y="0.0" width="430" height="932"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="VAF-dh-HtY" id="QG8-FA-Br4"/>
+                                    <outlet property="delegate" destination="VAF-dh-HtY" id="7te-ZA-tQe"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="i6x-wP-GPu"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="mCq-18-RUB" secondAttribute="trailing" id="1vS-R9-eBR"/>
+                            <constraint firstAttribute="bottom" secondItem="mCq-18-RUB" secondAttribute="bottom" id="GOc-Aw-GOb"/>
+                            <constraint firstItem="mCq-18-RUB" firstAttribute="leading" secondItem="fBD-PV-waZ" secondAttribute="leading" id="YIO-vD-zpq"/>
+                            <constraint firstItem="mCq-18-RUB" firstAttribute="top" secondItem="fBD-PV-waZ" secondAttribute="top" id="lZt-lY-r3o"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Popular Lectures" id="VIe-DG-fSM"/>
+                    <connections>
+                        <outlet property="lectureTebleView" destination="mCq-18-RUB" id="kni-Ow-ceG"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="2NM-B1-ylo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7126" y="-1704"/>
         </scene>
     </scenes>
     <designables>

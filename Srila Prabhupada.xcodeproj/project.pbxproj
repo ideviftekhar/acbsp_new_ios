@@ -247,6 +247,96 @@
 		C01ACC002A5809E200906CDF /* FileUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01ACBFF2A5809E200906CDF /* FileUserDefaults.swift */; };
 		C01ACC012A5809E200906CDF /* FileUserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01ACBFF2A5809E200906CDF /* FileUserDefaults.swift */; };
 		C01B88A02913F5FE00EF0EA0 /* LoadingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C01B889F2913F5FE00EF0EA0 /* LoadingViewController.swift */; };
+		C020ECB02A8A181000536F57 /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C020ECAF2A8A181000536F57 /* SegmentedControl.swift */; };
+		C020ECB12A8A181000536F57 /* SegmentedControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = C020ECAF2A8A181000536F57 /* SegmentedControl.swift */; };
+		C020ECB82A8A313400536F57 /* LectureHorizontalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C020ECB22A8A313300536F57 /* LectureHorizontalCell.swift */; };
+		C020ECB92A8A313400536F57 /* LectureHorizontalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C020ECB22A8A313300536F57 /* LectureHorizontalCell.swift */; };
+		C020ECBA2A8A313400536F57 /* LectureVerticalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C020ECB32A8A313300536F57 /* LectureVerticalCell.swift */; };
+		C020ECBB2A8A313400536F57 /* LectureVerticalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C020ECB32A8A313300536F57 /* LectureVerticalCell.swift */; };
+		C020ECBC2A8A313400536F57 /* LectureVerticalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C020ECB42A8A313300536F57 /* LectureVerticalCell.xib */; };
+		C020ECBD2A8A313400536F57 /* LectureVerticalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C020ECB42A8A313300536F57 /* LectureVerticalCell.xib */; };
+		C020ECBE2A8A313400536F57 /* LectureHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C020ECB52A8A313400536F57 /* LectureHeaderView.xib */; };
+		C020ECBF2A8A313400536F57 /* LectureHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C020ECB52A8A313400536F57 /* LectureHeaderView.xib */; };
+		C020ECC02A8A313400536F57 /* LectureHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C020ECB62A8A313400536F57 /* LectureHeaderView.swift */; };
+		C020ECC12A8A313400536F57 /* LectureHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C020ECB62A8A313400536F57 /* LectureHeaderView.swift */; };
+		C020ECC22A8A313400536F57 /* LectureHorizontalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C020ECB72A8A313400536F57 /* LectureHorizontalCell.xib */; };
+		C020ECC32A8A313400536F57 /* LectureHorizontalCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C020ECB72A8A313400536F57 /* LectureHorizontalCell.xib */; };
+		C020ECC72A8A31CC00536F57 /* LectureViewController+Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = C020ECC42A8A31CC00536F57 /* LectureViewController+Sort.swift */; };
+		C020ECC82A8A31CC00536F57 /* LectureViewController+Sort.swift in Sources */ = {isa = PBXBuildFile; fileRef = C020ECC42A8A31CC00536F57 /* LectureViewController+Sort.swift */; };
+		C020ECC92A8A31CC00536F57 /* LectureViewController+MoreSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C020ECC52A8A31CC00536F57 /* LectureViewController+MoreSelection.swift */; };
+		C020ECCA2A8A31CC00536F57 /* LectureViewController+MoreSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = C020ECC52A8A31CC00536F57 /* LectureViewController+MoreSelection.swift */; };
+		C020ECCB2A8A31CC00536F57 /* LectureViewController+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C020ECC62A8A31CC00536F57 /* LectureViewController+Actions.swift */; };
+		C020ECCC2A8A31CC00536F57 /* LectureViewController+Actions.swift in Sources */ = {isa = PBXBuildFile; fileRef = C020ECC62A8A31CC00536F57 /* LectureViewController+Actions.swift */; };
+		C020ECCE2A8A34F700536F57 /* Lecture+Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C020ECCD2A8A34F700536F57 /* Lecture+Operations.swift */; };
+		C020ECCF2A8A34F700536F57 /* Lecture+Operations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C020ECCD2A8A34F700536F57 /* Lecture+Operations.swift */; };
+		C020ECD22A8A362F00536F57 /* PlaylistHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C020ECD02A8A362F00536F57 /* PlaylistHeaderView.xib */; };
+		C020ECD32A8A362F00536F57 /* PlaylistHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = C020ECD02A8A362F00536F57 /* PlaylistHeaderView.xib */; };
+		C020ECD42A8A362F00536F57 /* PlaylistHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C020ECD12A8A362F00536F57 /* PlaylistHeaderView.swift */; };
+		C020ECD52A8A362F00536F57 /* PlaylistHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C020ECD12A8A362F00536F57 /* PlaylistHeaderView.swift */; };
+		C020ECD72A8A366A00536F57 /* LectureListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C020ECD62A8A366A00536F57 /* LectureListViewController.swift */; };
+		C020ECD82A8A366A00536F57 /* LectureListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C020ECD62A8A366A00536F57 /* LectureListViewController.swift */; };
+		C020ECF72A8A377C00536F57 /* BoringSSL-GRPC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECD92A8A377B00536F57 /* BoringSSL-GRPC.xcframework */; };
+		C020ECF82A8A377C00536F57 /* FirebaseFirestoreSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECDA2A8A377B00536F57 /* FirebaseFirestoreSwift.xcframework */; };
+		C020ECF92A8A377C00536F57 /* AppAuth.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECDB2A8A377B00536F57 /* AppAuth.xcframework */; };
+		C020ECFA2A8A377C00536F57 /* FirebaseSessions.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECDC2A8A377B00536F57 /* FirebaseSessions.xcframework */; };
+		C020ECFB2A8A377C00536F57 /* GoogleUtilities.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECDD2A8A377B00536F57 /* GoogleUtilities.xcframework */; };
+		C020ECFC2A8A377C00536F57 /* FBLPromises.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECDE2A8A377B00536F57 /* FBLPromises.xcframework */; };
+		C020ECFD2A8A377C00536F57 /* FirebaseInstallations.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECDF2A8A377C00536F57 /* FirebaseInstallations.xcframework */; };
+		C020ECFE2A8A377C00536F57 /* FirebaseDynamicLinks.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECE02A8A377C00536F57 /* FirebaseDynamicLinks.xcframework */; };
+		C020ECFF2A8A377C00536F57 /* FirebaseAuth.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECE12A8A377C00536F57 /* FirebaseAuth.xcframework */; };
+		C020ED002A8A377C00536F57 /* nanopb.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECE22A8A377C00536F57 /* nanopb.xcframework */; };
+		C020ED012A8A377C00536F57 /* PromisesSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECE32A8A377C00536F57 /* PromisesSwift.xcframework */; };
+		C020ED022A8A377C00536F57 /* FirebaseCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECE42A8A377C00536F57 /* FirebaseCore.xcframework */; };
+		C020ED032A8A377C00536F57 /* GoogleAppMeasurement.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECE52A8A377C00536F57 /* GoogleAppMeasurement.xcframework */; };
+		C020ED042A8A377C00536F57 /* gRPC-Core.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECE62A8A377C00536F57 /* gRPC-Core.xcframework */; };
+		C020ED052A8A377C00536F57 /* FirebaseAppCheckInterop.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECE72A8A377C00536F57 /* FirebaseAppCheckInterop.xcframework */; };
+		C020ED062A8A377C00536F57 /* FirebaseMessaging.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECE82A8A377C00536F57 /* FirebaseMessaging.xcframework */; };
+		C020ED072A8A377C00536F57 /* GTMAppAuth.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECE92A8A377C00536F57 /* GTMAppAuth.xcframework */; };
+		C020ED082A8A377C00536F57 /* FirebaseCoreExtension.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECEA2A8A377C00536F57 /* FirebaseCoreExtension.xcframework */; };
+		C020ED092A8A377C00536F57 /* FirebaseAnalyticsSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECEB2A8A377C00536F57 /* FirebaseAnalyticsSwift.xcframework */; };
+		C020ED0A2A8A377C00536F57 /* FirebaseFirestore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECEC2A8A377C00536F57 /* FirebaseFirestore.xcframework */; };
+		C020ED0B2A8A377C00536F57 /* FirebaseAnalytics.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECED2A8A377C00536F57 /* FirebaseAnalytics.xcframework */; };
+		C020ED0C2A8A377C00536F57 /* gRPC-C++.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECEE2A8A377C00536F57 /* gRPC-C++.xcframework */; };
+		C020ED0D2A8A377C00536F57 /* GTMSessionFetcher.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECEF2A8A377C00536F57 /* GTMSessionFetcher.xcframework */; };
+		C020ED0E2A8A377C00536F57 /* abseil.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECF02A8A377C00536F57 /* abseil.xcframework */; };
+		C020ED0F2A8A377C00536F57 /* leveldb-library.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECF12A8A377C00536F57 /* leveldb-library.xcframework */; };
+		C020ED102A8A377C00536F57 /* FirebaseSharedSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECF22A8A377C00536F57 /* FirebaseSharedSwift.xcframework */; };
+		C020ED112A8A377C00536F57 /* FirebaseCoreInternal.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECF32A8A377C00536F57 /* FirebaseCoreInternal.xcframework */; };
+		C020ED122A8A377C00536F57 /* FirebaseCrashlytics.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECF42A8A377C00536F57 /* FirebaseCrashlytics.xcframework */; };
+		C020ED132A8A377C00536F57 /* GoogleDataTransport.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECF52A8A377C00536F57 /* GoogleDataTransport.xcframework */; };
+		C020ED142A8A377C00536F57 /* GoogleSignIn.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECF62A8A377C00536F57 /* GoogleSignIn.xcframework */; };
+		C020ED152A8A378600536F57 /* abseil.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECF02A8A377C00536F57 /* abseil.xcframework */; };
+		C020ED162A8A378600536F57 /* AppAuth.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECDB2A8A377B00536F57 /* AppAuth.xcframework */; };
+		C020ED172A8A378600536F57 /* BoringSSL-GRPC.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECD92A8A377B00536F57 /* BoringSSL-GRPC.xcframework */; };
+		C020ED182A8A378600536F57 /* FBLPromises.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECDE2A8A377B00536F57 /* FBLPromises.xcframework */; };
+		C020ED192A8A378600536F57 /* FirebaseAnalytics.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECED2A8A377C00536F57 /* FirebaseAnalytics.xcframework */; };
+		C020ED1A2A8A378600536F57 /* FirebaseAnalyticsSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECEB2A8A377C00536F57 /* FirebaseAnalyticsSwift.xcframework */; };
+		C020ED1B2A8A378600536F57 /* FirebaseAppCheckInterop.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECE72A8A377C00536F57 /* FirebaseAppCheckInterop.xcframework */; };
+		C020ED1C2A8A378600536F57 /* FirebaseAuth.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECE12A8A377C00536F57 /* FirebaseAuth.xcframework */; };
+		C020ED1D2A8A378600536F57 /* FirebaseCore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECE42A8A377C00536F57 /* FirebaseCore.xcframework */; };
+		C020ED1E2A8A378600536F57 /* FirebaseCoreExtension.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECEA2A8A377C00536F57 /* FirebaseCoreExtension.xcframework */; };
+		C020ED1F2A8A378600536F57 /* FirebaseCoreInternal.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECF32A8A377C00536F57 /* FirebaseCoreInternal.xcframework */; };
+		C020ED202A8A378600536F57 /* FirebaseCrashlytics.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECF42A8A377C00536F57 /* FirebaseCrashlytics.xcframework */; };
+		C020ED212A8A378600536F57 /* FirebaseDynamicLinks.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECE02A8A377C00536F57 /* FirebaseDynamicLinks.xcframework */; };
+		C020ED222A8A378600536F57 /* FirebaseFirestore.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECEC2A8A377C00536F57 /* FirebaseFirestore.xcframework */; };
+		C020ED232A8A378600536F57 /* FirebaseFirestoreSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECDA2A8A377B00536F57 /* FirebaseFirestoreSwift.xcframework */; };
+		C020ED242A8A378600536F57 /* FirebaseInstallations.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECDF2A8A377C00536F57 /* FirebaseInstallations.xcframework */; };
+		C020ED252A8A378600536F57 /* FirebaseMessaging.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECE82A8A377C00536F57 /* FirebaseMessaging.xcframework */; };
+		C020ED262A8A378600536F57 /* FirebaseSessions.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECDC2A8A377B00536F57 /* FirebaseSessions.xcframework */; };
+		C020ED272A8A378600536F57 /* FirebaseSharedSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECF22A8A377C00536F57 /* FirebaseSharedSwift.xcframework */; };
+		C020ED282A8A378600536F57 /* GoogleAppMeasurement.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECE52A8A377C00536F57 /* GoogleAppMeasurement.xcframework */; };
+		C020ED292A8A378600536F57 /* GoogleDataTransport.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECF52A8A377C00536F57 /* GoogleDataTransport.xcframework */; };
+		C020ED2A2A8A378600536F57 /* GoogleSignIn.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECF62A8A377C00536F57 /* GoogleSignIn.xcframework */; };
+		C020ED2B2A8A378600536F57 /* GoogleUtilities.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECDD2A8A377B00536F57 /* GoogleUtilities.xcframework */; };
+		C020ED2C2A8A378600536F57 /* gRPC-C++.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECEE2A8A377C00536F57 /* gRPC-C++.xcframework */; };
+		C020ED2D2A8A378600536F57 /* gRPC-Core.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECE62A8A377C00536F57 /* gRPC-Core.xcframework */; };
+		C020ED2E2A8A378600536F57 /* GTMAppAuth.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECE92A8A377C00536F57 /* GTMAppAuth.xcframework */; };
+		C020ED2F2A8A378600536F57 /* GTMSessionFetcher.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECEF2A8A377C00536F57 /* GTMSessionFetcher.xcframework */; };
+		C020ED302A8A378600536F57 /* leveldb-library.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECF12A8A377C00536F57 /* leveldb-library.xcframework */; };
+		C020ED312A8A378600536F57 /* nanopb.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECE22A8A377C00536F57 /* nanopb.xcframework */; };
+		C020ED322A8A378600536F57 /* PromisesSwift.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = C020ECE32A8A377C00536F57 /* PromisesSwift.xcframework */; };
+		C020ED352A8A399200536F57 /* GoogleSignIn.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C020ED342A8A399100536F57 /* GoogleSignIn.bundle */; };
+		C020ED362A8A399200536F57 /* GoogleSignIn.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C020ED342A8A399100536F57 /* GoogleSignIn.bundle */; };
 		C02856F02A56EEB300C34D49 /* PlayerViewController+Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02856EF2A56EEB300C34D49 /* PlayerViewController+Gesture.swift */; };
 		C02856F12A56EEB300C34D49 /* PlayerViewController+Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02856EF2A56EEB300C34D49 /* PlayerViewController+Gesture.swift */; };
 		C02856F32A56EEE100C34D49 /* MiniPlayerView+Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = C02856F22A56EEE100C34D49 /* MiniPlayerView+Gesture.swift */; };
@@ -440,6 +530,51 @@
 		C01A66ED2A79647B002FBDDF /* WaveformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WaveformView.swift; sourceTree = "<group>"; };
 		C01ACBFF2A5809E200906CDF /* FileUserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUserDefaults.swift; sourceTree = "<group>"; };
 		C01B889F2913F5FE00EF0EA0 /* LoadingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingViewController.swift; sourceTree = "<group>"; };
+		C020ECAF2A8A181000536F57 /* SegmentedControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SegmentedControl.swift; sourceTree = "<group>"; };
+		C020ECB22A8A313300536F57 /* LectureHorizontalCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LectureHorizontalCell.swift; sourceTree = "<group>"; };
+		C020ECB32A8A313300536F57 /* LectureVerticalCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LectureVerticalCell.swift; sourceTree = "<group>"; };
+		C020ECB42A8A313300536F57 /* LectureVerticalCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LectureVerticalCell.xib; sourceTree = "<group>"; };
+		C020ECB52A8A313400536F57 /* LectureHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LectureHeaderView.xib; sourceTree = "<group>"; };
+		C020ECB62A8A313400536F57 /* LectureHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LectureHeaderView.swift; sourceTree = "<group>"; };
+		C020ECB72A8A313400536F57 /* LectureHorizontalCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = LectureHorizontalCell.xib; sourceTree = "<group>"; };
+		C020ECC42A8A31CC00536F57 /* LectureViewController+Sort.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LectureViewController+Sort.swift"; sourceTree = "<group>"; };
+		C020ECC52A8A31CC00536F57 /* LectureViewController+MoreSelection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LectureViewController+MoreSelection.swift"; sourceTree = "<group>"; };
+		C020ECC62A8A31CC00536F57 /* LectureViewController+Actions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "LectureViewController+Actions.swift"; sourceTree = "<group>"; };
+		C020ECCD2A8A34F700536F57 /* Lecture+Operations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Lecture+Operations.swift"; sourceTree = "<group>"; };
+		C020ECD02A8A362F00536F57 /* PlaylistHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PlaylistHeaderView.xib; sourceTree = "<group>"; };
+		C020ECD12A8A362F00536F57 /* PlaylistHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistHeaderView.swift; sourceTree = "<group>"; };
+		C020ECD62A8A366A00536F57 /* LectureListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LectureListViewController.swift; sourceTree = "<group>"; };
+		C020ECD92A8A377B00536F57 /* BoringSSL-GRPC.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "BoringSSL-GRPC.xcframework"; path = "Carthage/Build/BoringSSL-GRPC.xcframework"; sourceTree = "<group>"; };
+		C020ECDA2A8A377B00536F57 /* FirebaseFirestoreSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseFirestoreSwift.xcframework; path = Carthage/Build/FirebaseFirestoreSwift.xcframework; sourceTree = "<group>"; };
+		C020ECDB2A8A377B00536F57 /* AppAuth.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = AppAuth.xcframework; path = Carthage/Build/AppAuth.xcframework; sourceTree = "<group>"; };
+		C020ECDC2A8A377B00536F57 /* FirebaseSessions.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseSessions.xcframework; path = Carthage/Build/FirebaseSessions.xcframework; sourceTree = "<group>"; };
+		C020ECDD2A8A377B00536F57 /* GoogleUtilities.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleUtilities.xcframework; path = Carthage/Build/GoogleUtilities.xcframework; sourceTree = "<group>"; };
+		C020ECDE2A8A377B00536F57 /* FBLPromises.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FBLPromises.xcframework; path = Carthage/Build/FBLPromises.xcframework; sourceTree = "<group>"; };
+		C020ECDF2A8A377C00536F57 /* FirebaseInstallations.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseInstallations.xcframework; path = Carthage/Build/FirebaseInstallations.xcframework; sourceTree = "<group>"; };
+		C020ECE02A8A377C00536F57 /* FirebaseDynamicLinks.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseDynamicLinks.xcframework; path = Carthage/Build/FirebaseDynamicLinks.xcframework; sourceTree = "<group>"; };
+		C020ECE12A8A377C00536F57 /* FirebaseAuth.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseAuth.xcframework; path = Carthage/Build/FirebaseAuth.xcframework; sourceTree = "<group>"; };
+		C020ECE22A8A377C00536F57 /* nanopb.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = nanopb.xcframework; path = Carthage/Build/nanopb.xcframework; sourceTree = "<group>"; };
+		C020ECE32A8A377C00536F57 /* PromisesSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = PromisesSwift.xcframework; path = Carthage/Build/PromisesSwift.xcframework; sourceTree = "<group>"; };
+		C020ECE42A8A377C00536F57 /* FirebaseCore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseCore.xcframework; path = Carthage/Build/FirebaseCore.xcframework; sourceTree = "<group>"; };
+		C020ECE52A8A377C00536F57 /* GoogleAppMeasurement.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleAppMeasurement.xcframework; path = Carthage/Build/GoogleAppMeasurement.xcframework; sourceTree = "<group>"; };
+		C020ECE62A8A377C00536F57 /* gRPC-Core.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "gRPC-Core.xcframework"; path = "Carthage/Build/gRPC-Core.xcframework"; sourceTree = "<group>"; };
+		C020ECE72A8A377C00536F57 /* FirebaseAppCheckInterop.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseAppCheckInterop.xcframework; path = Carthage/Build/FirebaseAppCheckInterop.xcframework; sourceTree = "<group>"; };
+		C020ECE82A8A377C00536F57 /* FirebaseMessaging.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseMessaging.xcframework; path = Carthage/Build/FirebaseMessaging.xcframework; sourceTree = "<group>"; };
+		C020ECE92A8A377C00536F57 /* GTMAppAuth.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GTMAppAuth.xcframework; path = Carthage/Build/GTMAppAuth.xcframework; sourceTree = "<group>"; };
+		C020ECEA2A8A377C00536F57 /* FirebaseCoreExtension.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseCoreExtension.xcframework; path = Carthage/Build/FirebaseCoreExtension.xcframework; sourceTree = "<group>"; };
+		C020ECEB2A8A377C00536F57 /* FirebaseAnalyticsSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseAnalyticsSwift.xcframework; path = Carthage/Build/FirebaseAnalyticsSwift.xcframework; sourceTree = "<group>"; };
+		C020ECEC2A8A377C00536F57 /* FirebaseFirestore.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseFirestore.xcframework; path = Carthage/Build/FirebaseFirestore.xcframework; sourceTree = "<group>"; };
+		C020ECED2A8A377C00536F57 /* FirebaseAnalytics.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseAnalytics.xcframework; path = Carthage/Build/FirebaseAnalytics.xcframework; sourceTree = "<group>"; };
+		C020ECEE2A8A377C00536F57 /* gRPC-C++.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "gRPC-C++.xcframework"; path = "Carthage/Build/gRPC-C++.xcframework"; sourceTree = "<group>"; };
+		C020ECEF2A8A377C00536F57 /* GTMSessionFetcher.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GTMSessionFetcher.xcframework; path = Carthage/Build/GTMSessionFetcher.xcframework; sourceTree = "<group>"; };
+		C020ECF02A8A377C00536F57 /* abseil.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = abseil.xcframework; path = Carthage/Build/abseil.xcframework; sourceTree = "<group>"; };
+		C020ECF12A8A377C00536F57 /* leveldb-library.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = "leveldb-library.xcframework"; path = "Carthage/Build/leveldb-library.xcframework"; sourceTree = "<group>"; };
+		C020ECF22A8A377C00536F57 /* FirebaseSharedSwift.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseSharedSwift.xcframework; path = Carthage/Build/FirebaseSharedSwift.xcframework; sourceTree = "<group>"; };
+		C020ECF32A8A377C00536F57 /* FirebaseCoreInternal.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseCoreInternal.xcframework; path = Carthage/Build/FirebaseCoreInternal.xcframework; sourceTree = "<group>"; };
+		C020ECF42A8A377C00536F57 /* FirebaseCrashlytics.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = FirebaseCrashlytics.xcframework; path = Carthage/Build/FirebaseCrashlytics.xcframework; sourceTree = "<group>"; };
+		C020ECF52A8A377C00536F57 /* GoogleDataTransport.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleDataTransport.xcframework; path = Carthage/Build/GoogleDataTransport.xcframework; sourceTree = "<group>"; };
+		C020ECF62A8A377C00536F57 /* GoogleSignIn.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = GoogleSignIn.xcframework; path = Carthage/Build/GoogleSignIn.xcframework; sourceTree = "<group>"; };
+		C020ED342A8A399100536F57 /* GoogleSignIn.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GoogleSignIn.bundle; sourceTree = "<group>"; };
 		C02856EF2A56EEB300C34D49 /* PlayerViewController+Gesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PlayerView\U0010Controller+Gesture.swift"; sourceTree = "<group>"; };
 		C02856F22A56EEE100C34D49 /* MiniPlayerView+Gesture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "MiniPlayerView+Gesture.swift"; sourceTree = "<group>"; };
 		C028570F2A5707AA00C34D49 /* ContactUsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactUsViewController.swift; sourceTree = "<group>"; };
@@ -522,6 +657,36 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C020ED152A8A378600536F57 /* abseil.xcframework in Frameworks */,
+				C020ED162A8A378600536F57 /* AppAuth.xcframework in Frameworks */,
+				C020ED172A8A378600536F57 /* BoringSSL-GRPC.xcframework in Frameworks */,
+				C020ED182A8A378600536F57 /* FBLPromises.xcframework in Frameworks */,
+				C020ED192A8A378600536F57 /* FirebaseAnalytics.xcframework in Frameworks */,
+				C020ED1A2A8A378600536F57 /* FirebaseAnalyticsSwift.xcframework in Frameworks */,
+				C020ED1B2A8A378600536F57 /* FirebaseAppCheckInterop.xcframework in Frameworks */,
+				C020ED1C2A8A378600536F57 /* FirebaseAuth.xcframework in Frameworks */,
+				C020ED1D2A8A378600536F57 /* FirebaseCore.xcframework in Frameworks */,
+				C020ED1E2A8A378600536F57 /* FirebaseCoreExtension.xcframework in Frameworks */,
+				C020ED1F2A8A378600536F57 /* FirebaseCoreInternal.xcframework in Frameworks */,
+				C020ED202A8A378600536F57 /* FirebaseCrashlytics.xcframework in Frameworks */,
+				C020ED212A8A378600536F57 /* FirebaseDynamicLinks.xcframework in Frameworks */,
+				C020ED222A8A378600536F57 /* FirebaseFirestore.xcframework in Frameworks */,
+				C020ED232A8A378600536F57 /* FirebaseFirestoreSwift.xcframework in Frameworks */,
+				C020ED242A8A378600536F57 /* FirebaseInstallations.xcframework in Frameworks */,
+				C020ED252A8A378600536F57 /* FirebaseMessaging.xcframework in Frameworks */,
+				C020ED262A8A378600536F57 /* FirebaseSessions.xcframework in Frameworks */,
+				C020ED272A8A378600536F57 /* FirebaseSharedSwift.xcframework in Frameworks */,
+				C020ED282A8A378600536F57 /* GoogleAppMeasurement.xcframework in Frameworks */,
+				C020ED292A8A378600536F57 /* GoogleDataTransport.xcframework in Frameworks */,
+				C020ED2A2A8A378600536F57 /* GoogleSignIn.xcframework in Frameworks */,
+				C020ED2B2A8A378600536F57 /* GoogleUtilities.xcframework in Frameworks */,
+				C020ED2C2A8A378600536F57 /* gRPC-C++.xcframework in Frameworks */,
+				C020ED2D2A8A378600536F57 /* gRPC-Core.xcframework in Frameworks */,
+				C020ED2E2A8A378600536F57 /* GTMAppAuth.xcframework in Frameworks */,
+				C020ED2F2A8A378600536F57 /* GTMSessionFetcher.xcframework in Frameworks */,
+				C020ED302A8A378600536F57 /* leveldb-library.xcframework in Frameworks */,
+				C020ED312A8A378600536F57 /* nanopb.xcframework in Frameworks */,
+				C020ED322A8A378600536F57 /* PromisesSwift.xcframework in Frameworks */,
 				E011825F38AA8C00BAB9D282 /* Pods_BVKS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -530,6 +695,36 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C020ECF72A8A377C00536F57 /* BoringSSL-GRPC.xcframework in Frameworks */,
+				C020ECF82A8A377C00536F57 /* FirebaseFirestoreSwift.xcframework in Frameworks */,
+				C020ECF92A8A377C00536F57 /* AppAuth.xcframework in Frameworks */,
+				C020ECFA2A8A377C00536F57 /* FirebaseSessions.xcframework in Frameworks */,
+				C020ECFB2A8A377C00536F57 /* GoogleUtilities.xcframework in Frameworks */,
+				C020ECFC2A8A377C00536F57 /* FBLPromises.xcframework in Frameworks */,
+				C020ECFD2A8A377C00536F57 /* FirebaseInstallations.xcframework in Frameworks */,
+				C020ECFE2A8A377C00536F57 /* FirebaseDynamicLinks.xcframework in Frameworks */,
+				C020ECFF2A8A377C00536F57 /* FirebaseAuth.xcframework in Frameworks */,
+				C020ED002A8A377C00536F57 /* nanopb.xcframework in Frameworks */,
+				C020ED012A8A377C00536F57 /* PromisesSwift.xcframework in Frameworks */,
+				C020ED022A8A377C00536F57 /* FirebaseCore.xcframework in Frameworks */,
+				C020ED032A8A377C00536F57 /* GoogleAppMeasurement.xcframework in Frameworks */,
+				C020ED042A8A377C00536F57 /* gRPC-Core.xcframework in Frameworks */,
+				C020ED052A8A377C00536F57 /* FirebaseAppCheckInterop.xcframework in Frameworks */,
+				C020ED062A8A377C00536F57 /* FirebaseMessaging.xcframework in Frameworks */,
+				C020ED072A8A377C00536F57 /* GTMAppAuth.xcframework in Frameworks */,
+				C020ED082A8A377C00536F57 /* FirebaseCoreExtension.xcframework in Frameworks */,
+				C020ED092A8A377C00536F57 /* FirebaseAnalyticsSwift.xcframework in Frameworks */,
+				C020ED0A2A8A377C00536F57 /* FirebaseFirestore.xcframework in Frameworks */,
+				C020ED0B2A8A377C00536F57 /* FirebaseAnalytics.xcframework in Frameworks */,
+				C020ED0C2A8A377C00536F57 /* gRPC-C++.xcframework in Frameworks */,
+				C020ED0D2A8A377C00536F57 /* GTMSessionFetcher.xcframework in Frameworks */,
+				C020ED0E2A8A377C00536F57 /* abseil.xcframework in Frameworks */,
+				C020ED0F2A8A377C00536F57 /* leveldb-library.xcframework in Frameworks */,
+				C020ED102A8A377C00536F57 /* FirebaseSharedSwift.xcframework in Frameworks */,
+				C020ED112A8A377C00536F57 /* FirebaseCoreInternal.xcframework in Frameworks */,
+				C020ED122A8A377C00536F57 /* FirebaseCrashlytics.xcframework in Frameworks */,
+				C020ED132A8A377C00536F57 /* GoogleDataTransport.xcframework in Frameworks */,
+				C020ED142A8A377C00536F57 /* GoogleSignIn.xcframework in Frameworks */,
 				16C3FF0F2AECB7528D63EC53 /* Pods_Srila_Prabhupada.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -622,6 +817,7 @@
 			children = (
 				C0B7990428DC3FFA00681649 /* Supporting Model */,
 				C00AB21428D204D700A62A2F /* Lecture.swift */,
+				C020ECCD2A8A34F700536F57 /* Lecture+Operations.swift */,
 				C0FA049E28DB37FA003177DA /* LectureInfo.swift */,
 				C03E3F2728DCC6C500B987DD /* ListenInfo.swift */,
 				C0B7990128DC3FF700681649 /* Playlist.swift */,
@@ -640,6 +836,12 @@
 				C00AB21928D2080800A62A2F /* LectureCell.swift */,
 				C00AB21A28D2080800A62A2F /* LectureCell.xib */,
 				C02A4BA72A55C8FB006BF465 /* LectureInfoCell.swift */,
+				C020ECB62A8A313400536F57 /* LectureHeaderView.swift */,
+				C020ECB52A8A313400536F57 /* LectureHeaderView.xib */,
+				C020ECB22A8A313300536F57 /* LectureHorizontalCell.swift */,
+				C020ECB72A8A313400536F57 /* LectureHorizontalCell.xib */,
+				C020ECB32A8A313300536F57 /* LectureVerticalCell.swift */,
+				C020ECB42A8A313300536F57 /* LectureVerticalCell.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -705,6 +907,7 @@
 				C00E4DFF28CA39FE00F1A123 /* LectureControllers */,
 				C0B7990E28DC521900681649 /* Playlist Controllers */,
 				C00E4DE328CA393B00F1A123 /* Storyboards */,
+				C020ED332A8A399100536F57 /* Resources */,
 				C00E4DD328CA36F200F1A123 /* Assets.xcassets */,
 				C00E4DCA28CA36F100F1A123 /* AppDelegate.swift */,
 				C00E4DCC28CA36F100F1A123 /* SceneDelegate.swift */,
@@ -781,6 +984,9 @@
 				C00AB21628D207AA00A62A2F /* Cell */,
 				C0B7990D28DC4E0700681649 /* ViewModel */,
 				C00E4E0228CA39FE00F1A123 /* LectureViewController.swift */,
+				C020ECC62A8A31CC00536F57 /* LectureViewController+Actions.swift */,
+				C020ECC52A8A31CC00536F57 /* LectureViewController+MoreSelection.swift */,
+				C020ECC42A8A31CC00536F57 /* LectureViewController+Sort.swift */,
 				C00E4E0328CA39FE00F1A123 /* HomeViewController.swift */,
 				C00E4E1928CA45E000F1A123 /* PlaylistLecturesViewController.swift */,
 				C00E4E0728CA39FE00F1A123 /* TopLectureViewController.swift */,
@@ -789,6 +995,7 @@
 				C00E4E0528CA39FE00F1A123 /* PopularLectureViewController.swift */,
 				C00E4E0628CA39FE00F1A123 /* HistoryViewController.swift */,
 				C0034A962A559841005ADBBA /* LectureInfoViewController.swift */,
+				C020ECD62A8A366A00536F57 /* LectureListViewController.swift */,
 			);
 			path = LectureControllers;
 			sourceTree = "<group>";
@@ -815,6 +1022,14 @@
 			path = WaveformView;
 			sourceTree = "<group>";
 		};
+		C020ED332A8A399100536F57 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				C020ED342A8A399100536F57 /* GoogleSignIn.bundle */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
 		C02C13282A554ABB008D89DB /* Managers */ = {
 			isa = PBXGroup;
 			children = (
@@ -834,17 +1049,9 @@
 			path = "Firebase Firestore";
 			sourceTree = "<group>";
 		};
-		C052D8C629125F890003307B /* ViewModel */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = ViewModel;
-			sourceTree = "<group>";
-		};
 		C052D8C729125F9B0003307B /* Stats */ = {
 			isa = PBXGroup;
 			children = (
-				C052D8C629125F890003307B /* ViewModel */,
 				C00E4E1328CA433A00F1A123 /* StatsViewController.swift */,
 			);
 			path = Stats;
@@ -968,6 +1175,7 @@
 				C0034A932A5593F7005ADBBA /* RotableImageView.swift */,
 				C02A842E2A56BB0D008A21E3 /* IQCircularProgressView.swift */,
 				C0443FA02A66888600F633D6 /* IQProgressView.swift */,
+				C020ECAF2A8A181000536F57 /* SegmentedControl.swift */,
 			);
 			path = Subclasses;
 			sourceTree = "<group>";
@@ -978,6 +1186,8 @@
 				C0B7990928DC427B00681649 /* PlaylistOption.swift */,
 				C0B7990528DC41AE00681649 /* PlaylistCell.swift */,
 				C0B7990628DC41AE00681649 /* PlaylistCell.xib */,
+				C020ECD12A8A362F00536F57 /* PlaylistHeaderView.swift */,
+				C020ECD02A8A362F00536F57 /* PlaylistHeaderView.xib */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -1036,6 +1246,36 @@
 		C18860D36A2E32E82D66B5BC /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C020ECF02A8A377C00536F57 /* abseil.xcframework */,
+				C020ECDB2A8A377B00536F57 /* AppAuth.xcframework */,
+				C020ECD92A8A377B00536F57 /* BoringSSL-GRPC.xcframework */,
+				C020ECDE2A8A377B00536F57 /* FBLPromises.xcframework */,
+				C020ECED2A8A377C00536F57 /* FirebaseAnalytics.xcframework */,
+				C020ECEB2A8A377C00536F57 /* FirebaseAnalyticsSwift.xcframework */,
+				C020ECE72A8A377C00536F57 /* FirebaseAppCheckInterop.xcframework */,
+				C020ECE12A8A377C00536F57 /* FirebaseAuth.xcframework */,
+				C020ECE42A8A377C00536F57 /* FirebaseCore.xcframework */,
+				C020ECEA2A8A377C00536F57 /* FirebaseCoreExtension.xcframework */,
+				C020ECF32A8A377C00536F57 /* FirebaseCoreInternal.xcframework */,
+				C020ECF42A8A377C00536F57 /* FirebaseCrashlytics.xcframework */,
+				C020ECE02A8A377C00536F57 /* FirebaseDynamicLinks.xcframework */,
+				C020ECEC2A8A377C00536F57 /* FirebaseFirestore.xcframework */,
+				C020ECDA2A8A377B00536F57 /* FirebaseFirestoreSwift.xcframework */,
+				C020ECDF2A8A377C00536F57 /* FirebaseInstallations.xcframework */,
+				C020ECE82A8A377C00536F57 /* FirebaseMessaging.xcframework */,
+				C020ECDC2A8A377B00536F57 /* FirebaseSessions.xcframework */,
+				C020ECF22A8A377C00536F57 /* FirebaseSharedSwift.xcframework */,
+				C020ECE52A8A377C00536F57 /* GoogleAppMeasurement.xcframework */,
+				C020ECF52A8A377C00536F57 /* GoogleDataTransport.xcframework */,
+				C020ECF62A8A377C00536F57 /* GoogleSignIn.xcframework */,
+				C020ECDD2A8A377B00536F57 /* GoogleUtilities.xcframework */,
+				C020ECEE2A8A377C00536F57 /* gRPC-C++.xcframework */,
+				C020ECE62A8A377C00536F57 /* gRPC-Core.xcframework */,
+				C020ECE92A8A377C00536F57 /* GTMAppAuth.xcframework */,
+				C020ECEF2A8A377C00536F57 /* GTMSessionFetcher.xcframework */,
+				C020ECF12A8A377C00536F57 /* leveldb-library.xcframework */,
+				C020ECE22A8A377C00536F57 /* nanopb.xcframework */,
+				C020ECE32A8A377C00536F57 /* PromisesSwift.xcframework */,
 				D3B52BC8029AD7E1CF9C7843 /* Pods_Srila_Prabhupada.framework */,
 				F4EF8EB8523244723FB855F4 /* Pods_BVKS.framework */,
 			);
@@ -1136,18 +1376,23 @@
 				6E6900DA2A25C4C20086C7DB /* PlaylistCell.xib in Resources */,
 				6E8746C02A25F53400C6A313 /* GoogleService-Info-development-client.plist in Resources */,
 				6E6900DB2A25C4C20086C7DB /* Stats.storyboard in Resources */,
+				C020ED362A8A399200536F57 /* GoogleSignIn.bundle in Resources */,
 				6E6900DD2A25C4C20086C7DB /* Playlists.storyboard in Resources */,
 				6E8746C52A260D3B00C6A313 /* BVKS.xcassets in Resources */,
 				6E6900DE2A25C4C20086C7DB /* SideMenuCell.xib in Resources */,
 				6E6900E02A25C4C20086C7DB /* Assets.xcassets in Resources */,
 				6E6900E12A25C4C20086C7DB /* production-client.xcconfig in Resources */,
 				6E8746C12A25F53800C6A313 /* GoogleService-Info-production-client.plist in Resources */,
+				C020ECBD2A8A313400536F57 /* LectureVerticalCell.xib in Resources */,
 				6E6900E22A25C4C20086C7DB /* History.storyboard in Resources */,
+				C020ECC32A8A313400536F57 /* LectureHorizontalCell.xib in Resources */,
+				C020ECD32A8A362F00536F57 /* PlaylistHeaderView.xib in Resources */,
 				6E6900E32A25C4C20086C7DB /* SideMenu.storyboard in Resources */,
 				6E6900E52A25C4C20086C7DB /* TopLectures.storyboard in Resources */,
 				6E6900E62A25C4C20086C7DB /* Common.storyboard in Resources */,
 				6E6900E72A25C4C20086C7DB /* Main.storyboard in Resources */,
 				6E6900E82A25C4C20086C7DB /* Favorites.storyboard in Resources */,
+				C020ECBF2A8A313400536F57 /* LectureHeaderView.xib in Resources */,
 				6E6900E92A25C4C20086C7DB /* PopularLecture.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1166,8 +1411,11 @@
 				C0118A7928D34AA800F6002D /* GoogleService-Info-development-client.plist in Resources */,
 				C00E4DF028CA39CB00F1A123 /* Playlists.storyboard in Resources */,
 				C0CE0D1928E870DB00C2C825 /* SideMenuCell.xib in Resources */,
+				C020ECC22A8A313400536F57 /* LectureHorizontalCell.xib in Resources */,
 				C00E4DD428CA36F200F1A123 /* Assets.xcassets in Resources */,
+				C020ED352A8A399200536F57 /* GoogleSignIn.bundle in Resources */,
 				6E5F1DE12A4458C400569CAC /* GoogleServiceTest-Info.plist in Resources */,
+				C020ECBE2A8A313400536F57 /* LectureHeaderView.xib in Resources */,
 				C0D76E2928CF7D0F00F69320 /* production-client.xcconfig in Resources */,
 				C00E4DF428CA39CB00F1A123 /* History.storyboard in Resources */,
 				C00E4DF128CA39CB00F1A123 /* SideMenu.storyboard in Resources */,
@@ -1176,8 +1424,10 @@
 				6E8746C72A260D4E00C6A313 /* SP.xcassets in Resources */,
 				C00E4DEF28CA39CB00F1A123 /* TopLectures.storyboard in Resources */,
 				C00AB20D28D1F56C00A62A2F /* Common.storyboard in Resources */,
+				C020ECD22A8A362F00536F57 /* PlaylistHeaderView.xib in Resources */,
 				C00E4DD228CA36F100F1A123 /* Main.storyboard in Resources */,
 				C00E4DF628CA39CB00F1A123 /* Favorites.storyboard in Resources */,
+				C020ECBC2A8A313400536F57 /* LectureVerticalCell.xib in Resources */,
 				C00E4DF828CA39CB00F1A123 /* PopularLecture.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1295,7 +1545,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PROJECT_DIR}/scripts/run\"\n";
 		};
 		C0065D4628D87E2200B18AA6 /* Crashlytics */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1315,7 +1565,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PROJECT_DIR}/scripts/run\"\n";
 		};
 		C0D76E2A28CF7DC400F69320 /* Copy Google Plist */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1384,6 +1634,8 @@
 			files = (
 				6E69006A2A25C4C20086C7DB /* StatusAlert+Extension.swift in Sources */,
 				6E69006B2A25C4C20086C7DB /* LectureCell.swift in Sources */,
+				C020ECCF2A8A34F700536F57 /* Lecture+Operations.swift in Sources */,
+				C020ECD82A8A366A00536F57 /* LectureListViewController.swift in Sources */,
 				6E69006C2A25C4C20086C7DB /* Persistent+DBLecture.swift in Sources */,
 				6E69006D2A25C4C20086C7DB /* ProviderIDType.swift in Sources */,
 				6E69006E2A25C4C20086C7DB /* ForgotPasswordViewModel.swift in Sources */,
@@ -1405,6 +1657,7 @@
 				6E6900782A25C4C20086C7DB /* FilterTypeTableViewCell.swift in Sources */,
 				C01A66D92A795E4B002FBDDF /* WaveformImageDrawer.swift in Sources */,
 				6E6900792A25C4C20086C7DB /* Lecture.swift in Sources */,
+				C020ECCA2A8A31CC00536F57 /* LectureViewController+MoreSelection.swift in Sources */,
 				6E69007A2A25C4C20086C7DB /* LectureOption.swift in Sources */,
 				6E69007B2A25C4C20086C7DB /* String+Extension.swift in Sources */,
 				6E69007C2A25C4C20086C7DB /* AppDelegate.swift in Sources */,
@@ -1424,6 +1677,7 @@
 				6E6900872A25C4C20086C7DB /* HistoryViewController.swift in Sources */,
 				6E6900882A25C4C20086C7DB /* LectureViewController.swift in Sources */,
 				6E6900892A25C4C20086C7DB /* Search.swift in Sources */,
+				C020ECC12A8A313400536F57 /* LectureHeaderView.swift in Sources */,
 				6E69008A2A25C4C20086C7DB /* BackgroundSession.swift in Sources */,
 				6E69008B2A25C4C20086C7DB /* SignupViewModel.swift in Sources */,
 				6E67E2852A29DC1D000CE184 /* CommonConstants.swift in Sources */,
@@ -1437,18 +1691,22 @@
 				6E68EA932A2DEDD300C6DB6D /* SimplePDF.swift in Sources */,
 				6E69008F2A25C4C20086C7DB /* NSManagedObject+Extensions.swift in Sources */,
 				C01A66DF2A795EE0002FBDDF /* WaveformAnalyzer.swift in Sources */,
+				C020ECB12A8A181000536F57 /* SegmentedControl.swift in Sources */,
 				6E6900902A25C4C20086C7DB /* FilterDetailTableViewCell.swift in Sources */,
 				C01A66EB2A795FCE002FBDDF /* WaveformRenderer.swift in Sources */,
+				C020ECC82A8A31CC00536F57 /* LectureViewController+Sort.swift in Sources */,
 				6E6900912A25C4C20086C7DB /* ListenInfo.swift in Sources */,
 				6E6900922A25C4C20086C7DB /* LectureViewModel+RecentlyPlayed.swift in Sources */,
 				6E6900932A25C4C20086C7DB /* LoginViewModel.swift in Sources */,
 				6E6900942A25C4C20086C7DB /* SPMenu.swift in Sources */,
+				C020ECD52A8A362F00536F57 /* PlaylistHeaderView.swift in Sources */,
 				6E6900952A25C4C20086C7DB /* DownloadManager.swift in Sources */,
 				6E6900962A25C4C20086C7DB /* Persistant.swift in Sources */,
 				6E6900972A25C4C20086C7DB /* UIImageView+Letters.swift in Sources */,
 				6E6900982A25C4C20086C7DB /* Array+Extension.swift in Sources */,
 				6E6900992A25C4C20086C7DB /* Time.swift in Sources */,
 				6E69009A2A25C4C20086C7DB /* HomeViewController.swift in Sources */,
+				C020ECBB2A8A313400536F57 /* LectureVerticalCell.swift in Sources */,
 				6E69009B2A25C4C20086C7DB /* MainThreadSafe.swift in Sources */,
 				6E69009C2A25C4C20086C7DB /* Date+Extension.swift in Sources */,
 				6E69009D2A25C4C20086C7DB /* Location.swift in Sources */,
@@ -1483,6 +1741,7 @@
 				6E6900B22A25C4C20086C7DB /* FirestoreManager.swift in Sources */,
 				6E6900B32A25C4C20086C7DB /* DateFormatter+Extension.swift in Sources */,
 				6E6900B42A25C4C20086C7DB /* SPNowPlayableCommand.swift in Sources */,
+				C020ECB92A8A313400536F57 /* LectureHorizontalCell.swift in Sources */,
 				6E6900B52A25C4C20086C7DB /* UserProfileViewController.swift in Sources */,
 				6E6900B62A25C4C20086C7DB /* SPNowPlayingInfoCenter.swift in Sources */,
 				6E6900B72A25C4C20086C7DB /* PopularLectureViewController.swift in Sources */,
@@ -1493,6 +1752,7 @@
 				6E6900BB2A25C4C20086C7DB /* TabBarController.swift in Sources */,
 				C02857172A571F4800C34D49 /* Transcription.swift in Sources */,
 				6E6900BC2A25C4C20086C7DB /* TopLectures.swift in Sources */,
+				C020ECCC2A8A31CC00536F57 /* LectureViewController+Actions.swift in Sources */,
 				6E6900BD2A25C4C20086C7DB /* ForgotPasswordViewController.swift in Sources */,
 				6E6900BE2A25C4C20086C7DB /* CreatePlaylistViewController.swift in Sources */,
 				6E6900BF2A25C4C20086C7DB /* NavigationController.swift in Sources */,
@@ -1531,6 +1791,8 @@
 			files = (
 				C094A6572934A1A100710647 /* StatusAlert+Extension.swift in Sources */,
 				C00AB21B28D2080800A62A2F /* LectureCell.swift in Sources */,
+				C020ECCE2A8A34F700536F57 /* Lecture+Operations.swift in Sources */,
+				C020ECD72A8A366A00536F57 /* LectureListViewController.swift in Sources */,
 				C007D38628E80EC200CFBED0 /* Persistent+DBLecture.swift in Sources */,
 				EE97BEF029E7FA5500B9A80B /* ProviderIDType.swift in Sources */,
 				C0EA13E428CF53FA00BE9110 /* ForgotPasswordViewModel.swift in Sources */,
@@ -1552,6 +1814,7 @@
 				C00AB20B28D1F52D00A62A2F /* FilterTypeTableViewCell.swift in Sources */,
 				C01A66D82A795E4B002FBDDF /* WaveformImageDrawer.swift in Sources */,
 				C00AB21528D204D700A62A2F /* Lecture.swift in Sources */,
+				C020ECC92A8A31CC00536F57 /* LectureViewController+MoreSelection.swift in Sources */,
 				C0065D4D28D884AF00B18AA6 /* LectureOption.swift in Sources */,
 				C0FA305D28CF461900E78843 /* String+Extension.swift in Sources */,
 				C00E4DCB28CA36F100F1A123 /* AppDelegate.swift in Sources */,
@@ -1571,6 +1834,7 @@
 				C00E4E0F28CA39FE00F1A123 /* HistoryViewController.swift in Sources */,
 				C00E4E0B28CA39FE00F1A123 /* LectureViewController.swift in Sources */,
 				C007D38428E80AEE00CFBED0 /* Search.swift in Sources */,
+				C020ECC02A8A313400536F57 /* LectureHeaderView.swift in Sources */,
 				C047E6212959F94100C6D50E /* BackgroundSession.swift in Sources */,
 				C0FA306228CF51EB00E78843 /* SignupViewModel.swift in Sources */,
 				6E67E2842A29DC1A000CE184 /* CommonConstants.swift in Sources */,
@@ -1584,18 +1848,22 @@
 				C00DC57328E1DA66001EDE95 /* NSManagedObject+Extensions.swift in Sources */,
 				C00AB20A28D1F52D00A62A2F /* FilterDetailTableViewCell.swift in Sources */,
 				C01A66DE2A795EE0002FBDDF /* WaveformAnalyzer.swift in Sources */,
+				C020ECB02A8A181000536F57 /* SegmentedControl.swift in Sources */,
 				C03E3F2828DCC6C500B987DD /* ListenInfo.swift in Sources */,
 				C01A66EA2A795FCE002FBDDF /* WaveformRenderer.swift in Sources */,
+				C020ECC72A8A31CC00536F57 /* LectureViewController+Sort.swift in Sources */,
 				C00340012928B2B9008F8C81 /* LectureViewModel+RecentlyPlayed.swift in Sources */,
 				6E6AED132A3DC62F009BB06D /* UserSettings.swift in Sources */,
 				C0FA305F28CF4AF000E78843 /* LoginViewModel.swift in Sources */,
 				C0DA677D28FD8190003BF8E4 /* SPMenu.swift in Sources */,
+				C020ECD42A8A362F00536F57 /* PlaylistHeaderView.swift in Sources */,
 				C007586628E5BF2F0010EBE6 /* DownloadManager.swift in Sources */,
 				C00DC56F28E1DA66001EDE95 /* Persistant.swift in Sources */,
 				C0CBCF7D28FD3CED00ED8132 /* UIImageView+Letters.swift in Sources */,
 				C0EE5BD028F8589700528AA7 /* Array+Extension.swift in Sources */,
 				C00AB22028D2137C00A62A2F /* Time.swift in Sources */,
 				C00E4E0C28CA39FE00F1A123 /* HomeViewController.swift in Sources */,
+				C020ECBA2A8A313400536F57 /* LectureVerticalCell.swift in Sources */,
 				C0B3263B2927E1F700ACDE76 /* MainThreadSafe.swift in Sources */,
 				C0E9CC3928DC723B0089A9E8 /* Date+Extension.swift in Sources */,
 				C007D37E28E80ABB00CFBED0 /* Location.swift in Sources */,
@@ -1630,6 +1898,7 @@
 				C088178828DDB8FA00D3106C /* FirestoreManager.swift in Sources */,
 				C0EA5CBE28EC6C96007D9E4C /* DateFormatter+Extension.swift in Sources */,
 				C002119C28F6AD5300BE94EC /* SPNowPlayableCommand.swift in Sources */,
+				C020ECB82A8A313400536F57 /* LectureHorizontalCell.swift in Sources */,
 				EE23BB3D29E54ECE00E9D72E /* UserProfileViewController.swift in Sources */,
 				C002119A28F6A03200BE94EC /* SPNowPlayingInfoCenter.swift in Sources */,
 				C00E4E0E28CA39FE00F1A123 /* PopularLectureViewController.swift in Sources */,
@@ -1640,6 +1909,7 @@
 				C02857162A571F4800C34D49 /* Transcription.swift in Sources */,
 				C00E4E0828CA39FE00F1A123 /* TabBarController.swift in Sources */,
 				C0B7990228DC3FF700681649 /* TopLectures.swift in Sources */,
+				C020ECCB2A8A31CC00536F57 /* LectureViewController+Actions.swift in Sources */,
 				C00E4E1228CA3A1700F1A123 /* ForgotPasswordViewController.swift in Sources */,
 				C0E4748628F5A0FA001B69EE /* CreatePlaylistViewController.swift in Sources */,
 				C0CAF25D28D45B8C00DA9878 /* NavigationController.swift in Sources */,
@@ -1704,7 +1974,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Configurations/BVKS/BVKS.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				"EXCLUDED_ARCHS[sdk=iphoneos*]" = x86_64;
@@ -1729,7 +1999,12 @@
 					"@executable_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 2.5.4;
+				MARKETING_VERSION = 2.5.5;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"$(OTHER_LDFLAGS)",
+					"-ObjC",
+				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -DBVKS";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bhakti.bvks;
 				PRODUCT_NAME = "Bhakti Vikasa Swami";
@@ -1754,7 +2029,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Srila Prabhupada/Configurations/BVKS/BVKS.entitlements";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DERIVE_MACCATALYST_PRODUCT_BUNDLE_IDENTIFIER = NO;
 				DEVELOPMENT_TEAM = S92372RU6B;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1776,7 +2051,12 @@
 					"@executable_path/Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
-				MARKETING_VERSION = 2.5.4;
+				MARKETING_VERSION = 2.5.5;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"$(OTHER_LDFLAGS)",
+					"-ObjC",
+				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -DBVKS";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bhakti.bvks;
 				PRODUCT_NAME = "Bhakti Vikasa Swami";
@@ -1878,6 +2158,11 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MARKETING_VERSION = 2.0.4;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"$(OTHER_LDFLAGS)",
+					"-ObjC",
+				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -DSP";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bvksdigital.acbsp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1989,6 +2274,11 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MARKETING_VERSION = 2.0.4;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"$(OTHER_LDFLAGS)",
+					"-ObjC",
+				);
 				OTHER_SWIFT_FLAGS = "$(inherited) -DSP";
 				PRODUCT_BUNDLE_IDENTIFIER = com.bvksdigital.acbsp;
 				PRODUCT_NAME = "$(TARGET_NAME)";

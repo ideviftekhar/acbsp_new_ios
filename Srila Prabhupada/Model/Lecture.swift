@@ -45,6 +45,10 @@ struct Lecture: Hashable, Codable {
     let thumbnail: String
     let title: [String]
 
+    // Local Variables
+    var playedCount: Int?
+    var playedText: String?
+
     private(set) lazy var searchableTexts: [String] = {
         var searchableTexts: [String] = []
         searchableTexts.append(title.joined(separator: " "))
@@ -68,24 +72,6 @@ struct Lecture: Hashable, Codable {
     var downloadError: String?
     var isFavorite: Bool
     var lastPlayedPoint: Int
-
-    var isCompleted: Bool {
-        lastPlayedPoint >= length || lastPlayedPoint == -1
-    }
-
-    var playProgress: CGFloat {
-        let progress: CGFloat
-
-        if lastPlayedPoint == -1 {
-            progress = 1.0
-        } else if length != 0 {
-            progress = CGFloat(lastPlayedPoint) / CGFloat(length)
-        } else {
-            progress = 0
-        }
-
-        return progress
-    }
 
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
@@ -162,6 +148,32 @@ struct Lecture: Hashable, Codable {
 
         return dbLecture
     }
+}
+
+extension Lecture {
+
+    var isCompleted: Bool {
+        lastPlayedPoint >= length || lastPlayedPoint == -1
+    }
+
+    var isPartiallyPlayed: Bool {
+        let playProgress = playProgress
+        return playProgress > 0.0 && playProgress < 1.0
+    }
+
+    var playProgress: CGFloat {
+        let progress: CGFloat
+
+        if lastPlayedPoint == -1 {
+            progress = 1.0
+        } else if length != 0 {
+            progress = CGFloat(lastPlayedPoint) / CGFloat(length)
+        } else {
+            progress = 0
+        }
+
+        return progress
+    }
 
     var titleDisplay: String {
         title.joined(separator: " ")
@@ -192,5 +204,72 @@ struct Lecture: Hashable, Codable {
             return nil
         }
         return URL(string: thumbnail)
+    }
+}
+
+
+import FirebaseDynamicLinks
+
+extension Lecture {
+    func generateShareLink(completion: @escaping (Swift.Result<URL, Error>) -> Void) {
+        let deepLinkBaseURL = "https://bvks.com?lectureId=\(id)"
+        let domainURIPrefix = Constants.domainURIPrefix
+
+        guard let link = URL(string: deepLinkBaseURL),
+              let linkBuilder = DynamicLinkComponents(link: link, domainURIPrefix: domainURIPrefix) else {
+            return
+        }
+
+        do {
+            let iOSParameters = DynamicLinkIOSParameters(bundleID: Constants.iOSBundleIdentifier)
+            iOSParameters.appStoreID = "\(Constants.appStoreIdentifier)"
+            linkBuilder.iOSParameters = iOSParameters
+        }
+
+        do {
+            let androidParameters = DynamicLinkAndroidParameters(packageName: Constants.androidBundleIdentifier)
+             linkBuilder.androidParameters = androidParameters
+        }
+
+        var descriptions: [String] = []
+        do {
+            let durationString = "• Duration: " + lengthTime.displayString
+            descriptions.append(durationString)
+
+            if !legacyData.verse.isEmpty {
+                let verseString = "• " + legacyData.verse
+                descriptions.append(verseString)
+            }
+
+            let recordingDateString = "• Date of Recording: " + dateOfRecording.display_dd_MM_yyyy
+            descriptions.append(recordingDateString)
+
+            if !location.displayString.isEmpty {
+                let locationString = "• Location: " + location.displayString
+                descriptions.append(locationString)
+            }
+        }
+
+        do {
+            let socialMediaParameters = DynamicLinkSocialMetaTagParameters()
+            socialMediaParameters.title = titleDisplay
+            socialMediaParameters.descriptionText = descriptions.joined(separator: "\n")
+            if let thumbnailURL = thumbnailURL {
+                socialMediaParameters.imageURL = thumbnailURL
+            }
+            linkBuilder.socialMetaTagParameters = socialMediaParameters
+        }
+
+        linkBuilder.options = DynamicLinkComponentsOptions()
+        linkBuilder.options?.pathLength = .short
+        linkBuilder.shorten(completion: { url, _, error in
+            if let url = url {
+                completion(.success(url))
+            } else if let url = linkBuilder.url {
+                completion(.success(url))
+            } else if let error = error {
+                completion(.failure(error))
+            }
+        })
     }
 }

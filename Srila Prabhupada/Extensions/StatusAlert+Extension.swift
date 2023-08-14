@@ -5,7 +5,7 @@
 //  Created by IE on 11/28/22.
 //
 
-import Foundation
+import UIKit
 import StatusAlert
 
 extension StatusAlert {

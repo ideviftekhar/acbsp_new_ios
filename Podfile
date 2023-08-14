@@ -6,18 +6,6 @@ def shared_pods
   
   pod 'SideMenu'
 
-  pod 'FirebaseAuth'
-  pod 'FirebaseCore'
-#  pod 'FirebaseAnalytics'
-  pod 'FirebaseCrashlytics'
-  pod 'FirebaseDynamicLinks'
-  pod 'FirebaseFirestore'
-  pod 'FirebaseFirestoreSwift'
-  pod 'FirebaseMessaging'
-
-  pod 'GoogleSignIn'
-  pod 'GoogleSignInSwiftSupport'
-
   pod 'SkyFloatingLabelTextField'
   pod 'IQKeyboardManagerSwift'
   pod 'IQListKit', '6.1.1'
@@ -31,7 +19,7 @@ def shared_pods
 
   pod 'MarqueeLabel'
 
-  pod 'Charts'
+  pod 'DGCharts'
 end
 
 target 'Srila Prabhupada' do

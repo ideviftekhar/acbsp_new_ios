@@ -86,6 +86,7 @@ class PlayerViewController: LectureViewController {
     internal static let temporaryRates: [Float] = [1.0, 1.5, 2.0, 3.0, 4.0, 5.0, 10.0]
 
     @IBOutlet private var playNextOptionStackView: UIStackView!
+    @IBOutlet internal var playNextOptionHeightConstrant: NSLayoutConstraint!
     @IBOutlet internal var loopLectureButton: UIButton!
     @IBOutlet internal var shuffleLectureButton: UIButton!
     @IBOutlet internal var playNextMenuButton: UIButton!
@@ -124,7 +125,7 @@ class PlayerViewController: LectureViewController {
     var playNextOptionMenu: SPMenu!
 
     var optionMenu: SPMenu!
-    var allActions: [LectureOption: SPAction] = [:]
+    var allCurrentLectureActions: [LectureOption: SPAction] = [:]
 
     var playFillImage = UIImage(systemName: "play.fill")
     var pauseFillImage = UIImage(systemName: "pause.fill")

@@ -19,12 +19,6 @@ class FavoriteViewController: LectureViewController {
         }
     }
 
-    @objc private func refreshTriggered(_ sender: UIRefreshControl) {
-        if let tabBarController = self.tabBarController as? TabBarController {
-            tabBarController.startSyncing(force: false)
-        }
-    }
-
     override func syncStarted() {
         searchController.searchBar.placeholder = "Loading..."
     }
@@ -35,6 +29,8 @@ class FavoriteViewController: LectureViewController {
 
     override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[LectureViewController.Model], Error>) -> Void) {
 
+        let sortType: LectureSortType? = selectedSortType == .default ? nil : selectedSortType  // We don't want default behaviour here
+
         DefaultLectureViewModel.defaultModel.getUsersLectureInfo(source: source, progress: nil, completion: { [self] result in
             switch result {
             case .success(var success):
@@ -44,12 +40,8 @@ class FavoriteViewController: LectureViewController {
                 let uniqueIds: NSOrderedSet = NSOrderedSet(array: lectureIDs)
                 lectureIDs = (uniqueIds.array as? [Int]) ?? lectureIDs
 
-                DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: { result in
-                    self.lectureTebleView.refreshControl?.endRefreshing()
-                    completion(result)
-                })
+                DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: sortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: completion)
             case .failure(let error):
-                self.lectureTebleView.refreshControl?.endRefreshing()
                 completion(.failure(error))
             }
         })

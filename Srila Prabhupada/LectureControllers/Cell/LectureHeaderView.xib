@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="21701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21679"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionReusableView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="LectureHeaderView" id="K5I-oD-peW" customClass="LectureHeaderView" customModule="Bhakti_Vikasa_Swami" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="393" height="40"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hnf-pP-Pi2">
+                    <rect key="frame" x="0.0" y="10" width="29.333333333333332" height="20"/>
+                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="15"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                    <variation key="heightClass=regular-widthClass=regular">
+                        <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="20"/>
+                    </variation>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nbi-ZW-wpD">
+                    <rect key="frame" x="356" y="0.0" width="37" height="40"/>
+                    <fontDescription key="fontDescription" name="AvenirNextCondensed-Medium" family="Avenir Next Condensed" pointSize="15"/>
+                    <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                    <state key="normal" title="See All"/>
+                    <connections>
+                        <action selector="seeAllAction:" destination="K5I-oD-peW" eventType="touchUpInside" id="NbP-SS-I6I"/>
+                    </connections>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstItem="Hnf-pP-Pi2" firstAttribute="top" secondItem="K5I-oD-peW" secondAttribute="top" constant="10" id="3vi-Mu-Lxy"/>
+                <constraint firstItem="Nbi-ZW-wpD" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Hnf-pP-Pi2" secondAttribute="trailing" constant="10" id="EoG-im-ax6"/>
+                <constraint firstAttribute="bottom" secondItem="Nbi-ZW-wpD" secondAttribute="bottom" id="Gwm-VU-0gU"/>
+                <constraint firstAttribute="trailing" secondItem="Nbi-ZW-wpD" secondAttribute="trailing" id="U0T-8k-SHp"/>
+                <constraint firstAttribute="bottom" secondItem="Hnf-pP-Pi2" secondAttribute="bottom" constant="10" id="a1b-q6-JTK"/>
+                <constraint firstItem="Hnf-pP-Pi2" firstAttribute="leading" secondItem="K5I-oD-peW" secondAttribute="leading" id="tmV-K6-ooB"/>
+                <constraint firstItem="Nbi-ZW-wpD" firstAttribute="top" secondItem="K5I-oD-peW" secondAttribute="top" id="yZC-eB-yjg"/>
+            </constraints>
+            <connections>
+                <outlet property="seeAllButton" destination="Nbi-ZW-wpD" id="GcU-fG-Rdr"/>
+                <outlet property="titleLabel" destination="Hnf-pP-Pi2" id="5HU-hh-OS3"/>
+            </connections>
+            <point key="canvasLocation" x="-141" y="-375"/>
+        </collectionReusableView>
+    </objects>
+</document>

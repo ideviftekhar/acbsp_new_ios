@@ -98,10 +98,17 @@ extension PlayerViewController {
 extension PlayerViewController {
 
     // Loading last played lectures
-    func loadLastPlayedLectures(cachedLectures: [Lecture]) {
+    func loadLastPlayedLectures(cachedLectures: [Lecture], currentLectureID: Int? = nil) {
         DispatchQueue.global(qos: .background).async {
+
             let lectureIDDefaultKey: String = "\(Self.self).\(Lecture.self)"
-            let lectureID = UserDefaults.standard.integer(forKey: lectureIDDefaultKey)
+            let lectureID: Int?
+            if let currentLectureID = currentLectureID {
+                lectureID = currentLectureID
+                UserDefaults.standard.set(currentLectureID, forKey: lectureIDDefaultKey)
+            } else {
+                lectureID = UserDefaults.standard.integer(forKey: lectureIDDefaultKey)
+            }
 
             let currentLecture: Model?
             do {
@@ -121,7 +128,7 @@ extension PlayerViewController {
                 if let data = data {
                     playlistLectureIDs = (try? JSONDecoder().decode([Int].self, from: data)) ?? []
                 }
-                if !playlistLectureIDs.contains(where: { $0 == lectureID }) {
+                if let lectureID = lectureID, !playlistLectureIDs.contains(where: { $0 == lectureID }) {
                     playlistLectureIDs.insert(lectureID, at: 0)
                 }
 
@@ -143,6 +150,9 @@ extension PlayerViewController {
                 DispatchQueue.main.async {
                     self.currentLecture = currentLecture
                     self.updatePlaylistLectureIDs(ids: updatedLectureIDs, canShuffle: true, animated: nil)
+                    if currentLecture != nil, currentLectureID != nil { // If receive through deep link then force play
+                        self.play()
+                    }
                 }
             }
         }

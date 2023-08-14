@@ -27,9 +27,8 @@ class DownloadViewController: LectureViewController {
             lectureIDs.append(dbLecture.id)
         }
 
-        DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: { result in
-            self.lectureTebleView.refreshControl?.endRefreshing()
-            completion(result)
-        })
+        let sortType: LectureSortType? = selectedSortType == .default ? nil : selectedSortType  // We don't want default behaviour here
+
+        DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: sortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: completion)
     }
 }

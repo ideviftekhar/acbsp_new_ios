@@ -23,15 +23,11 @@ class PopularLectureViewController: LectureViewController {
 
         DefaultLectureViewModel.defaultModel.getPopularLectureIds(completion: { [self] result in
             switch result {
-            case .success(let lectureIDs):
-
-                DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: { result in
-                    self.lectureTebleView.refreshControl?.endRefreshing()
-                    completion(result)
-                })
+            case .success(let success):
+                let lectureIDs: [Int] = success.map({ $0.key })
+                DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: completion)
 
             case .failure(let error):
-                self.lectureTebleView.refreshControl?.endRefreshing()
                 completion(.failure(error))
             }
         })

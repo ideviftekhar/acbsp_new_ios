@@ -13,6 +13,7 @@ enum TopLectureType: String, Codable, CaseIterable {
     case thisMonth  = "This Month"
     case lastWeek   = "Last Week"
     case lastMonth  = "Last Month"
+    case allTime    = "All Time"
 
     init?(rawValue: Int) {
         switch rawValue {
@@ -24,6 +25,8 @@ enum TopLectureType: String, Codable, CaseIterable {
             self = .lastWeek
         case 3:
             self = .lastMonth
+        case 4:
+            self = .allTime
         default:
             self = .thisWeek
         }

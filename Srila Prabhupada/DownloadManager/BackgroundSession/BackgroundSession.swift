@@ -64,11 +64,6 @@ class BackgroundSession: NSObject {
             self.session.delegateQueue.addOperation {
 
                 let allDownloadTasks: [URLSessionDownloadTask] = allSessionTasks.filter { $0.state == .suspended || $0.state == .running }.compactMap { $0 as? URLSessionDownloadTask }
-
-                if #available(iOS 14.0, *) {
-                    os_log(.info, "BackgroundSession: Found \(allDownloadTasks.count) pending tasks")
-                }
-
                 self.updateTasksList(existingDownloadTasks: allDownloadTasks)
             }
         }
@@ -205,12 +200,10 @@ extension BackgroundSession {
 extension BackgroundSession: URLSessionDelegate {
 
     func performFetchWithCompletionHandler(completionHandler: @escaping () -> Void) {
-        os_log(.debug, "BackgroundSession: performFetchWithCompletionHandler")
         backgroundCompletionHandler = completionHandler
     }
 
     func handleEventsForBackgroundURLSession(identifier: String, completionHandler: @escaping () -> Void) {
-        os_log(.debug, "BackgroundSession: handleEventsForBackgroundURLSession")
         if identifier == session.configuration.identifier {
             backgroundCompletionHandler = completionHandler
         } else {
@@ -219,7 +212,6 @@ extension BackgroundSession: URLSessionDelegate {
     }
 
     func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
-        os_log(.debug, "BackgroundSession: urlSessionDidFinishEvents")
         mainThreadSafe {
             self.backgroundCompletionHandler?()
             self.backgroundCompletionHandler = nil
@@ -251,10 +243,6 @@ extension BackgroundSession: URLSessionTaskDelegate {
         if let dbLecture = dbLecture {
 
             if let error = error {
-                if #available(iOS 14.0, *) {
-                    os_log(.info, "BackgroundSession \(dbLecture.id): didCompleteWithError: \(error.localizedDescription)")
-                }
-
                 if let resumeData = (error as NSError).userInfo[NSURLSessionDownloadTaskResumeData] as? Data {
                     dbLecture.resumeData = resumeData
                 }
@@ -268,14 +256,6 @@ extension BackgroundSession: URLSessionTaskDelegate {
                     self.delegate?.backgroundSession(self, lecture: dbLecture, didFailed: error)
                     NotificationCenter.default.post(name: Persistant.Notification.downloadsUpdated, object: [dbLecture])
                 }
-            } else {
-                if #available(iOS 14.0, *) {
-                    os_log(.debug, "BackgroundSession \(dbLecture.id): didCompleteWithError: No error")
-                }
-            }
-        } else if error != nil {
-            if #available(iOS 14.0, *) {
-                os_log(.debug, "BackgroundSession: didCompleteWithError: No DBLecture ID Found")
             }
         }
     }
@@ -316,10 +296,6 @@ extension BackgroundSession: URLSessionDownloadDelegate {
                     self.delegate?.backgroundSession(self, lecture: dbLecture, didFinish: destination)
                     NotificationCenter.default.post(name: Persistant.Notification.downloadsUpdated, object: [dbLecture])
                 }
-
-                if #available(iOS 14.0, *) {
-                    os_log(.debug, "BackgroundSession \(dbLecture.id): didFinishDownloadingTo: File saved")
-                }
             } catch let error {
 
                 if dbLecture.downloadStateEnum != .pause {
@@ -330,10 +306,6 @@ extension BackgroundSession: URLSessionDownloadDelegate {
                 Persistant.shared.saveMainContext {
                     self.delegate?.backgroundSession(self, lecture: dbLecture, didFailed: error)
                     NotificationCenter.default.post(name: Persistant.Notification.downloadsUpdated, object: [dbLecture])
-                }
-
-                if #available(iOS 14.0, *) {
-                    os_log(.debug, "BackgroundSession \(dbLecture.id): didFinishDownloadingTo: failed to save. \(error.localizedDescription)")
                 }
             }
 
@@ -349,10 +321,6 @@ extension BackgroundSession: URLSessionDownloadDelegate {
                     center.add(request, withCompletionHandler: nil)
                 }
             }
-        } else {
-            if #available(iOS 14.0, *) {
-                os_log(.debug, "BackgroundSession: didFinishDownloadingTo: No DBLecture ID Found")
-            }
         }
     }
 
@@ -363,15 +331,10 @@ extension BackgroundSession: URLSessionDownloadDelegate {
             internalTask.progress.totalUnitCount = totalBytesExpectedToWrite
             internalTask.progress.completedUnitCount = totalBytesWritten
 
-            let totalBytesWrittenString: String = byteFormatter.string(fromByteCount: totalBytesWritten)
-            let totalBytesExpectedToWriteString: String = byteFormatter.string(fromByteCount: totalBytesExpectedToWrite)
+//            let totalBytesWrittenString: String = byteFormatter.string(fromByteCount: totalBytesWritten)
+//            let totalBytesExpectedToWriteString: String = byteFormatter.string(fromByteCount: totalBytesExpectedToWrite)
 //            let completedPercentage: Int = Int(internalTask.progress.fractionCompleted*100)
 //            print("Lecture \(internalTask.lecture.id), \(completedPercentage)%: \(totalBytesWrittenString) of \(totalBytesExpectedToWriteString)")
-
-            if #available(iOS 14.0, *) {
-                os_log(.debug, "BackgroundSession \(internalTask.lecture.id): didWriteData: \(totalBytesWrittenString) of \(totalBytesExpectedToWriteString)")
-            }
-
             mainThreadSafe {
                 self.delegate?.backgroundSession(self, lecture: internalTask.lecture, didUpdateProgress: internalTask.progress)
             }
@@ -384,12 +347,8 @@ extension BackgroundSession: URLSessionDownloadDelegate {
             internalTask.progress.totalUnitCount = expectedTotalBytes
             internalTask.progress.completedUnitCount = fileOffset
 
-            let totalBytesWrittenString: String = byteFormatter.string(fromByteCount: fileOffset)
-            let totalBytesExpectedToWriteString: String = byteFormatter.string(fromByteCount: expectedTotalBytes)
-
-            if #available(iOS 14.0, *) {
-                os_log(.debug, "BackgroundSession \(internalTask.lecture.id): didResumeAtOffset: \(totalBytesWrittenString) of \(totalBytesExpectedToWriteString)")
-            }
+//            let totalBytesWrittenString: String = byteFormatter.string(fromByteCount: fileOffset)
+//            let totalBytesExpectedToWriteString: String = byteFormatter.string(fromByteCount: expectedTotalBytes)
 
             mainThreadSafe {
                 self.delegate?.backgroundSession(self, lecture: internalTask.lecture, didUpdateProgress: internalTask.progress)

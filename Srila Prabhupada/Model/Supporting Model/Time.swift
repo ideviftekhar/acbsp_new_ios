@@ -45,11 +45,19 @@ struct Time: Hashable, Codable {
         return String(format: "%01ih %01im", hour, minute)
     }
 
-    var displayStringH: String {
+    var displayString2Unit: String {
         if hour > 0 {
-            return String(format: "%ih %im %is", hour, minute, second)
+            if minute > 0 {
+                return String(format: "%ih %im", hour, minute)
+            } else {
+                return String(format: "%ih", hour)
+            }
         } else if minute > 0 {
-            return String(format: "%im %is", minute, second)
+            if second > 0 {
+                return String(format: "%im %is", minute, second)
+            } else {
+                return String(format: "%im", minute)
+            }
         } else if second > 0 {
             return String(format: "%is", second)
         } else {

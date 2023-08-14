@@ -7,7 +7,6 @@
 
 import Foundation
 import UIKit
-import FirebaseDynamicLinks
 
 extension PlayerViewController {
 
@@ -22,52 +21,52 @@ extension PlayerViewController {
 
         switch currentLecture.downloadState {
         case .notDownloaded:
-            if let download = allActions[.download] {
+            if let download = allCurrentLectureActions[.download] {
                 actions.append(download)
             }
         case .downloading:
-            if let pauseDownload = allActions[.pauseDownload] {
+            if let pauseDownload = allCurrentLectureActions[.pauseDownload] {
                 actions.append(pauseDownload)
             }
-            if let deleteFromDownloads = allActions[.deleteFromDownloads] {
+            if let deleteFromDownloads = allCurrentLectureActions[.deleteFromDownloads] {
                 actions.append(deleteFromDownloads)
             }
         case .downloaded:
-            if let deleteFromDownloads = allActions[.deleteFromDownloads] {
+            if let deleteFromDownloads = allCurrentLectureActions[.deleteFromDownloads] {
                 actions.append(deleteFromDownloads)
             }
         case .pause:
-            if let download = allActions[.resumeDownload] {
+            if let download = allCurrentLectureActions[.resumeDownload] {
                 actions.append(download)
             }
-            if let deleteFromDownloads = allActions[.deleteFromDownloads] {
+            if let deleteFromDownloads = allCurrentLectureActions[.deleteFromDownloads] {
                 actions.append(deleteFromDownloads)
             }
         case .error:
-            if let download = allActions[.download] {
+            if let download = allCurrentLectureActions[.download] {
                 actions.append(download)
             }
-            if let deleteFromDownloads = allActions[.deleteFromDownloads] {
+            if let deleteFromDownloads = allCurrentLectureActions[.deleteFromDownloads] {
                 actions.append(deleteFromDownloads)
             }
         }
 
         // isFavorite
-        if currentLecture.isFavorite, let removeFromFavorite = allActions[.removeFromFavorite] {
+        if currentLecture.isFavorite, let removeFromFavorite = allCurrentLectureActions[.removeFromFavorite] {
             actions.append(removeFromFavorite)
-        } else if let markAsFavorite = allActions[.markAsFavorite] {
+        } else if let markAsFavorite = allCurrentLectureActions[.markAsFavorite] {
             actions.append(markAsFavorite)
         }
 
         // addToPlaylist
-        if let addToPlaylist = allActions[.addToPlaylist] {
+        if let addToPlaylist = allCurrentLectureActions[.addToPlaylist] {
             actions.append(addToPlaylist)
         }
 
-        if let share = allActions[.share] {
+        if let share = allCurrentLectureActions[.share] {
             actions.append(share)
         }
-        if let info = allActions[.info] {
+        if let info = allCurrentLectureActions[.info] {
             actions.append(info)
         }
         self.optionMenu.children = actions
@@ -93,11 +92,11 @@ extension PlayerViewController {
                 action.action.attributes = .destructive
             }
 
-            allActions[option] = action
+            allCurrentLectureActions[option] = action
         }
 
-        let childrens: [SPAction] = allActions.compactMap({ (key: LectureOption, _: SPAction) in
-            return allActions[key]
+        let childrens: [SPAction] = allCurrentLectureActions.compactMap({ (key: LectureOption, _: SPAction) in
+            return allCurrentLectureActions[key]
         })
 
         if let menuButton = menuButton {
@@ -142,69 +141,15 @@ extension PlayerViewController {
             self.removeFromQueue(lectureIDs: [lecture.id])
         case .share:
 
-            let deepLinkBaseURL = "https://bvks.com?lectureId=\(lecture.id)"
-            let domainURIPrefix = "https://prabhupada.page.link"
-
-            guard let link = URL(string: deepLinkBaseURL),
-                  let linkBuilder = DynamicLinkComponents(link: link, domainURIPrefix: domainURIPrefix) else {
-                return
-            }
-
-            do {
-                let iOSParameters = DynamicLinkIOSParameters(bundleID: "com.bvksdigital.acbsp")
-                iOSParameters.appStoreID = "1645287937"
-                linkBuilder.iOSParameters = iOSParameters
-            }
-
-            do {
-                let androidParameters = DynamicLinkAndroidParameters(packageName: "com.iskcon.prabhupada")
-                 linkBuilder.androidParameters = androidParameters
-            }
-
-            var descriptions: [String] = []
-            do {
-                let durationString = "• Duration: " + lecture.lengthTime.displayString
-                descriptions.append(durationString)
-
-                if !lecture.legacyData.verse.isEmpty {
-                    let verseString = "• " + lecture.legacyData.verse
-                    descriptions.append(verseString)
+            lecture.generateShareLink(completion: { result in
+                switch result {
+                case .success(let success):
+                    let shareController = UIActivityViewController(activityItems: [success], applicationActivities: nil)
+                    shareController.popoverPresentationController?.sourceView = self.menuButton
+                    self.present(shareController, animated: true)
+                case .failure(let failure):
+                    self.showAlert(error: failure)
                 }
-
-                let recordingDateString = "• Date of Recording: " + lecture.dateOfRecording.display_dd_MM_yyyy
-                descriptions.append(recordingDateString)
-
-                if !lecture.location.displayString.isEmpty {
-                    let locationString = "• Location: " + lecture.location.displayString
-                    descriptions.append(locationString)
-                }
-            }
-
-            do {
-                let socialMediaParameters = DynamicLinkSocialMetaTagParameters()
-                socialMediaParameters.title = lecture.titleDisplay
-                socialMediaParameters.descriptionText = descriptions.joined(separator: "\n")
-                if let thumbnailURL = lecture.thumbnailURL {
-                    socialMediaParameters.imageURL = thumbnailURL
-                }
-                linkBuilder.socialMetaTagParameters = socialMediaParameters
-            }
-
-            linkBuilder.shorten(completion: { url, _, _ in
-                var appLinks: [Any] = []
-                if let url = url {
-                    appLinks.append(url)
-                } else if let url = linkBuilder.url {
-                    appLinks.append(url)
-                }
-
-                guard !appLinks.isEmpty else {
-                    return
-                }
-
-                let shareController = UIActivityViewController(activityItems: appLinks, applicationActivities: nil)
-                shareController.popoverPresentationController?.sourceView = self.menuButton
-                self.present(shareController, animated: true)
             })
         case .info:
             let controller = UIStoryboard.common.instantiate(LectureInfoViewController.self)

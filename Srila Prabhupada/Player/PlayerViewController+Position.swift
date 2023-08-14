@@ -170,8 +170,10 @@ extension PlayerViewController {
             playingInfoStackView.axis = .horizontal
             playingInfoImageViewWidthConstraint.constant = 50
             playingInfoTitleStackView.alignment = .leading
+            playNextOptionHeightConstrant.isActive = true
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
+
 
             thumbnailImageView.shadowColor = nil
             thumbnailImageView.shadowOffset = .zero
@@ -191,6 +193,7 @@ extension PlayerViewController {
         let animationBlock = { [self] in
             playlistButton.isSelected = false
             tableViewHeightConstraint.isActive = true
+            playNextOptionHeightConstrant.isActive = false
             playingInfoStackView.axis = .vertical
             if self.traitCollection.verticalSizeClass == .compact {
                 playingInfoImageViewWidthConstraint.constant = 150

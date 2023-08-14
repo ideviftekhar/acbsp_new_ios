@@ -43,10 +43,9 @@ class PlaylistLecturesViewController: LectureViewController {
 
     override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[LectureViewController.Model], Error>) -> Void) {
 
-        DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: playlist.lectureIds, source: source, progress: nil, completion: { result in
-            self.lectureTebleView.refreshControl?.endRefreshing()
-            completion(result)
-        })
+        let sortType: LectureSortType? = selectedSortType == .default ? nil : selectedSortType  // We don't want default behaviour here
+
+        DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: sortType, filter: selectedFilters, lectureIDs: playlist.lectureIds, source: source, progress: nil, completion: completion)
     }
 
     @objc func addLecturesButtonAction(_ sender: UIBarButtonItem) {

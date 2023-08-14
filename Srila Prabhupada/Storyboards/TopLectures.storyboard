@@ -13,7 +13,7 @@
         <!--Top Lectures-->
         <scene sceneID="WGu-QM-DlK">
             <objects>
-                <navigationController storyboardIdentifier="TopLectureNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="Rto-Sa-HFt" customClass="NavigationController" customModule="BVKS" customModuleProvider="target" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="TopLectureNavigationController" automaticallyAdjustsScrollViewInsets="NO" id="Rto-Sa-HFt" customClass="NavigationController" customModule="Bhakti_Vikasa_Swami" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Top Lectures" image="chart.bar.xaxis" id="NCU-3f-JCK"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" largeTitles="YES" id="WbR-bu-YQm">
@@ -40,7 +40,7 @@
         <!--Top Lectures-->
         <scene sceneID="BvV-o4-6Iw">
             <objects>
-                <viewController storyboardIdentifier="TopLectureViewController" id="DeK-Gp-UKt" customClass="TopLectureViewController" customModule="BVKS" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TopLectureViewController" id="DeK-Gp-UKt" customClass="TopLectureViewController" customModule="Bhakti_Vikasa_Swami" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Zcu-R6-5hb">
                         <rect key="frame" x="0.0" y="0.0" width="1024" height="1366"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -53,7 +53,7 @@
                                     <outlet property="delegate" destination="DeK-Gp-UKt" id="8DV-jM-Y4b"/>
                                 </connections>
                             </tableView>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="E2N-Vu-7JO">
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="E2N-Vu-7JO" customClass="SegmentedControl" customModule="Bhakti_Vikasa_Swami" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="126" width="1024" height="51"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="bDq-cT-0Cz">
@@ -99,6 +99,11 @@
             <point key="canvasLocation" x="3879.7101449275365" y="-259.15178571428572"/>
         </scene>
     </scenes>
+    <designables>
+        <designable name="E2N-Vu-7JO">
+            <size key="intrinsicContentSize" width="177" height="31"/>
+        </designable>
+    </designables>
     <color key="tintColor" name="F96D00"/>
     <resources>
         <image name="chart.bar.xaxis" width="20.333333969116211" height="18.333333969116211"/>

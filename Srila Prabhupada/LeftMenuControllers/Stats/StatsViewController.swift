@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import Charts
+import DGCharts
 import FirebaseFirestore
 import FirebaseFirestoreSwift
 
@@ -20,20 +20,20 @@ class StatsViewController: UIViewController, ChartViewDelegate {
     @IBOutlet private var thisWeekChartView: BarChartView!
 
     @IBOutlet private var lastWeekListenedTimeLabel: UILabel!
-    @IBOutlet private var lastWeekProgressView: UIProgressView!
-    @IBOutlet private var lastWeekProgressLabel: UILabel!
     @IBOutlet private var lastWeekSBLabel: UILabel!
     @IBOutlet private var lastWeekBGLabel: UILabel!
     @IBOutlet private var lastWeekCCLabel: UILabel!
-    @IBOutlet private var lastWeekBhajansLabel: UILabel!
+    @IBOutlet private var lastWeekVSLabel: UILabel!
+    @IBOutlet private var lastWeekSeminarsLabel: UILabel!
+    @IBOutlet private var lastWeekOthersLabel: UILabel!
 
     @IBOutlet private var lastMonthListenedTimeLabel: UILabel!
-    @IBOutlet private var lastMonthProgressView: UIProgressView!
-    @IBOutlet private var lastMonthProgressLabel: UILabel!
     @IBOutlet private var lastMonthSBLabel: UILabel!
     @IBOutlet private var lastMonthBGLabel: UILabel!
     @IBOutlet private var lastMonthCCLabel: UILabel!
-    @IBOutlet private var lastMonthBhajansLabel: UILabel!
+    @IBOutlet private var lastMonthVSLabel: UILabel!
+    @IBOutlet private var lastMonthSeminarsLabel: UILabel!
+    @IBOutlet private var lastMonthOthersLabel: UILabel!
 
     @IBOutlet private var customTimeListenedTimeLabel: UILabel!
     @IBOutlet private var customTimeProgressView: UIProgressView!
@@ -41,10 +41,12 @@ class StatsViewController: UIViewController, ChartViewDelegate {
     @IBOutlet private var customTimeSBLabel: UILabel!
     @IBOutlet private var customTimeBGLabel: UILabel!
     @IBOutlet private var customTimeCCLabel: UILabel!
-    @IBOutlet private var customTimeBhajansLabel: UILabel!
+    @IBOutlet private var customTimeVSLabel: UILabel!
+    @IBOutlet private var customTimeSeminarsLabel: UILabel!
+    @IBOutlet private var customTimeOthersLabel: UILabel!
     @IBOutlet private var customTimeButton: UIButton!
     @IBOutlet private var loadingIndecator: UIActivityIndicatorView!
-    
+
     private var customTimeMenu: SPMenu!
 
     var selectedStatType: StatsType {
@@ -72,26 +74,28 @@ class StatsViewController: UIViewController, ChartViewDelegate {
             totalProgressView.progress = 0
             totalProgressLabel.text = nil
 
-            lastMonthSBLabel.text = "SB -"
-            lastMonthBGLabel.text = "BG -"
-            lastMonthCCLabel.text = "CC -"
-            lastMonthBhajansLabel.text = "Bhanjan -"
-            lastMonthListenedTimeLabel.text = "-"
-            lastMonthProgressView.progress = 0
-            lastMonthProgressLabel.text = nil
-
-            lastWeekSBLabel.text = "SB -"
-            lastWeekBGLabel.text = "BG -"
-            lastWeekCCLabel.text = "CC -"
-            lastWeekBhajansLabel.text = "Bhanjan -"
+            lastWeekSBLabel.text = "-"
+            lastWeekBGLabel.text = "-"
+            lastWeekCCLabel.text = "-"
+            lastWeekVSLabel.text = "-"
+            lastWeekSeminarsLabel.text = "-"
+            lastWeekOthersLabel.text = "-"
             lastWeekListenedTimeLabel.text = "-"
-            lastWeekProgressView.progress = 0
-            lastWeekProgressLabel.text = nil
 
-            customTimeSBLabel.text = "SB -"
-            customTimeBGLabel.text = "BG -"
-            customTimeCCLabel.text = "CC -"
-            customTimeBhajansLabel.text = "Bhanjan -"
+            lastMonthSBLabel.text = "-"
+            lastMonthBGLabel.text = "-"
+            lastMonthCCLabel.text = "-"
+            lastMonthVSLabel.text = "-"
+            lastMonthSeminarsLabel.text = "-"
+            lastMonthOthersLabel.text = "-"
+            lastMonthListenedTimeLabel.text = "-"
+
+            customTimeSBLabel.text = "-"
+            customTimeBGLabel.text = "-"
+            customTimeCCLabel.text = "-"
+            customTimeVSLabel.text = "-"
+            customTimeSeminarsLabel.text = "-"
+            customTimeOthersLabel.text = "-"
             customTimeListenedTimeLabel.text = "-"
             customTimeProgressView.progress = 0
             customTimeProgressLabel.text = nil
@@ -112,7 +116,7 @@ class StatsViewController: UIViewController, ChartViewDelegate {
     }
 
     @objc func shareAction(_ barButtonItem: UIBarButtonItem) {
-        
+
         let pdf = SimplePDF(
             pageSize: self.scrollView.contentSize,
             pageMarginLeft: 2.0,
@@ -120,17 +124,17 @@ class StatsViewController: UIViewController, ChartViewDelegate {
             pageMarginBottom: 0.0,
             pageMarginRight: 2.0
         )
-        
+
         let actualConstraints = self.view.relatedConstraints()
         let image = self.getImageOfScrollView()
         NSLayoutConstraint.activate(actualConstraints)
-        
+
         pdf.addImage(image)
 
         let pdfData = pdf.generatePDFdata()
         self.openShareActivityControler(data: pdfData, barButtonItem: barButtonItem)
     }
-                                              
+
     @IBAction func choosStartDate(sender: UIDatePicker) {
 
         updateCustomTime()
@@ -313,43 +317,38 @@ extension StatsViewController {
         var totalSB: Int = 0
         var totalBG: Int = 0
         var totalCC: Int = 0
-        var totalBhajans: Int = 0
-        var totalOthers: Int = 0
         var totalVSN: Int = 0
+        var totalSeminars: Int = 0
+        var totalOthers: Int = 0
         var audioListen = 0
 
         filteredRecords.forEach { listenInfo in
             totalSB += listenInfo.listenDetails.SB
             totalBG += listenInfo.listenDetails.BG
             totalCC += listenInfo.listenDetails.CC
-            totalBhajans += listenInfo.listenDetails.others
-            totalOthers += listenInfo.listenDetails.Seminars
             totalVSN += listenInfo.listenDetails.VSN
+            totalSeminars += listenInfo.listenDetails.Seminars
+            totalOthers += listenInfo.listenDetails.others
             audioListen += listenInfo.audioListen
         }
 
-        let total: Int = totalSB + totalBG + totalCC + totalBhajans + totalVSN + totalOthers
+        let total: Int = totalSB + totalBG + totalCC + totalVSN + totalSeminars + totalOthers
 
         let totalSBTime: Time = Time(totalSeconds: totalSB)
         let totalBGTime: Time = Time(totalSeconds: totalBG)
         let totalCCTime: Time = Time(totalSeconds: totalCC)
-        let totalBhajanTime: Time = Time(totalSeconds: totalBhajans)
+        let totalVSTime: Time = Time(totalSeconds: totalVSN)
+        let totalSeminarTime: Time = Time(totalSeconds: totalSeminars)
+        let totalOthersTime: Time = Time(totalSeconds: totalOthers)
         let totalListenTime: Time = Time(totalSeconds: total)
 
-        lastMonthListenedTimeLabel.text = "\(totalListenTime.displayStringH )"
-        lastMonthSBLabel.text = "SB \(totalSBTime.displayTopUnit)"
-        lastMonthBGLabel.text = "BG \(totalBGTime.displayTopUnit)"
-        lastMonthCCLabel.text = "CC \(totalCCTime.displayTopUnit)"
-        lastMonthBhajansLabel.text = "Bhanjan \(totalBhajanTime.displayTopUnit)"
-
-        let finalPoint: Float = Float(filteredRecords.count * 3600 * 24)
-        if finalPoint > 0 {
-            let progress: Float = Float(audioListen) / finalPoint
-            lastMonthProgressView.setProgress(progress, animated: true)
-        } else {
-            lastMonthProgressView.setProgress(0, animated: true)
-        }
-        lastMonthProgressLabel.text = "\(Int(lastMonthProgressView.progress*100))%"
+        lastMonthListenedTimeLabel.text = "\(totalListenTime.displayString2Unit )"
+        lastMonthSBLabel.text = "\(totalSBTime.displayString2Unit)"
+        lastMonthBGLabel.text = "\(totalBGTime.displayString2Unit)"
+        lastMonthCCLabel.text = "\(totalCCTime.displayString2Unit)"
+        lastMonthVSLabel.text = "\(totalVSTime.displayString2Unit)"
+        lastMonthSeminarsLabel.text = "\(totalSeminarTime.displayString2Unit)"
+        lastMonthOthersLabel.text = "\(totalOthersTime.displayString2Unit)"
     }
 
     private func updateLastWeek() {
@@ -376,43 +375,38 @@ extension StatsViewController {
         var totalSB: Int = 0
         var totalBG: Int = 0
         var totalCC: Int = 0
-        var totalBhajans: Int = 0
-        var totalOthers: Int = 0
         var totalVSN: Int = 0
+        var totalSeminars: Int = 0
+        var totalOthers: Int = 0
         var audioListen = 0
 
         filteredRecords.forEach { listenInfo in
             totalSB += listenInfo.listenDetails.SB
             totalBG += listenInfo.listenDetails.BG
             totalCC += listenInfo.listenDetails.CC
-            totalBhajans += listenInfo.listenDetails.others
-            totalOthers += listenInfo.listenDetails.Seminars
             totalVSN += listenInfo.listenDetails.VSN
+            totalSeminars += listenInfo.listenDetails.Seminars
+            totalOthers += listenInfo.listenDetails.others
             audioListen += listenInfo.audioListen
         }
 
-        let total: Int = totalSB + totalBG + totalCC + totalBhajans + totalVSN + totalOthers
+        let total: Int = totalSB + totalBG + totalCC + totalVSN + totalSeminars + totalOthers
 
         let totalSBTime: Time = Time(totalSeconds: totalSB)
         let totalBGTime: Time = Time(totalSeconds: totalBG)
         let totalCCTime: Time = Time(totalSeconds: totalCC)
-        let totalBhajanTime: Time = Time(totalSeconds: totalBhajans)
+        let totalVSTime: Time = Time(totalSeconds: totalVSN)
+        let totalSeminarTime: Time = Time(totalSeconds: totalSeminars)
+        let totalOthersTime: Time = Time(totalSeconds: totalOthers)
         let totalListenTime: Time = Time(totalSeconds: total)
 
-        lastWeekListenedTimeLabel.text = "\(totalListenTime.displayStringH )"
-        lastWeekSBLabel.text = "SB \(totalSBTime.displayTopUnit)"
-        lastWeekBGLabel.text = "BG \(totalBGTime.displayTopUnit)"
-        lastWeekCCLabel.text = "CC \(totalCCTime.displayTopUnit)"
-        lastWeekBhajansLabel.text = "Bhanjan \(totalBhajanTime.displayTopUnit)"
-
-        let finalPoint: Float = Float(filteredRecords.count * 3600 * 24)
-        if finalPoint > 0 {
-            let progress: Float = Float(audioListen) / finalPoint
-            lastWeekProgressView.setProgress(progress, animated: true)
-        } else {
-            lastWeekProgressView.setProgress(0, animated: true)
-        }
-        lastWeekProgressLabel.text = "\(Int(lastWeekProgressView.progress*100))%"
+        lastWeekListenedTimeLabel.text = "\(totalListenTime.displayString2Unit)"
+        lastWeekSBLabel.text = "\(totalSBTime.displayString2Unit)"
+        lastWeekBGLabel.text = "\(totalBGTime.displayString2Unit)"
+        lastWeekCCLabel.text = "\(totalCCTime.displayString2Unit)"
+        lastWeekVSLabel.text = "\(totalVSTime.displayString2Unit)"
+        lastWeekSeminarsLabel.text = "\(totalSeminarTime.displayString2Unit)"
+        lastWeekOthersLabel.text = "\(totalOthersTime.displayString2Unit)"
     }
 
     private func updateThisWeek() {
@@ -466,34 +460,38 @@ extension StatsViewController {
         var totalSB: Int = 0
         var totalBG: Int = 0
         var totalCC: Int = 0
-        var totalBhajans: Int = 0
-        var totalOthers: Int = 0
         var totalVSN: Int = 0
+        var totalSeminars: Int = 0
+        var totalOthers: Int = 0
         var audioListen = 0
 
         filteredRecords.forEach { listenInfo in
             totalSB += listenInfo.listenDetails.SB
             totalBG += listenInfo.listenDetails.BG
             totalCC += listenInfo.listenDetails.CC
-            totalBhajans += listenInfo.listenDetails.others
-            totalOthers += listenInfo.listenDetails.Seminars
             totalVSN += listenInfo.listenDetails.VSN
+            totalSeminars += listenInfo.listenDetails.Seminars
+            totalOthers += listenInfo.listenDetails.others
             audioListen += listenInfo.audioListen
         }
 
-        let totalDuration: Int = totalSB + totalBG + totalCC + totalBhajans + totalVSN + totalOthers
+        let total: Int = totalSB + totalBG + totalCC + totalVSN + totalSeminars + totalOthers
 
         let totalSBTime: Time = Time(totalSeconds: totalSB)
         let totalBGTime: Time = Time(totalSeconds: totalBG)
         let totalCCTime: Time = Time(totalSeconds: totalCC)
-        let totalBhajanTime: Time = Time(totalSeconds: totalBhajans)
-        let totalDurationListenTime: Time = Time(totalSeconds: totalDuration)
+        let totalVSTime: Time = Time(totalSeconds: totalVSN)
+        let totalSeminarTime: Time = Time(totalSeconds: totalSeminars)
+        let totalOthersTime: Time = Time(totalSeconds: totalOthers)
+        let totalListenTime: Time = Time(totalSeconds: total)
 
-        customTimeListenedTimeLabel.text = "\(totalDurationListenTime.displayStringH )"
-        customTimeSBLabel.text = "SB \(totalSBTime.displayTopUnit)"
-        customTimeBGLabel.text = "BG \(totalBGTime.displayTopUnit)"
-        customTimeCCLabel.text = "CC \(totalCCTime.displayTopUnit)"
-        customTimeBhajansLabel.text = "Bhanjan \(totalBhajanTime.displayTopUnit)"
+        customTimeListenedTimeLabel.text = "\(totalListenTime.displayString2Unit )"
+        customTimeSBLabel.text = "\(totalSBTime.displayString2Unit)"
+        customTimeBGLabel.text = "\(totalBGTime.displayString2Unit)"
+        customTimeCCLabel.text = "\(totalCCTime.displayString2Unit)"
+        customTimeVSLabel.text = "\(totalVSTime.displayString2Unit)"
+        customTimeSeminarsLabel.text = "\(totalSeminarTime.displayString2Unit)"
+        customTimeOthersLabel.text = "\(totalOthersTime.displayString2Unit)"
 
         let finalPoint: Float = Float(filteredRecords.count * 3600 * 24)
         if finalPoint > 0 {
@@ -533,17 +531,17 @@ extension StatsViewController {
             }
         })
     }
-    
-    private func getImageOfScrollView() -> UIImage{
-        var image = UIImage();
+
+    private func getImageOfScrollView() -> UIImage {
+        var image = UIImage()
 
         UIGraphicsBeginImageContextWithOptions(self.scrollView.contentSize, false, UIScreen.main.scale)
 
-        let savedContentOffset = self.scrollView.contentOffset;
-        let savedFrame = self.scrollView.frame;
+        let savedContentOffset = self.scrollView.contentOffset
+        let savedFrame = self.scrollView.frame
         let savedBackgroundColor = self.scrollView.backgroundColor
 
-        self.scrollView.contentOffset = CGPoint.zero;
+        self.scrollView.contentOffset = CGPoint.zero
         self.scrollView.frame = CGRect(x: 0, y: 0, width: self.scrollView.contentSize.width, height: self.scrollView.contentSize.height)
         self.scrollView.backgroundColor = UIColor.clear
 
@@ -553,31 +551,31 @@ extension StatsViewController {
         tempView.addSubview(self.scrollView)
 
         tempView.layer.render(in: UIGraphicsGetCurrentContext()!)
-        image = UIGraphicsGetImageFromCurrentImageContext()!;
+        image = UIGraphicsGetImageFromCurrentImageContext()!
 
         tempView.subviews[0].removeFromSuperview()
         tempSuperView?.addSubview(self.scrollView)
 
-        self.scrollView.contentOffset = savedContentOffset;
-        self.scrollView.frame = savedFrame;
+        self.scrollView.contentOffset = savedContentOffset
+        self.scrollView.frame = savedFrame
         self.scrollView.backgroundColor = savedBackgroundColor
 
-        UIGraphicsEndImageContext();
+        UIGraphicsEndImageContext()
 
         return image
     }
-    
+
     private func openShareActivityControler(data: Data, barButtonItem: UIBarButtonItem) {
         self.loadingIndecator.startAnimating()
-        
+
         self.getDocName(completion: { docName in
 
             self.loadingIndecator.stopAnimating()
             let url = URL(fileURLWithPath: NSTemporaryDirectory()).appendingPathComponent(docName) as NSURL
-                        
+
             do {
                 try data.write(to: url as URL)
-                
+
                 let activitycontroller = UIActivityViewController(activityItems: [url], applicationActivities: nil)
                 if activitycontroller.responds(to: #selector(getter: activitycontroller.completionWithItemsHandler)) {
                     activitycontroller.completionWithItemsHandler = {(type, isCompleted, items, error) in
@@ -588,16 +586,16 @@ extension StatsViewController {
                         }
                     }
                 }
-                
+
                 activitycontroller.excludedActivityTypes = [UIActivity.ActivityType.airDrop]
                 activitycontroller.popoverPresentationController?.barButtonItem = barButtonItem
                 self.present(activitycontroller, animated: true, completion: nil)
-                
+
             } catch let error {
                 self.showAlert(title: "Error!", message: error.localizedDescription)
             }
         })
-               
+
 //        DispatchQueue.main.async{
 //            let activityViewController = UIActivityViewController(activityItems: userContent as [Any], applicationActivities: nil)
 //
@@ -626,26 +624,26 @@ extension StatsViewController {
 //            self.present(activityViewController, animated: true, completion: nil)
 //        }
     }
-    
+
     private func getDocName(completion: @escaping (String) -> Void) {
-        
+
         var text = "PdfStats"
-        
+
         if let name = FirestoreManager.shared.currentUserDisplayName {
             text = name + "_"
         } else if let email = FirestoreManager.shared.currentUserEmail {
             text = email + "_"
         }
-        
+
         let currentDate = Date()
         let dateFormatter = DateFormatter()
 
         dateFormatter.dateFormat = "ddMMyyyy_hhmmss"
         let convertedDate: String = dateFormatter.string(from: currentDate)
-        
+
         text.append(convertedDate)
         text.append(".pdf")
-        
+
         completion(text)
     }
 }

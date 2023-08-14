@@ -39,9 +39,9 @@ protocol LectureViewModel: AnyObject {
     func updateListenInfo(date: Date, addListenSeconds seconds: Int, lecture: Lecture, completion: @escaping (Swift.Result<ListenInfo, Error>) -> Void)
 
     // Top Lecture
-    func getWeekLecturesIds(weekDays: [String], completion: @escaping (Swift.Result<[Int], Error>) -> Void)
-    func getMonthLecturesIds(month: Int, year: Int, completion: @escaping (Swift.Result<[Int], Error>) -> Void)
-    func getPopularLectureIds(completion: @escaping (Swift.Result<[Int], Error>) -> Void)
+    func getWeekLecturesIds(weekDays: [String], completion: @escaping (Swift.Result<[Dictionary<Int, Int>.Element], Error>) -> Void)
+    func getMonthLecturesIds(month: Int, year: Int, completion: @escaping (Swift.Result<[Dictionary<Int, Int>.Element], Error>) -> Void)
+    func getPopularLectureIds(completion: @escaping (Swift.Result<[Dictionary<Int, Int>.Element], Error>) -> Void)
     func updateTopLecture(date: Date, lectureID: Int, completion: @escaping (Swift.Result<TopLecture, Error>) -> Void)
 
     func getRecentlyPlayedLectureIDs(source: FirestoreSource, completion: @escaping (Swift.Result<RecentPlayID, Error>) -> Void)

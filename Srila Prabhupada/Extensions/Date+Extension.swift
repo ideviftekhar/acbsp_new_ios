@@ -56,4 +56,56 @@ extension Date {
     func adding(_ component: Calendar.Component, value: Int) -> Date? {
         return Self.gregorianCalendar.date(byAdding: component, value: value, to: self)
     }
+
+    static var lastWeekDates: [String] {
+
+        guard let endOfWeek = Date().startOfWeek else {
+            return []
+        }
+        var startOfWeek = Date().startOfWeek
+        startOfWeek = Date.gregorianCalendar.date(byAdding: .day, value: -7, to: startOfWeek!)
+        var weekDates: [String] = []
+
+        while let day = startOfWeek, day < endOfWeek {
+            let dateString = DateFormatter.d_M_yyyy.string(from: day)
+            weekDates.append(dateString)
+            startOfWeek = Date.gregorianCalendar.date(byAdding: .day, value: 1, to: day)
+        }
+        return weekDates
+
+    }
+
+    static var currentWeekDates: [String] {
+
+        guard let endOfWeek = Date().endOfWeek else {
+            return []
+        }
+
+        var startOfWeek = Date().startOfWeek
+
+        var weekDates: [String] = []
+
+        while let day = startOfWeek, day <= endOfWeek {
+            let dateString = DateFormatter.d_M_yyyy.string(from: day)
+            weekDates.append(dateString)
+            startOfWeek = Date.gregorianCalendar.date(byAdding: .day, value: 1, to: day)
+        }
+        return weekDates
+    }
+
+    static var lastSevenDaysDates: [String] {
+
+        let endOfWeek = Date()
+
+        var startOfWeek: Date? = endOfWeek.adding(.day, value: -6)
+
+        var weekDates: [String] = []
+
+        while let day = startOfWeek, day <= endOfWeek {
+            let dateString = DateFormatter.d_M_yyyy.string(from: day)
+            weekDates.append(dateString)
+            startOfWeek = Date.gregorianCalendar.date(byAdding: .day, value: 1, to: day)
+        }
+        return weekDates
+    }
 }

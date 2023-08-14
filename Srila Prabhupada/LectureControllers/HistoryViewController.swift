@@ -21,6 +21,8 @@ class HistoryViewController: LectureViewController {
 
     override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[LectureViewController.Model], Error>) -> Void) {
 
+        let sortType: LectureSortType? = selectedSortType == .default ? .dateLatestFirst : selectedSortType  // We don't want default behaviour here
+
         DefaultLectureViewModel.defaultModel.getUsersListenInfo(source: source, completion: { [self] result in
 
             switch result {
@@ -30,13 +32,9 @@ class HistoryViewController: LectureViewController {
                 let uniqueIds: Set<Int> = Set(lectureIDs)
                 lectureIDs = Array(uniqueIds)
 
-                DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: { result in
-                    self.lectureTebleView.refreshControl?.endRefreshing()
-                    completion(result)
-                })
+                DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: sortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: completion)
 
             case .failure(let error):
-                self.lectureTebleView.refreshControl?.endRefreshing()
                 completion(.failure(error))
             }
         })

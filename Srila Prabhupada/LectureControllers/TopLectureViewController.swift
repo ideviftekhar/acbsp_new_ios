@@ -58,23 +58,21 @@ class TopLectureViewController: LectureViewController {
     override func refreshAsynchronous(source: FirestoreSource, completion: @escaping (Result<[LectureViewController.Model], Error>) -> Void) {
 
         guard let selectedLectureType = TopLectureType(rawValue: topLecturesSegmentControl.selectedSegmentIndex) else {
-            self.lectureTebleView.refreshControl?.endRefreshing()
             return
         }
+
+        let sortType: LectureSortType? = selectedSortType == .default ? nil : selectedSortType  // We don't want default behaviour here
 
         switch selectedLectureType {
         case .thisWeek:
 
-            DefaultLectureViewModel.defaultModel.getWeekLecturesIds(weekDays: currentWeekDates, completion: { [self] result in
+            DefaultLectureViewModel.defaultModel.getWeekLecturesIds(weekDays: Date.currentWeekDates, completion: { [self] result in
 
                 switch result {
-                case .success(let lectureIDs):
-                    DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: { result in
-                        self.lectureTebleView.refreshControl?.endRefreshing()
-                        completion(result)
-                    })
+                case .success(let success):
+                    let lectureIDs: [Int] = success.map({ $0.key })
+                    DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: sortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: completion)
                 case .failure(let error):
-                    self.lectureTebleView.refreshControl?.endRefreshing()
                     completion(.failure(error))
                 }
             })
@@ -87,28 +85,22 @@ class TopLectureViewController: LectureViewController {
             DefaultLectureViewModel.defaultModel.getMonthLecturesIds(month: currentMonth, year: currentYear, completion: { [self] result in
 
                 switch result {
-                case .success(let lectureIDs):
-                    DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: { result in
-                        self.lectureTebleView.refreshControl?.endRefreshing()
-                        completion(result)
-                    })
+                case .success(let success):
+                    let lectureIDs: [Int] = success.map({ $0.key })
+                    DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: sortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: completion)
                 case .failure(let error):
-                    self.lectureTebleView.refreshControl?.endRefreshing()
                     completion(.failure(error))
                 }
             })
         case .lastWeek:
 
-            DefaultLectureViewModel.defaultModel.getWeekLecturesIds(weekDays: lastWeekDates, completion: { [self] result in
+            DefaultLectureViewModel.defaultModel.getWeekLecturesIds(weekDays: Date.lastWeekDates, completion: { [self] result in
 
                 switch result {
-                case .success(let lectureIDs):
-                    DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: { result in
-                        self.lectureTebleView.refreshControl?.endRefreshing()
-                        completion(result)
-                    })
+                case .success(let success):
+                    let lectureIDs: [Int] = success.map({ $0.key })
+                    DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: sortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: completion)
                 case .failure(let error):
-                    self.lectureTebleView.refreshControl?.endRefreshing()
                     completion(.failure(error))
                 }
             })
@@ -127,13 +119,21 @@ class TopLectureViewController: LectureViewController {
             DefaultLectureViewModel.defaultModel.getMonthLecturesIds(month: previousMonth, year: currentYear, completion: { [self] result in
 
                 switch result {
-                case .success(let lectureIDs):
-                    DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: selectedSortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: { result in
-                        self.lectureTebleView.refreshControl?.endRefreshing()
-                        completion(result)
-                    })
+                case .success(let success):
+                    let lectureIDs: [Int] = success.map({ $0.key })
+                    DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: sortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: completion)
                 case .failure(let error):
-                    self.lectureTebleView.refreshControl?.endRefreshing()
+                    completion(.failure(error))
+                }
+            })
+        case .allTime:
+            DefaultLectureViewModel.defaultModel.getPopularLectureIds(completion: { [self] result in
+
+                switch result {
+                case .success(let success):
+                    let lectureIDs: [Int] = success.map({ $0.key })
+                    DefaultLectureViewModel.defaultModel.getLectures(searchText: searchText, sortType: sortType, filter: selectedFilters, lectureIDs: lectureIDs, source: source, progress: nil, completion: completion)
+                case .failure(let error):
                     completion(.failure(error))
                 }
             })
@@ -150,44 +150,5 @@ extension TopLectureViewController {
     override func hideLoading() {
         super.hideLoading()
         topLecturesSegmentControl.isEnabled = true
-    }
-}
-
-extension TopLectureViewController {
-
-    var lastWeekDates: [String] {
-
-        guard let endOfWeek = Date().startOfWeek else {
-            return []
-        }
-        var startOfWeek = Date().startOfWeek
-        startOfWeek = Date.gregorianCalendar.date(byAdding: .day, value: -7, to: startOfWeek!)
-        var weekDates: [String] = []
-
-        while let day = startOfWeek, day < endOfWeek {
-            let dateString = DateFormatter.d_M_yyyy.string(from: day)
-            weekDates.append(dateString)
-            startOfWeek = Date.gregorianCalendar.date(byAdding: .day, value: 1, to: day)
-        }
-        return weekDates
-
-    }
-
-    var currentWeekDates: [String] {
-
-        guard let endOfWeek = Date().endOfWeek else {
-            return []
-        }
-
-        var startOfWeek = Date().startOfWeek
-
-        var weekDates: [String] = []
-
-        while let day = startOfWeek, day <= endOfWeek {
-            let dateString = DateFormatter.d_M_yyyy.string(from: day)
-            weekDates.append(dateString)
-            startOfWeek = Date.gregorianCalendar.date(byAdding: .day, value: 1, to: day)
-        }
-        return weekDates
     }
 }
